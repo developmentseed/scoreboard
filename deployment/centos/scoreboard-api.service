@@ -1,0 +1,21 @@
+[Unit]
+Description=Scoreboard API
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/var/www/scoreboard/api
+
+User=centos
+Group=centos
+
+EnvironmentFile=-/var/www/scoreboard/api/.env
+Environment=PORT=5000
+
+StandardInput=null
+StandardOutput=syslog
+StandardError=syslog
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

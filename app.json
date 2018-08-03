@@ -1,0 +1,17 @@
+{
+  "name": "OSM Scoreboard",
+  "description": "Tracking changes in OSM",
+  "scripts": {},
+  "env": {
+    "NODE_ENV": {
+      "required": true
+    }
+  },
+  "formation": {},
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

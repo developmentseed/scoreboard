@@ -1,0 +1,27 @@
+{
+  "name": "scoreboard-api",
+  "version": "0.1.0",
+  "description": "OSM Scoreboard API ",
+  "main": "server.js",
+  "scripts": {
+    "migrate": "knex migrate:latest",
+    "start": "npm run migrate && nf start web",
+    "clocks": "npm run migrate && nf start tm_clock,users_clock",
+    "start-dev": "npm run migrate && nf --procfile Procfile-dev start web",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marc Farra <marcfarra@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@heroku/foreman": "git+https://github.com/heroku/node-foreman.git",
+    "compression": "^1.7.1",
+    "express": "^4.16.2",
+    "express-boom": "^2.0.0",
+    "express-promise-router": "^2.0.0",
+    "knex": "^0.14.2",
+    "ramda": "^0.25.0",
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5",
+    "sqlite3": "^3.1.13"
+  }
+}

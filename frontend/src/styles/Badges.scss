@@ -1,0 +1,243 @@
+@import 'settings/variables.scss';
+/*----------------------------------------------*/
+/*             Badge Views Style    */
+/*                                   */
+/*----------------------------------------------*/
+/*----------------------------------------------*/
+/*Variables*/
+/*----------------------------------------------*/
+$darkgrey: #606161;
+$lightgrey: #dbdbda;
+$badgeyellow: #fef387;
+
+.badgeicon {
+  position: relative;
+  float: left;
+  pointer-events: none;
+}
+
+.badge-home {
+  hr {
+    max-width: 80%;
+  }
+  @media screen and (max-width: 630px) {
+    width: auto;
+    height: auto;
+  }
+}
+
+.badge-contain{
+  position: relative;
+}
+
+.badge-Details {
+  float: left;
+  width: 50%;
+  text-align: left;
+  margin-left: 1.2em;
+  margin-top: 1.5em;
+  .sub-head {
+    padding-bottom: .3em;
+    width: 100%;
+    @media screen and (max-width: 894px) {
+      margin-top: 15px;
+    }
+  }
+  @media screen and (max-width: 894px) {
+    float: initial;
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+.badge-Name {
+  font-size: 1.4em;
+  font-family: $heading-font-regular;
+  margin-bottom: 2px;
+  padding-top: 40px;
+}
+
+.Badge-Description {
+  font-family: $base-font-regular;
+  margin-bottom: 10px;
+  float: left;
+}
+
+.line-break {
+  width: 190px;
+  height: 1px;
+  margin-right: 20px;
+  margin-bottom: 18px;
+  background-color: darken($lightgrey, 8%);
+  @media screen and (max-width: 600px) {
+  }
+}
+
+.Badge-Container {
+  min-width: 300px;
+  max-width: 100%;
+  margin: 20px 24px;
+  margin-bottom: 0;
+  @media screen and (max-width: 1100px) {
+    position: relative;
+    max-width: 75%;
+    margin: 50px 10px 0 10px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+.Badge {
+  position: relative;
+  float: left;
+  border-radius: 50%;
+  background-image: linear-gradient(90deg, $lightgrey 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)),
+  linear-gradient(90deg, $green-color 50%, $lightgrey 50%, $lightgrey);
+  &.progress {
+    width: 150px;
+    height: 150px;
+  }
+  &.upcoming {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+  }
+}
+
+.Badge-Interior {
+  position: absolute;
+  margin-top: 6px;
+  margin-left: 6px;
+  border: 2px solid $darkgrey;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 140px;
+  &.progress {
+    width: 135px;
+    height: 135px;
+    -webkit-filter: saturate(0) brightness(1) contrast(.8);
+       -moz-filter: saturate(0) brightness(1) contrast(.8);
+         -o-filter: saturate(0) brightness(1) contrast(.8);
+        -ms-filter: saturate(0) brightness(1) contrast(.8);
+            filter: saturate(0) brightness(1) contrast(.8);
+  }
+  &.upcoming {
+    width: 71px;
+    height: 71px;
+    margin-top: 3px;
+    margin-left: 3px;
+    background-size: 75px;
+
+    -webkit-filter: saturate(0) brightness(1) contrast(.8);
+       -moz-filter: saturate(0) brightness(1) contrast(.8);
+         -o-filter: saturate(0) brightness(1) contrast(.8);
+        -ms-filter: saturate(0) brightness(1) contrast(.8);
+            filter: saturate(0) brightness(1) contrast(.8);
+  }
+}
+
+.Badge-Completed,
+.Badge-Border {
+  float: left;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Badge-Completed {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin-top: 4px;
+  background-size: 130px;
+  &.overview {
+    width: 165px;
+    height: 165px;
+    background-size: 165px;
+  }
+}
+
+.Badge-Roll .Badge-Completed {
+  width: 145px;
+  height: 145px;
+  background-size: 145px;
+  margin-right: 5px;
+}
+
+.Badge-Border {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  margin-top: 0;
+  margin-left: -7px;
+  background-size: 170px;
+  &.overview {
+    width: 185px;
+    height: 185px;
+    background-size: 185px;
+  }
+}
+
+.Overview-Badge-Container {
+  position: relative;
+  margin: 3px auto 0 auto;
+}
+
+.Badge-Popup {
+  font-family: $base-font-regular;
+  position: absolute;
+  z-index: 1;
+  top: 95px;
+  left: 95px;
+  width: 200px;
+  margin-top: 5px;
+  margin-left: 15px;
+  padding: 10px 10px;
+  -webkit-transition: all .25s ease-in-out;
+     -moz-transition: all .25s ease-in-out;
+          transition: all .25s ease-in-out;
+  border: 1px solid $darkgrey;
+  border-radius: 5px;
+  background-color: $lightgrey;
+  &.hidden {
+    margin-top: 0;
+    margin-left: 0;
+    opacity: 0;
+  }
+  @media screen and (max-width: 375px) {
+    left: 5;
+  }
+}
+
+.Badge-Roll {
+  li {
+    width: 45%;
+    float: left;
+    margin-bottom: 3em;
+    &:nth-of-type(odd) {
+      margin-right: 5%;
+    }
+  }
+  .Badge-Border {
+    width: 160px;
+    height: 160px;
+    background-size: 160px;
+  }
+}
+
+.Mini-Badge-Roll {
+  li {
+    float: left;
+    margin-right: 3em;
+    width: 31.5%;
+    margin-right: 1%;
+    &:nth-of-type(3) {
+      margin-right: 0;
+    }
+  }
+}
+
+.Badge-Container-progress {
+  clear: both;
+}

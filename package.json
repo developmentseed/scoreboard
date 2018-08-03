@@ -1,0 +1,46 @@
+{
+  "name": "scoreboard",
+  "version": "0.1.0",
+  "description": "OSM Scoreboard",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run api\" \"npm run client\"",
+    "api": "node start-api.js",
+    "postinstall": "npm run clientinstall && npm run apiinstall",
+    "clientinstall": "cd frontend && npm install",
+    "apiinstall": "cd api && npm install",
+    "heroku-postbuild": "cd frontend && npm run build",
+    "client": "node start-client.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint . "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/developmentseed/scoreboard.git"
+  },
+  "author": "Development Seed <info@developmentseed.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/developmentseed/scoreboard/issues"
+  },
+  "engines": {
+    "node": "8.4.0"
+  },
+  "homepage": "https://github.com/developmentseed/scoreboard#readme",
+  "dependencies": {
+    "babel-eslint": "^8.2.6",
+    "concurrently": "^3.5.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "i18n-iso-countries": "^3.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-react-app": "^2.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsdoc": "^3.5.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.7.0"
+  }
+}

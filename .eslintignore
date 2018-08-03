@@ -1,0 +1,7 @@
+**/node_modules/**
+**/dist/**
+**/webpack.config.js
+**/.nyc_output/**
+**/coverage/**
+tmp/**
+**/api/db/migrations/**

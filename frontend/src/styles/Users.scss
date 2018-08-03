@@ -1,0 +1,80 @@
+@import 'settings/variables.scss';
+@import 'settings/mixins.scss';
+
+.chart {
+  font-family: $tertiary-font-family;
+}
+
+.chart-pie {
+  margin-left: -2.5em;
+}
+
+.chart-pie--legend {
+  padding: 1em 0 0 1em;
+}
+
+.legend-buildings, .legend-roads, .legend-pois, .legend-waterways {
+  &:before {
+    content: " ";
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: rgb(31, 120, 180);
+    margin-right: .5em;
+  }
+  margin-bottom: .3em;
+}
+
+.legend-roads {
+  &:before {
+    background-color: rgb(178, 223, 138);
+  }
+}
+
+.legend-pois {
+  &:before {
+    background-color: rgb(51, 160, 44);
+  }
+}
+
+.legend-waterways {
+  &:before {
+    background-color: rgb(166, 206, 227);
+  }
+}
+
+.stats-user {
+  margin-top: -1em;
+}
+
+.graphs--user {
+  .section-width-thirty {
+    margin-left: 5%;
+  }
+}
+
+.user-glance-graphs {
+  margin-bottom: 2em;
+
+  .Badge-Border {
+    width: 140px;
+    height: 140px;
+    background-size: 140px;
+  }
+  .Badge-Completed {
+    width: 125px;
+    height: 125px;
+    background-size: 125px;
+  }
+  .Badge.progress {
+    width: 130px;
+    height: 130px;
+  }
+  .Badge-Interior {
+    background-size: 130px;
+  }
+  .Badge-Interior.progress {
+    width: 115px;
+    height: 115px;
+  }
+}

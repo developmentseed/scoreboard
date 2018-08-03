@@ -1,0 +1,40 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:5000",
+  "homepage": ".",
+  "dependencies": {
+    "@nivo/bar": "^0.33.0",
+    "@nivo/calendar": "^0.43.0",
+    "@nivo/line": "^0.33.0",
+    "@nivo/pie": "^0.33.0",
+    "@turf/center-of-mass": "^5.0.4",
+    "axios": "^0.17.0",
+    "date-fns": "^1.29.0",
+    "debounce-promise": "^3.0.2",
+    "lodash-es": "^4.17.5",
+    "mapbox-gl": "^0.44.1",
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.1.1",
+    "query-string": "^5.0.1",
+    "ramda": "^0.25.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-input-range": "^1.2.2",
+    "react-js-pagination": "^3.0.0",
+    "react-markdown": "^3.1.1",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "^1.1.4",
+    "react-select": "^1.2.1"
+  },
+  "scripts": {
+    "build-css": "node-sass-chokidar src/styles/ -o src/styles/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/styles/ -o src/styles/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

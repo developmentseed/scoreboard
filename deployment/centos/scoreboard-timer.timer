@@ -1,0 +1,12 @@
+[Unit]
+Description=Runs clocks every 10 minutes
+
+[Timer]
+# Time to wait after booting before we run first time
+OnBootSec=10min
+# Time between running each consecutive time
+OnUnitActiveSec=10min
+Unit=scoreboard-timer.service
+
+[Install]
+WantedBy=timers.target

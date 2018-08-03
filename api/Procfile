@@ -1,0 +1,3 @@
+web: node server.js
+tm_clock: node tm_clock.js
+users_clock: node users_clock.js

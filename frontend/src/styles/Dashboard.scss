@@ -1,0 +1,105 @@
+@import 'settings/variables.scss';
+@import 'settings/mixins.scss';
+
+.nav-temp--login {
+  padding-top: 2em;
+  float: right;
+  width: 20%;
+  li {
+    margin-left: 1em;
+    float: right;
+    &:first-of-type {
+      margin-top: .5em;
+    }
+  }
+}
+
+.header--internal--dashboard {
+  background-image: url("../assets/dashboard-temp/dashboard-background.jpg");
+  margin-top: -6em;
+  background-size: cover;
+  min-height: 400px;
+  color: #fff;
+  h1 {
+    color: #fff;
+    line-height: 1em;
+    margin-top: .4em;
+  }
+  .header--content--wrapper {
+  }
+  .section-sub--left, .section-sub--right {
+    padding-top: 290px;
+  }
+  .section-sub--right {
+    padding-top: 270px;
+  }
+  .link--large, .link--large:visited {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    display: inline-block;
+    &:hover {
+      color: darken(#fff, 7%);
+    }
+  }
+}
+
+.map--thumb {
+  width: 177px;
+  height: auto;
+  margin-right: 4%;
+}
+
+.profile--thumb {
+  width: 90px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  margin-right: 1em;
+  margin-bottom: .2em;
+}
+
+
+.communication--details {
+  float: left;
+  width: 58%;
+}
+
+.bi-fold {
+  li {
+    width: 45%;
+    float: left;
+    &:first-of-type {
+      margin-right: 4%;
+    }
+  }
+  .list--two-column {
+    margin-bottom: .5em;
+    li {
+      width: 100%;
+    }
+  }
+}
+
+.tri-fold {
+  margin-bottom: 2em;
+  li {
+    float: left;
+    width: 33%;
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}
+
+.badge--thumb {
+  width: 140px;
+  height: auto;
+}
+
+.dashboard {
+  .chart-bar--main {
+    margin-bottom: 2em;
+  }
+  .block--campaign p {
+    min-height: 20px;
+  }
+}

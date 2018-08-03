@@ -1,0 +1,84 @@
+/* Colors
+   ========================================================================== */
+
+$base-color: #4FCA9E;                                   //
+$blue-color: #22BDC1;                                //
+$green-color: #8BC544;
+$blue-purple-color: #5657C2;
+                            //
+$dark-text-color: #292929;
+$med-text-color: #595757;
+$light-text-color: #6F6F6F;
+
+$background-color-light: #FBFBFB;
+
+
+/* Typography
+   ========================================================================== */
+ @font-face {
+   font-family: 'CrimsonText-reg';
+   src: url('fonts/CrimsonText-Regular.ttf')  format('truetype');
+ }
+
+ @font-face {
+   font-family: 'CrimsonText-semi';
+   src: url('fonts/CrimsonText-SemiBold.ttf')  format('truetype');
+ }
+
+ @font-face {
+   font-family: 'CrimsonText-bold';
+   src: url('fonts/CrimsonText-Bold.ttf')  format('truetype');
+ }
+
+ @font-face {
+   font-family: 'Heebo-light';
+   src: url('fonts/Heebo-Light.ttf')  format('truetype');
+ }
+
+ @font-face {
+   font-family: 'Heebo-reg';
+   src: url('fonts/Heebo-Regular.ttf')  format('truetype');
+ }
+
+ @font-face {
+   font-family: 'Heebo-bold';
+   src: url('fonts/Heebo-Bold.ttf')  format('truetype');
+ }
+
+ @font-face {
+   font-family: 'Abel';
+   src: url('fonts/Abel-Regular.ttf')  format('truetype');
+ }
+
+
+$base-font-color: #595757;
+$base-font-family: "CrimsonText-reg", Georgia, serif;
+$base-font-style: normal;
+$base-font-regular: "CrimsonText-reg", Georgia, serif;
+$base-font-semibold: "CrimsonText-semi", Georgia, serif;
+$base-font-bold: "CrimsonText-bold", Georgia, serif;
+$base-font-weight: $base-font-regular;
+$base-font-size: 1rem;
+$base-line-height: 1.5;
+
+$base-header-color: #292929;
+$heading-font-family: 'Heebo-reg', "Helvetica Neue", Helvetica, Arial, sans-serif;
+$heading-font-light: 'Heebo-light', "Helvetica Neue", Helvetica, Arial, sans-serif;;
+$heading-font-regular: 'Heebo-reg', "Helvetica Neue", Helvetica, Arial, sans-serif;
+$heading-font-bold: 'Heebo-bold', "Helvetica Neue", Helvetica, Arial, sans-serif;
+$heading-font-weight: $heading-font-bold;
+
+$tertiary-font-family: 'Abel', "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+/* Rows */
+$row-min-width: 320px;
+$row-max-width: 1280px;
+
+
+/* Media queries */
+$xsmall-range: (0, 543px);
+$small-range: (544px, 799px);
+$medium-list-range: (800px, 915px);
+$medium-range: (800px, 991px);
+$large-range: (992px, 1199px);
+$xlarge-range: (1200px);
