@@ -1,6 +1,6 @@
 # OSM Scoreboard 🗺 🎯
 
-[![CircleCI](https://circleci.com/gh/developmentseed/scoreboard.svg?style=svg&circle-token=ed8258ed33b6860d7fd496bddb56863678d8fe98)](https://circleci.com/gh/developmentseed/scoreboard)
+[![CircleCI](https://circleci.com/gh/developmentseed/scoreboard.svg?style=svg)](https://circleci.com/gh/developmentseed/scoreboard)
 
 A project to display OSM user contribution metrics and campaign metrics.
 
