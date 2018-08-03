@@ -20,6 +20,7 @@ module.exports = async (req, res) => {
   const page = req.query.page || 1
   const search = req.query.q || ''
   const country = req.query.country || ''
+  const sortType = req.query.sortType || ''
   const active = req.query.active || false
   const filteredUsers = split(',', FILTERED_USERS).map(trim)
 
@@ -52,6 +53,22 @@ module.exports = async (req, res) => {
     if (country.length > 0) {
       const countries = country.split(',')
       query = query.whereIn('country', countries)
+    }
+
+    if (sortType.length > 0) {
+      // TODO: These do not yet work on all pages
+      if (sortType === '1') {
+        query = query.orderBy('last_edit', 'desc')
+      }
+      else if (sortType === '2') {
+        query = query.orderBy('last_edit', 'asc')
+      }
+      else if (sortType === '3') {
+        query = query.orderBy('edit_count', 'desc')
+      }
+      else if (sortType === '4') {
+        query = query.orderBy('edit_count', 'asc')
+      }
     }
 
     if (active && active === 'true') {
