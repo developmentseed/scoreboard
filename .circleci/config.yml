@@ -9,7 +9,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - scoreboard-{{ checksum "package.json" }}-{{ checksum "api/package.json" }}-{{ checksum "frontend/package.json" }}
+            - scoreboard-cache-{{ checksum "package.json" }}-{{ checksum "api/package.json" }}-{{ checksum "frontend/package.json" }}
 
       - run:
           name: Install
@@ -18,7 +18,7 @@ jobs:
           name: Bootstrap
           command: yarn bootstrap
       - save_cache:
-          key: scoreboard-{{ checksum "package.json" }}-{{ checksum "api/package.json" }}-{{ checksum "frontend/package.json" }}
+          key: scoreboard-cache-{{ checksum "package.json" }}-{{ checksum "api/package.json" }}-{{ checksum "frontend/package.json" }}
           paths:
             - ~/project/node_modules
             - ~/project/api/node_modules
