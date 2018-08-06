@@ -6,8 +6,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v0.1.1] - 2018-08-06
-
 ### Changed
 
 - Started using lerna for package management
@@ -16,6 +14,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v0.1.1...HEAD
-[v0.1.1]: https://github.com/developmentseed/scoreboard/compare/v0.1.0...v0.1.1
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v0.1.0...HEAD
 [v0.1.0]: https://github.com/developmentseed/scoreboard/compare/d4fc54a...v0.1.0
