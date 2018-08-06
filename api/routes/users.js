@@ -30,8 +30,7 @@ module.exports = async (req, res) => {
       .select('id', 'osm_id', 'display_name', 'edit_count', 'country', 'last_edit')
       .from('users')
       .whereNotIn('osm_id', filteredUsers)
-      .groupBy('osm_id')
-      .orderBy('edit_count', 'desc')).select(
+      .groupBy('osm_id')).select(
       's.id',
       's.osm_id',
       's.edit_count',
@@ -60,23 +59,22 @@ module.exports = async (req, res) => {
       query = query.whereBetween('last_edit', [subMonths(Date.now(), 6), Date.now()])
     }
 
-    if (sortType.length > 0) {
-      if (sortType === 'Most recent') {
-        query = query.orderBy('last_edit', 'desc')
-      }
-      else if (sortType === 'Least recent') {
-        query = query.orderBy('last_edit', 'asc')
-      }
-      else if (sortType === 'Most total') {
-        query = query.orderBy('edit_count', 'desc')
-      }
-      else if (sortType === 'Least total') {
-        query = query.orderBy('edit_count', 'asc')
-      }
+    switch (sortType) {
+    case 'Most recent':
+      query = query.orderBy('last_edit', 'desc')
+      break
+    case 'Least recent':
+      query = query.orderBy('last_edit', 'asc')
+      break
+    case 'Least total':
+      query = query.orderBy('edit_count', 'asc')
+      break
+    default: // Most total edits
+      query = query.orderBy('edit_count', 'desc')
+      break
     }
 
     const records = await query.clone()
-      .orderBy('edit_count', 'desc')
       .limit(25)
       .offset((parseInt(page) - 1) * 25)
 
