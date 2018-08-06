@@ -13,6 +13,7 @@ countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 const initialState = {
   searchText: "",
   selectedValue: null,
+  selectedSortValue: null,
   page: 1,
   selectedActive: false
 }
@@ -25,6 +26,8 @@ const allUsersReducer = (state = initialState, action) => {
       return Object.assign(state, { searchText: action.searchText, page: 1 });
     case 'SELECTED_COUNTRY_CHANGE':
       return Object.assign(state, { selectedValue: action.selectedValue, page: 1 });
+    case 'SELECTED_SORT_CHANGE':
+      return Object.assign(state, { selectedSortValue: action.selectedSortValue, page: 1 });
     case 'TOGGLE_ACTIVE':
       return Object.assign(state, { selectedActive: action.activeValue, page: 1 });
     default:
@@ -58,7 +61,7 @@ const AllUsersHeader = ({countries, users, edits}) => (
 );
 
 const AllUsersFilter = ({
-  searchText, handleSearch, countries, handleSelect, selectedValue,
+  searchText, handleSearch, countries, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
   handleToggleActive, activeValue
 }) => (
   <div className="sidebar">
@@ -84,6 +87,18 @@ const AllUsersFilter = ({
         />
       </fieldset>
       <fieldset>
+        <legend>Sort by</legend>
+        <Select name="sort-select"
+          simpleValue
+          value={selectedSortValue}
+          onChange={handleSortSelect}
+          options={
+            [{value: 'Most recent', label: 'Most recent edit'}, {value: 'Least recent', label: 'Least recent edit'}, 
+            {value: 'Most total', label: 'Most total edits'}, {value: 'Least total', label: 'Least total edits'}]
+          }
+        />
+      </fieldset>
+      <fieldset>
         <legend>Active Users</legend>
         <input type="checkbox" checked={activeValue} onChange={handleToggleActive} />
         Filter active users (edited in the past 6 months)
@@ -104,6 +119,7 @@ class Users extends Component {
     this.dispatch = this.dispatch.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleSortSelect = this.handleSortSelect.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleToggleActive = this.handleToggleActive.bind(this);
   }
@@ -113,9 +129,8 @@ class Users extends Component {
     const newState = allUsersReducer(state, action);
 
     this.setState(Object.assign(newState, { apiStatus: "LOADING" }));
-    let { searchText: q, page, selectedValue: country, selectedActive: active} = newState;
-
-    api('get', createApiUrl('/api/users', {q, page, country, active}))
+    let { searchText: q, page, selectedValue: country, selectedSortValue: sortType, selectedActive: active} = newState;
+    api('get', createApiUrl('/api/users', {q, page, country, sortType, active}))
       .then(res => {
         this.setState(Object.assign({ records: res.data, apiStatus: "SUCCESS"}));
       })
@@ -131,6 +146,11 @@ class Users extends Component {
   handleSelect (selectedOption) {
     const value = selectedOption  || null;
     this.dispatch({ type: 'SELECTED_COUNTRY_CHANGE', selectedValue: value});
+  }
+
+  handleSortSelect (selectedOption) {
+    const value = selectedOption  || null;
+    this.dispatch({ type: 'SELECTED_SORT_CHANGE', selectedSortValue: value});
   }
 
   handlePageChange(pageNumber) {
@@ -155,9 +175,9 @@ class Users extends Component {
       apiStatus,
       searchText,
       selectedValue,
+      selectedSortValue,
       selectedActive
     } = this.state;
-
     return (
       <div className="Users">
         <AllUsersHeader countries={countries} users={total} edits={edit_total}/>
@@ -166,7 +186,9 @@ class Users extends Component {
             <AllUsersFilter
               handleSearch={this.handleSearch}
               handleSelect={this.handleSelect}
+              handleSortSelect={this.handleSortSelect}
               selectedValue={selectedValue}
+              selectedSortValue={selectedSortValue}
               searchText={searchText}
               activeValue={selectedActive}
               handleToggleActive={this.handleToggleActive}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { sortBy, prop } from 'ramda';
 import { formatDecimal } from '../utils/format';
 import {distanceInWordsToNow, parse} from 'date-fns';
 import countries from 'i18n-iso-countries';
@@ -22,9 +21,7 @@ export default ({ apiStatus, users }) => {
         </thead>
         <tbody>
           {
-            sortBy(prop('edit_count'), users)
-              .reverse()
-              .map(user => (
+            users.map(user => (
                 <tr key={user.osm_id}>
                   <td>{((user.edit_count > 0 ) ? user.rank: "N/A")}</td>
                   <td><Link className="link--normal" to={`/users/${user.osm_id}`}>{user.display_name}</Link></td>
