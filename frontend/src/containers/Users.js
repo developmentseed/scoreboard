@@ -93,8 +93,8 @@ const AllUsersFilter = ({
           value={selectedSortValue}
           onChange={handleSortSelect}
           options={
-            [{value: 1, label: 'Most recent edit'}, {value: 2, label: 'Least recent edit'}, 
-            {value: 3, label: 'Most total edits'}, {value: 4, label: 'Least total edits'}]
+            [{value: 'Most recent', label: 'Most recent edit'}, {value: 'Least recent', label: 'Least recent edit'}, 
+            {value: 'Most total', label: 'Most total edits'}, {value: 'Least total', label: 'Least total edits'}]
           }
         />
       </fieldset>

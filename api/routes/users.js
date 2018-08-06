@@ -55,25 +55,24 @@ module.exports = async (req, res) => {
       query = query.whereIn('country', countries)
     }
 
-    if (sortType.length > 0) {
-      // TODO: These do not yet work on all pages
-      if (sortType === '1') {
-        query = query.orderBy('last_edit', 'desc')
-      }
-      else if (sortType === '2') {
-        query = query.orderBy('last_edit', 'asc')
-      }
-      else if (sortType === '3') {
-        query = query.orderBy('edit_count', 'desc')
-      }
-      else if (sortType === '4') {
-        query = query.orderBy('edit_count', 'asc')
-      }
-    }
-
     if (active && active === 'true') {
       // Filter for users that have edited in the past 6 months
       query = query.whereBetween('last_edit', [subMonths(Date.now(), 6), Date.now()])
+    }
+
+    if (sortType.length > 0) {
+      if (sortType === 'Most recent') {
+        query = query.orderBy('last_edit', 'desc')
+      }
+      else if (sortType === 'Least recent') {
+        query = query.orderBy('last_edit', 'asc')
+      }
+      else if (sortType === 'Most total') {
+        query = query.orderBy('edit_count', 'desc')
+      }
+      else if (sortType === 'Least total') {
+        query = query.orderBy('edit_count', 'asc')
+      }
     }
 
     const records = await query.clone()

@@ -22,9 +22,7 @@ export default ({ apiStatus, users }) => {
         </thead>
         <tbody>
           {
-            sortBy(prop('edit_count'), users)
-              .reverse()
-              .map(user => (
+            users.map(user => (
                 <tr key={user.osm_id}>
                   <td>{((user.edit_count > 0 ) ? user.rank: "N/A")}</td>
                   <td><Link className="link--normal" to={`/users/${user.osm_id}`}>{user.display_name}</Link></td>
