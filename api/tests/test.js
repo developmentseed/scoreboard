@@ -1,12 +1,10 @@
 'use strict'
 
-const knex = require('knex')
 const os = require('os')
 const path = require('path')
 const fs = require('fs-extra')
 const connection = require('../db/connection')
-// const { test: knexConfig } = require('../knexfile.js')
-const test = require('ava')
+const test = require('ava') //eslint-disable-line import/no-unresolved
 const users = require('../routes/users')
 
 let tempPath
@@ -21,9 +19,10 @@ test.before(async () => {
   await db.migrate.latest()
 
   // add a few records
-  const a = await db('users').insert({ id: 1, osm_id: 2, edit_count: 3, display_name: 'test', country: 'US' })
+  const a = await db('users').insert({
+    id: 1, osm_id: 2, edit_count: 3, display_name: 'test', country: 'US'
+  })
   console.log(a)
-
 })
 
 test.after.always(() => {
@@ -37,5 +36,4 @@ test('my first test', async (t) => {
     send: (...args) => console.log(args[0].records)
   }))
   t.is(1, 2)
-
 })
