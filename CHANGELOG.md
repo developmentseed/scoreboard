@@ -9,8 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Ability for user to sort by Most/Least recent edit or Most/Least total number of edits on /users.
+
 ### Changed
 - Took out user table sorting (which overwrote sorts executed on the backend) in frontend/src/commponents/AllUsersTable.js.
+- Started using lerna for package management
 
 ## [v0.1.0] - 2018-08-03
 

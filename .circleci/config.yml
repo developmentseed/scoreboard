@@ -3,11 +3,26 @@ jobs:
   build:
     docker:
       - image: circleci/node:8.11
+    working_directory: ~/project
     steps:
       - checkout
+
+      - restore_cache:
+          keys:
+            - scoreboard-cache-{{ checksum "package.json" }}-{{ checksum "api/package.json" }}-{{ checksum "frontend/package.json" }}
+
       - run:
           name: Install
-          command: npm install
+          command: yarn 
+      - run:
+          name: Bootstrap
+          command: yarn bootstrap
+      - save_cache:
+          key: scoreboard-cache-{{ checksum "package.json" }}-{{ checksum "api/package.json" }}-{{ checksum "frontend/package.json" }}
+          paths:
+            - ~/project/node_modules
+            - ~/project/api/node_modules
+            - ~/project/frontend/node_modules
       - run:
           name: Lint
-          command: npm run eslint
+          command: yarn eslint
