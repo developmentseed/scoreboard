@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "eslint": "^4.19.1",
+    "babel-eslint": "^8.2.6",
     "eslint-plugin-flowtype": "^2.50.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-react-app": "^2.1.0",
