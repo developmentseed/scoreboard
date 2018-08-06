@@ -4,15 +4,12 @@
   "description": "OSM Scoreboard",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run api\" \"npm run client\"",
-    "api": "node start-api.js",
-    "postinstall": "npm run clientinstall && npm run apiinstall",
-    "clientinstall": "cd frontend && npm install",
-    "apiinstall": "cd api && npm install",
-    "heroku-postbuild": "cd frontend && npm run build",
-    "client": "node start-client.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint . "
+    "start": "concurrently \"yarn api\" \"yarn frontend\"",
+    "clocks": "lerna run clocks --scope --scoreboard-api",
+    "api": "lerna run start-dev --scope scoreboard-api",
+    "frontend": "lerna run start --scope scoreboard-frontend",
+    "bootstrap": "lerna bootstrap",
+    "eslint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -23,19 +20,14 @@
   "bugs": {
     "url": "https://github.com/developmentseed/scoreboard/issues"
   },
-  "engines": {
-    "node": "8.4.0"
-  },
   "homepage": "https://github.com/developmentseed/scoreboard#readme",
   "dependencies": {
-    "babel-eslint": "^8.2.6",
     "concurrently": "^3.5.0",
-    "eslint-plugin-flowtype": "^2.50.0",
-    "i18n-iso-countries": "^3.6.2"
+    "lerna": "^3.0.0-rc.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.3",
     "eslint": "^4.19.1",
+    "eslint-plugin-flowtype": "^2.50.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-import": "^2.9.0",

@@ -6,13 +6,25 @@ A project to display OSM user contribution metrics and campaign metrics.
 
 - `api`: source to the API as well as processes to grab data from various OSM sources.
 - `frontend`: source to the frontend application.
-- `deployment`: deployment guides
+- `deployment`: deployment guides for CentOS only
 
-## 🔨 Development
+# 🔨 Development
 
-### Dependencies
+## Dependencies
 - Node 8.4
 - Sqlite3
+- Yarn
+
+To set the Node version as specified above:
+
+     $ brew install nvm
+     $ nvm use
+
+To install SQLite3 on Mac OS X:
+
+     $ brew install sqlite3
+
+See [this tutorial](https://www.tutorialspoint.com/sqlite/sqlite_installation.htm) for more details and instructions for installing SQLite3 on other operating systems.
 
 ### Env file
 
@@ -28,36 +40,36 @@ API_URL=http://localhost:3000
 FILTERED_USERS='0,1,2'
 ```
 
-- NODE_ENV: The configuration to use, "staging", "development" or "production"
-- TM_URL: The URL of the tasking manager to scrape
-- TM_HASHTAG: The default prefix the tasking manager uses as a hashtag (e.g. "osmus-project")
-- USERS_URL: URL to a csv that contains the users for OSM joined with country information, check the database schema for more information
-- OSMESA_API: URL to the OSMESA http server that serves out statistics
-- API_URL: URL where this API will be hosted
-- FILTERED_USERS: Comma separated user list, to filter import users
+| name | description
+| ---  | -----
+| NODE_ENV | The configuration to use, "staging", "development" or "production"
+| TM_URL | The URL of the tasking manager to scrape
+| TM_HASHTAG | The default prefix the tasking manager uses as a hashtag (e.g. "osmus-project")
+| USERS_URL | URL to a csv that contains the users for OSM joined with country information, check the database schema for more information
+| OSMESA_API | URL to the OSMESA http server that serves out statistics
+| API_URL | URL where this API will be hosted
+| FILTERED_USERS | Comma separated user list, to filter import users
 
-### Running locally
+## Installation
 
-```
-npm install
-cd api
-npm run clocks
-cd ..
-npm start
-```
+We use [lerna](https://github.com/lerna/lerna) for installation and package management
 
-Note: before running the above commands, you must replace api/.env.sample with your own api/.env file containing the correct URL values.
+     $ yarn
+     $ yarn bootstrap
 
-#### Dependencies
+## Populate Data
 
-To set the Node version as specified above:
-```
-brew install nvm
-nvm use
-```
-To install SQLite3 on Mac OS X:
-```
-brew install sqlite3
-```
+For the frontend and the API works, you must have the data loaded on the local database:
 
-See [this tutorial](https://www.tutorialspoint.com/sqlite/sqlite_installation.htm) for more details and instructions for installing SQLite3 on other operating systems.
+     $ yarn clocks 
+
+## Serve
+
+This command will start both the frontend and the api together
+
+     $ lerna start 
+
+To start the services individually do:
+
+     $ lerna api
+     $ lerna frontend
