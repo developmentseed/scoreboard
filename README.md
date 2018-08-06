@@ -67,9 +67,9 @@ For the frontend and the API works, you must have the data loaded on the local d
 
 This command will start both the frontend and the api together
 
-     $ lerna start 
+     $ yarn start 
 
 To start the services individually do:
 
-     $ lerna api
-     $ lerna frontend
+     $ yarn api
+     $ yarn frontend
