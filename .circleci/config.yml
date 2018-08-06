@@ -8,7 +8,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - scoreboard-{{ package.json }}-{{ api/package.json }}-{{ frontend/package.json }}
+            - scoreboard-{{ checksum "package.json" }}-{{ checksum "api/package.json" }}-{{ checksum "frontend/package.json" }}
 
       - run:
           name: Install
@@ -21,7 +21,7 @@ jobs:
           command: yarn eslint
 
       - save_cache:
-          key: scoreboard-{{ package.json }}-{{ api/package.json }}-{{ frontend/package.json }}
+          key: scoreboard-{{ checksum "package.json" }}-{{ checksum "api/package.json" }}-{{ checksum "frontend/package.json" }}
           paths:
             - ~/node_modules
             - ~/api/node_modules
