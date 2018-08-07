@@ -94,13 +94,3 @@ test('Sort users by least edits', async (t) => {
     .expect(200)
   t.deepEqual(response.body.records, leastEdits)
 })
-
-test.cb.skip('Test of OSMESA api call', (t) => {
-  console.log('About to request')
-  request(app)
-    .get('/scoreboard/api/users/1')
-    .expect(200, (err, res) => {
-      console.log(res.body.id)
-    })
-  t.is(1, 1)
-})
