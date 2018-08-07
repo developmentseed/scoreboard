@@ -3,6 +3,7 @@ const {
 } = require('../config')
 const { trim, split } = require('ramda')
 const connection = require('../db/connection')
+const db = connection()
 
 /**
  * Top level stats
@@ -19,23 +20,23 @@ module.exports = async (req, res) => {
   const filteredUsers = split(',', FILTERED_USERS).map(trim)
 
   try {
-    const [{ total }] = await connection('campaigns')
+    const [{ total }] = await db('campaigns')
       .whereNotNull('campaign_hashtag').count('id as total')
-    const records = await connection('campaigns')
+    const records = await db('campaigns')
       .whereNotNull('campaign_hashtag')
       .orderBy('priority')
       .limit(4)
 
-    const [{ feature }] = await connection('features')
+    const [{ feature }] = await db('features')
       .where('name', 'tm_campaigns').select('feature')
-    const topEdits = await connection('users')
+    const topEdits = await db('users')
       .whereNotIn('osm_id', filteredUsers)
       .select('display_name', 'country', 'edit_count')
       .orderBy('edit_count', 'desc')
       .limit(10)
 
-    const [{ numUsers }] = await connection('users').count('id as num_users')
-    const editsByCountry = await connection('users')
+    const [{ numUsers }] = await db('users').count('id as num_users')
+    const editsByCountry = await db('users')
       .whereNotIn('osm_id', filteredUsers)
       .groupBy('country').select('country')
       .sum('edit_count as edit_count')
