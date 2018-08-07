@@ -13,16 +13,19 @@
   "author": "Marc Farra <marcfarra@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.25.0"
+    "ava": "^0.25.0",
+    "got": "^9.0.0",
+    "nock": "^9.5.0",
+    "supertest": "^3.1.0"
   },
   "dependencies": {
     "@heroku/foreman": "git+https://github.com/heroku/node-foreman.git",
     "compression": "^1.7.1",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "express-boom": "^2.0.0",
     "express-promise-router": "^2.0.0",
     "fs-extra": "^7.0.0",
-    "knex": "^0.14.2",
+    "knex": "^0.15.2",
     "nodemon": "^1.18.3",
     "ramda": "^0.25.0",
     "request": "^2.83.0",

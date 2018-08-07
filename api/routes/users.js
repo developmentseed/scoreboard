@@ -25,8 +25,9 @@ module.exports = async (req, res) => {
   const filteredUsers = split(',', FILTERED_USERS).map(trim)
 
   try {
+    const db = connection()
     // Create table with ranking
-    const allUsers = connection().with('edits', (conn) => conn
+    const allUsers = db.with('edits', (conn) => conn
       .select('id', 'osm_id', 'display_name', 'edit_count', 'country', 'last_edit')
       .from('users')
       .whereNotIn('osm_id', filteredUsers)
@@ -37,7 +38,7 @@ module.exports = async (req, res) => {
       's.display_name',
       's.country',
       's.last_edit',
-      connection().raw(
+      db.raw(
         `(select count(*)+1 from edits as r
         where r.edit_count > s.edit_count) as rank`
       )
@@ -78,7 +79,7 @@ module.exports = async (req, res) => {
       .limit(25)
       .offset((parseInt(page) - 1) * 25)
 
-    const countries = await connection()('users').distinct('country').select()
+    const countries = await db('users').distinct('country').select()
 
     const [{ subTotal }] = await query.clone().count('id as sub_total')
     const [{ total }] = await allUsers.clone().count('id as total')
