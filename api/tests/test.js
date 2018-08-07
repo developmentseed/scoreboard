@@ -3,9 +3,21 @@
 const os = require('os')
 const path = require('path')
 const fs = require('fs-extra')
-const connection = require('../db/connection')
+const nock = require('nock')
 const test = require('ava') //eslint-disable-line import/no-unresolved
-const users = require('../routes/users')
+const request = require('supertest')
+// const users = require('../routes/users')
+const connection = require('../db/connection')
+const app = require('../index')
+const osmesa = require('./fixtures/user_json.json')
+const mostRecentlyActive = require('./fixtures/most_recently_active')
+const leastRecentlyActive = require('./fixtures/least_recently_active')
+const mostEdits = require('./fixtures/most_edits')
+const leastEdits = require('./fixtures/least_edits')
+
+const {
+  OSMESA_API
+} = require('../config')
 
 let tempPath
 let db
@@ -17,23 +29,78 @@ test.before(async () => {
 
   db = connection()
   await db.migrate.latest()
-
   // add a few records
-  const a = await db('users').insert({
-    id: 1, osm_id: 2, edit_count: 3, display_name: 'test', country: 'US'
-  })
-  console.log(a)
+  await db('users').insert([{
+    id: 1, osm_id: 2, edit_count: 3, display_name: 'A', country: 'US', last_edit: '500'
+  },
+  {
+    id: 2, osm_id: 3, edit_count: 5, display_name: 'B', country: 'Norway', last_edit: '250'
+  },
+  {
+    id: 3, osm_id: 4, edit_count: 10, display_name: 'C', country: 'Portugal', last_edit: '5'
+  },
+  {
+    id: 4, osm_id: 1, edit_count: 25, display_name: 'D', country: 'US', last_edit: '700'
+  }]
+  ) //eslint-disable-line function-paren-newline
+  nock(OSMESA_API)
+    .get('/users/1')
+    .reply(200, osmesa)
 })
 
 test.after.always(() => {
   fs.removeSync(tempPath)
 })
 
-test('my first test', async (t) => {
-  console.log(await users({
-    query: {}
-  }, {
-    send: (...args) => console.log(args[0].records)
-  }))
-  t.is(1, 2)
+test('Test of OSMESA api call', async (t) => {
+  const res = await request(app)
+    .get('/scoreboard/api/users/1')
+    .expect(200)
+  t.is(res.body.id, '1')
+})
+
+test('Pull all users', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users')
+    .expect(200)
+  t.is(4, response.body.records.length)
+})
+
+test('Sort users by most recently active', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users?q=&page=1&sortType=Most%20recent&active=false')
+    .expect(200)
+  t.deepEqual(response.body.records, mostRecentlyActive)
+})
+
+test('Sort users by least recently active', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users?q=&page=1&sortType=Least%20recent&active=false')
+    .expect(200)
+  t.deepEqual(response.body.records, leastRecentlyActive)
+})
+
+test('Sort users by most edits', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users?q=&page=1&sortType=Most%20total&active=false')
+    .expect(200)
+  console.log(response.body.records)
+  t.deepEqual(response.body.records, mostEdits)
+})
+
+test('Sort users by least edits', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users?q=&page=1&sortType=Least%20total&active=false')
+    .expect(200)
+  t.deepEqual(response.body.records, leastEdits)
+})
+
+test.cb.skip('Test of OSMESA api call', (t) => {
+  console.log('About to request')
+  request(app)
+    .get('/scoreboard/api/users/1')
+    .expect(200, (err, res) => {
+      console.log(res.body.id)
+    })
+  t.is(1, 1)
 })
