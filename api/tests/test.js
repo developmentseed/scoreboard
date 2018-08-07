@@ -6,7 +6,6 @@ const fs = require('fs-extra')
 const nock = require('nock')
 const test = require('ava') //eslint-disable-line import/no-unresolved
 const request = require('supertest')
-// const users = require('../routes/users')
 const connection = require('../db/connection')
 const app = require('../index')
 const osmesa = require('./fixtures/user_json.json')
@@ -84,7 +83,6 @@ test('Sort users by most edits', async (t) => {
   const response = await request(app)
     .get('/scoreboard/api/users?q=&page=1&sortType=Most%20total&active=false')
     .expect(200)
-  console.log(response.body.records)
   t.deepEqual(response.body.records, mostEdits)
 })
 
