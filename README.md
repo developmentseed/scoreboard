@@ -59,7 +59,7 @@ We use [lerna](https://github.com/lerna/lerna) for installation and package mana
 
 ## Populate Data
 
-For the frontend and the API works, you must have the data loaded on the local database:
+For the frontend and the API to work, you must have the data loaded on the local database:
 
      $ yarn clocks 
 
@@ -73,3 +73,9 @@ To start the services individually do:
 
      $ yarn api
      $ yarn frontend
+
+## Test
+
+We have provided some unit tests in api/tests/test.js. To run:
+
+    $ yarn test
