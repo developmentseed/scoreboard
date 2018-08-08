@@ -5,7 +5,6 @@ const {
 } = require('ramda')
 
 const conn = require('./db/connection')
-const db = conn()
 
 /**
  * Given a campaign's changeset_comment return the hashtag
@@ -43,6 +42,7 @@ function extractCampaignHashtag(str) {
 async function tmWorker() {
   // Get projects from TM2
   try {
+    const db = conn()
     const response = await rp(`${TM_URL}/projects.json`)
     const { features } = JSON.parse(response)
     if (features) {

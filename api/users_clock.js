@@ -5,7 +5,6 @@ const {
   uniqBy, tail, zipObj, merge, map, props, sum, head, prop
 } = require('ramda')
 const conn = require('./db/connection')
-const db = conn()
 
 /*
  * Given the edit times for a user get the last edit
@@ -47,6 +46,7 @@ async function usersWorker() {
   if (!USERS_URL) throw new Error('Users URL not defined')
 
   try {
+    const db = conn()
     const response = await rp(`${USERS_URL}`)
 
     const lines = tail(response.split('\n'))

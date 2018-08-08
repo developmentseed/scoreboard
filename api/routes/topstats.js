@@ -3,7 +3,6 @@ const {
 } = require('../config')
 const { trim, split } = require('ramda')
 const connection = require('../db/connection')
-const db = connection()
 
 /**
  * Top level stats
@@ -20,6 +19,7 @@ module.exports = async (req, res) => {
   const filteredUsers = split(',', FILTERED_USERS).map(trim)
 
   try {
+    const db = connection()
     const [{ total }] = await db('campaigns')
       .whereNotNull('campaign_hashtag').count('id as total')
     const records = await db('campaigns')
