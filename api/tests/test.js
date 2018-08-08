@@ -10,10 +10,6 @@ const connection = require('../db/connection')
 const app = require('../index')
 const osmesa = require('./fixtures/osmesa_api_user_output.json')
 const userData = require('./fixtures/user_data.json')
-const mostRecentlyActive = require('./fixtures/most_recently_active')
-const leastRecentlyActive = require('./fixtures/least_recently_active')
-const mostEdits = require('./fixtures/most_edits')
-const leastEdits = require('./fixtures/least_edits')
 
 const {
   OSMESA_API
@@ -58,26 +54,50 @@ test('Sort users by most recently active', async (t) => {
   const response = await request(app)
     .get('/scoreboard/api/users?q=&page=1&sortType=Most%20recent&active=false')
     .expect(200)
-  t.deepEqual(response.body.records, mostRecentlyActive)
+  const users = userData
+  users.sort((a, b) => b.last_edit - a.last_edit)
+  const resCopy = response.body.records
+  resCopy.forEach((x) => {
+    delete x.rank
+  })
+  t.deepEqual(resCopy, users)
 })
 
 test('Sort users by least recently active', async (t) => {
   const response = await request(app)
     .get('/scoreboard/api/users?q=&page=1&sortType=Least%20recent&active=false')
     .expect(200)
-  t.deepEqual(response.body.records, leastRecentlyActive)
+  const users = userData
+  users.sort((a, b) => a.last_edit - b.last_edit)
+  const resCopy = response.body.records
+  resCopy.forEach((x) => {
+    delete x.rank
+  })
+  t.deepEqual(resCopy, users)
 })
 
 test('Sort users by most edits', async (t) => {
   const response = await request(app)
     .get('/scoreboard/api/users?q=&page=1&sortType=Most%20total&active=false')
     .expect(200)
-  t.deepEqual(response.body.records, mostEdits)
+  const users = userData
+  users.sort((a, b) => b.edit_count - a.edit_count)
+  const resCopy = response.body.records
+  resCopy.forEach((x) => {
+    delete x.rank
+  })
+  t.deepEqual(resCopy, users)
 })
 
 test('Sort users by least edits', async (t) => {
   const response = await request(app)
     .get('/scoreboard/api/users?q=&page=1&sortType=Least%20total&active=false')
     .expect(200)
-  t.deepEqual(response.body.records, leastEdits)
+  const users = userData
+  users.sort((a, b) => a.edit_count - b.edit_count)
+  const resCopy = response.body.records
+  resCopy.forEach((x) => {
+    delete x.rank
+  })
+  t.deepEqual(resCopy, users)
 })
