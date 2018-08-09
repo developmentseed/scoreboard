@@ -40,14 +40,26 @@ test('Test of OSMESA api call', async (t) => {
   const res = await request(app)
     .get('/scoreboard/api/users/1')
     .expect(200)
-  t.is(res.body.id, '1')
+  // name should always be included
+  t.true('name' in res.body.records)
+  // country list should be a list of objects
+  t.true(typeof res.body.records.country_list[0] === 'object'
+    && res.body.records.country_list[0] !== null)
+  // edit_count should always be a number
+  t.false(Number.isNaN(res.body.records.edit_count))
 })
 
 test('Pull all users', async (t) => {
   const response = await request(app)
     .get('/scoreboard/api/users')
     .expect(200)
-  t.is(4, response.body.records.length)
+  // country should always be included
+  const numUsers = response.body.records.length
+  t.true('country' in response.body.records[numUsers - 1])
+  // name should always be included
+  t.true('display_name' in response.body.records[0])
+  // edit_count should always be a number
+  t.false(Number.isNaN(response.body.records[0].edit_count))
 })
 
 test('Sort users by most recently active', async (t) => {
