@@ -1,9 +1,10 @@
 const { TM_URL, TM_HASHTAG } = require('./config')
 const rp = require('request-promise-native')
-const conn = require('./db/connection')
 const {
   test, find, pick, merge, match, omit, tail
 } = require('ramda')
+
+const conn = require('./db/connection')
 
 /**
  * Given a campaign's changeset_comment return the hashtag
@@ -41,6 +42,7 @@ function extractCampaignHashtag(str) {
 async function tmWorker() {
   // Get projects from TM2
   try {
+    const db = conn()
     const response = await rp(`${TM_URL}/projects.json`)
     const { features } = JSON.parse(response)
     if (features) {
@@ -76,33 +78,33 @@ async function tmWorker() {
       const fc = { type: 'FeatureCollection', features: onlyGeometries }
 
       // Map feature collection to prepared SQL statement
-      const featureSQL = conn('features')
+      const featureSQL = db('features')
         .where('name', 'tm_campaigns')
         .then((rows) => {
           if (rows.length === 0) {
-            return conn('features').insert({
+            return db('features').insert({
               name: 'tm_campaigns',
               feature: fc,
-              created_at: conn.fn.now(),
-              updated_at: conn.fn.now()
+              created_at: db.fn.now(),
+              updated_at: db.fn.now()
             })
           }
-          return conn('features')
+          return db('features')
             .where('name', 'tm_campaigns')
             .update({
-              updated_at: conn.fn.now(),
+              updated_at: db.fn.now(),
               feature: JSON.stringify(fc)
             })
         })
 
       // Map campaign attributes to prepared SQL statements
-      const promises = sqlObjects.map((obj) => conn('campaigns')
+      const promises = sqlObjects.map((obj) => db('campaigns')
         .where('tm_id', obj.tm_id)
         .then((rows) => {
           if (rows.length === 0) { // Not found
-            return conn('campaigns').insert(obj)
+            return db('campaigns').insert(obj)
           }
-          return conn('campaigns').where('tm_id', obj.tm_id).update(obj)
+          return db('campaigns').where('tm_id', obj.tm_id).update(obj)
         }))
       promises.push(featureSQL)
 

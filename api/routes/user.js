@@ -20,10 +20,10 @@ module.exports = async (req, res) => {
   if (!id) {
     return res.boom.badRequest('Invalid id')
   }
-
   try {
+    const db = connection()
     const osmesaResponse = await osmesa.getUser(id)
-    const [{ country }] = await connection('users').where('osm_id', id).select('country')
+    const [{ country }] = await db('users').where('osm_id', id).select('country')
     const json = JSON.parse(osmesaResponse)
     json.extent_uri = `${API_URL}/scoreboard/api/extents/${json.extent_uri}`
     return res.send({ id, records: json, country })

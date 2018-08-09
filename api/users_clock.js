@@ -1,10 +1,10 @@
 const { USERS_URL, OSMESA_API } = require('./config')
 const rp = require('request-promise-native')
-const conn = require('./db/connection')
 const { compareDesc, parse } = require('date-fns')
 const {
   uniqBy, tail, zipObj, merge, map, props, sum, head, prop
 } = require('ramda')
+const conn = require('./db/connection')
 
 /*
  * Given the edit times for a user get the last edit
@@ -46,6 +46,7 @@ async function usersWorker() {
   if (!USERS_URL) throw new Error('Users URL not defined')
 
   try {
+    const db = conn()
     const response = await rp(`${USERS_URL}`)
 
     const lines = tail(response.split('\n'))
@@ -82,21 +83,21 @@ async function usersWorker() {
         console.error(`${obj.osm_id} not retrieved from OSMesa`, e.message)
       }
 
-      return conn('users')
+      return db('users')
         .where('email', obj.email)
         .then((rows) => {
           if (rows.length === 0) { // Not found
-            return conn('users').insert(
+            return db('users').insert(
               merge(obj, {
-                updated_at: conn.fn.now(),
-                created_at: conn.fn.now()
+                updated_at: db.fn.now(),
+                created_at: db.fn.now()
               })
             )
           }
 
-          return conn('users').where('email', obj.email).update(
+          return db('users').where('email', obj.email).update(
             merge(obj, {
-              updated_at: conn.fn.now()
+              updated_at: db.fn.now()
             })
           )
         })

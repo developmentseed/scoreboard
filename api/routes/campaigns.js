@@ -1,5 +1,4 @@
 const connection = require('../db/connection')
-
 /**
  * All Campaigns Route
  * /campaigns
@@ -18,7 +17,8 @@ module.exports = async (req, res) => {
   const complMax = req.query.compl_max || 100
 
   try {
-    let query = connection('campaigns').whereNotNull('campaign_hashtag')
+    const db = connection()
+    let query = db('campaigns').whereNotNull('campaign_hashtag')
     const [{ allCount }] = await query.clone().count('id as all_count')
 
     if (search.length > 0) {

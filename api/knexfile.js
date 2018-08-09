@@ -11,6 +11,7 @@ const def = {
 }
 
 module.exports = {
+  test: def,
   development: def,
   staging: def,
   production: def

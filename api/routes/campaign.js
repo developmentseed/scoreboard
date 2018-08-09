@@ -19,8 +19,9 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const db = connection()
     const osmesaResponse = await osmesa.getCampaign(id)
-    const [tmData] = await connection('campaigns').where('campaign_hashtag', id)
+    const [tmData] = await db('campaigns').where('campaign_hashtag', id)
     const records = Object.assign(
       { tmData: tmData },
       JSON.parse(osmesaResponse),

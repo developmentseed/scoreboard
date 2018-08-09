@@ -8,6 +8,7 @@
     "clocks": "lerna run clocks --scope --scoreboard-api",
     "api": "lerna run start-dev --scope scoreboard-api",
     "frontend": "lerna run start --scope scoreboard-frontend",
+    "test": "lerna run test --scope scoreboard-api",
     "bootstrap": "lerna bootstrap",
     "eslint": "eslint ."
   },
