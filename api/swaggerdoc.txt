@@ -42,3 +42,8 @@ paths:
           description: "Valid"
   /campaigns:
     get:
+      produces:
+        []
+      responses:
+        200:
+          description: "Valid"
