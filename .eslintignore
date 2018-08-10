@@ -4,4 +4,4 @@
 **/.nyc_output/**
 **/coverage/**
 tmp/**
-**/api/db/migrations/**
+**/api/src/db/migrations/**
