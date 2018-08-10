@@ -4,7 +4,7 @@
   "description": "OSM Scoreboard API ",
   "main": "server.js",
   "scripts": {
-    "migrate": "knex migrate:latest",
+    "migrate": "knex migrate:latest --knexfile src/knexfile.js",
     "start": "npm run migrate && nf start web",
     "clocks": "npm run migrate && nf start tm_clock,users_clock",
     "start-dev": "npm run migrate && nf --procfile Procfile-dev start web",

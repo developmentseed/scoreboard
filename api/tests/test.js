@@ -6,14 +6,14 @@ const fs = require('fs-extra')
 const nock = require('nock')
 const test = require('ava')
 const request = require('supertest')
-const connection = require('../db/connection')
-const app = require('../index')
+const connection = require('../src/db/connection')
+const app = require('../src/index')
 const osmesa = require('./fixtures/osmesa_api_user_output.json')
 const userData = require('./fixtures/user_data.json')
 
 const {
   OSMESA_API
-} = require('../config')
+} = require('../src/config')
 
 let tempPath
 let db
