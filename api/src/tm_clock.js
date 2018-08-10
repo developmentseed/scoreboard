@@ -1,4 +1,3 @@
-const rp = require('request-promise-native')
 const {
   pick, merge, omit
 } = require('ramda')

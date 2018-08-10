@@ -19,7 +19,9 @@ class UsersAPI {
 
 class FakeUsersAPI {
   getUsers() {
-    const users = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'sampleusers.csv'), 'utf-8')
+    const users = fs.readFileSync(
+      path.join(__dirname, '..', 'fixtures', 'sampleusers.csv'), 'utf-8'
+    )
     return Promise.resolve(users)
   }
 }

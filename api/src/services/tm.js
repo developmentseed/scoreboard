@@ -5,7 +5,7 @@ const {
   test, find, match, tail
 } = require('ramda')
 
-const { 
+const {
   TM_URL,
   TM_HASHTAG,
   NODE_ENV
