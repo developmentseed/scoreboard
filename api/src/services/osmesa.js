@@ -1,6 +1,6 @@
 const rp = require('request-promise-native')
-const sampleuser = require('../fixtures/sampleuser.json')
-const samplecampaign = require('../fixtures/samplecampaign.json')
+const fs = require('fs')
+const path = require('path')
 
 const {
   OSMESA_API,
@@ -21,16 +21,22 @@ class OSMesaAPI {
   }
 
   getCampaign(id) {
-    return rp(`${OSMESA_API}/campaigns/${id}`)
+    return rp(`${OSMESA_API}/hashtags/${id}`)
   }
 }
 
 class FakeOSMesaAPI {
-  getUser() {
+  getUser(id) {
+    const sampleuser = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'sampleuser.json'), 'utf-8'))
+    
+    sampleuser.uid = id
+    sampleuser.name = `test${(id - 100000000)}` // Users start at 100000000
     return Promise.resolve(JSON.stringify(sampleuser))
   }
 
-  getCampaign() {
+  getCampaign(id) {
+    const samplecampaign = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecampaign.json'), 'utf-8'))
+    samplecampaign.tag = `project-${id}`
     return Promise.resolve(JSON.stringify(samplecampaign))
   }
 }

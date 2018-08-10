@@ -1,5 +1,5 @@
-const { USERS_URL, OSMESA_API } = require('./config')
-const rp = require('request-promise-native')
+const Users = require('./services/users')
+const OSMesa = require('./services/osmesa')
 const { compareDesc, parse } = require('date-fns')
 const {
   uniqBy, tail, zipObj, merge, map, props, sum, head, prop
@@ -43,11 +43,9 @@ const sumEdits = (records) => {
  * @returns {Promise} a response
  */
 async function usersWorker() {
-  if (!USERS_URL) throw new Error('Users URL not defined')
-
   try {
     const db = conn()
-    const response = await rp(`${USERS_URL}`)
+    const response = await Users.getUsers()
 
     const lines = tail(response.split('\n'))
 
@@ -71,7 +69,7 @@ async function usersWorker() {
       // Get edit count from OSMesa
       await delay(50)
       try {
-        const resp = await rp(`${OSMESA_API}/users/${obj.osm_id}`)
+        const resp = await OSMesa.getUser(obj.osm_id)
 
         if (resp.length) {
           const data = JSON.parse(resp)
