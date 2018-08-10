@@ -79,3 +79,9 @@ To start the services individually do:
 We have provided some unit tests in api/tests/test.js. To run:
 
     $ yarn test
+
+## Generating Docs
+
+If you make changes to the API documentation make sure to update the README for the API which is auto-generated from the swagger YAML by running:
+
+     $ yarn docs
