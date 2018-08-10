@@ -5,9 +5,6 @@ Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scor
 
 **Version:** 0.1.0
 
-**Contact information:**  
-info@developmentseed.org  
-
 ### /scoreboard/api/users
 ---
 ##### ***GET***

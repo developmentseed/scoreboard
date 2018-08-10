@@ -4,8 +4,6 @@ info:
     Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scoreboard and allow grouping and searching of users and campaigns. It also provides insight into OSM top stats.
   version: '0.1.0'
   title: Scoreboard API
-  contact:
-    email: info@developmentseed.org
 consumes:
   - application/json
 produces:
