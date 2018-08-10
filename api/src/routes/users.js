@@ -81,9 +81,9 @@ module.exports = async (req, res) => {
 
     const countries = await db('users').distinct('country').select()
 
-    const [{ subTotal }] = await query.clone().count('id as sub_total')
+    const [{ subTotal }] = await query.clone().count('id as subTotal')
     const [{ total }] = await allUsers.clone().count('id as total')
-    const [{ editTotal }] = await allUsers.clone().sum('edit_count as edit_total')
+    const [{ editTotal }] = await allUsers.clone().sum('edit_count as editTotal')
 
     return res.send({
       records, subTotal, total, editTotal, countries

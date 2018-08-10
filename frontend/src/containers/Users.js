@@ -171,7 +171,7 @@ class Users extends Component {
   render() {
     const {
       page,
-      records: { total, records, sub_total, edit_total, countries },
+      records: { total, records, subTotal, editTotal, countries },
       apiStatus,
       searchText,
       selectedValue,
@@ -180,7 +180,7 @@ class Users extends Component {
     } = this.state;
     return (
       <div className="Users">
-        <AllUsersHeader countries={countries} users={total} edits={edit_total}/>
+        <AllUsersHeader countries={countries} users={total} edits={editTotal}/>
         <section>
           <div className="row">
             <AllUsersFilter
@@ -195,7 +195,7 @@ class Users extends Component {
               countries={countries || []}
             />
             <div className="content--with-sidebar">
-              <h3 className="header--medium">{sub_total} Results</h3>
+              <h3 className="header--medium">{subTotal} Results</h3>
               <AllUsersTable users={records} apiStatus={apiStatus}/>
               <Pagination
                 activePage={page}

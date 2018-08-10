@@ -35,7 +35,6 @@ class Home extends Component {
 
   render() {
     const {campaign_total, records, num_users, features, top_edits, edits_by_country} = this.state;
-    console.log(edits_by_country);
     return (
       <div className="home">
         <header className="header--homepage header--page">

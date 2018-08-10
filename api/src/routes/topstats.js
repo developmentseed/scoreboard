@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
       .orderBy('edit_count', 'desc')
       .limit(10)
 
-    const [{ numUsers }] = await db('users').count('id as num_users')
+    const [{ numUsers }] = await db('users').count('id as numUsers')
     const editsByCountry = await db('users')
       .whereNotIn('osm_id', filteredUsers)
       .groupBy('country').select('country')
