@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Started using lerna for package management
 - Logic for setting up the application separated from the rest of api/server.js and put into api/index.js
 - Connection.js (api/db/) now returns a function which sets a different database path when NODE_ENV is set to TEST
+- Api source code is organized under the `src` folder
 
 ## [v0.1.0] - 2018-08-03
 
