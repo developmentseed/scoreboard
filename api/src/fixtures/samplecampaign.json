@@ -1,6 +1,6 @@
 {
-  "tag": "project-291",
-  "extent_uri": "hashtag/project-291/{z}/{x}/{y}.mvt",
+  "tag": "project",
+  "extent_uri": "hashtag/project/{z}/{x}/{y}.mvt",
   "buildings_add": 3809,
   "buildings_mod": 74887,
   "roads_add": 1413,
@@ -16,93 +16,43 @@
   "users": [
     {
       "name": "test1",
-      "uid": 8,
+      "uid": 100000001,
       "edits": 23
     },
     {
       "name": "test2",
-      "uid": 11,
+      "uid": 100000002,
       "edits": 176
     },
     {
       "name": "test3",
-      "uid": 15,
+      "uid": 100000003,
       "edits": 1
     },
     {
       "name": "test4",
-      "uid": 30,
+      "uid": 100000004,
       "edits": 8
     },
     {
       "name": "test5",
-      "uid": 34,
+      "uid": 100000005,
       "edits": 51
     },
     {
       "name": "test6",
-      "uid": 35,
+      "uid": 100000006,
       "edits": 1
     },
     {
       "name": "test7",
-      "uid": 1000000002,
+      "uid": 1000000007,
       "edits": 44
     },
     {
       "name": "test8",
-      "uid": 1000000051,
+      "uid": 1000000008,
       "edits": 181
-    },
-    {
-      "name": "test9",
-      "uid": 1000000071,
-      "edits": 2
-    },
-    {
-      "name": "test10",
-      "uid": 1000000073,
-      "edits": 168
-    },
-    {
-      "name": "test11",
-      "uid": 1000000126,
-      "edits": 2
-    },
-    {
-      "name": "test12",
-      "uid": 1000000140,
-      "edits": 24
-    },
-    {
-      "name": "test13",
-      "uid": 1000000149,
-      "edits": 82
-    },
-    {
-      "name": "test14",
-      "uid": 1000000181,
-      "edits": 49
-    },
-    {
-      "name": "test15",
-      "uid": 1000000188,
-      "edits": 212
-    },
-    {
-      "name": "test16",
-      "uid": 1000000189,
-      "edits": 2
-    },
-    {
-      "name": "test17",
-      "uid": 1000000198,
-      "edits": 21
-    },
-    {
-      "name": "test18",
-      "uid": 1000000206,
-      "edits": 48
     }
   ]
 }

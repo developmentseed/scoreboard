@@ -1,37 +1,9 @@
-const { TM_URL, TM_HASHTAG } = require('./config')
 const rp = require('request-promise-native')
 const {
-  test, find, pick, merge, match, omit, tail
+  pick, merge, omit
 } = require('ramda')
-
+const { TM, extractCampaignHashtag } = require('./services/tm')
 const conn = require('./db/connection')
-
-/**
- * Given a campaign's changeset_comment return the hashtag
- * matching the tasking manager's schema for campaign hashtags
- * e.g for OSMUS, TM_HASHTAG is `osmus-project` and the main
- * hashtag is of the form `osmus-project-1`.
- *
- * If comment_changeset does not contain the TM_HASHTAG, it
- * defaults to the first hashtag it finds. If there are no
- * hashtags it returns null
- *
- * @param {string} str - changeset_comment from campaign
- * @returns {string} main hashtag for campaign
- */
-function extractCampaignHashtag(str) {
-  if (!str) return []
-
-  // Get the hashtags
-  // eslint-disable-next-line
-  const hashtags = match(new RegExp('#([^\r\n\t\f\v ]+)', 'g'), str).map(tail)
-  const main = find(test(new RegExp(`(${TM_HASHTAG}-[0-9]+)`)), hashtags)
-
-  if (main) {
-    return main
-  }
-  return (hashtags.length > 0) ? hashtags[0] : null
-}
 
 /**
  * Worker runs in a clock process and updates the cache
@@ -43,7 +15,7 @@ async function tmWorker() {
   // Get projects from TM2
   try {
     const db = conn()
-    const response = await rp(`${TM_URL}/projects.json`)
+    const response = await TM.getProjects()
     const { features } = JSON.parse(response)
     if (features) {
       // Map the features to objects for sql insertion
