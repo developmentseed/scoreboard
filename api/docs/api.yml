@@ -1,0 +1,122 @@
+swagger: '2.0'
+info:
+  description: >
+    Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scoreboard and allow grouping and searching of users and campaigns. It also provides insight into OSM top stats.
+  version: '0.1.0'
+  title: Scoreboard API
+consumes:
+  - application/json
+produces:
+  - application/json
+tags:
+  - name: users
+    description: Users
+  - name: campaigns
+    description: Campaigns
+  - name: stats
+    description: Top Stats
+paths:
+  /scoreboard/api/users:
+    get:
+      summary: list of OSM users
+      tags:
+        - users
+      parameters:
+      - in: query
+        name: page
+        type: integer
+        description: The pagination parameter (each page is limit to 25 results)
+        required: false
+      - in: query
+        name: search
+        type: string
+        description: Is used for searching the users display name
+        required: false
+      - in: query
+        name: country
+        type: string
+        description: "List of countries to filter on, using a 2 letter country code. Example 'CA,US' for Canada, United States"
+        required: false
+      - in: query
+        name: sortType
+        type: string
+        enum: [Least recent, Most recent, Most total, Least total]
+        description: Sort users by a given type
+        required: false
+      - in: query
+        name: active
+        type: boolean
+        description: Indicator for whether to include only users who have been active in the last 6 months
+        required: false
+        default: false
+      responses:
+        200:
+          description: The list of OSM users 
+  "/scoreboard/api/users/{id}":
+    get:
+      summary: a specific user
+      tags:
+        - users
+      parameters:
+        - name: id
+          in: path
+          description: User's OSM ID
+          type: integer
+          required: true
+      responses:
+        200:
+          description: The OSM user object
+  /scoreboard/api/campaigns:
+    get:
+      tags:
+        - campaigns
+      summary: list of campaigns
+      parameters:
+      - in: query
+        name: page
+        type: integer
+        description: The pagination parameter (each page is limit to 25 results)
+        required: false
+      - in: query
+        name: search
+        type: string
+        description: Search for campaign names
+        required: false
+      - in: query
+        name: compl_min
+        type: integer 
+        description: Minimum percentage of completion
+        required: false
+        default: 0
+      - in: query
+        name: compl_max
+        type: integer
+        description: Maximum percentage of completion
+        required: false
+        default: 100
+      responses:
+        200:
+          description: List of campaigns
+  "/scoreboard/api/campaigns/{id}":
+    get:
+      tags:
+        - campaigns
+      summary: a specific campaign
+      parameters:
+      - name: id
+        in: path
+        description: The campaign ID
+        type: integer
+        required: true
+      responses:
+        200:
+          description: The campaign object
+  /scoreboard/api/topstats:
+    get:
+      tags:
+        - stats
+      summary: "Top level stats including: number of campaigns, campaigns sorted by priority, edits by country and number of active users"
+      responses:
+        200:
+          description: Returns list of responses
+        

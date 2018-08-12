@@ -9,6 +9,7 @@
     "api": "lerna run start-dev --scope scoreboard-api",
     "frontend": "lerna run start --scope scoreboard-frontend",
     "test": "lerna run test --scope scoreboard-api",
+    "docs": "lerna run generate-docs --scope scoreboard-api",
     "bootstrap": "lerna bootstrap",
     "eslint": "eslint ."
   },
