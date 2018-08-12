@@ -35,7 +35,7 @@ paths:
       - in: query
         name: country
         type: string
-        description: "list of countries to return. To search for more than on country, use comma. Example: canada,france"
+        description: "List of countries to filter on, using a 2 letter country code. Example 'CA,US' for Canada, United States"
         required: false
       - in: query
         name: sortType
@@ -115,7 +115,7 @@ paths:
     get:
       tags:
         - stats
-      summary: the top stats
+      summary: "Top level stats including: number of campaigns, campaigns sorted by priority, edits by country and number of active users"
       responses:
         200:
           description: Returns list of responses
