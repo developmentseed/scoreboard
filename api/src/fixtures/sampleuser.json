@@ -1,6 +1,6 @@
 {
   "uid": 1000000000,
-  "name": "test",
+  "name": "test0",
   "extent_uri": "user/test/{z}/{x}/{y}.mvt",
   "buildings_add": 283952,
   "buildings_mod": 69928,
@@ -449,35 +449,31 @@
   ],
   "hashtags": [
     {
-      "tag": "project-26",
+      "tag": "project-1",
       "count": 65
     },
     {
-      "tag": "tag",
+      "tag": "project-7",
       "count": 45
     },
     {
-      "tag": "project-190",
+      "tag": "project-2",
       "count": 8
     },
     {
-      "tag": "project-236",
+      "tag": "project-3",
       "count": 1
     },
     {
-      "tag": "project-285",
+      "tag": "project-4",
       "count": 1
     },
     {
-      "tag": "project-289",
+      "tag": "project-5",
       "count": 29
     },
     {
-      "tag": "project-289-",
-      "count": 3
-    },
-    {
-      "tag": "project-291",
+      "tag": "project-6",
       "count": 44
     }
   ]
