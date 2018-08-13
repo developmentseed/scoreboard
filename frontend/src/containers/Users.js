@@ -164,8 +164,10 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    let { page } = queryString.parse(this.props.location.search);
-    this.dispatch({type: 'PAGE_CHANGE', page: page || 1});
+    if (this.props.location) {
+      let { page } = queryString.parse(this.props.location.search);
+      this.dispatch({ type: 'PAGE_CHANGE', page: page || 1 });
+    }
   }
 
   render() {

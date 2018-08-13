@@ -41,16 +41,22 @@ class User extends Component {
 
   componentDidMount () {
     const { match }  = this.props;
-    const {params: { uid } } = match;
-    api('get', `/api/users/${uid}`)
-    .then(res => {
-      // TODO error state
-      this.setState({
-        records: res.data.records,
-        country: res.data.country,
-        match
-      });
-    });
+    /**
+     * TODO
+     * What to do if it doesn't match?
+     */
+    if (match) {
+      const { params: { uid } } = match;
+      api('get', `/api/users/${uid}`)
+        .then(res => {
+          // TODO error state
+          this.setState({
+            records: res.data.records,
+            country: res.data.country,
+            match
+          });
+        });
+    }
   }
 
   render () {
