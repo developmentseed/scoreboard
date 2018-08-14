@@ -35,15 +35,22 @@ class Campaign extends Component {
 
   componentDidMount () {
     const { match }  = this.props;
-    const {params: { name } } = match;
-    api('get', `/api/campaigns/${name}`)
-    .then(res => {
-      // TODO error state
-      this.setState({
-        records: res.data.records,
-        match
-      });
-    });
+    /**
+     * TODO:
+     * What to do if there is no match?
+     */
+    if (match) {
+      const { params: { name } } = match;
+      api('get', `/api/campaigns/${name}`)
+        .then(res => {
+          // TODO error state
+          this.setState({
+            records: res.data.records,
+            match
+          });
+        });
+
+    }
   }
 
   render () {
