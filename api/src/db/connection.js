@@ -1,5 +1,5 @@
 const knex = require('knex')
-const connections = require('../knexfile')
+const connections = require('./knexfile')
 const { NODE_ENV } = require('../config')
 
 // Initialize knex with the development connection

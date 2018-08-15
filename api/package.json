@@ -27,6 +27,7 @@
     "express-boom": "^2.0.0",
     "express-promise-router": "^2.0.0",
     "fs-extra": "^7.0.0",
+    "i18n-iso-countries": "^3.7.4",
     "knex": "^0.15.2",
     "nodemon": "^1.18.3",
     "ramda": "^0.25.0",
