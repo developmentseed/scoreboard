@@ -28,14 +28,14 @@ module.exports = async (req, res) => {
     const db = connection()
     // Create table with ranking
     const allUsers = db.with('edits', (conn) => conn
-      .select('id', 'osm_id', 'display_name', 'edit_count', 'country', 'last_edit')
+      .select('id', 'osm_id', 'full_name', 'edit_count', 'country', 'last_edit')
       .from('users')
       .whereNotIn('osm_id', filteredUsers)
       .groupBy('osm_id')).select(
       's.id',
       's.osm_id',
       's.edit_count',
-      's.display_name',
+      's.full_name',
       's.country',
       's.last_edit',
       db.raw(
@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
     let query = allUsers.clone()
 
     if (search.length > 0) {
-      query = query.where('display_name', 'like', `%${search}%`)
+      query = query.where('full_name', 'like', `%${search}%`)
     }
 
     if (country.length > 0) {
