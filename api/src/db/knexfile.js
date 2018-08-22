@@ -1,13 +1,13 @@
 const path = require('path')
+const config = require('../config')
 
 const test = {
-  client: 'sqlite3',
-  connection: {
-    filename: ':memory:'
-  },
+  client: 'pg',
+  debug: process.env.KNEX_DEBUG || false,
   seeds: {
     directory: path.join(__dirname, 'seeds', 'test')
   },
+  connection: {},
   migrations: {
     directory: path.join(__dirname, './migrations'),
     tableName: 'knex_migrations'
@@ -17,10 +17,8 @@ const test = {
 }
 
 const def = {
-  client: 'sqlite3',
-  connection: {
-    filename: path.join(__dirname, 'db.sqlite3')
-  },
+  client: 'pg',
+  connection: config.DATABASE_URL,
   migrations: {
     directory: path.join(__dirname, './migrations'),
     tableName: 'knex_migrations'
@@ -33,7 +31,8 @@ module.exports = {
   development: Object.assign({}, {
     seeds: {
       directory: path.join(__dirname, 'seeds', 'development')
-    }
+    },
+    debug: true
   }, def),
   staging: def,
   production: def

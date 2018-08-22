@@ -15,6 +15,7 @@ class CampaignMap extends Component {
       renderWorldCopies: false,
       interactive: false
     });
+    console.log(this.props.overlay)
 
     this.map.on('load', () => {
       this.map.addLayer({
@@ -22,7 +23,7 @@ class CampaignMap extends Component {
         'type': 'fill',
         'source': {
           'type': 'geojson',
-          'data': JSON.parse(this.props.overlay)
+          'data': this.props.overlay
         },
         'layout': {},
         'paint': {

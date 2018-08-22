@@ -3,7 +3,7 @@ const countries = require('i18n-iso-countries')
 /*
  * n => [users] array of size n
  */
-function generateUsers(n) {
+function generateUsers(n, knex) {
   const countryIds = Object.keys(countries.getNames('en'))
   const users = []
   for (let i = 0; i < n; i += 1) {
@@ -18,8 +18,8 @@ function generateUsers(n) {
   }
 
   const usersWithStamps = users.map((user) => Object.assign({}, {
-    created_at: Date.now(),
-    updated_at: Date.now()
+    created_at: knex.fn.now(),
+    updated_at: knex.fn.now()
   }, user))
 
   return usersWithStamps

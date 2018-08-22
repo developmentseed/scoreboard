@@ -1,29 +1,21 @@
 'use strict'
 
-const os = require('os')
-const path = require('path')
-const fs = require('fs-extra')
 const test = require('ava')
 const request = require('supertest')
 const connection = require('../src/db/connection')
 const app = require('../src/index')
 const { omit } = require('ramda')
 
-let tempPath
 let db
 
 test.before(async () => {
-  tempPath = path.join(os.tmpdir(), 'scoreboard', `${Date.now()}`, path.sep)
-  fs.mkdirpSync(tempPath)
-  process.env.TEST_DB_FILENAME = path.join(tempPath, 'db.sqlite3')
-
   db = connection()
   await db.migrate.latest()
   await db.seed.run()
 })
 
-test.after.always(() => {
-  fs.removeSync(tempPath)
+test.after.always(async () => {
+  await db.destroy()
 })
 
 test('Test of OSMESA api call', async (t) => {
@@ -57,7 +49,7 @@ test('Sort users by most recently active', async (t) => {
     .get('/scoreboard/api/users?q=&page=1&sortType=Most%20recent&active=false')
     .expect(200)
   const users = await db('users')
-    .select('country', 'edit_count', 'full_name', 'id', 'last_edit', 'osm_id')
+    .select('country', 'edit_count', 'full_name', 'last_edit', 'osm_id')
   users.sort((a, b) => b.last_edit - a.last_edit)
   const resCopy = response.body.records.map(omit(['rank']))
   t.deepEqual(resCopy, users)
@@ -68,7 +60,7 @@ test('Sort users by least recently active', async (t) => {
     .get('/scoreboard/api/users?q=&page=1&sortType=Least%20recent&active=false')
     .expect(200)
   const users = await db('users')
-    .select('country', 'edit_count', 'full_name', 'id', 'last_edit', 'osm_id')
+    .select('country', 'edit_count', 'full_name', 'last_edit', 'osm_id')
   users.sort((a, b) => a.last_edit - b.last_edit)
   const resCopy = response.body.records.map(omit(['rank']))
   t.deepEqual(resCopy, users)
@@ -79,7 +71,7 @@ test('Sort users by most edits', async (t) => {
     .get('/scoreboard/api/users?q=&page=1&sortType=Most%20total&active=false')
     .expect(200)
   const users = await db('users')
-    .select('country', 'edit_count', 'full_name', 'id', 'last_edit', 'osm_id')
+    .select('country', 'edit_count', 'full_name', 'last_edit', 'osm_id')
   users.sort((a, b) => b.edit_count - a.edit_count)
   const resCopy = response.body.records.map(omit(['rank']))
   t.deepEqual(resCopy, users)
@@ -90,7 +82,7 @@ test('Sort users by least edits', async (t) => {
     .get('/scoreboard/api/users?q=&page=1&sortType=Least%20total&active=false')
     .expect(200)
   const users = await db('users')
-    .select('country', 'edit_count', 'full_name', 'id', 'last_edit', 'osm_id')
+    .select('country', 'edit_count', 'full_name', 'last_edit', 'osm_id')
   users.sort((a, b) => a.edit_count - b.edit_count)
   const resCopy = response.body.records.map(omit(['rank']))
   t.deepEqual(resCopy, users)

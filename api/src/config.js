@@ -9,5 +9,6 @@ module.exports = {
   FILTERED_USERS: process.env.FILTERED_USERS || '0',
   OSM_CONSUMER_KEY: process.env.OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET: process.env.OSM_CONSUMER_SECRET,
-  SESSION_SECRET: process.env.SESSION_SECRET || 'SUPER SECRET'
+  SESSION_SECRET: process.env.SESSION_SECRET || 'SUPER SECRET',
+  DATABASE_URL: process.env.DATABASE_URL || 'postgres://postgres@localhost/scoreboard'
 }
