@@ -9,6 +9,10 @@ function create() {
   if (NODE_ENV === 'test') {
     config.connection.database = 'scoreboard_tests'
   }
+  if (process.env.CI) {
+    // If in a CI the connection is the database url
+    config.connection = process.env.DATABASE_URL
+  }
 
   return knex(config)
 }
