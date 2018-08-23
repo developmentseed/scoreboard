@@ -1,7 +1,7 @@
 if [ -z "$CI" ]; then
-    ./src/db/scripts/create-database.sh && 
+    createdb scoreboard_tests && 
     ava tests/*.test.js ; 
-    ./src/db/scripts/drop-database.sh 
+    dropdb scoreboard_tests
 else
     ava tests/*.test.js
 fi
