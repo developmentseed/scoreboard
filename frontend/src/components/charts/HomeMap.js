@@ -15,7 +15,6 @@ class CampaignMap extends Component {
       renderWorldCopies: false,
       interactive: false
     });
-    console.log(this.props.overlay)
 
     this.map.on('load', () => {
       this.map.addLayer({
