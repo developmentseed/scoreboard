@@ -4,6 +4,8 @@
   "description": "OSM Scoreboard API ",
   "main": "server.js",
   "scripts": {
+    "createdb": "src/db/scripts/create-database.sh",
+    "dropdb": "src/db/scripts/drop-database.sh",
     "migrate": "knex migrate:latest --knexfile src/db/knexfile.js",
     "seed": "knex seed:run --knexfile src/db/knexfile.js",
     "start": "npm run migrate && nf start web",
