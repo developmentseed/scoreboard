@@ -1,8 +1,7 @@
-const Users = require('./services/users')
 const OSMesa = require('./services/osmesa')
 const { compareDesc, parse } = require('date-fns')
 const {
-  uniqBy, tail, zipObj, merge, map, props, sum, head, prop
+  merge, map, props, sum, head
 } = require('ramda')
 const conn = require('./db/connection')
 
@@ -45,27 +44,11 @@ const sumEdits = (records) => {
 async function usersWorker() {
   try {
     const db = conn()
-    const response = await Users.getUsers()
-
-    const lines = tail(response.split('\n'))
-
-    // Parse CSV and turn to SQLObjects
-    let sqlObjects = lines
-      .filter((line) => line.length > 0)
-      .map((line) => {
-        const parts = line.split(',')
-        return zipObj(
-          ['osm_id', 'display_name', 'email', 'status', 'full_name', 'country'],
-          parts
-        )
-      })
-
-    // Filter out duplicates
-    sqlObjects = uniqBy(prop('osm_id'), sqlObjects)
+    const users = await db('users').select('id', 'osm_id') // Get all users
 
     // Map user info to knex objects
     const delay = (time) => new Promise((res) => setTimeout(() => res(), time))
-    const promises = sqlObjects.map(async (obj) => {
+    const promises = users.map(async (obj) => {
       // Get edit count from OSMesa
       await delay(50)
       try {
@@ -82,23 +65,12 @@ async function usersWorker() {
       }
 
       return db('users')
-        .where('email', obj.email)
-        .then((rows) => {
-          if (rows.length === 0) { // Not found
-            return db('users').insert(
-              merge(obj, {
-                updated_at: db.fn.now(),
-                created_at: db.fn.now()
-              })
-            )
-          }
-
-          return db('users').where('email', obj.email).update(
-            merge(obj, {
-              updated_at: db.fn.now()
-            })
-          )
-        })
+        .where('osm_id', obj.osm_id)
+        .then(() => db('users').where('osm_id', obj.osm_id).update(
+          merge(obj, {
+            updated_at: db.fn.now()
+          })
+        ))
     })
 
     // Return a single promise wrapping all the

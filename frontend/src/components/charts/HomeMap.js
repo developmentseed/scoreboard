@@ -22,7 +22,7 @@ class CampaignMap extends Component {
         'type': 'fill',
         'source': {
           'type': 'geojson',
-          'data': JSON.parse(this.props.overlay)
+          'data': this.props.overlay
         },
         'layout': {},
         'paint': {
