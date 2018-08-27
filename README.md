@@ -64,6 +64,7 @@ We use [lerna](https://github.com/lerna/lerna) for installation and package mana
 ## Populate Data
 
 For the frontend and the API to work, you must have the data loaded on the local database:
+
      $ createdb scoreboard
      $ DATABASE_URL=postgres://localhost/scoreboard yarn clocks 
 
