@@ -1,3 +1,5 @@
+migrate_db: knex migrate:latest --knexfile src/db/knexfile.js
+seed_db: knex seed:run --knexfile src/db/knexfile.js
 web: node src/server.js
 tm_clock: node src/tm_clock.js
 users_clock: node src/users_clock.js
