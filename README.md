@@ -14,6 +14,7 @@ A project to display OSM user contribution metrics and campaign metrics.
 - Node 8.4
 - Postgres 9.5+
 - Yarn
+- Docker (for development work)
 
 To set the Node version as specified above:
 
@@ -24,7 +25,9 @@ See [this tutorial](https://www.postgresql.org/download/) for details and instru
 
 ### Env file
 
-There should be an env file in `/api` with the following environment variables
+There should be an env file in `/api` with the following environment variables.
+
+For development simply run: `cp api/.env.sample api/.env`.
 
 ```
 NODE_ENV=development
@@ -54,19 +57,35 @@ DATABASE_URL=postgres://postgres@localhost/scoreboard
 | SESSION_SECRET | A secret phrase to sign session tokens
 | DATABASE_URL | The location of the postgres database
 
-## Installation
+## Installation and Dev
 
 We use [lerna](https://github.com/lerna/lerna) for installation and package management
 
      $ yarn
      $ yarn bootstrap
 
-## Populate Data
+## Postgres Setup
 
-For the frontend and the API to work, you must have the data loaded on the local database:
+### Create and Run the database
 
-     $ createdb scoreboard
-     $ DATABASE_URL=postgres://localhost/scoreboard yarn clocks 
+     $ docker-compose run --rm --service-port db
+
+This command will create and run the database. The database files are stored under `.tmp` folder.
+
+If you are running the command for the first time, you should wait until the database created.
+
+To start with a new database with no data, stop the command, remove the `.tmp` folder and run the command again.
+
+### Populate Data
+For the frontend and the API to work, you must have the data loaded on the local database.
+
+To generate fake user data run:
+
+     $ yarn seed
+
+To populate fake campaign and tasking manager data run: 
+
+     $ yarn clocks 
 
 ## Serve
 

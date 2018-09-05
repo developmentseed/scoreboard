@@ -6,6 +6,7 @@
   "scripts": {
     "start": "concurrently \"yarn api\" \"yarn frontend\"",
     "clocks": "lerna run clocks --scope --scoreboard-api",
+    "seed": "lerna run seed --scope --scoreboard-api",
     "api": "lerna run start-dev --scope scoreboard-api",
     "frontend": "lerna run start --scope scoreboard-frontend",
     "test": "lerna run test --scope scoreboard-api && CI=true lerna run test --scope scoreboard-frontend",
