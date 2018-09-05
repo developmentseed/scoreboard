@@ -69,7 +69,6 @@ class App extends Component {
 
   render() {
     const loggedIn = this.state.loggedIn;
-    console.log(loggedIn)
     const profile = this.state.profile;
     return (
       <Router>
