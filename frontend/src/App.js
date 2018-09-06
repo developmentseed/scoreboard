@@ -6,7 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 import './styles/App.css';
-import { Campaigns, Campaign, Users, User, Home, About } from './containers';
+import { Campaigns, Campaign, Users, User, Home, About, Dashboard } from './containers';
 import profileIcon from './assets/dashboard-temp/profile-icon.png';
 
 const ActiveLink = ({ label, to }) => (
@@ -116,6 +116,7 @@ class App extends Component {
           <Route exact path="/users" component={Users} />
           <Route path="/users/:uid" component={User} />
           <Route exact path="/about" component={About} />
+          <Route exact path="/dashboard" component={Dashboard} />
           <Route path="/campaigns/:name" component={Campaign} />
         </div>
       </Router >
