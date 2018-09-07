@@ -27,7 +27,7 @@ See [this tutorial](https://www.postgresql.org/download/) for details and instru
 
 There should be an env file in `/api` with the following environment variables.
 
-For development simply run: `cp api/.env.sample api/.env`.
+For development simply run: `cp api/.env.sample api/.env`. In development, the Osmesa and Tasking Manager services are mocked, so the environment variables `TM_URL`, `TM_HASHTAG`, `FILTERED_USERS` and `OSMESA_API` are not required. 
 
 ```
 NODE_ENV=development
