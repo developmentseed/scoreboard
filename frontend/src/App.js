@@ -116,7 +116,9 @@ class App extends Component {
           <Route exact path="/users" component={Users} />
           <Route path="/users/:uid" component={User} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/dashboard" render={props => (
+            <Dashboard {...props} loggedIn={loggedIn} profile={profile} />
+          )} />
           <Route path="/campaigns/:name" component={Campaign} />
         </div>
       </Router >
