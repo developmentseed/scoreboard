@@ -5,7 +5,6 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import image1 from '../assets/dashboard-temp/profile-img.jpg';
 import badge1 from '../assets/dashboard-temp/badge-1.jpg';
 import badge2 from '../assets/dashboard-temp/badge-2.jpg';
 import badge3 from '../assets/dashboard-temp/badge-3.jpg';
@@ -34,14 +33,33 @@ class Dashboard extends Component {
     });
   }
   render() {
+    const {loggedIn, profile} = this.props
+
+    /* Handle not logged in */
+    if (!loggedIn) {
+      return (
+        <div className="dashboard">
+          <section>
+            <div className="row">
+              <h2 className="header--large">You are not logged in!</h2>
+              <p>Log in to see your personalized dashboard</p>
+            </div>
+          </section>
+        </div>
+      )
+    }
+
+    // We are logged in and should have a profile
+    const { user } = profile._xml2json
+
     return (
       <div className="dashboard">
         <header className="header--internal--dashboard header--page">
           <div className="row">
             <div className="header--content--wrapper">
               <div className="section-sub--left section-width-fifty-plus">
-                <img className="profile--thumb" style={{float: "left"}} src={image1} alt="Profile pic" />
-                <h1 className="header--xlarge header--with-description">Example User</h1>
+                <img className="profile--thumb" style={{float: "left"}} src={user.img['@']['href']} alt="Profile pic" />
+                <h1 className="header--xlarge header--with-description">{user['@']['display_name']}</h1>
                 <Link className="link--large" to="/about">View Public Profile</Link>
               </div>
               <div className="section-sub--right section-width-fifty-minus stats-user">
@@ -94,7 +112,10 @@ class Dashboard extends Component {
             <Link className="link--large" to="/about">Load More Upcoming Badges</Link>
           </div>
         </section>
+        {
+          /*
         <section>
+
           <div className="row">
             <h2 className="header--large header--with-description">Suggested Tasks</h2>
             <p>Get started on one of the tasks below to help complete campaigns or to continue earning points towards badges!</p>
@@ -130,6 +151,7 @@ class Dashboard extends Component {
             </ol>
           </div>
         </section>
+        */}
       </div>
     );
   }
