@@ -8,6 +8,6 @@ services:
       POSTGRES_USER: scoreboard 
       POSTGRES_DB: scoreboard 
     ports:
-      - 5432:5432 
+      - 5433:5432 
     volumes:
       - './.tmp/pg:/var/lib/postgresql/data'
