@@ -2,6 +2,7 @@
  * Prelude
  */
 const express = require('express')
+const bodyParser = require('body-parser')
 const boom = require('express-boom')
 const session = require('express-session')
 const compression = require('compression')
@@ -23,6 +24,7 @@ const { passport, authRouter } = require('./passport')
 const swaggerDocument = YAML.load('./docs/api.yml')
 swaggerDocument.info.version = pckg.version
 
+app.use(bodyParser.json())
 app.use(compression())
 app.use(boom())
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: true }))

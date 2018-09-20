@@ -15,7 +15,7 @@ const connection = require('../db/connection')
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-module.exports = async (req, res) => {
+async function get(req, res) {
   const { id } = req.params
   if (!id) {
     return res.boom.badRequest('Invalid id')
@@ -32,4 +32,37 @@ module.exports = async (req, res) => {
     console.error(err)
     return res.boom.notFound('Could not retrieve user stats')
   }
+}
+
+/**
+ * User update route
+ * /user/:id
+ *
+ * update user data
+ *
+ * @param {Object} req - the request object
+ * @param {Object} res - the response object
+ * @returns {Promise} a response
+ */
+async function put(req, res) {
+  const { id } = req.params
+  const { body } = req
+
+  if (!id) {
+    return res.boom.badRequest('Invalid id')
+  }
+
+  try {
+    const db = connection()
+    const [user] = await db('users').where('osm_id', id).update(body).returning('*')
+    return res.send(user)
+  }
+  catch (err) {
+    return res.boom.badRequest('Could not update user')
+  }
+}
+
+module.exports = {
+  get,
+  put
 }
