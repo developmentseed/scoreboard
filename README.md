@@ -40,7 +40,7 @@ API_URL=http://localhost:5000
 OSM_CONSUMER_KEY=your-oauth-key
 OSM_CONSUMER_SECRET=your-oauth-secre
 SESSION_SECRET=super-secret-sessions
-DATABASE_URL=postgres://postgres@localhost/scoreboard
+DATABASE_URL=postgres://postgres@localhost:5433/scoreboard
 ```
 
 | name | description
@@ -70,7 +70,7 @@ We use [lerna](https://github.com/lerna/lerna) for installation and package mana
 
      $ docker-compose run --rm --service-port db
 
-This command will create and run the database. The database files are stored under `.tmp` folder.
+This command will create and run the database on port `5433`. The database files are stored under `.tmp` folder.
 
 If you are running the command for the first time, you should wait until the database created.
 
