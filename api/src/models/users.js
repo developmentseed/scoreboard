@@ -6,11 +6,11 @@ class Users {
   }
 
   get(id) {
-    return this.db('users').where('id', id).then((rows) => rows[0])
+    return this.db('users').where('id', id)
   }
 
   findByOsmId(osmID) {
-    return this.db('users').where('osm_id', osmID).then((rows) => rows[0])
+    return this.db('users').where('osm_id', osmID)
   }
 
   find(key, value) {

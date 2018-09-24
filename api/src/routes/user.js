@@ -1,8 +1,10 @@
 const {
   API_URL
 } = require('../config')
+const Users = require('../models/users')
 const osmesa = require('../services/osmesa')
-const connection = require('../db/connection')
+
+const users = new Users()
 
 /**
  * User Stats Route
@@ -21,9 +23,8 @@ async function get(req, res) {
     return res.boom.badRequest('Invalid id')
   }
   try {
-    const db = connection()
     const osmesaResponse = await osmesa.getUser(id)
-    const [{ country }] = await db('users').where('osm_id', id).select('country')
+    const [{ country }] = await users.findByOsmId(id).select('country')
     const json = JSON.parse(osmesaResponse)
     json.extent_uri = `${API_URL}/scoreboard/api/extents/${json.extent_uri}`
     return res.send({ id, records: json, country })
@@ -53,8 +54,7 @@ async function put(req, res) {
   }
 
   try {
-    const db = connection()
-    const [user] = await db('users').where('osm_id', id).update(body).returning('*')
+    const [user] = await users.update(id, body)
     return res.send(user)
   }
   catch (err) {
