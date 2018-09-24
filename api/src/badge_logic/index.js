@@ -1,15 +1,17 @@
-import getSumBadges from './sum_based_badges';
-import dateSequentialCheck from './date_check_sequential';
-import dateTotalCheck from './date_check_total';
-import { mergeAll, reject, isNil, filter, map, prop, compose, sum } from 'ramda';
+const getSumBadges = require('./sum_based_badges')
+const dateSequentialCheck = require('./date_check_sequential')
+const dateTotalCheck = require('./date_check_total')
+const {
+  mergeAll, reject, isNil, filter, map, prop, compose, sum
+} = require('ramda')
 
 const getJosmEditCount = compose(
   sum,
   map(prop('count')),
-  filter(x => x.editor.toLowerCase().includes('josm'))
-);
+  filter((x) => x.editor.toLowerCase().includes('josm'))
+)
 
-export default userData => {
+module.exports = (userData, badges) => {
   const {
     buildings_add,
     waterways_add,
@@ -20,9 +22,9 @@ export default userData => {
     hashtags,
     editors,
     edit_times
-  } = userData;
+  } = userData
 
-  var sumBadges = reject(isNil)(getSumBadges({
+  const sumBadges = reject(isNil)(getSumBadges({
     buildings: Number(buildings_add),
     waterways: Number(waterways_add),
     pois: Number(poi_add),
@@ -31,12 +33,12 @@ export default userData => {
     countries: Object.keys(country_list).length,
     josm: getJosmEditCount(editors),
     hashtags: Object.keys(hashtags).length
-  }));
+  }, badges))
 
   const consistencyBadge = dateSequentialCheck(edit_times);
   const historyBadge = dateTotalCheck(edit_times);
   const allBadges = mergeAll([sumBadges, consistencyBadge, historyBadge]);
-  var earnedBadges = {};
+  const earnedBadges = {}
   for (let key in allBadges) {
     let val = allBadges[key];
     if (val && val.badgeLevel > 0) {
@@ -44,18 +46,18 @@ export default userData => {
     }
   }
 
-  var sortedSumBadges = Object.keys(sumBadges).sort(function (a, b) {
-    return sumBadges[a].points.percentage - sumBadges[b].points.percentage;
-  });
+  const sortedSumBadges = Object.keys(sumBadges).sort((a, b) => {
+    return sumBadges[a].points.percentage - sumBadges[b].points.percentage
+  })
 
-  var mostObtainableNames = sortedSumBadges.slice(-3);
-  var mostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 1]];
-  var secondMostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 2]];
-  var thirdMostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 3]];
+  const mostObtainableNames = sortedSumBadges.slice(-3);
+  const mostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 1]];
+  const secondMostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 2]];
+  const thirdMostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 3]];
 
   return {
     all: allBadges,
     earnedBadges,
     mostAttainable: [mostObtainable, secondMostObtainable, thirdMostObtainable]
-  };
-};
+  }
+}

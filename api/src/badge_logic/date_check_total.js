@@ -1,13 +1,13 @@
-import getBadgeInfo from './get_badge_info';
-var { uniq } = require('ramda');
+const getBadgeInfo = require('./get_badge_info')
+const { uniq } = require('ramda')
 
-export default dates => {
+module.exports = (dates) => {
   // Truncate hours/minutes/seconds from timestamp
-  let days = dates.map(function (date) {
-    date = new Date(date);
-    return date.setHours(0, 0, 0, 0);
-  });
+  const days = dates.map((date) => {
+    date = new Date(date)
+    return date.setHours(0, 0, 0, 0)
+  })
 
-  const key = 'daysTotal';
-  return { [key]: getBadgeInfo(uniq(days).length, key) };
-};
+  const key = 'daysTotal'
+  return { [key]: getBadgeInfo(uniq(days).length, key) }
+}

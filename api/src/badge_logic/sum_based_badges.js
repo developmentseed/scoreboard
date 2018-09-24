@@ -1,5 +1,5 @@
-import getBadgeInfo from './get_badge_info';
-import { keys } from 'ramda';
+const getBadgeInfo = require('./get_badge_info')
+const { keys } = require('ramda')
 
 /**
  * Given the userData object containing total amounts for each
@@ -7,6 +7,6 @@ import { keys } from 'ramda';
  * 
  * @param {*} userData 
  */
-export default userData => {
-  return keys(userData).map(key => getBadgeInfo(userData[key], key));
-};
+module.exports = (userData, badges) => {
+  return keys(userData).map((key) => getBadgeInfo(userData[key], key, badges))
+}
