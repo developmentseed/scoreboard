@@ -50,6 +50,7 @@ class Dashboard extends Component {
     }
 
     // We are logged in and should have a profile
+    console.log('profile', profile)
     const { user } = profile._xml2json
 
     return (

@@ -88,10 +88,10 @@ test('Sort users by least edits', async (t) => {
   t.deepEqual(resCopy, users)
 })
 
-test('Update user country', async (t) => {
+test.serial('Update user country', async (t) => {
   const updateResponse = await request(app)
-    .put('/scoreboard/api/users/100000000', { country: 'TZ' })
+    .put('/scoreboard/api/users/100000000').send({ country: 'TZ' })
     .expect(200)
 
-  t.equal(updateResponse.country, 'TZ')
+  t.deepEqual(updateResponse.body.country, 'TZ')
 })

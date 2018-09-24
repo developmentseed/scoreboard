@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 
-import api, { createApiUrl } from '../utils/api';
+import api from '../utils/api';
 import countries from '../utils/country-list';
 import '../styles/Users.css';
 

@@ -5,6 +5,7 @@ const campaign = require('./campaign')
 const campaigns = require('./campaigns')
 const topstats = require('./topstats')
 const request = require('request')
+const { passport } = require('../passport')
 const { OSMESA_API } = require('../config')
 
 /**
