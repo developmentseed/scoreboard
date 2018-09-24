@@ -1,7 +1,7 @@
 const connection = require('../db/connection')
 
 class Users {
-  constructor(options) {
+  constructor() {
     this.db = connection()
   }
 
