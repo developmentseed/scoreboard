@@ -1,8 +1,10 @@
+const getBadgeProgress = require('../badge_logic')
 const {
   API_URL
 } = require('../config')
 const osmesa = require('../services/osmesa')
 const connection = require('../db/connection')
+
 
 /**
  * User Stats Route
@@ -25,8 +27,15 @@ module.exports = async (req, res) => {
     const osmesaResponse = await osmesa.getUser(id)
     const [{ country }] = await db('users').where('osm_id', id).select('country')
     const json = JSON.parse(osmesaResponse)
+
+    const allBadges = await db('badges').select() // array of all badges
+    // calculate badges
+    const badges = getBadgeProgress(json, allBadges)
+
     json.extent_uri = `${API_URL}/scoreboard/api/extents/${json.extent_uri}`
-    return res.send({ id, records: json, country })
+    return res.send({
+      id, records: json, country, badges
+    })
   }
   catch (err) {
     console.error(err)
