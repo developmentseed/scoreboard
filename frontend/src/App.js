@@ -105,6 +105,7 @@ class App extends Component {
                             <ul>
                               <li><ActiveLink to="/dashboard" label="Dashboard" /></li>
                               <li><ActiveLink to={`/users/${profile.id}`} label="Public Profile" /></li>
+                              <li><ActiveLink to={`/edit/${profile.id}`} label="Edit Profile" /></li>
                               <li><a href="http://localhost:5000/auth/logout">Logout</a></li>
                             </ul>
                           </div>
