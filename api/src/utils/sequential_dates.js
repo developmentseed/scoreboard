@@ -15,20 +15,20 @@ module.exports = (dates) => {
   let k = 0
   const sorted = []
   sorted[k] = []
-  days.sort((a, b) => {
-    return +a > +b ? 1 : +a === +b ? 0 : -1;
+  days.sort((a, b) => { //eslint-disable-line arrow-body-style
+    return +a > +b ? 1 : +a === +b ? 0 : -1 //eslint-disable-line no-nested-ternary
   })
     .forEach((v, i) => {
-      let a = v
-      let b = dates[i + 1] || 0
+      const a = v
+      const b = dates[i + 1] || 0
       sorted[k].push(+a)
       if ((+b - +a) > 86400000) {
-        sorted[++k] = []
+        sorted[++k] = [] //eslint-disable-line no-plusplus
       }
       return 1
     })
 
-  sorted.sort((a, b) => {
+  sorted.sort((a, b) => { //eslint-disable-line arrow-body-style
     return a.length > b.length ? -1 : 1
   })
 

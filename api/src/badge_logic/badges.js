@@ -48,5 +48,5 @@ module.exports = {
     name: 'Mapathoner',
     id: 13,
     tiers: { 1: 5, 2: 20, 3: 50 }
-  },
-};
+  }
+}

@@ -7,5 +7,5 @@ module.exports = (dates) => {
   const userTotal = findLongestStreak(sequentialDates)
   const key = 'daysInRow'
 
-  return { [key]: getBadgeInfo(userTotal, key)}
+  return { [key]: getBadgeInfo(userTotal, key) }
 }
