@@ -15,6 +15,15 @@ const {
   APP_URL
 } = require('./config')
 
+/*
+* Authorization check for making sure a user has permission to edit a user
+* Currently a user can only edit their own record
+* TODO: consider allowing admins to edit a user record
+*/
+function canEditUser(req, userID) {
+  return req.user && req.user.id === userID
+}
+
 
 if (NODE_ENV === 'test') {
   const nullMiddle = (req, res, next) => {
@@ -28,7 +37,8 @@ if (NODE_ENV === 'test') {
       initialize: () => nullMiddle,
       session: () => nullMiddle
     },
-    authRouter: nullMiddle
+    authRouter: nullMiddle,
+    canEditUser: canEditUser
   }
 }
 else {
@@ -111,13 +121,6 @@ else {
     req.logout()
     res.redirect(APP_URL)
   })
-
-  /*
-  * Authorization check for making sure a user has permission to edit a user
-  * Currently a user can only edit their own record
-  * TODO: consider allowing admins to edit a user record
-  */
-  const canEditUser = (req, userID) => req.user && req.user.id === userID
 
   module.exports = {
     passport: passport,
