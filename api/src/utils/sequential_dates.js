@@ -5,7 +5,7 @@ const { uniq } = require('ramda')
 // http://stackoverflow.com/questions/16690905/javascript-get-sequential-dates-in-array
 module.exports = (dates) => {
   // Filter out non-unique dates
-  let days = uniq(
+  const days = uniq(
     dates.map((date) => {
       date = new Date(date)
       return date.setHours(0, 0, 0, 0)
