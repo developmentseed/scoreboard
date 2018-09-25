@@ -1,7 +1,5 @@
 const getBadgeInfo = require('./get_badge_info')
 const { keys } = require('ramda')
-// change this to get badges from db instead
-const badges = require('./badges')
 
 /**
  * Given the userData object containing total amounts for each
@@ -18,5 +16,5 @@ module.exports = (userData, badgesDB) => {
     return element.metric_name === key
   })
   */
-  return keys(userData).map((key) => getBadgeInfo(userData[key], key, badges[key]))
+  return keys(userData).map((key) => getBadgeInfo(userData[key], key, badgesDB))
 }

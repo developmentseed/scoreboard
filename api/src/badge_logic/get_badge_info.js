@@ -1,12 +1,13 @@
-
+// change this to get badges from db instead
+const badges = require('./badges')
 /**
  * Given a metric and a key to a badge
  * calculate the level of that badge and the percentage amount
  * needed to obtain the next badge
  */
 //eslint-disable-next-line no-unused-vars, consistent-return
-module.exports = (metric, key, badge) => {
-  const { tiers, name, id } = badge
+module.exports = (metric, key, badgesDB) => {
+  const { tiers, name, id } = badges[key]
   let badgeLevel = 0
 
   if (metric >= tiers[1] && metric < tiers[2]) {
