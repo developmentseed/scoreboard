@@ -5,8 +5,19 @@ import {
   Redirect,
   Link
 } from 'react-router-dom';
+
+import {
+  Campaigns,
+  Campaign,
+  Users,
+  User,
+  UserEdit,
+  Home,
+  About,
+  Dashboard
+} from './containers';
+
 import './styles/App.css';
-import { Campaigns, Campaign, Users, User, Home, About, Dashboard } from './containers';
 import profileIcon from './assets/dashboard-temp/profile-icon.png';
 
 const ActiveLink = ({ label, to }) => (
@@ -94,6 +105,7 @@ class App extends Component {
                             <ul>
                               <li><ActiveLink to="/dashboard" label="Dashboard" /></li>
                               <li><ActiveLink to={`/users/${profile.id}`} label="Public Profile" /></li>
+                              <li><ActiveLink to={`/edit/${profile.id}`} label="Edit Profile" /></li>
                               <li><a href="http://localhost:5000/auth/logout">Logout</a></li>
                             </ul>
                           </div>
@@ -114,6 +126,9 @@ class App extends Component {
           <Route exact path="/home" component={Home} />
           <Route exact path="/campaigns" component={Campaigns} />
           <Route exact path="/users" component={Users} />
+          <Route exact path="/edit/:uid" render={props => (
+            <UserEdit {...props} loggedIn={loggedIn} profile={profile} />
+          )} />
           <Route path="/users/:uid" component={User} />
           <Route exact path="/about" component={About} />
           <Route exact path="/dashboard" render={props => (
