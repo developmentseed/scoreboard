@@ -5,6 +5,7 @@ const {
 const Users = require('../models/users')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
+const connection = require('../db/connection')
 
 const users = new Users()
 
@@ -26,6 +27,7 @@ async function get(req, res) {
     return res.boom.badRequest('Invalid id')
   }
   try {
+    const db = connection()
     const osmesaResponse = await osmesa.getUser(id)
     const [{ country }] = await users.findByOsmId(id).select('country')
     const json = JSON.parse(osmesaResponse)
