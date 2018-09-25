@@ -12,6 +12,7 @@ const getJosmEditCount = compose(
 )
 
 module.exports = (userData, badges) => {
+  /* eslint-disable camelcase */
   const {
     buildings_add,
     waterways_add,
@@ -23,6 +24,7 @@ module.exports = (userData, badges) => {
     editors,
     edit_times
   } = userData
+  /* eslint-enable camelcase */
 
   const sumBadges = reject(isNil)(getSumBadges({
     buildings: Number(buildings_add),
@@ -35,25 +37,27 @@ module.exports = (userData, badges) => {
     hashtags: Object.keys(hashtags).length
   }, badges))
 
-  const consistencyBadge = dateSequentialCheck(edit_times);
-  const historyBadge = dateTotalCheck(edit_times);
-  const allBadges = mergeAll([sumBadges, consistencyBadge, historyBadge]);
+  const consistencyBadge = dateSequentialCheck(edit_times)
+  const historyBadge = dateTotalCheck(edit_times)
+  const allBadges = mergeAll([sumBadges, consistencyBadge, historyBadge])
   const earnedBadges = {}
-  for (let key in allBadges) {
-    let val = allBadges[key];
+  /* eslint-disable no-restricted-syntax */
+  for (const key in allBadges) {
+    const val = allBadges[key]
     if (val && val.badgeLevel > 0) {
-      earnedBadges[key] = val;
+      earnedBadges[key] = val
     }
   }
+  /* eslint-enable no-restricted-syntax */
 
   const sortedSumBadges = Object.keys(sumBadges).sort((a, b) => {
     return sumBadges[a].points.percentage - sumBadges[b].points.percentage
   })
 
-  const mostObtainableNames = sortedSumBadges.slice(-3);
-  const mostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 1]];
-  const secondMostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 2]];
-  const thirdMostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 3]];
+  const mostObtainableNames = sortedSumBadges.slice(-3)
+  const mostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 1]]
+  const secondMostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 2]]
+  const thirdMostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 3]]
 
   return {
     all: allBadges,
