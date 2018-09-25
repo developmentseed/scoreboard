@@ -48,8 +48,7 @@ else {
     const users = new Users()
 
     try {
-      let user = await users.findByOsmId(profile.id)
-
+      let [user] = await users.findByOsmId(profile.id)
       if (user) {
         done(null, profile)
       }
@@ -112,8 +111,17 @@ else {
     req.logout()
     res.redirect(APP_URL)
   })
+
+  /*
+  * Authorization check for making sure a user has permission to edit a user
+  * Currently a user can only edit their own record
+  * TODO: consider allowing admins to edit a user record
+  */
+  const canEditUser = (req, userID) => req.user && req.user.id === userID
+
   module.exports = {
     passport: passport,
-    authRouter: router
+    authRouter: router,
+    canEditUser: canEditUser
   }
 }

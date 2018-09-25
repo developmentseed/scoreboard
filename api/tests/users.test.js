@@ -91,7 +91,7 @@ test('Sort users by least edits', async (t) => {
 test.serial('Update user country', async (t) => {
   const updateResponse = await request(app)
     .put('/scoreboard/api/users/100000000').send({ country: 'TZ' })
-    .expect(200)
+    .expect(401)
 
-  t.deepEqual(updateResponse.body.country, 'TZ')
+  t.true(updateResponse.body.error === 'Unauthorized')
 })

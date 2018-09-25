@@ -3,6 +3,7 @@ const {
 } = require('../config')
 const Users = require('../models/users')
 const osmesa = require('../services/osmesa')
+const { canEditUser } = require('../passport')
 
 const users = new Users()
 
@@ -48,6 +49,10 @@ async function get(req, res) {
 async function put(req, res) {
   const { id } = req.params
   const { body } = req
+
+  if (!canEditUser(req, id)) {
+    return res.boom.unauthorized()
+  }
 
   if (!id) {
     return res.boom.badRequest('Invalid id')

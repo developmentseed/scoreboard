@@ -60,6 +60,20 @@ class UserEdit extends Component {
 
   render () {
     const { countries, currentCountry } = this.state;
+    const { loggedIn } = this.props;
+
+    if (!loggedIn) {
+      return (
+        <div className="dashboard">
+          <section>
+            <div className="row">
+              <h2 className="header--large">You are not logged in!</h2>
+              <p>Log in</p>
+            </div>
+          </section>
+        </div>
+      )
+    }
 
     return (
       <div className="UserEdit">
