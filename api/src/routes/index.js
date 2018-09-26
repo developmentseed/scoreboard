@@ -5,6 +5,7 @@ const campaign = require('./campaign')
 const campaigns = require('./campaigns')
 const topstats = require('./topstats')
 const request = require('request')
+
 const { OSMESA_API } = require('../config')
 
 /**
@@ -14,7 +15,8 @@ router.get('/extents/*', (req, res) => {
   const url = `${OSMESA_API}/extents/${req.params[0]}`
   req.pipe(request(url)).pipe(res)
 })
-router.get('/users/:id', user)
+router.get('/users/:id', user.get)
+router.put('/users/:id', user.put)
 router.get('/users', users)
 router.get('/campaigns/:id', campaign)
 router.get('/campaigns', campaigns)

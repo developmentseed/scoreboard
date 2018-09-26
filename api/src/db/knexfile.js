@@ -32,7 +32,7 @@ module.exports = {
     seeds: {
       directory: path.join(__dirname, 'seeds', 'development')
     },
-    debug: true
+    debug: process.env.KNEX_DEBUG || false
   }, def),
   staging: def,
   production: def

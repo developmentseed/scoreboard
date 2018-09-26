@@ -8,7 +8,6 @@ function generateUsers(n, knex) {
   const users = []
   for (let i = 0; i < n; i += 1) {
     const user = {
-      id: i + 1,
       osm_id: 100000000 + i,
       full_name: `test${i} McTest`,
       country: countryIds[parseInt(Math.random() * (countryIds.length - 1))]
