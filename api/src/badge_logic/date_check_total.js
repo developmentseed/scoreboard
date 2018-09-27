@@ -1,7 +1,7 @@
 const getBadgeInfo = require('./get_badge_info')
 const { uniq } = require('ramda')
 
-module.exports = (dates) => {
+module.exports = (dates, badges) => {
   // Truncate hours/minutes/seconds from timestamp
   const days = dates.map((date) => {
     date = new Date(date)
@@ -9,5 +9,9 @@ module.exports = (dates) => {
   })
 
   const key = 'daysTotal'
-  return { [key]: getBadgeInfo(uniq(days).length, key) }
+  return {
+    [key]: getBadgeInfo(uniq(days).length, key, badges.find((element) => {
+      return element.metric_name === key
+    }))
+  }
 }

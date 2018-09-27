@@ -32,9 +32,8 @@ async function get(req, res) {
     const [{ country }] = await users.findByOsmId(id).select('country')
     const json = JSON.parse(osmesaResponse)
 
-    const allBadges = await db('badges').select() // array of all badges
-    // calculate badges
-    const badges = getBadgeProgress(json, allBadges)
+    const badgesFromDB = await db('badges').select() // array of all badges
+    const badges = getBadgeProgress(json, badgesFromDB)
 
     json.extent_uri = `${API_URL}/scoreboard/api/extents/${json.extent_uri}`
     return res.send({

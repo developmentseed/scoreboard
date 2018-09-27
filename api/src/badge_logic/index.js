@@ -25,7 +25,6 @@ module.exports = (userData, badges) => {
     edit_times
   } = userData
   /* eslint-enable camelcase */
-
   const sumBadges = reject(isNil)(getSumBadges({
     buildings: Number(buildings_add),
     waterways: Number(waterways_add),
@@ -36,9 +35,9 @@ module.exports = (userData, badges) => {
     josm: getJosmEditCount(editors),
     hashtags: Object.keys(hashtags).length
   }, badges))
+  const consistencyBadge = dateSequentialCheck(edit_times, badges)
+  const historyBadge = dateTotalCheck(edit_times, badges)
 
-  const consistencyBadge = dateSequentialCheck(edit_times)
-  const historyBadge = dateTotalCheck(edit_times)
   const allBadges = mergeAll([sumBadges, consistencyBadge, historyBadge])
   const earnedBadges = {}
   /* eslint-disable no-restricted-syntax */
