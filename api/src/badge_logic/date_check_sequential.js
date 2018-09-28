@@ -9,7 +9,7 @@ module.exports = (dates, badges) => {
 
   return {
     [key]: getBadgeInfo(userTotal, key, badges.find((element) => {
-      return element.metric_name === key
+      return element.metric === key
     }))
   }
 }

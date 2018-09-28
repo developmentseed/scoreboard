@@ -11,7 +11,7 @@ module.exports = (dates, badges) => {
   const key = 'daysTotal'
   return {
     [key]: getBadgeInfo(uniq(days).length, key, badges.find((element) => {
-      return element.metric_name === key
+      return element.metric === key
     }))
   }
 }

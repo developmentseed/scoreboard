@@ -12,6 +12,6 @@ const { keys } = require('ramda')
 //eslint-disable-next-line no-unused-vars
 module.exports = (userData, badgesDB) => {
   return keys(userData).map((key) => getBadgeInfo(userData[key], key, badgesDB.find((element) => {
-    return element.metric_name === key
+    return element.metric === key
   })))
 }
