@@ -8,6 +8,7 @@ const {
 const {
   TM_URL,
   TM_HASHTAG,
+  TM_VERSION,
   NODE_ENV
 } = require('../config')
 
@@ -39,15 +40,28 @@ function extractCampaignHashtag(str) {
 }
 
 /**
- * Methods to grab data from the tasking manager
+ * Methods to grab data from tasking manager version 2
  */
-class TMAPI {
+class TM2API {
   /* Get all projects from the tasking manager
    *
    * @returns {Promise} response
    */
   getProjects() {
     return rp(`${TM_URL}/projects.json`)
+  }
+}
+
+/**
+ * Methods to grab data from tasking manager version 3
+ */
+class TM3API {
+  /* Get all projects from the tasking manager
+   *
+   * @returns {Promise} response
+   */
+  getProjects() {
+    return rp(`${TM_URL}/api/v1/project/search?mapperLevel=ALL`)
   }
 }
 
@@ -62,6 +76,9 @@ module.exports.extractCampaignHashtag = extractCampaignHashtag
 if (NODE_ENV === 'development' || NODE_ENV === 'test') {
   module.exports.TM = new FakeTMAPI()
 }
-else {
-  module.exports.TM = new TMAPI()
+else if (TM_VERSION === '2') {
+  module.exports.TM = new TM2API()
+}
+else if (TM_VERSION === '3') {
+  module.exports.TM = new TM3API()
 }

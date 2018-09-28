@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
 import '../styles/Dashboard.css';
 import api from '../utils/api';
-import {
-  Route,
-  Link
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import badge1 from '../assets/dashboard-temp/badge-1.jpg';
 import badge2 from '../assets/dashboard-temp/badge-2.jpg';
 import badge3 from '../assets/dashboard-temp/badge-3.jpg';
-
 
 import {UserExtentMap} from '../components/charts';
 
@@ -21,19 +17,40 @@ class Dashboard extends Component {
   }
 
   componentDidMount () {
-    const { match }  = this.props;
-    const {params: { uid } } = match;
-    api('get', `/api/users/8`)
-    .then(res => {
-      // TODO error state
-      this.setState({
-        records: res.data.records,
-        match
+    const { profile } = this.props
+
+    api('get', `/api/users/134244`)
+      .then(res => {
+        console.log(res)
+        this.setState({
+          records: res.data.records
+        });
+      }).catch((err) => {
+        console.log(err)
       });
-    });
+
+    // const { match }  = this.props;
+    // const {params: { uid } } = match;
+    // api('get', `/api/users/8`)
+    // .then(res => {
+    //   // TODO error state
+    //   this.setState({
+    //     records: res.data.records,
+    //     match
+    //   });
+    // });
   }
+
+  componentWillUpdate() {
+    const { loggedIn, profile } = this.props
+
+    // console.log('componentWillUpdate loggedIn, profile', loggedIn, profile)
+  }
+
   render() {
-    const {loggedIn, profile} = this.props
+    const { loggedIn, profile } = this.props
+
+    // console.log('render loggedIn, profile', loggedIn, profile)
 
     /* Handle not logged in */
     if (!loggedIn) {

@@ -3,6 +3,7 @@ module.exports = {
   NODE_ENV: process.env.NODE_ENV || 'development',
   OSMESA_API: process.env.OSMESA_API || 'https://osmesa-dummy-analytics.herokuapp.com',
   TM_URL: process.env.TM_URL || 'http://tasks.openstreetmap.us',
+  TM_VERSION: process.env.TM_VERSION || '2',
   TM_HASHTAG: process.env.TM_HASHTAG || 'project',
   API_URL: process.env.API_URL || 'http://localhost:5000',
   APP_URL: process.env.APP_URL || 'http://localhost:3000',
