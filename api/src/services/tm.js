@@ -50,6 +50,14 @@ class TM2API {
   getProjects() {
     return rp(`${TM_URL}/projects.json`)
   }
+
+  getProject(id) {
+    return rp(`${TM_URL}/project/${id}.json`)
+  }
+
+  getTasks(id) {
+    return rp(`${TM_URL}/project/${id}/tasks.json`)
+  }
 }
 
 /**
@@ -62,6 +70,14 @@ class TM3API {
    */
   getProjects() {
     return rp(`${TM_URL}/api/v1/project/search?mapperLevel=ALL`)
+  }
+
+  getProject(id) {
+    return rp(`${TM_URL}/project/${id}`)
+  }
+
+  getTasks(id) {
+    return rp(`${TM_URL}/project/${id}/tasks`)
   }
 }
 
