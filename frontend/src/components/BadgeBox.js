@@ -27,10 +27,8 @@ function stripWS(text) {
 export default ({ badges }) => {
   if (badges && badges.all) {
     var progressBadges = Object.keys(badges.all).map(val => {
-      console.log(badges)
       var badge = badges.all[val];
       if (badge) {
-        console.log(badge)
         return {
           description: badge.description, //mapBadgeToDescrip(badge.name),
           progress: Math.floor(badge.points.percentage) + '% of the way to Level ' + badge.nextBadgeLevel + '. ' +
