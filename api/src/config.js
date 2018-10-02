@@ -11,5 +11,5 @@ module.exports = {
   OSM_CONSUMER_KEY: process.env.OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET: process.env.OSM_CONSUMER_SECRET,
   SESSION_SECRET: process.env.SESSION_SECRET || 'SUPER SECRET',
-  DATABASE_URL: process.env.DATABASE_URL || 'postgres://scoreboard:test@localhost/scoreboard'
+  DATABASE_URL: process.env.DATABASE_URL || 'postgres://scoreboard:test@localhost:5433/scoreboard'
 }

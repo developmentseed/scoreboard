@@ -76,6 +76,12 @@ If you are running the command for the first time, you should wait until the dat
 
 To start with a new database with no data, stop the command, remove the `.tmp` folder and run the command again.
 
+### Run migrations
+
+Set up the database schema by running:
+
+     $ yarn migrate
+
 ### Populate Data
 For the frontend and the API to work, you must have the data loaded on the local database.
 
