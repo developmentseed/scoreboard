@@ -30,7 +30,7 @@ export default ({ badges }) => {
       var badge = badges.all[val];
       if (badge) {
         return {
-          description: badge.description, //mapBadgeToDescrip(badge.name),
+          description: badge.description,
           progress: Math.floor(badge.points.percentage) + '% of the way to Level ' + badge.nextBadgeLevel + '. ' +
             mapBadgeToTask(badge.metric, Math.floor(badge.points.nextPoints - badge.points.currentPoints)),
           name: badge.name,
