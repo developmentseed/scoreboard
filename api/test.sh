@@ -1,7 +1,7 @@
 if [ -z "$CI" ]; then
-    createdb scoreboard_tests && 
+    createdb -p 5433 scoreboard_tests && 
     ava tests/*.test.js ; 
-    dropdb scoreboard_tests
+    dropdb  -p 5433 scoreboard_tests
 else
     ava tests/*.test.js
 fi
