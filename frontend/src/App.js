@@ -14,7 +14,8 @@ import {
   UserEdit,
   Home,
   About,
-  Dashboard
+  Dashboard,
+  BadgesAdmin
 } from './containers';
 
 import './styles/App.css';
@@ -135,6 +136,9 @@ class App extends Component {
             <Dashboard {...props} loggedIn={loggedIn} profile={profile} />
           )} />
           <Route path="/campaigns/:name" component={Campaign} />
+          <Route exact path="/admin/badges" render={props => (
+            <BadgesAdmin {...props} loggedIn={loggedIn} profile={profile} />
+          )} />
         </div>
       </Router >
     )
