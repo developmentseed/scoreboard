@@ -4,6 +4,7 @@ const users = require('./users')
 const campaign = require('./campaign')
 const campaigns = require('./campaigns')
 const topstats = require('./topstats')
+const badges = require('./badges')
 const request = require('request')
 
 const { OSMESA_API } = require('../config')
@@ -21,5 +22,9 @@ router.get('/users', users)
 router.get('/campaigns/:id', campaign)
 router.get('/campaigns', campaigns)
 router.get('/topstats', topstats)
+
+router.get('/badges', badges.get)
+router.post('/badges', badges.post)
+// to be implemented: router.get('/badges/:id', badges.get)
 
 module.exports = router
