@@ -21,17 +21,17 @@ test('Getting a badge from the db', async (t) => {
     .get('/scoreboard/api/badges/1')
     .expect(200)
   // name should always be included
-  t.true('name' in res.body.records)
+  t.true('name' in res.body.badges)
 })
 
 test('Pull all badges', async (t) => {
   const res = await request(app)
     .get('/scoreboard/api/badges')
     .expect(200)
-  const numBadges = res.body.records.length
+  const numBadges = res.body.badges.length
   if (numBadges > 0) {
     // name should always be included
-    t.true('name' in res.body.records[numBadges - 1])
+    t.true('name' in res.body.badges[numBadges - 1])
   }
 })
 
@@ -39,7 +39,7 @@ test('Inserting a badge into the db', async (t) => {
   let res = await request(app)
     .get('/scoreboard/api/badges')
     .expect(200)
-  const numBadges = res.body.records.length
+  const numBadges = res.body.badges.length
   await request(app)
     .post('/scoreboard/api/badges')
     .send({ name: 'Test Badge', operations: [['>', 'daysTotal', '100']] })
@@ -47,10 +47,10 @@ test('Inserting a badge into the db', async (t) => {
   res = await request(app)
     .get('/scoreboard/api/badges')
     .expect(200)
-  const numBadges2 = res.body.records.length
+  const numBadges2 = res.body.badges.length
   t.true(numBadges + 1 === numBadges2)
-  t.true(res.body.records[numBadges - 1].name === 'Test Badge')
-  t.true(res.body.records[numBadges - 1].operations === [['>', 'daysTotal', '100']])
+  t.true(res.body.badges[numBadges - 1].name === 'Test Badge')
+  t.true(res.body.badges[numBadges - 1].operations === [['>', 'daysTotal', '100']])
 })
 
 test('Updating a badge in the db', async (t) => {
@@ -64,9 +64,9 @@ test('Updating a badge in the db', async (t) => {
   const res = await request(app)
     .get('/scoreboard/api/badges')
     .expect(200)
-  const numBadges = res.body.records.length
-  t.true(res.body.records[numBadges - 1].name === 'Test Badge Edit')
-  t.true(res.body.records[numBadges - 1].operations
+  const numBadges = res.body.badges.length
+  t.true(res.body.badges[numBadges - 1].name === 'Test Badge Edit')
+  t.true(res.body.badges[numBadges - 1].operations
     === [['>', 'daysTotal', '100'], ['>=', 'daysInRow', '200']])
 })
 
@@ -74,12 +74,12 @@ test('Deleting a badge from the db', async (t) => {
   let res = await request(app)
     .get('/scoreboard/api/badges')
     .expect(200)
-  const numBadges = res.body.records.length
+  const numBadges = res.body.badges.length
   await request(app)
     .delete('/scoreboard/api/badges/', numBadges - 1)
     .expect(200)
   res = await request(app)
     .get('/scoreboard/api/badges')
     .expect(200)
-  t.true(res.body.records.length === numBadges - 1)
+  t.true(res.body.badges.length === numBadges - 1)
 })
