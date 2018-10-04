@@ -24,7 +24,7 @@ router.get('/campaigns', campaigns)
 router.get('/topstats', topstats)
 
 router.get('/badges', badges.get)
+router.get('/badges/:id', badges.get)
 router.post('/badges', badges.post)
-// to be implemented: router.get('/badges/:id', badges.get)
 
 module.exports = router

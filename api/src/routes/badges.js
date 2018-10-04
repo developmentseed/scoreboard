@@ -1,16 +1,25 @@
 const connection = require('../db/connection')
 
 async function get(req, res) {
-  try {
+  // try {
+    const { id } = req.params
     const db = connection()
-    const badgesFromDB = await db('custom-badges').select()
+    let fromDB = null
+    if (!id) {
+      fromDB = await db('custom-badges').select()
+    }
+    else {
+      fromDB = await db('custom-badges').where('id', '=', id)
+    }
     return res.send({
-      badges: badgesFromDB
+      badges: fromDB
     })
+  /*
   }
   catch (e) {
     return res.sendStatus(500)
   }
+  */
 }
 
 async function post(req, res) {
