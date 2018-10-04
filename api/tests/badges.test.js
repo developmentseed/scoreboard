@@ -49,8 +49,8 @@ test.serial('Inserting a badge into the db', async (t) => {
     .expect(200)
   const numBadges2 = res.body.badges.length
   t.true(numBadges + 1 === numBadges2)
-  t.true(res.body.badges[numBadges - 1].name === 'Test Badge')
-  t.true(res.body.badges[numBadges - 1].operations === [['>', 'daysTotal', '100']])
+  t.true(res.body.badges[0].name === 'Test Badge')
+  t.true(res.body.badges[0].operations === [['>', 'daysTotal', '100']])
 })
 
 test.serial('Updating a badge in the db', async (t) => {
