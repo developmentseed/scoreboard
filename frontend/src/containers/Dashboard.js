@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'unistore/react';
 import { actions } from '../store'
 
+import api from '../utils/api';
 import '../styles/Dashboard.css';
 
 import { UserExtentMap } from '../components/charts';
@@ -18,6 +19,12 @@ class Dashboard extends Component {
   componentDidMount () {
     this.props.getAuthenticatedUser()
     this.props.getProjects()
+    api('get', '/api/projects/')
+      .then(res => {
+        console.log('did mount projects in dashboard', res.data)
+      }).catch((err) => {
+        console.log('err')
+      })
   }
 
   componentDidUpdate () {
