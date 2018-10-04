@@ -1,7 +1,7 @@
 const connection = require('../db/connection')
 
 async function get(req, res) {
-  // try {
+  try {
     const { id } = req.params
     const db = connection()
     let fromDB = null
@@ -14,12 +14,10 @@ async function get(req, res) {
     return res.send({
       badges: fromDB
     })
-  /*
   }
   catch (e) {
     return res.sendStatus(500)
   }
-  */
 }
 
 async function post(req, res) {
