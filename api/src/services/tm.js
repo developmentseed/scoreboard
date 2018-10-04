@@ -95,11 +95,10 @@ class FakeTMAPI {
 
 module.exports.extractCampaignHashtag = extractCampaignHashtag
 
-// if (NODE_ENV === 'development' || NODE_ENV === 'test') {
-//   module.exports.TM = new FakeTMAPI()
-// }
-// else 
-if (TM_VERSION === '2') {
+if (NODE_ENV === 'test') {
+  module.exports.TM = new FakeTMAPI()
+}
+else if (TM_VERSION === '2') {
   module.exports.TM = new TM2API()
 }
 else if (TM_VERSION === '3') {
