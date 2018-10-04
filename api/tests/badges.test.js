@@ -21,7 +21,7 @@ test('Getting a badge from the db', async (t) => {
     .get('/scoreboard/api/badges/1')
     .expect(200)
   // name should always be included
-  t.true('name' in res.body.badges)
+  t.true('name' in res.body.badges[0])
 })
 
 test('Pull all badges', async (t) => {
