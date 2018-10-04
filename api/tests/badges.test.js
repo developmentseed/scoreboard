@@ -45,7 +45,7 @@ test.serial('Inserting a badge into the db', async (t) => {
     .send({ name: 'Test Badge', operations: [['>', 'daysTotal', '100']] })
     .expect(200)
   res = await request(app)
-    .get('/scoreboard/api/badges/', numBadges)
+    .get('/scoreboard/api/badges/', numBadges + 1)
     .expect(200)
   const numBadges2 = res.body.badges.length
   t.true(numBadges + 1 === numBadges2)
