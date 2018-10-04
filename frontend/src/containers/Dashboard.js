@@ -17,6 +17,7 @@ class Dashboard extends Component {
 
   componentDidMount () {
     this.props.getAuthenticatedUser()
+    this.props.getProjects()
   }
 
   componentDidUpdate () {
@@ -71,6 +72,42 @@ class Dashboard extends Component {
               })
             }
           </ul>
+        </div>
+      </section>
+    )
+  }
+
+  renderProjects() {
+    const { projects } = this.props
+    console.log('renderProjects', projects)
+    if (!projects) return (<div />)
+
+    return (
+      <section>
+        <div className="row">
+          <h2 className="header--large header--with-description">Available Projects</h2>
+          <p>Get started on one of the projects below to help complete campaigns or to continue earning points towards badges!</p>
+          <ol>
+            {
+              projects.map((project) => {
+                return (
+                  <li className="block--campaign">
+                    <h3 className="header--small header--with-description-xlg">
+                      <Link className="header--underlined" to={`${projects.tasking_manager_url}/project/%{project.id}`}>{project.name}</Link>
+                    </h3>
+                    <div className="chart-bar--main">
+                      <span className="chart-bar--title">Complete</span>
+                      <span className="chart-bar--wrapper">
+                        <span className="chart-bar" style={{"width": `70%`}}></span>
+                        <span className="chart-bar--percent">70%</span>
+                      </span>
+                    </div>
+                    <Link className="link--large" to="/about">Join the project</Link>
+                  </li>
+                )
+              })
+            }
+          </ol>
         </div>
       </section>
     )
@@ -134,48 +171,10 @@ class Dashboard extends Component {
         </header>
 
         {this.renderUpcomingBadges(user.badges.mostAttainable)}
-
-
-        <section>
-          <div className="row">
-            <h2 className="header--large header--with-description">Suggested Tasks</h2>
-            <p>Get started on one of the tasks below to help complete campaigns or to continue earning points towards badges!</p>
-            <ol>
-              <li className="block--campaign">
-                <h3 className="header--small header--with-description-xlg">
-                  <Link className="header--underlined" to={`/campaigns/`}>Emergency Support</Link>
-                </h3>
-                <p>Check out a cell for editing from the Tasking Manager. Edit data using the web-based ID-Editor or Java-based JOSM...</p>
-                <div className="chart-bar--main">
-                  <span className="chart-bar--title">Complete</span>
-                  <span className="chart-bar--wrapper">
-                    <span className="chart-bar" style={{"width": `70%`}}></span>
-                    <span className="chart-bar--percent">70%</span>
-                  </span>
-                </div>
-                <Link className="link--large" to="/about">Join the 19 Participants</Link>
-              </li>
-              <li className="block--campaign">
-                <h3 className="header--small header--with-description-xlg">
-                  <Link className="header--underlined" to={`/campaigns/`}>Emergency Support</Link>
-                </h3>
-                <p>Check out a cell for editing from the Tasking Manager. Edit data using the web-based ID-Editor or Java-based JOSM...</p>
-                <div className="chart-bar--main">
-                  <span className="chart-bar--title">Complete</span>
-                  <span className="chart-bar--wrapper">
-                    <span className="chart-bar" style={{"width": `70%`}}></span>
-                    <span className="chart-bar--percent">70%</span>
-                  </span>
-                </div>
-                <Link className="link--large" to="/about">Join the 19 Participants</Link>
-              </li>
-            </ol>
-          </div>
-        </section>
-
+        {this.renderProjects()}
       </div>
     );
   }
 }
 
-export default connect(['loggedIn', 'osmProfile', 'user'], actions)(Dashboard);
+export default connect(['loggedIn', 'osmProfile', 'user', 'projects'], actions)(Dashboard);

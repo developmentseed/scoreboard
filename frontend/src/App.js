@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Provider, connect } from 'unistore/react';
+import { Provider } from 'unistore/react';
 
 import {
   HashRouter as Router,
@@ -19,7 +19,7 @@ import {
   Dashboard
 } from './containers';
 
-import { store, actions } from './store'
+import { store } from './store'
 
 import './styles/App.css';
 import profileIcon from './assets/dashboard-temp/profile-icon.png';

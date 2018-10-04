@@ -1,5 +1,10 @@
 const { TM } = require('../services/tm')
 
+const {
+  TM_URL,
+  TM_VERSION,
+} = require('../config')
+
 /**
  * Project list route
  * /projects
@@ -12,7 +17,11 @@ const { TM } = require('../services/tm')
 async function list(req, res) {
   try {
     const projects = await TM.getProjects()
-    return res.send({ records: projects })
+    return res.send({
+      tasking_manager_url: TM_URL,
+      tasking_manager_version: TM_VERSION,
+      records: JSON.parse(projects)
+    })
   }
   catch (err) {
     console.error(err)
@@ -36,7 +45,11 @@ async function get(req, res) {
   }
   try {
     const project = await TM.getProject(id)
-    return res.send(project)
+    return res.send({
+      tasking_manager_url: TM_URL,
+      tasking_manager_version: TM_VERSION,
+      feature: JSON.parse(project)
+    })
   }
   catch (err) {
     console.error(err)
@@ -60,7 +73,11 @@ async function getTasks(req, res) {
   }
   try {
     const tasks = await TM.getTasks(id)
-    return res.send(tasks)
+    return res.send({
+      tasking_manager_url: TM_URL,
+      tasking_manager_version: TM_VERSION,
+      tasks: JSON.parse(tasks)
+    })
   }
   catch (err) {
     console.error(err)

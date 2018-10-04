@@ -6,6 +6,7 @@ export const store = createStore({
   loggedIn: false,
   osmProfile: null,
   user: null,
+  projects: null,
   error: null
 })
 
@@ -40,6 +41,16 @@ export function actions (store) {
       return api('get', `/api/users/${id}`)
         .then(res => {
           store.setState({ user: res.data })
+        }).catch((err) => {
+          store.setState({ error: err })
+        })
+    },
+
+    getProjects () {
+      return api('get', '/api/projects/')
+        .then(res => {
+          console.log('getProjects', res.data)
+          store.setState({ projects: res.data })
         }).catch((err) => {
           store.setState({ error: err })
         })

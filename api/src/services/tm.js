@@ -85,14 +85,21 @@ class FakeTMAPI {
   getProjects() {
     return Promise.resolve(JSON.stringify(sampleprojects))
   }
+
+  getProject(id) {
+    return JSON.stringify(Promise.resolve(sampleprojects.features.find((project) => {
+      return String(project.id) === id
+    })))
+  }
 }
 
 module.exports.extractCampaignHashtag = extractCampaignHashtag
 
-if (NODE_ENV === 'development' || NODE_ENV === 'test') {
-  module.exports.TM = new FakeTMAPI()
-}
-else if (TM_VERSION === '2') {
+// if (NODE_ENV === 'development' || NODE_ENV === 'test') {
+//   module.exports.TM = new FakeTMAPI()
+// }
+// else 
+if (TM_VERSION === '2') {
   module.exports.TM = new TM2API()
 }
 else if (TM_VERSION === '3') {
