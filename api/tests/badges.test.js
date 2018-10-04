@@ -35,7 +35,7 @@ test('Pull all badges', async (t) => {
   }
 })
 
-test('Inserting a badge into the db', async (t) => {
+test.serial('Inserting a badge into the db', async (t) => {
   let res = await request(app)
     .get('/scoreboard/api/badges')
     .expect(200)
@@ -53,7 +53,7 @@ test('Inserting a badge into the db', async (t) => {
   t.true(res.body.badges[numBadges - 1].operations === [['>', 'daysTotal', '100']])
 })
 
-test('Updating a badge in the db', async (t) => {
+test.serial('Updating a badge in the db', async (t) => {
   await request(app)
     .put('/scoreboard/api/badges')
     .send({
@@ -70,7 +70,7 @@ test('Updating a badge in the db', async (t) => {
     === [['>', 'daysTotal', '100'], ['>=', 'daysInRow', '200']])
 })
 
-test('Deleting a badge from the db', async (t) => {
+test.serial('Deleting a badge from the db', async (t) => {
   let res = await request(app)
     .get('/scoreboard/api/badges')
     .expect(200)
