@@ -1,6 +1,4 @@
-const TM = require('../services/tm')
-
-const tm = new TM()
+const { TM } = require('../services/tm')
 
 /**
  * Project list route
@@ -13,7 +11,7 @@ const tm = new TM()
  */
 async function list(req, res) {
   try {
-    const projects = await tm.getProjects()
+    const projects = await TM.getProjects()
     return res.send({ records: projects })
   }
   catch (err) {
@@ -37,7 +35,7 @@ async function get(req, res) {
     return res.boom.badRequest('Invalid id')
   }
   try {
-    const project = await tm.getProject(id)
+    const project = await TM.getProject(id)
     return res.send(project)
   }
   catch (err) {
@@ -61,7 +59,7 @@ async function getTasks(req, res) {
     return res.boom.badRequest('Invalid id')
   }
   try {
-    const tasks = await tm.getTasks(id)
+    const tasks = await TM.getTasks(id)
     return res.send(tasks)
   }
   catch (err) {

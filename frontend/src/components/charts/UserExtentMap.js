@@ -5,7 +5,6 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0td
 
 class UserExtentMap extends Component {
   componentDidMount() {
-    console.log('this.props.extent', this.props.extent)
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/devseed/cj9iy816wb9x02smisy4y7id3',
