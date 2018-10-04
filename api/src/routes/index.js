@@ -23,8 +23,11 @@ router.get('/campaigns/:id', campaign)
 router.get('/campaigns', campaigns)
 router.get('/topstats', topstats)
 
+// badges routes
 router.get('/badges', badges.get)
 router.get('/badges/:id', badges.get)
 router.post('/badges', badges.post)
+router.delete('/badges/:id', badges.del)
+router.put('/badges/:id', badges.put)
 
 module.exports = router

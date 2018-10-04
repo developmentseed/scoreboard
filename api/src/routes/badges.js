@@ -25,7 +25,6 @@ async function post(req, res) {
     const { body } = req
     const db = connection()
     // Note that we'll need to add security here
-    console.log('insert ', body, ' into DB')
     await db('custom-badges').insert(body)
     return res.sendStatus(200)
   }
@@ -34,7 +33,36 @@ async function post(req, res) {
   }
 }
 
+async function del(req, res) {
+  try {
+    const { id } = req.params
+    const db = connection()
+    // Note that we'll need to add security here
+    await db('custom-badges').where('id', '=', id).del()
+    return res.sendStatus(200)
+  }
+  catch (e) {
+    return res.sendStatus(500)
+  }
+}
+
+
+async function put(req, res) {
+  const { id } = req.params
+  const { body } = req
+  const db = connection()
+  try {
+    await db('custom-badges').where('id', '=', id).update(body)
+    return res.sendStatus(200)
+  }
+  catch (err) {
+    return res.sendStatus(500)
+  }
+}
+
 module.exports = {
   get,
-  post
+  post,
+  put,
+  del
 }
