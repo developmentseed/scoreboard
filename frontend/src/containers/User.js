@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import api from '../utils/api';
 import '../styles/Users.css';
-import getBadgeProgress from '../badge_logic';
 import UserGlance from '../components/UserGlance';
 import UserHeader from '../components/UserHeader';
 import UserStats from '../components/UserStats';
@@ -53,6 +52,7 @@ class User extends Component {
           this.setState({
             records: res.data.records,
             country: res.data.country,
+            badges:  res.data.badges,
             match
           });
         });
@@ -60,9 +60,8 @@ class User extends Component {
   }
 
   render () {
-    const { records, match, country } = this.state;
+    const { records, match, country, badges } = this.state;
     if (match) {
-      const badges = getBadgeProgress(records);
       const edits = getSumEdits(records);
       return (
         <div className="User">
