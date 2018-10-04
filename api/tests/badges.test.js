@@ -48,7 +48,7 @@ test.serial('Inserting a badge into the db', async (t) => {
     .get(`/scoreboard/api/badges/${numBadges + 1}`)
     .expect(200)
   t.true(res.body.badges[0].name === 'Test Badge')
-  t.true(res.body.badges[0].operations === [['>', 'daysTotal', '100']])
+  t.deepEqual(res.body.badges[0].operations, [['>', 'daysTotal', '100']])
 })
 
 test.serial('Updating a badge in the db', async (t) => {
@@ -67,8 +67,8 @@ test.serial('Updating a badge in the db', async (t) => {
     .get(`/scoreboard/api/badges/${numBadges}`)
     .expect(200)
   t.true(res.body.badges[0].name === 'Test Badge Edit')
-  t.true(res.body.badges[0].operations
-    === [['>', 'daysTotal', '100'], ['>=', 'daysInRow', '200']])
+  t.deepEqual(res.body.badges[0].operations,
+    [['>', 'daysTotal', '100'], ['>=', 'daysInRow', '200']])
 })
 
 test.serial('Deleting a badge from the db', async (t) => {
