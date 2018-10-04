@@ -81,7 +81,7 @@ class Dashboard extends Component {
             </div>
           </div>
           <div className="wrapper--map"></div>
-          <UserExtentMap extent={this.state.records.extent_uri} />
+          <UserExtentMap extent={this.state.records.extent_uri} uid={user['@']['id']} />
         </header>
         <section>
           <div className="row">
