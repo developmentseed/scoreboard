@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import api from '../utils/api';
+import api from '../../utils/api';
 
 class BadgesAdmin extends Component {
   constructor () {
@@ -9,7 +9,9 @@ class BadgesAdmin extends Component {
 
   componentDidMount () {}
 
-  render() {}
+  render() {
+    return null;
+  }
 }
 
 export default BadgesAdmin;
