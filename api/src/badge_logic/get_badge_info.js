@@ -1,3 +1,20 @@
+
+function mapBadgeToTask(badge, x) {
+  const map = {
+    roadKms: `Add ${x} more km of roads.`,
+    roadKmMods: `Modify ${x} more km of roads.`,
+    buildings: `Build ${x} more buildings.`,
+    daysInRow: `Map ${x} more consecutive days.`,
+    josm: `Use JOSM to map an area ${x} more times.`,
+    hashtags: `Participate in ${x} more mapathons.`,
+    pois: `Add ${x} more nodes.`,
+    waterways: `Add ${x} more km of waterways.`,
+    countries: `Map in ${x} more different countries.`,
+    daysTotal: `Map ${x} more days in total.`
+  }
+  return map[badge]
+}
+
 /**
  * Given a metricValue and a metricName to a badge
  * calculate the level of that badge and the percentage amount
@@ -28,11 +45,14 @@ module.exports = (metricValue, metricName, badge) => {
     if (badgeLevel > 0) lastPoints = tiers[badgeLevel - 1]
     nextPoints = tiers[nextBadgeLevel]
     percentage = (currentPoints - lastPoints) / (nextPoints - lastPoints) * 100
+    const task = `${Math.floor(percentage)}% of the way to Level ${nextBadgeLevel}. 
+      ${mapBadgeToTask(metricName, Math.floor(nextPoints - currentPoints))}`
     return {
       name: name,
       category: id,
       metric: metricName,
       description: badge.description,
+      progress: task,
       badgeLevel,
       nextBadgeLevel,
       points: {

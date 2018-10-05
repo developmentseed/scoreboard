@@ -3,22 +3,6 @@ import BadgeInProgress from '../components/BadgeInProgress';
 import BadgeCompleted from '../components/BadgeCompleted';
 import { reject, isNil } from 'ramda';
 
-function mapBadgeToTask(badge, x) {
-  var map = {
-    'roadKms': (x) => `Add ${x} more km of roads.`,
-    'roadKmMods': (x) => `Modify ${x} more km of roads.`,
-    'buildings': (x) => `Build ${x} more buildings.`,
-    'daysInRow': (x) => `Map ${x} more consecutive days.`,
-    'josm': (x) => `Use JOSM to map an area ${x} more times.`,
-    'hashtags': (x) => `Participate in ${x} more mapathons.`,
-    'pois': (x) => `Add ${x} more nodes.`,
-    'waterways': (x) => `Add ${x} more km of waterways.`,
-    'countries': (x) => `Map in ${x} more different countries.`,
-    'daysTotal': (x) => `Map ${x} more days in total.`
-  };
-  return map[badge](x);
-}
-
 // Strips whitespace
 function stripWS(text) {
   return text.replace(/ /g, '');
@@ -31,8 +15,7 @@ export default ({ badges }) => {
       if (badge) {
         return {
           description: badge.description,
-          progress: Math.floor(badge.points.percentage) + '% of the way to Level ' + badge.nextBadgeLevel + '. ' +
-            mapBadgeToTask(badge.metric, Math.floor(badge.points.nextPoints - badge.points.currentPoints)),
+          progress: badge.progress,
           name: badge.name,
           category: badge.category,
           badgeLevel: badge.badgeLevel,
