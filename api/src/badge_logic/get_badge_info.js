@@ -24,42 +24,36 @@ function mapBadgeToTask(badge, x) {
 module.exports = (metricValue, metricName, badge) => {
   const { tiers, name, id } = badge
   let badgeLevel = 0
+  const threshold = tiers[2]
 
-  if (metricValue >= tiers[0] && metricValue < tiers[1]) {
+  // try out level-less system using just the largest threshold
+  if (metricValue >= threshold) {
     badgeLevel = 1
   }
-  else if (metricValue >= tiers[1] && metricValue < tiers[2]) {
-    badgeLevel = 2
-  }
-  else if (metricValue >= tiers[2]) {
-    badgeLevel = 3
-  }
-
-  const nextBadgeLevel = badgeLevel + 1
+  //  const nextBadgeLevel = badgeLevel + 1
   const currentPoints = Number(metricValue)
-  let lastPoints = 0
   let nextPoints = 0
   let percentage = 100
 
-  if (badgeLevel < Object.keys(tiers).length) {
-    if (badgeLevel > 0) lastPoints = tiers[badgeLevel - 1]
-    nextPoints = tiers[nextBadgeLevel]
-    percentage = (currentPoints - lastPoints) / (nextPoints - lastPoints) * 100
-    const task = `${Math.floor(percentage)}% of the way to Level ${nextBadgeLevel}. 
+  let task = ''
+
+  if (badgeLevel === 0) { //Object.keys(tiers).length) {
+    nextPoints = threshold
+    percentage = (currentPoints / nextPoints) * 100
+    task = `${Math.floor(percentage)}% of the way to earning this badge. 
       ${mapBadgeToTask(metricName, Math.floor(nextPoints - currentPoints))}`
-    return {
-      name: name,
-      category: id,
-      metric: metricName,
-      description: badge.description,
-      progress: task,
-      badgeLevel,
-      nextBadgeLevel,
-      points: {
-        currentPoints,
-        nextPoints,
-        percentage
-      }
+  }
+  return {
+    name: name,
+    category: id,
+    metric: metricName,
+    description: badge.description,
+    progress: task,
+    badgeLevel,
+    points: {
+      currentPoints,
+      nextPoints,
+      percentage
     }
   }
 }

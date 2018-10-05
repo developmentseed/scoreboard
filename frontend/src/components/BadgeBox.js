@@ -29,6 +29,7 @@ export default ({ badges }) => {
     // Strip out nulls
     progressBadges = reject(isNil)(progressBadges);
     const earnedBadges = progressBadges.filter(({ badgeLevel }) => badgeLevel > 0);
+    progressBadges = progressBadges.filter(({ badgeLevel }) => badgeLevel === 0);
 
     var earnedList = earnedBadges.map(badge => {
       return (
