@@ -48,7 +48,7 @@ class BadgesAdmin extends Component {
     };
 
     // API actions
-    this.fetchBadges = this.fetchBadges.bind(this);
+    // this.fetchBadges = this.fetchBadges.bind(this);
     this.postBadges = this.postBadges.bind(this);
 
     // Event handlers
@@ -61,28 +61,26 @@ class BadgesAdmin extends Component {
     this.resetInputs = this.resetInputs.bind(this);
   }
 
-  async fetchBadges() {
-    try {
-      const res = await api('get', createApiUrl(BADGES_ENDPOINT, {}));
-      const { badges } = res.data;
-      console.log(badges);
-    } catch (e) {
-      console.log('Error fetching badges: ', e);
-    }
-  }
+  // async fetchBadges() {
+  //   try {
+  //     const res = await api('get', createApiUrl(BADGES_ENDPOINT, {}));
+  //     const { badges } = res.data;
+  //   } catch (e) {
+  //     console.log('Error fetching badges: ', e);
+  //   }
+  // }
 
   async postBadges(params) {
     this.setState({ disableInteraction: true });
     try {
       const res = await api('post', BADGES_ENDPOINT, params);
-      console.log(res);
       this.setState({
         alert: 'Badge created successfully!',
         alertType: ALERT_TYPE_SUCCESS,
         disableInteraction: false
       });
       this.resetInputs();
-      this.fetchBadges();
+      // this.fetchBadges();
     } catch (e) {
       this.setState({
         alert: typeof e === 'string' ? e : 'Something went wrong',
@@ -162,6 +160,7 @@ class BadgesAdmin extends Component {
             name='badge-name'
             onChange={this.handleNameInputChange}
             placeholder='Awesome JOSM'
+            required
             type='text'
             value={this.state.nameInput}
           />
@@ -179,6 +178,7 @@ class BadgesAdmin extends Component {
             maxLength={150}
             onChange={this.handleDescriptionInputChange}
             placeholder='Let users know about how this badge works'
+            required
             rows={5}
             value={this.state.descriptionInput}
           />
@@ -192,7 +192,7 @@ class BadgesAdmin extends Component {
       <div className='form__section'>
         <h2 className='header--medium'>
           What do users need to do to achieve this badge?
-      </h2>
+        </h2>
         {this.state.operations.map((op, i) => (
           <fieldset
             key={`${i}`}
@@ -248,7 +248,6 @@ class BadgesAdmin extends Component {
               />
             </div>
             {i > 0 && (
-
               <button
                 className='button button--link'
                 id='delete-badge-operation-button'
