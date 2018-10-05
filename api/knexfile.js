@@ -1,7 +1,7 @@
 const def = {
   client: 'sqlite3',
   connection: {
-    filename: './db.sqlite3'
+    filename: process.env.DB_PATH || './db.sqlite3'
   },
   migrations: {
     directory: './db/migrations',
