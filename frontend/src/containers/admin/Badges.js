@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import api, { createApiUrl } from '../../utils/api';
+import '../../styles/Admin.css';
 
 const BADGES_ENDPOINT = '/api/badges';
 
@@ -64,9 +65,13 @@ class BadgesAdmin extends Component {
 
   render() {
     return (
-      <div className='Badges'>
+      <div className='admin'>
         {this.renderHeader()}
-        {this.renderAddNewForm()}
+        <section>
+          <div className='row'>
+            {this.renderAddNewForm()}
+          </div>
+        </section>
       </div>
     );
   }
@@ -84,76 +89,112 @@ class BadgesAdmin extends Component {
   renderAddNewForm() {
     return (
       <form
+        className='form form--two-column'
         id='form-add-new-badge'
         onSubmit={this.handleAddNewBadgeFormSubmit}
       >
-        <div>
-          <label htmlFor='add-new-badge-name'>
-            Custom Badge Name
-          </label>
-          <input
-            id='add-new-badge-name'
-            onChange={this.handleNameInputChange}
-            placeholder='Awesome JOSM'
-            type='text'
-            value={this.state.nameInput}
-          />
-        </div>
-        <div>
-          <label htmlFor='add-new-badge-description'>
-            Description
-          </label>
-          <textarea
-            id='add-new-badge-description'
-            onChange={this.handleDescriptionInputChange}
-            placeholder='Let users know about how this badge works'
-            value={this.state.descriptionInput}
-          />
-        </div>
-        <fieldset>
-          <legend>
-            Tell us how you'll measure the achievements necessary to get this badge!
+        <fieldset className='form__column'>
+          <legend className='header--medium'>
+            Badge Details
           </legend>
-          <label htmlFor='add-new-type-operation'>
-            Threshold Type
-          </label>
-          <Select
-            id='add-new-type-operation'
-            onChange={this.handleOperationInputChange}
-            options={[
-              { label: 'More than', value: '>' },
-              { label: 'At least', value: '>=' }
-            ]}
-            placeholder="Select how you'll gauge this metric"
-            value={this.state.operationInput}
-          />
-          <label htmlFor='add-new-badge-metric-number'>
-            Number
-          </label>
-          <input
-            id='add-new-badge-metric-number'
-            onChange={this.handleNumberInputChange}
-            placeholder='50'
-            type='number'
-          />
-          <label htmlFor='add-new-badge-metric'>
-            Metric
-          </label>
-          <Select
-            id='add-new-badge-metric'
-            onChange={this.handleMetricInputChange}
-            options={badgeMetrics}
-            placeholder='Select the metric your badge will measure...'
-            value={this.state.metricInput}
-          />
+          <div className='form__input-unit'>
+            <label
+              className='form__label'
+              htmlFor='add-new-badge-name'
+            >
+              Custom Badge Name
+            </label>
+            <input
+              id='badge-name'
+              name='badge-name'
+              onChange={this.handleNameInputChange}
+              placeholder='Awesome JOSM'
+              type='text'
+              value={this.state.nameInput}
+            />
+          </div>
+          <div className='form__input-unit'>
+            <label
+              className='form__label'
+              htmlFor='badge-description'
+            >
+              Description
+            </label>
+            <textarea
+              id='badge-description'
+              name='badge-description'
+              maxLength={150}
+              onChange={this.handleDescriptionInputChange}
+              placeholder='Let users know about how this badge works'
+              rows={5}
+              value={this.state.descriptionInput}
+            />
+          </div>
         </fieldset>
-        <button
-          id='add-new-badge-submit-button'
-          type='submit'
-        >
-          Create badge
+        <fieldset className='form__column'>
+          <legend className='header--medium'>
+            What do users need to do to achieve this badge?
+          </legend>
+          <div class='form__input-unit form__input-unit--half'>
+            <label
+              className='form__label'
+              htmlFor='badge-operation-type'
+            >
+              Threshold Type
+            </label>
+            <Select
+              id='badge-operation-type'
+              name='badge-operation-type'
+              onChange={this.handleOperationInputChange}
+              options={[
+                { label: 'More than', value: '>' },
+                { label: 'At least', value: '>=' }
+              ]}
+              placeholder="Select how you'll gauge this metric"
+              value={this.state.operationInput}
+            />
+          </div>
+          <div className='form__input-unit form__input-unit--half'>
+            <label
+              className='form__label'
+              htmlFor='badge-metric-number'
+            >
+              Number
+            </label>
+            <input
+              id='badge-metric-number'
+              name='badge-metric-number'
+              onChange={this.handleNumberInputChange}
+              placeholder='50'
+              type='number'
+            />
+          </div>
+          <div className='form__input-unit'>
+            <label
+              className='form__label'
+              htmlFor='badge-metric'
+            >
+              Metric
+            </label>
+            <Select
+              id='badge-metric'
+              name='badge-metric'
+              onChange={this.handleMetricInputChange}
+              options={badgeMetrics}
+              placeholder='Select the metric your badge will measure...'
+              value={this.state.metricInput}
+            />
+          </div>
+        </fieldset>
+        <div className='form__footer'>
+          <button
+            id='add-new-badge-submit-button'
+            type='submit'
+          >
+            Create badge
           </button>
-      </form>
+        </div>
+      </form >
     );
   }
 
