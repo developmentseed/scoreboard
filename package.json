@@ -12,7 +12,7 @@
     "heroku-postbuild": "cd frontend && npm run build",
     "client": "node start-client.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint . "
+    "eslint": "echo 'do nothing'"
   },
   "repository": {
     "type": "git",
