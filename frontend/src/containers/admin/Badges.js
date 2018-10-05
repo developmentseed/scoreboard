@@ -30,7 +30,8 @@ class BadgesAdmin extends Component {
       badges: []
     };
 
-    this.fetchBadges.call(this);
+    this.fetchBadges = this.fetchBadges.bind(this);
+    this.postBadges = this.postBadges.bind(this);
 
     this.handleAddNewBadgeFormSubmit = this.handleAddNewBadgeFormSubmit.bind(this);
     this.handleDescriptionInputChange = this.handleDescriptionInputChange.bind(this);
@@ -38,6 +39,8 @@ class BadgesAdmin extends Component {
     this.handleNameInputChange = this.handleNameInputChange.bind(this);
     this.handleNumberInputChange = this.handleNumberInputChange.bind(this);
     this.handleOperationInputChange = this.handleOperationInputChange.bind(this);
+
+    this.fetchBadges();
   }
 
   async fetchBadges() {
@@ -52,7 +55,7 @@ class BadgesAdmin extends Component {
 
   async postBadges(params) {
     try {
-      const res = await api('post', BADGES_ENDPOINT);
+      const res = await api('post', BADGES_ENDPOINT, params);
       console.log(res);
     } catch (e) {
       console.log('Error posting badge: ', e);
@@ -200,13 +203,17 @@ class BadgesAdmin extends Component {
     const metric = metricInput.value;
     const operation = operationInput.value;
 
-    console.log({
+    const params = {
       description: descriptionInput,
-      metric,
       name: nameInput,
-      number: numberInput,
-      operation
-    });
+      operations: [[
+        operation,
+        metric,
+        numberInput
+      ]]
+    };
+
+    this.postBadges(params);
   }
 }
 
