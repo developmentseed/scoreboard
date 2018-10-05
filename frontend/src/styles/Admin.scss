@@ -57,42 +57,84 @@ $border-color: #ccc;
     font-size: 14px;
     line-height: 1;
     padding: 0.5em;
-  }
-
-  input[type="text"] {
     width: 100%;
   }
 
   textarea {
     resize: none;
-    width: 100%;
-  }
-
-  button {
-    background-color: $base-color;
-    border-radius: $border-radius;
-    border: 0;
-    color: white;
-    font-size: $base-font-size;
-    padding: 0.5em;
-    transition: background-color 300ms ease-in-out;
-
-    &:hover,
-    &:active {
-      background-color: darken($base-color, 10%);
-    }
   }
 }
 
-.form--two-column {
-  display: flex;
-  flex-flow: row wrap;
+.button {
+  background-color: $base-color;
+  border-radius: $border-radius;
+  border: 1px solid $base-color;
+  color: white;
+  cursor: pointer;
+  font-size: $base-font-size;
+  padding: 0.5em;
+  text-transform: none;
+  transition: background-color 300ms ease-in-out;
 
-  .form__column {
-    flex: 1;
+  &:hover,
+  &:active {
+    background-color: darken($base-color, 10%);
+  }
+}
+
+.button--secondary {
+  background-color: white;
+  color: $base-color;
+  transition: color 300ms ease-in-out;
+
+  &:hover,
+  &:active {
+    background-color: inherit;
+    color: darken($base-color, 10%);
+  }
+}
+
+.button--link {
+  background-color: transparent;
+  border: 0;
+  color: $light-text-color;
+  font-family: $tertiary-font-family;
+  padding: 0;
+  transition: color 300ms ease-in-out;
+
+  &:hover,
+  &:active {
+    background-color: inherit;
+    color: $med-text-color;
+  }
+}
+
+.alert {
+  border-radius: $border-radius;
+  box-sizing: border-box;
+  font-family: $base-font-family;
+  margin-bottom: 2rem;
+  padding: 0.5em;
+
+  &.alert--info {
+    background-color: lighten($blue-color, 50%);
+    border: 1px solid $blue-color;
+    color: $blue-color;
   }
 
-  .form__footer {
-    flex-basis: 100%;
+  &.alert--error {
+    background-color: lighten(red, 50%);
+    border: 1px solid red;
+    color: red;
+  }
+
+  &.alert--success {
+    background-color: lighten($green-color, 50%);
+    border: 1px solid $green-color;
+    color: $green-color;
+  }
+
+  .admin & {
+    max-width: 800px;
   }
 }

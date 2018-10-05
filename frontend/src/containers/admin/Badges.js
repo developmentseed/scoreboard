@@ -4,6 +4,8 @@ import api, { createApiUrl } from '../../utils/api';
 import '../../styles/Admin.css';
 
 const BADGES_ENDPOINT = '/api/badges';
+const ALERT_TYPE_ERROR = 'error';
+const ALERT_TYPE_SUCCESS = 'success';
 
 const badgeMetrics = [
   { label: 'New buildings mapped', value: 'buildings' },
@@ -30,6 +32,8 @@ class BadgesAdmin extends Component {
     super();
 
     this.state = {
+      alert: '',
+      alertType: null,
       descriptionInput: '',
       disableInteraction: false,
       nameInput: '',
@@ -54,6 +58,7 @@ class BadgesAdmin extends Component {
     this.handleNameInputChange = this.handleNameInputChange.bind(this);
     this.handleOperationChange = this.handleOperationChange.bind(this);
     this.removeOperationFromBadge = this.removeOperationFromBadge.bind(this);
+    this.resetInputs = this.resetInputs.bind(this);
   }
 
   async fetchBadges() {
@@ -71,11 +76,19 @@ class BadgesAdmin extends Component {
     try {
       const res = await api('post', BADGES_ENDPOINT, params);
       console.log(res);
-      this.setState({ disableInteraction: false });
+      this.setState({
+        alert: 'Badge created successfully!',
+        alertType: ALERT_TYPE_SUCCESS,
+        disableInteraction: false
+      });
+      this.resetInputs();
       this.fetchBadges();
     } catch (e) {
-      console.log('Error posting badge: ', e);
-      this.setState({ disableInteraction: false });
+      this.setState({
+        alert: typeof e === 'string' ? e : 'Something went wrong',
+        alertType: ALERT_TYPE_ERROR,
+        disableInteraction: false
+      });
     }
   }
 
@@ -85,6 +98,7 @@ class BadgesAdmin extends Component {
         {this.renderHeader()}
         <section>
           <div className='row'>
+            {this.state.alert && this.showAlert()}
             {this.renderAddNewForm()}
           </div>
         </section>
@@ -321,14 +335,48 @@ class BadgesAdmin extends Component {
       operations,
     } = this.state;
 
+    // Verify that no empty operations objects are being passed
+    // and also collapse the object into an array
+    const parsedOperations = operations
+      .filter(op => op.metric && op.operation)
+      .map(op => [op.operation, op.metric, op.number]);
+
     const params = {
       description: descriptionInput,
       name: nameInput,
-      operations: operations.map(op => [op.operation, op.metric, op.number])
+      operations: parsedOperations
     };
 
     console.log(params);
     this.postBadges(params);
+  }
+
+  showAlert() {
+    if (!this.state.alert) {
+      return null;
+    }
+
+    return (
+      <div className={`alert alert--${this.state.alertType || 'info'}`}>
+        {this.state.alert}
+      </div>
+    );
+  }
+
+  resetInputs() {
+    this.setState({
+      descriptionInput: '',
+      disableInteraction: false,
+      nameInput: '',
+      numberInput: '',
+      operations: [
+        {
+          metric: '',
+          number: 0,
+          operation: ''
+        }
+      ]
+    });
   }
 }
 
