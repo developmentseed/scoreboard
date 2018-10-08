@@ -102,7 +102,7 @@ class Dashboard extends Component {
                       <span className="chart-bar--title">Done</span>
                       <span className="chart-bar--wrapper">
                         <span className="chart-bar" style={{"width": `${project.properties.done}%`}}></span>
-                        <span className="chart-bar--percent">${project.properties.done}%</span>
+                        <span className="chart-bar--percent">{project.properties.done}%</span>
                       </span>
                     </div>
                     <div className="chart-bar--main">
