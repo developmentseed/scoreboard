@@ -47,13 +47,31 @@ export function actions (store) {
     },
 
     getProjects () {
-      return api('get', '/api/projects/')
+      return fetch('/scoreboard/api/projects/')
         .then(res => {
-          console.log('getProjects', res.data)
-          store.setState({ projects: res.data })
-        }).catch((err) => {
-          store.setState({ error: err })
+          if (res.status === 200) {
+            const projects = res.json()
+            
+            return projects
+          } else {
+            throw new Error('failed to authenticate')
+          }
         })
+        .then((projects) => {
+          console.log('getProjects', projects)
+          store.setState({ projects })
+        })
+        .catch((error) => {
+          store.setState({ error })
+        })
+
+      // return api('get', '/api/projects/')
+      //   .then(res => {
+      //     console.log('getProjects', res.data)
+      //     store.setState({ projects: res.data })
+      //   }).catch((error) => {
+      //     store.setState({ error })
+      //   })
     }
   }
 }

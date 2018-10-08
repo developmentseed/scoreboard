@@ -19,12 +19,6 @@ class Dashboard extends Component {
   componentDidMount () {
     this.props.getAuthenticatedUser()
     this.props.getProjects()
-    api('get', '/api/projects/')
-      .then(res => {
-        console.log('did mount projects in dashboard', res.data)
-      }).catch((err) => {
-        console.log('err')
-      })
   }
 
   componentDidUpdate () {
@@ -86,7 +80,8 @@ class Dashboard extends Component {
 
   renderProjects() {
     const { projects } = this.props
-    console.log('renderProjects', projects)
+    const features = projects.records.features
+
     if (!projects) return (<div />)
 
     return (
@@ -96,20 +91,29 @@ class Dashboard extends Component {
           <p>Get started on one of the projects below to help complete campaigns or to continue earning points towards badges!</p>
           <ol>
             {
-              projects.map((project) => {
+              features.map((project) => {
+                console.log('project', project)
                 return (
-                  <li className="block--campaign">
+                  <li key={`tm-project-${project.id}`} className="block--campaign">
                     <h3 className="header--small header--with-description-xlg">
-                      <Link className="header--underlined" to={`${projects.tasking_manager_url}/project/%{project.id}`}>{project.name}</Link>
+                      <a className="header--underlined" href={`${projects.tasking_manager_url}/project/${project.id}`}>{project.properties.name}</a>
                     </h3>
                     <div className="chart-bar--main">
-                      <span className="chart-bar--title">Complete</span>
+                      <span className="chart-bar--title">Done</span>
                       <span className="chart-bar--wrapper">
-                        <span className="chart-bar" style={{"width": `70%`}}></span>
-                        <span className="chart-bar--percent">70%</span>
+                        <span className="chart-bar" style={{"width": `${project.properties.done}%`}}></span>
+                        <span className="chart-bar--percent">`${project.properties.done}%`</span>
                       </span>
                     </div>
-                    <Link className="link--large" to="/about">Join the project</Link>
+                    <div className="chart-bar--main">
+                      <span className="chart-bar--title">Validated</span>
+                      <span className="chart-bar--wrapper">
+                        <span className="chart-bar" style={{"width": `${project.properties.validated}%`}}></span>
+                        <span className="chart-bar--percent">`${project.properties.validated}%`</span>
+                      </span>
+                    </div>
+                    <p>{project.properties.description}</p>
+                    <a className="link--large" href={`${projects.tasking_manager_url}/project/${project.id}`}>Join the project</a>
                   </li>
                 )
               })
