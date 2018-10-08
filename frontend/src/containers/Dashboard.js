@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'unistore/react';
 import { actions } from '../store'
 
-import api from '../utils/api';
 import '../styles/Dashboard.css';
 
 import { UserExtentMap } from '../components/charts';
