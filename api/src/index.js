@@ -31,6 +31,7 @@ app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: true
 app.use(passport.initialize())
 app.use(passport.session())
 app.use('/auth', authRouter)
+app.use('/api', router)
 app.use('/scoreboard/api', router)
 app.use(['/docs', '/'], swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 

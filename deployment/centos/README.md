@@ -1,5 +1,7 @@
 # Scoreboard on CentOS
 
+These instructions are only useful if you are trying to deploy and run the scoreboard frontend and api on the same Centos machine.
+
 * [Provisioning](#provisioning)
     * [General deps](#general-deps)
     * [sqlite3](#sqlite3)
@@ -68,106 +70,59 @@ sudo yum install nginx
 
 ## Installing Scoreboard
 
-### Clone Repo
+### Prepare the environment
+
+This guide assumes that you will store your secret environment variables at `/var/scoreboard-data/.env`.
+
+We also strongly recommend that you move your sqlite3 database file to a location outside of the default `/var/www/scoreboard/api`.
+
+One place to store it is `/var/scoreboard-data/`. If you change the location of the database file, make sure to add `DB_PATH` to your `.env` file.
+
+Also make sure to run `sudo chown -R centos:centos /var/scoreboard-data` on the folder to ensure the nginx webserver has access to the .env and db files.
+
+#### Add .env file
+
+Add a file with the following content to `/var/scoreboard-data/.env`
+
+```
+NODE_ENV=production
+DB_PATH=/var/scoreboard-data/db.sqlite3
+TM_URL=xxxxx
+USERS_URL=xxxx
+TM_HASHTAG=xxxx
+OSMESA_API=xxxxx
+API_URL=xxxxx
+FILTERED_USERS="0,1"
+```
+
+### Setup NGINX and Services
+Make sure to put the correct version number in the url used by `wget`.
+
+```
+cd ~
+wget https://github.com/developmentseed/scoreboard/blob/<put-version-number-here>/deployment/centos/bootstrap.sh
+./bootstrap.sh
+```
+
+
+### Deploy the Repo 
+Make sure to put the correct version number in the url used by `wget`.
+
 ```
 sudo mkdir -p /var/www/
-cd /var/www
-sudo git clone https://github.com/developmentseed/scoreboard
-sudo chown -R centos:centos scoreboard/
-```
-
-### Install Node Deps
-```
-cd scoreboard/
-npm install
-```
-
-### Create build
-```
-cd frontend/
-npm run build
-```
-
-### Create env file
-```
-cd ../api
-sudo vim .env
-```
-
-**Contents:**
-```
-PORT=5000
-NODE_ENV=production
-OSMESA_API=https://OSMESA_API_URL
-TM_URL=https://TASKING_MANAGER_URL
-TM_HASHTAG=campaign-hashtag-prefix
-USERS_URL=https://LOCATION_OF_USER_INFO.csv
-API_URL=https://EXAMPLE.ORG
-```
-
-### Systemd
-```
-sudo mv *.service *.timer /etc/systemd/system/ 
+cd ~
+wget https://github.com/developmentseed/scoreboard/blob/<put-version-number-here>/deployment/centos/deploy.sh
+./deploy.sh
 ```
 
 ### Start Services
+The deploy script in the previous step automatically restart the services, but in case you need to do it manually this how to do it.
 ```
-sudo systemctl enable scoreboard-api.service
-sudo systemctl enable scoreboard-timer.service
-sudo systemctl enable scoreboard-timer.timer
-
-sudo systemctl start scoreboard-timer.timer
-sudo systemctl start scoreboard-api
-```
-
-## NGINX
-### Write configuration
-```
-sudo vim /etc/nginx/nginx.conf
-```
-
-We will handle /api and forward to the api, all other paths get the distribution.
-
-```
-server {
-    listen 80;
-    location /scoreboard {
-        alias /var/www/scoreboard/frontend/build;
-        try_files $uri $uri/ @proxy;
-        expires max;
-        client_max_body_size 200M;
-        access_log off;
-    }
-
-    location @proxy {
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-
-        proxy_pass http://127.0.0.1:5000;
-    }
-}
-```
-
-### Restart nginx
-
-```
-sudo systemctl restart nginx
+sudo systemctl restart scoreboard-api
+sudo systemctl restart scoreboard-timer
+sudo systemctl restart nginx 
 ```
 
 Voila! 👏
 
 Navigate to your server's URL and you should see Scoreboard
-
-## Adding a new feature
-```
-cd /var/www/scoreboard
-git pull origin master
-npm install
-
-# If there is a new frontend feature
-cd frontend && npm run build
-
-sudo systemctl restart scoreboard-api
-sudo systemctl restart scoreboard-timer.timer
-```
