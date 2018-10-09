@@ -5,6 +5,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0td
 
 class UserExtentMap extends Component {
   componentDidMount() {
+    const { uid } = this.props;
+
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/devseed/cj9iy816wb9x02smisy4y7id3',
@@ -33,7 +35,7 @@ class UserExtentMap extends Component {
         "id": "footprint-heat",
         "type": "heatmap",
         "source": "footprint",
-        "source-layer": "user_footprint",
+        "source-layer": uid,
         "maxzoom": 14,
         "paint": {
           //Increase the heatmap weight based on frequency and property magnitude
