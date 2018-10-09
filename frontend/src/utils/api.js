@@ -2,7 +2,9 @@ import axios from 'axios';
 var debounce = require('debounce-promise');
 const {isNil} = require('ramda');
 
-const instance = axios.create();
+const instance = axios.create({
+  baseURL: window.location.pathname
+});
 
 /**
  * Generate querystring for API params
