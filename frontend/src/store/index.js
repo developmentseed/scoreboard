@@ -50,28 +50,17 @@ export function actions (store) {
       return fetch('/scoreboard/api/projects/')
         .then(res => {
           if (res.status === 200) {
-            const projects = res.json()
-            
-            return projects
+            return res.json()
           } else {
             throw new Error('failed to authenticate')
           }
         })
         .then((projects) => {
-          console.log('getProjects', projects)
           store.setState({ projects })
         })
         .catch((error) => {
           store.setState({ error })
         })
-
-      // return api('get', '/api/projects/')
-      //   .then(res => {
-      //     console.log('getProjects', res.data)
-      //     store.setState({ projects: res.data })
-      //   }).catch((error) => {
-      //     store.setState({ error })
-      //   })
     }
   }
 }
