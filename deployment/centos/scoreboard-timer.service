@@ -10,7 +10,7 @@ WorkingDirectory=/var/www/scoreboard/api
 User=centos
 Group=centos
 
-EnvironmentFile=-/var/www/scoreboard/api/.env
+EnvironmentFile=-/var/scoreboard-data/.env
 
 StandardInput=null
 StandardOutput=syslog

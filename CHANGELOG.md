@@ -5,7 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v0.2.0...HEAD
+
+## [v0.2.1] - 2018-10-09
+
+### Added
+- Support custom path for sqlite3 database file
+
+### Fixed
+- Pass username as a footprint layer name
+- Add support for running the frontend side on addresses other than `/scoreboard`
+- Remove service workers to allow loading `/api` and `/docs` in the browser when using proxy
+
+## [v0.2.0] - 2018-08-14
 
 ### Added
 - Ability for user to sort by Most/Least recent edit or Most/Least total number of edits on /users.
@@ -23,4 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v0.2.1...HEAD
+[v0.2.1]: https://github.com/developmentseed/scoreboard/compare/v0.2.0...v0.2.1
+[v0.2.0]: https://github.com/developmentseed/scoreboard/compare/v0.1.0...v0.2.0
 [v0.1.0]: https://github.com/developmentseed/scoreboard/compare/d4fc54a...v0.1.0

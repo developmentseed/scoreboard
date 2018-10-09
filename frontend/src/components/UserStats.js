@@ -26,7 +26,7 @@ const editBox = (records) => (
       <h4 className="header--small header--with-description-lg">Extent of Edits</h4>
       <div style={{ position: "relative", height: "350px" }}>
         {(records && records.extent_uri)
-        ? <UserExtentMap extent={records.extent_uri} />
+        ? <UserExtentMap extent={records.extent_uri} uid={records.uid} />
         : <div>Extent map unavailable</div>
         }
       </div>
