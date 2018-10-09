@@ -21,7 +21,7 @@ class Dashboard extends Component {
   }
 
   componentDidUpdate () {
-    if (this.state.loading && this.props.loggedIn) {
+    if (this.state.loading && (this.props.loggedIn || this.props.error)) {
       this.setState({ loading: false })
     }
   }
@@ -138,7 +138,7 @@ class Dashboard extends Component {
           <section>
             <div className="row">
               <h2 className="header--large">You are not logged in!</h2>
-              <p>Log in to see your personalized dashboard</p>
+              <p><a href="http://localhost:5000/auth/openstreetmap">Log in with your OSM account to see your personalized dashboard</a></p>
             </div>
           </section>
         </div>
@@ -187,4 +187,4 @@ class Dashboard extends Component {
   }
 }
 
-export default connect(['loggedIn', 'osmProfile', 'user', 'projects'], actions)(Dashboard);
+export default connect(['loggedIn', 'osmProfile', 'user', 'projects', 'error'], actions)(Dashboard);
