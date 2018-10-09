@@ -21,7 +21,7 @@ swaggerDocument.info.version = pckg.version
 
 app.use(compression())
 app.use(boom())
-app.use('/scoreboard/api', router)
+app.use('/api', router)
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 

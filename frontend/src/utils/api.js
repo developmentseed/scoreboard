@@ -2,9 +2,7 @@ import axios from 'axios';
 var debounce = require('debounce-promise');
 const {isNil} = require('ramda');
 
-const instance = axios.create({
-  baseURL: '/scoreboard'
-})
+const instance = axios.create();
 
 /**
  * Generate querystring for API params
