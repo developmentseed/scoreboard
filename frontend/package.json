@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000",
-  "homepage": "https://github.com/developmentseed/scoreboard#readme",
+  "homepage": ".",
   "dependencies": {
     "@nivo/bar": "^0.33.0",
     "@nivo/calendar": "^0.43.0",
