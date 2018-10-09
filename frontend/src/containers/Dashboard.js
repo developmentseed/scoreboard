@@ -177,7 +177,7 @@ class Dashboard extends Component {
             </div>
           </div>
           <div className="wrapper--map"></div>
-          <UserExtentMap extent={this.state.records.extent_uri} uid={user['@']['id']} />
+          <UserExtentMap extent={user.records.extent_uri} uid={osmUser['@']['id']} />
         </header>
 
         {this.renderUpcomingBadges(user.badges.mostAttainable)}
