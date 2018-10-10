@@ -1,4 +1,5 @@
 const connection = require('../db/connection')
+const { validateRole } = require('../utils/roles')
 
 class Users {
   constructor() {
@@ -27,6 +28,13 @@ class Users {
 
   destroy(id) {
     return this.get(id).del()
+  }
+
+  validateRole(id, role) {
+    this.get(id).then((results) => {
+      const [user] = results
+      return validateRole(user.roles, role)
+    })
   }
 }
 

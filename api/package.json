@@ -25,6 +25,7 @@
     "@heroku/foreman": "git+https://github.com/heroku/node-foreman.git",
     "body-parser": "^1.18.3",
     "compression": "^1.7.1",
+    "directory-command": "^3.1.0",
     "express": "^4.16.3",
     "express-boom": "^2.0.0",
     "express-promise-router": "^2.0.0",
