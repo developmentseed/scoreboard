@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Ability to login using OSM (using passport in the backend)
+- Initial dashboard page
 
 ### Changed
 - Move from Sqlite to Postgres
