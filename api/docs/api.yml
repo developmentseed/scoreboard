@@ -16,7 +16,7 @@ tags:
   - name: stats
     description: Top Stats
 paths:
-  /scoreboard/api/users:
+  /api/users:
     get:
       summary: list of OSM users
       tags:
@@ -52,7 +52,7 @@ paths:
       responses:
         200:
           description: The list of OSM users 
-  "/scoreboard/api/users/{id}":
+  "/api/users/{id}":
     get:
       summary: a specific user
       tags:
@@ -66,7 +66,7 @@ paths:
       responses:
         200:
           description: The OSM user object
-  /scoreboard/api/campaigns:
+  /api/campaigns:
     get:
       tags:
         - campaigns
@@ -97,7 +97,7 @@ paths:
       responses:
         200:
           description: List of campaigns
-  "/scoreboard/api/campaigns/{id}":
+  "/api/campaigns/{id}":
     get:
       tags:
         - campaigns
@@ -111,7 +111,7 @@ paths:
       responses:
         200:
           description: The campaign object
-  /scoreboard/api/topstats:
+  /api/topstats:
     get:
       tags:
         - stats

@@ -68,7 +68,7 @@ class UserEdit extends Component {
           <section>
             <div className="row">
               <h2 className="header--large">You are not logged in!</h2>
-              <p>Log in</p>
+              <p><a href="http://localhost:5000/auth/openstreetmap">Log in with your OSM account to edit your profile</a></p>
             </div>
           </section>
         </div>
