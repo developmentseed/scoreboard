@@ -1,7 +1,7 @@
 
 exports.up = async function(knex, Promise) {
     try {
-        // await knex('badges').del();
+        await knex('badges').del();
         await knex.schema.table('badges', (table) => {
             table.integer('category');
             table.specificType('operations', 'text[][]');
