@@ -6,3 +6,4 @@ export { default as UserEdit } from './UserEdit.js';
 export { default as Users } from './Users.js';
 export { default as About } from './About.js';
 export { default as Dashboard } from './Dashboard.js';
+export { default as Admin } from './Admin.js';

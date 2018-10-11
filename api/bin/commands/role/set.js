@@ -4,7 +4,7 @@ function command (args, flags, context) {
   const { id, osmId, role } = flags
 
   if (!id && !osmId) {
-    console.error('user id or osm-id is required')
+    console.error('--id or --osm-id is required')
     return process.exit(1)
   }
 

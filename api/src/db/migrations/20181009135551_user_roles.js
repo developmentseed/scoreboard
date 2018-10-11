@@ -1,8 +1,8 @@
 
-exports.up = function (knex, Promise) {
+exports.up = async function (knex, Promise) {
   try {
     await knex.schema.table('users', table => {
-      table.specificType('roles', 'string[]')
+      table.specificType('roles', 'text[]')
     })
   } 
   catch (e) {
@@ -10,7 +10,7 @@ exports.up = function (knex, Promise) {
   }
 }
 
-exports.down = function (knex, Promise) {
+exports.down = async function (knex, Promise) {
   try {
     await knex.schema.table('users', table => {
       table.dropColumn('roles')
