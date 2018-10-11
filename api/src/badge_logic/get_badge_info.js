@@ -27,7 +27,6 @@ const valueIndex = 2
 //eslint-disable-next-line no-unused-vars, consistent-return
 module.exports = (userMetrics, badge) => {
   const { operations, name, id } = badge
-  console.log(badge, operations)
   let badgeLevel = 0
   // const threshold = tiers[2]
 
