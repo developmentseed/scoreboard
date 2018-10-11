@@ -38,13 +38,15 @@
     z-index: 3;
     position: relative;
   }
+  .header--content--wrapper {
+    padding-top: 280px;
+  }
   h1 {
     color: #fff;
     line-height: 1em;
     margin-top: .4em;
   }
   .section-sub--left, .section-sub--right {
-    padding-top: 290px;
     @include media(small-down) {
       padding-top: 220px;
     }
@@ -55,7 +57,8 @@
     }
   }
   .section-sub--right {
-    padding-top: 320px;
+    margin-top: 26px;
+
     @include media(small-down) {
       padding-top: .2em;
       padding-left: 7.2em;

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Provider } from 'unistore/react';
+
 import {
   HashRouter as Router,
   Route,
@@ -17,6 +19,8 @@ import {
   Dashboard
 } from './containers';
 
+import { store } from './store'
+
 import './styles/App.css';
 import profileIcon from './assets/dashboard-temp/profile-icon.png';
 
@@ -33,14 +37,14 @@ class App extends Component {
     super()
     this.state = {
       loggedIn: false,
-      profile: {},
+      profile: null,
       menuVisible: false
     }
     this.handleMenuClick = this.handleMenuClick.bind(this)
     this.handleOutsideClick = this.handleOutsideClick.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fetch('/auth/userinfo')
       .then(res => {
         if (res.status === 200) {
@@ -58,7 +62,7 @@ class App extends Component {
       .catch(err => {
         this.setState({
           loggedIn: false,
-          profile: {}
+          profile: null
         })
       })
   }
@@ -81,65 +85,67 @@ class App extends Component {
   render() {
     const loggedIn = this.state.loggedIn;
     const profile = this.state.profile;
-    return (
-      <Router>
-        <div className="App">
-          <header className="header-nav">
-            <div className="row">
-              <nav className="clearfix">
-                <ul className="nav--left">
-                  <li className="logo"><Link to="/">ScoreBoard</Link></li>
-                  <li><ActiveLink to="/campaigns" label="Campaigns" /></li>
-                  <li><ActiveLink to="/users" label="Users" /></li>
-                  <li><ActiveLink to="/about" label="About" /></li>
-                </ul>
-                {
-                  loggedIn ?
-                    <div className="nav--right">
-                      <ul>
-                        <li className="nav--icons" ref={node => this.navButton = node} onClick={this.handleMenuClick}><img style={{ float: "right", width: "30px" }} src={profileIcon} alt="Profile icon" /></li>
-                      </ul>
-                      {
-                        this.state.menuVisible && (
-                          <div className="login-menu">
-                            <ul>
-                              <li><ActiveLink to="/dashboard" label="Dashboard" /></li>
-                              <li><ActiveLink to={`/users/${profile.id}`} label="Public Profile" /></li>
-                              <li><ActiveLink to={`/edit/${profile.id}`} label="Edit Profile" /></li>
-                              <li><a href="http://localhost:5000/auth/logout">Logout</a></li>
-                            </ul>
-                          </div>
-                        )
-                      }
-                    </div>
-                    : 
-                    <ul className="nav--right">
-                      <li><a href="http://localhost:5000/auth/openstreetmap">Login</a></li>
-                    </ul>
-                }
-              </nav>
-            </div>
-          </header>
-          <Route exact path="/" render={() => (
-            <Redirect to="/home" />
-          )} />
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/campaigns" component={Campaigns} />
-          <Route exact path="/users" component={Users} />
-          <Route exact path="/edit/:uid" render={props => (
-            <UserEdit {...props} loggedIn={loggedIn} profile={profile} />
-          )} />
-          <Route path="/users/:uid" component={User} />
-          <Route exact path="/about" component={About} />
-          <Route exact path="/dashboard" render={props => (
-            <Dashboard {...props} loggedIn={loggedIn} profile={profile} />
-          )} />
-          <Route path="/campaigns/:name" component={Campaign} />
-        </div>
-      </Router >
-    )
 
+    return (
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <header className="header-nav">
+              <div className="row">
+                <nav className="clearfix">
+                  <ul className="nav--left">
+                    <li className="logo"><Link to="/">ScoreBoard</Link></li>
+                    <li><ActiveLink to="/campaigns" label="Campaigns" /></li>
+                    <li><ActiveLink to="/users" label="Users" /></li>
+                    <li><ActiveLink to="/about" label="About" /></li>
+                  </ul>
+                  {
+                    loggedIn ?
+                      <div className="nav--right">
+                        <ul>
+                          <li className="nav--icons" ref={node => this.navButton = node} onClick={this.handleMenuClick}><img style={{ float: "right", width: "30px" }} src={profileIcon} alt="Profile icon" /></li>
+                        </ul>
+                        {
+                          this.state.menuVisible && (
+                            <div className="login-menu">
+                              <ul>
+                                <li><ActiveLink to="/dashboard" label="Dashboard" /></li>
+                                <li><ActiveLink to={`/users/${profile.id}`} label="Public Profile" /></li>
+                                <li><ActiveLink to={`/edit/${profile.id}`} label="Edit Profile" /></li>
+                                <li><a href="http://localhost:5000/auth/logout">Logout</a></li>
+                              </ul>
+                            </div>
+                          )
+                        }
+                      </div>
+                      : 
+                      <ul className="nav--right">
+                        <li><a href="http://localhost:5000/auth/openstreetmap">Login</a></li>
+                      </ul>
+                  }
+                </nav>
+              </div>
+            </header>
+            <Route exact path="/" render={() => (
+              <Redirect to="/home" />
+            )} />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/campaigns" component={Campaigns} />
+            <Route exact path="/users" component={Users} />
+            <Route exact path="/edit/:uid" render={props => (
+              <UserEdit {...props} loggedIn={loggedIn} />
+            )} />
+            <Route path="/users/:uid" component={User} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/dashboard" render={props => (
+              <Dashboard {...props} />
+            )} />
+            <Route path="/campaigns/:name" component={Campaign} />
+          </div>
+        </Router >
+      </Provider>
+    )
   }
 }
 
-export default App
+export default App //connect('loggedIn,OSMprofile,user', actions)(App)
