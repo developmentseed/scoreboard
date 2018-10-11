@@ -6,10 +6,10 @@ async function get(req, res) {
     const db = connection()
     let fromDB = null
     if (!id) {
-      fromDB = await db('custom-badges').select()
+      fromDB = await db('badges').select()
     }
     else {
-      fromDB = await db('custom-badges').where('id', '=', id)
+      fromDB = await db('badges').where('id', '=', id)
     }
     return res.send({
       badges: fromDB
@@ -25,7 +25,7 @@ async function post(req, res) {
     const { body } = req
     const db = connection()
     // Note that we'll need to add security here
-    await db('custom-badges').insert(body)
+    await db('badges').insert(body)
     return res.sendStatus(200)
   }
   catch (e) {
@@ -38,7 +38,7 @@ async function del(req, res) {
     const { id } = req.params
     const db = connection()
     // Note that we'll need to add security here
-    await db('custom-badges').where('id', '=', id).del()
+    await db('badges').where('id', '=', id).del()
     return res.sendStatus(200)
   }
   catch (e) {
@@ -52,7 +52,7 @@ async function put(req, res) {
   const { body } = req
   const db = connection()
   try {
-    await db('custom-badges').where('id', '=', id).update(body)
+    await db('badges').where('id', '=', id).update(body)
     return res.sendStatus(200)
   }
   catch (err) {
