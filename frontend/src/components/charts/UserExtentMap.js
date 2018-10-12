@@ -35,7 +35,7 @@ class UserExtentMap extends Component {
         "id": "footprint-heat",
         "type": "heatmap",
         "source": "footprint",
-        "source-layer": uid,
+        "source-layer": uid.toString(),
         "maxzoom": 14,
         "paint": {
           //Increase the heatmap weight based on frequency and property magnitude
