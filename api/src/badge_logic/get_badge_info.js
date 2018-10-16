@@ -28,10 +28,7 @@ const valueIndex = 2
 module.exports = (userMetrics, badge) => {
   const { operations, name, id } = badge
   let badgeLevel = 0
-  // const threshold = tiers[2]
 
-  // try out level-less system using just the largest threshold
-  // if (metricValue >= threshold) badgeLevel = 1
   let opsPass = true
   let op = ''
   let task = ''
@@ -63,15 +60,11 @@ module.exports = (userMetrics, badge) => {
       opsPass = false
     }
   })
-  // const currentPoints = Number(metricValue)
   if (opsPass === true) {
     badgeLevel = 1
   }
   else { //if (badgeLevel === 0) {
-    // nextPoints = threshold
-    // percentage = (currentPoints / nextPoints) * 100
     task = `${Math.floor(percentage)}% of the way to earning this badge. ${task}`
-    // ${mapBadgeToTask(metricName, Math.floor(nextPoints - currentPoints))}`
   }
   return {
     name: name,
