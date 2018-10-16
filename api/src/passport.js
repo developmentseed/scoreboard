@@ -4,6 +4,7 @@
 const passport = require('passport')
 const router = require('express-promise-router')()
 const OSMStrategy = require('passport-openstreetmap').Strategy
+const MockStrategy = require('passport-mock-strategy')
 
 const Users = require('./models/users')
 
@@ -24,32 +25,35 @@ function canEditUser(req, userID) {
   return req.user && req.user.id === userID
 }
 
+passport.serializeUser((osmProfile, done) => {
+  done(null, osmProfile)
+})
+
+passport.deserializeUser((osmProfile, done) => {
+  done(null, osmProfile)
+})
 
 if (NODE_ENV === 'test') {
-  const nullMiddle = (req, res, next) => {
-    if (next) {
-      next()
+  passport.use(new MockStrategy({
+    name: 'openstreetmap',
+    passReqToCallback: true,
+    user: {
+      roles: []
     }
-  }
+  }, (req, user, done) => {
+    // allow tests to set roles to test user permissions
+    if (req.query.roles) {
+      user.roles = req.query.roles.split(',')
+    }
+    else {
+      user.roles = []
+    }
 
-  module.exports = {
-    passport: {
-      initialize: () => nullMiddle,
-      session: () => nullMiddle
-    },
-    authRouter: nullMiddle,
-    canEditUser: canEditUser
-  }
+    req.user = user
+    done(null, user)
+  }))
 }
 else {
-  passport.serializeUser((osmProfile, done) => {
-    done(null, osmProfile)
-  })
-
-  passport.deserializeUser((osmProfile, done) => {
-    done(null, osmProfile)
-  })
-
   passport.use(new OSMStrategy({
     consumerKey: OSM_CONSUMER_KEY,
     consumerSecret: OSM_CONSUMER_SECRET,
@@ -75,56 +79,55 @@ else {
       done(err)
     }
   }))
+}
 
-  /**
-   * Routes for auth
-   * Used under /auth domain
-   */
+/**
+ * Routes for auth
+ * Used under /auth domain
+ */
 
-  /**
-   * redirect the user to openstreetmap
-   */
-  router.get('/openstreetmap',
-    passport.authenticate('openstreetmap'))
+/**
+ * redirect the user to openstreetmap
+ */
+router.get('/openstreetmap',
+  passport.authenticate('openstreetmap'))
 
-  /**
-   * Callback
-   */
-  router.get('/openstreetmap/callback',
-    passport.authenticate('openstreetmap'),
-    (req, res) => {
-      if (req.user) {
-        res.redirect(APP_URL)
-      }
-      else {
-        console.error('could not authenticate')
-        res.send('could not authenticate')
-      }
-    })
-
-  /**
-   * User info
-   */
-  router.get('/userinfo', (req, res) => {
+/**
+ * Callback
+ */
+router.get('/openstreetmap/callback',
+  passport.authenticate('openstreetmap'),
+  (req, res) => {
     if (req.user) {
-      res.send(req.user)
+      res.redirect(APP_URL)
     }
     else {
-      res.boom.notFound('Not authenticated')
+      res.send('could not authenticate')
     }
   })
 
-  /**
-   * Logout
-   */
-  router.get('/logout', (req, res) => {
-    req.logout()
-    res.redirect(APP_URL)
-  })
-
-  module.exports = {
-    passport: passport,
-    authRouter: router,
-    canEditUser: canEditUser
+/**
+ * User info
+ */
+router.get('/userinfo', (req, res) => {
+  if (req.user) {
+    res.send(req.user)
   }
+  else {
+    res.boom.unauthorized('Not authenticated')
+  }
+})
+
+/**
+ * Logout
+ */
+router.get('/logout', (req, res) => {
+  req.logout()
+  res.redirect(APP_URL)
+})
+
+module.exports = {
+  passport: passport,
+  authRouter: router,
+  canEditUser: canEditUser
 }
