@@ -51,7 +51,7 @@ module.exports = (userMetrics, badge) => {
       if (badgeOp[opIndex] === '>=') (op = currentPoints >= badgeOp[valueIndex])
       else op = (currentPoints > badgeOp[valueIndex])
     }
-    else if (badgeOp[opIndex][0] === '=') {
+    else if (badgeOp[opIndex] === '=') {
       op = (currentPoints === badgeOp[valueIndex])
     }
     if (op === false) {
