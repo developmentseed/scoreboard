@@ -1,16 +1,16 @@
 
 function mapBadgeToTask(badge, x) {
   const map = {
-    roadKms: `Add ${x} more km of roads.`,
-    roadKmMods: `Modify ${x} more km of roads.`,
-    buildings: `Build ${x} more buildings.`,
-    daysInRow: `Map ${x} more consecutive days.`,
-    josm: `Use JOSM to map an area ${x} more times.`,
-    hashtags: `Participate in ${x} more mapathons.`,
-    pois: `Add ${x} more nodes.`,
-    waterways: `Add ${x} more km of waterways.`,
-    countries: `Map in ${x} more different countries.`,
-    daysTotal: `Map ${x} more days in total.`
+    roadKms: `Add ${x} more km of roads`,
+    roadKmMods: `Modify ${x} more km of roads`,
+    buildings: `Build ${x} more buildings`,
+    daysInRow: `Map ${x} more consecutive days`,
+    josm: `Use JOSM to map an area ${x} more times`,
+    hashtags: `Participate in ${x} more mapathons`,
+    pois: `Add ${x} more nodes`,
+    waterways: `Add ${x} more km of waterways`,
+    countries: `Map in ${x} more different countries`,
+    daysTotal: `Map ${x} more days in total`
   }
   return map[badge]
 }
@@ -26,7 +26,7 @@ const valueIndex = 2
  */
 //eslint-disable-next-line no-unused-vars, consistent-return
 module.exports = (userMetrics, badge) => {
-  const { operations, name, id } = badge
+  const { operations } = badge
   let badgeLevel = 0
 
   let opsPass = true
@@ -53,13 +53,14 @@ module.exports = (userMetrics, badge) => {
     }
     if (op === false) {
       nextPoints = badgeOp[valueIndex]
-      if (task !== '') task += 'and'
+      if (task !== '') task += ' and '
       task += mapBadgeToTask(metricName, Math.floor(nextPoints - currentPoints))
       thisPercentage = (currentPoints / nextPoints) * 100
       percentage = Math.min(thisPercentage, percentage)
       opsPass = false
     }
   })
+  task += '.'
   if (opsPass === true) {
     badgeLevel = 1
   }
@@ -67,8 +68,8 @@ module.exports = (userMetrics, badge) => {
     task = `${Math.floor(percentage)}% of the way to earning this badge. ${task}`
   }
   return {
-    name: name,
-    category: id,
+    name: badge.name,
+    category: badge.category,
     metric: metricName,
     description: badge.description,
     progress: task,
