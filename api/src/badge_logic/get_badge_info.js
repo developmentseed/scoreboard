@@ -43,8 +43,17 @@ module.exports = (userMetrics, badge) => {
   operations.forEach((badgeOp) => {
     metricName = badgeOp[metricIndex]
     currentPoints = userMetrics[metricName]
-    //eslint-disable-next-line no-eval
-    op = eval(currentPoints + badgeOp[opIndex] + badgeOp[valueIndex])
+    if (badgeOp[opIndex][0] === '<') {
+      if (badgeOp[opIndex] === '<=') (op = currentPoints <= badgeOp[valueIndex])
+      else (op = currentPoints < badgeOp[valueIndex])
+    }
+    else if (badgeOp[opIndex][0] === '>') {
+      if (badgeOp[opIndex] === '>=') (op = currentPoints >= badgeOp[valueIndex])
+      else op = (currentPoints > badgeOp[valueIndex])
+    }
+    else if (badgeOp[opIndex][0] === '=') {
+      op = (currentPoints === badgeOp[valueIndex])
+    }
     if (op === false) {
       nextPoints = badgeOp[valueIndex]
       if (task !== '') task += 'and'
