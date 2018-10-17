@@ -20,7 +20,7 @@ test('Pull all badges', async (t) => {
   const res = await request(app)
     .get('/scoreboard/api/badges')
     .expect(200)
-  console.log(res)
+  // console.log(res)
   const numBadges = res.body.badges.length
   if (numBadges > 0) {
     // name should always be included
