@@ -15,7 +15,7 @@ test.before(async () => {
 test.after.always(async () => {
   await db.destroy()
 })
-
+/*
 test('Getting a badge from the db', async (t) => {
   const res = await request(app)
     .get('/scoreboard/api/badges/1')
@@ -23,7 +23,7 @@ test('Getting a badge from the db', async (t) => {
   // name should always be included
   t.true('name' in res.body.badges[0])
 })
-
+*/
 test('Pull all badges', async (t) => {
   const res = await request(app)
     .get('/scoreboard/api/badges')
