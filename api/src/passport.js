@@ -6,7 +6,8 @@ const router = require('express-promise-router')()
 const OSMStrategy = require('passport-openstreetmap').Strategy
 const MockStrategy = require('passport-mock-strategy')
 
-const Users = require('./models/users')
+const users = require('./models/users')
+const roles = require('./models/roles')
 
 const {
   NODE_ENV,
@@ -40,10 +41,10 @@ if (NODE_ENV === 'test') {
     user: {
       roles: []
     }
-  }, (req, user, done) => {
+  }, async (req, user, done) => {
     // allow tests to set roles to test user permissions
     if (req.query.roles) {
-      user.roles = req.query.roles.split(',')
+      user.roles = await roles.getRoles(req.query.roles.split(','))
     }
     else {
       user.roles = []
@@ -59,17 +60,17 @@ else {
     consumerSecret: OSM_CONSUMER_SECRET,
     callbackUrl: `${API_URL}/auth/openstreetmap/callback`
   }, async (token, tokenSecret, profile, done) => {
-    const users = new Users()
-
     try {
       let [user] = await users.findByOsmId(profile.id)
       if (user) {
+        profile.roles = await roles.getRoles(user.roles)
         done(null, profile)
       }
       else {
         const data = {
           osm_id: profile.id,
-          full_name: profile.displayName
+          full_name: profile.displayName,
+          roles: []
         }
         user = await users.create(data)
         done(null, profile)
@@ -102,7 +103,7 @@ router.get('/openstreetmap/callback',
       res.redirect(APP_URL)
     }
     else {
-      res.send('could not authenticate')
+      res.boom.unauthorized('could not authenticate')
     }
   })
 

@@ -2,13 +2,11 @@ const getBadgeProgress = require('../badge_logic')
 const {
   API_URL
 } = require('../config')
-const Users = require('../models/users')
+const users = require('../models/users')
+const roles = require('../models/roles')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const connection = require('../db/connection')
-
-const users = new Users()
-
 
 /**
  * User Stats Route
@@ -29,15 +27,21 @@ async function get(req, res) {
   try {
     const db = connection()
     const osmesaResponse = await osmesa.getUser(id)
-    const [{ country }] = await users.findByOsmId(id).select('country')
+    const [user] = await users.findByOsmId(id)
     const json = JSON.parse(osmesaResponse)
 
     const badgesFromDB = await db('badges').select() // array of all badges
     const badges = getBadgeProgress(json, badgesFromDB)
 
     json.extent_uri = `${API_URL}/scoreboard/api/extents/${json.extent_uri}`
+    const rolesList = user.roles ? await roles.getRoles(user.roles) : []
+
     return res.send({
-      id, records: json, country, badges
+      id,
+      badges,
+      records: json,
+      roles: rolesList,
+      country: user.country
     })
   }
   catch (err) {
@@ -69,8 +73,9 @@ async function put(req, res) {
   }
 
   try {
-    const [user] = await users.update(id, body)
-    return res.send(user)
+    const [user] = await users.findByOsmId(id)
+    const [updatedUser] = await users.update(user.id, body)
+    return res.send(updatedUser)
   }
   catch (err) {
     return res.boom.badRequest('Could not update user')

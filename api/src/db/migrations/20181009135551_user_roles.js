@@ -10,10 +10,6 @@ exports.up = async function (knex, Promise) {
     await knex.schema.table('users', (table) => {
       table.specificType('roles', 'int[]')
     })
-
-    await knex('roles').insert([
-      { name: 'admin' }
-    ])
   }
   catch (e) {
     console.error(e);

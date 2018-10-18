@@ -1,6 +1,6 @@
 export function validateRole (roles, role) {
   if (!roles || !role) return false
-  return !!roles.includes(role)
+  return !!roles.map((role) => role.name).includes(role)
 }
 
 export function isAdmin (roles) {

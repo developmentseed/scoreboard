@@ -6,10 +6,20 @@ const db = connection()
  * get a role
  *
  * @param {int} id - id of a role
- * @returns {Promise} a response
+ * @returns {Promise<string>} a response
  */
 function get(id) {
   return db('roles').where('id', id)
+}
+
+/**
+ * get an array of roles from an array of role ids
+ *
+ * @param {int[]} ids - array of role ids
+ * @returns {Promise[]} a response
+ */
+function getRoles(ids) {
+  return db('roles').whereIn('id', ids)
 }
 
 /**
@@ -67,6 +77,7 @@ function destroy(id) {
 module.exports = {
   get,
   findByName,
+  getRoles,
   list,
   create,
   update,

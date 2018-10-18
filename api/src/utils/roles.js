@@ -8,6 +8,6 @@ module.exports = {
    */
   validateRole(roles, role) {
     if (!roles || !role) return false
-    return !!roles.includes(role)
+    return !!roles.map((r) => r.name).includes(role)
   }
 }

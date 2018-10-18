@@ -1,36 +1,41 @@
-const Users = require('../../../src/models/users')
+const users = require('../../../src/models/users')
 
-function command (args, flags, context) {
-  const { id, osmId, role } = flags
+async function command(args, flags, context) {
+  const { id, osmId, roleName } = flags
 
   if (!id && !osmId) {
     console.error('--id or --osm-id is required')
     return process.exit(1)
   }
 
-  if (!role) {
+  if (!roleName) {
     console.error('role is required')
     return process.exit(1)
   }
 
-  const users = new Users()
-  console.log('users', users)
+  const [role] = await roles.findByName(roleName)
+  console.log('role', role)
+
+  if (!role) {
+    console.error(`role ${roleName} not found`)
+    return process.exit(1)
+  }
 
   let user
   if (id) {
-    user = users.get(id)[0]
+    [user] = await users.get(id)
   }
   else if (osmId) {
-    user = users.findByOsmId(osmId)[0]
+    [user] = await users.findByOsmId(osmId)
   }
 
   // return early if user already has this role
-  if (user.roles.includes(role)) {
+  if (user.roles.includes(role.id)) {
     return process.exit()
   }
 
-  user.roles.push(role)
-  users.update(user.osmId, user)
+  user.roles.push(role.id)
+  users.update(user.id, user)
     .then(() => {
       process.exit()
     })
@@ -54,6 +59,7 @@ const flags = [
   },
   {
     name: 'role',
+    aliad: 'roleName',
     type: 'string'
   }
 ]

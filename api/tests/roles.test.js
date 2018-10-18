@@ -47,7 +47,7 @@ const createAuthenticatedUser = (userRoles) => {
 
 test.before(async () => {
   db = connection()
-  adminUser = await createAuthenticatedUser(['admin'])
+  adminUser = await createAuthenticatedUser([1])
   authenticatedUser = await createAuthenticatedUser([])
   anonymousUser = createAnonymousUser()
 })
@@ -56,7 +56,10 @@ test.after.always(async () => {
   await db.destroy()
 })
 
-const userRoles = ['admin']
+const userRoles = [{
+  id: 1,
+  name: 'admin'
+}]
 
 test('validate role', (t) => {
   const result = validateRole(userRoles, 'admin')
@@ -71,7 +74,6 @@ test('fail to validate role', (t) => {
 test('get roles list via js', async (t) => {
   const data = await roles.list()
   t.true(data.length > 0)
-  t.pass()
 })
 
 test('get role via js', async (t) => {
@@ -102,6 +104,11 @@ test('delete role via js', async (t) => {
   t.true(notFound.length === 0)
 })
 
+test('get roles using id array via js', async (t) => {
+  const list = await roles.getRoles([1, 2])
+  t.true(list.length > 0)
+})
+
 test('userinfo route includes roles', async (t) => {
   const { body } = await new Promise((resolve, reject) => {
     adminUser
@@ -114,7 +121,7 @@ test('userinfo route includes roles', async (t) => {
   })
 
   t.truthy(body.roles)
-  t.true(body.roles[0] === 'admin')
+  t.true(body.roles[0].name === 'admin')
 })
 
 test('get roles list via api', async (t) => {

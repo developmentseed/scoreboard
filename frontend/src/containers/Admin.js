@@ -5,6 +5,7 @@ import { connect } from 'unistore/react';
 import { actions } from '../store'
 import { isAdmin } from '../utils/roles'
 import NotLoggedIn from '../components/NotLoggedIn'
+import AdminHeader from '../components/AdminHeader'
 
 import '../styles/Admin.css';
 
@@ -31,7 +32,7 @@ class Admin extends Component {
 
     if (this.state.loading) {
       return (
-        <div />
+        <div><AdminHeader /></div>
       )
     }
 
@@ -46,7 +47,35 @@ class Admin extends Component {
     }
 
     return (
-      <div />
+      <div>
+        <header className="header--internal--green header--page">
+          <div className="row">
+            <div className="section-sub--left section-width-forty">
+              <h1 className="header--xlarge">Admin</h1>
+            </div>
+          </div>
+        </header>
+          <section>
+            <div className="row">
+              <div className="content">
+                <ul className="list-grid">
+                  <li>
+                    <Link to="/admin/users">
+                      <h2 className="header--large">Users</h2>
+                      <p>users description</p>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/admin/roles">
+                      <h2 className="header--large">Roles</h2>
+                      <p>roles description</p>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+      </div>
     );
   }
 }
