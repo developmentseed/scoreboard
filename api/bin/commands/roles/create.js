@@ -17,7 +17,8 @@ const flags = [
   {
     name: 'name',
     alias: 'roleName',
-    type: 'string'
+    type: 'string',
+    required: true
   }
 ]
 

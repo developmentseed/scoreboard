@@ -57,7 +57,6 @@ class AdminRoles extends Component {
   renderList () {
     const { admin } = this.props
 
-    console.log('admin', admin)
     if (!admin || !admin.roles) return
 
     return (
@@ -73,7 +72,6 @@ class AdminRoles extends Component {
           <tbody>
             {
               admin.roles
-              .reverse()
               .map((role) => (
                 <tr key={`role-${role.id}`}>
                   <td>{role.id}</td>
