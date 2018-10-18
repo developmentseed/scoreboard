@@ -1,6 +1,7 @@
 const users = require('../../../src/models/users')
+const roles = require('../../../src/models/roles')
 
-async function command(args, flags, context) {
+async function command(args, flags) {
   const { id, osmId, roleName } = flags
 
   if (!id && !osmId) {
@@ -35,7 +36,7 @@ async function command(args, flags, context) {
   }
 
   user.roles.push(role.id)
-  users.update(user.id, user)
+  return users.update(user.id, user)
     .then(() => {
       process.exit()
     })

@@ -1,5 +1,4 @@
-async function command(args, flags) {
-
+async function command() {
   return process.exit()
 }
 
