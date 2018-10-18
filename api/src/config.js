@@ -1,3 +1,13 @@
+const LOCAL_DATABASE_URL = 'postgres://scoreboard:test@localhost:5433'
+
+let DATABASE_URL
+if (process.env.NODE_ENV === 'test') {
+  DATABASE_URL = process.env.DATABASE_URL || `${LOCAL_DATABASE_URL}/scoreboard_tests`
+}
+else {
+  DATABASE_URL = process.env.DATABASE_URL || `${LOCAL_DATABASE_URL}/scoreboard`
+}
+
 module.exports = {
   PORT: process.env.PORT || 8181,
   NODE_ENV: process.env.NODE_ENV || 'development',
@@ -11,5 +21,5 @@ module.exports = {
   OSM_CONSUMER_KEY: process.env.OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET: process.env.OSM_CONSUMER_SECRET,
   SESSION_SECRET: process.env.SESSION_SECRET || 'SUPER SECRET',
-  DATABASE_URL: process.env.DATABASE_URL || 'postgres://scoreboard:test@localhost:5433/scoreboard'
+  DATABASE_URL
 }

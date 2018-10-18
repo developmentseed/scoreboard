@@ -7,7 +7,7 @@ const test = {
   seeds: {
     directory: path.join(__dirname, 'seeds', 'test')
   },
-  connection: `${config.DATABASE_URL}_tests`,
+  connection: config.DATABASE_URL,
   migrations: {
     directory: path.join(__dirname, './migrations'),
     tableName: 'knex_migrations'
