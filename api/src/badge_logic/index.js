@@ -1,8 +1,7 @@
 const getSumBadges = require('./sum_based_badges')
-const dateSequentialCheck = require('./date_check_sequential')
-const dateTotalCheck = require('./date_check_total')
+const { dateSequentialCheck, dateTotalCheck } = require('../utils/dateChecks')
 const {
-  mergeAll, reject, isNil, filter, map, prop, compose, sum
+  reject, isNil, filter, map, prop, compose, sum
 } = require('ramda')
 
 const getJosmEditCount = compose(
@@ -24,8 +23,11 @@ module.exports = (userData, badges) => {
     editors,
     edit_times
   } = userData
+  const daysInRow = dateSequentialCheck(edit_times)
+  const daysTotal = dateTotalCheck(edit_times)
   /* eslint-enable camelcase */
-  const sumBadges = reject(isNil)(getSumBadges({
+
+  const allBadges = reject(isNil)(getSumBadges({
     buildings: Number(buildings_add),
     waterways: Number(waterways_add),
     pois: Number(poi_add),
@@ -33,12 +35,12 @@ module.exports = (userData, badges) => {
     roadKmMods: Number(km_roads_mod),
     countries: Object.keys(country_list).length,
     josm: getJosmEditCount(editors),
-    hashtags: Object.keys(hashtags).length
+    hashtags: Object.keys(hashtags).length,
+    daysInRow,
+    daysTotal
   }, badges))
-  const consistencyBadge = dateSequentialCheck(edit_times, badges)
-  const historyBadge = dateTotalCheck(edit_times, badges)
 
-  const allBadges = mergeAll([sumBadges, consistencyBadge, historyBadge])
+  // const allBadges = mergeAll([sumBadges, consistencyBadge, historyBadge])
   const earnedBadges = {}
   /* eslint-disable no-restricted-syntax */
   for (const key in allBadges) {
@@ -49,18 +51,8 @@ module.exports = (userData, badges) => {
   }
   /* eslint-enable no-restricted-syntax */
 
-  const sortedSumBadges = Object.keys(sumBadges).sort((a, b) => {
-    return sumBadges[a].points.percentage - sumBadges[b].points.percentage
-  })
-
-  const mostObtainableNames = sortedSumBadges.slice(-3)
-  const mostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 1]]
-  const secondMostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 2]]
-  const thirdMostObtainable = sumBadges[mostObtainableNames[mostObtainableNames.length - 3]]
-
   return {
     all: allBadges,
-    earnedBadges,
-    mostAttainable: [mostObtainable, secondMostObtainable, thirdMostObtainable]
+    earnedBadges
   }
 }

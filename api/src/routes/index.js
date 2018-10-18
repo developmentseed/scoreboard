@@ -6,6 +6,7 @@ const users = require('./users')
 const campaign = require('./campaign')
 const campaigns = require('./campaigns')
 const topstats = require('./topstats')
+const badges = require('./badges')
 const projects = require('./projects')
 const roles = require('./roles')
 
@@ -32,5 +33,12 @@ router.post('/roles', roles.post)
 router.get('/roles/:id', roles.get)
 router.put('/roles/:id', roles.put)
 router.delete('/roles/:id', roles.del)
+
+// badges routes
+router.get('/badges', badges.get)
+router.get('/badges/:id', badges.get)
+router.post('/badges', badges.post)
+router.delete('/badges/:id', badges.del)
+router.put('/badges/:id', badges.put)
 
 module.exports = router
