@@ -18,6 +18,7 @@
     "ava": "^0.25.0",
     "got": "^9.0.0",
     "nock": "^9.5.0",
+    "passport-mock-strategy": "^1.1.1",
     "supertest": "^3.1.0",
     "swagger-markdown": "^1.1.5"
   },
@@ -25,6 +26,7 @@
     "@heroku/foreman": "git+https://github.com/heroku/node-foreman.git",
     "body-parser": "^1.18.3",
     "compression": "^1.7.1",
+    "directory-command": "^3.1.0",
     "express": "^4.16.3",
     "express-boom": "^2.0.0",
     "express-promise-router": "^2.0.0",

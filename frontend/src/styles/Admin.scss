@@ -1,0 +1,36 @@
+@import 'settings/variables.scss';
+@import 'settings/mixins.scss';
+
+.header--admin {
+  a {
+    color: white;
+  }
+
+  a:hover {
+    color: rgba(255, 255, 255, 0.8)
+  }
+}
+
+.list-grid {
+  li {
+    display: inline-block;
+    width: 20%;
+
+    a {
+      padding: 20px;
+      display: block;
+      margin-right: 4%; 
+      border-radius: 2px;
+    }
+
+    a:hover {
+      background-color: #fafafc;
+    }
+  }
+}
+
+.admin-sidebar-links {
+  li {
+    line-height: 2.5;
+  }
+}

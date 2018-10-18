@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ability to login using OSM (using passport in the backend)
 - Initial dashboard page
 - Allow badge creation, deletion, and updates through API routes
+- cli tool for debugging and administration in development
+- User roles
+  - db table & roles model
+  - role validation helpers
+  - API endpoints
+  - initial UI
+- Mock passport strategy for testing routes that require authentication
 
 ### Changed
 - Move from Sqlite to Postgres
@@ -16,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Move tests and fixtures for API into a single place
 - Move badge calculations to the backend
 - Move badge details to the database
+- Revise user model to be the same format as the roles model
 
 ## [v0.2.1] - 2018-10-09
 

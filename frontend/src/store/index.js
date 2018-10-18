@@ -7,7 +7,10 @@ export const store = createStore({
   osmProfile: null,
   user: null,
   projects: null,
-  error: null
+  error: null,
+  admin: {
+    roles: null
+  }
 })
 
 function getUserInfo () {
@@ -29,8 +32,10 @@ export function actions (store) {
     getAuthenticatedUser (id) {
       return getUserInfo()
         .then(osmProfile => {
-          api('get', `/api/users/${osmProfile.id}`)
-            .then(res => store.setState({ user: res.data, osmProfile, loggedIn: true }))
+          return api('get', `/api/users/${osmProfile.id}`)
+            .then(res => {
+              return store.setState({ user: res.data, osmProfile, loggedIn: true })
+            })
             .catch((err) => store.setState({ error: err }))
         }).catch((err) => {
           store.setState({ error: err })
@@ -60,6 +65,22 @@ export function actions (store) {
         })
         .catch((error) => {
           store.setState({ error })
+        })
+    },
+
+    getRoles () {
+      return fetch('/scoreboard/api/roles', { credentials: 'include' })
+        .then(res => {
+          if (res.status === 200) {
+            return res.json()
+          } else {
+            throw new Error('failed to authenticate')
+          }
+        })
+        .then(roles => {
+          store.setState({ admin: { roles } })
+        }).catch((err) => {
+          store.setState({ error: err })
         })
     }
   }

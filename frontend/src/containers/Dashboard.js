@@ -6,6 +6,7 @@ import { actions } from '../store'
 import '../styles/Dashboard.css';
 
 import { UserExtentMap } from '../components/charts';
+import NotLoggedIn from '../components/NotLoggedIn'
 
 class Dashboard extends Component {
   constructor () {
@@ -133,16 +134,7 @@ class Dashboard extends Component {
     }
 
     if (!loggedIn) {
-      return (
-        <div className="dashboard">
-          <section>
-            <div className="row">
-              <h2 className="header--large">You are not logged in!</h2>
-              <p><a href="http://localhost:5000/auth/openstreetmap">Log in with your OSM account to see your personalized dashboard</a></p>
-            </div>
-          </section>
-        </div>
-      )
+      return <NotLoggedIn message="Log in with your OSM account to see your personalized dashboard" />
     }
 
     // We are logged in and should have a profile

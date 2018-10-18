@@ -16,7 +16,10 @@ import {
   UserEdit,
   Home,
   About,
-  Dashboard
+  Dashboard,
+  Admin,
+  AdminRoles,
+  AdminUsers
 } from './containers';
 
 import { store } from './store'
@@ -141,6 +144,9 @@ class App extends Component {
               <Dashboard {...props} />
             )} />
             <Route path="/campaigns/:name" component={Campaign} />
+            <Route exact path="/admin" component={Admin} />
+            <Route exact path="/admin/roles" component={AdminRoles} />
+            <Route exact path="/admin/users" component={AdminUsers} />
           </div>
         </Router >
       </Provider>

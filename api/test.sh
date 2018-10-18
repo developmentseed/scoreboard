@@ -1,11 +1,11 @@
 if [ -z "$CI" ]; then
-    createdb -p 5433 scoreboard_tests
-    cd src/db && ../../node_modules/.bin/knex migrate:latest && cd ../..
-    yarn seed
-    ava tests/*.test.js
-    dropdb  -p 5433 scoreboard_tests
+    docker-compose exec db createdb -U postgres scoreboard_tests
+    NODE_ENV=test nf start migrate_db --env test
+    NODE_ENV=test nf start seed_db --env test
+    NODE_ENV=test ava tests/*.test.js
+    docker-compose exec db dropdb -U postgres scoreboard_tests
 else
-    cd src/db && ../../node_modules/.bin/knex migrate:latest && cd ../..
-    yarn seed
+    NODE_ENV=test nf start migrate_db --env test
+    NODE_ENV=test nf start seed_db --env test
     ava tests/*.test.js
 fi

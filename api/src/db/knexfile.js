@@ -7,13 +7,12 @@ const test = {
   seeds: {
     directory: path.join(__dirname, 'seeds', 'test')
   },
-  connection: {},
+  connection: config.DATABASE_URL,
   migrations: {
     directory: path.join(__dirname, './migrations'),
     tableName: 'knex_migrations'
   },
   useNullAsDefault: true
-
 }
 
 const def = {
