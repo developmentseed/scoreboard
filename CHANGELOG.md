@@ -8,11 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Ability to login using OSM (using passport in the backend)
 - Initial dashboard page
+- Allow badge creation, deletion, and updates through API routes
 
 ### Changed
 - Move from Sqlite to Postgres
 - Drop some columns from the user schema
 - Move tests and fixtures for API into a single place
+- Move badge calculations to the backend
+- Move badge details to the database
 
 ## [v0.2.1] - 2018-10-09
 
