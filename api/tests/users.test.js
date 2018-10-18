@@ -10,8 +10,6 @@ let db
 
 test.before(async () => {
   db = connection()
-  await db.migrate.latest()
-  await db.seed.run()
 })
 
 test.after.always(async () => {

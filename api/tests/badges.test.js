@@ -1,20 +1,7 @@
 
 const test = require('ava')
 const request = require('supertest')
-const connection = require('../src/db/connection')
 const app = require('../src/index')
-
-let db
-
-test.before(async () => {
-  db = connection()
-  await db.migrate.latest()
-  await db.seed.run()
-})
-
-test.after.always(async () => {
-  await db.destroy()
-})
 
 test('Pull all badges', async (t) => {
   const res = await request(app)
