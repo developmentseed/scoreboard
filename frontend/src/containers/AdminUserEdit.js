@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Select from 'react-select';
 import { connect } from 'unistore/react';
-import queryString from 'query-string';
 
 import { actions } from '../store'
 import { isAdmin } from '../utils/roles'
