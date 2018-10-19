@@ -10,7 +10,8 @@ export const store = createStore({
   error: null,
   admin: {
     roles: null,
-    users: null
+    users: null,
+    user: null
   }
 })
 
@@ -83,6 +84,24 @@ export function actions (store) {
         .then(roles => {
           const { admin } = store.getState()
           admin.roles = roles
+          store.setState({ admin })
+        }).catch((err) => {
+          store.setState({ error: err })
+        })
+    },
+
+    adminGetUser (state, id) {
+      return fetch(`/scoreboard/api/users/${id}`, { credentials: 'include' })
+        .then(res => {
+          if (res.status === 200) {
+            return res.json()
+          } else {
+            throw new Error('failed to authenticate')
+          }
+        })
+        .then(user => {
+          const { admin } = store.getState()
+          admin.user = user
           store.setState({ admin })
         }).catch((err) => {
           store.setState({ error: err })
