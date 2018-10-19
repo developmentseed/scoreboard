@@ -18,7 +18,15 @@ tags:
 paths:
   /api/users:
     get:
-      summary: list of OSM users
+      summary: list of users
+      tags:
+        - users
+      responses:
+        200:
+          description: User object
+  /api/users/stats:
+    get:
+      summary: list of OSM users and their stats
       tags:
         - users
       parameters:
@@ -119,4 +127,3 @@ paths:
       responses:
         200:
           description: Returns list of responses
-        

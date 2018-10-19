@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - db table & roles model
   - role validation helpers
   - API endpoints
-  - initial UI
+  - UI for managing the roles of users
+- Initial admin UI
 - Mock passport strategy for testing routes that require authentication
 
 ### Changed
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Move badge calculations to the backend
 - Move badge details to the database
 - Revise user model to be the same format as the roles model
+- Move existing `api/users` endpoint to `api/users/stats` and use `api/users` for a list of users without stats
 
 ## [v0.2.1] - 2018-10-09
 

@@ -8,6 +8,7 @@ const MockStrategy = require('passport-mock-strategy')
 
 const users = require('./models/users')
 const roles = require('./models/roles')
+const { validateRole } = require('./utils/roles')
 
 const {
   NODE_ENV,
@@ -19,11 +20,13 @@ const {
 
 /*
 * Authorization check for making sure a user has permission to edit a user
-* Currently a user can only edit their own record
-* TODO: consider allowing admins to edit a user record
+* Currently a user can edit their own record
+* Or a user with `admin` role can edit user records
 */
 function canEditUser(req, userID) {
-  return req.user && req.user.id === userID
+  if (!req.user || !req.user.id) return false
+  if (req.user.roles && validateRole(req.user.roles, 'admin')) return true
+  return req.user.id === userID
 }
 
 passport.serializeUser((osmProfile, done) => {

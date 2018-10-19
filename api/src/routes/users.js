@@ -3,6 +3,11 @@ const {
   split, trim
 } = require('ramda')
 const { subMonths } = require('date-fns')
+
+const users = require('../models/users')
+const roles = require('../models/roles')
+const { validateRole } = require('../utils/roles')
+
 const { FILTERED_USERS } = require('../config')
 
 function applyFilters(query, req) {
@@ -29,8 +34,8 @@ function applyFilters(query, req) {
 }
 
 /**
- * All Users Route
- * /users
+ * All Users and their stats route
+ * /users/stats
  *
  * The users route displays all the users from the external
  * users source
@@ -39,7 +44,7 @@ function applyFilters(query, req) {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-module.exports = async (req, res) => {
+async function stats(req, res) {
   const page = req.query.page || 1
   const filteredUsers = split(',', FILTERED_USERS).map(trim)
   const sortType = req.query.sortType || ''
@@ -100,4 +105,41 @@ module.exports = async (req, res) => {
     console.error(err)
     return res.boom.notFound('Could not retrieve records')
   }
+}
+
+/**
+ * User list route
+ * /users
+ *
+ * The users route displays all the users from the external
+ * users source
+ *
+ * @param {Object} req - the request object
+ * @param {Object} res - the response object
+ * @returns {Promise} a response
+ */
+async function list(req, res) {
+  if (!req.user || !req.user.roles || !validateRole(req.user.roles, 'admin')) {
+    return res.boom.unauthorized('Not authorized')
+  }
+
+  try {
+    const data = await users.list()
+    const userList = await Promise.all(data.map(async (user) => {
+      if (user.roles) {
+        user.roles = await roles.getRoles(user.roles)
+      }
+      return user
+    }))
+    return res.send(userList)
+  }
+  catch (err) {
+    console.error(err)
+    return res.boom.badRequest('Could not retrieve users list')
+  }
+}
+
+module.exports = {
+  stats,
+  list
 }

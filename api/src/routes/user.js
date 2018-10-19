@@ -78,6 +78,7 @@ async function put(req, res) {
     return res.send(updatedUser)
   }
   catch (err) {
+    console.log(err)
     return res.boom.badRequest('Could not update user')
   }
 }
