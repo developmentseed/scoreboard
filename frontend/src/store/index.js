@@ -111,7 +111,10 @@ export function actions (store) {
         })
     },
 
-    getUsers () {
+    /**
+    * get list of users for admin list
+    **/
+    adminGetUsers () {
       return fetch('/scoreboard/api/users', { credentials: 'include' })
         .then(res => {
           if (res.status === 200) {

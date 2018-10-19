@@ -21,7 +21,7 @@ class AdminUsers extends Component {
     this.props.getAuthenticatedUser().then(() => {
       Promise.all([
         this.props.getRoles(),
-        this.props.getUsers()
+        this.props.adminGetUsers()
       ]).then(() => {
         this.setState({ loading: false })
       })
