@@ -29,9 +29,9 @@ test('Test of OSMESA api call', async (t) => {
   t.false(Number.isNaN(res.body.records.edit_count))
 })
 
-test('Pull all users', async (t) => {
+test('Pull all users with stats', async (t) => {
   const response = await request(app)
-    .get('/scoreboard/api/users')
+    .get('/scoreboard/api/users/stats')
     .expect(200)
   // country should always be included
   const numUsers = response.body.records.length
@@ -44,7 +44,7 @@ test('Pull all users', async (t) => {
 
 test('Sort users by most recently active', async (t) => {
   const response = await request(app)
-    .get('/scoreboard/api/users?q=&page=1&sortType=Most%20recent&active=false')
+    .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Most%20recent&active=false')
     .expect(200)
   const users = await db('users')
     .select('country', 'edit_count', 'full_name', 'last_edit', 'osm_id')
@@ -55,7 +55,7 @@ test('Sort users by most recently active', async (t) => {
 
 test('Sort users by least recently active', async (t) => {
   const response = await request(app)
-    .get('/scoreboard/api/users?q=&page=1&sortType=Least%20recent&active=false')
+    .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Least%20recent&active=false')
     .expect(200)
   const users = await db('users')
     .select('country', 'edit_count', 'full_name', 'last_edit', 'osm_id')
@@ -66,7 +66,7 @@ test('Sort users by least recently active', async (t) => {
 
 test('Sort users by most edits', async (t) => {
   const response = await request(app)
-    .get('/scoreboard/api/users?q=&page=1&sortType=Most%20total&active=false')
+    .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Most%20total&active=false')
     .expect(200)
   const users = await db('users')
     .select('country', 'edit_count', 'full_name', 'last_edit', 'osm_id')
@@ -77,7 +77,7 @@ test('Sort users by most edits', async (t) => {
 
 test('Sort users by least edits', async (t) => {
   const response = await request(app)
-    .get('/scoreboard/api/users?q=&page=1&sortType=Least%20total&active=false')
+    .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Least%20total&active=false')
     .expect(200)
   const users = await db('users')
     .select('country', 'edit_count', 'full_name', 'last_edit', 'osm_id')
