@@ -90,6 +90,9 @@ export function actions (store) {
         })
     },
 
+    /**
+    * get user for admin editing page 
+    **/
     adminGetUser (state, id) {
       return fetch(`/scoreboard/api/users/${id}`, { credentials: 'include' })
         .then(res => {
