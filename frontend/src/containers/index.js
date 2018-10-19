@@ -9,4 +9,4 @@ export { default as Dashboard } from './Dashboard.js';
 export { default as Admin } from './Admin.js';
 export { default as AdminRoles } from './AdminRoles.js';
 export { default as AdminUsers } from './AdminUsers.js';
-export { default as AdminUsersEdit } from './AdminUsersEdit.js';
+export { default as AdminUserEdit } from './AdminUserEdit.js';

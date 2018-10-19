@@ -62,7 +62,7 @@ class Admin extends Component {
                   <li>
                     <Link to="/admin/users">
                       <h2 className="header--large">Users</h2>
-                      <p>users description</p>
+                      <p>Manage user roles</p>
                     </Link>
                   </li>
                 </ul>

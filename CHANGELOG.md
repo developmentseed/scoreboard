@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - db table & roles model
   - role validation helpers
   - API endpoints
-  - initial UI
+  - UI for managing the roles of users
+- Initial admin UI
 - Mock passport strategy for testing routes that require authentication
 
 ### Changed

@@ -11,7 +11,7 @@ import AdminHeader from '../components/AdminHeader'
 
 import '../styles/Admin.css';
 
-class AdminUsersEdit extends Component {
+class AdminUserEdit extends Component {
   constructor () {
     super()
     this.state = {
@@ -48,6 +48,9 @@ class AdminUsersEdit extends Component {
   onRoleChange (roles) {
     this.setState({ selectedRoles: roles })
     this.props.updateUserRoles(this.props.user.id, roles.map((role) => role.value))
+      .then(() => {
+        this.setState({ saved: true })
+      })
   }
 
   createRoleSelectOptions (roles) {
@@ -116,4 +119,4 @@ class AdminUsersEdit extends Component {
   }
 }
 
-export default connect(['user', 'loggedIn', 'error', 'admin'], actions)(AdminUsersEdit);
+export default connect(['user', 'loggedIn', 'error', 'admin'], actions)(AdminUserEdit);
