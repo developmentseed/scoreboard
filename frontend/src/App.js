@@ -19,7 +19,8 @@ import {
   Dashboard,
   Admin,
   AdminRoles,
-  AdminUsers
+  AdminUsers,
+  AdminUsersEdit
 } from './containers';
 
 import { store } from './store'
@@ -147,6 +148,7 @@ class App extends Component {
             <Route exact path="/admin" component={Admin} />
             <Route exact path="/admin/roles" component={AdminRoles} />
             <Route exact path="/admin/users" component={AdminUsers} />
+            <Route exact path="/admin/users/:id" component={AdminUsersEdit} />
           </div>
         </Router >
       </Provider>

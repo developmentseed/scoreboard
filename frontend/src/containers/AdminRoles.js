@@ -22,7 +22,6 @@ class AdminRoles extends Component {
   componentDidMount () {
     this.setCurrentView()
     this.props.getAuthenticatedUser().then(() => {
-      console.log('wut')
       this.props.getRoles()
     })
   }
@@ -49,7 +48,6 @@ class AdminRoles extends Component {
     }
 
     if (view !== this.state.currentView) {
-      console.log('new view', view)
       this.setState({ currentView: view })
     }
   }
@@ -105,7 +103,6 @@ class AdminRoles extends Component {
     const { currentView } = this.state
     const { loggedIn, user, location, admin } = this.props
 
-    console.log('currentView', currentView, admin)
     if (this.state.loading) {
       return (
         <div><AdminHeader /></div>

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import Select from 'react-select';
 import { connect } from 'unistore/react';
+import queryString from 'query-string';
 
 import { actions } from '../store'
 import { isAdmin } from '../utils/roles'
@@ -9,20 +11,18 @@ import AdminHeader from '../components/AdminHeader'
 
 import '../styles/Admin.css';
 
-class AdminUsers extends Component {
+class AdminUsersEdit extends Component {
   constructor () {
     super()
     this.state = {
-      loading: true
+      loading: true,
+      selectedRoles: null
     }
   }
 
   componentDidMount () {
     this.props.getAuthenticatedUser().then(() => {
-      Promise.all([
-        this.props.getRoles(),
-        this.props.getUsers()
-      ]).then(() => {
+      this.props.getRoles().then(() => {
         this.setState({ loading: false })
       })
     })
@@ -33,45 +33,33 @@ class AdminUsers extends Component {
     return roles.map((role) => role.name).join(', ')
   }
 
-  onUserClick (user) {
-    const { history } = this.props
-    history.push(`/admin/users/${user.id}`)
+  renderSaved () {
+    if (this.state.saved) {
+      setTimeout(() => {
+        this.setState({ saved: false })
+      }, 1000)
+
+      return (
+        <p style={{ color: '#4FCA9E' }}>✓ Saved</p>
+      )
+    }
   }
 
-  renderList () {
-    const { admin } = this.props
-    if (!admin || !admin.users) return
+  onRoleChange (roles) {
+    this.setState({ selectedRoles: roles })
+    this.props.updateUserRoles(this.props.user.id, roles.map((role) => role.value))
+  }
 
-    return (
-      <div>
-        <h1>List</h1>
-        <table className="admin-user-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Roles</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              admin.users
-              .map((user) => (
-                <tr key={`user-${user.id}`} onClick={() => this.onUserClick(user)} className="admin-user-table-row">
-                  <td>{user.id}</td>
-                  <td>{user.full_name}</td>
-                  <td>{this.renderUserRoles(user.roles)}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    )
+  createRoleSelectOptions (roles) {
+    return roles.map((role) => {
+      if (role.value && role.label) return role
+      return { value: role.id, label: role.name }
+    })
   }
 
   render() {
-    const { loggedIn, user, location } = this.props
+    const { selectedRoles } = this.state
+    const { loggedIn, user, location, admin } = this.props
 
     if (this.state.loading) {
       return (
@@ -105,7 +93,21 @@ class AdminUsers extends Component {
               </ul>
             </div>
             <div className="content--with-sidebar">
-              {this.renderList()}
+              <div className="row">
+                <h1 className="header--xlarge">Edit User</h1>
+              </div>
+              <div className="row">
+              <div style={{ width: '50%' }}>
+                <h4>Roles</h4>
+                <Select
+                  options={this.createRoleSelectOptions(admin.roles)}
+                  multi={true}
+                  value={this.createRoleSelectOptions(selectedRoles || user.roles)}
+                  onChange={(roles) => this.onRoleChange(roles)}
+                />
+                {this.renderSaved()}
+              </div>
+              </div>
             </div>
           </div>
         </section>
@@ -114,4 +116,4 @@ class AdminUsers extends Component {
   }
 }
 
-export default connect(['user', 'loggedIn', 'error', 'admin'], actions)(AdminUsers);
+export default connect(['user', 'loggedIn', 'error', 'admin'], actions)(AdminUsersEdit);
