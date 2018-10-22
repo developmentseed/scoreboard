@@ -9,7 +9,7 @@ import AdminHeader from '../components/AdminHeader'
 
 import '../styles/Admin.css';
 
-class Admin extends Component {
+export class Admin extends Component {
   constructor () {
     super()
     this.state = {

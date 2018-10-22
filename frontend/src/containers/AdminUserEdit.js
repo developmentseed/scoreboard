@@ -10,7 +10,7 @@ import AdminHeader from '../components/AdminHeader'
 
 import '../styles/Admin.css';
 
-class AdminUserEdit extends Component {
+export class AdminUserEdit extends Component {
   constructor () {
     super()
     this.state = {
