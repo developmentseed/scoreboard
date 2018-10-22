@@ -35,6 +35,7 @@ class Home extends Component {
 
   render() {
     const {campaign_total, records, num_users, features, top_edits, edits_by_country} = this.state;
+    const { projectName } = this.props;
     return (
       <div className="home">
         <header className="header--homepage header--page">
@@ -43,7 +44,7 @@ class Home extends Component {
               <div className="width--shortened">
                 <div className="section-sub--left">
                   <h1 className="header--xxlarge header--with-description">Tracking Map Edits Around the World</h1>
-                  <p className="description--header">See what’s happening throughout the OSM ecosystem. From which campaigns are the most active, to detailed information about the contributing mappers.</p>
+                  <p className="description--header">{'See what’s happening throughout the ' + projectName + ' ecosystem. From which campaigns are the most active, to detailed information about the contributing mappers.'}</p>
                   <Link className="link--large" to="/about">Learn More</Link>
                 </div>
                 <div className="section-sub--right section-sub--right--home">

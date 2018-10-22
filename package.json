@@ -1,6 +1,6 @@
 {
   "name": "scoreboard",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "OSM Scoreboard",
   "main": "index.js",
   "scripts": {
