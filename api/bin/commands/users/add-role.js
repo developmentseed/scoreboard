@@ -15,7 +15,6 @@ async function command(args, flags) {
   }
 
   const [role] = await roles.findByName(roleName)
-  console.log('role', role)
 
   if (!role) {
     console.error(`role ${roleName} not found`)
@@ -60,7 +59,7 @@ const flags = [
   },
   {
     name: 'role',
-    aliad: 'roleName',
+    alias: 'roleName',
     type: 'string'
   }
 ]

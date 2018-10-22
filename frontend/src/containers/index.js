@@ -10,3 +10,4 @@ export { default as Admin } from './Admin.js';
 export { default as AdminRoles } from './AdminRoles.js';
 export { default as AdminUsers } from './AdminUsers.js';
 export { default as BadgesAdmin } from './admin/Badges.js';
+export { default as AdminUserEdit } from './AdminUserEdit.js';

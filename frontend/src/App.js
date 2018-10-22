@@ -19,8 +19,9 @@ import {
   Dashboard,
   Admin,
   AdminRoles,
-  AdminUsers
   BadgesAdmin
+  AdminUsers,
+  AdminUserEdit
 } from './containers';
 
 import { store } from './store'
@@ -151,6 +152,7 @@ class App extends Component {
             <Route exact path="/admin/badges" render={props => (
               <BadgesAdmin {...props} loggedIn={loggedIn} profile={profile} />
             )} />
+            <Route exact path="/admin/users/:id" component={AdminUserEdit} />
           </div>
         </Router >
       </Provider>

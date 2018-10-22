@@ -9,9 +9,12 @@ export const store = createStore({
   projects: null,
   error: null,
   admin: {
-    roles: null
+    roles: null,
+    users: null
   }
 })
+
+store.subscribe(state => console.log('state', state))
 
 function getUserInfo () {
   return fetch('/auth/userinfo')
@@ -78,8 +81,49 @@ export function actions (store) {
           }
         })
         .then(roles => {
-          store.setState({ admin: { roles } })
+          const { admin } = store.getState()
+          admin.roles = roles
+          store.setState({ admin })
         }).catch((err) => {
+          store.setState({ error: err })
+        })
+    },
+
+    getUsers () {
+      return fetch('/scoreboard/api/users', { credentials: 'include' })
+        .then(res => {
+          if (res.status === 200) {
+            return res.json()
+          } else {
+            throw new Error('failed to authenticate')
+          }
+        })
+        .then(users => {
+          const { admin } = store.getState()
+          admin.users = users
+          store.setState({ admin })
+        }).catch((err) => {
+          store.setState({ error: err })
+        })
+    },
+
+    updateUserRoles (state, userId, roles) {
+      return fetch(`/scoreboard/api/users/${userId}`, {
+        method: 'PUT',
+        credentials: 'include',
+        body: JSON.stringify({ roles }),
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      })
+        .then(res => {
+          if (res.status === 200) {
+            return res.json()
+          } else {
+            throw new Error('failed to authenticate')
+          }
+        })
+        .catch((err) => {
           store.setState({ error: err })
         })
     }

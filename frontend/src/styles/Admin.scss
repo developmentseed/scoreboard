@@ -35,6 +35,18 @@
   }
 }
 
+.admin-user-table {
+  border-spacing: 0px;
+}
+
+.admin-user-table-row {
+  cursor: pointer;
+}
+
+.admin-user-table-row:hover {
+  background-color: #fafafc;
+}
+
 /* Styles for the admin badge interface */
 
 $border-radius: 4px;
