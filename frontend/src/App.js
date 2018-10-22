@@ -8,7 +8,7 @@ import {
 import './styles/App.css';
 import { Campaigns, Campaign, Users, User, Home, About } from './containers';
 
-const projectName = process.env.REACT_APP_PROJECT_NAME || 'OSM ecosystem';
+const projectName = process.env.REACT_APP_PROJECT_NAME || 'OSM';
 
 const ActiveLink = ({ label, to }) => (
   <Route path={to} exact={false} children={({ match }) => (
