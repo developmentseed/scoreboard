@@ -24,6 +24,10 @@ app/
     logo.svg
 ```
 
+### Custom Project Name
+
+The Frontend assumes that the Scoreboard is deployed for the OSM ecosystem. However, you can configure the Scoreboard to show other project names on the frontpage and and about page by setting the `REACT_APP_PROJECT_NAME` during build.
+
 ### Available Scripts
 
 In the project directory, you can run:
