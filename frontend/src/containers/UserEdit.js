@@ -4,6 +4,7 @@ import Select from 'react-select';
 import api from '../utils/api';
 import countries from '../utils/country-list';
 import '../styles/Users.css';
+import NotLoggedIn from '../components/NotLoggedIn'
 
 class UserEdit extends Component {
   constructor () {
@@ -63,16 +64,7 @@ class UserEdit extends Component {
     const { loggedIn } = this.props;
 
     if (!loggedIn) {
-      return (
-        <div className="dashboard">
-          <section>
-            <div className="row">
-              <h2 className="header--large">You are not logged in!</h2>
-              <p>Log in</p>
-            </div>
-          </section>
-        </div>
-      )
+      return <NotLoggedIn message="Log in with your OSM account to edit your Scoreboard profile" />
     }
 
     return (

@@ -1,28 +1,7 @@
 
 const test = require('ava')
 const request = require('supertest')
-const connection = require('../src/db/connection')
 const app = require('../src/index')
-
-let db
-
-test.before(async () => {
-  db = connection()
-  await db.migrate.latest()
-  await db.seed.run()
-})
-
-test.after.always(async () => {
-  await db.destroy()
-})
-
-test('Getting a badge from the db', async (t) => {
-  const res = await request(app)
-    .get('/scoreboard/api/badges/1')
-    .expect(200)
-  // name should always be included
-  t.true('name' in res.body.badges[0])
-})
 
 test('Pull all badges', async (t) => {
   const res = await request(app)
@@ -33,6 +12,15 @@ test('Pull all badges', async (t) => {
     // name should always be included
     t.true('name' in res.body.badges[numBadges - 1])
   }
+  t.true(numBadges === 10)
+})
+
+test('Getting a badge from the db', async (t) => {
+  const res = await request(app)
+    .get('/scoreboard/api/badges/1')
+    .expect(200)
+  // name should always be included
+  t.true('name' in res.body.badges[0])
 })
 
 test.serial('Inserting a badge into the db', async (t) => {
