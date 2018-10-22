@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Select from 'react-select';
 import { connect } from 'unistore/react';
-import queryString from 'query-string';
 
 import { actions } from '../store'
 import { isAdmin } from '../utils/roles'
@@ -11,7 +10,7 @@ import AdminHeader from '../components/AdminHeader'
 
 import '../styles/Admin.css';
 
-class AdminUserEdit extends Component {
+export class AdminUserEdit extends Component {
   constructor () {
     super()
     this.state = {
@@ -21,8 +20,13 @@ class AdminUserEdit extends Component {
   }
 
   componentDidMount () {
+    const { match } = this.props
+
     this.props.getAuthenticatedUser().then(() => {
-      this.props.getRoles().then(() => {
+      Promise.all([
+        this.props.getRoles(),
+        this.props.adminGetUser(match.params.id)
+      ]).then(() => {
         this.setState({ loading: false })
       })
     })
@@ -46,8 +50,9 @@ class AdminUserEdit extends Component {
   }
 
   onRoleChange (roles) {
+    const { admin } = this.props
     this.setState({ selectedRoles: roles })
-    this.props.updateUserRoles(this.props.user.id, roles.map((role) => role.value))
+    this.props.updateUserRoles(admin.user.id, roles.map((role) => role.value))
       .then(() => {
         this.setState({ saved: true })
       })
@@ -105,7 +110,7 @@ class AdminUserEdit extends Component {
                 <Select
                   options={this.createRoleSelectOptions(admin.roles)}
                   multi={true}
-                  value={this.createRoleSelectOptions(selectedRoles || user.roles)}
+                  value={this.createRoleSelectOptions(selectedRoles || admin.user.roles)}
                   onChange={(roles) => this.onRoleChange(roles)}
                 />
                 {this.renderSaved()}

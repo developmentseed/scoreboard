@@ -9,7 +9,7 @@ import AdminHeader from '../components/AdminHeader'
 
 import '../styles/Admin.css';
 
-class AdminUsers extends Component {
+export class AdminUsers extends Component {
   constructor () {
     super()
     this.state = {
@@ -21,7 +21,7 @@ class AdminUsers extends Component {
     this.props.getAuthenticatedUser().then(() => {
       Promise.all([
         this.props.getRoles(),
-        this.props.getUsers()
+        this.props.adminGetUsers()
       ]).then(() => {
         this.setState({ loading: false })
       })
@@ -35,7 +35,7 @@ class AdminUsers extends Component {
 
   onUserClick (user) {
     const { history } = this.props
-    history.push(`/admin/users/${user.id}`)
+    history.push(`/admin/users/${user.osm_id}`)
   }
 
   renderList () {
@@ -57,8 +57,8 @@ class AdminUsers extends Component {
             {
               admin.users
               .map((user) => (
-                <tr key={`user-${user.id}`} onClick={() => this.onUserClick(user)} className="admin-user-table-row">
-                  <td>{user.id}</td>
+                <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className="admin-user-table-row">
+                  <td>{user.osm_id}</td>
                   <td>{user.full_name}</td>
                   <td>{this.renderUserRoles(user.roles)}</td>
                 </tr>

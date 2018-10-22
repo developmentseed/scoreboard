@@ -10,7 +10,8 @@ export const store = createStore({
   error: null,
   admin: {
     roles: null,
-    users: null
+    users: null,
+    user: null
   }
 })
 
@@ -89,7 +90,31 @@ export function actions (store) {
         })
     },
 
-    getUsers () {
+    /**
+    * get user for admin editing page 
+    **/
+    adminGetUser (state, id) {
+      return fetch(`/scoreboard/api/users/${id}`, { credentials: 'include' })
+        .then(res => {
+          if (res.status === 200) {
+            return res.json()
+          } else {
+            throw new Error('failed to authenticate')
+          }
+        })
+        .then(user => {
+          const { admin } = store.getState()
+          admin.user = user
+          store.setState({ admin })
+        }).catch((err) => {
+          store.setState({ error: err })
+        })
+    },
+
+    /**
+    * get list of users for admin list
+    **/
+    adminGetUsers () {
       return fetch('/scoreboard/api/users', { credentials: 'include' })
         .then(res => {
           if (res.status === 200) {
