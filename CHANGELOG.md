@@ -39,7 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v0.2.2...HEAD
+[v0.2.1]: https://github.com/developmentseed/scoreboard/compare/v0.2.1...v0.2.2
 [v0.2.1]: https://github.com/developmentseed/scoreboard/compare/v0.2.0...v0.2.1
 [v0.2.0]: https://github.com/developmentseed/scoreboard/compare/v0.1.0...v0.2.0
 [v0.1.0]: https://github.com/developmentseed/scoreboard/compare/d4fc54a...v0.1.0
