@@ -25,6 +25,7 @@ import {
 } from './containers';
 
 import { store } from './store'
+import { isAdmin } from './utils/roles'
 
 import './styles/App.css';
 import profileIcon from './assets/dashboard-temp/profile-icon.png';
@@ -119,6 +120,11 @@ class App extends Component {
                                 <li><ActiveLink to="/dashboard" label="Dashboard" /></li>
                                 <li><ActiveLink to={`/users/${profile.id}`} label="Public Profile" /></li>
                                 <li><ActiveLink to={`/edit/${profile.id}`} label="Edit Profile" /></li>
+                                {
+                                  profile.roles && isAdmin(profile.roles) && (
+                                    <li><ActiveLink to={`/admin`} label="Admin" /></li>
+                                  )
+                                }
                                 <li><a href="http://localhost:5000/auth/logout">Logout</a></li>
                               </ul>
                             </div>
