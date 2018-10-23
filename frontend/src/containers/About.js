@@ -14,7 +14,7 @@ const About = props => (
     </header>
     <section className="text-body section-first--sm">
       <div className="row">
-        <p className="text-body--large">Scoreboard is a site that provides insight into the OSM ecosystem, making the users not only more informed but more efficient.</p>
+        <p className="text-body--large">{'Scoreboard is a site that provides insight into the ' + props.projectName + ' ecosystem, making the users not only more informed but more efficient.'}</p>
         <div className="clearfix about--block">
           <p style={{float: "left"}} className="text-body--med width--sm">For campaign managers, Scoreboard provides an overview of what’s happening on the system, and also a way to get detailed information on individual mappers or campaigns. Discover all active <Link to="/campaigns">campaigns.</Link></p>
           <Link to="/campaigns"><img className="img-about1" style={{float: "right"}} src={image1} alt="Individual project page screenshots" /></Link>

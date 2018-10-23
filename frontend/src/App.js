@@ -8,13 +8,15 @@ import {
 import './styles/App.css';
 import { Campaigns, Campaign, Users, User, Home, About } from './containers';
 
+const projectName = process.env.REACT_APP_PROJECT_NAME || 'OSM';
+
 const ActiveLink = ({ label, to }) => (
   <Route path={to} exact={false} children={({ match }) => (
     <div className={match ? 'active' : ''}>
       <Link to={to}>{label}</Link>
     </div>
   )}/>
-)
+  )
 
 export default () => (
   <Router>
@@ -34,11 +36,11 @@ export default () => (
       <Route exact path="/" render={() => (
           <Redirect to="/home" />
       )} />
-      <Route exact path="/home" component={Home} />
+      <Route exact path="/home" component={() => <Home projectName={projectName} />} />
       <Route exact path="/campaigns" component={Campaigns} />
       <Route exact path="/users" component={Users} />
       <Route path="/users/:uid" component={User} />
-      <Route exact path="/about" component={About} />
+      <Route exact path="/about" component={() => <About projectName={projectName} />} />
       <Route path="/campaigns/:name" component={Campaign} />
     </div>
   </Router>

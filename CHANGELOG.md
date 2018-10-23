@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.3] - 2018-10-22
+
+### Fixed
+- allow setting custom project names
+- unregister existing service workers 
+
 ## [v0.2.2] - 2018-10-12
 
 ### Fixed
@@ -39,7 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v0.2.3...HEAD
+[v0.2.3]: https://github.com/developmentseed/scoreboard/compare/v0.2.2...v0.2.3
 [v0.2.2]: https://github.com/developmentseed/scoreboard/compare/v0.2.1...v0.2.2
 [v0.2.1]: https://github.com/developmentseed/scoreboard/compare/v0.2.0...v0.2.1
 [v0.2.0]: https://github.com/developmentseed/scoreboard/compare/v0.1.0...v0.2.0
