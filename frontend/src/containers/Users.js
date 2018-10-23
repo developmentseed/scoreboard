@@ -130,7 +130,7 @@ class Users extends Component {
 
     this.setState(Object.assign(newState, { apiStatus: "LOADING" }));
     let { searchText: q, page, selectedValue: country, selectedSortValue: sortType, selectedActive: active} = newState;
-    api('get', createApiUrl('/api/users', {q, page, country, sortType, active}))
+    api('get', createApiUrl('/api/users/stats', {q, page, country, sortType, active}))
       .then(res => {
         this.setState(Object.assign({ records: res.data, apiStatus: "SUCCESS"}));
       })

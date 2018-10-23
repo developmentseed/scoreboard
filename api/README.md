@@ -5,10 +5,21 @@ Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scor
 
 **Version:** 0.1.0
 
-### /scoreboard/api/users
+### /api/users
 ---
 ##### ***GET***
-**Summary:** list of OSM users
+**Summary:** list of users
+
+**Responses**
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | User object |
+
+### /api/users/stats
+---
+##### ***GET***
+**Summary:** list of OSM users and their stats
 
 **Parameters**
 
@@ -16,7 +27,7 @@ Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scor
 | ---- | ---------- | ----------- | -------- | ---- |
 | page | query | The pagination parameter (each page is limit to 25 results) | No | integer |
 | search | query | Is used for searching the users display name | No | string |
-| country | query | list of countries to return. To search for more than on country, use comma. Example: canada,france | No | string |
+| country | query | List of countries to filter on, using a 2 letter country code. Example 'CA,US' for Canada, United States | No | string |
 | sortType | query | Sort users by a given type | No | string |
 | active | query | Indicator for whether to include only users who have been active in the last 6 months | No | boolean |
 
@@ -26,7 +37,7 @@ Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scor
 | ---- | ----------- |
 | 200 | The list of OSM users |
 
-### /scoreboard/api/users/{id}
+### /api/users/{id}
 ---
 ##### ***GET***
 **Summary:** a specific user
@@ -43,7 +54,7 @@ Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scor
 | ---- | ----------- |
 | 200 | The OSM user object |
 
-### /scoreboard/api/campaigns
+### /api/campaigns
 ---
 ##### ***GET***
 **Summary:** list of campaigns
@@ -63,7 +74,7 @@ Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scor
 | ---- | ----------- |
 | 200 | List of campaigns |
 
-### /scoreboard/api/campaigns/{id}
+### /api/campaigns/{id}
 ---
 ##### ***GET***
 **Summary:** a specific campaign
@@ -80,10 +91,10 @@ Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scor
 | ---- | ----------- |
 | 200 | The campaign object |
 
-### /scoreboard/api/topstats
+### /api/topstats
 ---
 ##### ***GET***
-**Summary:** the top stats
+**Summary:** Top level stats including: number of campaigns, campaigns sorted by priority, edits by country and number of active users
 
 **Responses**
 

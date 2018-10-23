@@ -1,7 +1,11 @@
+const getBadgeProgress = require('../badge_logic')
 const {
   API_URL
 } = require('../config')
+const users = require('../models/users')
+const roles = require('../models/roles')
 const osmesa = require('../services/osmesa')
+const { canEditUser } = require('../passport')
 const connection = require('../db/connection')
 
 /**
@@ -15,7 +19,7 @@ const connection = require('../db/connection')
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-module.exports = async (req, res) => {
+async function get(req, res) {
   const { id } = req.params
   if (!id) {
     return res.boom.badRequest('Invalid id')
@@ -23,13 +27,63 @@ module.exports = async (req, res) => {
   try {
     const db = connection()
     const osmesaResponse = await osmesa.getUser(id)
-    const [{ country }] = await db('users').where('osm_id', id).select('country')
+    const [user] = await users.findByOsmId(id)
     const json = JSON.parse(osmesaResponse)
+
+    const badgesFromDB = await db('badges').select() // array of all badges
+    const badges = getBadgeProgress(json, badgesFromDB)
+
     json.extent_uri = `${API_URL}/scoreboard/api/extents/${json.extent_uri}`
-    return res.send({ id, records: json, country })
+    const rolesList = user.roles ? await roles.getRoles(user.roles) : []
+
+    return res.send({
+      id,
+      badges,
+      records: json,
+      roles: rolesList,
+      country: user.country
+    })
   }
   catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve user stats')
   }
+}
+
+/**
+ * User update route
+ * /user/:id
+ *
+ * update user data
+ *
+ * @param {Object} req - the request object
+ * @param {Object} res - the response object
+ * @returns {Promise} a response
+ */
+async function put(req, res) {
+  const { id } = req.params
+  const { body } = req
+
+  if (!canEditUser(req, id)) {
+    return res.boom.unauthorized()
+  }
+
+  if (!id) {
+    return res.boom.badRequest('Invalid id')
+  }
+
+  try {
+    const [user] = await users.findByOsmId(id)
+    const [updatedUser] = await users.update(user.id, body)
+    return res.send(updatedUser)
+  }
+  catch (err) {
+    console.log(err)
+    return res.boom.badRequest('Could not update user')
+  }
+}
+
+module.exports = {
+  get,
+  put
 }

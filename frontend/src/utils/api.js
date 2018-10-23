@@ -27,10 +27,6 @@ export function createApiUrl (endpoint, obj) {
   return `${endpoint}?${queryString}`;
 }
 
-export default debounce(function (method, url, ...params) {
-  return instance({
-    method,
-    url,
-    ...params
-  })
+export default debounce(function (method, url, data, config) {
+  return instance(Object.assign({ method, url, data}, config));
 }, 300);

@@ -88,6 +88,8 @@
       ],
       "arrow-parens": ["error", "always"],
       "prefer-destructuring": "off",
-      "function-paren-newline": ["error", "consistent"]
+      "function-paren-newline": ["error", "consistent"],
+      "arrow-body-style": "off",
+      "one-var": "off"
     }
   }
