@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [v0.2.4] - 2018-10-23
+### Added
+- A 404 page for missing campaigns
+
 ### Fixed
 - updated OsMesa api endpoint for campaigns to `/campaigns` from `/hashtags`
 

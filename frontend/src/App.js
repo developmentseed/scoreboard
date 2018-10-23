@@ -6,7 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 import './styles/App.css';
-import { Campaigns, Campaign, Users, User, Home, About } from './containers';
+import { Campaigns, Campaign, Users, User, Home, About, NotFound } from './containers';
 
 const projectName = process.env.REACT_APP_PROJECT_NAME || 'OSM';
 
@@ -39,6 +39,7 @@ export default () => (
       <Route exact path="/home" component={() => <Home projectName={projectName} />} />
       <Route exact path="/campaigns" component={Campaigns} />
       <Route exact path="/users" component={Users} />
+      <Route exact path="/404" component={NotFound} />
       <Route path="/users/:uid" component={User} />
       <Route exact path="/about" component={() => <About projectName={projectName} />} />
       <Route path="/campaigns/:name" component={Campaign} />
