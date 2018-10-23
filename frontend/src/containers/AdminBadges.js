@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import api, { createApiUrl } from '../../utils/api';
-import '../../styles/Admin.css';
+import api, { createApiUrl } from '../utils/api';
+import '../styles/Admin.css';
 
 const BADGES_ENDPOINT = '/api/badges';
 const ALERT_TYPE_ERROR = 'error';
@@ -27,7 +27,7 @@ const badgeOperationTypes = [
   { label: 'Up to', value: '<=' }
 ];
 
-class BadgesAdmin extends Component {
+class AdminBadges extends Component {
   constructor() {
     super();
 
@@ -379,4 +379,4 @@ class BadgesAdmin extends Component {
   }
 }
 
-export default BadgesAdmin;
+export default AdminBadges;

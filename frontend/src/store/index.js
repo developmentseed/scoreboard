@@ -8,6 +8,7 @@ export const store = createStore({
   user: null,
   projects: null,
   error: null,
+  badges: null,
   admin: {
     roles: null,
     users: null
@@ -123,6 +124,23 @@ export function actions (store) {
             throw new Error('failed to authenticate')
           }
         })
+        .catch((err) => {
+          store.setState({ error: err })
+        })
+    },
+
+    getBadges (state) {
+      return api('get', '/api/badges')
+        .then((res) => {
+          store.setState({ badges: res.data })
+        })
+        .catch((err) => {
+          store.setState({ error: err })
+        })
+    },
+
+    updateBadges (state, params) {
+      return api('post', '/api/badges', params)
         .catch((err) => {
           store.setState({ error: err })
         })

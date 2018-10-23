@@ -19,7 +19,7 @@ import {
   Dashboard,
   Admin,
   AdminRoles,
-  BadgesAdmin
+  AdminBadges,
   AdminUsers,
   AdminUserEdit
 } from './containers';
@@ -149,9 +149,7 @@ class App extends Component {
             <Route exact path="/admin" component={Admin} />
             <Route exact path="/admin/roles" component={AdminRoles} />
             <Route exact path="/admin/users" component={AdminUsers} />
-            <Route exact path="/admin/badges" render={props => (
-              <BadgesAdmin {...props} loggedIn={loggedIn} profile={profile} />
-            )} />
+            <Route exact path="/admin/badges" component={AdminBadges} />
             <Route exact path="/admin/users/:id" component={AdminUserEdit} />
           </div>
         </Router >
