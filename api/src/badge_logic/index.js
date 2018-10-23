@@ -40,7 +40,6 @@ module.exports = (userData, badges) => {
     daysTotal
   }, badges))
 
-  // const allBadges = mergeAll([sumBadges, consistencyBadge, historyBadge])
   const earnedBadges = {}
   /* eslint-disable no-restricted-syntax */
   for (const key in allBadges) {
@@ -50,9 +49,18 @@ module.exports = (userData, badges) => {
     }
   }
   /* eslint-enable no-restricted-syntax */
+  const sortedBadges = Object.keys(allBadges).sort((a, b) => {
+    return allBadges[a].points.percentage - allBadges[b].points.percentage
+  })
+
+  const mostObtainableNames = sortedBadges.slice(-3)
+  const mostObtainable = allBadges[mostObtainableNames[mostObtainableNames.length - 1]]
+  const secondMostObtainable = allBadges[mostObtainableNames[mostObtainableNames.length - 2]]
+  const thirdMostObtainable = allBadges[mostObtainableNames[mostObtainableNames.length - 3]]
 
   return {
     all: allBadges,
-    earnedBadges
+    earnedBadges,
+    mostAttainable: [mostObtainable, secondMostObtainable, thirdMostObtainable]
   }
 }
