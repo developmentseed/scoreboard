@@ -21,7 +21,7 @@ class OSMesaAPI {
   }
 
   getCampaign(id) {
-    return rp(`${OSMESA_API}/hashtags/${id}`)
+    return rp(`${OSMESA_API}/campaigns/${id}`)
   }
 }
 
