@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import Select from 'react-select';
-import api, { createApiUrl } from '../utils/api';
+import { connect } from 'unistore/react';
+
+import { actions } from '../store';
+import { isAdmin } from '../utils/roles'
+import NotLoggedIn from '../components/NotLoggedIn'
+import AdminHeader from '../components/AdminHeader'
+
 import '../styles/Admin.css';
 
-const BADGES_ENDPOINT = '/api/badges';
 const ALERT_TYPE_ERROR = 'error';
 const ALERT_TYPE_SUCCESS = 'success';
 
@@ -27,11 +33,12 @@ const badgeOperationTypes = [
   { label: 'Up to', value: '<=' }
 ];
 
-class AdminBadges extends Component {
+export class AdminBadges extends Component {
   constructor() {
     super();
 
     this.state = {
+      loading: true,
       alert: '',
       alertType: null,
       descriptionInput: '',
@@ -47,10 +54,6 @@ class AdminBadges extends Component {
       ]
     };
 
-    // API actions
-    // this.fetchBadges = this.fetchBadges.bind(this);
-    this.postBadges = this.postBadges.bind(this);
-
     // Event handlers
     this.addAnotherOperationToBadge = this.addAnotherOperationToBadge.bind(this);
     this.handleAddNewBadgeFormSubmit = this.handleAddNewBadgeFormSubmit.bind(this);
@@ -61,24 +64,28 @@ class AdminBadges extends Component {
     this.resetInputs = this.resetInputs.bind(this);
   }
 
-  // async fetchBadges() {
-  //   try {
-  //     const res = await api('get', createApiUrl(BADGES_ENDPOINT, {}));
-  //     const { badges } = res.data;
-  //   } catch (e) {
-  //     console.log('Error fetching badges: ', e);
-  //   }
-  // }
-
-  async postBadges(params) {
-    this.setState({ disableInteraction: true });
+  async componentDidMount () {
     try {
-      const res = await api('post', BADGES_ENDPOINT, params);
+      await this.props.getAuthenticatedUser()
+      this.setState({ loading: false })
+    } catch (err) {
+      console.log(err)
+      this.setState({ loading: false })
+    }
+  }
+
+  async createBadge(params) {
+    this.setState({ disableInteraction: true });
+
+    try {
+      await this.props.createBadge(params);
+
       this.setState({
         alert: 'Badge created successfully!',
         alertType: ALERT_TYPE_SUCCESS,
         disableInteraction: false
       });
+
       this.resetInputs();
       // this.fetchBadges();
     } catch (e) {
@@ -91,10 +98,31 @@ class AdminBadges extends Component {
   }
 
   render() {
+    const { loggedIn, user, location } = this.props
+
+    if (this.state.loading) {
+      return (
+        <div><AdminHeader /></div>
+      )
+    }
+
+    if (!loggedIn) {
+      return <NotLoggedIn />
+    }
+
+    if (!isAdmin(user.roles)) {
+      return (
+        <Redirect to={{ pathname: '/', state: { from: location } }} />
+      )
+    }
+
     return (
       <div className='admin'>
-        {this.renderHeader()}
+        <AdminHeader />
         <section>
+          <div className="row">
+            <h1 className="header--xlarge">Add a new badge</h1>
+          </div>
           <div className='row'>
             {this.state.alert && this.showAlert()}
             {this.renderAddNewForm()}
@@ -347,7 +375,7 @@ class AdminBadges extends Component {
     };
 
     console.log(params);
-    this.postBadges(params);
+    this.createBadge(params);
   }
 
   showAlert() {
@@ -379,4 +407,4 @@ class AdminBadges extends Component {
   }
 }
 
-export default AdminBadges;
+export default connect(['user', 'loggedIn', 'error', 'badges', 'admin'], actions)(AdminBadges);

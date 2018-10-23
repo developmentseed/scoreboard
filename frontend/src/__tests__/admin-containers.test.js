@@ -11,6 +11,7 @@ import { Admin } from '../containers/Admin';
 import { AdminUsers } from '../containers/AdminUsers';
 import { AdminRoles } from '../containers/AdminRoles';
 import { AdminUserEdit } from '../containers/AdminUserEdit';
+import { AdminBadges } from '../containers/AdminBadges';
 
 import store, { actions } from '../store';
 
@@ -67,6 +68,20 @@ it('AdminUserEdit renders without crashing', () => {
     <Provider store={store}>
       <MemoryRouter>
         <AdminUserEdit actions={actions} getAuthenticatedUser={mockAction} />
+      </MemoryRouter>
+    </Provider>
+  )
+
+  ReactDOM.render(admin, div);
+});
+
+it('AdminBadges renders without crashing', () => {
+  const div = document.createElement('div');
+
+  const admin = (
+    <Provider store={store}>
+      <MemoryRouter>
+        <AdminBadges actions={actions} getAuthenticatedUser={mockAction} createBadge={mockAction} />
       </MemoryRouter>
     </Provider>
   )

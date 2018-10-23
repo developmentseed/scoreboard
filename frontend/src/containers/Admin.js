@@ -65,6 +65,12 @@ export class Admin extends Component {
                       <p>Manage user roles</p>
                     </Link>
                   </li>
+                  <li>
+                    <Link to="/admin/badges">
+                      <h2 className="header--large">Badges</h2>
+                      <p>Create new badges</p>
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>

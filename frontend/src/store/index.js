@@ -164,11 +164,17 @@ export function actions (store) {
         })
     },
 
-    updateBadges (state, params) {
-      return api('post', '/api/badges', params)
-        .catch((err) => {
-          store.setState({ error: err })
-        })
+    createBadge (state, params) {
+      return fetch(`/scoreboard/api/badges`, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(params),
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      }).catch((err) => {
+        store.setState({ error: err })
+      })
     }
   }
 }
