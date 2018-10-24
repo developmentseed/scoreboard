@@ -28,7 +28,8 @@ class Dashboard extends Component {
   }
 
   renderUpcomingBadges (badges) {
-    const badgeKeys = Object.keys(badges)
+    // show only the top 3 badges for now
+    const badgeKeys = Object.keys(badges).slice(0, 3)
 
     return (
       <section>
@@ -38,8 +39,8 @@ class Dashboard extends Component {
             {
               badgeKeys.map((badgeKey, i) => {
                 const badge = badges[badgeKey]
-                const badgeUrl = require(`../assets/badges/${badge.category}-${badge.badgeLevel}-graphic.svg`)
-                const borderUrl = require(`../assets/badges/border${badge.badgeLevel}.svg`)
+                const badgeUrl = require(`../assets/badges/${badge.category}-1-graphic.svg`)
+                const borderUrl = require(`../assets/badges/border1.svg`)
 
                 return (
                   <li key={`upcoming-badge-${i}`}>
@@ -64,7 +65,7 @@ class Dashboard extends Component {
                     <div className="badge-Details">
                       <h3 className="header--small sub-head header--with-description">{badge.name}</h3>
                       <h5 style={{ marginBottom: '.2em' }}>
-                        {badge.points.nextPoints - badge.points.currentPoints} {badge.metric} until level {badge.nextBadgeLevel}!
+                        {badge.progress}
                       </h5>
                       <p className="badge-Description">{badge.description}</p>
                     </div>
@@ -80,9 +81,9 @@ class Dashboard extends Component {
 
   renderProjects() {
     const { projects } = this.props
-    const features = projects.records.features
 
     if (!projects) return (<div />)
+    const features = projects.records.features
 
     return (
       <section>
@@ -92,7 +93,6 @@ class Dashboard extends Component {
           <ol>
             {
               features.map((project) => {
-                console.log('project', project)
                 return (
                   <li key={`tm-project-${project.id}`} className="block--campaign">
                     <h3 className="header--small header--with-description-xlg">
@@ -172,7 +172,7 @@ class Dashboard extends Component {
           <UserExtentMap extent={user.records.extent_uri} uid={osmUser['@']['id']} />
         </header>
 
-        {this.renderUpcomingBadges(user.badges.mostAttainable)}
+        {this.renderUpcomingBadges(user.badges.unearnedBadges)}
         {this.renderProjects()}
       </div>
     );
