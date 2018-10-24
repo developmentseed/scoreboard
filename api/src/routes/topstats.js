@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
       .where('name', 'tm_campaigns').select('feature')
     const topEdits = await db('users')
       .whereNotIn('osm_id', filteredUsers)
-      .select('display_name', 'country', 'edit_count')
+      .select('full_name', 'country', 'edit_count')
       .orderBy('edit_count', 'desc')
       .limit(10)
 
