@@ -93,6 +93,18 @@ To populate fake campaign and tasking manager data run:
 
      $ yarn clocks 
 
+### Create an admin user
+
+To be able to develop admin pages you'll need to have an admin user.
+
+Make your user an admin by running:
+
+```
+./api/bin/scoreboard create-admin-user --osm-id {your-id}
+```
+
+If you were already logged in, log out and log back, then you'll see an "admin" link in the menu in the top right.
+
 ## Serve
 
 This command will start both the frontend and the api together
