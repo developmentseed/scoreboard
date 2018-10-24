@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../styles/Campaigns.css';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import api from '../utils/api';
 import { distanceInWordsToNow } from 'date-fns';
 import CampaignMap from '../components/charts/CampaignMap';
@@ -29,7 +29,8 @@ class Campaign extends Component {
   constructor () {
     super();
     this.state = {
-      "records": {}
+      records: {},
+      notFound: false
     }
   }
 
@@ -48,8 +49,16 @@ class Campaign extends Component {
             records: res.data.records,
             match
           });
+        }).catch((e) => {
+          console.log(e);
+          this.setState({ notFound: true })
         });
+    }
+  }
 
+  renderRedirect () {
+    if (this.state.notFound) {
+      return <Redirect to='/404' />
     }
   }
 
@@ -117,7 +126,7 @@ class Campaign extends Component {
         </div>
       );
     } else {
-      return <div></div>;
+      return <div>{this.renderRedirect()}</div>;
     }
   }
 }
