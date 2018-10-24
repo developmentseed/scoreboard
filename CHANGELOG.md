@@ -27,6 +27,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Revise user model to be the same format as the roles model
 - Move existing `api/users` endpoint to `api/users/stats` and use `api/users` for a list of users without stats
 
+## [v0.2.4] - 2018-10-23
+### Added
+- A 404 page for missing campaigns
+
+### Fixed
+- updated OsMesa api endpoint for campaigns to `/campaigns` from `/hashtags`
+
 ## [v0.2.3] - 2018-10-22
 
 ### Fixed
@@ -66,7 +73,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v0.2.3...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v0.2.4...HEAD
+[v0.2.4]: https://github.com/developmentseed/scoreboard/compare/v0.2.3...v0.2.4
 [v0.2.3]: https://github.com/developmentseed/scoreboard/compare/v0.2.2...v0.2.3
 [v0.2.2]: https://github.com/developmentseed/scoreboard/compare/v0.2.1...v0.2.2
 [v0.2.1]: https://github.com/developmentseed/scoreboard/compare/v0.2.0...v0.2.1

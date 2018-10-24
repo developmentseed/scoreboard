@@ -21,7 +21,7 @@ class OSMesaAPI {
   }
 
   getCampaign(id) {
-    return rp(`${OSMESA_API}/hashtags/${id}`)
+    return rp(`${OSMESA_API}/campaigns/${id}`)
   }
 }
 
@@ -34,6 +34,10 @@ class FakeOSMesaAPI {
   }
 
   getCampaign(id) {
+    // to check the notfound page we fake a 404 response
+    if (id === 'notfound') {
+      return Promise.reject('not found')
+    }
     const samplecampaign = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecampaign.json'), 'utf-8'))
     samplecampaign.tag = `project-${id}`
     return Promise.resolve(JSON.stringify(samplecampaign))

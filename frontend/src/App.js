@@ -16,6 +16,7 @@ import {
   UserEdit,
   Home,
   About,
+  NotFound,
   Dashboard,
   Admin,
   AdminRoles,
@@ -138,6 +139,7 @@ class App extends Component {
             <Route exact path="/home" component={() => <Home projectName={projectName} />} />
             <Route exact path="/campaigns" component={Campaigns} />
             <Route exact path="/users" component={Users} />
+            <Route exact path="/404" component={NotFound} />
             <Route exact path="/edit/:uid" render={props => (
               <UserEdit {...props} loggedIn={loggedIn} />
             )} />
