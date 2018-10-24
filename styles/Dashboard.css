@@ -1,0 +1,398 @@
+/* Colors
+   ========================================================================== */
+/* Typography
+   ========================================================================== */
+@font-face {
+  font-family: 'CrimsonText-reg';
+  src: url("fonts/CrimsonText-Regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'CrimsonText-semi';
+  src: url("fonts/CrimsonText-SemiBold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'CrimsonText-bold';
+  src: url("fonts/CrimsonText-Bold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Heebo-light';
+  src: url("fonts/Heebo-Light.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Heebo-reg';
+  src: url("fonts/Heebo-Regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Heebo-bold';
+  src: url("fonts/Heebo-Bold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Abel';
+  src: url("fonts/Abel-Regular.ttf") format("truetype"); }
+
+/* Rows */
+/* Media queries */
+/* ==========================================================================
+   Functions
+   ========================================================================== */
+/* Range function
+   ========================================================================== */
+/**
+ * Define ranges for various things, like media queries.
+ */
+/* ==========================================================================
+   Media queries
+   ========================================================================== */
+.nav-temp--login {
+  padding-top: 2em;
+  float: right;
+  width: 20%; }
+  .nav-temp--login li {
+    margin-left: 1em;
+    float: right; }
+    .nav-temp--login li:first-of-type {
+      margin-top: .5em; }
+
+.wrapper--map {
+  background-color: rgba(79, 202, 156, 0.6);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2; }
+
+.header--internal--dashboard {
+  margin-top: -6em;
+  background-size: cover;
+  min-height: 400px;
+  color: #fff;
+  position: relative; }
+  @media all and (max-width: 543px) {
+    .header--internal--dashboard {
+      margin-top: -10em;
+      min-height: 430px; } }
+  .header--internal--dashboard .row {
+    z-index: 3;
+    position: relative; }
+  .header--internal--dashboard .header--content--wrapper {
+    padding-top: 280px; }
+  .header--internal--dashboard h1 {
+    color: #fff;
+    line-height: 1em;
+    margin-top: .4em; }
+  @media all and (max-width: 799px) {
+    .header--internal--dashboard .section-sub--left, .header--internal--dashboard .section-sub--right {
+      padding-top: 220px; } }
+  @media all and (max-width: 543px) {
+    .header--internal--dashboard .section-sub--left {
+      padding-top: 245px; } }
+  .header--internal--dashboard .section-sub--right {
+    margin-top: 26px; }
+    @media all and (max-width: 799px) {
+      .header--internal--dashboard .section-sub--right {
+        padding-top: .2em;
+        padding-left: 7.2em;
+        width: 70%; } }
+    @media all and (max-width: 799px) {
+      .header--internal--dashboard .section-sub--right .num--large {
+        color: rgba(255, 255, 255, 0.8); } }
+  .header--internal--dashboard .link--large, .header--internal--dashboard .link--large:visited {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    display: inline-block; }
+    .header--internal--dashboard .link--large:hover, .header--internal--dashboard .link--large:visited:hover {
+      color: #ededed; }
+
+.map--thumb {
+  width: 35%;
+  height: auto;
+  margin-right: 4%;
+  float: left; }
+  @media all and (min-width: 992px) {
+    .map--thumb {
+      max-width: 220px; } }
+  @media all and (max-width: 543px) {
+    .map--thumb {
+      width: 60%; } }
+
+.profile--thumb {
+  width: 90px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  margin-right: 1em;
+  margin-bottom: .2em; }
+  @media all and (max-width: 799px) {
+    .profile--thumb {
+      width: 80px; } }
+
+.communication--details {
+  float: left;
+  width: 58%; }
+  @media all and (max-width: 991px) {
+    .communication--details {
+      width: 60%; } }
+  @media all and (max-width: 799px) {
+    .communication--details {
+      width: 100%;
+      margin-top: 1.75em; } }
+  .communication--details .list--two-column {
+    margin-bottom: .5em; }
+
+.bi-fold li {
+  width: 45%;
+  float: left; }
+  .bi-fold li:first-of-type {
+    margin-right: 4%; }
+
+@media all and (max-width: 799px) {
+  .bi-fold > li {
+    width: 100%;
+    margin-bottom: 3em; } }
+
+.bi-fold .list--two-column {
+  margin-bottom: .5em; }
+  .bi-fold .list--two-column li {
+    width: 100%; }
+
+.tri-fold {
+  margin-bottom: 2em; }
+  .tri-fold li {
+    float: left;
+    width: 33%; }
+    .tri-fold li:last-of-type {
+      margin-right: 0; }
+    @media all and (max-width: 799px) {
+      .tri-fold li {
+        float: inherit;
+        width: 100%;
+        clear: both; } }
+  @media all and (min-width: 800px) {
+    .tri-fold .badge-Details {
+      width: 50%; } }
+  @media all and (max-width: 991px) {
+    .tri-fold .badge-Details {
+      width: 80%; } }
+  @media all and (max-width: 799px) {
+    .tri-fold .badge-Details {
+      float: left;
+      margin: .2em 0 0 1em;
+      width: 60%; } }
+
+.badge--thumb {
+  width: 140px;
+  height: auto;
+  float: left; }
+  @media all and (max-width: 991px) {
+    .badge--thumb {
+      float: inherit; } }
+  @media all and (max-width: 799px) {
+    .badge--thumb {
+      width: 110px;
+      float: left;
+      margin-bottom: 2em; } }
+
+.dashboard .chart-bar--main {
+  margin-bottom: 2em; }
+
+.dashboard .block--campaign p {
+  min-height: 20px; }
+
+@media all and (max-width: 799px) {
+  .dashboard section:first-of-type {
+    padding-bottom: 0; } }
+
+.messages {
+  margin-bottom: 6em; }
+  @media all and (max-width: 799px) {
+    .messages {
+      margin-bottom: 4em; } }
+  .messages li {
+    width: 24%;
+    float: left; }
+    .messages li:first-of-type {
+      margin-right: 5%; }
+    @media all and (max-width: 991px) {
+      .messages li {
+        width: 34%; } }
+    @media all and (max-width: 799px) {
+      .messages li {
+        width: 85%;
+        margin-bottom: 1em; } }
+    .messages li a {
+      background: #FBFBFB;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      border: 1px solid #eeeeee;
+      width: 85%;
+      float: left;
+      padding: 2em 2em;
+      position: relative;
+      overflow: hidden; }
+      @media all and (max-width: 991px) {
+        .messages li a {
+          width: 80%; } }
+      @media all and (max-width: 799px) {
+        .messages li a {
+          width: 90%;
+          padding: 1em 1em; } }
+      .messages li a .messages--overlay {
+        position: absolute;
+        visibility: hidden;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2em;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        transition: all 0.4s ease 0s; }
+        .messages li a .messages--overlay h3 {
+          color: #fff;
+          width: 60%;
+          float: left;
+          font-size: 1.72em;
+          line-height: 1.3em; }
+          @media all and (max-width: 799px) {
+            .messages li a .messages--overlay h3 {
+              font-size: 1.42em; } }
+        .messages li a .messages--overlay:after {
+          background-image: url("../assets/icon-arrow.svg");
+          content: " ";
+          width: 58px;
+          height: 35px;
+          background-size: 58px 35px;
+          display: inline-block;
+          float: left;
+          margin-top: 2em;
+          margin-left: 12%; }
+          @media all and (max-width: 799px) {
+            .messages li a .messages--overlay:after {
+              width: 48px;
+              height: 25px;
+              background-size: 48px 25px;
+              margin-top: 1em; } }
+      .messages li a:hover .messages--overlay {
+        visibility: visible;
+        background-color: rgba(86, 87, 194, 0.9);
+        opacity: 1;
+        filter: alpha(opacity=100); }
+    .messages li h3, .messages li .num--large {
+      color: #5657C2; }
+    .messages li .num--large {
+      margin-top: .4em;
+      font-family: "Heebo-bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 3.56em; }
+      @media all and (max-width: 799px) {
+        .messages li .num--large {
+          font-size: 3em;
+          text-align: right; } }
+  .messages img {
+    background-size: 83px 112px;
+    width: 83px;
+    height: 112px;
+    display: inline-block;
+    margin-right: 2em;
+    content: " ";
+    float: left; }
+    @media all and (max-width: 799px) {
+      .messages img {
+        background-size: 43px 72px;
+        width: 43px;
+        height: 72px; } }
+
+.message--body {
+  width: 40%;
+  float: left;
+  margin-top: .5em; }
+  @media all and (max-width: 799px) {
+    .message--body {
+      width: 70%; }
+      .message--body h3 {
+        float: left;
+        width: 40%;
+        margin-top: .6em;
+        margin-right: 1em; }
+      .message--body .num--large {
+        float: left;
+        width: 40%; } }
+
+.width--seventy > li {
+  width: 75%;
+  margin-bottom: 4em; }
+  @media all and (max-width: 799px) {
+    .width--seventy > li {
+      width: 100%; } }
+
+.message--direct img {
+  background-image: url("../assets/icons-direct.jpg"); }
+
+.message--notes img {
+  background-image: url("../assets/icons-note.jpg"); }
+
+.message {
+  background-color: rgba(0, 0, 0, 0.4);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 7; }
+
+.modal {
+  background-color: #fff;
+  width: 70%;
+  border: 1px solid #d5d5d5;
+  padding: 4em 4em 6em;
+  position: absolute;
+  top: 2em;
+  left: 10%;
+  z-index: 8;
+  margin-bottom: 4em; }
+  @media all and (max-width: 799px) {
+    .modal {
+      width: 80%;
+      top: 0em;
+      left: 0;
+      padding: 10% 10% 20%; } }
+
+.message--conversation {
+  margin-top: 2em; }
+  .message--conversation li {
+    width: 60%;
+    clear: both;
+    margin-bottom: 4em; }
+    .message--conversation li:nth-of-type(even) {
+      float: right;
+      text-align: right; }
+      @media all and (max-width: 799px) {
+        .message--conversation li:nth-of-type(even) {
+          float: left;
+          text-align: left; } }
+    @media all and (max-width: 799px) {
+      .message--conversation li {
+        width: 100%; } }
+    .message--conversation li p {
+      margin-top: .5em; }
+
+.close {
+  position: absolute;
+  top: 1.3em;
+  right: 2em; }
+  .close:before {
+    background-image: url("../assets/sm-xmark.svg");
+    content: " ";
+    width: 20px;
+    height: 20px;
+    background-size: 20px 20px;
+    display: block;
+    margin-right: .3em;
+    float: left; }
+  .close span {
+    float: left;
+    color: #000;
+    text-transform: uppercase;
+    font-size: 1.14em; }

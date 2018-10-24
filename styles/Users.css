@@ -1,0 +1,97 @@
+/* Colors
+   ========================================================================== */
+/* Typography
+   ========================================================================== */
+@font-face {
+  font-family: 'CrimsonText-reg';
+  src: url("fonts/CrimsonText-Regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'CrimsonText-semi';
+  src: url("fonts/CrimsonText-SemiBold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'CrimsonText-bold';
+  src: url("fonts/CrimsonText-Bold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Heebo-light';
+  src: url("fonts/Heebo-Light.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Heebo-reg';
+  src: url("fonts/Heebo-Regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Heebo-bold';
+  src: url("fonts/Heebo-Bold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Abel';
+  src: url("fonts/Abel-Regular.ttf") format("truetype"); }
+
+/* Rows */
+/* Media queries */
+/* ==========================================================================
+   Functions
+   ========================================================================== */
+/* Range function
+   ========================================================================== */
+/**
+ * Define ranges for various things, like media queries.
+ */
+/* ==========================================================================
+   Media queries
+   ========================================================================== */
+.chart {
+  font-family: "Abel", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+.chart-pie {
+  margin-left: -2.5em; }
+
+.chart-pie--legend {
+  padding: 1em 0 0 1em; }
+
+.legend-buildings, .legend-roads, .legend-pois, .legend-waterways {
+  margin-bottom: .3em; }
+  .legend-buildings:before, .legend-roads:before, .legend-pois:before, .legend-waterways:before {
+    content: " ";
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #1f78b4;
+    margin-right: .5em; }
+
+.legend-roads:before {
+  background-color: #b2df8a; }
+
+.legend-pois:before {
+  background-color: #33a02c; }
+
+.legend-waterways:before {
+  background-color: #a6cee3; }
+
+.stats-user {
+  margin-top: -1em; }
+
+.graphs--user .section-width-thirty {
+  margin-left: 5%; }
+
+.user-glance-graphs {
+  margin-bottom: 2em; }
+  .user-glance-graphs .Badge-Border {
+    width: 140px;
+    height: 140px;
+    background-size: 140px; }
+  .user-glance-graphs .Badge-Completed {
+    width: 125px;
+    height: 125px;
+    background-size: 125px; }
+  .user-glance-graphs .Badge.progress {
+    width: 130px;
+    height: 130px; }
+  .user-glance-graphs .Badge-Interior {
+    background-size: 130px; }
+  .user-glance-graphs .Badge-Interior.progress {
+    width: 115px;
+    height: 115px; }

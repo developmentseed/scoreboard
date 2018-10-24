@@ -1,0 +1,34 @@
+/* Colors
+   ========================================================================== */
+/* Typography
+   ========================================================================== */
+@font-face {
+  font-family: 'CrimsonText-reg';
+  src: url("fonts/CrimsonText-Regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'CrimsonText-semi';
+  src: url("fonts/CrimsonText-SemiBold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'CrimsonText-bold';
+  src: url("fonts/CrimsonText-Bold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Heebo-light';
+  src: url("fonts/Heebo-Light.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Heebo-reg';
+  src: url("fonts/Heebo-Regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Heebo-bold';
+  src: url("fonts/Heebo-Bold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Abel';
+  src: url("fonts/Abel-Regular.ttf") format("truetype"); }
+
+/* Rows */
+/* Media queries */

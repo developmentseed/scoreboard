@@ -6,3 +6,4 @@
 tmp/**
 **/api/src/db/migrations/**
 **/frontend/build
+.next

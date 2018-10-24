@@ -244,7 +244,7 @@ section {
 
 .header--homepage {
   margin-top: -6em;
-  background: url("../assets/homepage-background.jpg") no-repeat center top;
+  background: url("../static/homepage-background.jpg") no-repeat center top;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -618,7 +618,7 @@ legend {
 
 .search-icon {
   position: absolute;
-  background-image: url("../assets/magnifier-left.svg");
+  background-image: url("../static/magnifier-left.svg");
   content: " ";
   width: 15px;
   height: 15px;
