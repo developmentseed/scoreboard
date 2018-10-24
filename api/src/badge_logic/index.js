@@ -40,6 +40,10 @@ module.exports = (userData, badges) => {
     daysTotal
   }, badges))
 
+  allBadges.sort((a, b) => {
+    return b.points.percentage - a.points.percentage
+  })
+
   const earnedBadges = {}
   const unearnedBadges = {}
   /* eslint-disable no-restricted-syntax */
@@ -54,11 +58,6 @@ module.exports = (userData, badges) => {
       }
     }
   }
-  /* eslint-enable no-restricted-syntax */
-
-  unearnedBadges.sort((a, b) => {
-    return a.points.percentage - b.points.percentage
-  })
 
   return {
     all: allBadges,
