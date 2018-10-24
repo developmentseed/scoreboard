@@ -41,26 +41,28 @@ module.exports = (userData, badges) => {
   }, badges))
 
   const earnedBadges = {}
+  const unearnedBadges = {}
   /* eslint-disable no-restricted-syntax */
   for (const key in allBadges) {
     const val = allBadges[key]
-    if (val && val.badgeLevel > 0) {
-      earnedBadges[key] = val
+    if (val) {
+      if (val.badgeLevel > 0) {
+        earnedBadges[key] = val
+      }
+      else if (val.badgeLevel === 0) {
+        unearnedBadges[key] = val
+      }
     }
   }
   /* eslint-enable no-restricted-syntax */
-  const sortedBadges = Object.keys(allBadges).sort((a, b) => {
-    return allBadges[a].points.percentage - allBadges[b].points.percentage
-  })
 
-  const mostObtainableNames = sortedBadges.slice(-3)
-  const mostObtainable = allBadges[mostObtainableNames[mostObtainableNames.length - 1]]
-  const secondMostObtainable = allBadges[mostObtainableNames[mostObtainableNames.length - 2]]
-  const thirdMostObtainable = allBadges[mostObtainableNames[mostObtainableNames.length - 3]]
+  unearnedBadges.sort((a, b) => {
+    return a.points.percentage - b.points.percentage
+  })
 
   return {
     all: allBadges,
     earnedBadges,
-    mostAttainable: [mostObtainable, secondMostObtainable, thirdMostObtainable]
+    unearnedBadges
   }
 }
