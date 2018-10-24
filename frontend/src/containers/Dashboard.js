@@ -80,9 +80,9 @@ class Dashboard extends Component {
 
   renderProjects() {
     const { projects } = this.props
-    const features = projects.records.features
 
     if (!projects) return (<div />)
+    const features = projects.records.features
 
     return (
       <section>
