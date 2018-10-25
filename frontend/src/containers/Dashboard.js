@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'unistore/react';
 import { actions } from '../store'
 
+import BadgeInProgress from '../components/BadgeInProgress';
 import '../styles/Dashboard.css';
 
 import { UserExtentMap } from '../components/charts';
@@ -39,35 +40,15 @@ class Dashboard extends Component {
             {
               badgeKeys.map((badgeKey, i) => {
                 const badge = badges[badgeKey]
-                const badgeUrl = require(`../assets/badges/${badge.category}-1-graphic.svg`)
-                const borderUrl = require(`../assets/badges/border1.svg`)
 
                 return (
                   <li key={`upcoming-badge-${i}`}>
-                    <div
-                      className='Badge-Completed'
-                      style={{
-                        backgroundImage: `url(${badgeUrl})`,
-                        width: '130px',
-                        height: '130px',
-                        backgroundSize: '130px'
-                      }}>
-                    </div>
-                    <div
-                      className='Badge-Border'
-                      style={{
-                        backgroundImage: `url(${borderUrl})`,
-                        width: '143px',
-                        height: '143px',
-                        backgroundSize: '143px'
-                      }}>
-                    </div>
+                    <BadgeInProgress badge={badge} badgeClass="progress" />
                     <div className="badge-Details">
                       <h3 className="header--small sub-head header--with-description">{badge.name}</h3>
                       <h5 style={{ marginBottom: '.2em' }}>
                         {badge.progress}
                       </h5>
-                      <p className="badge-Description">{badge.description}</p>
                     </div>
                   </li>
                 )
