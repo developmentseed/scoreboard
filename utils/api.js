@@ -3,7 +3,7 @@ var debounce = require('debounce-promise');
 const {isNil} = require('ramda');
 
 const instance = axios.create({
-  baseURL: window.location.pathname
+  baseURL: process.env.APP_URL || "http://localhost:8181"
 });
 
 /**

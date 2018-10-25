@@ -35,6 +35,7 @@
     "@turf/center-of-mass": "^5.0.4",
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.17.0",
+    "css-loader": "^1.0.0",
     "date-fns": "^1.29.0",
     "debounce-promise": "^3.0.2",
     "dotenv": "^6.1.0",

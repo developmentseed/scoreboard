@@ -1,12 +1,16 @@
 import React from 'react'
 import App, { Container } from 'next/app'
 import Link from 'next/link'
+import Head from 'next/head'
 
 import "../styles/index.scss"
 import "../styles/App.scss"
 
-const Layout = ({children}) => (
+const Layout = ({ children }) => (
   <div className="App">
+  <Head>
+      <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
+  </Head>
     <header className="header-nav">
       <div className="row">
         <nav className="clearfix">
@@ -20,7 +24,7 @@ const Layout = ({children}) => (
       </div>
     </header>
     {children}
-    </div>
+  </div>
 )
 
 
@@ -35,7 +39,7 @@ export default class Scoreboard extends App {
     return { pageProps }
   }
 
-  render () {
+  render() {
     const { Component, pageProps } = this.props
 
     return (
