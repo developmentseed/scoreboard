@@ -7,7 +7,7 @@
     "migrate": "nf start migrate_db",
     "seed": "nf start seed_db",
     "start": "npm run migrate && nf start web",
-    "clocks": "npm run migrate && nf start tm_clock,users_clock",
+    "clocks": "npm run migrate && nf start users_clock",
     "start-dev": "npm run migrate && nf --procfile Procfile-dev start web",
     "generate-docs": "swagger-markdown -i docs/api.yml -o README.md",
     "test": "./test.sh"

@@ -19,6 +19,11 @@ class Users extends Component {
     this.state = {
       "records": {},
       apiStatus: "LOADING",
+      'searchText': "", 
+      'page': 1, 
+      'selectedValue': null, 
+      'selectedSortValue': null, 
+      'selectedActive': false
     }
 
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -48,11 +53,29 @@ class Users extends Component {
       });
   }
 
-  componentDidUpdate (prevProps) {
-    console.log('prev', prevProps.users)
-    console.log('next', this.props.users)
+  static getDerivedStateFromProps (props, state) {
     let filters = ['searchText', 'page', 'selectedValue', 'selectedSortValue', 'selectedActive']
-    if (prevProps.users && this.props.users && !equals(pick(filters, prevProps.users), pick(filters, this.props.users))) {
+    if (props.users && !equals(pick(filters, props.users), pick(filters, state))) {
+      let nextState = {
+        records: {
+          records: [],
+          total: 0,
+          subTotal: 0,
+          editTotal: 0,
+          countries: []
+        }
+      }
+      filters.forEach(filter => {
+        nextState[filter] = props.users[filter]
+      })
+
+      return nextState
+    }
+    return null
+  }
+
+  componentDidUpdate () {
+    if (this.state.records.records.length === 0) {
       this._handleChange(this.props.users)
     }
   }
@@ -81,14 +104,20 @@ class Users extends Component {
 
   render() {
     const {
-      page,
-      records: { total, records, subTotal, editTotal, countries },
       apiStatus,
+      records: recordData
+    } = this.state;
+
+    const { total, records, subTotal, editTotal, countries } = recordData
+
+    const {
       searchText,
       selectedValue,
       selectedSortValue,
-      selectedActive
-    } = this.state;
+      selectedActive,
+      page
+    } = this.props.users
+
     return (
       <div className="Users">
         <AllUsersHeader countries={countries} users={total} edits={editTotal}/>
@@ -123,4 +152,4 @@ class Users extends Component {
   }
 }
 
-export default connect('users', actions)(Users);
+export default connect('users,searchText', actions)(Users);

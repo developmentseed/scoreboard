@@ -1,6 +1,6 @@
 import React from 'react';
 import {sortBy, prop, splitAt} from 'ramda';
-import {formatDecimal} from '../../utils/format';
+import {formatDecimal} from '../../lib/utils/format';
 import countries from 'i18n-iso-countries';
 import Link from 'next/link'
 import enLocale from "i18n-iso-countries/langs/en.json"
