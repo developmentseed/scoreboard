@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link'
-import api from '../utils/api';
-import trimLength from '../utils/trim_length';
-import {formatDecimal} from '../utils/format';
+import api from '../lib/utils/api';
+import trimLength from '../lib/utils/trim_length';
+import {formatDecimal} from '../lib/utils/format';
 import TopEditorsChart from '../components/charts/TopEditorsChart';
 import EditorsByCountry from '../components/charts/EditorsByCountryChart';
 
@@ -36,7 +36,7 @@ class Home extends Component {
 
   render() {
     const {campaign_total, records, num_users, features, top_edits, edits_by_country} = this.state;
-    const { projectName } = this.props;
+    const { project: projectName } = this.props;
     return (
       <div className="home">
         <header className="header--homepage header--page">

@@ -59,6 +59,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "^1.1.4",
     "react-select": "^1.2.1",
+    "style-loader": "^0.23.1",
     "unistore": "^3.1.0",
     "url-loader": "^1.1.2"
   },

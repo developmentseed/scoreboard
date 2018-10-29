@@ -2,9 +2,13 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import Link from 'next/link'
 import Head from 'next/head'
+import withReduxStore from '../lib/store/with-store'
+import { Provider } from 'unistore/react';
 
 import "../styles/index.scss"
 import "../styles/App.scss"
+
+const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 
 const Layout = ({ children }) => (
   <div className="App">
@@ -15,10 +19,10 @@ const Layout = ({ children }) => (
       <div className="row">
         <nav className="clearfix">
           <ul className="nav--left">
-            <li className="logo"><Link href="/">ScoreBoard</Link></li>
-            <li><Link href="/campaigns" label="Campaigns" ><a>Campaigns</a></Link></li>
-            <li><Link href="/users" label="Users"><a>Users</a></Link></li>
-            <li><Link href="/about" label="About"><a>About</a></Link></li>
+            <li className="logo"><Link href="/"><a>ScoreBoard</a></Link></li>
+            <li><Link href="/campaigns"><a>Campaigns</a></Link></li>
+            <li><Link href="/users" ><a>Users</a></Link></li>
+            <li><Link href="/about" ><a>About</a></Link></li>
           </ul>
         </nav>
       </div>
@@ -28,7 +32,7 @@ const Layout = ({ children }) => (
 )
 
 
-export default class Scoreboard extends App {
+class Scoreboard extends App {
   static async getInitialProps({ Component, router, ctx }) {
     let pageProps = {}
 
@@ -40,14 +44,19 @@ export default class Scoreboard extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props
+    const { Component, pageProps, reduxStore } = this.props
 
     return (
       <Container>
         <Layout>
-          <Component {...pageProps} />
+          <Provider store={reduxStore}>
+            <Component {...pageProps} project={projectName}/>
+          </Provider>
         </Layout>
       </Container>
     )
   }
 }
+
+
+export default withReduxStore(Scoreboard)

@@ -20,6 +20,13 @@ module.exports = withImages(withSass({
       })
     ]
 
+    config.module.rules.push(
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
+      }
+    )
+
     config.module.rules.push({
       test: /\.(eot|woff|woff2|ttf|svg|png|jpg|gif)$/,
       use: {

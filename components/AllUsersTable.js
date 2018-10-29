@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { formatDecimal } from '../utils/format';
-import {distanceInWordsToNow, parse} from 'date-fns';
-import countries from 'i18n-iso-countries';
-countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+import React from 'react'
+import Link from 'next/link'
+import { formatDecimal } from '../lib/utils/format'
+import {distanceInWordsToNow, parse} from 'date-fns'
+import countries from 'i18n-iso-countries'
+countries.registerLocale(require("i18n-iso-countries/langs/en.json"))
 
 export default ({ apiStatus, users }) => {
   let content = <div></div>;
@@ -24,7 +24,7 @@ export default ({ apiStatus, users }) => {
             users.map(user => (
                 <tr key={user.osm_id}>
                   <td>{((user.edit_count > 0 ) ? user.rank: "N/A")}</td>
-                  <td><Link className="link--normal" to={`/users/${user.osm_id}`}>{user.full_name}</Link></td>
+                  <td><Link href={`/users/${user.osm_id}`}><a className="link--normal">{user.full_name}</a></Link></td>
                   <td>{countries.getName(user.country, "en")}</td>
                   <td>{formatDecimal(user.edit_count)}</td>
                   <td>{user.edit_count > 0 ? `${distanceInWordsToNow(parse(user.last_edit))} ago`: "N/A"}</td>
