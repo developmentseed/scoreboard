@@ -46,3 +46,142 @@
 .admin-user-table-row:hover {
   background-color: #fafafc;
 }
+
+/* Styles for the admin badge interface */
+
+$border-radius: 4px;
+$border-color: #ccc;
+
+.form {
+  max-width: 800px;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &__input-unit {
+    margin-bottom: 1rem;
+  }
+
+  &__input-unit--half {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+
+    &:first-child {
+      padding-right: 1rem;
+    }
+
+    &:last-child {
+      padding-left: 1rem;
+    }
+  }
+
+  &__label {
+    display: block;
+    font-family: $heading-font-bold;
+    margin-bottom: 0.5em;
+  }
+
+  &__footer button {
+    margin-right: 1rem;
+  }
+
+  &__section {
+    margin-bottom: 2rem;
+  }
+
+  fieldset {
+    padding-inline-start: 0;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    border-radius: $border-radius;
+    border: 1px solid $border-color;
+    font-family: $base-font-family;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0.5em;
+    width: 100%;
+  }
+
+  textarea {
+    resize: none;
+  }
+}
+
+.button {
+  background-color: $base-color;
+  border-radius: $border-radius;
+  border: 1px solid $base-color;
+  color: white;
+  cursor: pointer;
+  font-size: $base-font-size;
+  padding: 0.5em;
+  text-transform: none;
+  transition: background-color 300ms ease-in-out;
+
+  &:hover,
+  &:active {
+    background-color: darken($base-color, 10%);
+  }
+}
+
+.button--secondary {
+  background-color: white;
+  color: $base-color;
+  transition: color 300ms ease-in-out;
+
+  &:hover,
+  &:active {
+    background-color: inherit;
+    color: darken($base-color, 10%);
+  }
+}
+
+.button--link {
+  background-color: transparent;
+  border: 0;
+  color: $light-text-color;
+  font-family: $tertiary-font-family;
+  padding: 0;
+  transition: color 300ms ease-in-out;
+
+  &:hover,
+  &:active {
+    background-color: inherit;
+    color: $med-text-color;
+  }
+}
+
+.alert {
+  border-radius: $border-radius;
+  box-sizing: border-box;
+  font-family: $base-font-family;
+  margin-bottom: 2rem;
+  padding: 0.5em;
+
+  &.alert--info {
+    background-color: lighten($blue-color, 50%);
+    border: 1px solid $blue-color;
+    color: $blue-color;
+  }
+
+  &.alert--error {
+    background-color: lighten(red, 50%);
+    border: 1px solid red;
+    color: red;
+  }
+
+  &.alert--success {
+    background-color: lighten($green-color, 50%);
+    border: 1px solid $green-color;
+    color: $green-color;
+  }
+
+  .admin & {
+    max-width: 800px;
+  }
+}

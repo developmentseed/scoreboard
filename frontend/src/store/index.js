@@ -8,6 +8,7 @@ export const store = createStore({
   user: null,
   projects: null,
   error: null,
+  badges: null,
   admin: {
     roles: null,
     users: null,
@@ -151,6 +152,29 @@ export function actions (store) {
         .catch((err) => {
           store.setState({ error: err })
         })
+    },
+
+    getBadges (state) {
+      return api('get', '/api/badges')
+        .then((res) => {
+          store.setState({ badges: res.data })
+        })
+        .catch((err) => {
+          store.setState({ error: err })
+        })
+    },
+
+    createBadge (state, params) {
+      return fetch(`/scoreboard/api/badges`, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(params),
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      }).catch((err) => {
+        store.setState({ error: err })
+      })
     }
   }
 }
