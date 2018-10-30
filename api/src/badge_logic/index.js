@@ -40,19 +40,28 @@ module.exports = (userData, badges) => {
     daysTotal
   }, badges))
 
-  // const allBadges = mergeAll([sumBadges, consistencyBadge, historyBadge])
+  allBadges.sort((a, b) => {
+    return b.points.percentage - a.points.percentage
+  })
+
   const earnedBadges = {}
+  const unearnedBadges = {}
   /* eslint-disable no-restricted-syntax */
   for (const key in allBadges) {
     const val = allBadges[key]
-    if (val && val.badgeLevel > 0) {
-      earnedBadges[key] = val
+    if (val) {
+      if (val.badgeLevel > 0) {
+        earnedBadges[key] = val
+      }
+      else if (val.badgeLevel === 0) {
+        unearnedBadges[key] = val
+      }
     }
   }
-  /* eslint-enable no-restricted-syntax */
 
   return {
     all: allBadges,
-    earnedBadges
+    earnedBadges,
+    unearnedBadges
   }
 }

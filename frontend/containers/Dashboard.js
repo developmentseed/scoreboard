@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'unistore/react';
 import { actions } from '../store'
 
+import BadgeInProgress from '../components/BadgeInProgress';
 import '../styles/Dashboard.css';
 
 import { UserExtentMap } from '../components/charts';
@@ -28,7 +29,8 @@ class Dashboard extends Component {
   }
 
   renderUpcomingBadges (badges) {
-    const badgeKeys = Object.keys(badges)
+    // show only the top 3 badges for now
+    const badgeKeys = Object.keys(badges).slice(0, 3)
 
     return (
       <section>
@@ -38,35 +40,15 @@ class Dashboard extends Component {
             {
               badgeKeys.map((badgeKey, i) => {
                 const badge = badges[badgeKey]
-                const badgeUrl = require(`../assets/badges/${badge.category}-${badge.badgeLevel}-graphic.svg`)
-                const borderUrl = require(`../assets/badges/border${badge.badgeLevel}.svg`)
 
                 return (
                   <li key={`upcoming-badge-${i}`}>
-                    <div
-                      className='Badge-Completed'
-                      style={{
-                        backgroundImage: `url(${badgeUrl})`,
-                        width: '130px',
-                        height: '130px',
-                        backgroundSize: '130px'
-                      }}>
-                    </div>
-                    <div
-                      className='Badge-Border'
-                      style={{
-                        backgroundImage: `url(${borderUrl})`,
-                        width: '143px',
-                        height: '143px',
-                        backgroundSize: '143px'
-                      }}>
-                    </div>
+                    <BadgeInProgress badge={badge} badgeClass="progress" />
                     <div className="badge-Details">
                       <h3 className="header--small sub-head header--with-description">{badge.name}</h3>
                       <h5 style={{ marginBottom: '.2em' }}>
-                        {badge.points.nextPoints - badge.points.currentPoints} {badge.metric} until level {badge.nextBadgeLevel}!
+                        {badge.progress}
                       </h5>
-                      <p className="badge-Description">{badge.description}</p>
                     </div>
                   </li>
                 )
@@ -80,9 +62,9 @@ class Dashboard extends Component {
 
   renderProjects() {
     const { projects } = this.props
-    const features = projects.records.features
 
     if (!projects) return (<div />)
+    const features = projects.records.features
 
     return (
       <section>
@@ -92,7 +74,6 @@ class Dashboard extends Component {
           <ol>
             {
               features.map((project) => {
-                console.log('project', project)
                 return (
                   <li key={`tm-project-${project.id}`} className="block--campaign">
                     <h3 className="header--small header--with-description-xlg">
@@ -172,7 +153,7 @@ class Dashboard extends Component {
           <UserExtentMap extent={user.records.extent_uri} uid={osmUser['@']['id']} />
         </header>
 
-        {this.renderUpcomingBadges(user.badges.mostAttainable)}
+        {this.renderUpcomingBadges(user.badges.unearnedBadges)}
         {this.renderProjects()}
       </div>
     );

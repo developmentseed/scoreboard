@@ -20,11 +20,13 @@ import {
   Dashboard,
   Admin,
   AdminRoles,
+  AdminBadges,
   AdminUsers,
   AdminUserEdit
 } from './containers';
 
 import { store } from './store'
+import { isAdmin } from './utils/roles'
 
 import './styles/App.css';
 import profileIcon from './assets/dashboard-temp/profile-icon.png';
@@ -119,6 +121,11 @@ class App extends Component {
                                 <li><ActiveLink to="/dashboard" label="Dashboard" /></li>
                                 <li><ActiveLink to={`/users/${profile.id}`} label="Public Profile" /></li>
                                 <li><ActiveLink to={`/edit/${profile.id}`} label="Edit Profile" /></li>
+                                {
+                                  profile.roles && isAdmin(profile.roles) && (
+                                    <li><ActiveLink to={`/admin`} label="Admin" /></li>
+                                  )
+                                }
                                 <li><a href="http://localhost:5000/auth/logout">Logout</a></li>
                               </ul>
                             </div>
@@ -152,6 +159,7 @@ class App extends Component {
             <Route exact path="/admin" component={Admin} />
             <Route exact path="/admin/roles" component={AdminRoles} />
             <Route exact path="/admin/users" component={AdminUsers} />
+            <Route exact path="/admin/badges" component={AdminBadges} />
             <Route exact path="/admin/users/:id" component={AdminUserEdit} />
           </div>
         </Router >
@@ -160,4 +168,4 @@ class App extends Component {
   }
 }
 
-export default App //connect('loggedIn,OSMprofile,user', actions)(App)
+export default App
