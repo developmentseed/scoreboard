@@ -25,7 +25,7 @@ async function list(req, res) {
   }
   catch (err) {
     console.error(err)
-    return res.boom.notFound('Could not retrieve project')
+    return res.boom.notFound('Could not retrieve projects')
   }
 }
 

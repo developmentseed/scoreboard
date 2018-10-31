@@ -46,23 +46,25 @@ class Home extends Component {
                 <div className="section-sub--left">
                   <h1 className="header--xxlarge header--with-description">Tracking Map Edits Around the World</h1>
                   <p className="description--header">{'See what’s happening throughout the ' + projectName + ' ecosystem. From which campaigns are the most active, to detailed information about the contributing mappers.'}</p>
-                  <Link className="link--large" href="/about">Learn More</Link>
+                  <Link href="/about">
+                    <a className="link--large">Learn More</a>
+                  </Link>
                 </div>
                 <div className="section-sub--right section-sub--right--home">
                   <ul>
                     <li className="list--block">
-                      <Link className="link--white" href="/users">
-                        <a>
+                      <Link href="/users">
+                        <a className="link--white">
                           <span className="num--large">{formatDecimal(num_users)}</span>
                           <span className="descriptor-chart">Active Users</span>
                         </a>
                       </Link>
                     </li>
                     <li className="list--block">
-                      <Link className="link--white" href="/campaigns">
-                      <a> 
-                        <span className="num--large">{formatDecimal(campaign_total)}</span>
-                        <span className="descriptor-chart">Campaigns</span>
+                      <Link href="/campaigns">
+                        <a className="link--white"> 
+                          <span className="num--large">{formatDecimal(campaign_total)}</span>
+                          <span className="descriptor-chart">Campaigns</span>
                         </a>
                       </Link>
                     </li>
@@ -87,7 +89,9 @@ class Home extends Component {
                   records.map(record =>
                     <li key={`block-${record.campaign_hashtag}`} className="block--campaign">
                       <h3 className="header--small header--with-description-xlg">
-                        <Link className="header--underlined" href={`/campaigns/${record.campaign_hashtag}`}>{record.name}</Link>
+                        <Link href={`/campaigns/${record.campaign_hashtag}`}>
+                          <a className="header--underlined">{record.name}</a>
+                        </Link>
                       </h3>
                       <p>{trimLength(record.description, 195)}</p>
                       <ul className="chart-bar--main">
@@ -109,7 +113,9 @@ class Home extends Component {
                     </li>
                 )}
               </ul>
-              <Link className="link--large" href="/campaigns">View All Campaigns</Link>
+              <Link href="/campaigns">
+                <a className="link--large">View All Campaigns</a>
+              </Link>
             </div>
           </div>
         </section>
@@ -127,7 +133,9 @@ class Home extends Component {
                   top_edits ? <TopEditorsChart edits={top_edits} /> : <div>Loading...</div>
                 }
               </div>
-              <Link className="link--large" href="/users">View All Users</Link>
+              <Link href="/users">
+                <a className="link--large">View All Users</a>
+              </Link>
             </div>
           </div>
         </section>

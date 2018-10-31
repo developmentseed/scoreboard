@@ -49,6 +49,7 @@ class Users extends Component {
         this.setState(Object.assign({ records: res.data, apiStatus: "SUCCESS"}));
       })
       .catch(err => {
+        console.log('err', err)
         this.setState({apiStatus: "ERROR"});
       });
   }
@@ -75,7 +76,8 @@ class Users extends Component {
   }
 
   componentDidUpdate () {
-    if (this.state.records.records.length === 0) {
+    console.log('users componentDidUpdate', this.state)
+    if (!this.state.records.records || this.state.records.records.length === 0) {
       this._handleChange(this.props.users)
     }
   }

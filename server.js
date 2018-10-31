@@ -26,6 +26,12 @@ app.prepare()
       return app.render(req, res, '/about')
     })
 
+    api.get('/users/:id', (req, res) => {
+      console.log('users', req.params.id)
+      const { id } = req.params
+      app.render(req, res, '/user', { id })
+    })
+
     api.get('*', (req, res) => {
       return handle(req, res)
     })

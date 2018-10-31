@@ -77,8 +77,8 @@ class Layout extends React.Component {
               <ul className="nav--left">
                 <li className="logo"><Link href="/"><a>ScoreBoard</a></Link></li>
                 <li><Link href="/campaigns"><a>Campaigns</a></Link></li>
-                <li><Link href="/users" ><a>Users</a></Link></li>
-                <li><Link href="/about" ><a>About</a></Link></li>
+                <li><Link href="/users"><a>Users</a></Link></li>
+                <li><Link href="/about"><a>About</a></Link></li>
               </ul>
                   {
                     loggedIn ?
@@ -90,10 +90,10 @@ class Layout extends React.Component {
                           this.state.menuVisible && (
                             <div className="login-menu">
                               <ul>
-                                <li><Link href="/dashboard" >Dashboard</Link></li>
-                                <li><Link href={`/users/${profile.id}`} >Public Profile</Link></li>
-                                <li><Link href={`/edit/${profile.id}`} >Edit Profile</Link></li>
-                                <li><a href={`${domain}/auth/logout`}>Logout</a></li>
+                                <li><Link href="/dashboard"><a>Dashboard</a></Link></li>
+                                <li><Link href={`/users/${profile.id}`}><a>Public Profile</a></Link></li>
+                                <li><Link href={`/edit/${profile.id}`}><a>Edit Profile</a></Link></li>
+                                <li><a href={`${domain}/auth/logout`}><a>Logout</a></a></li>
                               </ul>
                             </div>
                           )
