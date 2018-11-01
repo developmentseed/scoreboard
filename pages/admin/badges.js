@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import Router from 'next/router';
 import Select from 'react-select';
 import { connect } from 'unistore/react';
 
-import { actions } from '../store';
-import { isAdmin } from '../utils/roles'
-import NotLoggedIn from '../components/NotLoggedIn'
-import AdminHeader from '../components/AdminHeader'
+import { actions } from '../../lib/store';
+import { isAdmin } from '../../lib/utils/roles'
+import NotLoggedIn from '../../components/NotLoggedIn'
+import AdminHeader from '../../components/AdminHeader'
 
-import '../styles/Admin.css';
+import '../../styles/Admin.scss';
+import 'react-select/dist/react-select.css';
 
 const ALERT_TYPE_ERROR = 'error';
 const ALERT_TYPE_SUCCESS = 'success';
@@ -87,8 +88,8 @@ export class AdminBadges extends Component {
       });
 
       this.resetInputs();
-      // this.fetchBadges();
     } catch (e) {
+      console.log(e)
       this.setState({
         alert: typeof e === 'string' ? e : 'Something went wrong',
         alertType: ALERT_TYPE_ERROR,
@@ -98,7 +99,7 @@ export class AdminBadges extends Component {
   }
 
   render() {
-    const { loggedIn, user, location } = this.props
+    const { loggedIn, user } = this.props
 
     if (this.state.loading) {
       return (
@@ -111,9 +112,7 @@ export class AdminBadges extends Component {
     }
 
     if (!isAdmin(user.roles)) {
-      return (
-        <Redirect to={{ pathname: '/', state: { from: location } }} />
-      )
+      return Router.push('/')
     }
 
     return (
@@ -407,4 +406,5 @@ export class AdminBadges extends Component {
   }
 }
 
+console.log('actions', actions)
 export default connect(['user', 'loggedIn', 'error', 'badges', 'admin'], actions)(AdminBadges);

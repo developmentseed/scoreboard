@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import Link from 'next/link';
+import Router from 'next/router';
 import Select from 'react-select';
 import { connect } from 'unistore/react';
 
-import { actions } from '../store'
-import { isAdmin } from '../utils/roles'
-import NotLoggedIn from '../components/NotLoggedIn'
-import AdminHeader from '../components/AdminHeader'
+import { actions } from '../../lib/store';
+import { isAdmin } from '../../lib/utils/roles'
+import NotLoggedIn from '../../components/NotLoggedIn'
+import AdminHeader from '../../components/AdminHeader'
 
-import '../styles/Admin.css';
+import '../../styles/Admin.scss';
 
 export class AdminUserEdit extends Component {
   constructor () {
@@ -20,12 +21,12 @@ export class AdminUserEdit extends Component {
   }
 
   componentDidMount () {
-    const { match } = this.props
-
+    const { id } = this.props
+    console.log('this.props', this.props)
     this.props.getAuthenticatedUser().then(() => {
       Promise.all([
         this.props.getRoles(),
-        this.props.adminGetUser(match.params.id)
+        this.props.adminGetUser(id)
       ]).then(() => {
         this.setState({ loading: false })
       })
@@ -67,8 +68,8 @@ export class AdminUserEdit extends Component {
 
   render() {
     const { selectedRoles } = this.state
-    const { loggedIn, user, location, admin } = this.props
-
+    const { loggedIn, user, admin } = this.props
+    console.log('admin', admin)
     if (this.state.loading) {
       return (
         <div><AdminHeader /></div>
@@ -80,9 +81,7 @@ export class AdminUserEdit extends Component {
     }
 
     if (!isAdmin(user.roles)) {
-      return (
-        <Redirect to={{ pathname: '/', state: { from: location } }} />
-      )
+      return Router.push('/')
     }
 
     return (
@@ -94,8 +93,10 @@ export class AdminUserEdit extends Component {
               <h2 className="header--large">Users</h2>
               <ul className="admin-sidebar-links">
                 <li>
-                  <Link to="/admin/users" className="link--large">
-                    Users List
+                  <Link href="/admin/users">
+                    <a className="link--large">
+                      Users List
+                    </a>
                   </Link>
                 </li>
               </ul>

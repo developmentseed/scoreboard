@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import Link from 'next/link';
+import Router from 'next/router';
 import { connect } from 'unistore/react';
 
-import { actions } from '../store'
-import { isAdmin } from '../utils/roles'
-import NotLoggedIn from '../components/NotLoggedIn'
-import AdminHeader from '../components/AdminHeader'
+import { actions } from '../../lib/store'
+import { isAdmin } from '../../lib/utils/roles'
+import NotLoggedIn from '../../components/NotLoggedIn'
+import AdminHeader from '../../components/AdminHeader'
 
-import '../styles/Admin.css';
+import '../../styles/Admin.scss';
 
 export class Admin extends Component {
   constructor () {
@@ -28,7 +29,7 @@ export class Admin extends Component {
   }
 
   render() {
-    const { loggedIn, user, location } = this.props
+    const { loggedIn, user } = this.props
 
     if (this.state.loading) {
       return (
@@ -41,9 +42,7 @@ export class Admin extends Component {
     }
 
     if (!isAdmin(user.roles)) {
-      return (
-        <Redirect to={{ pathname: '/', state: { from: location } }} />
-      )
+      return Router.push('/')
     }
 
     return (
@@ -60,15 +59,23 @@ export class Admin extends Component {
               <div className="content">
                 <ul className="list-grid">
                   <li>
-                    <Link to="/admin/users">
-                      <h2 className="header--large">Users</h2>
-                      <p>Manage user roles</p>
+                    <Link href="/admin/users">
+                      <a>
+                        <div>
+                        <h2 className="header--large">Users</h2>
+                        <p>Manage user roles</p>
+                        </div>
+                      </a>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/admin/badges">
-                      <h2 className="header--large">Badges</h2>
-                      <p>Create new badges</p>
+                    <Link href="/admin/badges">
+                      <a>
+                        <div>
+                        <h2 className="header--large">Badges</h2>
+                        <p>Create new badges</p>
+                        </div>
+                      </a>
                     </Link>
                   </li>
                 </ul>

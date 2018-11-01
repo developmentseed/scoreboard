@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import '../styles/Badges.css';
+import '../styles/Badges.scss';
 
 export default class BadgeCompleted extends Component {
   render () {
-    let badgeUrl = require('../assets/badges/blank-graphic.svg');
-    let borderUrl = require('../assets/badges/blank-border.svg');
+    let badgeUrl = require('../static/badges/blank-graphic.svg');
+    let borderUrl = require('../static/badges/blank-border.svg');
 
     var {category, badgeLevel} = this.props.badge;
 
     if (category && badgeLevel) {
-      badgeUrl = require(`../assets/badges/${category}-${badgeLevel}-graphic.svg`);
-      borderUrl = require(`../assets/badges/border${badgeLevel}.svg`);
+      badgeUrl = require(`../static/badges/${category}-${badgeLevel}-graphic.svg`);
+      borderUrl = require(`../static/badges/border${badgeLevel}.svg`);
     }
 
     return (

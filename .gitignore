@@ -4,5 +4,6 @@ yarn.lock
 package-lock.json
 *.lerna_backup
 .tmp
+tmp
 .next
 .env

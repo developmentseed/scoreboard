@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { sortBy, prop } from 'ramda';
-import { formatDecimal } from '../utils/format';
+import { formatDecimal } from '../lib/utils/format';
 
 export default (props) => (
   <table>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 
 export default () => {
   return (
@@ -7,7 +7,7 @@ export default () => {
       <div className="row">
         <div className="section-sub--left section-width-forty">
           <h1 className="header--xlarge">
-            <Link to="/admin">Admin</Link>
+            <Link href="/admin"><a>Admin</a></Link>
           </h1>
         </div>
       </div>

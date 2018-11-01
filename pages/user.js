@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import api from '../utils/api';
-import '../styles/Users.css';
-import UserGlance from '../components/UserGlance';
+import api from '../lib/utils/api';
+import '../styles/Users.scss';
+// import UserGlance from '../components/UserGlance';
 import UserHeader from '../components/UserHeader';
-import UserStats from '../components/UserStats';
-import getSumEdits from '../utils/sum_edits';
+// import UserStats from '../components/UserStats';
+import getSumEdits from '../lib/utils/sum_edits';
 
 const empty = {
   "id": 0, 
@@ -31,55 +31,51 @@ const empty = {
 
 
 class User extends Component {
-  constructor () {
-    super();
-    this.state = {
-      "records": empty
+  static async getInitialProps ({ req }) {
+    const { id } = req.params
+    const res = await api('get', `/api/users/${id}`)
+    const { records, country, badges} = res.data
+    console.log('res', res)
+    return {
+      id,
+      records,
+      country,
+      badges
     }
   }
 
   componentDidMount () {
-    const { match }  = this.props;
-    /**
-     * TODO
-     * What to do if it doesn't match?
-     */
-    if (match) {
-      const { params: { uid } } = match;
-      api('get', `/api/users/${uid}`)
-        .then(res => {
-          // TODO error state
-          this.setState({
-            records: res.data.records,
-            country: res.data.country,
-            badges:  res.data.badges,
-            match
-          });
-        });
-    }
+    // const { id } = this.props
+    // // TODO: getUser action that looks like this:
+    // api('get', `/api/users/${id}`)
+    //   .then(res => {
+    //     console.log('hello')
+    //     this.setState({
+    // 
+    //     });
+    //   });
   }
 
   render () {
-    const { records, match, country, badges } = this.state;
-    if (match) {
-      const edits = getSumEdits(records);
-      return (
-        <div className="User">
-          <UserHeader
-            name={records.name}
-            edit_times={records.edit_times}
-            num_badges={Object.keys(badges.earnedBadges).length}
-            num_edits={edits}
-            num_hashtags={records.hashtags.length}
-            country={country}
-          />
-          <UserGlance records={records} badges={badges} />
-          <UserStats records={records} match={match} badges={badges}/>
-        </div>
-      );
-    } else {
-      return <div></div>;
-    }
+    const { records, country, badges } = this.props;
+    const edits = getSumEdits(records);
+
+    if (!records || !country || !badges) return <div />
+
+    return (
+      <div className="User">
+        <UserHeader
+          name={records.name}
+          edit_times={records.edit_times}
+          num_badges={Object.keys(badges.earnedBadges).length}
+          num_edits={edits}
+          num_hashtags={records.hashtags.length}
+          country={country}
+        />
+        {/*<UserGlance records={records} badges={badges} />*/}
+        {/*<UserStats records={records} match={match} badges={badges}/>*/}
+      </div>
+    );
   }
 }
 

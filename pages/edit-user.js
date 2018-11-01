@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 
-import api from '../utils/api';
-import countries from '../utils/country-list';
-import '../styles/Users.css';
+import api from '../lib/utils/api';
+import countries from '../lib/utils/country-list';
+import '../styles/Users.scss';
 import NotLoggedIn from '../components/NotLoggedIn'
 
 class UserEdit extends Component {

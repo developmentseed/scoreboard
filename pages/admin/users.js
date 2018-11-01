@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import Link from 'next/link';
+import Router from 'next/router';
 import { connect } from 'unistore/react';
 
-import { actions } from '../store'
-import { isAdmin } from '../utils/roles'
-import NotLoggedIn from '../components/NotLoggedIn'
-import AdminHeader from '../components/AdminHeader'
+import { actions } from '../../lib/store'
+import { isAdmin } from '../../lib/utils/roles'
+import NotLoggedIn from '../../components/NotLoggedIn'
+import AdminHeader from '../../components/AdminHeader'
 
-import '../styles/Admin.css';
+import '../../styles/Admin.scss';
 
 export class AdminUsers extends Component {
   constructor () {
@@ -34,8 +35,7 @@ export class AdminUsers extends Component {
   }
 
   onUserClick (user) {
-    const { history } = this.props
-    history.push(`/admin/users/${user.osm_id}`)
+    Router.push(`/admin/users/${user.osm_id}`)
   }
 
   renderList () {
@@ -98,8 +98,10 @@ export class AdminUsers extends Component {
               <h2 className="header--large">Users</h2>
               <ul className="admin-sidebar-links">
                 <li>
-                  <Link to="/admin/users" className="link--large">
-                    Users List
+                  <Link href="/admin/users">
+                    <a className="link--large">
+                      Users List
+                    </a>
                   </Link>
                 </li>
               </ul>

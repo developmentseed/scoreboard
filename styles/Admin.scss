@@ -1,6 +1,27 @@
 @import 'settings/variables.scss';
 @import 'settings/mixins.scss';
 
+.sidebar {
+  width: 20%;
+  margin-right: 5%;
+  float: left;
+  @include media(xsmall-only) {
+    float: none;
+    width: 100%;
+    margin-right: 0%;
+  }
+}
+
+.content--with-sidebar {
+  width: 75%;
+  float: left;
+  @include media(xsmall-only) {
+    width: 100%;
+    float: none;
+    clear: both;
+  }
+}
+
 .header--admin {
   a {
     color: white;

@@ -49,6 +49,7 @@ const withActiveNav = (match) => (active, component) => {
   );
 }
 
+// TODO: replace react-router routes with query params
 export default ({ match, records, badges }) => (
   <section className="section--tertiary">
     <Route exact path={`${match.url}`} component={() => withActiveNav(match)("edits", editBox(records))} />

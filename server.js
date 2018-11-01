@@ -27,9 +27,18 @@ app.prepare()
     })
 
     api.get('/users/:id', (req, res) => {
-      console.log('users', req.params.id)
       const { id } = req.params
       app.render(req, res, '/user', { id })
+    })
+
+    api.get('/users/:id/edit', (req, res) => {
+      const { id } = req.params
+      app.render(req, res, '/edit-user', { id })
+    })
+
+    api.get('/admin/users/:id', (req, res) => {
+      const { id } = req.params
+      app.render(req, res, '/admin/edit-user', { id })
     })
 
     api.get('*', (req, res) => {
