@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import '../styles/Campaigns.css';
-import { Link, Redirect } from 'react-router-dom';
+import '../styles/Campaigns.scss';
+import Link from 'next/link';
+import Router from 'next/router';
 import api from '../utils/api';
 import { distanceInWordsToNow } from 'date-fns';
 import CampaignMap from '../components/charts/CampaignMap';
@@ -58,7 +59,7 @@ class Campaign extends Component {
 
   renderRedirect () {
     if (this.state.notFound) {
-      return <Redirect to='/404' />
+      return Router.push('/404')
     }
   }
 
@@ -83,7 +84,9 @@ class Campaign extends Component {
                 </ul>
               </div>
               <div className="section-sub--right">
-                <Link className="button" to="/about">Contribute</Link>
+                <Link href="/about">
+                  <a className="button">Contribute</a>
+                </Link>
               </div>
             </div>
           </header>
