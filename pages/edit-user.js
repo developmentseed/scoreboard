@@ -1,36 +1,48 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
+import { connect } from 'unistore/react'
 
 import api from '../lib/utils/api';
 import countries from '../lib/utils/country-list';
-import '../styles/Users.scss';
+import { actions } from '../lib/store'
+
 import NotLoggedIn from '../components/NotLoggedIn'
 
-class UserEdit extends Component {
-  constructor () {
-    super();
+import '../styles/Users.scss';
+import 'react-select/dist/react-select.css';
 
-    this.state = {
-      countries,
-      currentCountry: null
+class UserEdit extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {}
+  }
+
+  static async getInitialProps ({ req, query }) {
+    const { id } = req.params
+    const res = await api('get', `/api/users/${id}`)
+    const { country } = res.data
+
+    return {
+      id,
+      currentCountry: country
     }
   }
 
-  componentDidMount () {
-    const { match }  = this.props;
-    const { params: { uid } } = match;
-
-    api('get', `/api/users/${uid}`)
-      .then(res => {
-        this.setState({ currentCountry: res.data.country });
-      });
+  async componentDidMount () {
+    console.log('location', location)
+    console.log('componentDidMount', this.props, this.state)
+    if (!this.state.currentCountry) {
+      const { user } = this.props
+      // const res = await api('get', `/api/users/${user.id}`)
+      // const { country } = res.data
+      // this.setState({ currentCountry: country })
+    }
   }
 
   updateUser (data) {
-    const { match }  = this.props;
-    const { params: { uid } } = match;
+    const { user: { id } } = this.props;
 
-    api('put', `/api/users/${uid}`, data)
+    api('put', `/api/users/${id}`, data)
       .then(res => {
         this.setState({ saved: true })
       })
@@ -60,12 +72,13 @@ class UserEdit extends Component {
   }
 
   render () {
-    const { countries, currentCountry } = this.state;
-    const { loggedIn } = this.props;
-
+    const { user, loggedIn } = this.props
+    const { currentCountry } = this.state
     if (!loggedIn) {
       return <NotLoggedIn message="Log in with your OSM account to edit your Scoreboard profile" />
     }
+
+    const { country } = user;
 
     return (
       <div className="UserEdit">
@@ -92,4 +105,4 @@ class UserEdit extends Component {
   }
 }
 
-export default UserEdit;
+export default connect(['user','loggedIn'], actions)(UserEdit);

@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link'
-import api from '../lib/utils/api';
+import { connect } from 'unistore/react'
+
+import { actions } from '../lib/store';
 import trimLength from '../lib/utils/trim_length';
 import {formatDecimal} from '../lib/utils/format';
 import TopEditorsChart from '../components/charts/TopEditorsChart';
@@ -15,28 +17,21 @@ class Home extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      records: [],
+      records: null,
       campaign_total: 0
     }
   }
-  componentWillMount () {
-    api('get', `/api/topstats`)
-    .then(res => {
-      this.setState({
-        records: res.data.records,
-        campaign_total: res.data.total,
-        num_users: res.data.numUsers,
-        features: res.data.features,
-        top_edits: res.data.topEdits,
-        edits_by_country: res.data.editsByCountry
-      });
-    });
+
+  componentDidMount () {
+    this.props.getTopStats()
   }
 
-
   render() {
-    const {campaign_total, records, num_users, features, top_edits, edits_by_country} = this.state;
-    const { project: projectName } = this.props;
+    const { topStats, project: projectName } = this.props;
+    if (!topStats) return <div />
+
+    const {campaign_total, records, num_users, features, top_edits, edits_by_country} = topStats
+
     return (
       <div className="home">
         <header className="header--homepage header--page">
@@ -144,4 +139,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default connect('topStats', actions)(Home)

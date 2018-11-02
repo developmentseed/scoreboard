@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Users.scss';
-import { CampaignsChart, EditBreakdownChart } from './charts';
+import CampaignsChart from './charts/CampaignsChart';
+import EditBreakdownChart from './charts/EditBreakdownChart';
 import MiniBadgeBox from '../components/MiniBadgeBox';
 
 export default ({ records, badges }) =>

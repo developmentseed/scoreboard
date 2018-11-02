@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import api from '../lib/utils/api';
 import '../styles/Users.scss';
-// import UserGlance from '../components/UserGlance';
+import UserGlance from '../components/UserGlance';
 import UserHeader from '../components/UserHeader';
-// import UserStats from '../components/UserStats';
+import UserStats from '../components/UserStats';
 import getSumEdits from '../lib/utils/sum_edits';
 
 const empty = {
@@ -29,13 +29,12 @@ const empty = {
   "hashtags": []
 }
 
-
 class User extends Component {
   static async getInitialProps ({ req }) {
     const { id } = req.params
     const res = await api('get', `/api/users/${id}`)
     const { records, country, badges} = res.data
-    console.log('res', res)
+
     return {
       id,
       records,
@@ -44,23 +43,26 @@ class User extends Component {
     }
   }
 
-  componentDidMount () {
-    // const { id } = this.props
-    // // TODO: getUser action that looks like this:
-    // api('get', `/api/users/${id}`)
-    //   .then(res => {
-    //     console.log('hello')
-    //     this.setState({
-    // 
-    //     });
-    //   });
+  async componentDidMount () {
+    const { id, records, badges } = this.props;
+    if (!records || !badges) {
+      const res = await api('get', `/api/users/${id}`)
+      const { records, country, badges} = res.data
+
+      this.setState({
+        id,
+        records,
+        country,
+        badges
+      });
+    }
   }
 
   render () {
     const { records, country, badges } = this.props;
     const edits = getSumEdits(records);
-
-    if (!records || !country || !badges) return <div />
+    console.log('!records || !country || !badges', !records || !country || !badges)
+    if (!records || !badges) return <div />
 
     return (
       <div className="User">
@@ -72,11 +74,10 @@ class User extends Component {
           num_hashtags={records.hashtags.length}
           country={country}
         />
-        {/*<UserGlance records={records} badges={badges} />*/}
-        {/*<UserStats records={records} match={match} badges={badges}/>*/}
+        <UserGlance records={records} badges={badges} />
+        <UserStats records={records} badges={badges}/>
       </div>
     );
   }
 }
-
 export default User;

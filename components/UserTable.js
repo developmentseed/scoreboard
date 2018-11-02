@@ -19,7 +19,13 @@ export default (props) => (
         .map((user, idx) => (
           <tr key={user.uid}>
             <td>{idx + 1}</td>
-            <td><Link className="link--normal" to={`/users/${user.uid}`}>{user.name}</Link></td>
+            <td>
+              <Link href={`/users/${user.uid}`}>
+                <a className="link--normal" >
+                  {user.name}
+                </a>
+              </Link>
+            </td>
             <td>{formatDecimal(user.edits)}</td>
           </tr>
         ))

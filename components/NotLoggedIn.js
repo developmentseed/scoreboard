@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+const domain = process.env.APP_DOMAIN || 'http://localhost:8181'
 
 export default ({ message }) => {
   return (
@@ -8,7 +9,7 @@ export default ({ message }) => {
         <div className="row">
           <h2 className="header--large">You are not logged in!</h2>
           <p>
-            <Link href="http://localhost:5000/auth/openstreetmap">
+            <Link href={`${domain}/auth/openstreetmap`}>
               <a>{message || 'Log in with your OSM account'}</a>
             </Link>
           </p>

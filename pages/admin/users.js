@@ -71,7 +71,7 @@ export class AdminUsers extends Component {
   }
 
   render() {
-    const { loggedIn, user, location } = this.props
+    const { loggedIn, user } = this.props
 
     if (this.state.loading) {
       return (
@@ -84,9 +84,7 @@ export class AdminUsers extends Component {
     }
 
     if (!isAdmin(user.roles)) {
-      return (
-        <Redirect to={{ pathname: '/', state: { from: location } }} />
-      )
+      return Router.push('/')
     }
 
     return (

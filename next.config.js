@@ -3,10 +3,11 @@ require('dotenv').config()
 const path = require('path')
 const Dotenv = require('dotenv-webpack')
 
+const withCss = require('@zeit/next-css')
 const withSass = require('@zeit/next-sass')
 const withImages = require('next-images')
 
-module.exports = withImages(withSass({
+module.exports = withImages(withSass(withCss({
   webpack: (config) => {
     config.plugins = config.plugins || []
 
@@ -19,13 +20,6 @@ module.exports = withImages(withSass({
         systemvars: true
       })
     ]
-
-    config.module.rules.push(
-      {
-        test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
-      }
-    )
 
     config.module.rules.push({
       test: /\.(eot|woff|woff2|ttf|svg|png|jpg|gif)$/,
@@ -40,4 +34,4 @@ module.exports = withImages(withSass({
 
     return config
   }
-}))
+})))

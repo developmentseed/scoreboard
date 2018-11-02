@@ -3,13 +3,14 @@ import App, { Container } from 'next/app'
 import Link from 'next/link'
 import Head from 'next/head'
 import withReduxStore from '../lib/store/with-store'
-import { Provider } from 'unistore/react'
+import { Provider, connect } from 'unistore/react'
+import { actions } from '../lib/store'
 
 import "../styles/index.scss"
 import "../styles/App.scss"
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
-const domain =process.env.APP_DOMAIN || 'http://localhost:8181'
+const domain = process.env.APP_DOMAIN || 'http://localhost:8181'
 const profileIcon = '/static/dashboard-temp/profile-icon.png'
 
 class Layout extends React.Component {
@@ -25,26 +26,7 @@ class Layout extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/auth/userinfo')
-      .then(res => {
-        if (res.status === 200) {
-          return res.json()
-        } else {
-          throw new Error('failed to authenticate')
-        }
-      })
-      .then(data => {
-        this.setState({
-          loggedIn: true,
-          profile: data
-        })
-      })
-      .catch(err => {
-        this.setState({
-          loggedIn: false,
-          profile: null
-        })
-      })
+    this.props.getAuthenticatedUser()
   }
 
   handleOutsideClick() {
@@ -61,10 +43,9 @@ class Layout extends React.Component {
       menuVisible: !prevstate.menuVisible
     }))
   }
-  
+
   render() {
-    const {children} = this.props
-    const {loggedIn, profile} = this.state
+    const {loggedIn, osmProfile, children} = this.props
 
     return (
       <div className="App">
@@ -91,8 +72,8 @@ class Layout extends React.Component {
                             <div className="login-menu">
                               <ul>
                                 <li><Link href="/dashboard"><a>Dashboard</a></Link></li>
-                                <li><Link href={`/users/${profile.id}`}><a>Public Profile</a></Link></li>
-                                <li><Link href={`/edit/${profile.id}`}><a>Edit Profile</a></Link></li>
+                                <li><Link href={`/users/${osmProfile.id}`}><a>Public Profile</a></Link></li>
+                                <li><Link href={`/users/edit?id=${osmProfile.id}`} as={`/users/${osmProfile.id}/edit`}><a>Edit Profile</a></Link></li>
                                 <li><a href={`${domain}/auth/logout`}><a>Logout</a></a></li>
                               </ul>
                             </div>
@@ -109,12 +90,11 @@ class Layout extends React.Component {
         </header>
         {children}
       </div>
-  )
+    )
+  }
 }
 
-
-}
-
+const LayoutWithStore = connect(['user', 'loggedIn', 'osmProfile'], actions)(Layout)
 
 class Scoreboard extends App {
   static async getInitialProps({ Component, router, ctx }) {
@@ -147,15 +127,14 @@ class Scoreboard extends App {
 
     return (
       <Container>
-        <Layout>
-          <Provider store={reduxStore}>
+        <Provider store={reduxStore}>
+          <LayoutWithStore>
             <Component {...pageProps} project={projectName}/>
-          </Provider>
-        </Layout>
+          </LayoutWithStore>
+        </Provider>
       </Container>
     )
   }
 }
-
 
 export default withReduxStore(Scoreboard)
