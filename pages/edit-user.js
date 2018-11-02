@@ -17,28 +17,6 @@ class UserEdit extends Component {
     this.state = {}
   }
 
-  static async getInitialProps ({ req, query }) {
-    const { id } = req.params
-    const res = await api('get', `/api/users/${id}`)
-    const { country } = res.data
-
-    return {
-      id,
-      currentCountry: country
-    }
-  }
-
-  async componentDidMount () {
-    console.log('location', location)
-    console.log('componentDidMount', this.props, this.state)
-    if (!this.state.currentCountry) {
-      const { user } = this.props
-      // const res = await api('get', `/api/users/${user.id}`)
-      // const { country } = res.data
-      // this.setState({ currentCountry: country })
-    }
-  }
-
   updateUser (data) {
     const { user: { id } } = this.props;
 
@@ -72,13 +50,13 @@ class UserEdit extends Component {
   }
 
   render () {
-    const { user, loggedIn } = this.props
-    const { currentCountry } = this.state
-    if (!loggedIn) {
+    const { authenticatedUser, currentCountry } = this.props
+
+    const country = this.state.currentCountry || currentCountry
+
+    if (!authenticatedUser.loggedIn) {
       return <NotLoggedIn message="Log in with your OSM account to edit your Scoreboard profile" />
     }
-
-    const { country } = user;
 
     return (
       <div className="UserEdit">
@@ -93,7 +71,7 @@ class UserEdit extends Component {
               <h4>Country</h4>
               <Select
                 options={countries}
-                value={currentCountry}
+                value={country}
                 onChange={this.onCountryChange}
               />
               {this.renderSaved()}
@@ -105,4 +83,18 @@ class UserEdit extends Component {
   }
 }
 
-export default connect(['user','loggedIn'], actions)(UserEdit);
+const Page = connect(['authenticatedUser', 'user'], actions)(UserEdit);
+
+/*
+* because of how unistore wraps the component, the static method wasn't
+* available unless attached to the component here
+*/
+Page.getInitialProps = async ({ req, query }) => {
+  const { id } = query
+  const res = await api('get', `/api/users/${id}`)
+  const { country } = res.data
+  const user = { id, country }
+  return { id, currentCountry: country }
+}
+
+export default Page

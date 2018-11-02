@@ -99,7 +99,7 @@ export class AdminBadges extends Component {
   }
 
   render() {
-    const { loggedIn, user } = this.props
+    const { authenticatedUser } = this.props
 
     if (this.state.loading) {
       return (
@@ -107,11 +107,11 @@ export class AdminBadges extends Component {
       )
     }
 
-    if (!loggedIn) {
+    if (!authenticatedUser.loggedIn) {
       return <NotLoggedIn />
     }
 
-    if (!isAdmin(user.roles)) {
+    if (!isAdmin(authenticatedUser.account.roles)) {
       return Router.push('/')
     }
 
@@ -373,7 +373,6 @@ export class AdminBadges extends Component {
       operations: parsedOperations
     };
 
-    console.log(params);
     this.createBadge(params);
   }
 
@@ -406,5 +405,4 @@ export class AdminBadges extends Component {
   }
 }
 
-console.log('actions', actions)
-export default connect(['user', 'loggedIn', 'error', 'badges', 'admin'], actions)(AdminBadges);
+export default connect(['authenticatedUser', 'error', 'badges', 'admin'], actions)(AdminBadges);

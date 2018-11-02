@@ -27,7 +27,9 @@ class Dashboard extends Component {
   }
 
   componentDidUpdate () {
-    if (this.state.loading && (this.props.loggedIn || this.props.error)) {
+    const { authenticatedUser, error } = this.props
+
+    if (this.state.loading && (authenticatedUser.loggedIn || error)) {
       this.setState({ loading: false })
     }
   }
@@ -110,7 +112,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { loggedIn, osmProfile, user } = this.props
+    const { authenticatedUser } = this.props
+    const { loggedIn, osm, account } = authenticatedUser
 
     if (this.state.loading) {
       return (
@@ -123,7 +126,7 @@ class Dashboard extends Component {
     }
 
     // We are logged in and should have a profile
-    const osmUser = osmProfile._xml2json.user
+    const osmUser = osm._xml2json.user
 
     return (
       <div className="dashboard">
@@ -133,21 +136,21 @@ class Dashboard extends Component {
               <div className="section-sub--left section-width-fifty-plus">
                 <img className="profile--thumb" style={{float: "left"}} src={osmUser.img['@']['href']} alt="Profile pic" />
                 <h1 className="header--xlarge header--with-description">{osmUser['@']['display_name']}</h1>
-                <Link href={`/users/${user.id}`}><a className="link--large">View Public Profile</a></Link>
+                <Link href={`/users/${account.id}`}><a className="link--large">View Public Profile</a></Link>
               </div>
               <div className="section-sub--right section-width-fifty-minus stats-user">
                 <ul>
                   <li className="list--inline">
                     <span className="descriptor-chart">Campaigns</span>
-                    <span className="num--large">{user.records.hashtags.length}</span>
+                    <span className="num--large">{account.records.hashtags.length}</span>
                   </li>
                   <li className="list--inline">
                     <span className="descriptor-chart">Badges</span>
-                    <span className="num--large">{Object.keys(user.badges.earnedBadges).length}</span>
+                    <span className="num--large">{Object.keys(account.badges.earnedBadges).length}</span>
                   </li>
                   <li className="list--inline">
                     <span className="descriptor-chart">Edits</span>
-                    <span className="num--large">{user.records.edit_count}</span>
+                    <span className="num--large">{account.records.edit_count}</span>
                   </li>
                 </ul>
               </div>
@@ -157,11 +160,17 @@ class Dashboard extends Component {
           {/* <UserExtentMap extent={user.records.extent_uri} uid={osmUser['@']['id']} /> */}
         </header>
 
-        {this.renderUpcomingBadges(user.badges.unearnedBadges)}
+        {this.renderUpcomingBadges(account.badges.unearnedBadges)}
         {/* this.renderProjects() */}
       </div>
     );
   }
 }
 
-export default connect(['loggedIn', 'osmProfile', 'user', 'projects', 'error'], actions)(Dashboard);
+const Page = connect(['authenticatedUser', 'projects', 'error'], actions)(Dashboard);
+
+Page.getInitialProps = async ({ query }) => {
+  
+}
+
+export default Page

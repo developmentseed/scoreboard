@@ -23,13 +23,14 @@ export class Admin extends Component {
   }
 
   componentDidUpdate () {
-    if (this.state.loading && (this.props.loggedIn || this.props.error)) {
+    const { authenticatedUser } = this.props
+    if (this.state.loading && (authenticatedUser.loggedIn || this.props.error)) {
       this.setState({ loading: false })
     }
   }
 
   render() {
-    const { loggedIn, user } = this.props
+    const { authenticatedUser } = this.props
 
     if (this.state.loading) {
       return (
@@ -37,11 +38,11 @@ export class Admin extends Component {
       )
     }
 
-    if (!loggedIn) {
+    if (!authenticatedUser.loggedIn) {
       return <NotLoggedIn />
     }
 
-    if (!isAdmin(user.roles)) {
+    if (!isAdmin(authenticatedUser.account.roles)) {
       return Router.push('/')
     }
 
@@ -87,4 +88,4 @@ export class Admin extends Component {
   }
 }
 
-export default connect(['user', 'loggedIn', 'error'], actions)(Admin);
+export default connect(['authenticatedUser', 'error'], actions)(Admin);

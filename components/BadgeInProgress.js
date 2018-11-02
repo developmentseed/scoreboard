@@ -34,7 +34,7 @@ export default class BadgeInProgress extends Component {
     const { badge, badgeClass } = this.props;
 
     if (!badge || !badgeClass) return <div></div>;
-    const imgUrl = require(`../static/badges/${badge.category}-${badge.badgeLevel + 1}-graphic.svg`);
+    const imgUrl = `/static/badges/${badge.category}-${badge.badgeLevel + 1}-graphic.svg`
     const progressBreaks = getProgressGradientBreaks(badge.points.percentage);
     var progressStyle = `
     linear-gradient(${progressBreaks.A}deg,

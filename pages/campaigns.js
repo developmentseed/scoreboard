@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import '../styles/Campaigns.css';
-import api, { createApiUrl } from '../utils/api';
+import '../styles/Campaigns.scss';
+import api, { createApiUrl } from '../lib/utils/api';
 import queryString from 'query-string';
 import Pagination from 'react-js-pagination';
 import CampaignFilters from '../components/CampaignFilters';

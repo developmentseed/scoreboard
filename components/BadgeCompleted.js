@@ -3,14 +3,14 @@ import '../styles/Badges.scss';
 
 export default class BadgeCompleted extends Component {
   render () {
-    let badgeUrl = require('../static/badges/blank-graphic.svg');
-    let borderUrl = require('../static/badges/blank-border.svg');
+    let badgeUrl = '/static/badges/blank-graphic.svg'
+    let borderUrl = '/static/badges/blank-border.svg'
 
     var {category, badgeLevel} = this.props.badge;
 
     if (category && badgeLevel) {
-      badgeUrl = require(`../static/badges/${category}-${badgeLevel}-graphic.svg`);
-      borderUrl = require(`../static/badges/border${badgeLevel}.svg`);
+      badgeUrl = `/static/badges/${category}-${badgeLevel}-graphic.svg`
+      borderUrl = `/static/badges/border${badgeLevel}.svg`
     }
 
     return (

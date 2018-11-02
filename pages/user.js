@@ -61,7 +61,7 @@ class User extends Component {
   render () {
     const { records, country, badges } = this.props;
     const edits = getSumEdits(records);
-    console.log('!records || !country || !badges', !records || !country || !badges)
+
     if (!records || !badges) return <div />
 
     return (

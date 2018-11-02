@@ -5,6 +5,7 @@ import Head from 'next/head'
 import withReduxStore from '../lib/store/with-store'
 import { Provider, connect } from 'unistore/react'
 import { actions } from '../lib/store'
+import { isAdmin } from '../lib/utils/roles'
 
 import "../styles/index.scss"
 import "../styles/App.scss"
@@ -17,8 +18,6 @@ class Layout extends React.Component {
   constructor () { 
     super()
     this.state = {
-      loggedIn: false,
-      profile: null,
       menuVisible: false
     }
     this.handleMenuClick = this.handleMenuClick.bind(this)
@@ -45,7 +44,8 @@ class Layout extends React.Component {
   }
 
   render() {
-    const {loggedIn, osmProfile, children} = this.props
+    const { authenticatedUser, children } = this.props
+    const { loggedIn, osm, account } = authenticatedUser
 
     return (
       <div className="App">
@@ -72,9 +72,14 @@ class Layout extends React.Component {
                             <div className="login-menu">
                               <ul>
                                 <li><Link href="/dashboard"><a>Dashboard</a></Link></li>
-                                <li><Link href={`/users/${osmProfile.id}`}><a>Public Profile</a></Link></li>
-                                <li><Link href={`/users/edit?id=${osmProfile.id}`} as={`/users/${osmProfile.id}/edit`}><a>Edit Profile</a></Link></li>
-                                <li><a href={`${domain}/auth/logout`}><a>Logout</a></a></li>
+                                <li><Link href={`/users/${osm.id}`}><a>Public Profile</a></Link></li>
+                                <li><Link href={`/edit-user?id=${osm.id}`} as={`/users/${osm.id}/edit`}><a>Edit Profile</a></Link></li>
+                                {
+                                  account.roles && isAdmin(account.roles) && (
+                                    <li><Link href={`/admin`}><a>Admin</a></Link></li>
+                                  )
+                                }
+                                <li><Link href={`${domain}/auth/logout`}><a>Logout</a></Link></li>
                               </ul>
                             </div>
                           )
@@ -94,7 +99,7 @@ class Layout extends React.Component {
   }
 }
 
-const LayoutWithStore = connect(['user', 'loggedIn', 'osmProfile'], actions)(Layout)
+const LayoutWithStore = connect(['authenticatedUser'], actions)(Layout)
 
 class Scoreboard extends App {
   static async getInitialProps({ Component, router, ctx }) {

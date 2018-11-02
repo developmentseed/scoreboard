@@ -76,7 +76,6 @@ class Users extends Component {
   }
 
   componentDidUpdate () {
-    console.log('users componentDidUpdate', this.state)
     if (!this.state.records.records || this.state.records.records.length === 0) {
       this._handleChange(this.props.users)
     }

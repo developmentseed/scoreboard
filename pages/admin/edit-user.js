@@ -10,6 +10,7 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 
 import '../../styles/Admin.scss';
+import 'react-select/dist/react-select.css';
 
 export class AdminUserEdit extends Component {
   constructor () {
@@ -22,7 +23,7 @@ export class AdminUserEdit extends Component {
 
   componentDidMount () {
     const { id } = this.props
-    console.log('this.props', this.props)
+
     this.props.getAuthenticatedUser().then(() => {
       Promise.all([
         this.props.getRoles(),
@@ -68,19 +69,19 @@ export class AdminUserEdit extends Component {
 
   render() {
     const { selectedRoles } = this.state
-    const { loggedIn, user, admin } = this.props
-    console.log('admin', admin)
+    const { authenticatedUser, admin } = this.props
+
     if (this.state.loading) {
       return (
         <div><AdminHeader /></div>
       )
     }
 
-    if (!loggedIn) {
+    if (!authenticatedUser.loggedIn) {
       return <NotLoggedIn />
     }
 
-    if (!isAdmin(user.roles)) {
+    if (!isAdmin(authenticatedUser.account.roles)) {
       return Router.push('/')
     }
 
@@ -125,4 +126,11 @@ export class AdminUserEdit extends Component {
   }
 }
 
-export default connect(['user', 'loggedIn', 'error', 'admin'], actions)(AdminUserEdit);
+const Page = connect(['authenticatedUser', 'error', 'admin'], actions)(AdminUserEdit);
+
+Page.getInitialProps = async ({ query }) => {
+  const { id } = query
+  return { id }
+}
+
+export default Page

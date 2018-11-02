@@ -71,7 +71,7 @@ export class AdminUsers extends Component {
   }
 
   render() {
-    const { loggedIn, user } = this.props
+    const { authenticatedUser } = this.props
 
     if (this.state.loading) {
       return (
@@ -79,11 +79,11 @@ export class AdminUsers extends Component {
       )
     }
 
-    if (!loggedIn) {
+    if (!authenticatedUser.loggedIn) {
       return <NotLoggedIn />
     }
 
-    if (!isAdmin(user.roles)) {
+    if (!isAdmin(authenticatedUser.account.roles)) {
       return Router.push('/')
     }
 
@@ -114,4 +114,4 @@ export class AdminUsers extends Component {
   }
 }
 
-export default connect(['user', 'loggedIn', 'error', 'admin'], actions)(AdminUsers);
+export default connect(['authenticatedUser', 'error', 'admin'], actions)(AdminUsers);
