@@ -14,7 +14,8 @@ function mapBadgeToTask(badge, x) {
     pois: `Add ${x} more nodes`,
     waterways: `Add ${x} more km of waterways`,
     countries: `Map in ${x} more different countries`,
-    daysTotal: `Map ${x} more days in total`
+    daysTotal: `Map ${x} more days in total`,
+    allDays: `Map before ${x}`
   }
   return map[badge]
 }
@@ -99,7 +100,7 @@ module.exports = (userMetrics, badge) => {
         if (lastValidDate < today) { excludeFromInProgress = true }
         else if (today < firstValidDate) { excludeFromInProgress = true }
         else {
-          dateTaskPhrase = `Map before ${lastValidDay}`
+          dateTaskPhrase = mapBadgeToTask('allDays', lastValidDay)
         }
       }
       else {
@@ -115,7 +116,7 @@ module.exports = (userMetrics, badge) => {
           excludeFromInProgress = true
         }
         else if (operator[0] === '<') {
-          dateTaskPhrase = `Map before ${requiredPointValue}`
+          dateTaskPhrase = mapBadgeToTask('allDays', requiredPointValue)
         }
       }
     }
