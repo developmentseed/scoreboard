@@ -90,6 +90,7 @@
       "prefer-destructuring": "off",
       "function-paren-newline": ["error", "consistent"],
       "arrow-body-style": "off",
-      "one-var": "off"
+      "one-var": "off",
+      "array-callback-return": "off"
     }
   }
