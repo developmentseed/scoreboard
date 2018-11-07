@@ -10,7 +10,7 @@ const YAML = require('yamljs')
 const swaggerUi = require('swagger-ui-express')
 const path = require('path')
 
-const pckg = require('../package.json')
+const pckg = require('../../package.json')
 const router = require('./routes')
 
 const app = express()

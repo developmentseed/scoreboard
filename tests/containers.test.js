@@ -1,47 +1,134 @@
-/**
- * This test file contains mounting
- * tests
- */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {MemoryRouter} from 'react-router-dom';
-import {Campaigns, Campaign, Home, User, Users, About} from '../containers';
+import { Provider, connect } from 'unistore/react';
+
+// import {Campaigns, Campaign, Home, User, Users, About} from '../containers';
+import Home from '../pages/index'
+import Campaigns from '../pages/campaigns'
+import Campaign from '../pages/campaign'
+import User from '../pages/user'
+import {Users} from '../pages/users'
+import About from '../pages/about'
+
+
+import store, { actions } from '../lib/store';
+
+function mockAction () {
+  return Promise.resolve()
+}
 
 it('Campaigns renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Campaigns />, div);
+  const div = document.createElement('div')
+  const mockProps = {}
+
+  const page = (
+    <Provider store={store}>
+      <Campaigns {...mockProps} />
+    </Provider>
+  )
+
+  ReactDOM.render(page, div);
 });
 
 it('Campaign renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Campaign />, div);
+  const div = document.createElement('div')
+  const mockProps = {}
+
+  const page = (
+    <Provider store={store}>
+      <Campaign {...mockProps} />
+    </Provider>
+  )
+
+  ReactDOM.render(page, div);
 });
 
+
 it('Home renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(
-    <MemoryRouter>
-      <Home />
-    </MemoryRouter>,
-    div);
+  const div = document.createElement('div')
+
+  const mockProps = {
+    actions,
+    getTopStats: mockAction,
+    topStats: {
+      records: []
+    }
+  }
+
+  const page = (
+    <Provider store={store}>
+      <Home {...mockProps} />
+    </Provider>
+  )
+
+  ReactDOM.render(page, div)
 });
 
 it('User renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<User />, div);
+  const mockProps = {
+    actions,
+    records: {
+      hashtags: [],
+      edit_times: []
+    },
+    country: 'AF',
+    badges: {
+      earnedBadges: {}
+    }
+  }
+
+  const page = (
+    <Provider store={store}>
+      <User {...mockProps} />
+    </Provider>
+  )
+
+  ReactDOM.render(page, div)
 });
 
 it('Users renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Users />, div);
+  const div = document.createElement('div')
+
+  const mockProps = {
+    users: {},
+    searchText: '',
+    changeSearchText: mockAction,
+    changeCountry: mockAction,
+    changeSelectedSort: mockAction,
+    changePage: mockAction,
+    toggleActive: mockAction,
+    getRoles: mockAction
+  }
+
+  const page = (
+    <Provider store={store}>
+      <Users {...mockProps} />
+    </Provider>
+  )
+
+  ReactDOM.render(page, div)
 });
 
 it('About renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(
-    <MemoryRouter>
+  const mockProps = {
+    actions,
+    records: {
+      hashtags: [],
+      edit_times: []
+    },
+    country: 'AF',
+    badges: {
+      earnedBadges: {}
+    }
+  }
+
+  const page = (
+    <Provider store={store}>
       <About />
-    </MemoryRouter>
-    , div);
+    </Provider>
+  )
+
+  ReactDOM.render(page, div)
 });

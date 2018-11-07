@@ -1,11 +1,9 @@
-const LOCAL_DATABASE_URL = 'postgres://scoreboard:test@localhost:5433'
-
 let DATABASE_URL
 if (process.env.NODE_ENV === 'test') {
-  DATABASE_URL = process.env.DATABASE_URL || `${LOCAL_DATABASE_URL}/scoreboard_tests`
+  DATABASE_URL = process.env.DATABASE_URL || 'postgres://scoreboard_test:test@localhost:5433/scoreboard_test'
 }
 else {
-  DATABASE_URL = process.env.DATABASE_URL || `${LOCAL_DATABASE_URL}/scoreboard`
+  DATABASE_URL = process.env.DATABASE_URL || 'postgres://scoreboard:test@localhost:5433/scoreboard'
 }
 
 module.exports = {

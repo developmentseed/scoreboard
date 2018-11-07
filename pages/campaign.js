@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import '../styles/Campaigns.scss';
 import Link from 'next/link';
 import Router from 'next/router';
-import api from '../utils/api';
+import api from '../lib/utils/api';
 import { distanceInWordsToNow } from 'date-fns';
 import CampaignMap from '../components/charts/CampaignMap';
 import UserTable from '../components/UserTable';
 import ReactMarkdown from 'react-markdown';
-import {formatDecimal} from '../utils/format';
-import sumEdits from '../utils/sum_edits';
+import {formatDecimal} from '../lib/utils/format';
+import sumEdits from '../lib/utils/sum_edits';
 
 const Blurb = ({
   users,

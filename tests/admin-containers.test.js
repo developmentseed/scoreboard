@@ -5,18 +5,29 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'unistore/react';
-import { Admin } from '../containers/Admin';
-import { AdminUsers } from '../containers/AdminUsers';
-import { AdminRoles } from '../containers/AdminRoles';
-import { AdminUserEdit } from '../containers/AdminUserEdit';
-import { AdminBadges } from '../containers/AdminBadges';
+import { Admin } from '../pages/admin/index';
+import { AdminUsers } from '../pages/admin/users';
+import { AdminUserEdit } from '../pages/admin/edit-user';
+import { AdminBadges } from '../pages/admin/badges';
 
-import store, { actions } from '../store';
+import store from '../lib/store';
 
 function mockAction () {
   return Promise.resolve()
+}
+
+const props = {
+  authenticatedUser: {
+    loggedIn: true,
+    account: {
+      roles: [{ name: 'admin' }]
+    }
+  },
+  admin: {
+    user: { roles: [] },
+    roles: []
+  }
 }
 
 it('Admin renders without crashing', () => {
@@ -24,9 +35,7 @@ it('Admin renders without crashing', () => {
 
   const admin = (
     <Provider store={store}>
-      <MemoryRouter>
-        <Admin actions={actions} getAuthenticatedUser={mockAction} />
-      </MemoryRouter>
+      <Admin getAuthenticatedUser={mockAction} {...props} />
     </Provider>
   )
 
@@ -38,23 +47,7 @@ it('AdminUsers renders without crashing', () => {
 
   const admin = (
     <Provider store={store}>
-      <MemoryRouter>
-        <AdminUsers actions={actions} getAuthenticatedUser={mockAction} />
-      </MemoryRouter>
-    </Provider>
-  )
-
-  ReactDOM.render(admin, div);
-});
-
-it('AdminRoles renders without crashing', () => {
-  const div = document.createElement('div');
-
-  const admin = (
-    <Provider store={store}>
-      <MemoryRouter>
-        <AdminRoles actions={actions} getAuthenticatedUser={mockAction} getRoles={mockAction} location={{}} />
-      </MemoryRouter>
+      <AdminUsers getAuthenticatedUser={mockAction} getRoles={mockAction} adminGetUsers={mockAction} {...props} />
     </Provider>
   )
 
@@ -66,9 +59,7 @@ it('AdminUserEdit renders without crashing', () => {
 
   const admin = (
     <Provider store={store}>
-      <MemoryRouter>
-        <AdminUserEdit actions={actions} getAuthenticatedUser={mockAction} />
-      </MemoryRouter>
+      <AdminUserEdit getAuthenticatedUser={mockAction} getRoles={mockAction} adminGetUser={mockAction} {...props} />
     </Provider>
   )
 
@@ -80,9 +71,7 @@ it('AdminBadges renders without crashing', () => {
 
   const admin = (
     <Provider store={store}>
-      <MemoryRouter>
-        <AdminBadges actions={actions} getAuthenticatedUser={mockAction} createBadge={mockAction} />
-      </MemoryRouter>
+      <AdminBadges getAuthenticatedUser={mockAction} createBadge={mockAction} {...props} />
     </Provider>
   )
 

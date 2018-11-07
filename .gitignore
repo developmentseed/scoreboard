@@ -6,4 +6,6 @@ package-lock.json
 .tmp
 tmp
 .next
-.env
+*.env
+*.sqlite3*
+users.csv

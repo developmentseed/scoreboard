@@ -30,6 +30,7 @@ const createAuthenticatedUser = (userRoles) => {
   }
 
   const user = request.agent(app)
+
   const url = userRoles
     ? `/auth/openstreetmap?roles=${userRoles.join(',')}`
     : '/auth/openstreetmap'
@@ -38,6 +39,7 @@ const createAuthenticatedUser = (userRoles) => {
     user
       .get(url)
       .end((err, res) => {
+        console.log('err, res', err)
         if (err) return reject(err)
         if (res.error) return reject(err)
         return resolve(user)

@@ -4,18 +4,37 @@
   "description": "OSM Scoreboard",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node server.js",
     "dev": "node server.js",
+    "start": "NODE_ENV=production node server.js",
     "build": "next build",
-    "migrate": "lerna run migrate --scope --scoreboard-api",
-    "clocks": "lerna run clocks --scope --scoreboard-api",
-    "seed": "lerna run seed --scope --scoreboard-api",
-    "api": "lerna run start-dev --scope scoreboard-api",
-    "frontend": "lerna run start --scope scoreboard-frontend",
-    "test": "lerna run test --scope scoreboard-api && CI=true lerna run test --scope scoreboard-frontend",
-    "docs": "lerna run generate-docs --scope scoreboard-api",
-    "bootstrap": "lerna bootstrap",
+    "test": "npm run test-ui && npm run test-api",
+    "test-ui": "NODE_ENV=test jest tests/*.test.js",
+    "test-api": "NODE_ENV=test ava api/tests/*.test.js",
+    "migrate": "knex migrate:latest --cwd api/src/db/",
+    "seed": "knex seed:run --cwd api/src/db/",
+    "clocks": "nf start users_clock && nf start tm_clock",
+    "docs": "swagger-markdown -i api/docs/api.yml -o api/README.md",
     "eslint": "eslint ."
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "presets": [
+          "@babel/env",
+          "@babel/react",
+          "next/babel"
+        ],
+        "plugins": [
+          "transform-dynamic-import"
+        ]
+      }
+    }
+  },
+  "jest": {
+    "setupFiles": ["<rootDir>/tests/setup.jest.js"],
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/tests/mocks/style-mock.js"
+    }
   },
   "repository": {
     "type": "git",
@@ -36,19 +55,35 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.17.0",
+    "babel-preset-jest": "^23.2.0",
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.1",
     "css-loader": "^1.0.0",
     "date-fns": "^1.29.0",
     "debounce-promise": "^3.0.2",
+    "directory-command": "^4.0.1",
     "dotenv": "^6.1.0",
     "dotenv-webpack": "^1.5.7",
+    "enzyme": "^3.7.0",
+    "express": "^4.16.3",
+    "express-boom": "^2.0.0",
+    "express-promise-router": "^2.0.0",
+    "express-session": "^1.15.6",
     "file-loader": "^2.0.0",
-    "i18n-iso-countries": "^3.6.2",
+    "fs-extra": "^7.0.0",
+    "i18n-iso-countries": "^3.7.4",
+    "knex": "^0.15.2",
     "lodash-es": "^4.17.5",
     "mapbox-gl": "^0.44.1",
     "next": "^7.0.2",
     "next-images": "^1.0.1",
     "node-sass": "^4.9.4",
+    "nodemon": "^1.18.3",
     "npm-run-all": "^4.1.1",
+    "passport": "^0.4.0",
+    "passport-mock-strategy": "^1.1.1",
+    "passport-openstreetmap": "^0.1.2",
+    "pg": "^7.4.3",
     "query-string": "^6.2.0",
     "ramda": "^0.25.0",
     "react": "^16.0.0",
@@ -57,13 +92,23 @@
     "react-js-pagination": "^3.0.0",
     "react-markdown": "^3.1.1",
     "react-select": "^1.2.1",
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5",
+    "sqlite3": "^3.1.13",
     "style-loader": "^0.23.1",
+    "swagger-ui-express": "^3.0.10",
     "unistore": "^3.1.0",
     "url-loader": "^1.1.2",
-    "webpack": "^4.24.0"
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "ava": "^1.0.0-rc.1",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-plugin-transform-dynamic-import": "^2.1.0",
     "eslint": "^5.8.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-react-app": "^3.0.5",
@@ -71,6 +116,9 @@
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsdoc": "^3.9.1",
     "eslint-plugin-jsx-a11y": "6.1.2",
-    "eslint-plugin-react": "^7.7.0"
+    "eslint-plugin-react": "^7.7.0",
+    "jest": "^23.6.0",
+    "supertest": "^3.1.0",
+    "swagger-markdown": "^1.1.5"
   }
 }

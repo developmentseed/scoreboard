@@ -60,9 +60,9 @@ class User extends Component {
 
   render () {
     const { records, country, badges } = this.props;
-    const edits = getSumEdits(records);
-
     if (!records || !badges) return <div />
+
+    const edits = getSumEdits(records);
 
     return (
       <div className="User">
@@ -80,4 +80,5 @@ class User extends Component {
     );
   }
 }
+
 export default User;

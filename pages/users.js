@@ -13,17 +13,18 @@ import AllUsersHeader from '../components/AllUsersHeader'
 
 const AllUsersFilter = dynamic(() => import('../components/AllUsersFilter'), { ssr: false})
 
-class Users extends Component {
-  constructor() {
-    super()
+export class Users extends Component {
+  constructor(props) {
+    super(props)
+
     this.state = {
-      "records": {},
-      apiStatus: "LOADING",
-      'searchText': "", 
-      'page': 1, 
-      'selectedValue': null, 
-      'selectedSortValue': null, 
-      'selectedActive': false
+      records: {},
+      apiStatus: 'LOADING',
+      searchText: '', 
+      page: 1, 
+      selectedValue: null, 
+      selectedSortValue: null, 
+      selectedActive: false
     }
 
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -41,7 +42,7 @@ class Users extends Component {
     }
     this._handleChange(this.props)
   }
-
+  
   _handleChange (props) {
     let { searchText: q, page, selectedValue: country, selectedSortValue: sortType, selectedActive: active} = props;
     api('get', createApiUrl('/api/users/stats', {q, page, country, sortType, active}))
@@ -53,7 +54,7 @@ class Users extends Component {
         this.setState({apiStatus: "ERROR"});
       });
   }
-
+  
   static getDerivedStateFromProps (props, state) {
     let filters = ['searchText', 'page', 'selectedValue', 'selectedSortValue', 'selectedActive']
     if (props.users && !equals(pick(filters, props.users), pick(filters, state))) {
@@ -69,36 +70,36 @@ class Users extends Component {
       filters.forEach(filter => {
         nextState[filter] = props.users[filter]
       })
-
+  
       return nextState
     }
     return null
   }
-
+  
   componentDidUpdate () {
     if (!this.state.records.records || this.state.records.records.length === 0) {
       this._handleChange(this.props.users)
     }
   }
-
+  
   handleSearch (event) {
     this.props.changeSearchText(event.target.value)
   }
-
+  
   handleSelect (selectedOption) {
     this.props.changeCountry(selectedOption || null)
   }
-
+  
   handleSortSelect (selectedOption) {
     this.props.changeSelectedSort(selectedOption || null)
   }
-
+  
   handlePageChange(pageNumber) {
     this.setState({ records: {} });
     window.scrollTo(0, 0);
     this.props.changePage(pageNumber || 1)
   }
-
+  
   handleToggleActive(event) {
     this.props.toggleActive(event.target.checked)
   }
@@ -108,9 +109,9 @@ class Users extends Component {
       apiStatus,
       records: recordData
     } = this.state;
-
+    
     const { total, records, subTotal, editTotal, countries } = recordData
-
+    
     const {
       searchText,
       selectedValue,
@@ -120,7 +121,7 @@ class Users extends Component {
     } = this.props.users
 
     return (
-      <div className="Users">
+      <div className="Users">)
         <AllUsersHeader countries={countries} users={total} edits={editTotal}/>
         <section>
           <div className="row">
@@ -153,4 +154,5 @@ class Users extends Component {
   }
 }
 
-export default connect('users,searchText', actions)(Users);
+// export default () => 'div />'
+export default connect(['users'], actions)(Users)

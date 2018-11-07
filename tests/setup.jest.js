@@ -6,3 +6,5 @@
 jest.mock('mapbox-gl/dist/mapbox-gl', () => ({
   Map: () => ({})
 }));
+
+jest.mock('next/router')

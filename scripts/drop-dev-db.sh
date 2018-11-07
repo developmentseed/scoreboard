@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+POSTGRES_USER=${1:-postgres}
+
+psql $POSTGRES_USER -v ON_ERROR_STOP=1 <<-EOSQL
+  DROP DATABASE IF EXISTS scoreboard;
+  REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM scoreboard;
+  DROP USER IF EXISTS scoreboard;
+EOSQL

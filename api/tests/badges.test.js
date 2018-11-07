@@ -1,7 +1,21 @@
-
+const path = require('path')
 const test = require('ava')
 const request = require('supertest')
+const connection = require('../src/db/connection')
 const app = require('../src/index')
+
+let db
+const migrationsDirectory = path.join(__dirname, '..', 'src', 'db', 'migrations')
+
+test.before(async () => {
+  db = connection()
+  await db.migrate.latest({ directory: migrationsDirectory })
+})
+
+test.after.always(async () => {
+  await db.migrate.rollback({ directory: migrationsDirectory })
+  await db.destroy()
+})
 
 test('Pull all badges', async (t) => {
   const res = await request(app)
