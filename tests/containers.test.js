@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider, connect } from 'unistore/react';
+import { Provider } from 'unistore/react';
 
 // import {Campaigns, Campaign, Home, User, Users, About} from '../containers';
 import Home from '../pages/index'
@@ -9,7 +9,6 @@ import Campaign from '../pages/campaign'
 import User from '../pages/user'
 import {Users} from '../pages/users'
 import About from '../pages/about'
-
 
 import store, { actions } from '../lib/store';
 
@@ -112,17 +111,6 @@ it('Users renders without crashing', () => {
 
 it('About renders without crashing', () => {
   const div = document.createElement('div');
-  const mockProps = {
-    actions,
-    records: {
-      hashtags: [],
-      edit_times: []
-    },
-    country: 'AF',
-    badges: {
-      earnedBadges: {}
-    }
-  }
 
   const page = (
     <Provider store={store}>

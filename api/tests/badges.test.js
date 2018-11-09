@@ -5,11 +5,14 @@ const connection = require('../src/db/connection')
 const app = require('../src/index')
 
 let db
-const migrationsDirectory = path.join(__dirname, '..', 'src', 'db', 'migrations')
+const dbDirectory = path.join(__dirname, '..', 'src', 'db')
+const migrationsDirectory = path.join(dbDirectory, 'migrations')
+const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async () => {
   db = connection()
   await db.migrate.latest({ directory: migrationsDirectory })
+  await db.seed.run({ directory: seedsDirectory })
 })
 
 test.after.always(async () => {
