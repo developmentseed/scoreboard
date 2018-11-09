@@ -17,9 +17,6 @@ jobs:
       - run:
           name: Install
           command: yarn 
-      - run:
-          name: Bootstrap
-          command: yarn bootstrap
       - save_cache:
           key: scoreboard-cache-{{ checksum "package.json" }}-{{ checksum "api/package.json" }}-{{ checksum "frontend/package.json" }}
           paths:
