@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'unistore/react';
 
 // import {Campaigns, Campaign, Home, User, Users, About} from '../containers';
-import Home from '../pages/index'
+import {Home} from '../pages/index'
 import Campaigns from '../pages/campaigns'
 import Campaign from '../pages/campaign'
 import User from '../pages/user'

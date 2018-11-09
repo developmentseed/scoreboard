@@ -19,6 +19,11 @@
   },
   "babel": {
     "env": {
+      "development": {
+        "presets": [
+          "next/babel"
+        ]
+      },
       "test": {
         "presets": [
           "@babel/env",
@@ -32,7 +37,9 @@
     }
   },
   "jest": {
-    "setupFiles": ["<rootDir>/tests/setup.jest.js"],
+    "setupFiles": [
+      "<rootDir>/tests/setup.jest.js"
+    ],
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/tests/mocks/style-mock.js"
     }

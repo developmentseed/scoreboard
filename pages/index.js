@@ -13,7 +13,7 @@ const Map = dynamic(() => import('../components/charts/HomeMap'), {
   ssr: false
 })
 
-class Home extends Component {
+export class Home extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -114,34 +114,29 @@ class Home extends Component {
             </div>
           </div>
         </section>
+        <section>
+          <div className="row">
+            <div className="width--shortened graphs--users">
+              <h2 className="header--large">Users</h2>
+              <div className="side-by-side section-width-twenty section-width--first">
+                <h3>Edits By Country</h3>
+                <EditorsByCountry edits={edits_by_country} />
+              </div>
+              <div className="side-by-side section-width-eighty" style={{height: "430px", marginBottom: "50px"}}>
+                <h3>Top Editors</h3>
+                {
+                  top_edits ? <TopEditorsChart edits={top_edits} /> : <div>Loading...</div>
+                }
+              </div>
+              <Link href="/users">
+                <a className="link--large">View All Users</a>
+              </Link>
+            </div>
+          </div>
+        </section>
       </div>
-    )
-
-        // <section>
-        //   <div className="row">
-        //     <div className="width--shortened graphs--users">
-        //       <h2 className="header--large">Users</h2>
-        //       <div className="side-by-side section-width-twenty section-width--first">
-        //         <h3>Edits By Country</h3>
-        //         <EditorsByCountry edits={edits_by_country} />
-        //       </div>
-        //       <div className="side-by-side section-width-eighty" style={{height: "430px", marginBottom: "50px"}}>
-        //         <h3>Top Editors</h3>
-        //         {
-        //           top_edits ? <TopEditorsChart edits={top_edits} /> : <div>Loading...</div>
-        //         }
-        //       </div>
-        //       <Link href="/users">
-        //         <a className="link--large">View All Users</a>
-        //       </Link>
-        //     </div>
-        //   </div>
-        // </section>
-    //   </div>
-    // );
+    );
   }
 }
 
-export default Home
-
-// export default connect('topStats', actions)(Home)
+export default connect('topStats', actions)(Home)
