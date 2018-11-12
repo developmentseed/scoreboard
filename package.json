@@ -15,7 +15,8 @@
     "rollback": "knex migrate:rollback --cwd api/src/db/",
     "clocks": "nf start users_clock && nf start tm_clock",
     "docs": "swagger-markdown -i api/docs/api.yml -o api/README.md",
-    "eslint": "eslint ."
+    "lint": "devseed-standard",
+    "lintfix": "devseed-standard --fix"
   },
   "babel": {
     "env": {
@@ -70,7 +71,6 @@
     "css-loader": "^1.0.0",
     "date-fns": "^1.29.0",
     "debounce-promise": "^3.0.2",
-    "devseed-standard": "^1.0.1",
     "directory-command": "^4.0.1",
     "dotenv": "^6.1.0",
     "dotenv-webpack": "^1.5.7",
@@ -116,17 +116,9 @@
     "@babel/preset-env": "^7.1.0",
     "ava": "^1.0.0-rc.1",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-plugin-transform-dynamic-import": "^2.1.0",
-    "eslint": "^5.8.0",
-    "eslint-config-airbnb": "^17.0.0",
-    "eslint-config-react-app": "^3.0.5",
-    "eslint-plugin-flowtype": "^3.2.0",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-jsdoc": "^3.9.1",
-    "eslint-plugin-jsx-a11y": "6.1.2",
-    "eslint-plugin-react": "^7.7.0",
+    "devseed-standard": "^1.0.1",
     "jest": "^23.6.0",
     "supertest": "^3.1.0",
     "swagger-markdown": "^1.1.5"

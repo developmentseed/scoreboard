@@ -28,4 +28,4 @@ jobs:
           command: yarn test
       - run:
           name: Lint
-          command: yarn eslint
+          command: yarn lint
