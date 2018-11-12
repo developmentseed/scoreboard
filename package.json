@@ -118,7 +118,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-plugin-transform-dynamic-import": "^2.1.0",
-    "devseed-standard": "^1.0.1",
+    "devseed-standard": "^1.1.0",
     "jest": "^23.6.0",
     "supertest": "^3.1.0",
     "swagger-markdown": "^1.1.5"
