@@ -11,3 +11,4 @@ services:
       - 5433:5432 
     volumes:
       - './.tmp/pg:/var/lib/postgresql/data'
+      - ./scripts/create-test-db.sh:/docker-entrypoint-initdb.d/create-test-db.sh

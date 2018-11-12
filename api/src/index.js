@@ -8,8 +8,9 @@ const session = require('express-session')
 const compression = require('compression')
 const YAML = require('yamljs')
 const swaggerUi = require('swagger-ui-express')
+const path = require('path')
 
-const pckg = require('../package.json')
+const pckg = require('../../package.json')
 const router = require('./routes')
 
 const app = express()
@@ -21,7 +22,7 @@ const { passport, authRouter } = require('./passport')
  * Config
  */
 
-const swaggerDocument = YAML.load('./docs/api.yml')
+const swaggerDocument = YAML.load(path.join(__dirname, '..', '/docs/api.yml'))
 swaggerDocument.info.version = pckg.version
 
 app.use(bodyParser.json())
@@ -33,6 +34,6 @@ app.use(passport.session())
 app.use('/auth', authRouter)
 app.use('/api', router)
 app.use('/scoreboard/api', router)
-app.use(['/docs', '/'], swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use(['/api/docs'], swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 module.exports = app

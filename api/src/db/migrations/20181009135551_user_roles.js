@@ -21,6 +21,8 @@ exports.down = async function (knex, Promise) {
     await knex.schema.table('users', table => {
       table.dropColumn('roles')
     })
+
+    await knex.schema.dropTable('roles')
   } catch (e) {
     console.error(e)
   }

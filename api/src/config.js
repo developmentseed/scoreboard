@@ -1,11 +1,9 @@
-const LOCAL_DATABASE_URL = 'postgres://scoreboard:test@localhost:5433'
-
 let DATABASE_URL
 if (process.env.NODE_ENV === 'test') {
-  DATABASE_URL = process.env.DATABASE_URL || `${LOCAL_DATABASE_URL}/scoreboard_tests`
+  DATABASE_URL = process.env.DATABASE_URL || 'postgres://scoreboard_test:test@localhost:5433/scoreboard_test'
 }
 else {
-  DATABASE_URL = process.env.DATABASE_URL || `${LOCAL_DATABASE_URL}/scoreboard`
+  DATABASE_URL = process.env.DATABASE_URL || 'postgres://scoreboard:test@localhost:5433/scoreboard'
 }
 
 module.exports = {
@@ -15,8 +13,7 @@ module.exports = {
   TM_URL: process.env.TM_URL || 'http://tasks.openstreetmap.us',
   TM_VERSION: process.env.TM_VERSION || '2',
   TM_HASHTAG: process.env.TM_HASHTAG || 'project',
-  API_URL: process.env.API_URL || 'http://localhost:5000',
-  APP_URL: process.env.APP_URL || 'http://localhost:3000',
+  APP_URL: process.env.APP_URL || 'http://localhost:8181',
   FILTERED_USERS: process.env.FILTERED_USERS || '0',
   OSM_CONSUMER_KEY: process.env.OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET: process.env.OSM_CONSUMER_SECRET,
