@@ -1,7 +1,7 @@
 const users = require('../../src/models/users')
 const roles = require('../../src/models/roles')
 
-async function command(args, flags) {
+async function command (args, flags) {
   const { id, osmId, fullName } = flags
 
   if (!id && !osmId) {
@@ -14,8 +14,7 @@ async function command(args, flags) {
   let user
   if (id) {
     [user] = await users.get(id)
-  }
-  else if (osmId) {
+  } else if (osmId) {
     [user] = await users.findByOsmId(osmId)
   }
 

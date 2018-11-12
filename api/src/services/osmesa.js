@@ -16,24 +16,24 @@ class OSMesaAPI {
    * @param {string} id - User ID
    * @returns {Promise} response
    */
-  getUser(id) {
+  getUser (id) {
     return rp(`${OSMESA_API}/users/${id}`)
   }
 
-  getCampaign(id) {
+  getCampaign (id) {
     return rp(`${OSMESA_API}/campaigns/${id}`)
   }
 }
 
 class FakeOSMesaAPI {
-  getUser(id) {
+  getUser (id) {
     const sampleuser = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'sampleuser.json'), 'utf-8'))
     sampleuser.uid = id
     sampleuser.name = `test${(id - 100000000)}` // Users start at 100000000
     return Promise.resolve(JSON.stringify(sampleuser))
   }
 
-  getCampaign(id) {
+  getCampaign (id) {
     // to check the notfound page we fake a 404 response
     if (id === 'notfound') {
       return Promise.reject('not found')
@@ -46,7 +46,6 @@ class FakeOSMesaAPI {
 
 if (NODE_ENV === 'development' || NODE_ENV === 'test') {
   module.exports = new FakeOSMesaAPI()
-}
-else {
+} else {
   module.exports = new OSMesaAPI()
 }

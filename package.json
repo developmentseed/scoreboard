@@ -70,6 +70,7 @@
     "css-loader": "^1.0.0",
     "date-fns": "^1.29.0",
     "debounce-promise": "^3.0.2",
+    "devseed-standard": "^1.0.1",
     "directory-command": "^4.0.1",
     "dotenv": "^6.1.0",
     "dotenv-webpack": "^1.5.7",

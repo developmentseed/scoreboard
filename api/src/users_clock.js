@@ -10,7 +10,7 @@ const conn = require('./db/connection')
  *
  * @param {Array[Date]} editTimes
  */
-function getLastEdit(editTimes) {
+function getLastEdit (editTimes) {
   const days = editTimes.map((time) => parse(time.day))
   return head(days.sort(compareDesc))
 }
@@ -41,7 +41,7 @@ const sumEdits = (records) => {
  *
  * @returns {Promise} a response
  */
-async function usersWorker() {
+async function usersWorker () {
   try {
     const db = conn()
     const users = await db('users').select('id', 'osm_id') // Get all users
@@ -59,8 +59,7 @@ async function usersWorker() {
           obj.edit_count = sumEdits(data) || 0
           obj.last_edit = getLastEdit(data.edit_times)
         }
-      }
-      catch (e) {
+      } catch (e) {
         console.error(`${obj.osm_id} not retrieved from OSMesa`, e.message)
       }
 
@@ -76,8 +75,7 @@ async function usersWorker() {
     // Return a single promise wrapping all the
     // SQL statements
     return Promise.all(promises)
-  }
-  catch (e) {
+  } catch (e) {
     console.error(e)
     return Promise.resolve()
   }

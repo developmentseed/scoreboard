@@ -1,7 +1,7 @@
 const users = require('../../../src/models/users')
 const roles = require('../../../src/models/roles')
 
-async function command() {
+async function command () {
   const list = await users.list()
 
   await Promise.all(list.map(async (user) => {

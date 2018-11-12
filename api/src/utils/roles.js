@@ -6,7 +6,7 @@ module.exports = {
    * @param {string} role - role name
    * @returns {Promise} a response
    */
-  validateRole(roles, role) {
+  validateRole (roles, role) {
     if (!roles || !role) return false
     return !!roles.map((r) => r.name).includes(role)
   }

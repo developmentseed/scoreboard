@@ -1,55 +1,55 @@
-import React, { Component } from 'react';
-import '../styles/Badges.scss';
+import React, { Component } from 'react'
+import '../styles/Badges.scss'
 
-function getProgressGradientBreaks(percentage) {
+function getProgressGradientBreaks (percentage) {
   // Calculates the linear-gradient breakpoint angles necessary to
   // represent progress percentage
-  var breakA = 90;
-  var breakB = 90;
+  var breakA = 90
+  var breakB = 90
   if (percentage < 50) {
-    breakB = 90 + percentage * 3.6;
-    return { A: breakA, B: breakB, dependantGrad: '#dbdbda' };
+    breakB = 90 + percentage * 3.6
+    return { A: breakA, B: breakB, dependantGrad: '#dbdbda' }
   }
-  breakA = -90 + (percentage - 50) * 3.6;
-  breakB = 270;
-  return { A: breakA, B: breakB, dependantGrad: '#8BC544' };
+  breakA = -90 + (percentage - 50) * 3.6
+  breakB = 270
+  return { A: breakA, B: breakB, dependantGrad: '#8BC544' }
 }
 
 export default class BadgeInProgress extends Component {
   constructor () {
-    super();
+    super()
     this.state = {
       hidden: true
     }
   }
 
   onMouseOver () {
-    this.setState({'hidden': false});
+    this.setState({ 'hidden': false })
   }
 
   onMouseOut () {
-    this.setState({'hidden': true});
+    this.setState({ 'hidden': true })
   }
-  render() {
-    const { badge, badgeClass } = this.props;
+  render () {
+    const { badge, badgeClass } = this.props
 
-    if (!badge || !badgeClass) return <div></div>;
+    if (!badge || !badgeClass) return <div />
     const imgUrl = `/static/badges/${badge.category}-${badge.badgeLevel + 1}-graphic.svg`
-    const progressBreaks = getProgressGradientBreaks(badge.points.percentage);
+    const progressBreaks = getProgressGradientBreaks(badge.points.percentage)
     var progressStyle = `
     linear-gradient(${progressBreaks.A}deg,
       ${progressBreaks.dependantGrad} 50%,
       rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)),
       linear-gradient(${progressBreaks.B}deg,
-        #8BC544 50%, #dbdbda 50%, #dbdbda)`;
+        #8BC544 50%, #dbdbda 50%, #dbdbda)`
 
-    var popup = '';
+    var popup = ''
     if (badgeClass === 'progress') {
       popup = (
         <div className={'Badge-Popup' + (this.state.hidden ? ' hidden' : '')} >
           {badge.description}
         </div>
-      );
+      )
     }
     return (
       <div
@@ -60,9 +60,8 @@ export default class BadgeInProgress extends Component {
         {popup}
         <div
           className={'Badge-Interior ' + badgeClass}
-          style={{ backgroundImage: `url(${imgUrl})` }}>
-        </div>
+          style={{ backgroundImage: `url(${imgUrl})` }} />
       </div>
-    );
+    )
   }
 };

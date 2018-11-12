@@ -1,6 +1,6 @@
 const users = require('../../../src/models/users')
 
-async function command(args, flags) {
+async function command (args, flags) {
   const { id } = flags
 
   if (!id) {

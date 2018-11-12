@@ -4,7 +4,7 @@ const { NODE_ENV } = require('../config')
 
 // Initialize knex with the development connection
 
-function create() {
+function create () {
   const config = connections[NODE_ENV]
 
   if (process.env.CI) {

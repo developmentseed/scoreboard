@@ -9,8 +9,8 @@ const { keys } = require('ramda')
  * @param {*} badgesDB - All badges in the database
  * @returns {*} keys - For every key in userData, get the badge info associated with that key
  */
-//eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
 module.exports = (userData, badgesDB) => {
-  //eslint-disable-next-line brace-style
+  // eslint-disable-next-line brace-style
   return keys(badgesDB).map((badge) => { return getBadgeInfo(userData, badgesDB[badge]) })
 }

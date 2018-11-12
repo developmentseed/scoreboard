@@ -1,14 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
 import { formatDecimal } from '../lib/utils/format'
-import {distanceInWordsToNow, parse} from 'date-fns'
+import { distanceInWordsToNow, parse } from 'date-fns'
 import countries from 'i18n-iso-countries'
-countries.registerLocale(require("i18n-iso-countries/langs/en.json"))
+countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
 
 export default ({ apiStatus, users }) => {
-  let content = <div></div>;
+  let content = <div />
   switch (apiStatus) {
-    case "SUCCESS":
+    case 'SUCCESS':
       content = (<table>
         <thead>
           <tr>
@@ -22,28 +22,28 @@ export default ({ apiStatus, users }) => {
         <tbody>
           {
             users.map(user => (
-                <tr key={user.osm_id}>
-                  <td>{((user.edit_count > 0 ) ? user.rank: "N/A")}</td>
-                  <td><Link href={`/users/${user.osm_id}`}><a className="link--normal">{user.full_name}</a></Link></td>
-                  <td>{countries.getName(user.country, "en")}</td>
-                  <td>{formatDecimal(user.edit_count)}</td>
-                  <td>{user.edit_count > 0 ? `${distanceInWordsToNow(parse(user.last_edit))} ago`: "N/A"}</td>
-                </tr>
-              ))
+              <tr key={user.osm_id}>
+                <td>{((user.edit_count > 0) ? user.rank : 'N/A')}</td>
+                <td><Link href={`/users/${user.osm_id}`}><a className='link--normal'>{user.full_name}</a></Link></td>
+                <td>{countries.getName(user.country, 'en')}</td>
+                <td>{formatDecimal(user.edit_count)}</td>
+                <td>{user.edit_count > 0 ? `${distanceInWordsToNow(parse(user.last_edit))} ago` : 'N/A'}</td>
+              </tr>
+            ))
           }
         </tbody>
       </table>
-      );
-      break;
-    case "LOADING":
-      content = <div>Loading...</div>;
-      break;
+      )
+      break
+    case 'LOADING':
+      content = <div>Loading...</div>
+      break
 
-    case "ERROR":
-      content = <div>Error loading records</div>;
-      break;
+    case 'ERROR':
+      content = <div>Error loading records</div>
+      break
     default:
-      content = <div></div>;
+      content = <div />
   }
-  return content;
-};
+  return content
+}
