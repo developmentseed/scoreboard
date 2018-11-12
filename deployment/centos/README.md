@@ -91,7 +91,7 @@ TM_URL=xxxxx
 USERS_URL=xxxx
 TM_HASHTAG=xxxx
 OSMESA_API=xxxxx
-API_URL=xxxxx
+APP_URL=xxxxx
 FILTERED_USERS="0,1"
 ```
 
