@@ -2,54 +2,54 @@
 
 const path = require('path')
 const test = require('ava')
-const request = require('supertest')
+// const request = require('supertest')
 const connection = require('../src/db/connection')
-const app = require('../src/index')
+// const app = require('../src/index')
 const { validateRole } = require('../src/utils/roles')
 const roles = require('../src/models/roles')
 
 let db
-let adminUser
-let authenticatedUser
-let anonymousUser
+// let adminUser
+// let authenticatedUser
+// let anonymousUser
 
 /*
 * synchronous function creating a supertest agent to use as an anonymous user
 */
-const createAnonymousUser = () => {
-  return request(app)
-}
+// const createAnonymousUser = () => {
+//   return request(app)
+// }
 
 /*
 * asynchronous function returning a promise for creating a supertest agent
 * to use as an authenticated user
 *
 */
-const createAuthenticatedUser = async (userRoles) => {
-  if (typeof userRoles === 'string') {
-    userRoles = [userRoles]
-  }
-
-  const user = request.agent(app)
-
-  const url = userRoles
-    ? `/auth/openstreetmap?roles=${userRoles.join(',')}`
-    : '/auth/openstreetmap'
-
-  return new Promise((resolve, reject) => {
-    user
-      .get(url)
-      .end((err, res) => {
-        console.log('err, res', err)
-        if (err) return reject(err)
-        if (res.error) {
-          console.log('res.error', res.error, res)
-          return reject(err)
-        }
-        return resolve(user)
-      })
-  })
-}
+// const createAuthenticatedUser = async (userRoles) => {
+//   if (typeof userRoles === 'string') {
+//     userRoles = [userRoles]
+//   }
+//
+//   const user = request.agent(app)
+//
+//   const url = userRoles
+//     ? `/auth/openstreetmap?roles=${userRoles.join(',')}`
+//     : '/auth/openstreetmap'
+//
+//   return new Promise((resolve, reject) => {
+//     user
+//       .get(url)
+//       .end((err, res) => {
+//         console.log('err, res', err)
+//         if (err) return reject(err)
+//         if (res.error) {
+//           console.log('res.error', res.error, res)
+//           return reject(err)
+//         }
+//         return resolve(user)
+//       })
+//   })
+// }
 
 const dbDirectory = path.join(__dirname, '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')

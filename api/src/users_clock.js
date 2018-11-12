@@ -47,7 +47,7 @@ async function usersWorker () {
     const users = await db('users').select('id', 'osm_id') // Get all users
 
     // Map user info to knex objects
-    const delay = (time) => new Promise((res) => setTimeout(() => res(), time))
+    const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time))
     const promises = users.map(async (obj) => {
       // Get edit count from OSMesa
       await delay(50)

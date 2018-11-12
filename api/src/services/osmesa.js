@@ -36,7 +36,7 @@ class FakeOSMesaAPI {
   getCampaign (id) {
     // to check the notfound page we fake a 404 response
     if (id === 'notfound') {
-      return Promise.reject('not found')
+      return Promise.reject(new Error('not found'))
     }
     const samplecampaign = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecampaign.json'), 'utf-8'))
     samplecampaign.tag = `project-${id}`

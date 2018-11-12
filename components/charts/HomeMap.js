@@ -43,7 +43,7 @@ class CampaignMap extends Component {
       backgroundColor: 'rgb(106,214,217)'
     }
 
-    return <div style={style} ref={el => this.mapContainer = el} />
+    return <div style={style} ref={el => { this.mapContainer = el }} />
   }
 }
 

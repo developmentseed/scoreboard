@@ -43,7 +43,7 @@ class CampaignMap extends Component {
       height: '100%'
     }
 
-    return <div style={style} ref={el => this.mapContainer = el} />
+    return <div style={style} ref={el => { this.mapContainer = el }} />
   }
 }
 

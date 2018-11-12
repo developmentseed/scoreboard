@@ -144,7 +144,7 @@ class UserExtentMap extends Component {
       width: '100%'
     }
 
-    return <div style={style} ref={el => this.mapContainer = el} />
+    return <div style={style} ref={el => { this.mapContainer = el }} />
   }
 }
 

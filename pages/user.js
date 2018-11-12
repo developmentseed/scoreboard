@@ -6,28 +6,28 @@ import UserHeader from '../components/UserHeader'
 import UserStats from '../components/UserStats'
 import getSumEdits from '../lib/utils/sum_edits'
 
-const empty = {
-  'id': 0,
-  'name': '',
-  'extent_uri': '',
-  'buildings_add': 0,
-  'buildings_mod': 0,
-  'waterways_add': 0,
-  'waterways_mod': 0,
-  'roads_add': 0,
-  'roads_mod': 0,
-  'poi_add': 0,
-  'poi_mod': 0,
-  'km_roads_add': 0,
-  'km_roads_mod': 0,
-  'km_waterways_add': 0,
-  'km_waterways_mod': 0,
-  'changeset_count': 0,
-  'editors': [],
-  'edit_times': [],
-  'country_list': [],
-  'hashtags': []
-}
+// const empty = {
+//   'id': 0,
+//   'name': '',
+//   'extent_uri': '',
+//   'buildings_add': 0,
+//   'buildings_mod': 0,
+//   'waterways_add': 0,
+//   'waterways_mod': 0,
+//   'roads_add': 0,
+//   'roads_mod': 0,
+//   'poi_add': 0,
+//   'poi_mod': 0,
+//   'km_roads_add': 0,
+//   'km_roads_mod': 0,
+//   'km_waterways_add': 0,
+//   'km_waterways_mod': 0,
+//   'changeset_count': 0,
+//   'editors': [],
+//   'edit_times': [],
+//   'country_list': [],
+//   'hashtags': []
+// }
 
 class User extends Component {
   static async getInitialProps ({ req }) {

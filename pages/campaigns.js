@@ -54,6 +54,7 @@ class Campaigns extends Component {
         this.setState(Object.assign({ records: res.data, apiStatus: 'SUCCESS' }))
       })
       .catch(err => {
+        console.log(err)
         this.setState({ apiStatus: 'ERROR' })
       })
   }

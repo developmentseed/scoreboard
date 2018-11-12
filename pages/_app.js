@@ -65,7 +65,7 @@ class Layout extends React.Component {
                 loggedIn
                   ? <div className='nav--right'>
                     <ul>
-                      <li className='nav--icons' ref={node => this.navButton = node} onClick={this.handleMenuClick}><img style={{ float: 'right', width: '30px' }} src={profileIcon} alt='Profile icon' /></li>
+                      <li className='nav--icons' ref={node => { this.navButton = node }} onClick={this.handleMenuClick}><img style={{ float: 'right', width: '30px' }} src={profileIcon} alt='Profile icon' /></li>
                     </ul>
                     {
                       this.state.menuVisible && (

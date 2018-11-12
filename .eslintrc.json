@@ -1,4 +1,11 @@
 {
   "root": true,
-  "extends": "devseed-standard"
+  "extends": "devseed-standard",
+  "globals": {
+    "it": true,
+    "jest": true
+  },
+  "rules": {
+    "camelcase": "off"
+  }
 }
