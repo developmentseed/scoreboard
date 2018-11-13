@@ -1,6 +1,6 @@
 const getBadgeProgress = require('../badge_logic')
 const {
-  API_URL
+  APP_URL
 } = require('../config')
 const users = require('../models/users')
 const roles = require('../models/roles')
@@ -33,7 +33,7 @@ async function get(req, res) {
     const badgesFromDB = await db('badges').select() // array of all badges
     const badges = getBadgeProgress(json, badgesFromDB)
 
-    json.extent_uri = `${API_URL}/scoreboard/api/extents/${json.extent_uri}`
+    json.extent_uri = `${APP_URL}/scoreboard/api/extents/${json.extent_uri}`
     const rolesList = user.roles ? await roles.getRoles(user.roles) : []
 
     return res.send({
