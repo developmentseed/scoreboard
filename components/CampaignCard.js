@@ -1,9 +1,9 @@
-import React from 'react';
-import Link from 'next/link';
-import trimLength from '../lib/utils/trim_length';
-import CampaignMap from './charts/CampaignMap';
+import React from 'react'
+import Link from 'next/link'
+import trimLength from '../lib/utils/trim_length'
+import CampaignMap from './charts/CampaignMap'
 
-export default ({campaign}) => {
+export default ({ campaign }) => {
   const {
     tm_id,
     name,
@@ -12,29 +12,29 @@ export default ({campaign}) => {
     campaign_hashtag,
     done,
     validated
-  } = campaign;
+  } = campaign
   return (
     <Link href={`/campaigns/${campaign_hashtag}`}>
-      <a className="card--wrapper">
-        <div className="card">
-          <div className="map-campaign-sm"><CampaignMap feature={JSON.parse(geometry)} interactive={false} /></div>
-          <div className="card-content">
-            <h4 className="header--small header--with-description">{trimLength(name, 70)}</h4>
-            <span className="description--project">Project #{tm_id}</span>
+      <a className='card--wrapper'>
+        <div className='card'>
+          <div className='map-campaign-sm'><CampaignMap feature={JSON.parse(geometry)} interactive={false} /></div>
+          <div className='card-content'>
+            <h4 className='header--small header--with-description'>{trimLength(name, 70)}</h4>
+            <span className='description--project'>Project #{tm_id}</span>
             <p>{trimLength(description, 190)}</p>
-            <ul className="card-stats">
-              <li className="list--inline">
-                <span className="num--large">{parseInt(done * 0.5, 10) + parseInt(validated, 10)}%</span>
-                <span className="descriptor-chart">Complete</span>
+            <ul className='card-stats'>
+              <li className='list--inline'>
+                <span className='num--large'>{parseInt(done * 0.5, 10) + parseInt(validated, 10)}%</span>
+                <span className='descriptor-chart'>Complete</span>
               </li>
-              <li className="list--inline">
-                <span className="num--large">{parseInt(validated, 10)}%</span>
-                <span className="descriptor-chart">Validated</span>
+              <li className='list--inline'>
+                <span className='num--large'>{parseInt(validated, 10)}%</span>
+                <span className='descriptor-chart'>Validated</span>
               </li>
             </ul>
           </div>
         </div>
       </a>
     </Link>
-  );
+  )
 }

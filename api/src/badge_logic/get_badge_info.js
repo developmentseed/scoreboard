@@ -1,5 +1,5 @@
 
-function mapBadgeToTask(badge, x) {
+function mapBadgeToTask (badge, x) {
   const map = {
     roadKms: `Add ${x} more km of roads`,
     roadKmMods: `Modify ${x} more km of roads`,
@@ -24,7 +24,7 @@ const valueIndex = 2
  * calculate the level of that badge and the percentage amount
  * needed to obtain the next badge
  */
-//eslint-disable-next-line no-unused-vars, consistent-return
+// eslint-disable-next-line no-unused-vars, consistent-return
 module.exports = (userMetrics, badge) => {
   const { operations } = badge
   let badgeLevel = 0
@@ -43,12 +43,10 @@ module.exports = (userMetrics, badge) => {
     if (badgeOp[opIndex][0] === '<') {
       if (badgeOp[opIndex] === '<=') (op = currentPoints <= badgeOp[valueIndex])
       else (op = currentPoints < badgeOp[valueIndex])
-    }
-    else if (badgeOp[opIndex][0] === '>') {
+    } else if (badgeOp[opIndex][0] === '>') {
       if (badgeOp[opIndex] === '>=') (op = currentPoints >= badgeOp[valueIndex])
       else op = (currentPoints > badgeOp[valueIndex])
-    }
-    else if (badgeOp[opIndex] === '=') {
+    } else if (badgeOp[opIndex] === '=') {
       op = (currentPoints === badgeOp[valueIndex])
     }
     if (op === false) {
@@ -63,8 +61,7 @@ module.exports = (userMetrics, badge) => {
   task += '.'
   if (opsPass === true) {
     badgeLevel = 1
-  }
-  else { //if (badgeLevel === 0) {
+  } else { // if (badgeLevel === 0) {
     task = `${Math.floor(percentage)}% of the way to earning this badge. ${task}`
   }
   return {

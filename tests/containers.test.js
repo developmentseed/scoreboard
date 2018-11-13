@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'unistore/react';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'unistore/react'
 
 // import {Campaigns, Campaign, Home, User, Users, About} from '../containers';
-import {Home} from '../pages/index'
+import { Home } from '../pages/index'
 import Campaigns from '../pages/campaigns'
 import Campaign from '../pages/campaign'
 import User from '../pages/user'
-import {Users} from '../pages/users'
+import { Users } from '../pages/users'
 import About from '../pages/about'
 
-import store, { actions } from '../lib/store';
+import store, { actions } from '../lib/store'
 
 function mockAction () {
   return Promise.resolve()
@@ -26,8 +26,8 @@ it('Campaigns renders without crashing', () => {
     </Provider>
   )
 
-  ReactDOM.render(page, div);
-});
+  ReactDOM.render(page, div)
+})
 
 it('Campaign renders without crashing', () => {
   const div = document.createElement('div')
@@ -39,9 +39,8 @@ it('Campaign renders without crashing', () => {
     </Provider>
   )
 
-  ReactDOM.render(page, div);
-});
-
+  ReactDOM.render(page, div)
+})
 
 it('Home renders without crashing', () => {
   const div = document.createElement('div')
@@ -61,10 +60,10 @@ it('Home renders without crashing', () => {
   )
 
   ReactDOM.render(page, div)
-});
+})
 
 it('User renders without crashing', () => {
-  const div = document.createElement('div');
+  const div = document.createElement('div')
   const mockProps = {
     actions,
     records: {
@@ -84,7 +83,7 @@ it('User renders without crashing', () => {
   )
 
   ReactDOM.render(page, div)
-});
+})
 
 it('Users renders without crashing', () => {
   const div = document.createElement('div')
@@ -107,10 +106,10 @@ it('Users renders without crashing', () => {
   )
 
   ReactDOM.render(page, div)
-});
+})
 
 it('About renders without crashing', () => {
-  const div = document.createElement('div');
+  const div = document.createElement('div')
 
   const page = (
     <Provider store={store}>
@@ -119,4 +118,4 @@ it('About renders without crashing', () => {
   )
 
   ReactDOM.render(page, div)
-});
+})

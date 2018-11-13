@@ -52,8 +52,7 @@ module.exports = (userData, badges) => {
     if (val) {
       if (val.badgeLevel > 0) {
         earnedBadges[key] = val
-      }
-      else if (val.badgeLevel === 0) {
+      } else if (val.badgeLevel === 0) {
         unearnedBadges[key] = val
       }
     }

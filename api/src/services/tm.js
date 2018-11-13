@@ -25,7 +25,7 @@ const {
  * @param {string} str - changeset_comment from campaign
  * @returns {string} main hashtag for campaign
  */
-function extractCampaignHashtag(str) {
+function extractCampaignHashtag (str) {
   if (!str) return []
 
   // Get the hashtags
@@ -47,15 +47,15 @@ class TM2API {
    *
    * @returns {Promise} response
    */
-  getProjects() {
+  getProjects () {
     return rp(`${TM_URL}/projects.json`)
   }
 
-  getProject(id) {
+  getProject (id) {
     return rp(`${TM_URL}/project/${id}.json`)
   }
 
-  getTasks(id) {
+  getTasks (id) {
     return rp(`${TM_URL}/project/${id}/tasks.json`)
   }
 }
@@ -68,25 +68,25 @@ class TM3API {
    *
    * @returns {Promise} response
    */
-  getProjects() {
+  getProjects () {
     return rp(`${TM_URL}/api/v1/project/search?mapperLevel=ALL`)
   }
 
-  getProject(id) {
+  getProject (id) {
     return rp(`${TM_URL}/project/${id}`)
   }
 
-  getTasks(id) {
+  getTasks (id) {
     return rp(`${TM_URL}/project/${id}/tasks`)
   }
 }
 
 class FakeTMAPI {
-  getProjects() {
+  getProjects () {
     return Promise.resolve(JSON.stringify(sampleprojects))
   }
 
-  getProject(id) {
+  getProject (id) {
     return JSON.stringify(Promise.resolve(sampleprojects.features.find((project) => {
       return String(project.id) === id
     })))
@@ -97,10 +97,8 @@ module.exports.extractCampaignHashtag = extractCampaignHashtag
 
 if (NODE_ENV === 'test') {
   module.exports.TM = new FakeTMAPI()
-}
-else if (TM_VERSION === '2') {
+} else if (TM_VERSION === '2') {
   module.exports.TM = new TM2API()
-}
-else if (TM_VERSION === '3') {
+} else if (TM_VERSION === '3') {
   module.exports.TM = new TM3API()
 }

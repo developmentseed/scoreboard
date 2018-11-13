@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import Link from 'next/link';
-import Router from 'next/router';
-import { connect } from 'unistore/react';
+import React, { Component } from 'react'
+import Link from 'next/link'
+import Router from 'next/router'
+import { connect } from 'unistore/react'
 
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 
-import '../../styles/Admin.scss';
+import '../../styles/Admin.scss'
 
 export class AdminUsers extends Component {
   constructor () {
@@ -45,7 +45,7 @@ export class AdminUsers extends Component {
     return (
       <div>
         <h1>List</h1>
-        <table className="admin-user-table">
+        <table className='admin-user-table'>
           <thead>
             <tr>
               <th>ID</th>
@@ -56,13 +56,13 @@ export class AdminUsers extends Component {
           <tbody>
             {
               admin.users
-              .map((user) => (
-                <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className="admin-user-table-row">
-                  <td>{user.osm_id}</td>
-                  <td>{user.full_name}</td>
-                  <td>{this.renderUserRoles(user.roles)}</td>
-                </tr>
-              ))
+                .map((user) => (
+                  <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-user-table-row'>
+                    <td>{user.osm_id}</td>
+                    <td>{user.full_name}</td>
+                    <td>{this.renderUserRoles(user.roles)}</td>
+                  </tr>
+                ))
             }
           </tbody>
         </table>
@@ -70,7 +70,7 @@ export class AdminUsers extends Component {
     )
   }
 
-  render() {
+  render () {
     const { authenticatedUser } = this.props
 
     if (this.state.loading) {
@@ -91,27 +91,27 @@ export class AdminUsers extends Component {
       <div>
         <AdminHeader />
         <section>
-          <div className="row">
-            <div className="sidebar">
-              <h2 className="header--large">Users</h2>
-              <ul className="admin-sidebar-links">
+          <div className='row'>
+            <div className='sidebar'>
+              <h2 className='header--large'>Users</h2>
+              <ul className='admin-sidebar-links'>
                 <li>
-                  <Link href="/admin/users">
-                    <a className="link--large">
+                  <Link href='/admin/users'>
+                    <a className='link--large'>
                       Users List
                     </a>
                   </Link>
                 </li>
               </ul>
             </div>
-            <div className="content--with-sidebar">
+            <div className='content--with-sidebar'>
               {this.renderList()}
             </div>
           </div>
         </section>
       </div>
-    );
+    )
   }
 }
 
-export default connect(['authenticatedUser', 'error', 'admin'], actions)(AdminUsers);
+export default connect(['authenticatedUser', 'error', 'admin'], actions)(AdminUsers)

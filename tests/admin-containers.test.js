@@ -3,15 +3,15 @@
  * tests
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'unistore/react';
-import { Admin } from '../pages/admin/index';
-import { AdminUsers } from '../pages/admin/users';
-import { AdminUserEdit } from '../pages/admin/edit-user';
-import { AdminBadges } from '../pages/admin/badges';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'unistore/react'
+import { Admin } from '../pages/admin/index'
+import { AdminUsers } from '../pages/admin/users'
+import { AdminUserEdit } from '../pages/admin/edit-user'
+import { AdminBadges } from '../pages/admin/badges'
 
-import store from '../lib/store';
+import store from '../lib/store'
 
 function mockAction () {
   return Promise.resolve()
@@ -31,7 +31,7 @@ const props = {
 }
 
 it('Admin renders without crashing', () => {
-  const div = document.createElement('div');
+  const div = document.createElement('div')
 
   const admin = (
     <Provider store={store}>
@@ -39,11 +39,11 @@ it('Admin renders without crashing', () => {
     </Provider>
   )
 
-  ReactDOM.render(admin, div);
-});
+  ReactDOM.render(admin, div)
+})
 
 it('AdminUsers renders without crashing', () => {
-  const div = document.createElement('div');
+  const div = document.createElement('div')
 
   const admin = (
     <Provider store={store}>
@@ -51,11 +51,11 @@ it('AdminUsers renders without crashing', () => {
     </Provider>
   )
 
-  ReactDOM.render(admin, div);
-});
+  ReactDOM.render(admin, div)
+})
 
 it('AdminUserEdit renders without crashing', () => {
-  const div = document.createElement('div');
+  const div = document.createElement('div')
 
   const admin = (
     <Provider store={store}>
@@ -63,11 +63,11 @@ it('AdminUserEdit renders without crashing', () => {
     </Provider>
   )
 
-  ReactDOM.render(admin, div);
-});
+  ReactDOM.render(admin, div)
+})
 
 it('AdminBadges renders without crashing', () => {
-  const div = document.createElement('div');
+  const div = document.createElement('div')
 
   const admin = (
     <Provider store={store}>
@@ -75,5 +75,5 @@ it('AdminBadges renders without crashing', () => {
     </Provider>
   )
 
-  ReactDOM.render(admin, div);
-});
+  ReactDOM.render(admin, div)
+})

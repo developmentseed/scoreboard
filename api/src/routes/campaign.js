@@ -24,11 +24,10 @@ module.exports = async (req, res) => {
     const [tmData] = await db('campaigns').where('campaign_hashtag', id)
     const records = Object.assign(
       { tmData: tmData },
-      JSON.parse(osmesaResponse),
+      JSON.parse(osmesaResponse)
     )
     return res.send({ id, records })
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve campaign stats')
   }
