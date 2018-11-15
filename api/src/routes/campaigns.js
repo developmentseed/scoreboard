@@ -33,8 +33,7 @@ module.exports = async (req, res) => {
     const [{ total }] = await query.clone().count('id as total')
 
     return res.send({ records, total, allCount })
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve records')
   }

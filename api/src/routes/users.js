@@ -10,7 +10,7 @@ const { validateRole } = require('../utils/roles')
 
 const { FILTERED_USERS } = require('../config')
 
-function applyFilters(query, req) {
+function applyFilters (query, req) {
   const search = req.query.q || ''
   const country = req.query.country || ''
   const active = req.query.active || false
@@ -29,7 +29,6 @@ function applyFilters(query, req) {
     query = query.whereBetween('last_edit', [subMonths(Date.now(), 6), Date.now()])
   }
 
-
   return query
 }
 
@@ -44,7 +43,7 @@ function applyFilters(query, req) {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function stats(req, res) {
+async function stats (req, res) {
   const page = req.query.page || 1
   const filteredUsers = split(',', FILTERED_USERS).map(trim)
   const sortType = req.query.sortType || ''
@@ -71,18 +70,18 @@ async function stats(req, res) {
 
     let recordQuery = applyFilters(allUsers.clone(), req)
     switch (sortType) {
-    case 'Most recent':
-      recordQuery = recordQuery.orderBy('last_edit', 'desc')
-      break
-    case 'Least recent':
-      recordQuery = recordQuery.orderBy('last_edit', 'asc')
-      break
-    case 'Least total':
-      recordQuery = recordQuery.orderBy('edit_count', 'asc')
-      break
-    default: // Most total edits
-      recordQuery = recordQuery.orderBy('edit_count', 'desc')
-      break
+      case 'Most recent':
+        recordQuery = recordQuery.orderBy('last_edit', 'desc')
+        break
+      case 'Least recent':
+        recordQuery = recordQuery.orderBy('last_edit', 'asc')
+        break
+      case 'Least total':
+        recordQuery = recordQuery.orderBy('edit_count', 'asc')
+        break
+      default: // Most total edits
+        recordQuery = recordQuery.orderBy('edit_count', 'desc')
+        break
     }
 
     const records = await recordQuery
@@ -100,8 +99,7 @@ async function stats(req, res) {
     return res.send({
       records, subTotal, total, editTotal, countries
     })
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve records')
   }
@@ -118,7 +116,7 @@ async function stats(req, res) {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function list(req, res) {
+async function list (req, res) {
   if (!req.user || !req.user.roles || !validateRole(req.user.roles, 'admin')) {
     return res.boom.unauthorized('Not authorized')
   }
@@ -132,8 +130,7 @@ async function list(req, res) {
       return user
     }))
     return res.send(userList)
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.badRequest('Could not retrieve users list')
   }

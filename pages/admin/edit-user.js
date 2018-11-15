@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
-import Link from 'next/link';
-import Router from 'next/router';
-import Select from 'react-select';
-import { connect } from 'unistore/react';
+import React, { Component } from 'react'
+import Link from 'next/link'
+import Router from 'next/router'
+import Select from 'react-select'
+import { connect } from 'unistore/react'
 
-import { actions } from '../../lib/store';
+import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 
-import '../../styles/Admin.scss';
-import 'react-select/dist/react-select.css';
+import '../../styles/Admin.scss'
+import 'react-select/dist/react-select.css'
 
 export class AdminUserEdit extends Component {
   constructor () {
@@ -67,7 +67,7 @@ export class AdminUserEdit extends Component {
     })
   }
 
-  render() {
+  render () {
     const { selectedRoles } = this.state
     const { authenticatedUser, admin } = this.props
 
@@ -89,44 +89,44 @@ export class AdminUserEdit extends Component {
       <div>
         <AdminHeader />
         <section>
-          <div className="row">
-            <div className="sidebar">
-              <h2 className="header--large">Users</h2>
-              <ul className="admin-sidebar-links">
+          <div className='row'>
+            <div className='sidebar'>
+              <h2 className='header--large'>Users</h2>
+              <ul className='admin-sidebar-links'>
                 <li>
-                  <Link href="/admin/users">
-                    <a className="link--large">
+                  <Link href='/admin/users'>
+                    <a className='link--large'>
                       Users List
                     </a>
                   </Link>
                 </li>
               </ul>
             </div>
-            <div className="content--with-sidebar">
-              <div className="row">
-                <h1 className="header--xlarge">Edit User</h1>
+            <div className='content--with-sidebar'>
+              <div className='row'>
+                <h1 className='header--xlarge'>Edit User</h1>
               </div>
-              <div className="row">
-              <div style={{ width: '50%' }}>
-                <h4>Roles</h4>
-                <Select
-                  options={this.createRoleSelectOptions(admin.roles)}
-                  multi={true}
-                  value={this.createRoleSelectOptions(selectedRoles || admin.user.roles)}
-                  onChange={(roles) => this.onRoleChange(roles)}
-                />
-                {this.renderSaved()}
-              </div>
+              <div className='row'>
+                <div style={{ width: '50%' }}>
+                  <h4>Roles</h4>
+                  <Select
+                    options={this.createRoleSelectOptions(admin.roles)}
+                    multi
+                    value={this.createRoleSelectOptions(selectedRoles || admin.user.roles)}
+                    onChange={(roles) => this.onRoleChange(roles)}
+                  />
+                  {this.renderSaved()}
+                </div>
               </div>
             </div>
           </div>
         </section>
       </div>
-    );
+    )
   }
 }
 
-const Page = connect(['authenticatedUser', 'error', 'admin'], actions)(AdminUserEdit);
+const Page = connect(['authenticatedUser', 'error', 'admin'], actions)(AdminUserEdit)
 
 Page.getInitialProps = async ({ query }) => {
   const { id } = query

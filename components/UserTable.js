@@ -1,7 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
-import { sortBy, prop } from 'ramda';
-import { formatDecimal } from '../lib/utils/format';
+import React from 'react'
+import Link from 'next/link'
+import { sortBy, prop } from 'ramda'
+import { formatDecimal } from '../lib/utils/format'
 
 export default (props) => (
   <table>
@@ -15,21 +15,21 @@ export default (props) => (
     <tbody>
       {
         sortBy(prop('edits'), props.users)
-        .reverse()
-        .map((user, idx) => (
-          <tr key={user.uid}>
-            <td>{idx + 1}</td>
-            <td>
-              <Link href={`/users/${user.uid}`}>
-                <a className="link--normal" >
-                  {user.name}
-                </a>
-              </Link>
-            </td>
-            <td>{formatDecimal(user.edits)}</td>
-          </tr>
-        ))
+          .reverse()
+          .map((user, idx) => (
+            <tr key={user.uid}>
+              <td>{idx + 1}</td>
+              <td>
+                <Link href={`/users/${user.uid}`}>
+                  <a className='link--normal' >
+                    {user.name}
+                  </a>
+                </Link>
+              </td>
+              <td>{formatDecimal(user.edits)}</td>
+            </tr>
+          ))
       }
     </tbody>
   </table>
-);
+)

@@ -1,9 +1,10 @@
 
+
 const metricIndex = 1
 const opIndex = 0
 const valueIndex = 2
 
-function mapBadgeToTask(badge, x) {
+function mapBadgeToTask (badge, x) {
   const map = {
     roadKms: `Add ${x} more km of roads`,
     roadKmMods: `Modify ${x} more km of roads`,
@@ -41,7 +42,7 @@ function execLogic(op, compValue, requiredValue) {
  * calculate the level of that badge and the percentage amount
  * needed to obtain the next badge
  */
-//eslint-disable-next-line no-unused-vars, consistent-return
+// eslint-disable-next-line no-unused-vars, consistent-return
 module.exports = (userMetrics, badge) => {
   const { operations } = badge
   let badgeLevel = 0
@@ -56,6 +57,7 @@ module.exports = (userMetrics, badge) => {
   let nextPoints = 0
   let percentage = 100
   let thisPercentage = 100
+
   let firstValidDay = ''
   let firstValidDate = ''
   let lastValidDay = ''

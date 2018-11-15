@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import Router from 'next/router';
-import Select from 'react-select';
-import { connect } from 'unistore/react';
+import React, { Component } from 'react'
+import Router from 'next/router'
+import Select from 'react-select'
+import { connect } from 'unistore/react'
 
-import { actions } from '../../lib/store';
+import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 
-import '../../styles/Admin.scss';
-import 'react-select/dist/react-select.css';
+import '../../styles/Admin.scss'
+import 'react-select/dist/react-select.css'
 
-const ALERT_TYPE_ERROR = 'error';
-const ALERT_TYPE_SUCCESS = 'success';
+const ALERT_TYPE_ERROR = 'error'
+const ALERT_TYPE_SUCCESS = 'success'
 
 const badgeMetrics = [
   { label: 'New buildings mapped', value: 'buildings' },
@@ -24,19 +24,19 @@ const badgeMetrics = [
   { label: 'Points of interest mapped', value: 'pois' },
   { label: 'New roads mapped (km)', value: 'roadKms' },
   { label: 'Roads modified (km)', value: 'roadKmMods' },
-  { label: 'Waterways mapped', value: 'waterways' },
-];
+  { label: 'Waterways mapped', value: 'waterways' }
+]
 
 const badgeOperationTypes = [
   { label: 'More than', value: '>' },
   { label: 'Fewer than', value: '<' },
   { label: 'At least', value: '>=' },
   { label: 'Up to', value: '<=' }
-];
+]
 
 export class AdminBadges extends Component {
-  constructor() {
-    super();
+  constructor () {
+    super()
 
     this.state = {
       loading: true,
@@ -53,16 +53,16 @@ export class AdminBadges extends Component {
           operation: ''
         }
       ]
-    };
+    }
 
     // Event handlers
-    this.addAnotherOperationToBadge = this.addAnotherOperationToBadge.bind(this);
-    this.handleAddNewBadgeFormSubmit = this.handleAddNewBadgeFormSubmit.bind(this);
-    this.handleDescriptionInputChange = this.handleDescriptionInputChange.bind(this);
-    this.handleNameInputChange = this.handleNameInputChange.bind(this);
-    this.handleOperationChange = this.handleOperationChange.bind(this);
-    this.removeOperationFromBadge = this.removeOperationFromBadge.bind(this);
-    this.resetInputs = this.resetInputs.bind(this);
+    this.addAnotherOperationToBadge = this.addAnotherOperationToBadge.bind(this)
+    this.handleAddNewBadgeFormSubmit = this.handleAddNewBadgeFormSubmit.bind(this)
+    this.handleDescriptionInputChange = this.handleDescriptionInputChange.bind(this)
+    this.handleNameInputChange = this.handleNameInputChange.bind(this)
+    this.handleOperationChange = this.handleOperationChange.bind(this)
+    this.removeOperationFromBadge = this.removeOperationFromBadge.bind(this)
+    this.resetInputs = this.resetInputs.bind(this)
   }
 
   async componentDidMount () {
@@ -75,30 +75,30 @@ export class AdminBadges extends Component {
     }
   }
 
-  async createBadge(params) {
-    this.setState({ disableInteraction: true });
+  async createBadge (params) {
+    this.setState({ disableInteraction: true })
 
     try {
-      await this.props.createBadge(params);
+      await this.props.createBadge(params)
 
       this.setState({
         alert: 'Badge created successfully!',
         alertType: ALERT_TYPE_SUCCESS,
         disableInteraction: false
-      });
+      })
 
-      this.resetInputs();
+      this.resetInputs()
     } catch (e) {
       console.log(e)
       this.setState({
         alert: typeof e === 'string' ? e : 'Something went wrong',
         alertType: ALERT_TYPE_ERROR,
         disableInteraction: false
-      });
+      })
     }
   }
 
-  render() {
+  render () {
     const { authenticatedUser } = this.props
 
     if (this.state.loading) {
@@ -119,8 +119,8 @@ export class AdminBadges extends Component {
       <div className='admin'>
         <AdminHeader />
         <section>
-          <div className="row">
-            <h1 className="header--xlarge">Add a new badge</h1>
+          <div className='row'>
+            <h1 className='header--xlarge'>Add a new badge</h1>
           </div>
           <div className='row'>
             {this.state.alert && this.showAlert()}
@@ -128,20 +128,20 @@ export class AdminBadges extends Component {
           </div>
         </section>
       </div>
-    );
+    )
   }
 
-  renderHeader() {
+  renderHeader () {
     return (
-      <header className="header--internal--green header--page">
-        <div className="row">
-          <h1 className="section-sub--left header--xlarge margin-top-sm">Add a new badge</h1>
+      <header className='header--internal--green header--page'>
+        <div className='row'>
+          <h1 className='section-sub--left header--xlarge margin-top-sm'>Add a new badge</h1>
         </div>
       </header>
-    );
+    )
   }
 
-  renderAddNewForm() {
+  renderAddNewForm () {
     return (
       <form
         className='form form--two-column'
@@ -168,10 +168,10 @@ export class AdminBadges extends Component {
           </button>
         </div>
       </form >
-    );
+    )
   }
 
-  renderBasicDetailsSection() {
+  renderBasicDetailsSection () {
     return (
       <div className='form__section'>
         <h2 className='header--medium'>Badge Details</h2>
@@ -211,10 +211,10 @@ export class AdminBadges extends Component {
           />
         </div>
       </div>
-    );
+    )
   }
 
-  renderOperationsSection() {
+  renderOperationsSection () {
     return (
       <div className='form__section'>
         <h2 className='header--medium'>
@@ -231,7 +231,7 @@ export class AdminBadges extends Component {
                 htmlFor='badge-operation-type'
               >
                 Condition
-            </label>
+              </label>
               <Select
                 id='badge-operation-type'
                 name='badge-operation-type'
@@ -247,7 +247,7 @@ export class AdminBadges extends Component {
                 htmlFor='badge-metric-number'
               >
                 Number
-            </label>
+              </label>
               <input
                 id='badge-metric-number'
                 min={0}
@@ -264,7 +264,7 @@ export class AdminBadges extends Component {
                 htmlFor='badge-metric'
               >
                 Metric
-            </label>
+              </label>
               <Select
                 id='badge-metric'
                 name='badge-metric'
@@ -282,15 +282,15 @@ export class AdminBadges extends Component {
                 type='button'
               >
                 Remove this condition
-            </button>
+              </button>
             )}
           </fieldset>
         ))}
       </div>
-    );
+    )
   }
 
-  addAnotherOperationToBadge() {
+  addAnotherOperationToBadge () {
     this.setState((prevState) => {
       return {
         ...prevState,
@@ -302,93 +302,93 @@ export class AdminBadges extends Component {
             operation: ''
           }
         ]
-      };
-    });
+      }
+    })
   }
 
-  removeOperationFromBadge(e, idx) {
-    e.preventDefault();
+  removeOperationFromBadge (e, idx) {
+    e.preventDefault()
 
     // Can't delete the only set
     if (idx === 0) {
-      return;
+      return
     }
 
     if (this.state.operations[idx]) {
-      const nextOperations = [...this.state.operations];
-      nextOperations.splice(idx, 1);
-      this.setState({ operations: nextOperations });
+      const nextOperations = [...this.state.operations]
+      nextOperations.splice(idx, 1)
+      this.setState({ operations: nextOperations })
     }
   }
 
-  handleNameInputChange(e) {
-    const { value } = e.target;
+  handleNameInputChange (e) {
+    const { value } = e.target
     this.setState({
       nameInput: value
-    });
+    })
   }
 
-  handleDescriptionInputChange(e) {
-    const { value } = e.target;
+  handleDescriptionInputChange (e) {
+    const { value } = e.target
     this.setState({
       descriptionInput: value
-    });
+    })
   }
 
-  handleOperationChange(e, idx, keyName) {
-    const { value } = keyName === 'number' ? e.target : e;
-    let targetOperation = this.state.operations[idx];
-    if (!targetOperation) return;
+  handleOperationChange (e, idx, keyName) {
+    const { value } = keyName === 'number' ? e.target : e
+    let targetOperation = this.state.operations[idx]
+    if (!targetOperation) return
 
     targetOperation = {
       ...targetOperation,
       [keyName]: value
-    };
+    }
 
     this.setState((state) => {
       return {
         operations: Object.assign([...state.operations], { [idx]: targetOperation })
       }
-    });
+    })
   }
 
-  handleAddNewBadgeFormSubmit(e) {
-    e.preventDefault();
+  handleAddNewBadgeFormSubmit (e) {
+    e.preventDefault()
 
     const {
       descriptionInput,
       nameInput,
-      operations,
-    } = this.state;
+      operations
+    } = this.state
 
     // Verify that no empty operations objects are being passed
     // and also collapse the object into an array
     const parsedOperations = operations
       .filter(op => op.metric && op.operation)
-      .map(op => [op.operation, op.metric, op.number]);
+      .map(op => [op.operation, op.metric, op.number])
 
     const params = {
       description: descriptionInput,
       name: nameInput,
       operations: parsedOperations
-    };
+    }
 
-    this.createBadge(params);
+    this.createBadge(params)
   }
 
-  showAlert() {
+  showAlert () {
     if (!this.state.alert) {
-      return null;
+      return null
     }
 
     return (
       <div className={`alert alert--${this.state.alertType || 'info'}`}>
         {this.state.alert}
       </div>
-    );
+    )
   }
 
-  resetInputs() {
+  resetInputs () {
     this.setState({
       descriptionInput: '',
       disableInteraction: false,
@@ -401,8 +401,8 @@ export class AdminBadges extends Component {
           operation: ''
         }
       ]
-    });
+    })
   }
 }
 
-export default connect(['authenticatedUser', 'error', 'badges', 'admin'], actions)(AdminBadges);
+export default connect(['authenticatedUser', 'error', 'badges', 'admin'], actions)(AdminBadges)

@@ -57,8 +57,7 @@ module.exports = async (req, res) => {
       topEdits,
       features: feature
     })
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve records')
   }

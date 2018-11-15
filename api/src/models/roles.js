@@ -8,7 +8,7 @@ const db = connection()
  * @param {int} id - id of a role
  * @returns {Promise<string>} a response
  */
-function get(id) {
+function get (id) {
   return db('roles').where('id', id)
 }
 
@@ -18,7 +18,7 @@ function get(id) {
  * @param {int[]} ids - array of role ids
  * @returns {Promise[]} a response
  */
-function getRoles(ids) {
+function getRoles (ids) {
   return db('roles').whereIn('id', ids)
 }
 
@@ -28,7 +28,7 @@ function getRoles(ids) {
  * @param {string} name - role name
  * @returns {Promise} a response
  */
-function findByName(name) {
+function findByName (name) {
   return db('roles').where('name', name)
 }
 
@@ -37,7 +37,7 @@ function findByName(name) {
  *
  * @returns {Promise} a response
  */
-function list() {
+function list () {
   return db('roles').select()
 }
 
@@ -48,7 +48,7 @@ function list() {
  * @param {string} data.name - role name
  * @returns {Promise} a response
  */
-function create(data) {
+function create (data) {
   return db('roles').insert(data).returning('*')
 }
 
@@ -60,7 +60,7 @@ function create(data) {
  * @param {string} data.name - role name
  * @returns {Promise} a response
  */
-function update(id, data) {
+function update (id, data) {
   return get(id).update(data).returning('*')
 }
 
@@ -70,7 +70,7 @@ function update(id, data) {
  * @param {int} id - role id
  * @returns {Promise} a response
  */
-function destroy(id) {
+function destroy (id) {
   return db('roles').where('id', id).del()
 }
 

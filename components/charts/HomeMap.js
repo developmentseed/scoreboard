@@ -1,12 +1,11 @@
 
 import React, { Component } from 'react'
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl'
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0tdtaT2QNe2Q';
+mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0tdtaT2QNe2Q'
 
 class CampaignMap extends Component {
-  componentDidMount() {
-
+  componentDidMount () {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       center: [0, 20],
@@ -14,7 +13,7 @@ class CampaignMap extends Component {
       zoom: 0.2,
       renderWorldCopies: false,
       interactive: false
-    });
+    })
 
     this.map.on('load', () => {
       this.map.addLayer({
@@ -26,26 +25,26 @@ class CampaignMap extends Component {
         },
         'layout': {},
         'paint': {
-            'fill-color': '#9E14C3',
-            'fill-opacity': 0.7
+          'fill-color': '#9E14C3',
+          'fill-opacity': 0.7
         }
       })
-    });
+    })
   }
 
-  componentWillUnmount() {
-    this.map.remove();
+  componentWillUnmount () {
+    this.map.remove()
   }
 
-  render() {
+  render () {
     const style = {
       textAlign: 'left',
       height: '100%',
       backgroundColor: 'rgb(106,214,217)'
-    };
+    }
 
-    return <div style={style} ref={el => this.mapContainer = el} />;
+    return <div style={style} ref={el => { this.mapContainer = el }} />
   }
 }
 
-export default CampaignMap;
+export default CampaignMap

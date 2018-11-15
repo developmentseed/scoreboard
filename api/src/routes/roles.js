@@ -10,7 +10,7 @@ const { validateRole } = require('../utils/roles')
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function list(req, res) {
+async function list (req, res) {
   const { user } = req
 
   if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
@@ -20,8 +20,7 @@ async function list(req, res) {
   try {
     const data = await roles.list()
     return res.send(data)
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.badRequest('Could not retrieve roles list')
   }
@@ -36,7 +35,7 @@ async function list(req, res) {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function get(req, res) {
+async function get (req, res) {
   const { user, params: { id } } = req
 
   if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
@@ -55,8 +54,7 @@ async function get(req, res) {
     }
 
     return res.send(role)
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.badRequest('Could not retrieve project')
   }
@@ -71,7 +69,7 @@ async function get(req, res) {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function post(req, res) {
+async function post (req, res) {
   const { user, body } = req
 
   if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
@@ -81,8 +79,7 @@ async function post(req, res) {
   try {
     const [role] = await roles.create(body)
     return res.send(role)
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.badRequest('Could not retrieve project')
   }
@@ -97,7 +94,7 @@ async function post(req, res) {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function put(req, res) {
+async function put (req, res) {
   const { user, body, params: { id } } = req
 
   if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
@@ -111,8 +108,7 @@ async function put(req, res) {
   try {
     const [role] = await roles.update(id, body)
     return res.send(role)
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.badRequest('Could not retrieve project')
   }
@@ -127,7 +123,7 @@ async function put(req, res) {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function del(req, res) {
+async function del (req, res) {
   const { user, params: { id } } = req
 
   if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
@@ -141,8 +137,7 @@ async function del(req, res) {
   try {
     await roles.destroy(id)
     return res.sendStatus(200)
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.badRequest('Could not retrieve project')
   }

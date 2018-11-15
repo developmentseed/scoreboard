@@ -2,7 +2,7 @@ const { TM } = require('../services/tm')
 
 const {
   TM_URL,
-  TM_VERSION,
+  TM_VERSION
 } = require('../config')
 
 /**
@@ -14,7 +14,7 @@ const {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function list(req, res) {
+async function list (req, res) {
   try {
     const projects = await TM.getProjects()
     return res.send({
@@ -22,8 +22,7 @@ async function list(req, res) {
       tasking_manager_version: TM_VERSION,
       records: JSON.parse(projects)
     })
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve projects')
   }
@@ -38,7 +37,7 @@ async function list(req, res) {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function get(req, res) {
+async function get (req, res) {
   const { id } = req.params
   if (!id) {
     return res.boom.badRequest('Invalid id')
@@ -50,8 +49,7 @@ async function get(req, res) {
       tasking_manager_version: TM_VERSION,
       feature: JSON.parse(project)
     })
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve project')
   }
@@ -66,7 +64,7 @@ async function get(req, res) {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function getTasks(req, res) {
+async function getTasks (req, res) {
   const { id } = req.params
   if (!id) {
     return res.boom.badRequest('Invalid id')
@@ -78,8 +76,7 @@ async function getTasks(req, res) {
       tasking_manager_version: TM_VERSION,
       tasks: JSON.parse(tasks)
     })
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve project')
   }
