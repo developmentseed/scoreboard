@@ -14,7 +14,6 @@ const {
   NODE_ENV,
   OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET,
-  API_URL,
   APP_URL
 } = require('./config')
 
@@ -23,7 +22,7 @@ const {
 * Currently a user can edit their own record
 * Or a user with `admin` role can edit user records
 */
-function canEditUser(req, userID) {
+function canEditUser (req, userID) {
   if (!req.user || !req.user.id) return false
   if (req.user.roles && validateRole(req.user.roles, 'admin')) return true
   return req.user.id === userID
@@ -48,28 +47,28 @@ if (NODE_ENV === 'test') {
     // allow tests to set roles to test user permissions
     if (req.query.roles) {
       user.roles = await roles.getRoles(req.query.roles.split(','))
-    }
-    else {
+    } else {
       user.roles = []
     }
 
     req.user = user
     done(null, user)
   }))
-}
-else {
+} else {
   passport.use(new OSMStrategy({
+    requestTokenURL: 'https://www.openstreetmap.org/oauth/request_token',
+    accessTokenURL: 'https://www.openstreetmap.org/oauth/access_token',
+    userAuthorizationURL: 'https://www.openstreetmap.org/oauth/authorize',
     consumerKey: OSM_CONSUMER_KEY,
     consumerSecret: OSM_CONSUMER_SECRET,
-    callbackUrl: `${API_URL}/auth/openstreetmap/callback`
+    callbackURL: `${APP_URL}/auth/openstreetmap/callback`
   }, async (token, tokenSecret, profile, done) => {
     try {
       let [user] = await users.findByOsmId(profile.id)
       if (user) {
         profile.roles = await roles.getRoles(user.roles)
         done(null, profile)
-      }
-      else {
+      } else {
         const data = {
           osm_id: profile.id,
           full_name: profile.displayName,
@@ -78,8 +77,7 @@ else {
         user = await users.create(data)
         done(null, profile)
       }
-    }
-    catch (err) {
+    } catch (err) {
       done(err)
     }
   }))
@@ -104,8 +102,7 @@ router.get('/openstreetmap/callback',
   (req, res) => {
     if (req.user) {
       res.redirect(APP_URL)
-    }
-    else {
+    } else {
       res.boom.unauthorized('could not authenticate')
     }
   })
@@ -116,8 +113,7 @@ router.get('/openstreetmap/callback',
 router.get('/userinfo', (req, res) => {
   if (req.user) {
     res.send(req.user)
-  }
-  else {
+  } else {
     res.boom.unauthorized('Not authenticated')
   }
 })

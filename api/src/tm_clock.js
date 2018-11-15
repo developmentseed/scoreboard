@@ -10,7 +10,7 @@ const conn = require('./db/connection')
  *
  * @returns {Promise} a response
  */
-async function tmWorker() {
+async function tmWorker () {
   // Get projects from TM2
   try {
     const db = conn()
@@ -81,8 +81,7 @@ async function tmWorker() {
       return Promise.all(promises)
     }
     throw new Error('Invalid response from Tasking Manager')
-  }
-  catch (e) {
+  } catch (e) {
     console.error(e)
     return Promise.resolve()
   }

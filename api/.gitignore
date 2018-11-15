@@ -1,4 +1,0 @@
-node_modules
-*.env
-*.sqlite3*
-users.csv

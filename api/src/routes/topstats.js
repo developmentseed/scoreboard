@@ -27,8 +27,16 @@ module.exports = async (req, res) => {
       .orderBy('priority')
       .limit(4)
 
-    const [{ feature }] = await db('features')
+    let feature = {
+      properties: {},
+      features: []
+    }
+    const features = await db('features')
       .where('name', 'tm_campaigns').select('feature')
+
+    if (features.length > 0) {
+      feature = features[0].feature
+    }
     const topEdits = await db('users')
       .whereNotIn('osm_id', filteredUsers)
       .select('full_name', 'country', 'edit_count')
@@ -49,8 +57,7 @@ module.exports = async (req, res) => {
       topEdits,
       features: feature
     })
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve records')
   }

@@ -2,23 +2,23 @@ const connection = require('../db/connection')
 
 const db = connection()
 
-function get(id) {
+function get (id) {
   return db('users').where('id', id)
 }
 
-function findByOsmId(osmID) {
+function findByOsmId (osmID) {
   return db('users').where('osm_id', osmID)
 }
 
-function list() {
+function list () {
   return db('users').select()
 }
 
-function find(key, value) {
+function find (key, value) {
   return db('users').where(key, value)
 }
 
-function create(data) {
+function create (data) {
   if (!data.roles) {
     data.roles = []
   }
@@ -26,11 +26,11 @@ function create(data) {
   return db('users').insert(data)
 }
 
-function update(id, data) {
+function update (id, data) {
   return get(id).update(data).returning('*')
 }
 
-function destroy(id) {
+function destroy (id) {
   return get(id).del()
 }
 

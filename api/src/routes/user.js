@@ -1,6 +1,6 @@
 const getBadgeProgress = require('../badge_logic')
 const {
-  API_URL
+  APP_URL
 } = require('../config')
 const users = require('../models/users')
 const roles = require('../models/roles')
@@ -19,7 +19,7 @@ const connection = require('../db/connection')
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function get(req, res) {
+async function get (req, res) {
   const { id } = req.params
   if (!id) {
     return res.boom.badRequest('Invalid id')
@@ -33,7 +33,7 @@ async function get(req, res) {
     const badgesFromDB = await db('badges').select() // array of all badges
     const badges = getBadgeProgress(json, badgesFromDB)
 
-    json.extent_uri = `${API_URL}/scoreboard/api/extents/${json.extent_uri}`
+    json.extent_uri = `${APP_URL}/scoreboard/api/extents/${json.extent_uri}`
     const rolesList = user.roles ? await roles.getRoles(user.roles) : []
 
     return res.send({
@@ -43,8 +43,7 @@ async function get(req, res) {
       roles: rolesList,
       country: user.country
     })
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve user stats')
   }
@@ -60,7 +59,7 @@ async function get(req, res) {
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function put(req, res) {
+async function put (req, res) {
   const { id } = req.params
   const { body } = req
 
@@ -76,8 +75,7 @@ async function put(req, res) {
     const [user] = await users.findByOsmId(id)
     const [updatedUser] = await users.update(user.id, body)
     return res.send(updatedUser)
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err)
     return res.boom.badRequest('Could not update user')
   }

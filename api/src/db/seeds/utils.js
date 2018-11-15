@@ -3,7 +3,7 @@ const countries = require('i18n-iso-countries')
 /*
  * n => [users] array of size n
  */
-function generateUsers(n, knex) {
+function generateUsers (n, knex) {
   const countryIds = Object.keys(countries.getNames('en'))
   const users = []
   for (let i = 0; i < n; i += 1) {
