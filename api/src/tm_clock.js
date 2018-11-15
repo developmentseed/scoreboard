@@ -15,39 +15,36 @@ async function tmWorker() {
   try {
     const db = conn()
     const response = await TM.getProjects()
-    const { features } = JSON.parse(response)
+    const features = JSON.parse(response).results
     if (features) {
       // Map the features to objects for sql insertion
       const sqlObjects = features.map((feature) => {
-        const properties = pick([
-          'done',
-          'description',
-          'author',
-          'status',
-          'changeset_comment',
-          'priority',
-          'name',
-          'instructions',
-          'validated'
-        ], feature.properties)
-        const noPropertiesFeature = merge(feature, { properties: {} })
-        const mainHashtag = extractCampaignHashtag(properties.changeset_comment)
+        //eslint-disable-next-line
+        const geometry = {"type":"Feature","geometry":{"type":"Point","coordinates":[-77.0857801216917, 38.9609074226397]},"properties":{}}
+        // Above is temporary until I can get this to work:
+        /*
+        const rp = TM.getProject(feature.projectId)
+        const geometry = JSON.parse(rp).areaOfInterest
+         */
         const {
           created: created_at, last_update: updated_at // eslint-disable-line camelcase
-        } = feature.properties
-        return merge(properties, {
-          campaign_hashtag: mainHashtag,
+        } = feature
+        return {
+          priority: feature.priority,
+          campaign_hashtag: feature.campaignTag,
           created_at,
           updated_at,
-          geometry: JSON.stringify(noPropertiesFeature),
-          tm_id: feature.id
-        })
+          geometry,
+          name: feature.name,
+          description: feature.shortDescription,
+          validated: feature.percentValidated,
+          done: feature.percentMapped,
+          tm_id: feature.projectId
+        }
       })
-
       // Add all features as single feature collection geometry
       const onlyGeometries = features.map(omit(['properties']))
       const fc = { type: 'FeatureCollection', features: onlyGeometries }
-
       // Map feature collection to prepared SQL statement
       const featureSQL = db('features')
         .where('name', 'tm_campaigns')
