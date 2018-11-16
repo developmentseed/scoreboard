@@ -10,7 +10,8 @@ function generateUsers (n, knex) {
     const user = {
       osm_id: 100000000 + i,
       full_name: `test${i} McTest`,
-      country: countryIds[parseInt(Math.random() * (countryIds.length - 1))]
+      country: countryIds[parseInt(Math.random() * (countryIds.length - 1))],
+      edit_count: Math.floor(Math.random() * 100000000)
     }
 
     users.push(user)
