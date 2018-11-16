@@ -1,4 +1,4 @@
-function collapseOnKey(arr, keyName) {
+function collapseOnKey (arr, keyName) {
   const collapsed = []
   arr.reduce((acc, obj) => {
     collapsed.push(obj[keyName])
