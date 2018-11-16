@@ -1,7 +1,5 @@
-const {
-  pick, merge, omit
-} = require('ramda')
-const { TM, extractCampaignHashtag } = require('./services/tm')
+const { omit } = require('ramda')
+const { TM } = require('./services/tm')
 const conn = require('./db/connection')
 
 /**
@@ -19,7 +17,7 @@ async function tmWorker () {
     if (features) {
       // Map the features to objects for sql insertion
       const sqlObjects = features.map((feature) => {
-        //eslint-disable-next-line
+        // eslint-disable-next-line
         const geometry = {"type":"Feature","geometry":{"type":"Point","coordinates":[-77.0857801216917, 38.9609074226397]},"properties":{}}
         // Above is temporary until I can get this to work:
         /*
