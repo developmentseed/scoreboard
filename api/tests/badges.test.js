@@ -65,7 +65,7 @@ test.serial('Updating a badge in the db', async (t) => {
     .put(`/scoreboard/api/badges/${numBadges}`)
     .send({
       name: 'Test Badge Edit',
-      operations: [['>', 'daysTotal', '100'], ['>=', 'daysInRow', '200']]
+      operations: [['>', 'daysTotal', '1'], ['>=', 'daysInRow', '1']]
     })
     .expect(200)
   res = await request(app)
@@ -73,7 +73,25 @@ test.serial('Updating a badge in the db', async (t) => {
     .expect(200)
   t.true(res.body.badges[0].name === 'Test Badge Edit')
   t.deepEqual(res.body.badges[0].operations,
-    [['>', 'daysTotal', '100'], ['>=', 'daysInRow', '200']])
+    [['>', 'daysTotal', '1'], ['>=', 'daysInRow', '1']])
+})
+
+test.serial('Earning a badge in the db', async (t) => {
+  const users = await db('users')
+    .select('osm_id') // .where('edit_count', '>', 1)
+  t.log('ids are ', users)
+  let stats = await request(app)
+    .get(`/scoreboard/api/users/${users[0].osm_id}`)
+    .expect(200)
+  stats = JSON.parse(stats.text)
+  // t.log(typeof stats, stats)
+  t.log(typeof stats.badges.earnedBadges, stats.badges.earnedBadges)
+  const badgeDetails = Object.entries(stats.badges.earnedBadges).map((eachBadge) => {
+    return eachBadge[1]
+  })
+  t.false(badgeDetails.find((badge) => {
+    return badge.name === 'Test Badge Edit'
+  }) === null)
 })
 
 test.serial('Deleting a badge from the db', async (t) => {
