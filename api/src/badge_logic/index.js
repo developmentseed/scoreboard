@@ -24,10 +24,10 @@ module.exports = (userData, badges) => {
     editors,
     edit_times
   } = userData
-  const daysInRow = dateSequentialCheck(edit_times)
-  const daysTotal = dateTotalCheck(edit_times)
-  const campaigns = collapseOnKey(hashtags, 'tag')
   const allDays = collapseOnKey(edit_times, 'day')
+  const daysInRow = dateSequentialCheck(allDays)
+  const daysTotal = dateTotalCheck(allDays)
+  const campaigns = collapseOnKey(hashtags, 'tag')
   /* eslint-enable camelcase */
 
   const allBadges = reject(isNil)(getSumBadges({
