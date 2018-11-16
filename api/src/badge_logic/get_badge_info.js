@@ -48,11 +48,9 @@ function betweenDates (firstValidDay, lastValidDay, days, today, excluded) {
     (day) => (execLogic('>=', day, firstValidDay) &&
       execLogic('<=', day, lastValidDay))
   ).length > 0
-  /* eslint-disable brace-style */
   if ((lastValidDate < today) || (today < firstValidDate)) {
     return [ pass, true, '' ]
-  }
-  else {
+  } else {
     return [ pass, excluded, mapBadgeToTask('allDays', lastValidDay) ]
   }
 }
@@ -68,8 +66,7 @@ function simpleDateComp (requiredDay, days, operator, today, excluded) {
   const validDate = new Date(validDay[0], Number(validDay[1] - 1), validDay[2])
   if (!(execLogic(operator, today, validDate))) {
     return [ pass, true, '' ]
-  }
-  else if (operator[0] === '<') {
+  } else if (operator[0] === '<') {
     return [ pass, excluded, mapBadgeToTask('allDays', requiredDay) ]
   }
 }
@@ -141,8 +138,7 @@ module.exports = (userMetrics, badge) => {
   task += '.'
   if (badgePass === true) {
     badgeLevel = 1
-  }
-  else { // if (badgeLevel === 0) {
+  } else { // if (badgeLevel === 0) {
     if (percentage === 100) { percentage = 0 } // Simple unearned date badges will show 0 progress
     task = `${Math.floor(percentage)}% of the way to earning this badge. ${task}`
   }
