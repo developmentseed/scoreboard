@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Admin UI that allows admin users to manage users, roles, and badges
 - Mock passport strategy for testing routes that require authentication
 - Support for badges based on the time edits are made and the hashtags they're made with
+- Hashtag-based badges and expired date-specific badges are excluded from "In Progress" display
 
 ### Changed
 - Migrated to [next.js](https://github.com/zeit/next.js/)
@@ -32,7 +33,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Revise user model to be the same format as the roles model
 - Move existing `api/users` endpoint to `api/users/stats` and use `api/users` for a list of users without stats
 - Consecutive and total days mapped are calculated with dates formatted YYYY-MM-DD
-- Badges which can no longer be earned and those based on hashtags are excluded from "In Progress" display
 
 ## [v0.2.4] - 2018-10-23
 ### Added
