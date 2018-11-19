@@ -7,8 +7,8 @@ module.exports = (dates) => {
   // Filter out non-unique dates
   const days = uniq(
     dates.map((date) => {
-      date = new Date(date)
-      return date.setHours(0, 0, 0, 0)
+      const dateSplit = date.split('-')
+      return new Date(dateSplit[0], Number(dateSplit[1] - 1), dateSplit[2])
     })
   )
 

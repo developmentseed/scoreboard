@@ -1,5 +1,6 @@
 const getSumBadges = require('./sum_based_badges')
 const { dateSequentialCheck, dateTotalCheck } = require('../utils/dateChecks')
+const { collapseOnKey } = require('../utils/collapseMetric')
 const {
   reject, isNil, filter, map, prop, compose, sum
 } = require('ramda')
@@ -23,8 +24,10 @@ module.exports = (userData, badges) => {
     editors,
     edit_times
   } = userData
-  const daysInRow = dateSequentialCheck(edit_times)
-  const daysTotal = dateTotalCheck(edit_times)
+  const allDays = collapseOnKey(edit_times, 'day')
+  const daysInRow = dateSequentialCheck(allDays)
+  const daysTotal = dateTotalCheck(allDays)
+  const campaigns = collapseOnKey(hashtags, 'tag')
   /* eslint-enable camelcase */
 
   const allBadges = reject(isNil)(getSumBadges({
@@ -37,7 +40,9 @@ module.exports = (userData, badges) => {
     josm: getJosmEditCount(editors),
     hashtags: Object.keys(hashtags).length,
     daysInRow,
-    daysTotal
+    daysTotal,
+    campaigns,
+    allDays
   }, badges))
 
   allBadges.sort((a, b) => {
