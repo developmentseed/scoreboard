@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Ability to login using OSM (using passport in the backend)
-- Initial dashboard page that allows users to see their personal stats
+- Dashboard page that allows users to see their personal stats
 - Allow badge creation, deletion, and updates through API routes
 - cli tool for debugging and administration in development
 - User roles
@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - role validation helpers
   - API endpoints
   - UI for managing the roles of users
-- Initial admin UI for managing users, roles, and badges
+- Admin UI that allows admin users to manage users, roles, and badges
 - Mock passport strategy for testing routes that require authentication
 
 ### Changed
