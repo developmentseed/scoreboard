@@ -79,6 +79,7 @@
     "express-boom": "^2.0.0",
     "express-promise-router": "^2.0.0",
     "express-session": "^1.15.6",
+    "foreman": "^3.0.1",
     "file-loader": "^2.0.0",
     "fs-extra": "^7.0.0",
     "i18n-iso-countries": "^3.7.4",
