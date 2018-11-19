@@ -3,15 +3,10 @@ const sequentializeDates = require('./sequentialDates')
 const findLongestStreak = require('./longestStreak')
 
 function dateTotalCheck (dates) {
-  // Truncate hours/minutes/seconds from timestamp
-  const days = dates.map((date) => {
-    date = new Date(date)
-    return date.setHours(0, 0, 0, 0)
-  })
-  return uniq(days).length
+  return uniq(dates).length
 }
 
-function dateSequentialCheck (dates) { // }, badges) => {
+function dateSequentialCheck (dates) {
   const sequentialDates = sequentializeDates(dates)
   const userTotal = findLongestStreak(sequentialDates)
   return userTotal
