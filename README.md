@@ -4,9 +4,10 @@
 
 A project to display OSM user contribution metrics and campaign metrics.
 
-- `api`: source to the API as well as processes to grab data from various OSM sources.
-- `frontend`: source to the frontend application.
-- `deployment`: deployment guides for CentOS only
+## In this repo
+- **api**: [source to the API](api/) as well as processes to grab data from various OSM sources.
+- **frontend**: source to the frontend application is in the root project directory, in the [components](components/), [lib](lib/), [pages](pages/), [static](static/), [styles](styles/), and [tests](tests/) directories.
+- **deployment**: [deployment guides](deployment/) for CentOS only
 
 # 🔨 Development
 
@@ -57,16 +58,13 @@ DATABASE_URL=postgres://postgres@localhost:5433/scoreboard
 
 ## Installation and Dev
 
-We use [lerna](https://github.com/lerna/lerna) for installation and package management
-
      $ yarn
-     $ yarn bootstrap
 
 ## Postgres Setup
 
 ### Create and Run the database
 
-     $ docker-compose up
+     $ docker-compose up -d
 
 This command will create and run the database on port `5433`. The database files are stored under `.tmp` folder.
 
@@ -88,6 +86,8 @@ To start with a new database with no data, stop the command, remove the `.tmp` f
 Set up the database schema by running:
 
      $ yarn migrate
+
+You can rollback migrations with `yarn rollback`.
 
 ### Populate Data
 For the frontend and the API to work, you must have the data loaded on the local database.
@@ -116,18 +116,29 @@ If you were already logged in, log out and log back in, then you'll see an "admi
 
 This command will start both the frontend and the api together
 
-     $ yarn start 
+     $ yarn dev
 
-To start the services individually do:
+## Build
 
-     $ yarn api
-     $ yarn frontend
+To create a build of the site:
+
+     $ yarn build
 
 ## Test
 
-We have provided some unit tests in api/tests/test.js. To run:
+Tests for the API endpoints and related code are stored in [api/tests/](api/tests/) and UI tests are stored in [tests/](tests/). To run both:
 
     $ yarn test
+
+Test the UI and API separately using `yarn test-ui` and `yarn test-api`.
+
+## Lint
+
+Lint the code using:
+
+     $ yarn lint
+
+You can automatically fix some lint errors using `yarn lintfix`.
 
 ## Generating Docs
 
