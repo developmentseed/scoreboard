@@ -16,14 +16,9 @@ async function tmWorker () {
     const features = JSON.parse(response).results
     if (features) {
       // Map the features to objects for sql insertion
-      const sqlObjects = features.map((feature) => {
-        // eslint-disable-next-line
-        const geometry = {"type":"Feature","geometry":{"type":"Point","coordinates":[-77.0857801216917, 38.9609074226397]},"properties":{}}
-        // Above is temporary until I can get this to work:
-        /*
-        const rp = TM.getProject(feature.projectId)
+      const sqlPromises = features.map(async (feature) => {
+        const rp = await TM.getProject(feature.projectId)
         const geometry = JSON.parse(rp).areaOfInterest
-         */
         const {
           created: created_at, last_update: updated_at // eslint-disable-line camelcase
         } = feature
@@ -40,6 +35,7 @@ async function tmWorker () {
           tm_id: feature.projectId
         }
       })
+      const sqlObjects = await Promise.all(sqlPromises)
       // Add all features as single feature collection geometry
       const onlyGeometries = features.map(omit(['properties']))
       const fc = { type: 'FeatureCollection', features: onlyGeometries }
