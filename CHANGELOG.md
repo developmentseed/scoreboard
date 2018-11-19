@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Ability to login using OSM (using passport in the backend)
-- Initial dashboard page
+- Initial dashboard page that allows users to see their personal stats
 - Allow badge creation, deletion, and updates through API routes
 - cli tool for debugging and administration in development
 - User roles
@@ -15,10 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - role validation helpers
   - API endpoints
   - UI for managing the roles of users
-- Initial admin UI
+- Initial admin UI for managing users, roles, and badges
 - Mock passport strategy for testing routes that require authentication
 
 ### Changed
+- Migrated to [next.js](https://github.com/zeit/next.js/)
+  - Instead of deploying the api and frontend separately, the two codebases are 
+    merged into one with server-rendering provided by next.js
+  - For changes to development process see the [updated README.md](README.md)
 - Move from Sqlite to Postgres
 - Drop some columns from the user schema
 - Move tests and fixtures for API into a single place
