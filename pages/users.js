@@ -50,6 +50,7 @@ export class Users extends Component {
         this.setState(Object.assign({ records: res.data, apiStatus: 'SUCCESS' }))
       })
       .catch(err => {
+        // TODO: handle error
         console.log('err', err)
         this.setState({ apiStatus: 'ERROR' })
       })

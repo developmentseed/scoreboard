@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { connect } from 'unistore/react'
+import { withAlert } from 'react-alert'
 
 import { actions } from '../lib/store'
 import trimLength from '../lib/utils/trim_length'
@@ -24,6 +25,15 @@ export class Home extends Component {
 
   componentDidMount () {
     this.props.getTopStats()
+  }
+
+  componentDidUpdate () {
+    const { notification } = this.props
+
+    if (notification) {
+      this.props.alert[notification.type](notification.message)
+      this.props.clearNotification()
+    }
   }
 
   render () {
@@ -139,4 +149,4 @@ export class Home extends Component {
   }
 }
 
-export default connect('topStats', actions)(Home)
+export default connect(['topStats', 'notification'], actions)(withAlert(Home))

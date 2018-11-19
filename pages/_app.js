@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Head from 'next/head'
 import withReduxStore from '../lib/store/with-store'
 import { Provider, connect } from 'unistore/react'
+import { Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 import { actions } from '../lib/store'
 import { isAdmin } from '../lib/utils/roles'
 
@@ -25,7 +27,7 @@ class Layout extends React.Component {
   }
 
   componentDidMount () {
-    this.props.getAuthenticatedUser()
+    this.props.getAuthenticatedUser() // TODO: handle error
   }
 
   handleOutsideClick () {
@@ -128,12 +130,15 @@ class Scoreboard extends App {
 
   render () {
     const { Component, pageProps, reduxStore } = this.props
+    const alertOptions = { position: 'top center', timeout: 3000, offset: '30px' }
 
     return (
       <Container>
         <Provider store={reduxStore}>
           <LayoutWithStore>
-            <Component {...pageProps} project={projectName} />
+            <AlertProvider template={AlertTemplate} {...alertOptions}>
+              <Component {...pageProps} project={projectName} />
+            </AlertProvider>
           </LayoutWithStore>
         </Provider>
       </Container>

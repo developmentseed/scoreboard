@@ -70,6 +70,7 @@ export class AdminBadges extends Component {
       await this.props.getAuthenticatedUser()
       this.setState({ loading: false })
     } catch (err) {
+      // TODO: handle error
       console.log(err)
       this.setState({ loading: false })
     }
@@ -89,6 +90,7 @@ export class AdminBadges extends Component {
 
       this.resetInputs()
     } catch (e) {
+      // TODO: handle error
       console.log(e)
       this.setState({
         alert: typeof e === 'string' ? e : 'Something went wrong',

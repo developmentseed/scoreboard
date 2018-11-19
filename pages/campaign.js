@@ -45,12 +45,12 @@ class Campaign extends Component {
       const { params: { name } } = match
       api('get', `/api/campaigns/${name}`)
         .then(res => {
-          // TODO error state
           this.setState({
             records: res.data.records,
             match
           })
         }).catch((e) => {
+          // TODO: handle error
           console.log(e)
           this.setState({ notFound: true })
         })

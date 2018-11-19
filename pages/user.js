@@ -32,29 +32,38 @@ import getSumEdits from '../lib/utils/sum_edits'
 class User extends Component {
   static async getInitialProps ({ req }) {
     const { id } = req.params
-    const res = await api('get', `/api/users/${id}`)
-    const { records, country, badges } = res.data
 
-    return {
-      id,
-      records,
-      country,
-      badges
+    try {
+      const res = await api('get', `/api/users/${id}`)
+      const { records, country, badges } = res.data
+
+      return {
+        id,
+        records,
+        country,
+        badges
+      }
+    } catch (e) {
+      // TODO: handle error
     }
   }
 
   async componentDidMount () {
     const { id, records, badges } = this.props
     if (!records || !badges) {
-      const res = await api('get', `/api/users/${id}`)
-      const { records, country, badges } = res.data
+      try {
+        const res = await api('get', `/api/users/${id}`)
+        const { records, country, badges } = res.data
 
-      this.setState({
-        id,
-        records,
-        country,
-        badges
-      })
+        this.setState({
+          id,
+          records,
+          country,
+          badges
+        })
+      } catch (e) {
+        // TODO: handle error
+      }
     }
   }
 

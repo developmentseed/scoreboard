@@ -25,7 +25,7 @@ class UserEdit extends Component {
         this.setState({ saved: true })
       })
       .catch(err => {
-        // TODO: show error
+        // TODO: handle error
         console.log('err', err)
       })
   }
@@ -34,7 +34,7 @@ class UserEdit extends Component {
     const { currentCountry } = this.state
     if (!country || country.value === currentCountry) return
     this.setState({ currentCountry: country.value })
-    this.updateUser({ country: country.value })
+    this.updateUser({ country: country.value }) // TODO: handle error
   }
 
   renderSaved () {

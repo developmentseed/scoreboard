@@ -24,6 +24,7 @@ export class AdminUserEdit extends Component {
   componentDidMount () {
     const { id } = this.props
 
+// TODO: handle error
     this.props.getAuthenticatedUser().then(() => {
       Promise.all([
         this.props.getRoles(),
