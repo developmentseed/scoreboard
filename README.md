@@ -95,7 +95,7 @@ To generate fake user data run:
 
 To populate fake campaign and tasking manager data run: 
 
-     $ yarn clocks 
+     $ # yarn clocks 
 
 ### Create an admin user
 
