@@ -4,9 +4,10 @@
 
 A project to display OSM user contribution metrics and campaign metrics.
 
-- `api`: source to the API as well as processes to grab data from various OSM sources.
-- `frontend`: source to the frontend application.
-- `deployment`: deployment guides for CentOS only
+## In this repo
+- **api**: [source to the API](api/) as well as processes to grab data from various OSM sources.
+- **frontend**: source to the frontend application is in the root project directory, in the [components](components/), [lib](lib/), [pages](pages/), [static](static/), [styles](styles/), and [tests](tests/) directories.
+- **deployment**: [deployment guides](deployment/) for CentOS only
 
 # 🔨 Development
 
@@ -86,6 +87,8 @@ Set up the database schema by running:
 
      $ yarn migrate
 
+You can rollback migrations with `yarn rollback`.
+
 ### Populate Data
 For the frontend and the API to work, you must have the data loaded on the local database.
 
@@ -95,7 +98,7 @@ To generate fake user data run:
 
 To populate fake campaign and tasking manager data run: 
 
-     $ # yarn clocks 
+     $ yarn clocks 
 
 ### Create an admin user
 
@@ -113,15 +116,29 @@ If you were already logged in, log out and log back in, then you'll see an "admi
 
 This command will start both the frontend and the api together
 
-     $ yarn run dev
+     $ yarn dev
 
-To start the services individually, execute the above command in the relevant directory (either `api` or `frontend`)
+## Build
+
+To create a build of the site:
+
+     $ yarn build
 
 ## Test
 
-We have provided some unit tests in api/tests/test.js. To run:
+Tests for the API endpoints and related code are stored in [api/tests/](api/tests/) and UI tests are stored in [tests/](tests/). To run both:
 
     $ yarn test
+
+Test the UI and API separately using `yarn test-ui` and `yarn test-api`.
+
+## Lint
+
+Lint the code using:
+
+     $ yarn lint
+
+You can automatically fix some lint errors using `yarn lintfix`.
 
 ## Generating Docs
 
