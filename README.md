@@ -57,16 +57,13 @@ DATABASE_URL=postgres://postgres@localhost:5433/scoreboard
 
 ## Installation and Dev
 
-We use [lerna](https://github.com/lerna/lerna) for installation and package management
-
      $ yarn
-     $ yarn bootstrap
 
 ## Postgres Setup
 
 ### Create and Run the database
 
-     $ docker-compose up
+     $ docker-compose up -d
 
 This command will create and run the database on port `5433`. The database files are stored under `.tmp` folder.
 
@@ -116,12 +113,9 @@ If you were already logged in, log out and log back in, then you'll see an "admi
 
 This command will start both the frontend and the api together
 
-     $ yarn start 
+     $ yarn run dev
 
-To start the services individually do:
-
-     $ yarn api
-     $ yarn frontend
+To start the services individually, execute the above command in the relevant directory (either `api` or `frontend`)
 
 ## Test
 
