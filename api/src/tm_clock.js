@@ -99,6 +99,8 @@ async function tmWorker () {
               'instructions',
               'validated'
             ], feature.properties)
+            // priority is now stored as a string
+            properties.priority = properties.priority.toString()
             const noPropertiesFeature = merge(feature, { properties: {} })
             const mainHashtag = extractCampaignHashtag(properties.changeset_comment)
             const {
