@@ -27,15 +27,6 @@ export class Home extends Component {
     this.props.getTopStats()
   }
 
-  componentDidUpdate () {
-    const { notification } = this.props
-
-    if (notification) {
-      this.props.alert[notification.type](notification.message)
-      this.props.clearNotification()
-    }
-  }
-
   render () {
     const { topStats, project: projectName } = this.props
     if (!topStats) return <div />

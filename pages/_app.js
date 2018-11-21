@@ -2,10 +2,11 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import Link from 'next/link'
 import Head from 'next/head'
-import withReduxStore from '../lib/store/with-store'
 import { Provider, connect } from 'unistore/react'
-import { Provider as AlertProvider } from 'react-alert'
+import { Provider as AlertProvider, withAlert } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
+
+import withReduxStore from '../lib/store/with-store'
 import { actions } from '../lib/store'
 import { isAdmin } from '../lib/utils/roles'
 
@@ -27,7 +28,18 @@ class Layout extends React.Component {
   }
 
   componentDidMount () {
-    this.props.getAuthenticatedUser() // TODO: handle error
+    this.props.getAuthenticatedUser()
+  }
+
+  componentDidUpdate () {
+    const { notification } = this.props
+
+    if (notification) {
+      const { type, message, options } = notification
+      if (!this.props.alert || !this.props.alert[type]) return
+      this.props.alert[type](message, options)
+      this.props.clearNotification()
+    }
   }
 
   handleOutsideClick () {
@@ -100,7 +112,7 @@ class Layout extends React.Component {
   }
 }
 
-const LayoutWithStore = connect(['authenticatedUser'], actions)(Layout)
+const LayoutWithStore = connect(['authenticatedUser', 'notification'], actions)(withAlert(Layout))
 
 class Scoreboard extends App {
   static async getInitialProps ({ Component, router, ctx }) {
@@ -135,11 +147,11 @@ class Scoreboard extends App {
     return (
       <Container>
         <Provider store={reduxStore}>
-          <LayoutWithStore>
-            <AlertProvider template={AlertTemplate} {...alertOptions}>
+          <AlertProvider template={AlertTemplate} {...alertOptions}>
+            <LayoutWithStore>
               <Component {...pageProps} project={projectName} />
-            </AlertProvider>
-          </LayoutWithStore>
+            </LayoutWithStore>
+          </AlertProvider>
         </Provider>
       </Container>
     )

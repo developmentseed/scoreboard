@@ -59,6 +59,6 @@ module.exports = async (req, res) => {
     })
   } catch (err) {
     console.error(err)
-    return res.boom.badImplementation('Could not retrieve stats')
+    return res.boom.notFound('Could not retrieve stats')
   }
 }

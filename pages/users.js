@@ -50,9 +50,10 @@ export class Users extends Component {
         this.setState(Object.assign({ records: res.data, apiStatus: 'SUCCESS' }))
       })
       .catch(err => {
-        // TODO: handle error
-        console.log('err', err)
-        this.setState({ apiStatus: 'ERROR' })
+        if (this.state.apiStatus !== 'ERROR') {
+          this.setState({ apiStatus: 'ERROR' })
+          this.props.setNotification({ type: 'error', message: 'Could not retrieve user stats' })
+        }
       })
   }
 
@@ -122,7 +123,7 @@ export class Users extends Component {
     } = this.props.users
 
     return (
-      <div className='Users'>)
+      <div className='Users'>
         <AllUsersHeader countries={countries} users={total} edits={editTotal} />
         <section>
           <div className='row'>
