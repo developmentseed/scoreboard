@@ -23,6 +23,7 @@ class UserEdit extends Component {
     api('put', `/api/users/${id}`, data)
       .then(res => {
         this.setState({ saved: true })
+        this.props.setNotification({ type: 'error', message: '✓ Saved' })
       })
       .catch(err => {
         console.log(err)
@@ -35,16 +36,6 @@ class UserEdit extends Component {
     if (!country || country.value === currentCountry) return
     this.setState({ currentCountry: country.value })
     this.updateUser({ country: country.value })
-  }
-
-  renderSaved () {
-    if (this.state.saved) {
-      setTimeout(() => {
-        this.setState({ saved: false })
-      }, 1000)
-
-      return this.props.setNotification({ type: 'error', message: '✓ Saved' })
-    }
   }
 
   render () {
@@ -72,7 +63,6 @@ class UserEdit extends Component {
                 value={country}
                 onChange={(country) => this.onCountryChange(country)}
               />
-              {this.renderSaved()}
             </div>
           </div>
         </section>
