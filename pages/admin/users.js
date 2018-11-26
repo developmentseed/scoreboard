@@ -19,7 +19,6 @@ export class AdminUsers extends Component {
   }
 
   componentDidMount () {
-    // TODO: handle error
     this.props.getAuthenticatedUser().then(() => {
       Promise.all([
         this.props.getRoles(),

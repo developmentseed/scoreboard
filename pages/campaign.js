@@ -50,9 +50,9 @@ class Campaign extends Component {
             match
           })
         }).catch((e) => {
-          // TODO: handle error
           console.log(e)
           this.setState({ notFound: true })
+          this.props.setNotification({ type: 'error', message: 'Could not retrieve campaign' })
         })
     }
   }

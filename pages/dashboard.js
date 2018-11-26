@@ -22,8 +22,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount () {
-    this.props.getAuthenticatedUser() // TODO: handle error
-    // this.props.getProjects()
+    this.props.getAuthenticatedUser()
   }
 
   componentDidUpdate () {

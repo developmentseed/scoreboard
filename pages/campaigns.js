@@ -57,6 +57,7 @@ class Campaigns extends Component {
         // TODO: handle error
         console.log(err)
         this.setState({ apiStatus: 'ERROR' })
+        this.props.setNotification({ type: 'error', message: 'Could not retrieve campaigns' })
       })
   }
 

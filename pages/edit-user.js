@@ -25,16 +25,16 @@ class UserEdit extends Component {
         this.setState({ saved: true })
       })
       .catch(err => {
-        // TODO: handle error
-        console.log('err', err)
+        console.log(err)
+        this.props.setNotification({ type: 'error', message: 'Could not update user' })
       })
   }
 
-  onCountryChange = (country) => {
+  onCountryChange (country) {
     const { currentCountry } = this.state
     if (!country || country.value === currentCountry) return
     this.setState({ currentCountry: country.value })
-    this.updateUser({ country: country.value }) // TODO: handle error
+    this.updateUser({ country: country.value })
   }
 
   renderSaved () {
@@ -43,9 +43,7 @@ class UserEdit extends Component {
         this.setState({ saved: false })
       }, 1000)
 
-      return (
-        <p style={{ color: '#4FCA9E' }}>✓ Saved</p>
-      )
+      return this.props.setNotification({ type: 'error', message: '✓ Saved' })
     }
   }
 
@@ -72,7 +70,7 @@ class UserEdit extends Component {
               <Select
                 options={countries}
                 value={country}
-                onChange={this.onCountryChange}
+                onChange={(country) => this.onCountryChange(country)}
               />
               {this.renderSaved()}
             </div>

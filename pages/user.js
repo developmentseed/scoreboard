@@ -44,7 +44,8 @@ class User extends Component {
         badges
       }
     } catch (e) {
-      // TODO: handle error
+      console.log(e)
+      this.props.setNotification({ type: 'error', message: 'Could not get user' })
     }
   }
 
@@ -62,7 +63,8 @@ class User extends Component {
           badges
         })
       } catch (e) {
-        // TODO: handle error
+        console.log(e)
+        this.props.setNotification({ type: 'error', message: 'Could not get user' })
       }
     }
   }

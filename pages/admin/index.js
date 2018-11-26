@@ -19,7 +19,7 @@ export class Admin extends Component {
   }
 
   componentDidMount () {
-    this.props.getAuthenticatedUser() // TODO: handle error
+    this.props.getAuthenticatedUser()
   }
 
   componentDidUpdate () {

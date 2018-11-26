@@ -11,9 +11,6 @@ import AdminHeader from '../../components/AdminHeader'
 import '../../styles/Admin.scss'
 import 'react-select/dist/react-select.css'
 
-const ALERT_TYPE_ERROR = 'error'
-const ALERT_TYPE_SUCCESS = 'success'
-
 const badgeMetrics = [
   { label: 'New buildings mapped', value: 'buildings' },
   { label: 'Countries mapped', value: 'countries' },
@@ -40,8 +37,6 @@ export class AdminBadges extends Component {
 
     this.state = {
       loading: true,
-      alert: '',
-      alertType: null,
       descriptionInput: '',
       disableInteraction: false,
       nameInput: '',
@@ -70,7 +65,6 @@ export class AdminBadges extends Component {
       await this.props.getAuthenticatedUser()
       this.setState({ loading: false })
     } catch (err) {
-      // TODO: handle error
       console.log(err)
       this.setState({ loading: false })
     }
@@ -81,22 +75,13 @@ export class AdminBadges extends Component {
 
     try {
       await this.props.createBadge(params)
-
-      this.setState({
-        alert: 'Badge created successfully!',
-        alertType: ALERT_TYPE_SUCCESS,
-        disableInteraction: false
-      })
-
+      this.props.setNotification({ type: 'info', message: 'Badge created successfully!' })
+      this.setState({ disableInteraction: false })
       this.resetInputs()
     } catch (e) {
-      // TODO: handle error
       console.log(e)
-      this.setState({
-        alert: typeof e === 'string' ? e : 'Something went wrong',
-        alertType: ALERT_TYPE_ERROR,
-        disableInteraction: false
-      })
+      this.props.setNotification({ type: 'error', message: 'Something went wrong. Badge not created' })
+      this.setState({ disableInteraction: false })
     }
   }
 
@@ -125,7 +110,6 @@ export class AdminBadges extends Component {
             <h1 className='header--xlarge'>Add a new badge</h1>
           </div>
           <div className='row'>
-            {this.state.alert && this.showAlert()}
             {this.renderAddNewForm()}
           </div>
         </section>
@@ -376,18 +360,6 @@ export class AdminBadges extends Component {
     }
 
     this.createBadge(params)
-  }
-
-  showAlert () {
-    if (!this.state.alert) {
-      return null
-    }
-
-    return (
-      <div className={`alert alert--${this.state.alertType || 'info'}`}>
-        {this.state.alert}
-      </div>
-    )
   }
 
   resetInputs () {
