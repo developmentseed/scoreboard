@@ -68,16 +68,22 @@ class TM3API {
    *
    * @returns {Promise} response
    */
+
   getProjects () {
-    return rp(`${TM_URL}/api/v1/project/search?mapperLevel=ALL`)
+    return rp({
+      uri: `${TM_URL}/api/v1/project/search?mapperLevel=ALL`,
+      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+    })
   }
 
   getProject (id) {
-    return rp(`${TM_URL}/project/${id}`)
+    return rp(`${TM_URL}/api/v1/project/${id}`)
   }
 
   getTasks (id) {
-    return rp(`${TM_URL}/project/${id}/tasks`)
+    return rp({
+      uri: `${TM_URL}/api/v1/project/${id}/tasks`
+    })
   }
 }
 
