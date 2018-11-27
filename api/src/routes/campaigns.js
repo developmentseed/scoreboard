@@ -19,11 +19,11 @@ module.exports = async (req, res) => {
   try {
     const db = connection()
     let query = db('campaigns').whereNotNull('campaign_hashtag')
-    const [{ allCount }] = await query.clone().count('id as all_count')
+    const [{ allCount }] = await query.clone().count('id as allCount')
 
     if (search.length > 0) {
-      query = query.where('description', 'like', `%${search}%`)
-        .orWhere('name', 'like', `%${search}%`)
+      query = query.where('description', 'ilike', `%${search}%`)
+        .orWhere('name', 'ilike', `%${search}%`)
     }
     if (complMin > 0 || complMax < 100) {
       query = query.whereRaw(`(done / 2) + validated between ${complMin} and ${complMax}`)
