@@ -42,7 +42,7 @@ export class Campaigns extends Component {
   render () {
     const { page, searchText, compl_min, compl_max } = this.props.campaigns
     const { records: { total, records, all_count }, apiStatus } = this.props.campaigns
-    
+
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
