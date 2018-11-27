@@ -20,6 +20,11 @@
   },
   "babel": {
     "env": {
+      "production": {
+        "presets": [
+          "next/babel"
+        ]
+      },
       "development": {
         "presets": [
           "next/babel"
