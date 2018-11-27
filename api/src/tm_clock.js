@@ -53,9 +53,11 @@ async function tmWorker () {
   try {
     const db = conn()
     const response = await TM.getProjects()
+    const json = JSON.parse(response)
+    let features = ''
     switch (TM_VERSION) {
       case '3':
-        const features = JSON.parse(response).results
+        features = json.results
         if (features) {
           // Map the features to objects for sql insertion
           const sqlPromises = features.map(async (feature) => {
@@ -86,6 +88,7 @@ async function tmWorker () {
         }
         throw new Error('Invalid response from Tasking Manager')
       case '2':
+        features = json.features
         if (features) {
           const sqlObjects = features.map((feature) => {
             const properties = pick([
