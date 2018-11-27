@@ -7,9 +7,7 @@ import CampaignsListing from '../components/CampaignsListing'
 
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
-
-
-class Campaigns extends Component {
+export class Campaigns extends Component {
   constructor () {
     super()
 
