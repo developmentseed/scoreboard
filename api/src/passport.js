@@ -33,7 +33,7 @@ OSMStrategy.prototype.userProfile = function (token, tokenSecret, params, done) 
       if (err) { return done(err) };
 
       var profile = { provider: 'openstreetmap' }
-      profile.id = xml.user['@'].id;
+      profile.id = xml.user['@'].id
       profile.displayName = xml.user['@'].display_name
 
       profile._raw = body
@@ -83,9 +83,6 @@ if (NODE_ENV === 'test') {
     done(null, user)
   }))
 } else {
-
-  
-
   passport.use(new OSMStrategy({
     requestTokenURL: `${OSM_DOMAIN_INTERNAL}/oauth/request_token`,
     accessTokenURL: `${OSM_DOMAIN_INTERNAL}/oauth/access_token`,
