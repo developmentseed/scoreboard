@@ -52,41 +52,49 @@ async function tmWorker () {
   // Get projects from TM2
   try {
     const db = conn()
-    const response = await TM.getProjects()
-    const json = JSON.parse(response)
+    let response = await TM.getProjects()
+    let json = JSON.parse(response)
     let features = ''
     switch (TM_VERSION) {
       case '3':
         features = json.results
-        if (features) {
-          // Map the features to objects for sql insertion
-          const sqlPromises = features.map(async (feature) => {
-            const rp = await TM.getProject(feature.projectId)
-            const geometry = JSON.parse(rp).areaOfInterest
-            const {
-              created: created_at, last_update: updated_at // eslint-disable-line camelcase
-            } = feature
-            return {
-              priority: feature.priority,
-              campaign_hashtag: feature.campaignTag,
-              created_at,
-              updated_at,
-              geometry,
-              name: feature.name,
-              description: feature.shortDescription,
-              validated: feature.percentValidated,
-              done: feature.percentMapped,
-              tm_id: feature.projectId
-            }
-          })
+        let sqlPromises = []
+        for (let page = 1; page <= json.pagination.pages; page++) {
+          if (page > 1) {
+            response = await TM.getProjects(page)
+            json = JSON.parse(response)
+            features = json.results
+          }
+          if (features) {
+            // Map the features to objects for sql insertion
+            sqlPromises = sqlPromises.concat(features.map(async (feature) => {
+              const rp = await TM.getProject(feature.projectId)
+              const geometry = JSON.parse(rp).areaOfInterest
+              const {
+                created: created_at, last_update: updated_at // eslint-disable-line camelcase
+              } = feature
+              return {
+                priority: feature.priority,
+                campaign_hashtag: feature.campaignTag,
+                created_at,
+                updated_at,
+                geometry,
+                name: feature.name,
+                description: feature.shortDescription,
+                validated: feature.percentValidated,
+                done: feature.percentMapped,
+                tm_id: feature.projectId
+              }
+            }))
+          }
+        }
+        if (sqlPromises !== null) {
           const sqlObjects = await Promise.all(sqlPromises)
-
           const promises = DBPromises(db, sqlObjects, features)
           // Return a single promise wrapping all the
           // SQL statements
           return Promise.all(promises)
-        }
-        throw new Error('Invalid response from Tasking Manager')
+        } else throw new Error('Invalid response from Tasking Manager')
       case '2':
         features = json.features
         if (features) {
@@ -132,7 +140,7 @@ async function tmWorker () {
 if (require.main === module) {
   tmWorker()
     .then((resp) => {
-      console.log(`Updated ${resp.length} records.`)
+      console.log(`Updated ${resp.length - 1} records`)
       process.exit(0)
     })
     .catch((e) => {
