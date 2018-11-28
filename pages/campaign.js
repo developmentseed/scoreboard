@@ -45,7 +45,6 @@ class Campaign extends Component {
       const { params: { name } } = match
       api('get', `/api/campaigns/${name}`)
         .then(res => {
-          // TODO error state
           this.setState({
             records: res.data.records,
             match
@@ -53,6 +52,7 @@ class Campaign extends Component {
         }).catch((e) => {
           console.log(e)
           this.setState({ notFound: true })
+          this.props.setNotification({ type: 'error', message: 'Could not retrieve campaign' })
         })
     }
   }
