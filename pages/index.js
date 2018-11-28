@@ -83,7 +83,7 @@ export class Home extends Component {
               <ul className='clearfix'>
                 {
                   records.map(record =>
-                    <li key={`block-${record.campaign_hashtag}`} className='block--campaign'>
+                    <li key={`block-${record.id}`} className='block--campaign'>
                       <h3 className='header--small header--with-description-xlg'>
                         <Link href={`/campaigns/${record.campaign_hashtag}`}>
                           <a className='header--underlined'>{record.name}</a>
