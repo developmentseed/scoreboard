@@ -23,7 +23,6 @@ export class Home extends Component {
     const { topStats, project: projectName } = this.props
     if (!topStats) return <div />
 
-    console.log('topStats', topStats)
     const { total, records, numUsers, features, topEdits, editsByCountry } = topStats
 
     return (
