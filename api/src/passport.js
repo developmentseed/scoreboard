@@ -14,6 +14,7 @@ const {
   NODE_ENV,
   OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET,
+  OSM_DOMAIN,
   APP_URL
 } = require('./config')
 
@@ -56,9 +57,9 @@ if (NODE_ENV === 'test') {
   }))
 } else {
   passport.use(new OSMStrategy({
-    requestTokenURL: 'https://www.openstreetmap.org/oauth/request_token',
-    accessTokenURL: 'https://www.openstreetmap.org/oauth/access_token',
-    userAuthorizationURL: 'https://www.openstreetmap.org/oauth/authorize',
+    requestTokenURL: `${OSM_DOMAIN}/oauth/request_token`,
+    accessTokenURL: `${OSM_DOMAIN}/oauth/access_token`,
+    userAuthorizationURL: `${OSM_DOMAIN}/oauth/authorize`,
     consumerKey: OSM_CONSUMER_KEY,
     consumerSecret: OSM_CONSUMER_SECRET,
     callbackURL: `${APP_URL}/auth/openstreetmap/callback`
