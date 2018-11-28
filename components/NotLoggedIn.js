@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-const domain = process.env.APP_DOMAIN || 'http://localhost:8181'
+const domain = process.env.APP_URL || 'http://localhost:8181'
 
 export default ({ message }) => {
   return (

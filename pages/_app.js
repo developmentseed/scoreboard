@@ -11,7 +11,7 @@ import '../styles/index.scss'
 import '../styles/App.scss'
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
-const domain = process.env.APP_DOMAIN || 'http://localhost:8181'
+const domain = process.env.APP_URL || 'http://localhost:8181'
 const profileIcon = '/static/dashboard-temp/profile-icon.png'
 
 class Layout extends React.Component {
