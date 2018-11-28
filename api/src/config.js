@@ -17,6 +17,9 @@ module.exports = {
   OSM_CONSUMER_KEY: process.env.OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET: process.env.OSM_CONSUMER_SECRET,
   OSM_DOMAIN: process.env.OSM_DOMAIN || 'https://www.openstreetmap.org',
+
+  // to handle cases where the OSM deployment is behind a firewall
+  OSM_DOMAIN_INTERNAL: process.env.OSM_DOMAIN_INTERNAL || process.env.OSM_DOMAIN || 'https://www.openstreetmap.org',
   SESSION_SECRET: process.env.SESSION_SECRET || 'SUPER SECRET',
   DATABASE_URL
 }

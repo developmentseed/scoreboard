@@ -2,8 +2,10 @@
  * Passport
  */
 const passport = require('passport')
+const xml2js = require('xml2js')
 const router = require('express-promise-router')()
 const OSMStrategy = require('passport-openstreetmap').Strategy
+const InternalOAuthError = require('passport-oauth').InternalOAuthError
 const MockStrategy = require('passport-mock-strategy')
 
 const users = require('./models/users')
@@ -15,8 +17,33 @@ const {
   OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET,
   OSM_DOMAIN,
+  OSM_DOMAIN_INTERNAL,
   APP_URL
 } = require('./config')
+
+/**
+ * override the userProfile method of OSMStrategy to allow for custom osm endpoints
+ */
+OSMStrategy.prototype.userProfile = function (token, tokenSecret, params, done) {
+  this._oauth.get(`${OSM_DOMAIN_INTERNAL}/api/0.6/user/details`, token, tokenSecret, function (err, body, res) {
+    if (err) { return done(new InternalOAuthError('failed to fetch user profile', err)) }
+
+    var parser = new xml2js.Parser()
+    parser.parseString(body, function (err, xml) {
+      if (err) { return done(err) };
+
+      var profile = { provider: 'openstreetmap' }
+      profile.id = xml.user['@'].id;
+      profile.displayName = xml.user['@'].display_name
+
+      profile._raw = body
+      profile._xml2json =
+      profile._xml2js = xml
+
+      done(null, profile)
+    })
+  })
+}
 
 /*
 * Authorization check for making sure a user has permission to edit a user
@@ -56,9 +83,12 @@ if (NODE_ENV === 'test') {
     done(null, user)
   }))
 } else {
+
+  
+
   passport.use(new OSMStrategy({
-    requestTokenURL: `${OSM_DOMAIN}/oauth/request_token`,
-    accessTokenURL: `${OSM_DOMAIN}/oauth/access_token`,
+    requestTokenURL: `${OSM_DOMAIN_INTERNAL}/oauth/request_token`,
+    accessTokenURL: `${OSM_DOMAIN_INTERNAL}/oauth/access_token`,
     userAuthorizationURL: `${OSM_DOMAIN}/oauth/authorize`,
     consumerKey: OSM_CONSUMER_KEY,
     consumerSecret: OSM_CONSUMER_SECRET,
