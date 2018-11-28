@@ -6,6 +6,7 @@ const directoryCommand = require('directory-command')
 const directory = path.join(__dirname, 'commands')
 
 const options = {
+  commandName: 'scoreboard',
   context: {}
 }
 
