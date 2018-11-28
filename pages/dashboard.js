@@ -23,7 +23,6 @@ class Dashboard extends Component {
 
   componentDidMount () {
     this.props.getAuthenticatedUser()
-    // this.props.getProjects()
   }
 
   componentDidUpdate () {
