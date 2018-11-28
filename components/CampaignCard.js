@@ -1,7 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
 import trimLength from '../lib/utils/trim_length'
-import CampaignMap from './charts/CampaignMap'
+import dynamic from 'next/dynamic'
+
+const CampaignMap = dynamic(() => import('./charts/CampaignMap'), {
+  ssr: false
+})
 
 export default ({ campaign }) => {
   const {
