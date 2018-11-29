@@ -100,7 +100,7 @@ class Layout extends React.Component {
                     }
                   </div>
                   : <ul className='nav--right'>
-                    <li><a href={`${domain}/auth/openstreetmap`}>Login</a></li>
+                    <li><a href={`${domain}/auth/openstreetmap`} className='link--login'>Login</a></li>
                   </ul>
               }
             </nav>
