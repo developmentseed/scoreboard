@@ -13,9 +13,9 @@ export default ({ campaign }) => {
     name,
     description,
     geometry,
-    campaign_hashtag,
     done,
-    validated
+    validated,
+    campaign_hashtag
   } = campaign
   return (
     <Link href={`/campaigns/${campaign_hashtag}`}>

@@ -1,8 +1,11 @@
 import React from 'react'
 import Select from 'react-select'
+import { sortBy, prop } from 'ramda'
 
 import countries, { getName } from 'i18n-iso-countries'
 countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
+
+const sortByLabel = sortBy(prop('label'))
 
 export default ({
   searchText, handleSearch, countries, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
@@ -26,7 +29,7 @@ export default ({
           value={selectedValue}
           onChange={handleSelect}
           options={
-            countries.map(({ country }) => { return { value: country, label: getName(country, 'en') } })
+            sortByLabel(countries.map(({ country }) => { return { value: country, label: getName(country, 'en') } }).filter((country) => country.label))
           }
         />
       </fieldset>
