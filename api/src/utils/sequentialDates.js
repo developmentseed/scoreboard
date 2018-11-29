@@ -20,8 +20,8 @@ module.exports = (dates) => {
   })
     .forEach((v, i) => {
       const a = v
-      const b = dates[i + 1] || 0
-      sorted[k].push(+a)
+      const b = days[i + 1] || 0
+      sorted[k].push(a)
       if ((+b - +a) > 86400000) {
         sorted[++k] = [] // eslint-disable-line no-plusplus
       }
