@@ -1,6 +1,5 @@
 import React from 'react'
 import Select from 'react-select'
-import 'react-select/dist/react-select.css'
 
 import countries, { getName } from 'i18n-iso-countries'
 countries.registerLocale(require('i18n-iso-countries/langs/en.json'))

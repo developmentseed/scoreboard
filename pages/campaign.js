@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import '../styles/Campaigns.scss'
 import Link from 'next/link'
 import Router from 'next/router'
 import api from '../lib/utils/api'

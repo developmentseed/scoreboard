@@ -5,7 +5,6 @@ import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 
 import BadgeInProgress from '../components/BadgeInProgress'
-import '../styles/Dashboard.scss'
 
 import NotLoggedIn from '../components/NotLoggedIn'
 

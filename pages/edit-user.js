@@ -8,9 +8,6 @@ import { actions } from '../lib/store'
 
 import NotLoggedIn from '../components/NotLoggedIn'
 
-import '../styles/Users.scss'
-import 'react-select/dist/react-select.css'
-
 class UserEdit extends Component {
   constructor (props) {
     super(props)
