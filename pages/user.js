@@ -6,29 +6,6 @@ import UserHeader from '../components/UserHeader'
 import UserStats from '../components/UserStats'
 import getSumEdits from '../lib/utils/sum_edits'
 
-// const empty = {
-//   'id': 0,
-//   'name': '',
-//   'extent_uri': '',
-//   'buildings_add': 0,
-//   'buildings_mod': 0,
-//   'waterways_add': 0,
-//   'waterways_mod': 0,
-//   'roads_add': 0,
-//   'roads_mod': 0,
-//   'poi_add': 0,
-//   'poi_mod': 0,
-//   'km_roads_add': 0,
-//   'km_roads_mod': 0,
-//   'km_waterways_add': 0,
-//   'km_waterways_mod': 0,
-//   'changeset_count': 0,
-//   'editors': [],
-//   'edit_times': [],
-//   'country_list': [],
-//   'hashtags': []
-// }
-
 class User extends Component {
   static async getInitialProps ({ req }) {
     const { id } = req.params
@@ -80,12 +57,12 @@ class User extends Component {
       <div className='About'>
         <header className='header--internal '>
           <div className='row'>
-            <h1 className='header--xlarge'>User Stats is Missing!</h1>
+            <h1 className='header--xlarge'>User stats are missing!</h1>
           </div>
         </header>
         <section className='text-body section-first--sm'>
           <div className='row'>
-            <p className='text-body--large'>The User stats does not exist on OSMESA.</p>
+            <p className='text-body--large'>We couldn't find stats for this user. Please contact an administrator.</p>
           </div>
         </section>
       </div>
@@ -110,7 +87,7 @@ class User extends Component {
           num_hashtags={records.hashtags.length}
           country={country}
         />
-        <BadgeSection />
+        { BadgeSection }
       </div>
     )
   }

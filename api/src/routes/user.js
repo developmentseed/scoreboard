@@ -54,7 +54,7 @@ async function get (req, res) {
             uid: parseInt(id, 10),
             name: user.full_name,
             edit_count: 0,
-            buildings_add: 869088,
+            buildings_add: 0,
             buildings_mod: 0,
             roads_add: 0,
             km_roads_add: 0,
