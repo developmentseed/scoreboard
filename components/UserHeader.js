@@ -12,6 +12,10 @@ countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
  * @param {Array[Date]} edit_times
  */
 function getLastEdit (edit_times) {
+  if (edit_times.length === 0) {
+    return `N/A`
+  }
+
   const days = edit_times.map(time => parse(time.day))
   const lastEdit = head(days.sort(compareDesc))
   return `${distanceInWordsToNow(lastEdit)} ago`
