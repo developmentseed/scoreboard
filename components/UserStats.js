@@ -22,13 +22,11 @@ const editBox = (records) => (
     <div className='section-sub--tertiary'>
       <h2 className='header--large'>Edits</h2>
       <h4 className='header--small header--with-description-lg'>Edits Over Time</h4>
-      <div style={{ width: '100%', height: '500px' }} >
-        {
-          (records && records.edit_times)
-            ? <CalendarHeatmap times={records.edit_times} />
-            : <div>Edit time chart unavailable</div>
-        }
-      </div>
+      {
+        (records && records.edit_times)
+          ? <CalendarHeatmap times={records.edit_times} />
+          : <div>Edit time chart unavailable</div>
+      }
     </div>
     <div>
       <h4 className='header--small header--with-description-lg'>Extent of Edits</h4>
