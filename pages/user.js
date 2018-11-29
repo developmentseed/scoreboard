@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import api from '../lib/utils/api'
-import '../styles/Users.scss'
 import UserGlance from '../components/UserGlance'
 import UserHeader from '../components/UserHeader'
 import UserStats from '../components/UserStats'

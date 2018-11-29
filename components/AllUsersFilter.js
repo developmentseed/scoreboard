@@ -1,6 +1,5 @@
 import React from 'react'
 import Select from 'react-select'
-import 'react-select/dist/react-select.css'
 import { sortBy, prop } from 'ramda'
 
 import countries, { getName } from 'i18n-iso-countries'
