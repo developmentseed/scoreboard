@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import '../styles/Badges.scss'
 
 function getProgressGradientBreaks (percentage) {
   // Calculates the linear-gradient breakpoint angles necessary to

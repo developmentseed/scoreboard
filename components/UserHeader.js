@@ -1,6 +1,5 @@
 import React from 'react'
 import { distanceInWordsToNow, parse, compareDesc } from 'date-fns'
-import '../styles/Users.scss'
 import { formatDecimal } from '../lib/utils/format'
 import { head } from 'ramda'
 import countries, { getName } from 'i18n-iso-countries'

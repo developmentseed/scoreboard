@@ -8,9 +8,6 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 
-import '../../styles/Admin.scss'
-import 'react-select/dist/react-select.css'
-
 const badgeMetrics = [
   { label: 'New buildings mapped', value: 'buildings' },
   { label: 'Countries mapped', value: 'countries' },

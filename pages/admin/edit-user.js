@@ -9,9 +9,6 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 
-import '../../styles/Admin.scss'
-import 'react-select/dist/react-select.css'
-
 export class AdminUserEdit extends Component {
   constructor () {
     super()

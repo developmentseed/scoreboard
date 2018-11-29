@@ -1,5 +1,4 @@
 import React from 'react'
-import '../styles/Users.scss'
 import CampaignsChart from './charts/CampaignsChart'
 import EditBreakdownChart from './charts/EditBreakdownChart'
 import MiniBadgeBox from '../components/MiniBadgeBox'

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import '../styles/Campaigns.scss'
 import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
 import CampaignFilters from '../components/CampaignFilters'
