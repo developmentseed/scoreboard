@@ -71,22 +71,46 @@ class User extends Component {
 
   render () {
     const { records, country, badges } = this.props
-    if (!records || !badges) return <div />
+    if (!records) return <div />
 
     const edits = getSumEdits(records)
+
+    let numBadges = 0
+    let BadgeSection = (
+      <div className='About'>
+        <header className='header--internal '>
+          <div className='row'>
+            <h1 className='header--xlarge'>User Stats is Missing!</h1>
+          </div>
+        </header>
+        <section className='text-body section-first--sm'>
+          <div className='row'>
+            <p className='text-body--large'>The User stats does not exist on OSMESA.</p>
+          </div>
+        </section>
+      </div>
+    )
+    if (badges) {
+      numBadges = Object.keys(badges.earnedBadges).length
+      BadgeSection = (
+        <div>
+          <UserGlance records={records} badges={badges} />
+          <UserStats records={records} badges={badges} />
+        </div>
+      )
+    }
 
     return (
       <div className='User'>
         <UserHeader
           name={records.name}
           edit_times={records.edit_times}
-          num_badges={Object.keys(badges.earnedBadges).length}
+          num_badges={numBadges}
           num_edits={edits}
           num_hashtags={records.hashtags.length}
           country={country}
         />
-        <UserGlance records={records} badges={badges} />
-        <UserStats records={records} badges={badges} />
+        <BadgeSection />
       </div>
     )
   }
