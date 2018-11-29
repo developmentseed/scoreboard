@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '../../../.env' })
 const path = require('path')
 const config = require('../config')
 
@@ -18,6 +19,9 @@ const test = {
 const def = {
   client: 'pg',
   connection: config.DATABASE_URL,
+  seeds: {
+    directory: path.join(__dirname, 'seeds', 'production')
+  },
   migrations: {
     directory: path.join(__dirname, './migrations'),
     tableName: 'knex_migrations'

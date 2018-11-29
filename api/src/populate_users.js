@@ -39,9 +39,11 @@ async function populateUsers () {
         .then((rows) => {
           const user = {
             osm_id: obj.osm_id,
-            full_name: obj.full_name,
+            full_name: obj.display_name,
             country: obj.country,
+            edit_count: 0,
             user_info: {
+              full_name: obj.full_name,
               display_name: obj.display_name,
               email: obj.email,
               status: obj.status
