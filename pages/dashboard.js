@@ -126,7 +126,7 @@ class Dashboard extends Component {
 
     // We are logged in and should have a profile
     const osmUser = osm._xml2json.user
-    const badgeNums = account.badges.earnedBadges ? Object.keys(account.badges.earnedBadges).length : 0
+    const badgeNums = account.badges ? Object.keys(account.badges.earnedBadges).length : 0
 
     return (
       <div className='dashboard'>
@@ -160,7 +160,7 @@ class Dashboard extends Component {
           {/* <UserExtentMap extent={user.records.extent_uri} uid={osmUser['@']['id']} /> */}
         </header>
 
-        {account.badges.unearnedBadges ? this.renderUpcomingBadges(account.badges.unearnedBadges) : ''}
+        {account.badges ? this.renderUpcomingBadges(account.badges.unearnedBadges) : ''}
         {/* this.renderProjects() */}
       </div>
     )
