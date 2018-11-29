@@ -8,7 +8,6 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 
-
 export class Admin extends Component {
   constructor () {
     super()
