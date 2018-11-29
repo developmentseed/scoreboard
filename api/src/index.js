@@ -34,7 +34,8 @@ swaggerDocument.info.version = pckg.version
 let sessionConfig = {
   secret: SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  expires: new Date(Date.now() + (30 * 86400 * 1000))
 }
 
 if (NODE_ENV === 'production') {
@@ -42,13 +43,13 @@ if (NODE_ENV === 'production') {
     knex: connection()
   })
 
-  sessionConfig = {
+  Object.assign(sessionConfig, {
     secret: SESSION_SECRET,
     cookie: {
-      maxAge: 10000 // ten seconds, for testing
+      expires: new Date(Date.now() + (30 * 86400 * 1000))
     },
     store: store
-  }
+  })
 }
 
 app.use(bodyParser.json())
