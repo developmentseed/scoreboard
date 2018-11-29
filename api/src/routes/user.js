@@ -26,23 +26,55 @@ async function get (req, res) {
   }
   try {
     const db = connection()
-    const osmesaResponse = await osmesa.getUser(id)
     const [user] = await users.findByOsmId(id)
-    const json = JSON.parse(osmesaResponse)
-
-    const badgesFromDB = await db('badges').select() // array of all badges
-    const badges = getBadgeProgress(json, badgesFromDB)
-
-    json.extent_uri = `${APP_URL}/scoreboard/api/extents/${json.extent_uri}`
     const rolesList = user.roles ? await roles.getRoles(user.roles) : []
 
-    return res.send({
-      id,
-      badges,
-      records: json,
-      roles: rolesList,
-      country: user.country
-    })
+    // handle the case where osm user doesn't exist on osmesa
+    try {
+      const osmesaResponse = await osmesa.getUser(id)
+      const json = JSON.parse(osmesaResponse)
+
+      const badgesFromDB = await db('badges').select() // array of all badges
+      const badges = getBadgeProgress(json, badgesFromDB)
+
+      json.extent_uri = `${APP_URL}/scoreboard/api/extents/${json.extent_uri}`
+
+      return res.send({
+        id,
+        badges,
+        records: json,
+        country: user.country
+      })
+    } catch (e) {
+      if (e.message && e.message.includes('Unable to retrieve user record at')) {
+        return res.send({
+          id,
+          badges: null,
+          records: {
+            uid: parseInt(id, 10),
+            name: user.full_name,
+            edit_count: 0,
+            buildings_add: 0,
+            buildings_mod: 0,
+            roads_add: 0,
+            km_roads_add: 0,
+            roads_mod: 0,
+            km_roads_mod: 0,
+            waterways_add: 0,
+            km_waterways_add: 0,
+            poi_add: 0,
+            changeset_count: 0,
+            editors: [],
+            edit_times: [],
+            country_list: [],
+            hashtags: []
+          },
+          roles: rolesList,
+          country: user.country
+        })
+      }
+      throw e
+    }
   } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve user stats')

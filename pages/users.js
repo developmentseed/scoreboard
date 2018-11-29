@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import '../styles/Users.scss'
-import '../styles/Campaigns.scss'
 import { equals, pick } from 'ramda'
 import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
