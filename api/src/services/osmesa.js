@@ -2,10 +2,7 @@ const rp = require('request-promise-native')
 const fs = require('fs')
 const path = require('path')
 
-const {
-  OSMESA_API,
-  NODE_ENV
-} = require('../config')
+const { OSMESA_API } = require('../config')
 
 /**
  * Methods to grab data from OSMesa
@@ -44,7 +41,7 @@ class FakeOSMesaAPI {
   }
 }
 
-if (NODE_ENV === 'development' || NODE_ENV === 'test') {
+if (!OSMESA_API) {
   module.exports = new FakeOSMesaAPI()
 } else {
   module.exports = new OSMesaAPI()

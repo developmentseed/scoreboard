@@ -64,7 +64,6 @@ async function get (req, res) {
             km_waterways_add: 0,
             poi_add: 0,
             changeset_count: 0,
-            edit_count: 0,
             editors: [],
             edit_times: [],
             country_list: [],
