@@ -18,12 +18,19 @@ class CalendarHeatmap extends React.Component {
 
   setChartOptions () {
     const { times } = this.props
+
     const years = times.map(time => getISOYear(time.day))
     const totalYears = [ ...new Set(years) ].length
     const earliestYear = years.sort()[0]
+
     // calculate a height for a year grid that can retain aspect ratio at different sizes
     const yearGridHeight = window.innerWidth / (150 / 1170 * 100) * 1.5
-    const height = yearGridHeight * totalYears
+    let height = yearGridHeight * totalYears
+
+    if (height > 525) {
+      height = 525
+    }
+
     const values = times.map(time => ({ day: time.day, value: time.count }))
     this.setState({ height, values, earliestYear })
   }
