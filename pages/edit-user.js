@@ -8,9 +8,6 @@ import { actions } from '../lib/store'
 
 import NotLoggedIn from '../components/NotLoggedIn'
 
-import '../styles/Users.scss'
-import 'react-select/dist/react-select.css'
-
 class UserEdit extends Component {
   constructor (props) {
     super(props)
@@ -18,12 +15,12 @@ class UserEdit extends Component {
   }
 
   updateUser (data) {
-    const { user: { id } } = this.props
+    const { id } = this.props
 
     api('put', `/api/users/${id}`, data)
       .then(res => {
         this.setState({ saved: true })
-        this.props.setNotification({ type: 'error', message: '✓ Saved' })
+        this.props.setNotification({ type: 'info', message: '✓ Saved' })
       })
       .catch(err => {
         console.log(err)

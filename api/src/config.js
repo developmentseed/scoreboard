@@ -1,4 +1,5 @@
 let DATABASE_URL
+
 if (process.env.NODE_ENV === 'test') {
   DATABASE_URL = process.env.DATABASE_URL || 'postgres://scoreboard_test:test@localhost:5433/scoreboard_test'
 } else {
@@ -8,7 +9,7 @@ if (process.env.NODE_ENV === 'test') {
 module.exports = {
   PORT: process.env.PORT || 8181,
   NODE_ENV: process.env.NODE_ENV || 'development',
-  OSMESA_API: process.env.OSMESA_API || 'https://osmesa-dummy-analytics.herokuapp.com',
+  OSMESA_API: process.env.OSMESA_API || null,
   TM_URL: process.env.TM_URL || 'http://tasks.openstreetmap.us',
   TM_VERSION: process.env.TM_VERSION || '3',
   TM_HASHTAG: process.env.TM_HASHTAG || 'project',
