@@ -61,6 +61,6 @@ app.use(passport.session())
 app.use('/auth', authRouter)
 app.use('/api', router)
 app.use('/scoreboard/api', router)
-app.use(['/api/docs'], swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use(['/api', '/api/docs'], swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 module.exports = app
