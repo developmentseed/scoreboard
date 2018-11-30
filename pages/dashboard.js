@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Link from 'next/link'
-// import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 
@@ -10,9 +10,9 @@ import NotLoggedIn from '../components/NotLoggedIn'
 
 import mockCampaigns from '../tests/mocks/campaigns.json'
 
-// const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
-//   ssr: false
-// })
+const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
+  ssr: false
+})
 
 class Dashboard extends Component {
   constructor () {
@@ -124,7 +124,7 @@ class Dashboard extends Component {
             </div>
           </div>
           <div className='wrapper--map' />
-          {/* <UserExtentMap extent={user.records.extent_uri} uid={osmUser['@']['id']} /> */}
+          <UserExtentMap extent={account.records.extent_uri} uid={osmUser['@']['id']} />
         </header>
 
         {account.badges ? this.renderUpcomingBadges(account.badges.unearnedBadges) : ''}
