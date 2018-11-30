@@ -9,9 +9,6 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 
-import '../../styles/Admin.scss'
-import 'react-select/dist/react-select.css'
-
 export class AdminUserEdit extends Component {
   constructor () {
     super()
@@ -39,24 +36,17 @@ export class AdminUserEdit extends Component {
     return roles.map((role) => role.name).join(', ')
   }
 
-  renderSaved () {
-    if (this.state.saved) {
-      setTimeout(() => {
-        this.setState({ saved: false })
-      }, 1000)
-
-      return (
-        <p style={{ color: '#4FCA9E' }}>✓ Saved</p>
-      )
-    }
-  }
-
   onRoleChange (roles) {
     const { admin } = this.props
     this.setState({ selectedRoles: roles })
     this.props.updateUserRoles(admin.user.id, roles.map((role) => role.value))
       .then(() => {
         this.setState({ saved: true })
+        this.props.setNotification({ type: 'error', message: '✓ Saved' })
+      })
+      .catch(err => {
+        console.log(err)
+        this.props.setNotification({ type: 'error', message: 'Could not update user' })
       })
   }
 
@@ -115,7 +105,6 @@ export class AdminUserEdit extends Component {
                     value={this.createRoleSelectOptions(selectedRoles || admin.user.roles)}
                     onChange={(roles) => this.onRoleChange(roles)}
                   />
-                  {this.renderSaved()}
                 </div>
               </div>
             </div>

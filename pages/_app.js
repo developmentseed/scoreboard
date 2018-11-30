@@ -2,16 +2,29 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import Link from 'next/link'
 import Head from 'next/head'
-import withReduxStore from '../lib/store/with-store'
 import { Provider, connect } from 'unistore/react'
+import { Provider as AlertProvider, withAlert } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
+
+import withReduxStore from '../lib/store/with-store'
 import { actions } from '../lib/store'
 import { isAdmin } from '../lib/utils/roles'
 
+/* SCSS */
 import '../styles/index.scss'
 import '../styles/App.scss'
+import '../styles/Admin.scss'
+import '../styles/Dashboard.scss'
+import '../styles/Campaigns.scss'
+import '../styles/Users.scss'
+import '../styles/Badges.scss'
+
+/* CSS */
+import 'react-select/dist/react-select.css'
+import 'react-input-range/lib/css/index.css'
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
-const domain = process.env.APP_DOMAIN || 'http://localhost:8181'
+const domain = process.env.APP_URL || 'http://localhost:8181'
 const profileIcon = '/static/dashboard-temp/profile-icon.png'
 
 class Layout extends React.Component {
@@ -26,6 +39,17 @@ class Layout extends React.Component {
 
   componentDidMount () {
     this.props.getAuthenticatedUser()
+  }
+
+  componentDidUpdate () {
+    const { notification } = this.props
+
+    if (notification) {
+      const { type, message, options } = notification
+      if (!this.props.alert || !this.props.alert[type]) return
+      this.props.alert[type](message, options)
+      this.props.clearNotification()
+    }
   }
 
   handleOutsideClick () {
@@ -86,7 +110,7 @@ class Layout extends React.Component {
                     }
                   </div>
                   : <ul className='nav--right'>
-                    <li><a href={`${domain}/auth/openstreetmap`}>Login</a></li>
+                    <li><a href={`${domain}/auth/openstreetmap`} className='link--login'>Login</a></li>
                   </ul>
               }
             </nav>
@@ -98,7 +122,7 @@ class Layout extends React.Component {
   }
 }
 
-const LayoutWithStore = connect(['authenticatedUser'], actions)(Layout)
+const LayoutWithStore = connect(['authenticatedUser', 'notification'], actions)(withAlert(Layout))
 
 class Scoreboard extends App {
   static async getInitialProps ({ Component, router, ctx }) {
@@ -128,13 +152,16 @@ class Scoreboard extends App {
 
   render () {
     const { Component, pageProps, reduxStore } = this.props
+    const alertOptions = { position: 'top center', timeout: 3000, offset: '30px' }
 
     return (
       <Container>
         <Provider store={reduxStore}>
-          <LayoutWithStore>
-            <Component {...pageProps} project={projectName} />
-          </LayoutWithStore>
+          <AlertProvider template={AlertTemplate} {...alertOptions}>
+            <LayoutWithStore>
+              <Component {...pageProps} project={projectName} />
+            </LayoutWithStore>
+          </AlertProvider>
         </Provider>
       </Container>
     )

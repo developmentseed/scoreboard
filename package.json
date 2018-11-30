@@ -11,15 +11,21 @@
     "test-ui": "NODE_ENV=test jest tests/*.test.js",
     "test-api": "NODE_ENV=test ava api/tests/*.test.js --serial",
     "migrate": "knex migrate:latest --cwd api/src/db/",
-    "seed": "knex seed:run --cwd api/src/db/",
+    "seed": "knex seed:run --cwd api/src/db",
     "rollback": "knex migrate:rollback --cwd api/src/db/",
     "clocks": "nf start users_clock && nf start tm_clock",
+    "users": "nf start populate_users",
     "docs": "swagger-markdown -i api/docs/api.yml -o api/README.md",
     "lint": "devseed-standard",
     "lintfix": "devseed-standard --fix"
   },
   "babel": {
     "env": {
+      "production": {
+        "presets": [
+          "next/babel"
+        ]
+      },
       "development": {
         "presets": [
           "next/babel"
@@ -68,6 +74,7 @@
     "babel-preset-jest": "^23.2.0",
     "body-parser": "^1.18.3",
     "compression": "^1.7.1",
+    "connect-session-knex": "^1.4.0",
     "css-loader": "^1.0.0",
     "date-fns": "^1.29.0",
     "debounce-promise": "^3.0.2",
@@ -80,6 +87,7 @@
     "express-promise-router": "^2.0.0",
     "express-session": "^1.15.6",
     "file-loader": "^2.0.0",
+    "foreman": "^3.0.1",
     "fs-extra": "^7.0.0",
     "i18n-iso-countries": "^3.7.4",
     "knex": "^0.15.2",
@@ -94,14 +102,18 @@
     "passport-mock-strategy": "^1.1.1",
     "passport-openstreetmap": "^0.1.2",
     "pg": "^7.4.3",
+    "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
     "ramda": "^0.25.0",
     "react": "^16.0.0",
+    "react-alert": "^4.0.4",
+    "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.0.0",
     "react-input-range": "^1.2.2",
     "react-js-pagination": "^3.0.0",
     "react-markdown": "^3.1.1",
     "react-select": "^1.2.1",
+    "react-transition-group": "^2.5.0",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5",
     "sqlite3": "^3.1.13",

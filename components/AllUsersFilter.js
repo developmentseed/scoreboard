@@ -1,13 +1,15 @@
 import React from 'react'
 import Select from 'react-select'
-import 'react-select/dist/react-select.css'
+import { sortBy, prop } from 'ramda'
 
 import countries, { getName } from 'i18n-iso-countries'
 countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
 
+const sortByLabel = sortBy(prop('label'))
+
 export default ({
   searchText, handleSearch, countries, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
-  handleToggleActive, activeValue
+  handleToggleActive, selectedActive
 }) => (
   <div className='sidebar'>
     <h3 className='header--medium'>Filter</h3>
@@ -27,7 +29,7 @@ export default ({
           value={selectedValue}
           onChange={handleSelect}
           options={
-            countries.map(({ country }) => { return { value: country, label: getName(country, 'en') } })
+            sortByLabel(countries.map(({ country }) => { return { value: country, label: getName(country, 'en') } }).filter((country) => country.label))
           }
         />
       </fieldset>
@@ -45,7 +47,7 @@ export default ({
       </fieldset>
       <fieldset>
         <legend>Active Users</legend>
-        <input type='checkbox' checked={activeValue} onChange={handleToggleActive} />
+        <input type='checkbox' checked={selectedActive} onChange={handleToggleActive} />
         Filter active users (edited in the past 6 months)
       </fieldset>
     </form>

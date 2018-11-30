@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import '../styles/Badges.scss'
 
 export default class BadgeCompleted extends Component {
   render () {

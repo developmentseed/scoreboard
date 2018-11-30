@@ -7,8 +7,8 @@ module.exports = (dates) => {
   // Filter out non-unique dates
   const days = uniq(
     dates.map((date) => {
-      date = new Date(date)
-      return date.setHours(0, 0, 0, 0)
+      const dateSplit = date.split('-')
+      return new Date(dateSplit[0], Number(dateSplit[1] - 1), dateSplit[2])
     })
   )
 
@@ -20,8 +20,8 @@ module.exports = (dates) => {
   })
     .forEach((v, i) => {
       const a = v
-      const b = dates[i + 1] || 0
-      sorted[k].push(+a)
+      const b = days[i + 1] || 0
+      sorted[k].push(a)
       if ((+b - +a) > 86400000) {
         sorted[++k] = [] // eslint-disable-line no-plusplus
       }

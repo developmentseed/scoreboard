@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { connect } from 'unistore/react'
+import { withAlert } from 'react-alert'
 
 import { actions } from '../lib/store'
 import trimLength from '../lib/utils/trim_length'
@@ -14,14 +15,6 @@ const Map = dynamic(() => import('../components/charts/HomeMap'), {
 })
 
 export class Home extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      records: null,
-      campaign_total: 0
-    }
-  }
-
   componentDidMount () {
     this.props.getTopStats()
   }
@@ -30,7 +23,7 @@ export class Home extends Component {
     const { topStats, project: projectName } = this.props
     if (!topStats) return <div />
 
-    const { campaign_total, records, num_users, features, top_edits, edits_by_country } = topStats
+    const { total, records, numUsers, features, topEdits, editsByCountry } = topStats
 
     return (
       <div className='home'>
@@ -50,7 +43,7 @@ export class Home extends Component {
                     <li className='list--block'>
                       <Link href='/users'>
                         <a className='link--white'>
-                          <span className='num--large'>{formatDecimal(num_users)}</span>
+                          <span className='num--large'>{formatDecimal(numUsers)}</span>
                           <span className='descriptor-chart'>Active Users</span>
                         </a>
                       </Link>
@@ -58,7 +51,7 @@ export class Home extends Component {
                     <li className='list--block'>
                       <Link href='/campaigns'>
                         <a className='link--white'>
-                          <span className='num--large'>{formatDecimal(campaign_total)}</span>
+                          <span className='num--large'>{formatDecimal(total)}</span>
                           <span className='descriptor-chart'>Campaigns</span>
                         </a>
                       </Link>
@@ -82,7 +75,7 @@ export class Home extends Component {
               <ul className='clearfix'>
                 {
                   records.map(record =>
-                    <li key={`block-${record.campaign_hashtag}`} className='block--campaign'>
+                    <li key={`block-${record.id}`} className='block--campaign'>
                       <h3 className='header--small header--with-description-xlg'>
                         <Link href={`/campaigns/${record.campaign_hashtag}`}>
                           <a className='header--underlined'>{record.name}</a>
@@ -120,12 +113,12 @@ export class Home extends Component {
               <h2 className='header--large'>Users</h2>
               <div className='side-by-side section-width-twenty section-width--first'>
                 <h3>Edits By Country</h3>
-                <EditorsByCountry edits={edits_by_country} />
+                <EditorsByCountry edits={editsByCountry} />
               </div>
               <div className='side-by-side section-width-eighty' style={{ height: '430px', marginBottom: '50px' }}>
                 <h3>Top Editors</h3>
                 {
-                  top_edits ? <TopEditorsChart edits={top_edits} /> : <div>Loading...</div>
+                  topEdits ? <TopEditorsChart edits={topEdits} /> : <div>Loading...</div>
                 }
               </div>
               <Link href='/users'>
@@ -139,4 +132,4 @@ export class Home extends Component {
   }
 }
 
-export default connect('topStats', actions)(Home)
+export default connect(['topStats', 'notification'], actions)(withAlert(Home))
