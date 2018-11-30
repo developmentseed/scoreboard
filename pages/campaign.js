@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { connect } from 'unistore/react'
 import { distanceInWordsToNow } from 'date-fns'
