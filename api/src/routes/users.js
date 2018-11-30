@@ -26,7 +26,7 @@ function applyFilters (query, req) {
 
   if (active && active === 'true') {
     // Filter for users that have edited in the past 6 months
-    query = query.whereBetween('last_edit', [subMonths(Date.now(), 6), Date.now()])
+    query = query.whereBetween('last_edit', [subMonths(Date.now(), 6), new Date(Date.now())])
   }
 
   return query
