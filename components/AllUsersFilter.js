@@ -9,7 +9,7 @@ const sortByLabel = sortBy(prop('label'))
 
 export default ({
   searchText, handleSearch, countries, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
-  handleToggleActive, activeValue
+  handleToggleActive, selectedActive
 }) => (
   <div className='sidebar'>
     <h3 className='header--medium'>Filter</h3>
@@ -47,7 +47,7 @@ export default ({
       </fieldset>
       <fieldset>
         <legend>Active Users</legend>
-        <input type='checkbox' checked={activeValue} onChange={handleToggleActive} />
+        <input type='checkbox' checked={selectedActive} onChange={handleToggleActive} />
         Filter active users (edited in the past 6 months)
       </fieldset>
     </form>
