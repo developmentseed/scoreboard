@@ -5,8 +5,10 @@ import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 
 import BadgeInProgress from '../components/BadgeInProgress'
-
+import CampaignCard from '../components/CampaignCard'
 import NotLoggedIn from '../components/NotLoggedIn'
+
+import mockCampaigns from '../tests/mocks/campaigns.json'
 
 // const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
 //   ssr: false
@@ -64,46 +66,12 @@ class Dashboard extends Component {
     )
   }
 
-  renderProjects () {
-    const { projects } = this.props
-
-    if (!projects) return (<div />)
-    const features = projects.records.features
-
+  renderTodos () {
     return (
       <section>
         <div className='row'>
-          <h2 className='header--large header--with-description'>Available Projects</h2>
-          <p>Get started on one of the projects below to help complete campaigns or to continue earning points towards badges!</p>
-          <ol>
-            {
-              features.map((project) => {
-                return (
-                  <li key={`tm-project-${project.id}`} className='block--campaign'>
-                    <h3 className='header--small header--with-description-xlg'>
-                      <a className='header--underlined' href={`${projects.tasking_manager_url}/project/${project.id}`}>{project.properties.name}</a>
-                    </h3>
-                    <div className='chart-bar--main'>
-                      <span className='chart-bar--title'>Done</span>
-                      <span className='chart-bar--wrapper'>
-                        <span className='chart-bar' style={{ 'width': `${project.properties.done}%` }} />
-                        <span className='chart-bar--percent'>{project.properties.done}%</span>
-                      </span>
-                    </div>
-                    <div className='chart-bar--main'>
-                      <span className='chart-bar--title'>Validated</span>
-                      <span className='chart-bar--wrapper'>
-                        <span className='chart-bar' style={{ 'width': `${project.properties.validated}%` }} />
-                        <span className='chart-bar--percent'>{project.properties.validated}%</span>
-                      </span>
-                    </div>
-                    <p>{project.properties.description}</p>
-                    <a href={`${projects.tasking_manager_url}/project/${project.id}`}><a className='link--large'>Join the project</a></a>
-                  </li>
-                )
-              })
-            }
-          </ol>
+          <h2 className='header--large header--with-description'>To-do</h2>
+          {mockCampaigns.records.map(record => <CampaignCard key={record.id} campaign={record} />)}
         </div>
       </section>
     )
@@ -160,13 +128,13 @@ class Dashboard extends Component {
         </header>
 
         {account.badges ? this.renderUpcomingBadges(account.badges.unearnedBadges) : ''}
-        {/* this.renderProjects() */}
+        {this.renderTodos()}
       </div>
     )
   }
 }
 
-const Page = connect(['authenticatedUser', 'projects', 'error'], actions)(Dashboard)
+const Page = connect(['authenticatedUser', 'error'], actions)(Dashboard)
 
 Page.getInitialProps = async ({ query }) => {
 
