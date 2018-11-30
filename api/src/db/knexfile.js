@@ -37,6 +37,5 @@ module.exports = {
     },
     debug: process.env.KNEX_DEBUG || false
   }),
-  staging: def,
   production: def
 }
