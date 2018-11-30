@@ -391,6 +391,7 @@ section {
   font-family: $heading-font-family;
   display: inline-block;
   text-transform: uppercase;
+  cursor: pointer;
   &:hover {
     background-color: #fff;
     color: $base-color;
@@ -403,6 +404,17 @@ section {
   }
 }
 
+.header--page {
+  .button, .button:visited {
+    border-color: #fff;
+    background-color: $base-color;
+    color: #fff;
+    &:hover {
+      color: $base-color;
+      background-color: #fff;
+    }
+  }
+}
 
 a, a:visited {
   text-decoration: none;

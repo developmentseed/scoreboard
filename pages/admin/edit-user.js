@@ -76,7 +76,7 @@ export class AdminUserEdit extends Component {
     }
 
     return (
-      <div>
+      <div className='admin'>
         <AdminHeader />
         <section>
           <div className='row'>

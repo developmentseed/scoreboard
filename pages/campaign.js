@@ -58,9 +58,7 @@ export class Campaign extends Component {
               </ul>
             </div>
             <div className='section-sub--right'>
-              <Link href='/about'>
-                <a className='button'>Contribute</a>
-              </Link>
+              <button className='button'>Add Campaign to to-do list</button>
             </div>
           </div>
         </header>
