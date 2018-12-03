@@ -28,6 +28,10 @@ async function command (args, flags) {
     [user] = await users.findByOsmId(osmId)
   }
 
+  if (!user.roles) {
+    user.roles = []
+  }
+
   // return early if user already has this role
   if (user.roles.includes(role.id)) {
     return process.exit()

@@ -51,6 +51,7 @@ async function get (req, res) {
         badges,
         assignments,
         records: json,
+        roles: rolesList,
         country: user.country
       })
     } catch (e) {
