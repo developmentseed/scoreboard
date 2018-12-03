@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 const appUrl = process.env.APP_URL || 'http://localhost:8181'
-const prefix = process.env.APP_URL_PREFIX || ''
+const prefix = process.env.APP_URL_PREFIX || '/'
 const final = join(appUrl, prefix)
 
 module.exports = {

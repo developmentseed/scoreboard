@@ -86,7 +86,7 @@ class Layout extends React.Component {
             <nav className='clearfix'>
               <ul className='nav--left'>
                 <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
-                <li><Link href={`/${prefix}campaigns`}><a>Campaigns</a></Link></li>
+                <li><Link href='/campaigns'><a>Campaigns</a></Link></li>
                 <li><Link href='/users'><a>Users</a></Link></li>
                 <li><Link href='/about'><a>About</a></Link></li>
               </ul>

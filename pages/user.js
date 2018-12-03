@@ -1,52 +1,19 @@
 import React, { Component } from 'react'
-import fetch from '../lib/utils/api'
 import UserGlance from '../components/UserGlance'
 import UserHeader from '../components/UserHeader'
 import UserStats from '../components/UserStats'
 import getSumEdits from '../lib/utils/sum_edits'
+import { actions } from '../lib/store'
+import { connect } from 'unistore/react'
 
 class User extends Component {
-  static async getInitialProps ({ req }) {
-    const { id } = req.params
-
-    try {
-      const res = await fetch(`/api/users/${id}`)
-      const { records, country, badges } = res.json()
-
-      return {
-        id,
-        records,
-        country,
-        badges
-      }
-    } catch (e) {
-      console.log(e)
-      this.props.setNotification({ type: 'error', message: 'Could not get user' })
-    }
-  }
-
-  async componentDidMount () {
-    const { id, records, badges } = this.props
-    if (!records || !badges) {
-      try {
-        const res = await fetch(`/api/users/${id}`)
-        const { records, country, badges } = res.json()
-
-        this.setState({
-          id,
-          records,
-          country,
-          badges
-        })
-      } catch (e) {
-        console.log(e)
-        this.props.setNotification({ type: 'error', message: 'Could not get user' })
-      }
-    }
+  componentDidMount () {
+    this.props.getUser(this.props.id)
   }
 
   render () {
-    const { records, country, badges } = this.props
+    if (!this.props.user) return <div />
+    const { records, country, badges } = this.props.user
     if (!records) return <div />
 
     const edits = getSumEdits(records)
@@ -92,4 +59,12 @@ class User extends Component {
   }
 }
 
-export default User
+const connectedUser = connect(['user'], actions)(User)
+connectedUser.getInitialProps = function ({ req }) {
+  const { id } = req.params
+  return {
+    id
+  }
+}
+
+export default connectedUser
