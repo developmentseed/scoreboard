@@ -20,7 +20,7 @@ class UserEdit extends Component {
     api('put', `/api/users/${id}`, data)
       .then(res => {
         this.setState({ saved: true })
-        this.props.setNotification({ type: 'info', message: '✓ Saved' })
+        this.props.setNotification({ type: 'success', message: 'User updated successfully' })
       })
       .catch(err => {
         console.log(err)

@@ -72,7 +72,7 @@ export class AdminBadgesEdit extends Component {
 
     try {
       await this.props.createBadge(params)
-      this.props.setNotification({ type: 'info', message: 'Badge created successfully!' })
+      this.props.setNotification({ type: 'success', message: 'Badge created successfully' })
       this.setState({ disableInteraction: false })
       this.resetInputs()
     } catch (e) {

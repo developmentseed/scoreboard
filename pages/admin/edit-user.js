@@ -42,7 +42,7 @@ export class AdminUserEdit extends Component {
     this.props.updateUserRoles(admin.user.id, roles.map((role) => role.value))
       .then(() => {
         this.setState({ saved: true })
-        this.props.setNotification({ type: 'error', message: '✓ Saved' })
+        this.props.setNotification({ type: 'success', message: 'Profile updated successfully' })
       })
       .catch(err => {
         console.log(err)
