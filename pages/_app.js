@@ -1,10 +1,12 @@
 import React from 'react'
+import join from 'url-join'
 import App, { Container } from 'next/app'
 import Head from 'next/head'
 import { Provider, connect } from 'unistore/react'
 import { Provider as AlertProvider, withAlert } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 
+import { APP_URL_FINAL } from '../api/src/config'
 import Link from '../components/Link'
 import withReduxStore from '../lib/store/with-store'
 import { actions } from '../lib/store'
@@ -22,9 +24,9 @@ import '../styles/Badges.scss'
 /* CSS */
 import 'react-select/dist/react-select.css'
 import 'react-input-range/lib/css/index.css'
+import { join } from 'upath';
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
-const domain = process.env.APP_URL || 'http://localhost:8181'
 const prefix = process.env.APP_PREFIX || ''
 const profileIcon = '/static/dashboard-temp/profile-icon.png'
 
@@ -107,14 +109,14 @@ class Layout extends React.Component {
                                 <li><Link href={`/admin`}><a>Admin</a></Link></li>
                               )
                             }
-                            <li><Link href={`${domain}/auth/logout`}><a>Logout</a></Link></li>
+                            <li><Link href={join(APP_URL_FINAL, '/auth/logout')}><a>Logout</a></Link></li>
                           </ul>
                         </div>
                       )
                     }
                   </div>
                   : <ul className='nav--right'>
-                    <li><a href={`${domain}/auth/openstreetmap`} className='link--login'>Login</a></li>
+                    <li><a href={join(APP_URL_FINAL, '/auth/openstreetmap')} className='link--login'>Login</a></li>
                   </ul>
               }
             </nav>
