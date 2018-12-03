@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import join from 'url-join'
+import { APP_URL_PREFIX } from '../api/src/config'
 
 export default class BadgeCompleted extends Component {
   render () {
@@ -8,8 +10,8 @@ export default class BadgeCompleted extends Component {
     var { category, badgeLevel } = this.props.badge
 
     if (category && badgeLevel) {
-      badgeUrl = `/static/badges/${category}-${badgeLevel}-graphic.svg`
-      borderUrl = `/static/badges/border${badgeLevel}.svg`
+      badgeUrl = join(APP_URL_PREFIX, `/static/badges/${category}-${badgeLevel}-graphic.svg`)
+      borderUrl = join(APP_URL_PREFIX, `/static/badges/border${badgeLevel}.svg`)
     }
 
     return (
