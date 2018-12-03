@@ -27,6 +27,10 @@ async function command (args, flags) {
     return process.exit()
   }
 
+  if (!user.roles) {
+    user.roles = []
+  }
+
   if (user.roles.includes(adminRole.id)) {
     console.log('user is already an admin')
     return process.exit()

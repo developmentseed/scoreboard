@@ -43,6 +43,7 @@ async function get (req, res) {
         id,
         badges,
         records: json,
+        roles: rolesList,
         country: user.country
       })
     } catch (e) {
