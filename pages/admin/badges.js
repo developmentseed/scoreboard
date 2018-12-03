@@ -37,6 +37,7 @@ export class AdminBadges extends Component {
     const { badges } = this.props
     if (!badges || !badges.length) return
 
+    console.log('renderList', badges)
     return (
       <div>
         <h1>List</h1>
