@@ -3,7 +3,7 @@ import { equals, pick } from 'ramda'
 import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
 import AllUsersTable from '../components/AllUsersTable'
-import api, { createApiUrl } from '../lib/utils/api'
+import fetch, { createApiUrl } from '../lib/utils/api'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
@@ -43,7 +43,7 @@ export class Users extends Component {
 
   _handleChange (props) {
     let { searchText: q, page, selectedValue: country, selectedSortValue: sortType, selectedActive: active } = props
-    api('get', createApiUrl('/api/users/stats', { q, page, country, sortType, active }))
+    fetch(createApiUrl('/api/users/stats', { q, page, country, sortType, active }))
       .then(res => {
         this.setState(Object.assign({ records: res.data, apiStatus: 'SUCCESS' }))
       })
