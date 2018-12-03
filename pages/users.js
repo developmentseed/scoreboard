@@ -45,7 +45,7 @@ export class Users extends Component {
     let { searchText: q, page, selectedValue: country, selectedSortValue: sortType, selectedActive: active } = props
     fetch(createApiUrl('/api/users/stats', { q, page, country, sortType, active }))
       .then(res => {
-        this.setState(Object.assign({ records: res.data, apiStatus: 'SUCCESS' }))
+        this.setState(Object.assign({ records: res.json(), apiStatus: 'SUCCESS' }))
       })
       .catch(err => {
         console.log(err)

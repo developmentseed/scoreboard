@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Select from 'react-select'
 import { connect } from 'unistore/react'
 
-import api from '../lib/utils/api'
+import fetch from '../lib/utils/api'
 import countries from '../lib/utils/country-list'
 import { actions } from '../lib/store'
 
@@ -76,8 +76,8 @@ const Page = connect(['authenticatedUser', 'user'], actions)(UserEdit)
 */
 Page.getInitialProps = async ({ req, query }) => {
   const { id } = query
-  const res = await api('get', `/api/users/${id}`)
-  const { country } = res.data
+  const res = await fetch(`/api/users/${id}`)
+  const { country } = res.json()
   return { id, currentCountry: country }
 }
 

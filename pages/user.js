@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import api from '../lib/utils/api'
+import fetch from '../lib/utils/api'
 import UserGlance from '../components/UserGlance'
 import UserHeader from '../components/UserHeader'
 import UserStats from '../components/UserStats'
@@ -10,8 +10,8 @@ class User extends Component {
     const { id } = req.params
 
     try {
-      const res = await api('get', `/api/users/${id}`)
-      const { records, country, badges } = res.data
+      const res = await fetch(`/api/users/${id}`)
+      const { records, country, badges } = res.json()
 
       return {
         id,
@@ -29,8 +29,8 @@ class User extends Component {
     const { id, records, badges } = this.props
     if (!records || !badges) {
       try {
-        const res = await api('get', `/api/users/${id}`)
-        const { records, country, badges } = res.data
+        const res = await fetch(`/api/users/${id}`)
+        const { records, country, badges } = res.json()
 
         this.setState({
           id,
