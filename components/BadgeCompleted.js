@@ -4,8 +4,8 @@ import { APP_URL_PREFIX } from '../api/src/config'
 
 export default class BadgeCompleted extends Component {
   render () {
-    let badgeUrl = '/static/badges/blank-graphic.svg'
-    let borderUrl = '/static/badges/blank-border.svg'
+    let badgeUrl = join(APP_URL_PREFIX, '/static/badges/blank-graphic.svg')
+    let borderUrl = join(APP_URL_PREFIX, '/static/badges/blank-border.svg')
 
     var { category, badgeLevel } = this.props.badge
 
