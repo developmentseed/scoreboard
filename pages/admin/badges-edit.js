@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Router from 'next/router'
+import Link from 'next/link'
 import Select from 'react-select'
 import { connect } from 'unistore/react'
 
@@ -58,13 +59,21 @@ export class AdminBadgesEdit extends Component {
   }
 
   async componentDidMount () {
+    const { id } = this.props
+
     try {
       await this.props.getAuthenticatedUser()
+      await this.props.getBadge(id)
+      console.log('loading???')
       this.setState({ loading: false })
     } catch (err) {
       console.log(err)
       this.setState({ loading: false })
     }
+  }
+
+  componentDidUpdate () {
+    console.log('componentDidUpdate badge', this.props.badge, this.props)
   }
 
   async createBadge (params) {
@@ -104,10 +113,26 @@ export class AdminBadgesEdit extends Component {
         <AdminHeader />
         <section>
           <div className='row'>
-            <h1 className='header--xlarge'>Add a new badge</h1>
-          </div>
-          <div className='row'>
-            {this.renderAddNewForm()}
+            <div className='sidebar'>
+              <h2 className='header--large'>Badges</h2>
+              <ul className='admin-sidebar-links'>
+                <li>
+                  <Link href='/admin/badges'>
+                    <a className='link--large'>
+                      Badges List
+                    </a>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className='content--with-sidebar'>
+              <div className='row'>
+                <h1 className='header--xlarge'>Edit badge</h1>
+              </div>
+              <div className='row'>
+                {this.renderAddNewForm()}
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -376,4 +401,11 @@ export class AdminBadgesEdit extends Component {
   }
 }
 
-export default connect(['authenticatedUser', 'error', 'badges', 'admin'], actions)(AdminBadgesEdit)
+const Page = connect(['authenticatedUser', 'error', 'badge', 'admin'], actions)(AdminBadgesEdit)
+
+Page.getInitialProps = function ({ req }) {
+  const { id } = req.params
+  return { id }
+}
+
+export default Page

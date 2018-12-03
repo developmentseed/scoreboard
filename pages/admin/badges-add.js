@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Router from 'next/router'
+import Link from 'next/link'
 import Select from 'react-select'
 import { connect } from 'unistore/react'
 
@@ -104,10 +105,26 @@ export class AdminBadgesAdd extends Component {
         <AdminHeader />
         <section>
           <div className='row'>
-            <h1 className='header--xlarge'>Add a new badge</h1>
-          </div>
-          <div className='row'>
-            {this.renderAddNewForm()}
+            <div className='sidebar'>
+              <h2 className='header--large'>Badges</h2>
+              <ul className='admin-sidebar-links'>
+                <li>
+                  <Link href='/admin/badges'>
+                    <a className='link--large'>
+                      Badges List
+                    </a>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className='content--with-sidebar'>
+              <div className='row'>
+                <h1 className='header--xlarge'>Add a new badge</h1>
+              </div>
+              <div className='row'>
+                {this.renderAddNewForm()}
+              </div>
+            </div>
           </div>
         </section>
       </div>

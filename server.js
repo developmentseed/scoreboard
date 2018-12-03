@@ -46,13 +46,13 @@ app.prepare()
       app.render(req, res, '/admin/edit-user', { id })
     })
 
+    api.get('/admin/badges/add', (req, res) => {
+      app.render(req, res, '/admin/badges-add')
+    })
+
     api.get('/admin/badges/:id', (req, res) => {
       const { id } = req.params
       app.render(req, res, '/admin/badges-edit', { id })
-    })
-
-    api.get('/admin/badges/add', (req, res) => {
-      app.render(req, res, '/admin/badges-add')
     })
 
     api.get('*', (req, res) => {

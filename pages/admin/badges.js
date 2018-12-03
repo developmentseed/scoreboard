@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Link from 'next/link'
 import Router from 'next/router'
-import Select from 'react-select'
 import { connect } from 'unistore/react'
 
 import { actions } from '../../lib/store'
@@ -24,6 +23,7 @@ export class AdminBadges extends Component {
       await this.props.getBadges()
       this.setState({ loading: false })
     } catch (err) {
+      console.log('did an error', err)
       console.log(err)
       this.setState({ loading: false })
     }
@@ -35,26 +35,27 @@ export class AdminBadges extends Component {
 
   renderList () {
     const { badges } = this.props
+    console.log('renderList', badges)
+
     if (!badges || !badges.length) return
 
-    console.log('renderList', badges)
     return (
       <div>
         <h1>List</h1>
-        <table className='admin-badges-table'>
+        <table className='admin-table'>
           <thead>
             <tr>
               <th>ID</th>
-
+              <th>Name</th>
             </tr>
           </thead>
           <tbody>
             {
               badges
                 .map((badge) => (
-                  <tr key={`badge-${badge.id}`} onClick={() => this.onBadgeClick(badge)} className='admin-badge-table-row'>
+                  <tr key={`badge-${badge.id}`} onClick={() => this.onBadgeClick(badge)} className='admin-table-row'>
                     <td>{badge.id}</td>
-
+                    <td>{badge.name}</td>
                   </tr>
                 ))
             }
@@ -87,12 +88,12 @@ export class AdminBadges extends Component {
         <section>
           <div className='row'>
             <div className='sidebar'>
-              <h2 className='header--large'>Users</h2>
+              <h2 className='header--large'>Badges</h2>
               <ul className='admin-sidebar-links'>
                 <li>
-                  <Link href='/admin/users'>
+                  <Link href='/admin/badges/add'>
                     <a className='link--large'>
-                      Badges List
+                      Create new badge
                     </a>
                   </Link>
                 </li>
