@@ -37,11 +37,19 @@ async function get (req, res) {
       const badgesFromDB = await db('badges').select() // array of all badges
       const badges = getBadgeProgress(json, badgesFromDB)
 
+      // Match OSM ID to user ID
+      const user_id = await db('users').select('id').where('osm_id', '=', id)
+      // Find all campaign assignments for this user
+      let campaign_ids = await db('assignments').select('campaign_id').where('user_id', '=', user_id[0]['id'])
+      campaign_ids = campaign_ids.map((res) => res.campaign_id)
+      // Get information for each of those campaigns to return as assignments
+      const assignments = await db('campaigns').where('id', 'in', campaign_ids)
       json.extent_uri = `${APP_URL}/scoreboard/api/extents/${json.extent_uri}`
 
       return res.send({
         id,
         badges,
+        assignments,
         records: json,
         country: user.country
       })
@@ -50,6 +58,7 @@ async function get (req, res) {
         return res.send({
           id,
           badges: null,
+          assignments: null,
           records: {
             uid: parseInt(id, 10),
             name: user.full_name,

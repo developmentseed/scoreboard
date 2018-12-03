@@ -8,8 +8,6 @@ import BadgeInProgress from '../components/BadgeInProgress'
 import CampaignCard from '../components/CampaignCard'
 import NotLoggedIn from '../components/NotLoggedIn'
 
-import mockCampaigns from '../tests/mocks/campaigns.json'
-
 const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
   ssr: false
 })
@@ -66,12 +64,12 @@ class Dashboard extends Component {
     )
   }
 
-  renderTodos () {
+  renderTodos (assignments) {
     return (
       <section>
         <div className='row'>
           <h2 className='header--large header--with-description'>To-do</h2>
-          {mockCampaigns.records.map(record => <CampaignCard key={record.id} campaign={record} />)}
+          {assignments.map(record => <CampaignCard key={record.id} campaign={record} />)}
         </div>
       </section>
     )
@@ -101,7 +99,7 @@ class Dashboard extends Component {
           <div className='row'>
             <div className='header--content--wrapper'>
               <div className='section-sub--left section-width-fifty-plus'>
-                <img className='profile--thumb' style={{ float: 'left' }} src={osmUser.img['@']['href']} alt='Profile pic' />
+                {/* <img className='profile--thumb' style={{ float: 'left' }} src={osmUser.img['@']['href']} alt='Profile pic' /> */}
                 <h1 className='header--xlarge header--with-description'>{osmUser['@']['display_name']}</h1>
                 <Link href={`/users/${account.id}`}><a className='link--large'>View Public Profile</a></Link>
               </div>
@@ -128,7 +126,7 @@ class Dashboard extends Component {
         </header>
 
         {account.badges ? this.renderUpcomingBadges(account.badges.unearnedBadges) : ''}
-        {this.renderTodos()}
+        {account.assignments ? this.renderTodos(account.assignments) : ''}
       </div>
     )
   }
