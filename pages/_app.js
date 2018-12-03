@@ -1,11 +1,11 @@
 import React from 'react'
 import App, { Container } from 'next/app'
-import Link from 'next/link'
 import Head from 'next/head'
 import { Provider, connect } from 'unistore/react'
 import { Provider as AlertProvider, withAlert } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 
+import Link from '../components/Link'
 import withReduxStore from '../lib/store/with-store'
 import { actions } from '../lib/store'
 import { isAdmin } from '../lib/utils/roles'
@@ -25,6 +25,7 @@ import 'react-input-range/lib/css/index.css'
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 const domain = process.env.APP_URL || 'http://localhost:8181'
+const prefix = process.env.APP_PREFIX || ''
 const profileIcon = '/static/dashboard-temp/profile-icon.png'
 
 class Layout extends React.Component {
@@ -81,7 +82,7 @@ class Layout extends React.Component {
             <nav className='clearfix'>
               <ul className='nav--left'>
                 <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
-                <li><Link href='/campaigns'><a>Campaigns</a></Link></li>
+                <li><Link href={`/${prefix}campaigns`}><a>Campaigns</a></Link></li>
                 <li><Link href='/users'><a>Users</a></Link></li>
                 <li><Link href='/about'><a>About</a></Link></li>
               </ul>
