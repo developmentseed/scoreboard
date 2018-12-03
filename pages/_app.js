@@ -24,7 +24,6 @@ import '../styles/Badges.scss'
 /* CSS */
 import 'react-select/dist/react-select.css'
 import 'react-input-range/lib/css/index.css'
-import { join } from 'upath';
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 const prefix = process.env.APP_PREFIX || ''
