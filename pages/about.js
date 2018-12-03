@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import Link from '../components/Link'
 
 const image1 = '/static/about-campaignmanager.jpg'
 const image2 = '/static/about-mapper.jpg'

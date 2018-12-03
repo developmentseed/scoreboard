@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
+import Link from '../components/Link'
 import { connect } from 'unistore/react'
 import { withAlert } from 'react-alert'
 
