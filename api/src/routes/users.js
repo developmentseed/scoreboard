@@ -56,6 +56,7 @@ async function stats (req, res) {
       .select('osm_id', 'full_name', 'edit_count', 'country', 'last_edit')
       .from('users')
       .whereNotIn('osm_id', filteredUsers))
+      .where('edit_count', '>', 0)
       .select(
         's.osm_id',
         's.edit_count',
@@ -91,7 +92,7 @@ async function stats (req, res) {
     const countries = await db('users').distinct('country').select()
 
     // Create counts
-    const realUsers = db('users').whereNotIn('osm_id', filteredUsers)
+    const realUsers = db('users').whereNotIn('osm_id', filteredUsers).where('edit_count', '>', 0)
     const [{ subTotal }] = await applyFilters(realUsers.clone(), req).count('id as subTotal')
     const [{ total }] = await realUsers.clone().count('id as total')
     const [{ editTotal }] = await realUsers.clone().sum('edit_count as editTotal')
