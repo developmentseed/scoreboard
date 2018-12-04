@@ -36,7 +36,7 @@ async function post (req, res) {
 }
 
 async function del (req, res) {
-  const { user, params: { id } } = req.params
+  const { user, params: { id } } = req
 
   if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
     return res.boom.unauthorized('Not authorized')
@@ -56,7 +56,7 @@ async function del (req, res) {
 }
 
 async function put (req, res) {
-  const { user, body, params: { id } } = req.params
+  const { user, body, params: { id } } = req
 
   if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
     return res.boom.unauthorized('Not authorized')
