@@ -68,8 +68,8 @@ const Page = connect(['authenticatedUser', 'user'], actions)(UserEdit)
 Page.getInitialProps = async ({ req, query }) => {
   const { id } = query
   const res = await fetch(`/api/users/${id}`)
-  const { country } = res.json()
-  return { id, currentCountry: country }
+  const data = await res.json()
+  return { id, currentCountry: data.country }
 }
 
 export default Page
