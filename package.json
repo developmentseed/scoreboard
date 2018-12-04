@@ -117,7 +117,6 @@
     "react-transition-group": "^2.5.0",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5",
-    "sqlite3": "^3.1.13",
     "style-loader": "^0.23.1",
     "swagger-ui-express": "^3.0.10",
     "unistore": "^3.1.0",

@@ -71,7 +71,7 @@ it('AdminBadges renders without crashing', () => {
 
   const admin = (
     <Provider store={store}>
-      <AdminBadges getAuthenticatedUser={mockAction} createBadge={mockAction} {...props} />
+      <AdminBadges getAuthenticatedUser={mockAction} getBadges={mockAction} {...props} />
     </Provider>
   )
 

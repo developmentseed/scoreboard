@@ -120,8 +120,11 @@ if (NODE_ENV === 'test') {
 /**
  * redirect the user to openstreetmap
  */
-router.get('/openstreetmap',
-  passport.authenticate('openstreetmap'))
+router.get('/openstreetmap', passport.authenticate('openstreetmap'), (req, res) => {
+  // only necessary for testing authenticated api routes
+  // real requests are handled by the openstreetmap provider
+  res.sendStatus(200)
+})
 
 /**
  * Callback
