@@ -31,7 +31,7 @@ const Blurb = ({
 }
 
 export class Campaign extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.getCampaign(this.props.id)
   }
 

@@ -6,7 +6,7 @@ import { Provider, connect } from 'unistore/react'
 import { Provider as AlertProvider, withAlert } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 
-import { APP_URL_FINAL, APP_URL_PREFIX} from '../api/src/config'
+import { APP_URL_FINAL, APP_URL_PREFIX } from '../api/src/config'
 import Link from '../components/Link'
 import withReduxStore from '../lib/store/with-store'
 import { actions } from '../lib/store'
@@ -26,7 +26,6 @@ import 'react-select/dist/react-select.css'
 import 'react-input-range/lib/css/index.css'
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
-const prefix = process.env.APP_PREFIX || ''
 const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.png')
 
 class Layout extends React.Component {

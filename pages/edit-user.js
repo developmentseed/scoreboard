@@ -16,16 +16,7 @@ class UserEdit extends Component {
 
   updateUser (data) {
     const { id } = this.props
-
-    api('put', `/api/users/${id}`, data)
-      .then(res => {
-        this.setState({ saved: true })
-        this.props.setNotification({ type: 'success', message: 'User updated successfully' })
-      })
-      .catch(err => {
-        console.log(err)
-        this.props.setNotification({ type: 'error', message: 'Could not update user' })
-      })
+    this.props.updateUser(id, data)
   }
 
   onCountryChange (country) {
