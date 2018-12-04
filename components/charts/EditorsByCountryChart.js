@@ -2,7 +2,7 @@ import React from 'react'
 import { sortBy, prop, splitAt } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
 import countries from 'i18n-iso-countries'
-import Link from 'next/link'
+import Link from '../Link'
 import enLocale from 'i18n-iso-countries/langs/en.json'
 
 countries.registerLocale(enLocale)

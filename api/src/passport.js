@@ -2,6 +2,7 @@
  * Passport
  */
 const passport = require('passport')
+const join = require('url-join')
 const xml2js = require('xml2js')
 const router = require('express-promise-router')()
 const OSMStrategy = require('passport-openstreetmap').Strategy
@@ -18,7 +19,7 @@ const {
   OSM_CONSUMER_SECRET,
   OSM_DOMAIN,
   OSM_DOMAIN_INTERNAL,
-  APP_URL
+  APP_URL_FINAL
 } = require('./config')
 
 /**
@@ -89,7 +90,7 @@ if (NODE_ENV === 'test') {
     userAuthorizationURL: `${OSM_DOMAIN}/oauth/authorize`,
     consumerKey: OSM_CONSUMER_KEY,
     consumerSecret: OSM_CONSUMER_SECRET,
-    callbackURL: `${APP_URL}/auth/openstreetmap/callback`
+    callbackURL: join(APP_URL_FINAL, '/auth/openstreetmap/callback')
   }, async (token, tokenSecret, profile, done) => {
     try {
       let [user] = await users.findByOsmId(profile.id)
@@ -129,7 +130,7 @@ router.get('/openstreetmap/callback',
   passport.authenticate('openstreetmap'),
   (req, res) => {
     if (req.user) {
-      res.redirect(APP_URL)
+      res.redirect(APP_URL_FINAL)
     } else {
       res.boom.unauthorized('could not authenticate')
     }
@@ -151,7 +152,7 @@ router.get('/userinfo', (req, res) => {
  */
 router.get('/logout', (req, res) => {
   req.logout()
-  res.redirect(APP_URL)
+  res.redirect(APP_URL_FINAL)
 })
 
 module.exports = {
