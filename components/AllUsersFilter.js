@@ -20,7 +20,7 @@ export default ({
       <fieldset>
         <legend>Search</legend>
         <div className='search'>
-          <input className='input--text' value={searchText} onChange={handleSearch} />
+          <input className='input--text' onChange={handleSearch} />
           <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
         </div>
       </fieldset>
