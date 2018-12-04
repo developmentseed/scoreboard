@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
+import Link from '../components/Link'
 // import dynamic from 'next/dynamic'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'

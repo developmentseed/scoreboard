@@ -15,42 +15,6 @@ $background-color-light: #FBFBFB;
 
 /* Typography
    ========================================================================== */
- @font-face {
-   font-family: 'CrimsonText-reg';
-   src: url('/static/fonts/CrimsonText-Regular.ttf')  format('truetype');
- }
-
- @font-face {
-   font-family: 'CrimsonText-semi';
-   src: url('/static/fonts/CrimsonText-SemiBold.ttf')  format('truetype');
- }
-
- @font-face {
-   font-family: 'CrimsonText-bold';
-   src: url('/static/fonts/CrimsonText-Bold.ttf')  format('truetype');
- }
-
- @font-face {
-   font-family: 'Heebo-light';
-   src: url('/static/fonts/Heebo-Light.ttf')  format('truetype');
- }
-
- @font-face {
-   font-family: 'Heebo-reg';
-   src: url('/static/fonts/Heebo-Regular.ttf')  format('truetype');
- }
-
- @font-face {
-   font-family: 'Heebo-bold';
-   src: url('/static/fonts/Heebo-Bold.ttf')  format('truetype');
- }
-
- @font-face {
-   font-family: 'Abel';
-   src: url('/static/fonts/Abel-Regular.ttf')  format('truetype');
- }
-
-
 $base-font-color: #595757;
 $base-font-family: "CrimsonText-reg", Georgia, serif;
 $base-font-style: normal;
