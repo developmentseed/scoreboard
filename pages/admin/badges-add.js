@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import Router from 'next/router'
-import Link from 'next/link'
 import Select from 'react-select'
 import { connect } from 'unistore/react'
 
+import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
+import Link from '../../components/Link'
 
 const badgeMetrics = [
   { label: 'New buildings mapped', value: 'buildings' },
@@ -73,12 +73,9 @@ export class AdminBadgesAdd extends Component {
 
     try {
       await this.props.createBadge(params)
-      this.props.setNotification({ type: 'success', message: 'Badge created successfully' })
-      this.setState({ disableInteraction: false })
-      this.resetInputs()
+      Router.push('/admin/badges')
     } catch (e) {
       console.log(e)
-      this.props.setNotification({ type: 'error', message: 'Something went wrong. Badge not created' })
       this.setState({ disableInteraction: false })
     }
   }

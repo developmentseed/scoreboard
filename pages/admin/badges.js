@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
-import Router from 'next/router'
 import { connect } from 'unistore/react'
 
+import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
+import Link from '../../components/Link'
 
 export class AdminBadges extends Component {
   constructor () {
@@ -23,7 +23,6 @@ export class AdminBadges extends Component {
       await this.props.getBadges()
       this.setState({ loading: false })
     } catch (err) {
-      console.log('did an error', err)
       console.log(err)
       this.setState({ loading: false })
     }
@@ -35,7 +34,6 @@ export class AdminBadges extends Component {
 
   renderList () {
     const { badges } = this.props
-    console.log('renderList', badges)
 
     if (!badges || !badges.length) return
 

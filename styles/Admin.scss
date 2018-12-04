@@ -162,6 +162,18 @@ $border-color: #ccc;
   }
 }
 
+.button--destroy {
+  border-color: #CA4F4F;
+  color: #CA4F4F;
+  background-color: white;
+
+  &:hover,
+  &:active {
+    background-color: #CA4F4F;
+    color: white;
+  }
+}
+
 .button--link {
   background-color: transparent;
   border: 0;

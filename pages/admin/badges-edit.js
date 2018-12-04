@@ -1,39 +1,15 @@
 import React, { Component } from 'react'
-import Router from 'next/router'
-import Link from 'next/link'
 import Select from 'react-select'
 import { connect } from 'unistore/react'
 
+import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
+import Link from '../../components/Link'
 
-const badgeMetrics = [
-  { label: 'New buildings mapped', value: 'buildings' },
-  { label: 'Countries mapped', value: 'countries' },
-  { label: 'Total days mapped', value: 'daysTotal' },
-  { label: 'Days mapped in a row', value: 'daysInRow' },
-  { label: 'Campaigns participated in', value: 'hashtags' },
-  { label: 'Times using JOSM', value: 'josm' },
-  { label: 'Points of interest mapped', value: 'pois' },
-  { label: 'New roads mapped (km)', value: 'roadKms' },
-  { label: 'Roads modified (km)', value: 'roadKmMods' },
-  { label: 'Waterways mapped', value: 'waterways' }
-]
-
-const badgeOperationTypes = [
-  { label: 'More than', value: '>' },
-  { label: 'Fewer than', value: '<' },
-  { label: 'At least', value: '>=' },
-  { label: 'Up to', value: '<=' }
-]
-
-const badgeOperationIndex = {
-  operation: 0,
-  metric: 1,
-  number: 2
-}
+import { badgeMetrics, badgeOperationTypes, badgeOperationIndex } from '../../lib/badge-utils'
 
 export class AdminBadgesEdit extends Component {
   constructor () {
@@ -42,10 +18,11 @@ export class AdminBadgesEdit extends Component {
     this.state = {
       loading: true,
       disableInteraction: false,
-      name: null,
+      name: '',
       description: '',
       number: '',
-      operations: []
+      operations: [],
+      destroyConfirmation: null
     }
 
     // Event handlers
@@ -64,7 +41,6 @@ export class AdminBadgesEdit extends Component {
     try {
       await this.props.getAuthenticatedUser()
       await this.props.getBadge(id)
-      console.log('loading???')
       this.setState({ loading: false })
     } catch (err) {
       console.log(err)
@@ -80,12 +56,12 @@ export class AdminBadgesEdit extends Component {
   }
 
   async updateBadge (params) {
+    const { id } = this.props
     this.setState({ disableInteraction: true })
 
     try {
-      await this.props.updateBadge(params)
-      this.setState({ disableInteraction: false })
-      this.resetInputs()
+      await this.props.updateBadge(id, params)
+      Router.push('/admin/badges')
     } catch (e) {
       console.log(e)
       this.setState({ disableInteraction: false })
@@ -94,6 +70,7 @@ export class AdminBadgesEdit extends Component {
 
   render () {
     const { authenticatedUser } = this.props
+    const { destroyConfirmation } = this.state
 
     if (this.state.loading) {
       return (
@@ -142,11 +119,60 @@ export class AdminBadgesEdit extends Component {
               </div>
               <div className='row' style={{ marginTop: 50 }}>
                 <h2 className='header--large' style={{ borderTop: '1px solid #efefef', paddingTop: 20 }}>Delete badge</h2>
+                {
+                  destroyConfirmation
+                  ? this.renderDestroyConfirmation()
+                  : this.renderDestroyButton()
+                }
               </div>
             </div>
           </div>
         </section>
       </div>
+    )
+  }
+
+  renderDestroyConfirmation () {
+    const { id } = this.props
+
+    return (
+      <div className='form__footer'>
+        <p>Are you sure you want to delete this badge?</p>
+        <button className='button button--destroy'
+          id='delete-badge-confirmation-operation-button'
+          type='button'
+          onClick={async () => {
+            await this.props.deleteBadge(id)
+            Router.push('/admin/badges')
+          }}
+        >
+          Delete this badge permanently
+        </button>
+
+        <button className='button button--secondary'
+          id='cancel-delete-badge-operation-button'
+          type='button'
+          onClick={() => {
+            this.setState({ destroyConfirmation: false })
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    )
+  }
+
+  renderDestroyButton () {
+    return (
+      <button className='button button--destroy'
+        id='delete-badge-operation-button'
+        type='button'
+        onClick={() => {
+          this.setState({ destroyConfirmation: true })
+        }}
+      >
+        Delete this badge
+      </button>
     )
   }
 
@@ -183,7 +209,7 @@ export class AdminBadgesEdit extends Component {
             id='add-new-badge-submit-button'
             type='submit'
           >
-            Create badge
+            Update badge
           </button>
         </div>
       </form >
@@ -199,7 +225,7 @@ export class AdminBadgesEdit extends Component {
             className='form__label'
             htmlFor='add-new-badge-name'
           >
-            Custom Badge Name
+            Badge Name
           </label>
           <input
             id='badge-name'
@@ -234,7 +260,6 @@ export class AdminBadgesEdit extends Component {
   }
 
   renderOperationsSection () {
-    console.log('this.state.operations', this.state.operations)
     return (
       <div className='form__section'>
         <h2 className='header--medium'>
@@ -339,16 +364,15 @@ export class AdminBadgesEdit extends Component {
 
   handleNameInputChange (e) {
     const { value } = e.target
-    this.setState({ nameInput: value })
+    this.setState({ name: value })
   }
 
   handleDescriptionInputChange (e) {
     const { value } = e.target
-    this.setState({ descriptionInput: value })
+    this.setState({ description: value })
   }
 
   handleOperationChange (e, idx, keyName) {
-    console.log('handleOperationChange', idx, keyName)
     const { value } = keyName === 'number' ? e.target : e
     let targetOperation = this.state.operations[idx]
     if (!targetOperation) return
@@ -377,16 +401,15 @@ export class AdminBadgesEdit extends Component {
       operations
     }
 
-    console.log('params', params)
     this.updateBadge(params)
   }
 
   resetInputs () {
     this.setState({
-      descriptionInput: '',
+      description: '',
       disableInteraction: false,
-      nameInput: '',
-      numberInput: '',
+      name: '',
+      number: '',
       operations: [
         ['', 0, '']
       ]
