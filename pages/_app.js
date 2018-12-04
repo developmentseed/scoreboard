@@ -6,7 +6,7 @@ import { Provider, connect } from 'unistore/react'
 import { Provider as AlertProvider, withAlert } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 
-import { APP_URL_FINAL, APP_URL_PREFIX} from '../api/src/config'
+import { APP_URL_FINAL, APP_URL_PREFIX } from '../api/src/config'
 import Link from '../components/Link'
 import withReduxStore from '../lib/store/with-store'
 import { actions } from '../lib/store'
@@ -26,7 +26,6 @@ import 'react-select/dist/react-select.css'
 import 'react-input-range/lib/css/index.css'
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
-const prefix = process.env.APP_PREFIX || ''
 const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.png')
 
 class Layout extends React.Component {
@@ -102,7 +101,7 @@ class Layout extends React.Component {
                           <ul>
                             <li><Link href='/dashboard'><a>Dashboard</a></Link></li>
                             <li><Link href={`/users/${osm.id}`}><a>Public Profile</a></Link></li>
-                            <li><Link href={`/edit-user?id=${osm.id}`} as={`/users/${osm.id}/edit`}><a>Edit Profile</a></Link></li>
+                            <li><Link href={`/edit-user?id=${osm.id}`} as={join(APP_URL_PREFIX, `/users/${osm.id}/edit`)}><a>Edit Profile</a></Link></li>
                             {
                               account.roles && isAdmin(account.roles) && (
                                 <li><Link href={`/admin`}><a>Admin</a></Link></li>
