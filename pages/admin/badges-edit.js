@@ -355,7 +355,6 @@ export class AdminBadgesEdit extends Component {
 
     targetOperation[badgeOperationIndex[keyName]] = value
 
-
     this.setState((state) => {
       return {
         operations: Object.assign([...state.operations], { [idx]: targetOperation })
@@ -371,7 +370,6 @@ export class AdminBadgesEdit extends Component {
       description,
       operations
     } = this.state
-
 
     const params = {
       description,
