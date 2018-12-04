@@ -77,6 +77,16 @@ export class Admin extends Component {
                     </a>
                   </Link>
                 </li>
+                <li>
+                  <Link href='/admin/teams'>
+                    <a>
+                      <div>
+                        <h2 className='header--large'>Teams</h2>
+                        <p>Manage teams</p>
+                      </div>
+                    </a>
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

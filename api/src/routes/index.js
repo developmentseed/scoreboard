@@ -9,6 +9,7 @@ const topstats = require('./topstats')
 const badges = require('./badges')
 const projects = require('./projects')
 const roles = require('./roles')
+const teams = require('./teams')
 
 const { OSMESA_API } = require('../config')
 
@@ -41,5 +42,9 @@ router.get('/badges/:id', badges.get)
 router.post('/badges', badges.post)
 router.delete('/badges/:id', badges.del)
 router.put('/badges/:id', badges.put)
+
+// teams routes
+router.get('/teams', teams.list)
+router.post('/teams', teams.post)
 
 module.exports = router
