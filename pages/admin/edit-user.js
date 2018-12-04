@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
+import Link from '../../components/Link'
 import Router from 'next/router'
 import Select from 'react-select'
 import { connect } from 'unistore/react'
@@ -8,9 +8,6 @@ import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
-
-import '../../styles/Admin.scss'
-import 'react-select/dist/react-select.css'
 
 export class AdminUserEdit extends Component {
   constructor () {
@@ -45,7 +42,7 @@ export class AdminUserEdit extends Component {
     this.props.updateUserRoles(admin.user.id, roles.map((role) => role.value))
       .then(() => {
         this.setState({ saved: true })
-        this.props.setNotification({ type: 'error', message: '✓ Saved' })
+        this.props.setNotification({ type: 'success', message: 'Profile updated successfully' })
       })
       .catch(err => {
         console.log(err)

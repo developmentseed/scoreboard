@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
+import Link from '../components/Link'
 import { connect } from 'unistore/react'
 import { withAlert } from 'react-alert'
+import join from 'url-join'
 
+import { APP_URL_PREFIX } from '../api/src/config'
 import { actions } from '../lib/store'
 import trimLength from '../lib/utils/trim_length'
 import { formatDecimal } from '../lib/utils/format'
@@ -25,9 +27,11 @@ export class Home extends Component {
 
     const { total, records, numUsers, features, topEdits, editsByCountry } = topStats
 
+    const homePageBg = join(APP_URL_PREFIX, '/static/homepage-background.jpg')
+
     return (
       <div className='home'>
-        <header className='header--homepage header--page'>
+        <header className='header--homepage header--page' style={{ backgroundImage: `url(${homePageBg})` }}>
           <div className='overlay-dark'>
             <div className='row'>
               <div className='width--shortened'>
@@ -75,7 +79,7 @@ export class Home extends Component {
               <ul className='clearfix'>
                 {
                   records.map(record =>
-                    <li key={`block-${record.campaign_hashtag}`} className='block--campaign'>
+                    <li key={`block-${record.id}`} className='block--campaign'>
                       <h3 className='header--small header--with-description-xlg'>
                         <Link href={`/campaigns/${record.campaign_hashtag}`}>
                           <a className='header--underlined'>{record.name}</a>

@@ -1,13 +1,18 @@
 import React from 'react'
 import Select from 'react-select'
-import 'react-select/dist/react-select.css'
+import { sortBy, prop } from 'ramda'
+import join from 'url-join'
 
+import { APP_URL_PREFIX } from '../api/src/config'
 import countries, { getName } from 'i18n-iso-countries'
 countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
 
+const sortByLabel = sortBy(prop('label'))
+const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
+
 export default ({
   searchText, handleSearch, countries, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
-  handleToggleActive, activeValue
+  handleToggleActive, selectedActive
 }) => (
   <div className='sidebar'>
     <h3 className='header--medium'>Filter</h3>
@@ -16,7 +21,7 @@ export default ({
         <legend>Search</legend>
         <div className='search'>
           <input className='input--text' value={searchText} onChange={handleSearch} />
-          <span className='search-icon' />
+          <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
         </div>
       </fieldset>
       <fieldset>
@@ -27,7 +32,7 @@ export default ({
           value={selectedValue}
           onChange={handleSelect}
           options={
-            countries.map(({ country }) => { return { value: country, label: getName(country, 'en') } })
+            sortByLabel(countries.map(({ country }) => { return { value: country, label: getName(country, 'en') } }).filter((country) => country.label))
           }
         />
       </fieldset>
@@ -45,7 +50,7 @@ export default ({
       </fieldset>
       <fieldset>
         <legend>Active Users</legend>
-        <input type='checkbox' checked={activeValue} onChange={handleToggleActive} />
+        <input type='checkbox' checked={selectedActive} onChange={handleToggleActive} />
         Filter active users (edited in the past 6 months)
       </fieldset>
     </form>

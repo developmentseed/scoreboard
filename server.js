@@ -3,7 +3,7 @@ require('dotenv').config()
 /**
  * Prelude
  */
-const { PORT, NODE_ENV } = require('./api/src/config')
+const { PORT, NODE_ENV, APP_URL_FINAL } = require('./api/src/config')
 const dev = NODE_ENV !== 'production'
 const next = require('next')
 
@@ -20,6 +20,7 @@ const api = require('./api/src/index')
 /**
  * Init
  */
+app.setAssetPrefix(APP_URL_FINAL)
 app.prepare()
   .then(() => {
     api.get('/about', (req, res) => {
@@ -34,6 +35,11 @@ app.prepare()
     api.get('/users/:id/edit', (req, res) => {
       const { id } = req.params
       app.render(req, res, '/edit-user', { id })
+    })
+
+    api.get('/campaigns/:id', (req, res) => {
+      const { id } = req.params
+      app.render(req, res, '/campaign', { id })
     })
 
     api.get('/admin/users/:id', (req, res) => {

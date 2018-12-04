@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
+import Link from '../../components/Link'
 import Router from 'next/router'
 import { connect } from 'unistore/react'
 
@@ -7,8 +7,6 @@ import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
-
-import '../../styles/Admin.scss'
 
 export class AdminUsers extends Component {
   constructor () {

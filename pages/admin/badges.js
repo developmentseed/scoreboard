@@ -8,9 +8,6 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 
-import '../../styles/Admin.scss'
-import 'react-select/dist/react-select.css'
-
 const badgeMetrics = [
   { label: 'New buildings mapped', value: 'buildings' },
   { label: 'Countries mapped', value: 'countries' },
@@ -75,7 +72,7 @@ export class AdminBadges extends Component {
 
     try {
       await this.props.createBadge(params)
-      this.props.setNotification({ type: 'info', message: 'Badge created successfully!' })
+      this.props.setNotification({ type: 'success', message: 'Badge created successfully' })
       this.setState({ disableInteraction: false })
       this.resetInputs()
     } catch (e) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import Link from './Link'
 import trimLength from '../lib/utils/trim_length'
 import dynamic from 'next/dynamic'
 
@@ -13,9 +13,9 @@ export default ({ campaign }) => {
     name,
     description,
     geometry,
-    campaign_hashtag,
     done,
-    validated
+    validated,
+    campaign_hashtag
   } = campaign
   return (
     <Link href={`/campaigns/${campaign_hashtag}`}>

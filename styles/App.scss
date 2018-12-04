@@ -276,3 +276,20 @@ nav {
     }
   }
 }
+
+.link--login {
+  color: #fff;
+  transition: all 0.2s ease 0s;
+  border-bottom: 2px solid rgba(255,255,255,0);
+  padding: 0 .5em 1.4em;
+}
+
+.link--login:hover {
+  border-bottom: 2px solid rgba(255,255,255,.8);
+  padding-bottom: .8em;
+}
+
+.active .link--login {
+  padding-bottom: .8em;
+  border-bottom: 2px solid rgba(255,255,255,.4);
+}

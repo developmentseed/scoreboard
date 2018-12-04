@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import '../styles/Badges.scss'
+import join from 'url-join'
+import { APP_URL_PREFIX } from '../api/src/config'
 
 function getProgressGradientBreaks (percentage) {
   // Calculates the linear-gradient breakpoint angles necessary to
@@ -34,7 +35,7 @@ export default class BadgeInProgress extends Component {
     const { badge, badgeClass } = this.props
 
     if (!badge || !badgeClass) return <div />
-    const imgUrl = `/static/badges/${badge.category}-${badge.badgeLevel + 1}-graphic.svg`
+    const imgUrl = join(APP_URL_PREFIX, `/static/badges/${badge.category}-${badge.badgeLevel + 1}-graphic.svg`)
     const progressBreaks = getProgressGradientBreaks(badge.points.percentage)
     var progressStyle = `
     linear-gradient(${progressBreaks.A}deg,
