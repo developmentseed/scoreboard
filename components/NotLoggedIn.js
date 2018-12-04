@@ -1,7 +1,5 @@
 import React from 'react'
-import join from 'url-join'
 import Link from './Link'
-import { APP_URL_FINAL } from '../api/src/config'
 
 export default ({ message }) => {
   return (
