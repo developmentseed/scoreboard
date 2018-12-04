@@ -16,7 +16,7 @@ const { OSMESA_API } = require('../config')
  * Route registration
  */
 router.get('/extents/*', (req, res) => {
-  const url = `${OSMESA_API}/extents/${req.params[0]}`
+  const url = `${OSMESA_API}/tiles/${req.params[0]}`
   req.pipe(request(url)).pipe(res)
 })
 router.get('/users', users.list)
