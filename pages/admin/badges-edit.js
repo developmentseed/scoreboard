@@ -29,23 +29,23 @@ const badgeOperationTypes = [
   { label: 'Up to', value: '<=' }
 ]
 
+const badgeOperationIndex = {
+  operation: 0,
+  metric: 1,
+  number: 2
+}
+
 export class AdminBadgesEdit extends Component {
   constructor () {
     super()
 
     this.state = {
       loading: true,
-      descriptionInput: '',
       disableInteraction: false,
-      nameInput: '',
-      numberInput: '',
-      operations: [
-        {
-          metric: '',
-          number: 0,
-          operation: ''
-        }
-      ]
+      name: null,
+      description: '',
+      number: '',
+      operations: []
     }
 
     // Event handlers
@@ -73,7 +73,10 @@ export class AdminBadgesEdit extends Component {
   }
 
   componentDidUpdate () {
-    console.log('componentDidUpdate badge', this.props.badge, this.props)
+    const { badge } = this.props
+    if (badge && !this.state.name) {
+      this.setState(this.props.badge)
+    }
   }
 
   async createBadge (params) {
@@ -123,6 +126,13 @@ export class AdminBadgesEdit extends Component {
                     </a>
                   </Link>
                 </li>
+                <li>
+                  <Link href='/admin/badges/add'>
+                    <a className='link--large'>
+                      Create new badge
+                    </a>
+                  </Link>
+                </li>
               </ul>
             </div>
             <div className='content--with-sidebar'>
@@ -131,6 +141,9 @@ export class AdminBadgesEdit extends Component {
               </div>
               <div className='row'>
                 {this.renderAddNewForm()}
+              </div>
+              <div className='row' style={{ marginTop: 50 }}>
+                <h2 className='header--large' style={{ borderTop: '1px solid #efefef', paddingTop: 20 }}>Delete badge</h2>
               </div>
             </div>
           </div>
@@ -197,7 +210,7 @@ export class AdminBadgesEdit extends Component {
             placeholder='Awesome JOSM'
             required
             type='text'
-            value={this.state.nameInput}
+            value={this.state.name}
           />
         </div>
         <div className='form__input-unit'>
@@ -215,7 +228,7 @@ export class AdminBadgesEdit extends Component {
             placeholder='Let users know about how this badge works'
             required
             rows={5}
-            value={this.state.descriptionInput}
+            value={this.state.description}
           />
         </div>
       </div>
@@ -223,6 +236,7 @@ export class AdminBadgesEdit extends Component {
   }
 
   renderOperationsSection () {
+    console.log('this.state.operations', this.state.operations)
     return (
       <div className='form__section'>
         <h2 className='header--medium'>
@@ -246,7 +260,7 @@ export class AdminBadgesEdit extends Component {
                 onChange={(e) => this.handleOperationChange(e, i, 'operation')}
                 options={badgeOperationTypes}
                 placeholder="Select how you'll gauge this metric"
-                value={op.operation}
+                value={op[0]}
               />
             </div>
             <div className='form__input-unit form__input-unit--half'>
@@ -263,7 +277,7 @@ export class AdminBadgesEdit extends Component {
                 onChange={(e) => this.handleOperationChange(e, i, 'number')}
                 placeholder='50'
                 type='number'
-                value={op.number}
+                value={op[2]}
               />
             </div>
             <div className='form__input-unit'>
@@ -279,7 +293,7 @@ export class AdminBadgesEdit extends Component {
                 onChange={(e) => this.handleOperationChange(e, i, 'metric')}
                 options={badgeMetrics}
                 placeholder='Select the metric your badge will measure...'
-                value={op.metric}
+                value={op[1]}
               />
             </div>
             {i > 0 && (
@@ -304,11 +318,7 @@ export class AdminBadgesEdit extends Component {
         ...prevState,
         operations: [
           ...prevState.operations,
-          {
-            metric: '',
-            number: 0,
-            operation: ''
-          }
+          ['', 0, '']
         ]
       }
     })
@@ -331,27 +341,22 @@ export class AdminBadgesEdit extends Component {
 
   handleNameInputChange (e) {
     const { value } = e.target
-    this.setState({
-      nameInput: value
-    })
+    this.setState({ nameInput: value })
   }
 
   handleDescriptionInputChange (e) {
     const { value } = e.target
-    this.setState({
-      descriptionInput: value
-    })
+    this.setState({ descriptionInput: value })
   }
 
   handleOperationChange (e, idx, keyName) {
+    console.log('handleOperationChange', idx, keyName)
     const { value } = keyName === 'number' ? e.target : e
     let targetOperation = this.state.operations[idx]
     if (!targetOperation) return
 
-    targetOperation = {
-      ...targetOperation,
-      [keyName]: value
-    }
+    targetOperation[badgeOperationIndex[keyName]] = value
+
 
     this.setState((state) => {
       return {
@@ -364,24 +369,20 @@ export class AdminBadgesEdit extends Component {
     e.preventDefault()
 
     const {
-      descriptionInput,
-      nameInput,
+      name,
+      description,
       operations
     } = this.state
 
-    // Verify that no empty operations objects are being passed
-    // and also collapse the object into an array
-    const parsedOperations = operations
-      .filter(op => op.metric && op.operation)
-      .map(op => [op.operation, op.metric, op.number])
 
     const params = {
-      description: descriptionInput,
-      name: nameInput,
-      operations: parsedOperations
+      description,
+      name,
+      operations
     }
 
-    this.createBadge(params)
+    console.log('params', params)
+    // this.createBadge(params)
   }
 
   resetInputs () {
@@ -391,11 +392,7 @@ export class AdminBadgesEdit extends Component {
       nameInput: '',
       numberInput: '',
       operations: [
-        {
-          metric: '',
-          number: 0,
-          operation: ''
-        }
+        ['', 0, '']
       ]
     })
   }
