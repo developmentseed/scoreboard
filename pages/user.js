@@ -6,7 +6,7 @@ import getSumEdits from '../lib/utils/sum_edits'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 
-class User extends Component {
+export class User extends Component {
   componentDidMount () {
     this.props.getUser(this.props.id)
   }
