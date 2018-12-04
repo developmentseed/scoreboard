@@ -121,8 +121,8 @@ export class AdminBadgesEdit extends Component {
                 <h2 className='header--large' style={{ borderTop: '1px solid #efefef', paddingTop: 20 }}>Delete badge</h2>
                 {
                   destroyConfirmation
-                  ? this.renderDestroyConfirmation()
-                  : this.renderDestroyButton()
+                    ? this.renderDestroyConfirmation()
+                    : this.renderDestroyButton()
                 }
               </div>
             </div>
