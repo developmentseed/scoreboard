@@ -56,15 +56,15 @@
   }
 }
 
-.admin-user-table {
+.admin-table {
   border-spacing: 0px;
 }
 
-.admin-user-table-row {
+.admin-table-row {
   cursor: pointer;
 }
 
-.admin-user-table-row:hover {
+.admin-table-row:hover {
   background-color: #fafafc;
 }
 
@@ -159,6 +159,18 @@ $border-color: #ccc;
   &:active {
     background-color: inherit;
     color: darken($base-color, 10%);
+  }
+}
+
+.button--destroy {
+  border-color: #CA4F4F;
+  color: #CA4F4F;
+  background-color: white;
+
+  &:hover,
+  &:active {
+    background-color: #CA4F4F;
+    color: white;
   }
 }
 
