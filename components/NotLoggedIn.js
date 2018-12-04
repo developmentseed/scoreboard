@@ -10,7 +10,7 @@ export default ({ message }) => {
         <div className='row'>
           <h2 className='header--large'>You are not logged in!</h2>
           <p>
-            <Link href={join(APP_URL_FINAL, '/auth/openstreetmap')}>
+            <Link href='/auth/openstreetmap'>
               <a>{message || 'Log in with your OSM account'}</a>
             </Link>
           </p>

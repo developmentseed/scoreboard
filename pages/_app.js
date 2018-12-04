@@ -107,7 +107,7 @@ class Layout extends React.Component {
                                 <li><Link href={`/admin`}><a>Admin</a></Link></li>
                               )
                             }
-                            <li><Link href={join(APP_URL_FINAL, '/auth/logout')}><a>Logout</a></Link></li>
+                            <li><Link href='/auth/logout'><a>Logout</a></Link></li>
                           </ul>
                         </div>
                       )
