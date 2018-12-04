@@ -79,17 +79,15 @@ export class AdminBadgesEdit extends Component {
     }
   }
 
-  async createBadge (params) {
+  async updateBadge (params) {
     this.setState({ disableInteraction: true })
 
     try {
-      await this.props.createBadge(params)
-      this.props.setNotification({ type: 'success', message: 'Badge created successfully' })
+      await this.props.updateBadge(params)
       this.setState({ disableInteraction: false })
       this.resetInputs()
     } catch (e) {
       console.log(e)
-      this.props.setNotification({ type: 'error', message: 'Something went wrong. Badge not created' })
       this.setState({ disableInteraction: false })
     }
   }
@@ -382,7 +380,7 @@ export class AdminBadgesEdit extends Component {
     }
 
     console.log('params', params)
-    // this.createBadge(params)
+    this.updateBadge(params)
   }
 
   resetInputs () {
