@@ -16,16 +16,7 @@ class UserEdit extends Component {
 
   updateUser (data) {
     const { id } = this.props
-
-    api('put', `/api/users/${id}`, data)
-      .then(res => {
-        this.setState({ saved: true })
-        this.props.setNotification({ type: 'success', message: 'User updated successfully' })
-      })
-      .catch(err => {
-        console.log(err)
-        this.props.setNotification({ type: 'error', message: 'Could not update user' })
-      })
+    this.props.updateUser(id, data)
   }
 
   onCountryChange (country) {
@@ -77,8 +68,8 @@ const Page = connect(['authenticatedUser', 'user'], actions)(UserEdit)
 Page.getInitialProps = async ({ req, query }) => {
   const { id } = query
   const res = await fetch(`/api/users/${id}`)
-  const { country } = res.json()
-  return { id, currentCountry: country }
+  const data = await res.json()
+  return { id, currentCountry: data.country }
 }
 
 export default Page

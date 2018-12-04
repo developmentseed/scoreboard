@@ -71,7 +71,7 @@ export class Users extends Component {
       apiStatus
     } = this.props.users
     if (!this.props.users) {
-      return <div></div>
+      return <div />
     }
 
     const { total, records, subTotal, editTotal, countries } = stats
