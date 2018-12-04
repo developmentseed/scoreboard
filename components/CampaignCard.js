@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import Link from './Link'
 import trimLength from '../lib/utils/trim_length'
 import dynamic from 'next/dynamic'
 

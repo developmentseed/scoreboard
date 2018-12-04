@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Select from 'react-select'
 import { connect } from 'unistore/react'
 
-import api from '../lib/utils/api'
+import fetch from '../lib/utils/api'
 import countries from '../lib/utils/country-list'
 import { actions } from '../lib/store'
 
@@ -16,16 +16,7 @@ class UserEdit extends Component {
 
   updateUser (data) {
     const { id } = this.props
-
-    api('put', `/api/users/${id}`, data)
-      .then(res => {
-        this.setState({ saved: true })
-        this.props.setNotification({ type: 'info', message: '✓ Saved' })
-      })
-      .catch(err => {
-        console.log(err)
-        this.props.setNotification({ type: 'error', message: 'Could not update user' })
-      })
+    this.props.updateUser(id, data)
   }
 
   onCountryChange (country) {
@@ -76,9 +67,9 @@ const Page = connect(['authenticatedUser', 'user'], actions)(UserEdit)
 */
 Page.getInitialProps = async ({ req, query }) => {
   const { id } = query
-  const res = await api('get', `/api/users/${id}`)
-  const { country } = res.data
-  return { id, currentCountry: country }
+  const res = await fetch(`/api/users/${id}`)
+  const data = await res.json()
+  return { id, currentCountry: data.country }
 }
 
 export default Page

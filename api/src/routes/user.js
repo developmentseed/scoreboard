@@ -1,6 +1,7 @@
+const join = require('url-join')
 const getBadgeProgress = require('../badge_logic')
 const {
-  APP_URL
+  APP_URL_FINAL
 } = require('../config')
 const users = require('../models/users')
 const roles = require('../models/roles')
@@ -37,12 +38,13 @@ async function get (req, res) {
       const badgesFromDB = await db('badges').select() // array of all badges
       const badges = getBadgeProgress(json, badgesFromDB)
 
-      json.extent_uri = `${APP_URL}/scoreboard/api/extents/${json.extent_uri}`
+      json.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', json.extent_uri)
 
       return res.send({
         id,
         badges,
         records: json,
+        roles: rolesList,
         country: user.country
       })
     } catch (e) {

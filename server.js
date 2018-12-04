@@ -3,7 +3,7 @@ require('dotenv').config()
 /**
  * Prelude
  */
-const { PORT, NODE_ENV } = require('./api/src/config')
+const { PORT, NODE_ENV, APP_URL_FINAL } = require('./api/src/config')
 const dev = NODE_ENV !== 'production'
 const next = require('next')
 
@@ -20,6 +20,7 @@ const api = require('./api/src/index')
 /**
  * Init
  */
+app.setAssetPrefix(APP_URL_FINAL)
 app.prepare()
   .then(() => {
     api.get('/about', (req, res) => {
