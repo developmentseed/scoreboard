@@ -32,10 +32,22 @@ scoreboard users
 scoreboard users destroy --id {user id}
 ```
 
-### Create an admin user
+### Create an new admin user
 
 ```console
 scoreboard create-admin-user --osm-id {osm id} --full-name {osm username}
+```
+
+### Assign admin rights to an existing user
+
+By osm-id:
+```console
+scoreboard create-admin-user --osm-id {osm id}
+```
+
+By username
+```console
+scoreboard create-admin-user --username {osm username}
 ```
 
 ## Roles
