@@ -93,7 +93,7 @@ class UserExtentMap extends Component {
         'id': 'footprint-point',
         'type': 'circle',
         'source': 'footprint',
-        'source-layer': 'user_footprint',
+        'source-layer': uid.toString(),
         'minzoom': 7,
         'paint': {
           // Size circle raidus by earthquake magnitude and zoom level
