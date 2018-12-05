@@ -87,6 +87,7 @@ class Layout extends React.Component {
                 <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
                 <li><Link href='/campaigns'><a>Campaigns</a></Link></li>
                 <li><Link href='/users'><a>Users</a></Link></li>
+                <li><Link href='/countries'><a>Countries</a></Link></li>
                 <li><Link href='/about'><a>About</a></Link></li>
               </ul>
               {
