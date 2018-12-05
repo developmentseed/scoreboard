@@ -1,11 +1,14 @@
 import React from 'react'
 import Select from 'react-select'
 import { sortBy, prop } from 'ramda'
+import join from 'url-join'
 
+import { APP_URL_PREFIX } from '../api/src/config'
 import countries, { getName } from 'i18n-iso-countries'
 countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
 
 const sortByLabel = sortBy(prop('label'))
+const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 export default ({
   searchText, handleSearch, countries, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
@@ -17,8 +20,8 @@ export default ({
       <fieldset>
         <legend>Search</legend>
         <div className='search'>
-          <input className='input--text' value={searchText} onChange={handleSearch} />
-          <span className='search-icon' />
+          <input className='input--text' onChange={handleSearch} />
+          <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
         </div>
       </fieldset>
       <fieldset>

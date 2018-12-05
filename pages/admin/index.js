@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
+import Link from '../../components/Link'
 import Router from 'next/router'
 import { connect } from 'unistore/react'
 
@@ -72,7 +72,7 @@ export class Admin extends Component {
                     <a>
                       <div>
                         <h2 className='header--large'>Badges</h2>
-                        <p>Create new badges</p>
+                        <p>Manage badges</p>
                       </div>
                     </a>
                   </Link>

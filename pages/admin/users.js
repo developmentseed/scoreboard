@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
+import Link from '../../components/Link'
 import Router from 'next/router'
 import { connect } from 'unistore/react'
 
@@ -43,7 +43,7 @@ export class AdminUsers extends Component {
     return (
       <div className='admin'>
         <h1>List</h1>
-        <table className='admin-user-table'>
+        <table className='admin-table'>
           <thead>
             <tr>
               <th>ID</th>
@@ -55,7 +55,7 @@ export class AdminUsers extends Component {
             {
               admin.users
                 .map((user) => (
-                  <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-user-table-row'>
+                  <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-table-row'>
                     <td>{user.osm_id}</td>
                     <td>{user.full_name}</td>
                     <td>{this.renderUserRoles(user.roles)}</td>

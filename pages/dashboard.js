@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import Link from '../components/Link'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
+import Link from '../../components/Link'
 import Router from 'next/router'
 import Select from 'react-select'
 import { connect } from 'unistore/react'

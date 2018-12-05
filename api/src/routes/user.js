@@ -1,6 +1,7 @@
+const join = require('url-join')
 const getBadgeProgress = require('../badge_logic')
 const {
-  APP_URL
+  APP_URL_FINAL
 } = require('../config')
 const users = require('../models/users')
 const roles = require('../models/roles')
@@ -44,7 +45,7 @@ async function get (req, res) {
       campaign_ids = campaign_ids.map((res) => res.campaign_id)
       // Get information for each of those campaigns to return as assignments
       const assignments = await db('campaigns').where('id', 'in', campaign_ids)
-      json.extent_uri = `${APP_URL}/scoreboard/api/extents/${json.extent_uri}`
+      json.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', json.extent_uri)
 
       return res.send({
         id,

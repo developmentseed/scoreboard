@@ -31,12 +31,11 @@ const def = {
 
 module.exports = {
   test: test,
-  development: Object.assign({}, {
+  development: Object.assign(def, {
     seeds: {
       directory: path.join(__dirname, 'seeds', 'development')
     },
     debug: process.env.KNEX_DEBUG || false
-  }, def),
-  staging: def,
+  }),
   production: def
 }

@@ -1,4 +1,5 @@
 const connection = require('../db/connection')
+const { validateRole } = require('../utils/roles')
 
 async function get (req, res) {
   try {
@@ -19,10 +20,14 @@ async function get (req, res) {
 }
 
 async function post (req, res) {
+  const { user, body } = req
+
+  if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
+    return res.boom.unauthorized('Not authorized')
+  }
+
   try {
-    const { body } = req
     const db = connection()
-    // Note that we'll need to add security here
     await db('badges').insert(body)
     return res.sendStatus(200)
   } catch (e) {
@@ -31,10 +36,18 @@ async function post (req, res) {
 }
 
 async function del (req, res) {
+  const { user, params: { id } } = req
+
+  if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
+    return res.boom.unauthorized('Not authorized')
+  }
+
+  if (!id) {
+    return res.boom.badRequest('Invalid id')
+  }
+
   try {
-    const { id } = req.params
     const db = connection()
-    // Note that we'll need to add security here
     await db('badges').where('id', '=', id).del()
     return res.sendStatus(200)
   } catch (e) {
@@ -43,10 +56,18 @@ async function del (req, res) {
 }
 
 async function put (req, res) {
-  const { id } = req.params
-  const { body } = req
-  const db = connection()
+  const { user, body, params: { id } } = req
+
+  if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
+    return res.boom.unauthorized('Not authorized')
+  }
+
+  if (!id) {
+    return res.boom.badRequest('Invalid id')
+  }
+
   try {
+    const db = connection()
     await db('badges').where('id', '=', id).update(body)
     return res.sendStatus(200)
   } catch (err) {
