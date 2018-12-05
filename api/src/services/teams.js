@@ -22,6 +22,29 @@ class OSMTeams {
     }
     return rp(options)
   }
+
+  getTeam (id) {
+    return rp(`${OSM_TEAMS_SERVICE}/api/teams/${id}`)
+  }
+
+  editTeam (id, body) {
+    var options = {
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}`,
+      body,
+      json: true
+    }
+    return rp(options)
+  }
+
+  deleteTeam (id) {
+    var options = {
+      method: 'DELETE',
+      uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}`,
+      json: true
+    }
+    return rp(options)
+  }
 }
 
 module.exports = new OSMTeams()

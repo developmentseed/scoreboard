@@ -46,5 +46,8 @@ router.put('/badges/:id', badges.put)
 // teams routes
 router.get('/teams', teams.list)
 router.post('/teams', teams.post)
+router.get('/teams/:id', teams.get)
+router.put('/teams/:id', teams.put)
+router.delete('/teams/:id', teams.del)
 
 module.exports = router

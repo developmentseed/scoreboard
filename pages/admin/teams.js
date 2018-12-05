@@ -28,6 +28,10 @@ export class AdminTeams extends Component {
     }
   }
 
+  onTeamClick (team) {
+    Router.push(`/admin/teams/${team.id}`)
+  }
+
   renderList () {
     const { teams } = this.props
 
