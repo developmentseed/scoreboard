@@ -76,6 +76,7 @@ class Dashboard extends Component {
   }
 
   render () {
+    console.log('this.props', this.props)
     const { authenticatedUser } = this.props
     const { loggedIn, osm, account } = authenticatedUser
 
@@ -132,10 +133,4 @@ class Dashboard extends Component {
   }
 }
 
-const Page = connect(['authenticatedUser', 'error'], actions)(Dashboard)
-
-Page.getInitialProps = async ({ query }) => {
-
-}
-
-export default Page
+export default connect(['authenticatedUser', 'error'], actions)(Dashboard)
