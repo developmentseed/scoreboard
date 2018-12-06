@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
+import Router from 'next/router'
 import join from 'url-join'
 
 import { APP_URL_PREFIX } from '../api/src/config'
@@ -35,6 +36,7 @@ class Teams extends Component {
     }
 
     this.handleSearch = this.handleSearch.bind(this)
+    this.onTeamClick = this.onTeamClick.bind(this)
   }
 
   async componentDidMount () {
@@ -62,8 +64,8 @@ class Teams extends Component {
     })
   }
 
-  onTeamClick(team) {
-    
+  onTeamClick (team) {
+    Router.push(`/teams/${team.id}`)
   }
 
   renderList () {
