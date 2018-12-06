@@ -1,8 +1,4 @@
 const connection = require('../db/connection')
-const {
-  split, trim
-} = require('ramda')
-const { subMonths } = require('date-fns')
 
 function applyFilters (query, req) {
   const search = req.query.q || ''
