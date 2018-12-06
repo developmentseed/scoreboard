@@ -4,6 +4,8 @@ const {
   merge, map, props, sum, head
 } = require('ramda')
 const conn = require('./db/connection')
+const { findByName, create } = require('./models/countries.js')
+const { updateUserCountryEdit } = require('./models/userCountryEdits.js')
 
 /*
  * Given the edit times for a user get the last edit
@@ -35,6 +37,27 @@ const sumEdits = (records) => {
   return sum(summableProperties)
 }
 
+async function updateCountries (knex, userID, countryEditList) {
+  const promises = countryEditList.map(async (countryTuple) => {
+    let countryID = await findByName(countryTuple.name) // findByAlpha2('US')
+    if (countryID.length === 0) {
+      countryID = await create(countryTuple.name)
+      countryID = countryID[0]
+    } else {
+      countryID = countryID[0].id
+    }
+    try {
+      if (countryID.length !== 0) {
+        const rows_affected = await updateUserCountryEdit(userID, countryID, countryTuple.count)
+        console.log(rows_affected.rowCount)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  })
+  return Promise.all(promises)
+}
+
 /*
  * Worker runs in a clock process and updates the cache
  * that holds users
@@ -58,6 +81,7 @@ async function usersWorker () {
           const data = JSON.parse(resp)
           obj.edit_count = sumEdits(data) || 0
           obj.last_edit = getLastEdit(data.edit_times)
+          await updateCountries(db, obj.id, data.country_list)
         }
       } catch (e) {
         console.error(`${obj.osm_id} not retrieved from OSMesa`, e.message)
