@@ -9,7 +9,11 @@ const db = connection()
  * @returns {Promise<string>} a response
  */
 function get (id) {
-  return db('userCountryEdits').where('id', id)
+  return db('user_country_edits').where('id', id)
+}
+
+function getParticipants (id) {
+  return db('user_country_edits').select('user_id', 'edit_count').where('country_id', id) // Get all users mapping in that country
 }
 
 function update (id, data) {
@@ -34,6 +38,7 @@ function updateUserCountryEdit (user_id, country_id, count) {
 
 module.exports = {
   get,
+  getParticipants,
   update,
   updateUserCountryEdit
 }

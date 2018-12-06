@@ -26,13 +26,17 @@ function find (key, value) {
 }
 
 function findByAlpha2 (alpha2Value) {
+  return db('countries').where('alpha2', alpha2Value)
+}
+
+function findIDByAlpha2 (alpha2Value) {
   return db('countries').select('id').where('alpha2', alpha2Value)
 }
 
 async function findByName (name) {
   if (usStateNames.includes(name)) name = 'United States of America'
   const alpha2 = countryHelp.getAlpha2Code(name, 'en')
-  return findByAlpha2(alpha2)
+  return findIDByAlpha2(alpha2)
 }
 
 function update (id, data) {
@@ -49,6 +53,7 @@ module.exports = {
   list,
   find,
   findByAlpha2,
+  findIDByAlpha2,
   findByName,
   update,
   destroy
