@@ -1,10 +1,11 @@
+const countryHelp = require('i18n-iso-countries')
 const connection = require('../db/connection')
 
 function applyFilters (query, req) {
   const search = req.query.q || ''
 
   if (search.length > 0) {
-    query = query.where('name', 'like', `%${search}%`)
+    query = query.where('country_name', 'ilike', `%${search}%`)
   }
 
   return query
@@ -22,33 +23,30 @@ function applyFilters (query, req) {
  * @returns {Promise} a response
  */
 async function stats (req, res) {
-  const page = req.query.page || 1
   const sortType = req.query.sortType || ''
 
   try {
     const db = connection()
 
-    // Create table with ranking
-    const allCountries = db.with('edits', (conn) => conn
-      .select('name', 'edit_count')
-      .from('countries'))
-      .select(
-        's.name',
-        's.edit_count',
-        db.raw(
-          `(select count(*)+1 from edits as r
-        where r.edit_count > s.edit_count) as rank`
-        )
-      ).from('edits as s')
+    // get all the counts
+    const countQuery = db('user_country_edits').countDistinct('country_name')
 
+    // count all countries
+    const totalCountries = await countQuery.clone()
+
+    // count subtotal
+    const subTotal = await applyFilters(countQuery, req)
+
+    // Create table with ranking
+    const allCountries = db('user_country_edits')
+      .select('country_name as name', 'edit_count')
+      .groupBy('country_name', 'edit_count')
+
+    // apply search filter
     let recordQuery = applyFilters(allCountries.clone(), req)
+
+    // apply sorting
     switch (sortType) {
-      // case 'Most recent':
-      //   recordQuery = recordQuery.orderBy('last_edit', 'desc')
-      //   break
-      // case 'Least recent':
-      //   recordQuery = recordQuery.orderBy('last_edit', 'asc')
-      //   break
       case 'Least total':
         recordQuery = recordQuery.orderBy('edit_count', 'asc')
         break
@@ -57,18 +55,19 @@ async function stats (req, res) {
         break
     }
 
-    const records = await recordQuery
-      .limit(25)
-      .offset((parseInt(page) - 1) * 25)
+    let records = await recordQuery.clone()
 
-    // Create counts
-    const countries = db('countries')
-    const [{ subTotal }] = await applyFilters(countries.clone(), req).count('id as subTotal')
-    const [{ total }] = await countries.clone().count('id as total')
-    const [{ editTotal }] = await countries.clone().sum('edit_count as editTotal')
+    // add alpha codes to each country
+    records = records.map((c) => {
+      c.alpha2 = countryHelp.getAlpha2Code(c.name, 'en')
+      return c
+    })
 
     return res.send({
-      records, subTotal, total, editTotal
+      records,
+      subTotal: subTotal[0].count,
+      total: totalCountries[0].count,
+      editTotal: records.reduce((sum, { edit_count }) => sum + edit_count, 0)
     })
   } catch (err) {
     console.error(err)
@@ -76,38 +75,6 @@ async function stats (req, res) {
   }
 }
 
-/**
- * User list route
- * /users
- *
- * The users route displays all the users from the external
- * users source
- *
- * @param {Object} req - the request object
- * @param {Object} res - the response object
- * @returns {Promise} a response
- */
-/*
-async function list (req, res) {
-  if (!req.user || !req.user.roles || !validateRole(req.user.roles, 'admin')) {
-    return res.boom.unauthorized('Not authorized')
-  }
-
-  try {
-    const data = await users.list()
-    const userList = await Promise.all(data.map(async (user) => {
-      if (user.roles) {
-        user.roles = await roles.getRoles(user.roles)
-      }
-      return user
-    }))
-    return res.send(userList)
-  } catch (err) {
-    console.error(err)
-    return res.boom.badRequest('Could not retrieve users list')
-  }
-}
-*/
 module.exports = {
   stats
 }
