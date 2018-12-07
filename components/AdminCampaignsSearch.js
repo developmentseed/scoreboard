@@ -75,8 +75,8 @@ class CampaignSearch extends Component {
             </section>)
             : <div />
         }
-        <section className=''>
-          <h1>Unassigned</h1>
+        <section className='section-sub'>
+          <h1>Task list</h1>
           <form onSubmit={e => e.preventDefault()}>
             <fieldset>
               <legend>Search</legend>
@@ -94,12 +94,18 @@ class CampaignSearch extends Component {
                 </tr>
               </thead>
               <tbody>
-                {records.map(record => (
-                  <tr key={`campaign-${record.name}`} onClick={() => this.onSearchCampaignClick(record)} className='admin-table-row'>
+                {records.map(record => {
+                  let isAssigned = false
+                  assigned.forEach(task => {
+                    if (record.id === task.id) isAssigned = true
+                  })
+
+                  return <tr key={`campaign-${record.name}`} onClick={() => this.onSearchCampaignClick(record)} className={isAssigned ? 'admin-table-row-alt' : 'admin-table-row'} >
                     <td>{`${record.name} - project-${(record.tm_id || record.id)}`}</td>
                     <td>{record.priority}</td>
                   </tr>
-                ))}
+                })
+                }
               </tbody>
               <Pagination
                 activePage={page}
