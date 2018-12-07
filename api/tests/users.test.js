@@ -60,6 +60,19 @@ test('Sort users by most recently active', async (t) => {
   t.deepEqual(resCopy, users)
 })
 
+test('Search users', async (t) => {
+  const sensitiveRes = await request(app)
+    .get('/scoreboard/api/users/stats/?q=test')
+    .expect(200)
+
+  const insensitiveRes = await request(app)
+    .get('/scoreboard/api/users/stats/?q=TesT')
+    .expect(200)
+
+  t.is(sensitiveRes.body.records.length, insensitiveRes.body.records.length)
+  t.is(sensitiveRes.body.editTotal, insensitiveRes.body.editTotal)
+})
+
 test('Sort users by least recently active', async (t) => {
   const response = await request(app)
     .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Least%20recent&active=false')

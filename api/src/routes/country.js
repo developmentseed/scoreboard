@@ -1,19 +1,5 @@
 const countryHelp = require('i18n-iso-countries')
-const countries = require('../models/countries')
 const userCountryEdits = require('../models/userCountryEdits')
-const user = require('../models/users')
-
-function getUserInfo (userIDs) {
-  const promises = userIDs.map(async (element) => {
-    const [userData] = await user.get(element.user_id)
-    return {
-      id: element.user_id,
-      count: element.edit_count,
-      name: userData.full_name
-    }
-  })
-  return Promise.all(promises)
-}
 
 /**
  * User Stats Route
@@ -33,27 +19,20 @@ async function get (req, res) {
   } else {
     alpha2 = alpha2.toUpperCase()
   }
+
+  const countryName = countryHelp.getName(alpha2, 'en')
+
   try {
-    const [country] = await countries.findByAlpha2(alpha2)
-    let userIDs = await userCountryEdits.getParticipants(country.id)
-    const userData = await getUserInfo(userIDs)
-    if (country.id === null) {
-      return res.send({
-        alpha2,
-        name: countryHelp.getName(alpha2, 'en'),
-        users: [],
-        edit_count: 0,
-        id: 0
-      })
-    } else {
-      return res.send({
-        alpha2,
-        name: countryHelp.getName(alpha2, 'en'),
-        users: userData,
-        edit_count: country.edit_count,
-        id: country.id
-      })
+    let userData = await userCountryEdits.getParticipants(countryName)
+    if (userData === null) {
+      return res.boom.notFound('Could not retrieve user stats')
     }
+    return res.send({
+      alpha2,
+      name: countryName,
+      users: userData,
+      edit_count: userData.reduce((total, { count }) => total + count, 0)
+    })
   } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve user stats')
