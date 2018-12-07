@@ -65,8 +65,8 @@ async function stats (req, res) {
 
     return res.send({
       records,
-      subTotal: subTotal[0].count,
-      total: totalCountries[0].count,
+      subTotal: parseInt(subTotal[0].count, 10),
+      total: parseInt(totalCountries[0].count, 10),
       editTotal: records.reduce((sum, { edit_count }) => sum + edit_count, 0)
     })
   } catch (err) {
