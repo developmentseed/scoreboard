@@ -59,13 +59,16 @@ async function get (req, res) {
   try {
     const db = connection()
     const data = JSON.parse(await OSMTeams.getTeam(req.params.id))
-    const campaigns = await db('team_assignments').where('team_id', req.params.id)
+    const campaigns = await db('campaigns').select().whereIn('id', function () {
+      this.select('campaign_id').from('team_assignments').where('team_id', req.params.id)
+    })
     const team = {
       id: data.id,
       bio: data.bio,
       hashtag: data.hashtag,
       name: data.name,
-      campaigns: campaigns.map(c => c.campaign_id)
+      campaigns: campaigns.map(c => c.id),
+      campaignData: campaigns
     }
     return res.send(team)
   } catch (err) {

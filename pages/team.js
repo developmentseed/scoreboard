@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Link from '../components/Link'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
+import CampaignCard from '../components/CampaignCard'
 
 export class Team extends Component {
   componentDidMount () {
@@ -43,9 +44,8 @@ export class Team extends Component {
         </section>
         <section className='section--tertiary'>
           <div className='row'>
-            {
-              // Add user table
-            }
+            <h2>Assigned Campaigns</h2>
+            {team.campaignData.map(record => <CampaignCard key={record.id} campaign={record} />)}
           </div>
         </section>
       </div>
