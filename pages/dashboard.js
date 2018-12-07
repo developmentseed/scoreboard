@@ -5,9 +5,8 @@ import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 
 import BadgeInProgress from '../components/BadgeInProgress'
-import CampaignCard from '../components/CampaignCard'
 import NotLoggedIn from '../components/NotLoggedIn'
-import DataNotAvailable from '../components/DataNotAvailable'
+// import DataNotAvailable from '../components/DataNotAvailable'
 import InlineList from '../components/InlineList'
 import FilterBar from '../components/FilterBar'
 import AssignmentsTable from '../components/AssignmentsTable'
@@ -57,7 +56,7 @@ class Dashboard extends Component {
 
   render () {
     const { authenticatedUser } = this.props
-    const { loggedIn, osm, account } = authenticatedUser
+    const { loggedIn } = authenticatedUser
 
     if (this.state.loading) {
       return (
@@ -103,7 +102,7 @@ class Dashboard extends Component {
 
   renderHeader () {
     const { authenticatedUser } = this.props
-    const { loggedIn, osm, account } = authenticatedUser
+    const { osm, account } = authenticatedUser
 
     const osmUser = osm._xml2json.user
     const badgeNums = account.badges ? Object.keys(account.badges.earnedBadges).length : 0
@@ -119,7 +118,7 @@ class Dashboard extends Component {
         <div className='row'>
           <div className='header--content--wrapper'>
             <div className='section-sub--left section-width-fifty-plus'>
-              {/* <img className='profile--thumb' style={{ float: 'left' }} src={osmUser.img['@']['href']} alt='Profile pic' /> */}
+              {<img className='profile--thumb' style={{ float: 'left' }} src={profileImage} alt='Profile pic' />}
               <h1 className='header--xlarge header--with-description'>{osmUser['@']['display_name']}</h1>
               <Link href={`/users/${account.id}`}><a className='link--large'>View Public Profile</a></Link>
             </div>
