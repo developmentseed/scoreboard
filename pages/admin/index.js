@@ -72,7 +72,17 @@ export class Admin extends Component {
                     <a>
                       <div>
                         <h2 className='header--large'>Badges</h2>
-                        <p>Create new badges</p>
+                        <p>Manage badges</p>
+                      </div>
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href='/admin/teams'>
+                    <a>
+                      <div>
+                        <h2 className='header--large'>Teams</h2>
+                        <p>Manage teams</p>
                       </div>
                     </a>
                   </Link>

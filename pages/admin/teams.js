@@ -1,44 +1,41 @@
 import React, { Component } from 'react'
-import Link from '../../components/Link'
-import Router from 'next/router'
 import { connect } from 'unistore/react'
 
+import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
+import Link from '../../components/Link'
 
-export class AdminUsers extends Component {
+export class AdminTeams extends Component {
   constructor () {
     super()
+
     this.state = {
       loading: true
     }
   }
 
-  componentDidMount () {
-    this.props.getAuthenticatedUser().then(() => {
-      Promise.all([
-        this.props.getRoles(),
-        this.props.adminGetUsers()
-      ]).then(() => {
-        this.setState({ loading: false })
-      })
-    })
+  async componentDidMount () {
+    try {
+      await this.props.getAuthenticatedUser()
+      await this.props.getAllTeams()
+      this.setState({ loading: false })
+    } catch (err) {
+      console.log(err)
+      this.setState({ loading: false })
+    }
   }
 
-  renderUserRoles (roles) {
-    if (!roles) return
-    return roles.map((role) => role.name).join(', ')
-  }
-
-  onUserClick (user) {
-    Router.push(`/admin/users/${user.osm_id}`)
+  onTeamClick (team) {
+    Router.push(`/admin/teams/${team.id}`)
   }
 
   renderList () {
-    const { admin } = this.props
-    if (!admin || !admin.users) return
+    const { teams } = this.props
+
+    if (!teams.records || !teams.records.length) return
 
     return (
       <div>
@@ -46,19 +43,17 @@ export class AdminUsers extends Component {
         <table className='admin-table'>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Name</th>
-              <th>Roles</th>
+              <th>Hashtag</th>
             </tr>
           </thead>
           <tbody>
             {
-              admin.users
-                .map((user) => (
-                  <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-table-row'>
-                    <td>{user.osm_id}</td>
-                    <td>{user.full_name}</td>
-                    <td>{this.renderUserRoles(user.roles)}</td>
+              teams.records
+                .map((team) => (
+                  <tr key={`team-${team.name}`} onClick={() => this.onTeamClick(team)} className='admin-table-row'>
+                    <td>{team.name}</td>
+                    <td>{team.hashtag}</td>
                   </tr>
                 ))
             }
@@ -86,17 +81,17 @@ export class AdminUsers extends Component {
     }
 
     return (
-      <div>
+      <div className='admin'>
         <AdminHeader />
         <section>
           <div className='row'>
             <div className='sidebar'>
-              <h2 className='header--large'>Users</h2>
+              <h2 className='header--large'>Teams</h2>
               <ul className='admin-sidebar-links'>
                 <li>
-                  <Link href='/admin/users'>
+                  <Link href='/admin/teams/add'>
                     <a className='link--large'>
-                      Users List
+                      Create new team
                     </a>
                   </Link>
                 </li>
@@ -112,4 +107,4 @@ export class AdminUsers extends Component {
   }
 }
 
-export default connect(['authenticatedUser', 'error', 'admin'], actions)(AdminUsers)
+export default connect(['authenticatedUser', 'error', 'teams', 'admin'], actions)(AdminTeams)
