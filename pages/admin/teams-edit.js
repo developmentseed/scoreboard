@@ -6,6 +6,7 @@ import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
+import AdminCampaignsSearch from '../../components/AdminCampaignsSearch'
 import Link from '../../components/Link'
 
 export class AdminTeamsEdit extends Component {
@@ -17,7 +18,8 @@ export class AdminTeamsEdit extends Component {
       descriptionInput: '',
       disableInteraction: false,
       nameInput: '',
-      hashtagInput: ''
+      hashtagInput: '',
+      teamCampaigns: []
     }
 
     // Event handlers
@@ -26,6 +28,9 @@ export class AdminTeamsEdit extends Component {
     this.handleNameInputChange = this.handleNameInputChange.bind(this)
     this.handleHashtagInputChange = this.handleHashtagInputChange.bind(this)
     this.resetInputs = this.resetInputs.bind(this)
+    this.renderCampaignsSelectSection = this.renderCampaignsSelectSection.bind(this)
+    this.addCampaignToTeam = this.addCampaignToTeam.bind(this)
+    this.removeCampaignFromTeam = this.removeCampaignFromTeam.bind(this)
   }
 
   async componentDidMount () {
@@ -47,7 +52,8 @@ export class AdminTeamsEdit extends Component {
         loading: false,
         nameInput: team.name,
         descriptionInput: team.bio,
-        hashtagInput: team.hashtag
+        hashtagInput: team.hashtag,
+        teamCampaigns: team.campaigns
       })
     }
   }
@@ -63,6 +69,34 @@ export class AdminTeamsEdit extends Component {
       console.log(e)
       this.setState({ disableInteraction: false })
     }
+  }
+
+  renderCampaignsSelectSection () {
+    return (
+      <div className='form__section'>
+        <h2 className='header--medium'>
+          Team campaigns
+        </h2>
+        <AdminCampaignsSearch
+          selectedCampaigns={this.state.teamCampaigns}
+          addCampaign={this.addCampaignToTeam}
+          removeCampaign={this.removeCampaignFromTeam}
+        />
+      </div>
+    )
+  }
+
+  addCampaignToTeam (campaignId) {
+    let { teamCampaigns } = this.state
+    teamCampaigns = teamCampaigns.filter(c => c !== campaignId)
+    teamCampaigns.push(campaignId)
+    this.setState({ teamCampaigns })
+  }
+
+  removeCampaignFromTeam (campaignId) {
+    let { teamCampaigns } = this.state
+    teamCampaigns = teamCampaigns.filter(c => c !== campaignId)
+    this.setState({ teamCampaigns })
   }
 
   render () {
@@ -191,6 +225,7 @@ export class AdminTeamsEdit extends Component {
         onSubmit={this.handleAddNewTeamFormSubmit}
       >
         {this.renderBasicDetailsSection()}
+        {this.renderCampaignsSelectSection()}
         <div className='form__footer'>
           <button
             className='button'
@@ -287,13 +322,15 @@ export class AdminTeamsEdit extends Component {
     const {
       descriptionInput,
       nameInput,
-      hashtagInput
+      hashtagInput,
+      teamCampaigns
     } = this.state
 
     const params = {
       bio: descriptionInput,
       name: nameInput,
-      hashtag: hashtagInput
+      hashtag: hashtagInput,
+      campaigns: teamCampaigns
     }
 
     this.updateTeam(params)
@@ -305,7 +342,8 @@ export class AdminTeamsEdit extends Component {
       descriptionInput: '',
       disableInteraction: false,
       nameInput: '',
-      hashtagInput: ''
+      hashtagInput: '',
+      teamCampaigns: []
     })
   }
 }
