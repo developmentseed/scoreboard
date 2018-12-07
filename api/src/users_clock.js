@@ -46,7 +46,6 @@ async function updateCountries (userID, countryEditList) {
     if (isState(countryName)) {
       countryName = 'United States of America'
     }
-    // console.log(isState(tuple.name), tuple.name, countryName)
     if (!countryTotal[countryName]) {
       countryTotal[countryName] = 0
     }

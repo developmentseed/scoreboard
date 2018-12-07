@@ -39,7 +39,6 @@ function update (id, data) {
  * @returns {boolean} true indicates it is a state
  */
 function isState (name) {
-  console.log(usStateNames.indexOf(name), name, usStateNames.indexOf(name) > -1)
   if (usStateNames.indexOf(name) > -1) {
     return true
   }
