@@ -8,7 +8,7 @@ export default ({ list }) => {
         list && list.map((item) => {
           return (
             <li>
-              <Link>
+              <Link href={item.href}>
                 <a>
                   {item.name}
                 </a>

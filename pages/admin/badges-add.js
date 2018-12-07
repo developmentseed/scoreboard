@@ -63,7 +63,7 @@ export class AdminBadgesAdd extends Component {
       await this.props.getAuthenticatedUser()
       this.setState({ loading: false })
     } catch (err) {
-      console.log(err)
+      console.error(err)
       this.setState({ loading: false })
     }
   }
@@ -75,7 +75,7 @@ export class AdminBadgesAdd extends Component {
       await this.props.createBadge(params)
       Router.push('/admin/badges')
     } catch (e) {
-      console.log(e)
+      console.error(e)
       this.setState({ disableInteraction: false })
     }
   }

@@ -45,7 +45,7 @@ export class AdminUserEdit extends Component {
         this.props.setNotification({ type: 'success', message: 'Profile updated successfully' })
       })
       .catch(err => {
-        console.log(err)
+        console.error(err)
         this.props.setNotification({ type: 'error', message: 'Could not update user' })
       })
   }

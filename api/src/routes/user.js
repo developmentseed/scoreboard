@@ -5,6 +5,7 @@ const {
 } = require('../config')
 const users = require('../models/users')
 const roles = require('../models/roles')
+const favoriteCampaigns = require('../models/favorite-campaigns')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const connection = require('../db/connection')
@@ -28,6 +29,7 @@ async function get (req, res) {
   try {
     const db = connection()
     const [user] = await users.findByOsmId(id)
+    const uid = user.id
     const rolesList = user.roles ? await roles.getRoles(user.roles) : []
 
     // handle the case where osm user doesn't exist on osmesa
@@ -38,19 +40,15 @@ async function get (req, res) {
       const badgesFromDB = await db('badges').select() // array of all badges
       const badges = getBadgeProgress(json, badgesFromDB)
 
-      // Match OSM ID to user ID
-      const user_id = await db('users').select('id').where('osm_id', '=', id)
-      // Find all campaign assignments for this user
-      let campaign_ids = await db('assignments').select('campaign_id').where('user_id', '=', user_id[0]['id'])
-      campaign_ids = campaign_ids.map((res) => res.campaign_id)
-      // Get information for each of those campaigns to return as assignments
-      const assignments = await db('campaigns').where('id', 'in', campaign_ids)
+      // Find all favorite campaigns for this user
+      const favorites = await favoriteCampaigns.findByUserID(uid)
       json.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', json.extent_uri)
 
       return res.send({
         id,
+        uid,
         badges,
-        assignments,
+        favorites,
         records: json,
         roles: rolesList,
         country: user.country
@@ -60,7 +58,7 @@ async function get (req, res) {
         return res.send({
           id,
           badges: null,
-          assignments: null,
+          favorites: null,
           records: {
             uid: parseInt(id, 10),
             name: user.full_name,
@@ -119,7 +117,7 @@ async function put (req, res) {
     const [updatedUser] = await users.update(user.id, body)
     return res.send(updatedUser)
   } catch (err) {
-    console.log(err)
+    console.error(err)
     return res.boom.badRequest('Could not update user')
   }
 }

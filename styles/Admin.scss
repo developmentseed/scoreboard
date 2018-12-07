@@ -12,6 +12,17 @@
   }
 }
 
+.sidebar-right {
+  width: 20%;
+  left: 5%;
+  float: right;
+  @include media(xsmall-only) {
+    float: none;
+    width: 100%;
+    margin-right: 0%;
+  }
+}
+
 .content--with-sidebar {
   width: 75%;
   float: left;

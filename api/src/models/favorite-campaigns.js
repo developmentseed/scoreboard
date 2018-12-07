@@ -9,7 +9,20 @@ const db = connection()
  * @returns {Promise<string>} a response
  */
 function get (id) {
-  return db('assignments').where('id', id)
+  return db('favorite_campaigns').where('id', id)
+}
+
+function list () {
+  return db('favorite_campaigns').then((faves) => {
+    return Promise.all(faves.map((fav) => {
+      return db('campaigns')
+        .where('id', fav.campaign_id)
+        .then((result) => {
+          fav.campaign = result[0]
+          return fav
+        })
+    }))
+  })
 }
 
 /**
@@ -19,7 +32,18 @@ function get (id) {
  * @returns {Promise} a response
  */
 function findByUserID (user_id) {
-  return db('campaigns').where('id', 'in', db('assignments').select('campaign_id').where('user_id', '=', user_id))
+  return db('favorite_campaigns')
+    .where('user_id', user_id)
+    .then((faves) => {
+      return Promise.all(faves.map((fav) => {
+        return db('campaigns')
+          .where('id', fav.campaign_id)
+          .then((result) => {
+            fav.campaign = result[0]
+            return fav
+          })
+      }))
+    })
 }
 
 /**
@@ -41,7 +65,7 @@ async function findByOsmID (osm_id) {
  * @returns {Promise} a response
  */
 function create (data) {
-  return db('assignments').insert(data).returning('*')
+  return db('favorite_campaigns').insert(data).returning('*')
 }
 
 /**
@@ -52,8 +76,7 @@ function create (data) {
  * @returns {Promise} a response
  */
 function findAssignedByIDs (campaignID, osmID) {
-  console.log('Here')
-  return db('assignments').select('id').where({ campaign_id: campaignID, user_id: db('users').select('id').where('osm_id', '=', osmID).limit(1) })
+  return db('favorite_campaigns').select('id').where({ campaign_id: campaignID, user_id: db('users').select('id').where('osm_id', '=', osmID).limit(1) })
 }
 
 /**
@@ -63,11 +86,12 @@ function findAssignedByIDs (campaignID, osmID) {
  * @returns {Promise} a response
  */
 function destroy (id) {
-  return db('assignments').where('id', id).del()
+  return db('favorite_campaigns').where('id', id).del()
 }
 
 module.exports = {
   get,
+  list,
   findByUserID,
   findByOsmID,
   findAssignedByIDs,
