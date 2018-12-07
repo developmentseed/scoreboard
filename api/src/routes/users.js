@@ -16,7 +16,7 @@ function applyFilters (query, req) {
   const active = req.query.active || false
 
   if (search.length > 0) {
-    query = query.where('full_name', 'like', `%${search}%`)
+    query = query.where('full_name', 'ilike', `%${search}%`)
   }
 
   if (country.length > 0) {
