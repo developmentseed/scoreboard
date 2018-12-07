@@ -1,6 +1,5 @@
 const countryHelp = require('i18n-iso-countries')
 const userCountryEdits = require('../models/userCountryEdits')
-const user = require('../models/users')
 
 /**
  * User Stats Route
