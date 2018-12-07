@@ -2,10 +2,10 @@ const users = require('../../src/models/users')
 const roles = require('../../src/models/roles')
 
 async function command (args, flags) {
-  const { id, osmId, fullName } = flags
+  const { id, osmId, fullName, username } = flags
 
-  if (!id && !osmId) {
-    console.error('--id or --osm-id is required')
+  if (!id && !osmId && !username) {
+    console.error('--id or --osm-id or --username is required')
     return process.exit(1)
   }
 
@@ -16,6 +16,8 @@ async function command (args, flags) {
     [user] = await users.get(id)
   } else if (osmId) {
     [user] = await users.findByOsmId(osmId)
+  } else if (username) {
+    [user] = await users.find('full_name', username)
   }
 
   if (!user) {

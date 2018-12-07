@@ -108,6 +108,12 @@ class Dashboard extends Component {
     const osmUser = osm._xml2json.user
     const badgeNums = account.badges ? Object.keys(account.badges.earnedBadges).length : 0
 
+    // use default gravatar image
+    let profileImage = 'https://www.gravatar.com/avatar/00000000000000000000000000000000'
+    if (osmUser && osmUser.img && osmUser.img['@'] && osmUser.img['@']['href']) {
+      profileImage = osmUser.img['@']['href']
+    }
+
     return (
       <header className='header--internal--dashboard header--page'>
         <div className='row'>

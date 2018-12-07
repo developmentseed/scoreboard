@@ -11,7 +11,7 @@ export default class BadgeCompleted extends Component {
 
     if (category && badgeLevel) {
       badgeUrl = join(APP_URL_PREFIX, `/static/badges/${category}-${badgeLevel}-graphic.svg`)
-      borderUrl = join(APP_URL_PREFIX, `/static/badges/border${badgeLevel}.svg`)
+      borderUrl = join(APP_URL_PREFIX, `/static/badges/border0.svg`)
     }
 
     return (
