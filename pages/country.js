@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import CountryHeader from '../components/CountryHeader'
+import UserTable from '../components/UserTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 
@@ -11,6 +12,11 @@ export class Country extends Component {
   render () {
     if (!this.props.country) return <div />
     const { name, edit_count, users } = this.props.country
+    users.map((user) => {
+      user.uid = user.osm_id
+      user.edits = user.count
+      user.name = user.full_name
+    })
     if (!name) return <div />
 
     return (
@@ -20,6 +26,11 @@ export class Country extends Component {
           num_edits={edit_count}
           num_participants={users.length}
         />
+        <section className='section--tertiary'>
+          <div className='row'>
+            <UserTable users={users} />
+          </div>
+        </section>
       </div>
     )
   }
