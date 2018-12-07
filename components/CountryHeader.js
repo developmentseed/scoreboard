@@ -1,7 +1,5 @@
 import React from 'react'
 import { formatDecimal } from '../lib/utils/format'
-import countries, { getName } from 'i18n-iso-countries'
-countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
 
 /**
  * Given the edit times for a user return the difference between now()
