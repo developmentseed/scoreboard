@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from './Link'
-import { formatDecimal } from '../lib/utils/format'
+const { formatDecimal } = require('../lib/utils/format')
 
 export default ({ apiStatus, countries }) => {
   let content = <div />
