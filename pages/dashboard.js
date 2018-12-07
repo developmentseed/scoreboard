@@ -13,11 +13,17 @@ import FilterBar from '../components/FilterBar'
 import AssignmentsTable from '../components/AssignmentsTable'
 
 const mockTeams = [
-  { name: 'HOT Lunch', id: 1 }
+  { name: 'HOT Lunch', id: 1 },
+  { name: 'OpenPizzaMap', id: 2 },
+  { name: 'OpenStreetMap Seattle', id: 3 },
+  { name: 'CUGOS', id: 4 }
 ]
 
 const mockCountries = [
-  { name: 'United States', id: 1 }
+  { name: 'United States', id: 1 },
+  { name: 'Tanzania', id: 1 },
+  { name: 'Peru', id: 1 },
+  { name: 'Iceland', id: 1 }
 ]
 
 const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
@@ -36,6 +42,9 @@ class Dashboard extends Component {
 
   componentDidMount () {
     this.props.getAuthenticatedUser()
+
+    this.onAssignmentsFilterClick = this.onAssignmentsFilterClick.bind(this)
+    this.onBadgesFilterClick = this.onBadgesFilterClick.bind(this)
   }
 
   componentDidUpdate () {
@@ -66,7 +75,7 @@ class Dashboard extends Component {
         <section>
           <div className='row'>
             <div className='sidebar-right'>
-              <h2 className='header--large'>Teams</h2>
+              <h2 className='header--large' style={{ marginBottom: 5 }}>Teams</h2>
               <InlineList list={mockTeams.map((item) => {
                 return {
                   name: item.name,
@@ -74,7 +83,7 @@ class Dashboard extends Component {
                 }
               })} />
 
-              <h2 className='header--large'>Countries</h2>
+              <h2 className='header--large' style={{ marginBottom: 5 }}>Countries</h2>
               <InlineList list={mockCountries.map((item) => {
                 return {
                   name: item.name,
@@ -154,7 +163,11 @@ class Dashboard extends Component {
     return (
       <div>
         <h2 className='header--large header--with-description'>Campaigns</h2>
-        <FilterBar filters={assignmentFilters} onClick={(filterId) => this.onAssignmentsFilterClick(filterId)} />
+        <FilterBar
+          filters={assignmentFilters}
+          active={this.state.assignmentsFilter}
+          onClick={this.onAssignmentsFilterClick}
+        />
         <AssignmentsTable assignments={favorites} />
       </div>
     )
@@ -176,27 +189,31 @@ class Dashboard extends Component {
     return (
       <div style={{ marginTop: 50 }}>
         <h2 className='header--large header--with-description'>Badges</h2>
-        <FilterBar filters={badgeFilters} onClick={(filterId) => this.onBadgesFilterClick(filterId)} />
+        <FilterBar
+          filters={badgeFilters}
+          active={this.state.badgesFilter}
+          onClick={this.onBadgesFilterClick}
+        />
 
-          <ul className='tri-fold clearfix'>
-            {
-              badgeKeys.map((badgeKey, i) => {
-                const badge = badges[badgesFilter][badgeKey]
+        <ul className='tri-fold clearfix'>
+          {
+            badgeKeys.map((badgeKey, i) => {
+              const badge = badges[badgesFilter][badgeKey]
 
-                return (
-                  <li key={`upcoming-badge-${i}`}>
-                    <BadgeInProgress badge={badge} badgeClass='progress' />
-                    <div className='badge-Details'>
-                      <h3 className='header--small sub-head header--with-description'>{badge.name}</h3>
-                      <h5 style={{ marginBottom: '.2em' }}>
-                        {badge.progress}
-                      </h5>
-                    </div>
-                  </li>
-                )
-              })
-            }
-          </ul>
+              return (
+                <li key={`upcoming-badge-${i}`}>
+                  <BadgeInProgress badge={badge} badgeClass='progress' />
+                  <div className='badge-Details'>
+                    <h3 className='header--small sub-head header--with-description'>{badge.name}</h3>
+                    <h5 style={{ marginBottom: '.2em' }}>
+                      {badge.progress}
+                    </h5>
+                  </div>
+                </li>
+              )
+            })
+          }
+        </ul>
       </div>
     )
   }

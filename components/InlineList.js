@@ -3,7 +3,7 @@ import Link from './Link'
 
 export default ({ list }) => {
   return (
-    <ul>
+    <ul className='inline-list'>
       {
         list && list.map((item) => {
           return (

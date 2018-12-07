@@ -432,3 +432,54 @@
     font-size: 1.14em;
   }
 }
+
+.inline-list {
+  font-family: $tertiary-font-family;
+  margin-bottom: 30px;
+
+  li {
+    display: inline-block;
+    line-height: 2;
+  }
+
+  a {
+    background-color: #f3f3f3;
+    padding: 3px 5px;
+    border-radius: 3px;
+    color: #333;
+    margin-right: 3px;
+  
+    &:hover {
+      background-color: #888;
+      color: #fcfcfc;
+    }
+  }
+}
+
+.filter-bar {
+  margin-bottom: 20px;
+
+  li {
+    display: inline-block;
+  }
+
+  button {
+    border: none;
+    background-color: transparent;
+    text-transform: uppercase;
+    padding: 0;
+    margin-right: 10px;
+    color: #777;
+  
+    &:hover {
+      cursor: pointer;
+      color: #222;
+      text-decoration: underline;
+    }
+
+    &.active {
+      color: #222;
+      text-decoration: underline;
+    }
+  }
+}
