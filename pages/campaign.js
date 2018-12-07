@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import join from 'url-join'
-import Link from '../components/Link'
 import dynamic from 'next/dynamic'
 import { connect } from 'unistore/react'
 import { distanceInWordsToNow } from 'date-fns'
@@ -44,14 +43,14 @@ export class Campaign extends Component {
     const { tmData, users } = records
     if (!tmData || !users) return <div />
 
-    let contribute = (<div></div>)
-  
+    let contribute = (<div />)
+
     if (TM_URL && tmData.tm_id) {
       // this link only supports TM 2 and 3
       // TODO: add logic to support more tasking managers
       const tmLink = join(TM_URL, `project/${tmData.tm_id}`)
       contribute = (
-        <a className="button" href={tmLink}>Contribute</a>
+        <a className='button' href={tmLink}>Contribute</a>
       )
     }
 
@@ -59,7 +58,7 @@ export class Campaign extends Component {
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
           <div className='row'>
-            <div className='section-sub--left' style={{ 'pointer-events': 'none'}}>
+            <div className='section-sub--left' style={{ 'pointer-events': 'none' }}>
               <h1 className='header--xlarge margin-top-sm'>{tmData.name}</h1>
               <ul className='list--two-column clearfix'>
                 <li>
