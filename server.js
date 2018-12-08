@@ -45,6 +45,11 @@ app.prepare()
       app.render(req, res, '/edit-user', { id })
     })
 
+    api.get('/teams/:id', (req, res) => {
+      const { id } = req.params
+      app.render(req, res, '/team', { id })
+    })
+
     api.get('/campaigns/:id', (req, res) => {
       const { id } = req.params
       app.render(req, res, '/campaign', { id })
