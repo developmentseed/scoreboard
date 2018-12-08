@@ -12,7 +12,7 @@ const prefix = process.env.APP_URL_PREFIX || '/'
 let final = join(appUrl, prefix)
 
 // add a trailing slash if it is missing
-if (final[final.length -1] !== '/') final += '/'
+if (final[final.length - 1] !== '/') final += '/'
 
 module.exports = {
   PORT: process.env.PORT || 8181,
