@@ -9,7 +9,10 @@ if (process.env.NODE_ENV === 'test') {
 
 const appUrl = process.env.APP_URL || 'http://localhost:8181'
 const prefix = process.env.APP_URL_PREFIX || '/'
-const final = join(appUrl, prefix)
+let final = join(appUrl, prefix)
+
+// add a trailing slash if it is missing
+if (final[final.length -1] !== '/') final += '/'
 
 module.exports = {
   PORT: process.env.PORT || 8181,

@@ -51,7 +51,6 @@ if (NODE_ENV === 'production') {
     store: store
   })
 }
-
 app.use(bodyParser.json())
 app.use(compression())
 app.use(boom())
@@ -62,5 +61,6 @@ app.use('/auth', authRouter)
 app.use('/api', router)
 app.use('/scoreboard/api', router)
 app.use(['/api', '/api/docs'], swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use('/fonts', express.static(path.join(__dirname, '../../static/fonts')))
 
 module.exports = app
