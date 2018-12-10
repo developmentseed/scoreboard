@@ -26,7 +26,8 @@ const badgeOperationTypes = [
   { label: 'More than', value: '>' },
   { label: 'Fewer than', value: '<' },
   { label: 'At least', value: '>=' },
-  { label: 'Up to', value: '<=' }
+  { label: 'Up to', value: '<=' },
+  { label: 'Equal to', value: '=' }
 ]
 
 export class AdminBadgesAdd extends Component {
@@ -222,6 +223,22 @@ export class AdminBadgesAdd extends Component {
             key={`${i}`}
             style={{ borderBottom: '1px solid #eee', paddingBottom: '1em' }}
           >
+            <div className='form__input-unit'>
+              <label
+                className='form__label'
+                htmlFor='badge-metric'
+              >
+                Metric
+              </label>
+              <Select
+                id='badge-metric'
+                name='badge-metric'
+                onChange={(e) => this.handleOperationChange(e, i, 'metric')}
+                options={badgeMetrics}
+                placeholder='Select the metric your badge will measure...'
+                value={op.metric}
+              />
+            </div>
             <div className='form__input-unit form__input-unit--half'>
               <label
                 className='form__label'
@@ -253,22 +270,6 @@ export class AdminBadgesAdd extends Component {
                 placeholder='50'
                 type='number'
                 value={op.number}
-              />
-            </div>
-            <div className='form__input-unit'>
-              <label
-                className='form__label'
-                htmlFor='badge-metric'
-              >
-                Metric
-              </label>
-              <Select
-                id='badge-metric'
-                name='badge-metric'
-                onChange={(e) => this.handleOperationChange(e, i, 'metric')}
-                options={badgeMetrics}
-                placeholder='Select the metric your badge will measure...'
-                value={op.metric}
               />
             </div>
             {i > 0 && (
@@ -344,7 +345,6 @@ export class AdminBadgesAdd extends Component {
     } else {
       const { value } = keyName === 'number' ? e.target : e
       let targetOperation = this.state.operations[idx]
-      console.log(targetOperation)
       if (!targetOperation) return
 
       targetOperation = {
