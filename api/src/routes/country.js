@@ -1,5 +1,6 @@
 const countryHelp = require('i18n-iso-countries')
 const userCountryEdits = require('../models/userCountryEdits')
+const { getCountry } = require('../utils/countryGeometry')
 
 /**
  * User Stats Route
@@ -21,7 +22,6 @@ async function get (req, res) {
   }
 
   const countryName = countryHelp.getName(alpha2, 'en')
-
   try {
     let userData = await userCountryEdits.getParticipants(countryName)
     if (userData === null) {
@@ -31,7 +31,8 @@ async function get (req, res) {
       alpha2,
       name: countryName,
       users: userData,
-      edit_count: userData.reduce((total, { count }) => total + count, 0)
+      edit_count: userData.reduce((total, { count }) => total + count, 0),
+      geography: getCountry(countryName)
     })
   } catch (err) {
     console.error(err)
