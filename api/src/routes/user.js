@@ -6,10 +6,10 @@ const {
 const users = require('../models/users')
 const roles = require('../models/roles')
 const favoriteCampaigns = require('../models/favorite-campaigns')
+const OSMTeams = require('../services/teams')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const db = require('../db/connection')
-const OSMTeams = require('../services/teams')
 
 /**
  * User Stats Route
@@ -44,18 +44,34 @@ async function get (req, res) {
       const favorites = await favoriteCampaigns.findByUserID(uid)
       json.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', json.extent_uri)
 
-      const teamsResponse = await OSMTeams.getTeamsByOsmId(id)
-      const teams = JSON.parse(teamsResponse)
+      // Find all teams for this user
+      const teams = JSON.parse(await OSMTeams.getTeams(user.osm_id))
+      let assignments = []
+      if (teams && teams.length > 0) {
+        assignments = await db('team_assignments').whereIn('team_id', teams.map(t => t.id))
+          .join('campaigns', 'campaigns.id', '=', 'team_assignments.campaign_id')
+          .select('campaign_id', 'team_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
+      }
+      // Map names
+      assignments = assignments.map(assignment => {
+        teams.forEach(team => {
+          if (assignment.team_id === team.id) {
+            assignment.team_name = team.name
+          }
+        })
+        return assignment
+      })
 
       return res.send({
         id,
         uid,
         badges,
+        teams,
+        assignments,
         favorites,
         records: json,
         roles: rolesList,
-        country: user.country,
-        teams
+        country: user.country
       })
     } catch (e) {
       if (e.message && e.message.includes('Unable to retrieve user record at')) {

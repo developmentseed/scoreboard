@@ -7,8 +7,8 @@ export default ({ assignments }) => {
       <thead>
         <tr>
           <th>Name</th>
-          <th>Country</th>
-          <th>Date Created</th>
+          <th>Assigned By</th>
+          <th>Priority</th>
         </tr>
       </thead>
       <tbody>
@@ -19,17 +19,17 @@ export default ({ assignments }) => {
               return (
                 <tr key={`assignment-${assignment.id}`}>
                   <td>
-                    <Link href={`/campaigns/${assignment.campaign.campaign_hashtag}`}>
+                    <Link href={`/campaigns/${assignment.campaign_hashtag}`}>
                       <a className='link--normal' >
-                        {assignment.campaign.name}
+                        {assignment.name}
                       </a>
                     </Link>
                   </td>
                   <td>
-                    {assignment.country}
+                    {assignment.assigned_by}
                   </td>
                   <td>
-                    {assignment.created}
+                    {assignment.priority}
                   </td>
                 </tr>
               )

@@ -10,7 +10,10 @@ class OSMTeams {
    *
    * @returns {Promise} response
    */
-  getTeams () {
+  getTeams (id) {
+    if (id) {
+      return rp(`${OSM_TEAMS_SERVICE}/api/teams?osmId=${id}`)
+    }
     return rp(`${OSM_TEAMS_SERVICE}/api/teams`)
   }
 

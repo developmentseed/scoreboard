@@ -3,8 +3,9 @@ import Link from './Link'
 
 export default ({ message, callToAction, callToActionUrl }) => {
   return (
+
     <div className='data-not-available'>
-      <span>{message}. </span>
+      <span>{message}.</span>
       <br />
       <span>
         <Link href={callToActionUrl}>
