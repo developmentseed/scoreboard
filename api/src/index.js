@@ -15,7 +15,7 @@ const pckg = require('../../package.json')
 const router = require('./routes')
 
 const app = express()
-const connection = require('./db/connection')
+const db = require('./db/connection')
 
 const { SESSION_SECRET, NODE_ENV } = require('./config')
 const { passport, authRouter } = require('./passport')
@@ -40,7 +40,7 @@ let sessionConfig = {
 
 if (NODE_ENV === 'production') {
   const store = new KnexSessionStore({
-    knex: connection()
+    knex: db
   })
 
   Object.assign(sessionConfig, {
