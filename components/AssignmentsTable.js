@@ -7,6 +7,8 @@ export default ({ assignments }) => {
       <thead>
         <tr>
           <th>Name</th>
+          <th>Country</th>
+          <th>Date Created</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +24,12 @@ export default ({ assignments }) => {
                         {assignment.campaign.name}
                       </a>
                     </Link>
+                  </td>
+                  <td>
+                    {assignment.country}
+                  </td>
+                  <td>
+                    {assignment.created}
                   </td>
                 </tr>
               )

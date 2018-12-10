@@ -144,9 +144,12 @@
 
 .tri-fold {
   margin-bottom: 2em;
+
   li {
     float: left;
     width: 33%;
+    min-height: 350px;
+
     &:last-of-type {
       margin-right: 0;
     }

@@ -25,6 +25,27 @@ const mockCountries = [
   { name: 'Iceland', id: 1 }
 ]
 
+const mockCampaigns = {
+  favorites: [
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 1', campaign_hashtag: '#ok' } },
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 2', campaign_hashtag: '#ok' } },
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 3', campaign_hashtag: '#ok' } }
+  ],
+  teams: [
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 4', campaign_hashtag: '#ok' } },
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 5', campaign_hashtag: '#ok' } },
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 6', campaign_hashtag: '#ok' } }
+  ],
+  all: [
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 1', campaign_hashtag: '#ok' } },
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 2', campaign_hashtag: '#ok' } },
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 3', campaign_hashtag: '#ok' } },
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 4', campaign_hashtag: '#ok' } },
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 5', campaign_hashtag: '#ok' } },
+    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 6', campaign_hashtag: '#ok' } }
+  ]
+}
+
 const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
   ssr: false
 })
@@ -75,20 +96,42 @@ class Dashboard extends Component {
           <div className='row'>
             <div className='sidebar-right'>
               <h2 className='header--large' style={{ marginBottom: 5 }}>Teams</h2>
-              <InlineList list={mockTeams.map((item) => {
-                return {
-                  name: item.name,
-                  href: `/teams/${item.id}`
-                }
-              })} />
+              {
+                mockTeams.length
+                  ? (
+                    <InlineList
+                      viewMore='/teams'
+                      list={mockTeams.map((item) => {
+                        return {
+                          name: item.name,
+                          href: `/teams/${item.id}`
+                        }
+                      })}
+                    />
+                  )
+                  : (
+                    <DataNotAvailable message='You have not joined any teams yet' callToAction='Explore teams' callToActionUrl='/teams' />
+                  )
+              }
 
               <h2 className='header--large' style={{ marginBottom: 5 }}>Countries</h2>
-              <InlineList list={mockCountries.map((item) => {
-                return {
-                  name: item.name,
-                  href: `/teams/${item.id}`
-                }
-              })} />
+              {
+                mockCountries.length
+                  ? (
+                    <InlineList
+                      viewMore='/countries'
+                      list={mockCountries.map((item) => {
+                        return {
+                          name: item.name,
+                          href: `/teams/${item.id}`
+                        }
+                      })}
+                    />
+                  )
+                  : (
+                    <DataNotAvailable message='You have not joined any teams yet' callToAction='Explore teams' callToActionUrl='/teams' />
+                  )
+              }
             </div>
             <div className='content--with-sidebar'>
               {this.renderAssignments()}
@@ -159,11 +202,13 @@ class Dashboard extends Component {
     const { account: { favorites } } = authenticatedUser
 
     const assignmentFilters = [
-      { name: 'Featured', id: 'featured' },
+      // { name: 'Featured', id: 'featured' },
       { name: 'Teams', id: 'teams' },
       { name: 'Favorites', id: 'favorites' },
       { name: 'All', id: 'all' }
     ]
+
+    const assignments = mockCampaigns[this.state.assignmentsFilter]
 
     return (
       <div>
@@ -173,7 +218,7 @@ class Dashboard extends Component {
           active={this.state.assignmentsFilter}
           onClick={this.onAssignmentsFilterClick}
         />
-        <AssignmentsTable assignments={favorites} />
+        <AssignmentsTable assignments={assignments} />
       </div>
     )
   }
