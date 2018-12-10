@@ -24,7 +24,6 @@ export class Country extends Component {
       user.name = user.full_name
     })
     if (!name) return <div />
-
     return (
       <div className = 'Country'>
       <CountryHeader name={name} num_participants = {users.length} num_edits = {edit_count} country={this.props.country} />
@@ -38,7 +37,7 @@ export class Country extends Component {
               <div className='map-campaign-lg'>
                 <div className='campagin-body-header'>
                 </div>
-              <CountryMap country={this.props.country} interactive />
+              <CountryMap geography={this.props.country.geography} interactive />
               </div>
               {/* <h3 className='header--medium'>Users</h3>
               <UserTable users={users} /> */}
