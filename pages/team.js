@@ -26,11 +26,13 @@ export class Team extends Component {
                 </li>
               </ul>
             </div>
-            <div className='section-sub--right'>
-              <Link href='/about'>
-                <a className='button'>Join</a>
-              </Link>
-            </div>
+            {
+            // <div className='section-sub--right'>
+            //   <Link href='/about'>
+            //     <a className='button'>Join</a>
+            //   </Link>
+            // </div>
+            }
           </div>
         </header>
         <section>
@@ -39,6 +41,25 @@ export class Team extends Component {
               <div className='text-body'>
                 {team.bio}
               </div>
+              <section>
+                <h2>Team Members</h2>
+                <table className=''>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>User ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {team.users.map(record => (
+                      <tr key={`users-${record.osm_id}`} className=''>
+                        <td>{`${record.full_name}`}</td>
+                        <td>{record.osm_id}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </section>
             </div>
           </div>
         </section>
