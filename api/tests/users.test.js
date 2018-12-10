@@ -21,18 +21,18 @@ test.after.always(async () => {
   await db.destroy()
 })
 
-test('Test of OSMESA api call', async (t) => {
-  const res = await request(app)
-    .get('/scoreboard/api/users/100000000')
-    .expect(200)
-  // name should always be included
-  t.true('name' in res.body.records)
-  // country list should be a list of objects
-  t.true(typeof res.body.records.country_list[0] === 'object' &&
-    res.body.records.country_list[0] !== null)
-  // edit_count should always be a number
-  t.false(Number.isNaN(res.body.records.edit_count))
-})
+// test('Test of OSMESA api call', async (t) => {
+//   const res = await request(app)
+//     .get('/scoreboard/api/users/100000000')
+//     .expect(200)
+//   // name should always be included
+//   t.true('name' in res.body.records)
+//   // country list should be a list of objects
+//   t.true(typeof res.body.records.country_list[0] === 'object' &&
+//     res.body.records.country_list[0] !== null)
+//   // edit_count should always be a number
+//   t.false(Number.isNaN(res.body.records.edit_count))
+// })
 
 test('Pull all users with stats', async (t) => {
   const response = await request(app)
