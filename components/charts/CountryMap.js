@@ -6,7 +6,6 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0td
 
 class CountryMap extends Component {
   componentDidMount () {
-    const geometry = this.props.geography
     const center = centerOfMass(this.props.geography)
 
     this.map = new mapboxgl.Map({
@@ -17,14 +16,6 @@ class CountryMap extends Component {
       interactive: this.props.interactive
     })
     this.map.on('load', () => {
-      var firstSymbolId
-      var layers = this.map.getStyle().layers
-      for (var i = 0; i < layers.length; i++) {
-        if (layers[i].type === 'symbol') {
-          firstSymbolId = layers[i].id
-          break
-        }
-      }
       this.map.addLayer({
         'id': 'overlay',
         'type': 'fill',

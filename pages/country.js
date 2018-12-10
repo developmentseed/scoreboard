@@ -4,7 +4,6 @@ import UserTable from '../components/UserTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
-import { formatDecimal } from '../lib/utils/format'
 
 const CountryMap = dynamic(() => import('../components/charts/CountryMap'), {
   ssr: false
@@ -25,25 +24,21 @@ export class Country extends Component {
     })
     if (!name) return <div />
     return (
-      <div className = 'Country'>
-      <CountryHeader name={name} num_participants = {users.length} num_edits = {edit_count} country={this.props.country} />
-      <section>
-        <div className='row'>
-          <div className='section-sub--left section-width-fifty-plus'>
+      <div className='Country'>
+        <CountryHeader name={name} num_participants={users.length} num_edits={edit_count} country={this.props.country} />
+        <section>
+          <div className='row'>
+            <div className='section-sub--left section-width-fifty-plus'>
               <h3 className='header--medium'>Participants</h3>
               <UserTable users={users} />
-          </div>
+            </div>
             <div className='section-sub--right section-width-fifty-minus'>
               <div className='map-campaign-lg'>
-                <div className='campagin-body-header'>
-                </div>
-              <CountryMap geography={this.props.country.geography} interactive />
+                <CountryMap geography={this.props.country.geography} interactive />
               </div>
-              {/* <h3 className='header--medium'>Users</h3>
-              <UserTable users={users} /> */}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       </div>
     )
   }
