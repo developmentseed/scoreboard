@@ -36,7 +36,9 @@ class UsersSearch extends Component {
   render () {
     if (!this.props.users) return <div />
 
-    const { selectedUsers } = this.props
+    let { selectedUsers } = this.props
+    selectedUsers = selectedUsers || []
+
     const { stats: { total, records }, page } = this.props.users
     if (!records) return <div />
 
