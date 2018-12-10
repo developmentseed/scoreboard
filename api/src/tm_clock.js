@@ -2,7 +2,7 @@ const {
   pick, merge, omit
 } = require('ramda')
 const { TM, extractCampaignHashtag } = require('./services/tm')
-const conn = require('./db/connection')
+const db = require('./db/connection')
 const { TM_VERSION } = require('./config')
 
 function DBPromises (db, sqlObjects, features) {
@@ -51,7 +51,6 @@ function DBPromises (db, sqlObjects, features) {
 async function tmWorker () {
   // Get projects from TM2
   try {
-    const db = conn()
     const response = await TM.getProjects()
     const json = JSON.parse(response)
     let features = ''
