@@ -1,6 +1,7 @@
 const { validateRole } = require('../utils/roles')
 const OSMTeams = require('../services/teams')
 const db = require('../db/connection')
+const { difference } = require('ramda')
 
 /**
  * Teams list route
@@ -61,13 +62,17 @@ async function get (req, res) {
     const campaigns = await db('campaigns').select().whereIn('id', function () {
       this.select('campaign_id').from('team_assignments').where('team_id', req.params.id)
     })
+    const users = data.members
+    const userData = await db('users').whereIn('osm_id', users)
     const team = {
       id: data.id,
       bio: data.bio,
       hashtag: data.hashtag,
       name: data.name,
       campaigns: campaigns.map(c => c.id),
-      campaignData: campaigns
+      campaignData: campaigns,
+      users,
+      userData
     }
     return res.send(team)
   } catch (err) {
@@ -93,9 +98,15 @@ async function put (req, res) {
   }
 
   try {
-    const { campaigns, bio, name, hashtag } = body
+    const { campaigns, bio, name, hashtag, oldusers, newusers } = body
     const team_id = req.params.id
     const data = await OSMTeams.editTeam(team_id, { bio, name, hashtag })
+
+    // Update members
+    let add = difference(newusers, oldusers)
+    let remove = difference(oldusers, newusers)
+
+    await OSMTeams.updateMembers(team_id, { add, remove })
 
     // Insert assignments
     const assignments = campaigns.map(campaign_id => ({ team_id, campaign_id }))
