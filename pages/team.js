@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Link from '../components/Link'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import CampaignCard from '../components/CampaignCard'
