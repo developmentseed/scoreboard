@@ -13,7 +13,6 @@ import InlineList from '../components/InlineList'
 import FilterBar from '../components/FilterBar'
 import AssignmentsTable from '../components/AssignmentsTable'
 
-
 const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
   ssr: false
 })
@@ -84,7 +83,7 @@ class Dashboard extends Component {
             <div className='sidebar-right'>
               <h2 className='header--large' style={{ marginBottom: 5 }}>Teams</h2>
               {
-                teams.length
+                teams && teams.length
                   ? (
                     <InlineList
                       viewMore='/teams'
@@ -97,7 +96,7 @@ class Dashboard extends Component {
                     />
                   )
                   : (
-                    <DataNotAvailable message='You have not joined any teams yet' callToAction='Explore teams' callToActionUrl='/teams' />
+                    <DataNotAvailable message={'You haven\'t joined any teams yet'} callToAction='Explore teams' callToActionUrl='/teams' />
                   )
               }
 

@@ -1,5 +1,6 @@
 const rp = require('request-promise-native')
 const { OSM_TEAMS_SERVICE } = require('../config')
+const sampleTeams = require('../fixtures/teams.json')
 
 /**
  * Methods to grab data from OSM Teams
@@ -14,6 +15,10 @@ class OSMTeams {
       return rp(`${OSM_TEAMS_SERVICE}/api/teams?osmId=${id}`)
     }
     return rp(`${OSM_TEAMS_SERVICE}/api/teams`)
+  }
+
+  getTeamsByOsmId (id) {
+    return rp(`${OSM_TEAMS_SERVICE}/api/teams?osmId=${id}`)
   }
 
   createTeam (body) {
@@ -60,4 +65,42 @@ class OSMTeams {
   }
 }
 
-module.exports = new OSMTeams()
+class FakeOSMTeams {
+  getTeams () {
+    return Promise.resolve(sampleTeams)
+  }
+
+  getTeamsByOsmId (id) {
+    return Promise.resolve(sampleTeams)
+  }
+
+  createTeam (body) {
+    return Promise.resolve(sampleTeams[0])
+  }
+
+  getTeam (id) {
+    const team = sampleTeams[0]
+    team.id = id
+    return Promise.resolve(team)
+  }
+
+  editTeam (id, body) {
+    const team = sampleTeams[0]
+    team.id = id
+    return Promise.resolve(team, body)
+  }
+
+  updateMembers (id, body) {
+    return Promise.resolve(sampleTeams[0])
+  }
+
+  deleteTeam (id) {
+    return Promise.resolve()
+  }
+}
+
+if (!OSM_TEAMS_SERVICE) {
+  module.exports = new FakeOSMTeams()
+} else {
+  module.exports = new OSMTeams()
+}
