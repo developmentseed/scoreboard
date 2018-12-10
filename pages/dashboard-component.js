@@ -13,33 +13,6 @@ import InlineList from '../components/InlineList'
 import FilterBar from '../components/FilterBar'
 import AssignmentsTable from '../components/AssignmentsTable'
 
-const mockTeams = [
-  { name: 'HOT Lunch', id: 1 },
-  { name: 'OpenPizzaMap', id: 2 },
-  { name: 'OpenStreetMap Seattle', id: 3 },
-  { name: 'CUGOS', id: 4 }
-]
-
-const mockCampaigns = {
-  favorites: [
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 1', campaign_hashtag: '#ok' } },
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 2', campaign_hashtag: '#ok' } },
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 3', campaign_hashtag: '#ok' } }
-  ],
-  teams: [
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 4', campaign_hashtag: '#ok' } },
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 5', campaign_hashtag: '#ok' } },
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 6', campaign_hashtag: '#ok' } }
-  ],
-  all: [
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 1', campaign_hashtag: '#ok' } },
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 2', campaign_hashtag: '#ok' } },
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 3', campaign_hashtag: '#ok' } },
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 4', campaign_hashtag: '#ok' } },
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 5', campaign_hashtag: '#ok' } },
-    { url: '/1', country: 'Country', created: 'Jan 1, 2017', campaign: { name: 'Campaign 6', campaign_hashtag: '#ok' } }
-  ]
-}
 
 const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
   ssr: false
@@ -89,6 +62,7 @@ class Dashboard extends Component {
   render () {
     const { authenticatedUser } = this.props
     const { loggedIn, account } = authenticatedUser
+    const  { teams } = authenticatedUser.account
 
     if (this.state.loading) {
       return (
@@ -110,11 +84,11 @@ class Dashboard extends Component {
             <div className='sidebar-right'>
               <h2 className='header--large' style={{ marginBottom: 5 }}>Teams</h2>
               {
-                mockTeams.length
+                teams.length
                   ? (
                     <InlineList
                       viewMore='/teams'
-                      list={mockTeams.map((item) => {
+                      list={teams.map((item) => {
                         return {
                           name: item.name,
                           href: `/teams/${item.id}`
@@ -212,7 +186,7 @@ class Dashboard extends Component {
 
   renderAssignments () {
     const { authenticatedUser } = this.props
-    const { account: { favorites } } = authenticatedUser
+    const { account: { favorites, assignments } } = authenticatedUser
 
     const assignmentFilters = [
       // { name: 'Featured', id: 'featured' },
@@ -221,7 +195,22 @@ class Dashboard extends Component {
       { name: 'All', id: 'all' }
     ]
 
-    const assignments = mockCampaigns[this.state.assignmentsFilter]
+    let teamAssignments = assignments.map(task => {
+      return {
+        priority: task.priority,
+        name: task.name,
+        assigned_by: task.team_name,
+        campaign_hashtag: task.campaign_hashtag
+      }
+    })
+
+    const allCampaigns = {
+      favorites: teamAssignments,
+      teams: teamAssignments,
+      all: teamAssignments
+    }
+
+    const assignmentsTable = allCampaigns[this.state.assignmentsFilter]
 
     return (
       <div>
@@ -231,7 +220,7 @@ class Dashboard extends Component {
           active={this.state.assignmentsFilter}
           onClick={this.onAssignmentsFilterClick}
         />
-        <AssignmentsTable assignments={assignments} />
+        <AssignmentsTable assignments={assignmentsTable} />
       </div>
     )
   }
