@@ -1,6 +1,6 @@
 const { validateRole } = require('../utils/roles')
 const OSMTeams = require('../services/teams')
-const connection = require('../db/connection')
+const db = require('../db/connection')
 
 /**
  * Teams list route
@@ -57,7 +57,6 @@ async function post (req, res) {
  */
 async function get (req, res) {
   try {
-    const db = connection()
     const data = JSON.parse(await OSMTeams.getTeam(req.params.id))
     const campaigns = await db('campaigns').select().whereIn('id', function () {
       this.select('campaign_id').from('team_assignments').where('team_id', req.params.id)
@@ -99,7 +98,6 @@ async function put (req, res) {
     const data = await OSMTeams.editTeam(team_id, { bio, name, hashtag })
 
     // Insert assignments
-    const db = connection()
     const assignments = campaigns.map(campaign_id => ({ team_id, campaign_id }))
     await db.transaction(async t => {
       await t('team_assignments').where('team_id', team_id).del() // delete existing assingnments
