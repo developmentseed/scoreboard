@@ -1,10 +1,9 @@
-const connection = require('../db/connection')
+const db = require('../db/connection')
 const { validateRole } = require('../utils/roles')
 
 async function get (req, res) {
   try {
     const { id } = req.params
-    const db = connection()
     let fromDB = null
     if (!id) {
       fromDB = await db('badges').select()
@@ -27,7 +26,6 @@ async function post (req, res) {
   }
 
   try {
-    const db = connection()
     await db('badges').insert(body)
     return res.sendStatus(200)
   } catch (e) {
@@ -47,7 +45,6 @@ async function del (req, res) {
   }
 
   try {
-    const db = connection()
     await db('badges').where('id', '=', id).del()
     return res.sendStatus(200)
   } catch (e) {
@@ -67,7 +64,6 @@ async function put (req, res) {
   }
 
   try {
-    const db = connection()
     await db('badges').where('id', '=', id).update(body)
     return res.sendStatus(200)
   } catch (err) {

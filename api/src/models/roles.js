@@ -1,6 +1,4 @@
-const connection = require('../db/connection')
-
-const db = connection()
+const db = require('../db/connection')
 
 /**
  * get a role

@@ -4,7 +4,7 @@ const {
 } = require('ramda')
 const pLimit = require('p-limit')
 const OSMesa = require('./services/osmesa')
-const conn = require('./db/connection')
+const db = require('./db/connection')
 const { updateUserCountryEdit, isState } = require('./models/userCountryEdits')
 
 /*
@@ -71,7 +71,6 @@ async function updateCountries (userID, countryEditList) {
  */
 async function usersWorker () {
   try {
-    const db = conn()
     const users = await db('users').select('id', 'osm_id') // Get all users
 
     // run only 100 concurrent events
