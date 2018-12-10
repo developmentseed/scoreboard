@@ -101,6 +101,7 @@ class Dashboard extends Component {
     }
 
     const countries = this.formatCountryList(account.records.country_list)
+    const teams = account.teams
 
     return (
       <div className='dashboard'>
@@ -110,11 +111,11 @@ class Dashboard extends Component {
             <div className='sidebar-right'>
               <h2 className='header--large' style={{ marginBottom: 5 }}>Teams</h2>
               {
-                mockTeams.length
+                teams && teams.length
                   ? (
                     <InlineList
                       viewMore='/teams'
-                      list={mockTeams.map((item) => {
+                      list={teams.map((item) => {
                         return {
                           name: item.name,
                           href: `/teams/${item.id}`
@@ -123,7 +124,7 @@ class Dashboard extends Component {
                     />
                   )
                   : (
-                    <DataNotAvailable message='You have not joined any teams yet' callToAction='Explore teams' callToActionUrl='/teams' />
+                    <DataNotAvailable message={'You haven\'t joined any teams yet'} callToAction='Explore teams' callToActionUrl='/teams' />
                   )
               }
 
@@ -238,7 +239,7 @@ class Dashboard extends Component {
 
   renderBadges () {
     const { authenticatedUser } = this.props
-    const { account: { badges, teams } } = authenticatedUser
+    const { account: { badges } } = authenticatedUser
     const { badgesFilter } = this.state
 
     const badgeFilters = [
@@ -249,7 +250,6 @@ class Dashboard extends Component {
 
     const badgeKeys = Object.keys(badges[badgesFilter])
 
-    console.log(teams)
     return (
       <div style={{ marginTop: 50 }}>
         <h2 className='header--large header--with-description'>Badges</h2>

@@ -44,7 +44,8 @@ async function get (req, res) {
       const favorites = await favoriteCampaigns.findByUserID(uid)
       json.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', json.extent_uri)
 
-      const teams = await OSMTeams.getTeamsByOsmId(id)
+      const teamsResponse = await OSMTeams.getTeamsByOsmId(id)
+      const teams = JSON.parse(teamsResponse)
 
       return res.send({
         id,
