@@ -6,7 +6,7 @@ function getCountry (countryName) {
       return countryArr.properties.ADMIN === countryName
     })
     return countryProperties.geometry
-  } catch (e){
+  } catch (e) {
     return {}
   }
 }
