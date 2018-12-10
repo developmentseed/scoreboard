@@ -24,10 +24,6 @@ app.setAssetPrefix(APP_URL_FINAL)
 app.prepare()
   .then(() => {
     api.get('/', (req, res) => {
-      if (req.user) {
-        return app.render(req, res, '/dashboard')
-      }
-
       return app.render(req, res, '/')
     })
 

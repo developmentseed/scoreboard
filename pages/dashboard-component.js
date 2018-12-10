@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import dynamic from 'next/dynamic'
 import Link from '../components/Link'
 import { connect } from 'unistore/react'
+import { withAlert } from 'react-alert'
 import { actions } from '../lib/store'
 
 import countryList from '../lib/utils/country-list'
 import BadgeInProgress from '../components/BadgeInProgress'
 import NotLoggedIn from '../components/NotLoggedIn'
-// import DataNotAvailable from '../components/DataNotAvailable'
+import DataNotAvailable from '../components/DataNotAvailable'
 import InlineList from '../components/InlineList'
 import FilterBar from '../components/FilterBar'
 import AssignmentsTable from '../components/AssignmentsTable'
@@ -70,7 +71,6 @@ class Dashboard extends Component {
   }
 
   findCountryByName (countryName) {
-    console.log('countryName', countryName)
     return countryList.find((country) => {
       return countryName === country.label
     })
@@ -100,9 +100,8 @@ class Dashboard extends Component {
       return <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
     }
 
-    console.log(account.records.country_list)
     const countries = this.formatCountryList(account.records.country_list)
-    console.log('countries', countries)
+
     return (
       <div className='dashboard'>
         {this.renderHeader()}
@@ -283,4 +282,4 @@ class Dashboard extends Component {
   }
 }
 
-export default connect(['authenticatedUser', 'error'], actions)(Dashboard)
+export default connect(['authenticatedUser', 'error'], actions)(withAlert(Dashboard))

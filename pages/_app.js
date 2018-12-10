@@ -101,7 +101,7 @@ class Layout extends React.Component {
                       this.state.menuVisible && (
                         <div className='login-menu'>
                           <ul>
-                            <li><Link href='/dashboard'><a>Dashboard</a></Link></li>
+                            <li><Link href='/'><a>Dashboard</a></Link></li>
                             <li><Link href={`/users/${osm.id}`}><a>Public Profile</a></Link></li>
                             <li><Link href={`/edit-user?id=${osm.id}`} as={join(APP_URL_PREFIX, `/users/${osm.id}/edit`)}><a>Edit Profile</a></Link></li>
                             {
