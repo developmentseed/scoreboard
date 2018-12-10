@@ -63,7 +63,7 @@ async function stats (req, res) {
         's.country',
         's.last_edit',
         db.raw(
-          'rank() over (order by s.edit_count asc) as rank'
+          'rank() over (order by s.edit_count desc) as rank'
         )
       ).from('edits as s')
 
