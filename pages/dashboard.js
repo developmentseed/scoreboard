@@ -4,6 +4,7 @@ import Link from '../components/Link'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 
+import countryList from '../lib/utils/country-list'
 import BadgeInProgress from '../components/BadgeInProgress'
 import NotLoggedIn from '../components/NotLoggedIn'
 // import DataNotAvailable from '../components/DataNotAvailable'
@@ -16,13 +17,6 @@ const mockTeams = [
   { name: 'OpenPizzaMap', id: 2 },
   { name: 'OpenStreetMap Seattle', id: 3 },
   { name: 'CUGOS', id: 4 }
-]
-
-const mockCountries = [
-  { name: 'United States', id: 1 },
-  { name: 'Tanzania', id: 1 },
-  { name: 'Peru', id: 1 },
-  { name: 'Iceland', id: 1 }
 ]
 
 const mockCampaigns = {
@@ -75,9 +69,26 @@ class Dashboard extends Component {
     }
   }
 
+  findCountryByName (countryName) {
+    console.log('countryName', countryName)
+    return countryList.find((country) => {
+      return countryName === country.label
+    })
+  }
+
+  formatCountryList (userCountries) {
+    if (!userCountries) return
+    return userCountries.map((country) => {
+      const c = this.findCountryByName(country.name)
+      if (!c) return
+      country.alpha2 = this.findCountryByName(country.name).value
+      return country
+    }).filter((country) => !!country)
+  }
+
   render () {
     const { authenticatedUser } = this.props
-    const { loggedIn } = authenticatedUser
+    const { loggedIn, account } = authenticatedUser
 
     if (this.state.loading) {
       return (
@@ -89,6 +100,9 @@ class Dashboard extends Component {
       return <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
     }
 
+    console.log(account.records.country_list)
+    const countries = this.formatCountryList(account.records.country_list)
+    console.log('countries', countries)
     return (
       <div className='dashboard'>
         {this.renderHeader()}
@@ -116,14 +130,14 @@ class Dashboard extends Component {
 
               <h2 className='header--large' style={{ marginBottom: 5 }}>Countries</h2>
               {
-                mockCountries.length
+                countries.length
                   ? (
                     <InlineList
                       viewMore='/countries'
-                      list={mockCountries.map((item) => {
+                      list={countries.map((item) => {
                         return {
                           name: item.name,
-                          href: `/teams/${item.id}`
+                          href: `/countries/${item.alpha2}`
                         }
                       })}
                     />
