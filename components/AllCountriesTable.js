@@ -9,7 +9,6 @@ export default ({ apiStatus, countries }) => {
       content = (<table>
         <thead>
           <tr>
-            <th>Rank</th>
             <th>Name</th>
             <th>Total Edits</th>
           </tr>
@@ -18,7 +17,6 @@ export default ({ apiStatus, countries }) => {
           {
             countries.map(country => (
               <tr key={country.id}>
-                <td>{(country.rank)}</td>
                 <td><Link href={`/countries/${country.alpha2}`}><a className='link--normal'>{country.name}</a></Link></td>
                 <td>{formatDecimal(country.edit_count)}</td>
               </tr>
