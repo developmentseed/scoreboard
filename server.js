@@ -37,9 +37,19 @@ app.prepare()
       app.render(req, res, '/edit-user', { id })
     })
 
+    api.get('/teams/:id', (req, res) => {
+      const { id } = req.params
+      app.render(req, res, '/team', { id })
+    })
+
     api.get('/campaigns/:id', (req, res) => {
       const { id } = req.params
       app.render(req, res, '/campaign', { id })
+    })
+
+    api.get('/countries/:alpha2', (req, res) => {
+      const { alpha2 } = req.params
+      app.render(req, res, '/country', { alpha2 })
     })
 
     api.get('/admin/users/:id', (req, res) => {

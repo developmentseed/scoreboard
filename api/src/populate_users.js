@@ -1,5 +1,5 @@
 
-const conn = require('./db/connection')
+const db = require('./db/connection')
 const rp = require('request-promise-native')
 const {
   uniqBy, tail, zipObj, merge, prop
@@ -12,7 +12,6 @@ const {
  */
 async function populateUsers () {
   try {
-    const db = conn()
     if (!process.env.USERS_URL) throw new Error('Users URL not defined')
     const response = await rp(`${process.env.USERS_URL}`)
 

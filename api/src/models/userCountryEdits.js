@@ -1,6 +1,5 @@
-const connection = require('../db/connection')
+const db = require('../db/connection')
 const util = require('util')
-const db = connection()
 
 // list of all US states
 const usStateNames = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
@@ -24,7 +23,7 @@ function get (id) {
 function getParticipants (country_name) {
   return db('user_country_edits')
     .leftJoin('users', 'user_id', 'users.id')
-    .select('user_id', 'user_country_edits.edit_count as count', 'users.full_name')
+    .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
     .where('country_name', country_name)
 }
 

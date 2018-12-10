@@ -1,4 +1,4 @@
-const connection = require('../db/connection')
+const db = require('../db/connection')
 const {
   split, trim
 } = require('ramda')
@@ -16,7 +16,7 @@ function applyFilters (query, req) {
   const active = req.query.active || false
 
   if (search.length > 0) {
-    query = query.where('full_name', 'like', `%${search}%`)
+    query = query.where('full_name', 'ilike', `%${search}%`)
   }
 
   if (country.length > 0) {
@@ -49,8 +49,6 @@ async function stats (req, res) {
   const sortType = req.query.sortType || ''
 
   try {
-    const db = connection()
-
     // Create table with ranking
     const allUsers = db.with('edits', (conn) => conn
       .select('osm_id', 'full_name', 'edit_count', 'country', 'last_edit')
