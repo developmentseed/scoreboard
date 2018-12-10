@@ -1,5 +1,5 @@
 const countryHelp = require('i18n-iso-countries')
-const connection = require('../db/connection')
+const db = require('../db/connection')
 
 function applyFilters (query, req) {
   const search = req.query.q || ''
@@ -26,8 +26,6 @@ async function stats (req, res) {
   const sortType = req.query.sortType || ''
 
   try {
-    const db = connection()
-
     // get all the counts
     const countQuery = db('user_country_edits').countDistinct('country_name')
 

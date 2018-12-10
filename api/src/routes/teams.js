@@ -1,5 +1,6 @@
 const { validateRole } = require('../utils/roles')
 const OSMTeams = require('../services/teams')
+const db = require('../db/connection')
 
 /**
  * Teams list route
@@ -56,8 +57,19 @@ async function post (req, res) {
  */
 async function get (req, res) {
   try {
-    const data = await OSMTeams.getTeam(req.params.id)
-    return res.send(data)
+    const data = JSON.parse(await OSMTeams.getTeam(req.params.id))
+    const campaigns = await db('campaigns').select().whereIn('id', function () {
+      this.select('campaign_id').from('team_assignments').where('team_id', req.params.id)
+    })
+    const team = {
+      id: data.id,
+      bio: data.bio,
+      hashtag: data.hashtag,
+      name: data.name,
+      campaigns: campaigns.map(c => c.id),
+      campaignData: campaigns
+    }
+    return res.send(team)
   } catch (err) {
     console.error(err)
     return res.boom.badRequest('Could not retrieve team')
@@ -81,7 +93,17 @@ async function put (req, res) {
   }
 
   try {
-    const data = await OSMTeams.editTeam(req.params.id, body)
+    const { campaigns, bio, name, hashtag } = body
+    const team_id = req.params.id
+    const data = await OSMTeams.editTeam(team_id, { bio, name, hashtag })
+
+    // Insert assignments
+    const assignments = campaigns.map(campaign_id => ({ team_id, campaign_id }))
+    await db.transaction(async t => {
+      await t('team_assignments').where('team_id', team_id).del() // delete existing assingnments
+      await t.batchInsert('team_assignments', assignments) // insert new assignments
+    })
+
     return res.send(data)
   } catch (err) {
     console.error(err)
