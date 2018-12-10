@@ -1,6 +1,4 @@
-const connection = require('../db/connection')
-
-const db = connection()
+const db = require('../db/connection')
 
 function get (id) {
   return db('users').where('id', id)

@@ -8,7 +8,7 @@ const roles = require('../models/roles')
 const favoriteCampaigns = require('../models/favorite-campaigns')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
-const connection = require('../db/connection')
+const db = require('../db/connection')
 
 /**
  * User Stats Route
@@ -27,7 +27,6 @@ async function get (req, res) {
     return res.boom.badRequest('Invalid id')
   }
   try {
-    const db = connection()
     const [user] = await users.findByOsmId(id)
     const uid = user.id
     const rolesList = user.roles ? await roles.getRoles(user.roles) : []
