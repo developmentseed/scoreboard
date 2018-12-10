@@ -33,7 +33,7 @@ export class Country extends Component {
               <UserTable users={users} />
             </div>
             <div className='section-sub--right section-width-fifty-minus'>
-              <div className='map-campaign-lg'>
+              <div className='map-country-lg'>
                 <CountryMap geography={this.props.country.geography} centroid={this.props.country.center} interactive />
               </div>
             </div>
