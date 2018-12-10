@@ -51,10 +51,11 @@ async function stats (req, res) {
   try {
     // Create table with ranking
     const allUsers = db.with('edits', (conn) => conn
-      .select('osm_id', 'full_name', 'edit_count', 'country', 'last_edit')
+      .select('osm_id', 'full_name',
+        db.raw('case "edit_count" when NULL then 0 else "edit_count" end'),
+        'country', 'last_edit')
       .from('users')
       .whereNotIn('osm_id', filteredUsers))
-      .where('edit_count', '>', 0)
       .select(
         's.osm_id',
         's.edit_count',
@@ -62,8 +63,7 @@ async function stats (req, res) {
         's.country',
         's.last_edit',
         db.raw(
-          `(select count(*)+1 from edits as r
-        where r.edit_count > s.edit_count) as rank`
+          'rank() over (order by s.edit_count asc) as rank'
         )
       ).from('edits as s')
 
@@ -76,10 +76,10 @@ async function stats (req, res) {
         recordQuery = recordQuery.orderBy('last_edit', 'asc')
         break
       case 'Least total':
-        recordQuery = recordQuery.orderBy('edit_count', 'asc')
+        recordQuery = recordQuery.orderBy('rank', 'desc')
         break
       default: // Most total edits
-        recordQuery = recordQuery.orderBy('edit_count', 'desc')
+        recordQuery = recordQuery.orderBy('rank', 'asc')
         break
     }
 
@@ -90,7 +90,7 @@ async function stats (req, res) {
     const countries = await db('users').distinct('country').select()
 
     // Create counts
-    const realUsers = db('users').whereNotIn('osm_id', filteredUsers).where('edit_count', '>', 0)
+    const realUsers = db('users').whereNotIn('osm_id', filteredUsers)
     const [{ subTotal }] = await applyFilters(realUsers.clone(), req).count('id as subTotal')
     const [{ total }] = await realUsers.clone().count('id as total')
     const [{ editTotal }] = await realUsers.clone().sum('edit_count as editTotal')
