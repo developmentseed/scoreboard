@@ -333,20 +333,31 @@ export class AdminBadgesAdd extends Component {
   }
 
   handleOperationChange (e, idx, keyName) {
-    const { value } = keyName === 'number' ? e.target : e
-    let targetOperation = this.state.operations[idx]
-    if (!targetOperation) return
+    if (e === null) {
+      this.state.operations = this.state.operations.splice(idx, 1)
+      this.setState((state) => {
+        return {
+          operations: Object.assign([...state.operations], {
+            [idx]: {metric: "", number: 0, operation: "" }})
+        }
+      })
+    } else {
+      const { value } = keyName === 'number' ? e.target : e
+      let targetOperation = this.state.operations[idx]
+      console.log(targetOperation)
+      if (!targetOperation) return
 
-    targetOperation = {
-      ...targetOperation,
-      [keyName]: value
-    }
-
-    this.setState((state) => {
-      return {
-        operations: Object.assign([...state.operations], { [idx]: targetOperation })
+      targetOperation = {
+        ...targetOperation,
+        [keyName]: value
       }
-    })
+
+      this.setState((state) => {
+        return {
+          operations: Object.assign([...state.operations], { [idx]: targetOperation })
+        }
+      })
+    }
   }
 
   handleAddNewBadgeFormSubmit (e) {
