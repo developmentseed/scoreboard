@@ -1,6 +1,6 @@
 const countriesGeoJSON = require('./countries.geojson')
 
-function getCountry (countryName) {
+function getCountryGeo (countryName) {
   try {
     const countryProperties = countriesGeoJSON.countryGeoJSON.features.find((countryArr) => {
       return countryArr.properties.ADMIN === countryName
@@ -12,5 +12,5 @@ function getCountry (countryName) {
 }
 
 module.exports = {
-  getCountry
+  getCountryGeo
 }

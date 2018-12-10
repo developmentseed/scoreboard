@@ -34,7 +34,7 @@ export class Country extends Component {
             </div>
             <div className='section-sub--right section-width-fifty-minus'>
               <div className='map-campaign-lg'>
-                <CountryMap geography={this.props.country.geography} interactive />
+                <CountryMap geography={this.props.country.geography} centroid={this.props.country.center} interactive />
               </div>
             </div>
           </div>

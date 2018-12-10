@@ -1,6 +1,7 @@
 const countryHelp = require('i18n-iso-countries')
 const userCountryEdits = require('../models/userCountryEdits')
-const { getCountry } = require('../utils/countryGeometry')
+const { getCountryGeo } = require('../utils/countryGeometry')
+const getCenter = require('../utils/countryCenters')
 
 /**
  * User Stats Route
@@ -32,7 +33,8 @@ async function get (req, res) {
       name: countryName,
       users: userData,
       edit_count: userData.reduce((total, { count }) => total + count, 0),
-      geography: getCountry(countryName)
+      geography: getCountryGeo(countryName),
+      center: getCenter(countryName)
     })
   } catch (err) {
     console.error(err)

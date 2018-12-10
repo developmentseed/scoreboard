@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
 import mapboxgl from 'mapbox-gl'
-import centerOfMass from '@turf/center-of-mass'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0tdtaT2QNe2Q'
 
 class CountryMap extends Component {
   componentDidMount () {
-    const center = centerOfMass(this.props.geography)
-
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/devseed/cj9iy816wb9x02smisy4y7id3',
       zoom: 1,
-      center: center.geometry.coordinates,
+      center: this.props.centroid,
       interactive: this.props.interactive
     })
     this.map.on('load', () => {
