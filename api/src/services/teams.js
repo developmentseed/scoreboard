@@ -13,6 +13,10 @@ class OSMTeams {
     return rp(`${OSM_TEAMS_SERVICE}/api/teams`)
   }
 
+  getTeamsByOsmId (id) {
+    return rp(`${OSM_TEAMS_SERVICE}/api/teams?osmId=${id}`)
+  }
+
   createTeam (body) {
     var options = {
       method: 'POST',

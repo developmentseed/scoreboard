@@ -238,7 +238,7 @@ class Dashboard extends Component {
 
   renderBadges () {
     const { authenticatedUser } = this.props
-    const { account: { badges } } = authenticatedUser
+    const { account: { badges, teams } } = authenticatedUser
     const { badgesFilter } = this.state
 
     const badgeFilters = [
@@ -249,6 +249,7 @@ class Dashboard extends Component {
 
     const badgeKeys = Object.keys(badges[badgesFilter])
 
+    console.log(teams)
     return (
       <div style={{ marginTop: 50 }}>
         <h2 className='header--large header--with-description'>Badges</h2>

@@ -9,6 +9,7 @@ const favoriteCampaigns = require('../models/favorite-campaigns')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const db = require('../db/connection')
+const OSMTeams = require('../services/teams')
 
 /**
  * User Stats Route
@@ -43,6 +44,8 @@ async function get (req, res) {
       const favorites = await favoriteCampaigns.findByUserID(uid)
       json.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', json.extent_uri)
 
+      const teams = await OSMTeams.getTeamsByOsmId(id)
+
       return res.send({
         id,
         uid,
@@ -50,7 +53,8 @@ async function get (req, res) {
         favorites,
         records: json,
         roles: rolesList,
-        country: user.country
+        country: user.country,
+        teams
       })
     } catch (e) {
       if (e.message && e.message.includes('Unable to retrieve user record at')) {
