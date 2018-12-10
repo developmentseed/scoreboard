@@ -7,6 +7,7 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 import AdminCampaignsSearch from '../../components/AdminCampaignsSearch'
+import AdminUsersSearch from '../../components/AdminUsersSearch'
 import Link from '../../components/Link'
 
 export class AdminTeamsEdit extends Component {
@@ -19,7 +20,8 @@ export class AdminTeamsEdit extends Component {
       disableInteraction: false,
       nameInput: '',
       hashtagInput: '',
-      teamCampaigns: []
+      teamCampaigns: [],
+      teamUsers: []
     }
 
     // Event handlers
@@ -31,6 +33,9 @@ export class AdminTeamsEdit extends Component {
     this.renderCampaignsSelectSection = this.renderCampaignsSelectSection.bind(this)
     this.addCampaignToTeam = this.addCampaignToTeam.bind(this)
     this.removeCampaignFromTeam = this.removeCampaignFromTeam.bind(this)
+
+    this.addUserToTeam = this.addUserToTeam.bind(this)
+    this.removeUserFromTeam = this.removeUserFromTeam.bind(this)
   }
 
   async componentDidMount () {
@@ -53,7 +58,9 @@ export class AdminTeamsEdit extends Component {
         nameInput: team.name,
         descriptionInput: team.bio,
         hashtagInput: team.hashtag,
-        teamCampaigns: team.campaigns
+        teamCampaigns: team.campaigns,
+        initialUsers: team.users,
+        teamUsers: team.users
       })
     }
   }
@@ -82,21 +89,39 @@ export class AdminTeamsEdit extends Component {
           addCampaign={this.addCampaignToTeam}
           removeCampaign={this.removeCampaignFromTeam}
         />
+        <AdminUsersSearch
+          selectedUsers={this.state.teamUsers}
+          addUser={this.addUserToTeam}
+          removeUser={this.removeUserFromTeam}
+        />
       </div>
     )
   }
 
-  addCampaignToTeam (campaignId) {
+  addCampaignToTeam (campaign) {
     let { teamCampaigns } = this.state
-    teamCampaigns = teamCampaigns.filter(c => c !== campaignId)
-    teamCampaigns.push(campaignId)
+    teamCampaigns = teamCampaigns.filter(c => c.id !== campaign.id)
+    teamCampaigns.push(campaign)
     this.setState({ teamCampaigns })
   }
 
-  removeCampaignFromTeam (campaignId) {
+  removeCampaignFromTeam (campaign) {
     let { teamCampaigns } = this.state
-    teamCampaigns = teamCampaigns.filter(c => c !== campaignId)
+    teamCampaigns = teamCampaigns.filter(c => c.id !== campaign.id)
     this.setState({ teamCampaigns })
+  }
+
+  addUserToTeam (user) {
+    let { teamUsers } = this.state
+    teamUsers = teamUsers.filter(c => c.osm_id.toString() !== user.osm_id.toString())
+    teamUsers.push(user)
+    this.setState({ teamUsers })
+  }
+
+  removeUserFromTeam (user) {
+    let { teamUsers } = this.state
+    teamUsers = teamUsers.filter(c => c.osm_id.toString() !== user.osm_id.toString())
+    this.setState({ teamUsers })
   }
 
   render () {
@@ -323,14 +348,18 @@ export class AdminTeamsEdit extends Component {
       descriptionInput,
       nameInput,
       hashtagInput,
-      teamCampaigns
+      teamCampaigns,
+      teamUsers,
+      initialUsers
     } = this.state
 
     const params = {
       bio: descriptionInput,
       name: nameInput,
       hashtag: hashtagInput,
-      campaigns: teamCampaigns
+      campaigns: teamCampaigns.map(c => c.id),
+      newusers: teamUsers.map(u => u.osm_id),
+      oldusers: initialUsers.map(u => u.osm_id)
     }
 
     this.updateTeam(params)
@@ -343,7 +372,8 @@ export class AdminTeamsEdit extends Component {
       disableInteraction: false,
       nameInput: '',
       hashtagInput: '',
-      teamCampaigns: []
+      teamCampaigns: [],
+      teamUsers: []
     })
   }
 }
