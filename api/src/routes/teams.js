@@ -62,17 +62,14 @@ async function get (req, res) {
     const campaigns = await db('campaigns').select().whereIn('id', function () {
       this.select('campaign_id').from('team_assignments').where('team_id', req.params.id)
     })
-    const users = data.members
-    const userData = await db('users').whereIn('osm_id', users)
+    const users = await db('users').whereIn('osm_id', data.members)
     const team = {
       id: data.id,
       bio: data.bio,
       hashtag: data.hashtag,
       name: data.name,
-      campaigns: campaigns.map(c => c.id),
-      campaignData: campaigns,
-      users,
-      userData
+      campaigns,
+      users
     }
     return res.send(team)
   } catch (err) {

@@ -98,29 +98,29 @@ export class AdminTeamsEdit extends Component {
     )
   }
 
-  addCampaignToTeam (campaignId) {
+  addCampaignToTeam (campaign) {
     let { teamCampaigns } = this.state
-    teamCampaigns = teamCampaigns.filter(c => c !== campaignId)
-    teamCampaigns.push(campaignId)
+    teamCampaigns = teamCampaigns.filter(c => c.id !== campaign.id)
+    teamCampaigns.push(campaign)
     this.setState({ teamCampaigns })
   }
 
-  removeCampaignFromTeam (campaignId) {
+  removeCampaignFromTeam (campaign) {
     let { teamCampaigns } = this.state
-    teamCampaigns = teamCampaigns.filter(c => c !== campaignId)
+    teamCampaigns = teamCampaigns.filter(c => c.id !== campaign.id)
     this.setState({ teamCampaigns })
   }
 
-  addUserToTeam (userId) {
+  addUserToTeam (user) {
     let { teamUsers } = this.state
-    teamUsers = teamUsers.filter(c => c !== userId)
-    teamUsers.push(userId)
+    teamUsers = teamUsers.filter(c => c.osm_id.toString() !== user.osm_id.toString())
+    teamUsers.push(user)
     this.setState({ teamUsers })
   }
 
-  removeUserFromTeam (userId) {
+  removeUserFromTeam (user) {
     let { teamUsers } = this.state
-    teamUsers = teamUsers.filter(c => c.toString() !== userId.toString())
+    teamUsers = teamUsers.filter(c => c.osm_id.toString() !== user.osm_id.toString())
     this.setState({ teamUsers })
   }
 
@@ -357,9 +357,9 @@ export class AdminTeamsEdit extends Component {
       bio: descriptionInput,
       name: nameInput,
       hashtag: hashtagInput,
-      campaigns: teamCampaigns,
-      newusers: teamUsers,
-      oldusers: initialUsers
+      campaigns: teamCampaigns.map(c => c.id),
+      newusers: teamUsers.map(u => u.osm_id),
+      oldusers: initialUsers.map(u => u.osm_id)
     }
 
     this.updateTeam(params)

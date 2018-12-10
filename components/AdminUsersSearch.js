@@ -18,11 +18,11 @@ class UsersSearch extends Component {
   }
 
   onSearchUsersClick (user) {
-    this.props.addUser(user.osm_id)
+    this.props.addUser(user)
   }
 
   onSelectedUsersClick (user) {
-    this.props.removeUser(user.osm_id)
+    this.props.removeUser(user)
   }
 
   handlePageChange (pageNumber) {
@@ -40,15 +40,6 @@ class UsersSearch extends Component {
     const { stats: { total, records }, page } = this.props.users
     if (!records) return <div />
 
-    let members = []
-    records.forEach(record => {
-      selectedUsers.forEach(id => {
-        if (record.osm_id.toString() === id.toString()) {
-          members.push(record)
-        }
-      })
-    })
-
     return (
       <div>
         {
@@ -63,7 +54,7 @@ class UsersSearch extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {members.map(record => (
+                  {selectedUsers.map(record => (
                     <tr key={`user-${record.osm_id}`} onClick={() => this.onSelectedUsersClick(record)} className='admin-table-row'>
                       <td>{`${record.full_name}`}</td>
                       <td>{`${record.osm_id}`}</td>
@@ -95,7 +86,7 @@ class UsersSearch extends Component {
               <tbody>
                 {records.map(record => {
                   let isAssigned = false
-                  members.forEach(user => {
+                  selectedUsers.forEach(user => {
                     if (record.osm_id.toString() === user.osm_id.toString()) isAssigned = true
                   })
 

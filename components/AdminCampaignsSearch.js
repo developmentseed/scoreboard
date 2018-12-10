@@ -18,11 +18,11 @@ class CampaignSearch extends Component {
   }
 
   onSearchCampaignClick (campaign) {
-    this.props.addCampaign(campaign.id)
+    this.props.addCampaign(campaign)
   }
 
   onSelectedCampaignClick (campaign) {
-    this.props.removeCampaign(campaign.id)
+    this.props.removeCampaign(campaign)
   }
 
   handlePageChange (pageNumber) {
@@ -41,15 +41,6 @@ class CampaignSearch extends Component {
     const { records: { total, records } } = this.props.campaigns
     if (!records) return <div />
 
-    let assigned = []
-    records.forEach(record => {
-      selectedCampaigns.forEach(id => {
-        if (record.id === id) {
-          assigned.push(record)
-        }
-      })
-    })
-
     return (
       <div>
         {
@@ -64,7 +55,7 @@ class CampaignSearch extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {assigned.map(record => (
+                  {selectedCampaigns.map(record => (
                     <tr key={`campaign-${record.name}`} onClick={() => this.onSelectedCampaignClick(record)} className='admin-table-row'>
                       <td>{`${record.name} - project-${(record.tm_id || record.id)}`}</td>
                       <td>{record.priority}</td>
@@ -96,7 +87,7 @@ class CampaignSearch extends Component {
               <tbody>
                 {records.map(record => {
                   let isAssigned = false
-                  assigned.forEach(task => {
+                  selectedCampaigns.forEach(task => {
                     if (record.id === task.id) isAssigned = true
                   })
 

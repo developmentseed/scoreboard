@@ -45,7 +45,7 @@ export class Team extends Component {
         <section className='section--tertiary'>
           <div className='row'>
             <h2>Assigned Campaigns</h2>
-            {team.campaignData.map(record => <CampaignCard key={record.id} campaign={record} />)}
+            {team.campaigns.map(record => <CampaignCard key={record.id} campaign={record} />)}
           </div>
         </section>
       </div>
