@@ -11,7 +11,8 @@ function generateUsers (n, knex) {
       osm_id: 100000000 + i,
       full_name: `test${i} McTest`,
       country: countryIds[parseInt(Math.random() * (countryIds.length - 1))],
-      edit_count: Math.floor(Math.random() * 100000000)
+      edit_count: Math.floor(Math.random() * 100000000),
+      last_edit: knex.raw(`to_timestamp(${Date.now()} - ${Math.floor(Math.random() * 1000 * 3600 * 24 * 365)} / 1000.0)`)
     }
 
     users.push(user)

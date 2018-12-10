@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Link from '../components/Link'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import CampaignCard from '../components/CampaignCard'
@@ -26,11 +25,13 @@ export class Team extends Component {
                 </li>
               </ul>
             </div>
-            <div className='section-sub--right'>
-              <Link href='/about'>
-                <a className='button'>Join</a>
-              </Link>
-            </div>
+            {
+            // <div className='section-sub--right'>
+            //   <Link href='/about'>
+            //     <a className='button'>Join</a>
+            //   </Link>
+            // </div>
+            }
           </div>
         </header>
         <section>
@@ -39,13 +40,32 @@ export class Team extends Component {
               <div className='text-body'>
                 {team.bio}
               </div>
+              <section>
+                <h2>Team Members</h2>
+                <table className=''>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>User ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {team.users.map(record => (
+                      <tr key={`users-${record.osm_id}`} className=''>
+                        <td>{`${record.full_name}`}</td>
+                        <td>{record.osm_id}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </section>
             </div>
           </div>
         </section>
         <section className='section--tertiary'>
           <div className='row'>
             <h2>Assigned Campaigns</h2>
-            {team.campaignData.map(record => <CampaignCard key={record.id} campaign={record} />)}
+            {team.campaigns.map(record => <CampaignCard key={record.id} campaign={record} />)}
           </div>
         </section>
       </div>
