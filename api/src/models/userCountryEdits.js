@@ -25,12 +25,12 @@ function getParticipants (country_name, limitNum) {
     return db('user_country_edits')
       .leftJoin('users', 'user_id', 'users.id')
       .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-      .where('country_name', country_name)
+      .where('country_name', 'ilike', country_name)
   } else {
     return db('user_country_edits')
       .leftJoin('users', 'user_id', 'users.id')
       .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-      .where('country_name', country_name).limit(limitNum)
+      .where('country_name', 'ilike', country_name).limit(limitNum)
   }
 }
 
