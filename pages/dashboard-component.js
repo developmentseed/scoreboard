@@ -68,12 +68,13 @@ class Dashboard extends Component {
       )
     }
 
-    if (!loggedIn) {
+    if (!loggedIn || !account) {
       return <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
     }
 
-    const countries = this.formatCountryList(account.records.country_list)
     const { teams } = account
+    const osmesaData = account.records
+    const countries = osmesaData ? this.formatCountryList(osmesaData.country_list) : []
 
     return (
       <div className='dashboard'>
@@ -133,9 +134,12 @@ class Dashboard extends Component {
     const { authenticatedUser } = this.props
     const { osm, account } = authenticatedUser
     const { badges } = account
+    const osmesaData = account.records
 
     const osmUser = osm._xml2json.user
     const badgeNums = account.badges && badges.earnedBadges ? Object.keys(badges.earnedBadges).length : 0
+    const campaignsCount = osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0
+    const editCount = osmesaData ? osmesaData.edit_count : 0
 
     // use default gravatar image
     let profileImage = 'https://www.gravatar.com/avatar/00000000000000000000000000000000'
@@ -156,7 +160,7 @@ class Dashboard extends Component {
               <ul>
                 <li className='list--inline'>
                   <span className='descriptor-chart'>Campaigns</span>
-                  <span className='num--large'>{account.records.hashtags.length}</span>
+                  <span className='num--large'>{campaignsCount}</span>
                 </li>
                 <li className='list--inline'>
                   <span className='descriptor-chart'>Badges</span>
@@ -164,7 +168,7 @@ class Dashboard extends Component {
                 </li>
                 <li className='list--inline'>
                   <span className='descriptor-chart'>Edits</span>
-                  <span className='num--large'>{account.records.edit_count}</span>
+                  <span className='num--large'>{editCount}</span>
                 </li>
               </ul>
             </div>
