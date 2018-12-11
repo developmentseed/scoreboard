@@ -19,7 +19,8 @@ const badgeMetrics = [
   { label: 'Points of interest mapped', value: 'pois' },
   { label: 'New roads mapped (km)', value: 'roadKms' },
   { label: 'Roads modified (km)', value: 'roadKmMods' },
-  { label: 'Waterways mapped', value: 'waterways' }
+  { label: 'Waterways mapped', value: 'waterways' },
+  { label: 'Contributed to a certain campaign', value: 'campaigns' }
 ]
 
 const badgeOperationTypes = [
@@ -212,6 +213,61 @@ export class AdminBadgesAdd extends Component {
     )
   }
 
+  renderRequirements (op, i) {
+    console.log(op, i)
+    if (op.metric !== 'campaigns') {
+      return (
+        <div className='requirement__section'>
+          <div className='form__input-unit form__input-unit--half'>
+            <label
+              className='form__label'
+              htmlFor='badge-operation-type'
+            >
+              Condition
+            </label>
+            <Select
+              id='badge-operation-type'
+              name='badge-operation-type'
+              onChange={(e) => this.handleOperationChange(e, i, 'operation')}
+              options={badgeOperationTypes}
+              placeholder="Select how you'll gauge this metric"
+              value={op.operation}
+            />
+          </div>
+          <div className='form__input-unit form__input-unit--half'>
+            <label
+              className='form__label'
+              htmlFor='badge-metric-number'
+            >
+              Number
+            </label>
+            <input
+              id='badge-metric-number'
+              min={0}
+              name='badge-metric-number'
+              onChange={(e) => this.handleOperationChange(e, i, 'number')}
+              placeholder='50'
+              type='number'
+              value={op.number}
+            />
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <input
+          id='campaign-name'
+          name='campaign-name'
+          onChange={(e) => this.handleOperationChange(e, i, 'campaign')}
+          placeholder='Enter the hashtag associated with this campaign'
+          required
+          type='text'
+          value={this.state.campaignName}
+        />
+      )
+    }
+  }
+
   renderOperationsSection () {
     return (
       <div className='form__section'>
@@ -239,39 +295,7 @@ export class AdminBadgesAdd extends Component {
                 value={op.metric}
               />
             </div>
-            <div className='form__input-unit form__input-unit--half'>
-              <label
-                className='form__label'
-                htmlFor='badge-operation-type'
-              >
-                Condition
-              </label>
-              <Select
-                id='badge-operation-type'
-                name='badge-operation-type'
-                onChange={(e) => this.handleOperationChange(e, i, 'operation')}
-                options={badgeOperationTypes}
-                placeholder="Select how you'll gauge this metric"
-                value={op.operation}
-              />
-            </div>
-            <div className='form__input-unit form__input-unit--half'>
-              <label
-                className='form__label'
-                htmlFor='badge-metric-number'
-              >
-                Number
-              </label>
-              <input
-                id='badge-metric-number'
-                min={0}
-                name='badge-metric-number'
-                onChange={(e) => this.handleOperationChange(e, i, 'number')}
-                placeholder='50'
-                type='number'
-                value={op.number}
-              />
-            </div>
+            {this.renderRequirements(op, i)}
             {i > 0 && (
               <button
                 className='button button--link'
