@@ -2,6 +2,7 @@ const countryHelp = require('i18n-iso-countries')
 const userCountryEdits = require('../models/userCountryEdits')
 const { getCountryGeo } = require('../utils/countryGeometry')
 const getCenter = require('../utils/countryCenters')
+const countryList = require('../../../lib/utils/country-list.js')
 
 /**
  * User Stats Route
@@ -21,7 +22,16 @@ async function get (req, res) {
   } else {
     alpha2 = alpha2.toUpperCase()
   }
-  const countryName = countryHelp.getName(alpha2, 'en')
+
+  // check the country list first
+  const countryPair = countryList.find((country_pair) => {
+    return country_pair.value === alpha2
+  })
+  let countryName = countryPair.label
+  if (typeof countryPair !== 'undefined') {
+    countryName = countryHelp.getName(alpha2, 'en')
+  }
+
   try {
     let userData = await userCountryEdits.getParticipants(countryName, req.query.participantLimit)
     if (userData === null) {
