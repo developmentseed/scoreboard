@@ -30,7 +30,7 @@ test('Test countries list endpoint', async (t) => {
     .expect(200)
   t.is(res.body.subTotal, res.body.records.length)
   t.is(res.body.total, res.body.records.length)
-  t.is(res.body.editTotal, res.body.records.reduce((total, { edit_count }) => total + edit_count, 0))
+  t.is(res.body.editTotal, res.body.records.reduce((total, { edit_count }) => total + parseInt(edit_count, 10), 0))
 })
 
 test('Test countries list endpoint with search', async (t) => {
@@ -40,7 +40,7 @@ test('Test countries list endpoint with search', async (t) => {
   t.is(res.body.records[0].name, 'Sudan')
   t.is(res.body.subTotal, res.body.records.length)
   t.is(res.body.total, 6)
-  t.is(res.body.editTotal, res.body.records.reduce((total, { edit_count }) => total + edit_count, 0))
+  t.is(res.body.editTotal, res.body.records.reduce((total, { edit_count }) => total + parseInt(edit_count, 10), 0))
 })
 
 test('Test countries list endpoint sorting', async (t) => {
