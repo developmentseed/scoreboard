@@ -62,7 +62,7 @@ async function get (req, res) {
       // Find all favorite campaigns for this user
       const favorites = await db('favorite_campaigns')
         .join('campaigns', 'campaigns.id', '=', 'favorite_campaigns.campaign_id')
-        .select('campaign_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
+        .select('favorite_campaigns.id', 'campaign_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
 
       return res.send({
         id,
