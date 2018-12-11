@@ -15,9 +15,23 @@ function get (id) {
 }
 
 /**
+ * Get number of users mapping in that country
+ *
+ * @param {string} country_name - name of the country
+ * @returns {Promise} a response
+ */
+function getNumberOfParticipants (country_name) {
+  return db('user_country_edits')
+    .leftJoin('users', 'user_id', 'users.id')
+    .count('users.osm_id')
+    .where('country_name', 'ilike', country_name)
+}
+
+/**
  * Get all users mapping in that country
  *
  * @param {string} country_name - name of the country
+ *  * @param {integer} limitNum - optional argument to limit number of results
  * @returns {Promise} a response
  */
 function getParticipants (country_name, limitNum) {
@@ -71,6 +85,7 @@ function updateUserCountryEdit (user_id, country_name, edit_count) {
 
 module.exports = {
   get,
+  getNumberOfParticipants,
   getParticipants,
   update,
   updateUserCountryEdit,
