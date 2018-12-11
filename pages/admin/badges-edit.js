@@ -373,9 +373,12 @@ export class AdminBadgesEdit extends Component {
   }
 
   handleOperationChange (e, idx, keyName) {
-    const { value } = keyName === 'number' ? e.target : e
     let targetOperation = this.state.operations[idx]
     if (!targetOperation) return
+    let value = ''
+    if (e !== null) {
+      value = keyName === 'number' ? e.target.value : e.value
+    }
 
     targetOperation[badgeOperationIndex[keyName]] = value
 
