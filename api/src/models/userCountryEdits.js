@@ -20,11 +20,18 @@ function get (id) {
  * @param {string} country_name - name of the country
  * @returns {Promise} a response
  */
-function getParticipants (country_name) {
-  return db('user_country_edits')
-    .leftJoin('users', 'user_id', 'users.id')
-    .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-    .where('country_name', country_name)
+function getParticipants (country_name, limitNum) {
+  if (typeof limitNum === 'undefined') {
+    return db('user_country_edits')
+      .leftJoin('users', 'user_id', 'users.id')
+      .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
+      .where('country_name', country_name)
+  } else {
+    return db('user_country_edits')
+      .leftJoin('users', 'user_id', 'users.id')
+      .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
+      .where('country_name', country_name).limit(limitNum)
+  }
 }
 
 function update (id, data) {
