@@ -16,13 +16,14 @@ const Map = dynamic(() => import('../components/charts/HomeMap'), {
   ssr: false
 })
 
+const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 export class Home extends Component {
   componentDidMount () {
     this.props.getTopStats()
   }
 
   render () {
-    const { topStats, project: projectName } = this.props
+    const { topStats } = this.props
     if (!topStats) return <div />
 
     const { total, records, numUsers, features, topEdits, editsByCountry } = topStats
