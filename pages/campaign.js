@@ -36,6 +36,49 @@ export class Campaign extends Component {
     this.props.getCampaign(this.props.id)
   }
 
+  addFavoriteCampaign () {
+    const { authenticatedUser } = this.props
+    const { account } = authenticatedUser
+    const campaignId = this.props.campaign.records.tmData.id
+
+    this.props.addFavoriteCampign({
+      user_id: account.uid,
+      campaign_id: campaignId
+    })
+  }
+
+  getFavoriteByCampaignId (id) {
+    const { authenticatedUser } = this.props
+    const { favorites } = authenticatedUser.account
+
+    return favorites.find((item) => {
+      return item.campaign_id === id
+    })
+  }
+
+  removeFavoriteCampaign () {
+    const campaignId = this.props.campaign.records.tmData.id
+    const { id } = this.getFavoriteByCampaignId(campaignId)
+    this.props.removeFavoriteCampaign(id)
+  }
+
+  renderFavoriteButton () {
+    const { authenticatedUser, campaign } = this.props
+    const campaignId = campaign.records.tmData.id
+
+    if (!authenticatedUser || !authenticatedUser.loggedIn) {
+      return (<button className='button' onClick={() => this.addFavoriteCampaign()}>Log in to favorite</button>)
+    }
+
+    const alreadyFavorited = !!this.getFavoriteByCampaignId(campaignId)
+
+    if (alreadyFavorited) {
+      return (<button className='button' onClick={() => this.removeFavoriteCampaign()}>Remove favorite</button>)
+    }
+
+    return (<button className='button' onClick={() => this.addFavoriteCampaign()}>Add favorite</button>)
+  }
+
   render () {
     if (!this.props.campaign) return <div />
 
@@ -72,6 +115,7 @@ export class Campaign extends Component {
               </ul>
             </div>
             <div className='section-sub--right'>
+              {this.renderFavoriteButton()}
               {contribute}
             </div>
           </div>
