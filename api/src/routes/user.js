@@ -5,7 +5,6 @@ const {
 } = require('../config')
 const users = require('../models/users')
 const roles = require('../models/roles')
-const favoriteCampaigns = require('../models/favorite-campaigns')
 const OSMTeams = require('../services/teams')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
