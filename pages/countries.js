@@ -52,7 +52,6 @@ export class Countries extends Component {
     const {
       searchText,
       selectedSortValue,
-      page,
       stats,
       apiStatus
     } = this.props.countries
