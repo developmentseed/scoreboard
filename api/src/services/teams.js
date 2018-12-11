@@ -37,6 +37,16 @@ class OSMTeams {
     return rp(options)
   }
 
+  updateMembers (id, body) {
+    var options = {
+      method: 'PATCH',
+      uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}/members`,
+      body,
+      json: true
+    }
+    return rp(options)
+  }
+
   deleteTeam (id) {
     var options = {
       method: 'DELETE',
