@@ -245,9 +245,6 @@ class Dashboard extends Component {
       { name: 'All', id: 'all' }
     ]
 
-    const filteredBadges = badges[badgesFilter]
-    const badgeKeys = Object.keys(filteredBadges)
-
     if (!badges || !badges.all || !badges.all.length) {
       return (
         <div style={{ marginTop: 50 }}>
@@ -256,6 +253,9 @@ class Dashboard extends Component {
         </div>
       )
     }
+
+    const filteredBadges = badges[badgesFilter]
+    const badgeKeys = Object.keys(filteredBadges)
 
     return (
       <div style={{ marginTop: 50 }}>
