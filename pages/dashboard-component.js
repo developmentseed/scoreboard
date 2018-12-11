@@ -115,7 +115,7 @@ class Dashboard extends Component {
                     />
                   )
                   : (
-                    <DataNotAvailable message='You have not joined any teams yet' callToAction='Explore teams' callToActionUrl='/teams' />
+                    <DataNotAvailable message='We have not found any stats for your profile' callToAction='Explore countries' callToActionUrl='/countries' />
                   )
               }
             </div>

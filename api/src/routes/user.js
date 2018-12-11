@@ -31,6 +31,29 @@ async function get (req, res) {
     const uid = user.id
     const rolesList = user.roles ? await roles.getRoles(user.roles) : []
 
+    // Find all teams for this user
+    const teams = JSON.parse(await OSMTeams.getTeams(user.osm_id))
+    let assignments = []
+    if (teams && teams.length > 0) {
+      assignments = await db('team_assignments').whereIn('team_id', teams.map(t => t.id))
+        .join('campaigns', 'campaigns.id', '=', 'team_assignments.campaign_id')
+        .select('campaign_id', 'team_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
+    }
+    // Map names
+    assignments = assignments.map(assignment => {
+      teams.forEach(team => {
+        if (assignment.team_id === team.id) {
+          assignment.team_name = team.name
+        }
+      })
+      return assignment
+    })
+
+    // Find all favorite campaigns for this user
+    const favorites = await db('favorite_campaigns')
+      .join('campaigns', 'campaigns.id', '=', 'favorite_campaigns.campaign_id')
+      .select('favorite_campaigns.id', 'campaign_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
+
     // handle the case where osm user doesn't exist on osmesa
     try {
       const osmesaResponse = await osmesa.getUser(id)
@@ -40,29 +63,6 @@ async function get (req, res) {
       const badges = getBadgeProgress(json, badgesFromDB)
 
       json.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', json.extent_uri)
-
-      // Find all teams for this user
-      const teams = JSON.parse(await OSMTeams.getTeams(user.osm_id))
-      let assignments = []
-      if (teams && teams.length > 0) {
-        assignments = await db('team_assignments').whereIn('team_id', teams.map(t => t.id))
-          .join('campaigns', 'campaigns.id', '=', 'team_assignments.campaign_id')
-          .select('campaign_id', 'team_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
-      }
-      // Map names
-      assignments = assignments.map(assignment => {
-        teams.forEach(team => {
-          if (assignment.team_id === team.id) {
-            assignment.team_name = team.name
-          }
-        })
-        return assignment
-      })
-
-      // Find all favorite campaigns for this user
-      const favorites = await db('favorite_campaigns')
-        .join('campaigns', 'campaigns.id', '=', 'favorite_campaigns.campaign_id')
-        .select('favorite_campaigns.id', 'campaign_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
 
       return res.send({
         id,
@@ -79,8 +79,14 @@ async function get (req, res) {
       if (e.message && e.message.includes('Unable to retrieve user record at')) {
         return res.send({
           id,
-          badges: null,
-          favorites: null,
+          badges: {
+            all: [],
+            earnedBadges: {},
+            unearnedBadges: {}
+          },
+          favorites,
+          teams,
+          assignments,
           records: {
             uid: parseInt(id, 10),
             name: user.full_name,
