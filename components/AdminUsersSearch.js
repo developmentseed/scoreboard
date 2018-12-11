@@ -3,62 +3,63 @@ import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 
-class CampaignSearch extends Component {
+class UsersSearch extends Component {
   constructor (props) {
     super(props)
 
     this.handleSearch = this.handleSearch.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
-    this.onSearchCampaignClick = this.onSearchCampaignClick.bind(this)
-    this.onSelectedCampaignClick = this.onSelectedCampaignClick.bind(this)
+    this.onSearchUsersClick = this.onSearchUsersClick.bind(this)
+    this.onSelectedUsersClick = this.onSelectedUsersClick.bind(this)
   }
 
   handleSearch (event) {
-    this.props.handleCampaignsSearch(event.target.value)
+    this.props.changeSearchText(event.target.value)
   }
 
-  onSearchCampaignClick (campaign) {
-    this.props.addCampaign(campaign)
+  onSearchUsersClick (user) {
+    this.props.addUser(user)
   }
 
-  onSelectedCampaignClick (campaign) {
-    this.props.removeCampaign(campaign)
+  onSelectedUsersClick (user) {
+    this.props.removeUser(user)
   }
 
   handlePageChange (pageNumber) {
-    this.props.handleCampaignsPageChange(pageNumber || 1)
+    this.props.changePage(pageNumber || 1)
   }
 
   componentDidMount () {
-    this.props.handleCampaignsPageChange(1)
+    this.props.changePage(1)
   }
 
   render () {
-    if (!this.props.campaigns) return <div />
+    if (!this.props.users) return <div />
 
-    const { selectedCampaigns } = this.props
-    const { page } = this.props.campaigns
-    const { records: { total, records } } = this.props.campaigns
+    let { selectedUsers } = this.props
+    selectedUsers = selectedUsers || []
+
+    const { stats: { total, records }, page } = this.props.users
     if (!records) return <div />
 
     return (
       <div>
         {
-          (selectedCampaigns.length > 0)
+          (selectedUsers.length > 0)
             ? (<section className='section-sub'>
-              <h1>Assigned</h1>
+              <h1>Team Members</h1>
               <table className='admin-table'>
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Priority</th>
+                    <th>User ID</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {selectedCampaigns.map(record => (
-                    <tr key={`campaign-${record.name}`} onClick={() => this.onSelectedCampaignClick(record)} className='admin-table-row'>
-                      <td>{`${record.name} - project-${(record.tm_id || record.id)}`}</td>
-                      <td>{record.priority}</td>
+                  {selectedUsers.map(record => (
+                    <tr key={`user-${record.osm_id}`} onClick={() => this.onSelectedUsersClick(record)} className='admin-table-row'>
+                      <td>{`${record.full_name}`}</td>
+                      <td>{`${record.osm_id}`}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -67,7 +68,7 @@ class CampaignSearch extends Component {
             : <div />
         }
         <section className='section-sub'>
-          <h1>Task list</h1>
+          <h1>Users</h1>
           <div>
             <fieldset>
               <legend>Search</legend>
@@ -81,19 +82,19 @@ class CampaignSearch extends Component {
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Priority</th>
+                  <th>User ID</th>
                 </tr>
               </thead>
               <tbody>
                 {records.map(record => {
                   let isAssigned = false
-                  selectedCampaigns.forEach(task => {
-                    if (record.id === task.id) isAssigned = true
+                  selectedUsers.forEach(user => {
+                    if (record.osm_id.toString() === user.osm_id.toString()) isAssigned = true
                   })
 
-                  return <tr key={`campaign-${record.name}`} onClick={isAssigned ? null : () => this.onSearchCampaignClick(record)} className={isAssigned ? 'admin-table-row-alt' : 'admin-table-row'} >
-                    <td>{`${record.name} - project-${(record.tm_id || record.id)}`}</td>
-                    <td>{record.priority}</td>
+                  return <tr key={`user-${record.osm_id}`} onClick={isAssigned ? null : () => this.onSearchUsersClick(record)} className={isAssigned ? 'admin-table-row-alt' : 'admin-table-row'} >
+                    <td>{`${record.full_name}`}</td>
+                    <td>{`${record.osm_id}`}</td>
                   </tr>
                 })
                 }
@@ -113,4 +114,4 @@ class CampaignSearch extends Component {
   }
 }
 
-export default connect(['campaigns'], actions)(CampaignSearch)
+export default connect(['users'], actions)(UsersSearch)
