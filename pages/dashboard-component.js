@@ -61,7 +61,7 @@ class Dashboard extends Component {
   render () {
     const { authenticatedUser } = this.props
     const { loggedIn, account } = authenticatedUser
-    const  { teams } = authenticatedUser.account
+    const { teams } = authenticatedUser.account
 
     if (this.state.loading) {
       return (
@@ -188,7 +188,6 @@ class Dashboard extends Component {
     const { account: { favorites, assignments } } = authenticatedUser
 
     const assignmentFilters = [
-      // { name: 'Featured', id: 'featured' },
       { name: 'Teams', id: 'teams' },
       { name: 'Favorites', id: 'favorites' },
       { name: 'All', id: 'all' }
@@ -204,12 +203,18 @@ class Dashboard extends Component {
     })
 
     const allCampaigns = {
-      favorites: teamAssignments,
+      favorites,
       teams: teamAssignments,
-      all: teamAssignments
+      all: teamAssignments.concat(favorites)
     }
 
-    const assignmentsTable = allCampaigns[this.state.assignmentsFilter]
+    const assignmentsTable = allCampaigns[this.state.assignmentsFilter].map((assignment) => {
+      if (!assignment.assigned_by) {
+        assignment.assigned_by = authenticatedUser.osm.displayName
+      }
+
+      return assignment
+    })
 
     return (
       <div>

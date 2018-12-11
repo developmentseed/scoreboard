@@ -40,8 +40,6 @@ async function get (req, res) {
       const badgesFromDB = await db('badges').select() // array of all badges
       const badges = getBadgeProgress(json, badgesFromDB)
 
-      // Find all favorite campaigns for this user
-      const favorites = await favoriteCampaigns.findByUserID(uid)
       json.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', json.extent_uri)
 
       // Find all teams for this user
@@ -61,6 +59,11 @@ async function get (req, res) {
         })
         return assignment
       })
+
+      // Find all favorite campaigns for this user
+      const favorites = await db('favorite_campaigns')
+        .join('campaigns', 'campaigns.id', '=', 'favorite_campaigns.campaign_id')
+        .select('campaign_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
 
       return res.send({
         id,
