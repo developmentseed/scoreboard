@@ -84,7 +84,7 @@ class Teams extends Component {
                   <tr key={`team-${team.name}`}>
                     <td>
                       <Link href={`/teams/${team.id}`}>
-                        <a className='link--normal' > {team.name}</a >
+                        <a className='link--normal'>{team.name}</a >
                       </Link>
                     </td>
                     <td>{team.hashtag}</td>
