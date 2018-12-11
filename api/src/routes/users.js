@@ -63,7 +63,7 @@ async function stats (req, res) {
         's.country',
         's.last_edit',
         db.raw(
-          'rank() over (order by s.edit_count desc) as rank'
+          'rank() over (order by s.edit_count desc nulls last) as rank'
         )
       ).from('edits as s')
 
@@ -79,7 +79,7 @@ async function stats (req, res) {
         recordQuery = recordQuery.orderBy('rank', 'desc')
         break
       default: // Most total edits
-        recordQuery = recordQuery.orderBy('rank', 'asc')
+        recordQuery = recordQuery.orderByRaw('edit_count DESC NULLS LAST')
         break
     }
 
