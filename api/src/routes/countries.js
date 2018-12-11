@@ -1,5 +1,6 @@
 const countryHelp = require('i18n-iso-countries')
 const db = require('../db/connection')
+const countryList = require('../../../lib/utils/country-list.js')
 
 function applyFilters (query, req) {
   const search = req.query.q || ''
@@ -59,6 +60,14 @@ async function stats (req, res) {
     // add alpha codes to each country
     records = records.map((c) => {
       c.alpha2 = countryHelp.getAlpha2Code(c.name, 'en')
+      if (typeof c.alpha2 === 'undefined') {
+        const countryPair = countryList.find((country_pair) => {
+          return country_pair.label === c.name
+        })
+        if (typeof countryPair !== 'undefined') {
+          c.alpha2 = countryPair.value
+        }
+      }
       return c
     })
 

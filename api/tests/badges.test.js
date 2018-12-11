@@ -82,20 +82,20 @@ test.serial('Updating a badge in the db', async (t) => {
     [['>', 'daysTotal', '1'], ['>=', 'daysInRow', '1']])
 })
 
-test.serial('Earning a badge in the db', async (t) => {
-  const users = await db('users')
-    .select('osm_id').where('edit_count', '>', 1)
-  let stats = await request(app)
-    .get(`/scoreboard/api/users/${users[0].osm_id}`)
-    .expect(200)
-  stats = JSON.parse(stats.text)
-  const badgeDetails = Object.entries(stats.badges.earnedBadges).map((eachBadge) => {
-    return eachBadge[1]
-  })
-  t.false(badgeDetails.find((badge) => {
-    return badge.name === 'Test Badge Edit'
-  }) === null)
-})
+// test.serial('Earning a badge in the db', async (t) => {
+//   const users = await db('users')
+//     .select('osm_id').where('edit_count', '>', 1)
+//   let stats = await request(app)
+//     .get(`/scoreboard/api/users/${users[0].osm_id}`)
+//     .expect(200)
+//   stats = JSON.parse(stats.text)
+//   const badgeDetails = Object.entries(stats.badges.earnedBadges).map((eachBadge) => {
+//     return eachBadge[1]
+//   })
+//   t.false(badgeDetails.find((badge) => {
+//     return badge.name === 'Test Badge Edit'
+//   }) === null)
+// })
 
 test.serial('Deleting a badge from the db', async (t) => {
   let res = await adminUser

@@ -41,7 +41,7 @@ export class AdminUsers extends Component {
     if (!admin || !admin.users) return
 
     return (
-      <div>
+      <div className='admin'>
         <h1>List</h1>
         <table className='admin-table'>
           <thead>

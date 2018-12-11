@@ -23,7 +23,7 @@ export class AdminBadges extends Component {
       await this.props.getBadges()
       this.setState({ loading: false })
     } catch (err) {
-      console.log(err)
+      console.error(err)
       this.setState({ loading: false })
     }
   }
