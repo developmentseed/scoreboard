@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import queryString from 'query-string'
-import Pagination from 'react-js-pagination'
 import AllCountriesTable from '../components/AllCountriesTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
@@ -77,13 +76,6 @@ export class Countries extends Component {
             <div className='content--with-sidebar'>
               <h3 className='header--medium'>{subTotal} Results</h3>
               <AllCountriesTable countries={records} apiStatus={apiStatus} />
-              <Pagination
-                activePage={page}
-                itemsCountPerPage={25}
-                totalItemsCount={total}
-                pageRangeDisplayed={5}
-                onChange={this.handlePageChange}
-              />
             </div>
           </div>
         </section>
