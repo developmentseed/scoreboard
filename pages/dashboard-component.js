@@ -132,9 +132,10 @@ class Dashboard extends Component {
   renderHeader () {
     const { authenticatedUser } = this.props
     const { osm, account } = authenticatedUser
+    const { badges } = account
 
     const osmUser = osm._xml2json.user
-    const badgeNums = account.badges ? Object.keys(account.badges.earnedBadges).length : 0
+    const badgeNums = account.badges && badges.earnedBadges ? Object.keys(badges.earnedBadges).length : 0
 
     // use default gravatar image
     let profileImage = 'https://www.gravatar.com/avatar/00000000000000000000000000000000'
@@ -240,7 +241,17 @@ class Dashboard extends Component {
       { name: 'All', id: 'all' }
     ]
 
-    const badgeKeys = Object.keys(badges[badgesFilter])
+    const filteredBadges = badges[badgesFilter]
+    const badgeKeys = Object.keys(filteredBadges)
+
+    if (!badges || !badges.all || !badges.all.length) {
+      return (
+        <div style={{ marginTop: 50 }}>
+          <h2 className='header--large header--with-description'>Badges</h2>
+          <DataNotAvailable message={'No badges available'} callToAction='' callToActionUrl='/teams' />
+        </div>
+      )
+    }
 
     return (
       <div style={{ marginTop: 50 }}>
