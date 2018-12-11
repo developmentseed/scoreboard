@@ -77,9 +77,6 @@ class Layout extends React.Component {
       <div className='App'>
         <Head>
           <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
-          <link href='https://fonts.googleapis.com/css?family=Heebo' rel='stylesheet' />
-          <link href='https://fonts.googleapis.com/css?family=Crimson+Text' rel='stylesheet' />
-          <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' />
         </Head>
         <header className='header-nav'>
           <div className='row'>
