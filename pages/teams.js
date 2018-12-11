@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
-import Router from 'next/router'
+import Link from '../components/Link'
 import join from 'url-join'
 
 import { APP_URL_PREFIX } from '../api/src/config'
@@ -36,7 +36,6 @@ class Teams extends Component {
     }
 
     this.handleSearch = this.handleSearch.bind(this)
-    this.onTeamClick = this.onTeamClick.bind(this)
   }
 
   async componentDidMount () {
@@ -64,10 +63,6 @@ class Teams extends Component {
     })
   }
 
-  onTeamClick (team) {
-    Router.push(`/teams/${team.id}`)
-  }
-
   renderList () {
     const { teams } = this.state
 
@@ -86,8 +81,12 @@ class Teams extends Component {
             {
               teams
                 .map((team) => (
-                  <tr key={`team-${team.name}`} onClick={() => this.onTeamClick(team)} className='admin-table-row'>
-                    <td>{team.name}</td>
+                  <tr key={`team-${team.name}`}>
+                    <td>
+                      <Link href={`/teams/${team.id}`}>
+                        <a className='link--normal' > {team.name}</a >
+                      </Link>
+                    </td>
                     <td>{team.hashtag}</td>
                   </tr>
                 ))
