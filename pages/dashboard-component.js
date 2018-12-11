@@ -61,7 +61,6 @@ class Dashboard extends Component {
   render () {
     const { authenticatedUser } = this.props
     const { loggedIn, account } = authenticatedUser
-    const { teams } = authenticatedUser.account
 
     if (this.state.loading) {
       return (
@@ -74,6 +73,7 @@ class Dashboard extends Component {
     }
 
     const countries = this.formatCountryList(account.records.country_list)
+    const { teams } = account
 
     return (
       <div className='dashboard'>
