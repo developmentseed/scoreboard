@@ -37,8 +37,9 @@ async function stats (req, res) {
 
     // Create table with ranking
     const allCountries = db('user_country_edits')
-      .select('country_name as name', 'edit_count')
-      .groupBy('country_name', 'edit_count')
+      .select('country_name as name')
+      .sum('edit_count as edit_count')
+      .groupBy('country_name')
 
     // apply search filter
     let recordQuery = applyFilters(allCountries.clone(), req)
@@ -65,7 +66,7 @@ async function stats (req, res) {
       records,
       subTotal: parseInt(subTotal[0].count, 10),
       total: parseInt(totalCountries[0].count, 10),
-      editTotal: records.reduce((sum, { edit_count }) => sum + edit_count, 0)
+      editTotal: records.reduce((sum, { edit_count }) => sum + parseInt(edit_count, 10), 0)
     })
   } catch (err) {
     console.error(err)
