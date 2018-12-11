@@ -276,9 +276,9 @@ class Dashboard extends Component {
                   <BadgeInProgress badge={badge} badgeClass='progress' />
                   <div className='badge-Details'>
                     <h3 className='header--small sub-head header--with-description'>{badge.name}</h3>
-                    <h5 style={{ marginBottom: '.2em' }}>
-                      {badge.progress}
-                    </h5>
+                    <p style={{ marginBottom: '.2em', lineHeight: 1.4 }}>
+                      {badgesFilter === 'unearnedBadges' ? badge.progress : badge.description}
+                    </p>
                   </div>
                 </li>
               )
