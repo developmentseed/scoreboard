@@ -30,7 +30,7 @@ export class Country extends Component {
           <div className='row'>
             <div className='section-sub--left section-width-fifty-plus'>
               <h3 className='header--medium'>Top 15 Participants</h3>
-              <UserTable users={users.splice(0, 15)} />
+              <UserTable users={users} />
             </div>
             <div className='section-sub--right section-width-fifty-minus'>
               <div className='map-country-lg'>
