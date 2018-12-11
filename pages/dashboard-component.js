@@ -249,7 +249,7 @@ class Dashboard extends Component {
       return (
         <div style={{ marginTop: 50 }}>
           <h2 className='header--large header--with-description'>Badges</h2>
-          <DataNotAvailable message={'No badges available'} callToAction='' callToActionUrl='/teams' />
+          <DataNotAvailable message={'No badges available'} />
         </div>
       )
     }
