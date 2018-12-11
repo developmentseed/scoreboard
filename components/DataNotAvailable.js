@@ -6,12 +6,16 @@ export default ({ message, callToAction, callToActionUrl }) => {
 
     <div className='data-not-available'>
       <span>{message}.</span>
-      <br />
-      <span>
-        <Link href={callToActionUrl}>
-          <a>{callToAction}.</a>
-        </Link>
-      </span>
+      {
+        callToAction && (
+          <span>
+            <br />
+            <Link href={callToActionUrl}>
+              <a>{callToAction}.</a>
+            </Link>
+          </span>
+        )
+      }
     </div>
   )
 }
