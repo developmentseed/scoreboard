@@ -21,10 +21,9 @@ async function get (req, res) {
   } else {
     alpha2 = alpha2.toUpperCase()
   }
-
   const countryName = countryHelp.getName(alpha2, 'en')
   try {
-    let userData = await userCountryEdits.getParticipants(countryName)
+    let userData = await userCountryEdits.getParticipants(countryName, req.query.participantLimit)
     if (userData === null) {
       return res.boom.notFound('Could not retrieve user stats')
     }
