@@ -53,7 +53,7 @@ class Dashboard extends Component {
     return userCountries.map((country) => {
       const c = this.findCountryByName(country.name)
       if (!c) return
-      country.alpha2 = this.findCountryByName(country.name).value
+      country.code = this.findCountryByName(country.name).value
       return country
     }).filter((country) => !!country)
   }
@@ -110,7 +110,7 @@ class Dashboard extends Component {
                       list={countries.map((item) => {
                         return {
                           name: item.name,
-                          href: `/countries/${item.alpha2}`
+                          href: `/countries/${item.code}`
                         }
                       })}
                     />
