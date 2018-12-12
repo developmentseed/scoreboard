@@ -36,7 +36,7 @@ test('Test countries list endpoint', async (t) => {
 
 test('Test countries list endpoint with search', async (t) => {
   const [oneCountry] = await db('user_country_edits').limit(1)
- 
+
   const res = await request(app)
     .get(`/scoreboard/api/countries?q=${oneCountry.name}`)
     .expect(200)
@@ -75,6 +75,6 @@ test('Test getting a country that doesnt exist', async (t) => {
   const res = await request(app)
     .get('/scoreboard/api/countries/RU')
     .expect(404)
-  
+
   t.is(res.status, 404)
 })
