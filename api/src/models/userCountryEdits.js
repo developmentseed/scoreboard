@@ -49,22 +49,17 @@ function update (id, data) {
   return get(id).update(data).returning('*')
 }
 
-// Use upsert here https://jaketrent.com/post/upsert-knexjs/
 function updateUserCountryEdit (user_id, country_name, edit_count) {
-  const insert = db('user_country_edits').insert({
-    user_id,
-    country_name,
-    edit_count
-  }).toString()
-  const update = db('user_country_edits')
-    .update({ edit_count })
-    .whereRaw(`user_country_edits.user_id= ${user_id} AND user_country_edits.country_name='${country_name}'`)
-  const query = util.format(
-    '%s ON CONFLICT (user_id, country_name) DO UPDATE SET %s',
-    insert.toString(),
-    update.toString().replace(/^update\s.*\sset\s/i, '')
-  )
-  return db.raw(query)
+  return db.transaction(async conn => {
+    const records = await conn('user_country_edits').where({ user_id, country_name })
+    if (records.length === 0) {
+      await conn('user_country_edits').insert({
+        user_id, country_name, edit_count
+      })
+    } else {
+      await conn('user_country_edits').where({ user_id, country_name }).update({ edit_count })
+    }
+  })
 }
 
 module.exports = {
