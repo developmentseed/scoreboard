@@ -49,7 +49,7 @@ export class Home extends Component {
                       <Link href='/users'>
                         <a className='link--white'>
                           <span className='num--large'>{formatDecimal(numUsers)}</span>
-                          <span className='descriptor-chart'>Active Users</span>
+                          <span className='descriptor-chart'>Users</span>
                         </a>
                       </Link>
                     </li>
