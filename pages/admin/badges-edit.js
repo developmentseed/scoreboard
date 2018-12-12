@@ -8,6 +8,9 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 import Link from '../../components/Link'
+import imageList from '../../lib/utils/loadImages'
+import { Carousel } from 'react-responsive-carousel'
+import '../../styles/Carousel.css'
 
 import { badgeMetrics, badgeOperationTypes, badgeOperationIndex } from '../../lib/badge-utils'
 
@@ -22,6 +25,8 @@ export class AdminBadgesEdit extends Component {
       description: '',
       number: '',
       operations: [],
+      imageFile: null,
+      selectedImg: 0,
       destroyConfirmation: null
     }
 
@@ -33,6 +38,7 @@ export class AdminBadgesEdit extends Component {
     this.handleOperationChange = this.handleOperationChange.bind(this)
     this.removeOperationFromBadge = this.removeOperationFromBadge.bind(this)
     this.resetInputs = this.resetInputs.bind(this)
+    this.handleBadgeImageChange = this.handleBadgeImageChange.bind(this)
   }
 
   async componentDidMount () {
@@ -195,6 +201,7 @@ export class AdminBadgesEdit extends Component {
       >
         {this.renderBasicDetailsSection()}
         {this.renderOperationsSection()}
+        {this.renderImageSection()}
         <div className='form__footer'>
           <button
             className='button button--secondary'
@@ -359,6 +366,41 @@ export class AdminBadgesEdit extends Component {
     )
   }
 
+  handleBadgeImageChange (badgeImage) {
+    this.setState({ imageFile: imageList[badgeImage], selectedImg: badgeImage })
+  }
+
+  displayImages (filename) {
+    const imageSource = `../../static/badges/${filename}`
+    return (
+      <div>
+        <img src={imageSource} />
+      </div>
+    )
+  }
+
+  renderImageSection () {
+    console.log(this.state.selectedImg)
+    return (
+      <div className='form__input-unit'>
+        <h2 className='header--medium'>
+          What image should be shown with this badge?
+        </h2>
+        <Carousel
+          onChange={(e) => this.handleBadgeImageChange(e)}
+          centerMode
+          infiniteLoop
+          centerSlidePercentage='65'
+          width='50'
+          selectedItem={this.state.selectedImg}
+          emulateTouch
+        >
+          {imageList.map((filename) => this.displayImages(filename))}
+        </Carousel>
+      </div>
+    )
+  }
+
   addAnotherOperationToBadge () {
     this.setState((prevState) => {
       return {
@@ -431,13 +473,15 @@ export class AdminBadgesEdit extends Component {
     const {
       name,
       description,
-      operations
+      operations,
+      imageFile
     } = this.state
 
     const params = {
       description,
       name,
-      operations
+      operations,
+      imageFile
     }
 
     this.updateBadge(params)
@@ -451,7 +495,9 @@ export class AdminBadgesEdit extends Component {
       number: '',
       operations: [
         ['', 0, '']
-      ]
+      ],
+      imageFile: null,
+      selectedImg: 0
     })
   }
 }

@@ -9,7 +9,6 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 import Link from '../../components/Link'
 import imageList from '../../lib/utils/loadImages'
-import 'react-image-picker/dist/index.css'
 import { Carousel } from 'react-responsive-carousel'
 import '../../styles/Carousel.css'
 
@@ -32,7 +31,7 @@ export class AdminBadgesAdd extends Component {
           operation: ''
         }
       ],
-      badgePicture: null,
+      imageFile: imageList[0],
       selectedImg: 0
     }
 
@@ -58,7 +57,6 @@ export class AdminBadgesAdd extends Component {
   }
 
   async createBadge (params) {
-    console.log(params)
     this.setState({ disableInteraction: true })
 
     try {
@@ -256,71 +254,6 @@ export class AdminBadgesAdd extends Component {
     }
   }
 
-  handleBadgeImageChange (badgeImage) {
-    this.setState({ badgePicture: imageList[badgeImage], selectedImg: badgeImage })
-  }
-
-  displayImages (filename) {
-    const imageSource = `../../static/badges/${filename}`
-    return (
-      <div>
-        <img src={imageSource} />
-      </div>
-    )
-  }
-
-  renderImageSection () {
-    /*
-    let imageList = []
-    for (var i = 3; i < 18; i += 1) {
-      if (i !== 12 && i !== 17 && i !== 18) {
-        for (var j = 1; j < 4; j += 1) {
-          imageList.push(`../../static/badges/${i}-${j}-graphic.svg`)
-        }
-      } else {
-        imageList.push(`../../static/badges/${i}-${1}-graphic.svg`)
-      }
-    }
-    */
-    return (
-      <div className='form__input-unit'>
-        <h2 className='header--medium'>
-          What image should be shown with this badge?
-        </h2>
-        <Carousel
-          onChange={(e) => this.handleBadgeImageChange(e)}
-          centerMode
-          // infiniteLoop
-          centerSlidePercentage='65'
-          width='50'
-          selectedItem={this.state.selectedImg}
-          // emulateTouch
-        >
-          {imageList.map((filename) => this.displayImages(filename))}
-        </Carousel>
-      </div>
-    )
-    /*
-            {imageList.map((i, j) => (
-          this.displayImages(1, 1)
-        ))}
-        <div className='form__input-unit' align='center'>
-        <Carousel
-          onChange={(e) => console.log('Changed to ', e)}
-          centerMode
-          infiniteLoop
-          centerSlidePercentage='65'
-          width='50'
-        >
-          {imageList.slice(0, 5).map((pair) => this.displayImages(pair[0], pair[1]))}
-        </Carousel>
-        <ImagePicker
-          images={imageList.map(([i, j]) => ({ src: `${imagePath}${i}-${j}-graphic.svg`, value: i * j }))}
-          onPick={this.onPick}
-        />
-    */
-  }
-
   renderOperationsSection () {
     return (
       <div className='form__section'>
@@ -361,6 +294,40 @@ export class AdminBadgesAdd extends Component {
             )}
           </fieldset>
         ))}
+      </div>
+    )
+  }
+
+  handleBadgeImageChange (badgeImage) {
+    this.setState({ imageFile: imageList[badgeImage], selectedImg: badgeImage })
+  }
+
+  displayImages (filename) {
+    const imageSource = `../../static/badges/${filename}`
+    return (
+      <div>
+        <img src={imageSource} />
+      </div>
+    )
+  }
+
+  renderImageSection () {
+    return (
+      <div className='form__input-unit'>
+        <h2 className='header--medium'>
+          What image should be shown with this badge?
+        </h2>
+        <Carousel
+          onChange={(e) => this.handleBadgeImageChange(e)}
+          centerMode
+          infiniteLoop
+          centerSlidePercentage='65'
+          width='50'
+          selectedItem={this.state.selectedImg}
+          emulateTouch
+        >
+          {imageList.map((filename) => this.displayImages(filename))}
+        </Carousel>
       </div>
     )
   }
@@ -469,7 +436,7 @@ export class AdminBadgesAdd extends Component {
       descriptionInput,
       nameInput,
       operations,
-      badgePicture
+      imageFile
     } = this.state
 
     // Verify that no empty operations objects are being passed
@@ -482,7 +449,7 @@ export class AdminBadgesAdd extends Component {
       description: descriptionInput,
       name: nameInput,
       operations: parsedOperations,
-      imageFile: badgePicture
+      imageFile
     }
 
     this.createBadge(params)
@@ -501,7 +468,7 @@ export class AdminBadgesAdd extends Component {
           operation: ''
         }
       ],
-      badgePicture: null,
+      imageFile: imageList[0],
       selectedImg: 0
     })
   }
