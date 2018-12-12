@@ -157,7 +157,8 @@ module.exports = (userMetrics, badge) => {
       badgeLevel,
       points: {
         percentage
-      }
+      },
+      badgeImage: badge.imageFile
     }
   }
   return null

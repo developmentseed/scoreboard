@@ -52,7 +52,7 @@ export class AdminBadgesAdd extends Component {
           operation: ''
         }
       ],
-      badgeImage: null,
+      badgePicture: null,
       selectedImg: 0
     }
 
@@ -78,6 +78,7 @@ export class AdminBadgesAdd extends Component {
   }
 
   async createBadge (params) {
+    console.log(params)
     this.setState({ disableInteraction: true })
 
     try {
@@ -276,7 +277,7 @@ export class AdminBadgesAdd extends Component {
   }
 
   handleBadgeImageChange (badgeImage) {
-    this.setState({ badgeImage: imageList[badgeImage], selectedImg: badgeImage })
+    this.setState({ badgePicture: imageList[badgeImage], selectedImg: badgeImage })
   }
 
   displayImages (filename) {
@@ -487,7 +488,8 @@ export class AdminBadgesAdd extends Component {
     const {
       descriptionInput,
       nameInput,
-      operations
+      operations,
+      badgePicture
     } = this.state
 
     // Verify that no empty operations objects are being passed
@@ -499,7 +501,8 @@ export class AdminBadgesAdd extends Component {
     const params = {
       description: descriptionInput,
       name: nameInput,
-      operations: parsedOperations
+      operations: parsedOperations,
+      imageFile: badgePicture
     }
 
     this.createBadge(params)
@@ -518,7 +521,7 @@ export class AdminBadgesAdd extends Component {
           operation: ''
         }
       ],
-      badgeImage: null,
+      badgePicture: null,
       selectedImg: 0
     })
   }
