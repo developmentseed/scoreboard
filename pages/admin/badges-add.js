@@ -8,6 +8,10 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 import Link from '../../components/Link'
+import imageList from '../../lib/utils/loadImages'
+import 'react-image-picker/dist/index.css'
+import { Carousel } from 'react-responsive-carousel'
+import '../../styles/Carousel.css'
 
 const badgeMetrics = [
   { label: 'New buildings mapped', value: 'buildings' },
@@ -47,7 +51,9 @@ export class AdminBadgesAdd extends Component {
           number: 0,
           operation: ''
         }
-      ]
+      ],
+      badgeImage: null,
+      selectedImg: 0
     }
 
     // Event handlers
@@ -58,6 +64,7 @@ export class AdminBadgesAdd extends Component {
     this.handleOperationChange = this.handleOperationChange.bind(this)
     this.removeOperationFromBadge = this.removeOperationFromBadge.bind(this)
     this.resetInputs = this.resetInputs.bind(this)
+    this.handleBadgeImageChange = this.handleBadgeImageChange.bind(this)
   }
 
   async componentDidMount () {
@@ -149,6 +156,7 @@ export class AdminBadgesAdd extends Component {
       >
         {this.renderBasicDetailsSection()}
         {this.renderOperationsSection()}
+        {this.renderImageSection()}
         <div className='form__footer'>
           <button
             className='button button--secondary'
@@ -214,7 +222,6 @@ export class AdminBadgesAdd extends Component {
   }
 
   renderRequirements (op, i) {
-    console.log(op, i)
     if (op.metric !== 'campaigns') {
       return (
         <div className='requirement__section'>
@@ -254,7 +261,6 @@ export class AdminBadgesAdd extends Component {
         </div>
       )
     } else {
-      // this.handleCampaignOperation(i)
       return (
         <input
           id='campaign-name'
@@ -267,6 +273,71 @@ export class AdminBadgesAdd extends Component {
         />
       )
     }
+  }
+
+  handleBadgeImageChange (badgeImage) {
+    this.setState({ badgeImage: imageList[badgeImage], selectedImg: badgeImage })
+  }
+
+  displayImages (filename) {
+    const imageSource = `../../static/badges/${filename}`
+    return (
+      <div>
+        <img src={imageSource} />
+      </div>
+    )
+  }
+
+  renderImageSection () {
+    /*
+    let imageList = []
+    for (var i = 3; i < 18; i += 1) {
+      if (i !== 12 && i !== 17 && i !== 18) {
+        for (var j = 1; j < 4; j += 1) {
+          imageList.push(`../../static/badges/${i}-${j}-graphic.svg`)
+        }
+      } else {
+        imageList.push(`../../static/badges/${i}-${1}-graphic.svg`)
+      }
+    }
+    */
+    return (
+      <div className='form__input-unit'>
+        <h2 className='header--medium'>
+          What image should be shown with this badge?
+        </h2>
+        <Carousel
+          onChange={(e) => this.handleBadgeImageChange(e)}
+          centerMode
+          // infiniteLoop
+          centerSlidePercentage='65'
+          width='50'
+          selectedItem={this.state.selectedImg}
+          // emulateTouch
+        >
+          {imageList.map((filename) => this.displayImages(filename))}
+        </Carousel>
+      </div>
+    )
+    /*
+            {imageList.map((i, j) => (
+          this.displayImages(1, 1)
+        ))}
+        <div className='form__input-unit' align='center'>
+        <Carousel
+          onChange={(e) => console.log('Changed to ', e)}
+          centerMode
+          infiniteLoop
+          centerSlidePercentage='65'
+          width='50'
+        >
+          {imageList.slice(0, 5).map((pair) => this.displayImages(pair[0], pair[1]))}
+        </Carousel>
+        <ImagePicker
+          images={imageList.map(([i, j]) => ({ src: `${imagePath}${i}-${j}-graphic.svg`, value: i * j }))}
+          onPick={this.onPick}
+        />
+    */
   }
 
   renderOperationsSection () {
@@ -446,7 +517,9 @@ export class AdminBadgesAdd extends Component {
           number: 0,
           operation: ''
         }
-      ]
+      ],
+      badgeImage: null,
+      selectedImg: 0
     })
   }
 }
