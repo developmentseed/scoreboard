@@ -254,15 +254,16 @@ export class AdminBadgesAdd extends Component {
         </div>
       )
     } else {
+      // this.handleCampaignOperation(i)
       return (
         <input
           id='campaign-name'
           name='campaign-name'
-          onChange={(e) => this.handleOperationChange(e, i, 'campaign')}
+          onChange={(e) => this.handleOperationChange(e, i, 'number')}
           placeholder='Enter the hashtag associated with this campaign'
           required
           type='text'
-          value={this.state.campaignName}
+          value={op.number}
         />
       )
     }
@@ -357,6 +358,21 @@ export class AdminBadgesAdd extends Component {
     })
   }
 
+  handleCampaignOperation (idx) {
+    let targetOperation = this.state.operations[idx]
+    if (!targetOperation) return
+    targetOperation = {
+      ...targetOperation,
+      operation: '='
+    }
+
+    this.setState((state) => {
+      return {
+        operations: Object.assign([...state.operations], { [idx]: targetOperation })
+      }
+    })
+  }
+
   handleOperationChange (e, idx, keyName) {
     let targetOperation = this.state.operations[idx]
     if (!targetOperation) return
@@ -364,10 +380,26 @@ export class AdminBadgesAdd extends Component {
     if (e !== null) {
       value = keyName === 'number' ? e.target.value : e.value
     }
-
-    targetOperation = {
-      ...targetOperation,
-      [keyName]: value
+    if (keyName === 'metric' && value === 'campaigns') {
+      // make operation "=" and number an empty string
+      targetOperation = {
+        ...targetOperation,
+        [keyName]: value,
+        operation: '=',
+        number: ''
+      }
+    } else if (keyName === 'metric' && value !== 'campaigns') {
+      // reset number to numeric
+      targetOperation = {
+        ...targetOperation,
+        [keyName]: value,
+        number: 0
+      }
+    } else {
+      targetOperation = {
+        ...targetOperation,
+        [keyName]: value
+      }
     }
 
     this.setState((state) => {
