@@ -259,6 +259,62 @@ export class AdminBadgesEdit extends Component {
     )
   }
 
+  renderRequirements (op, i) {
+    if (op[1] !== 'campaigns') {
+      return (
+        <div className='requirement__section'>
+          <div className='form__input-unit form__input-unit--half'>
+            <label
+              className='form__label'
+              htmlFor='badge-operation-type'
+            >
+              Condition
+            </label>
+            <Select
+              id='badge-operation-type'
+              name='badge-operation-type'
+              onChange={(e) => this.handleOperationChange(e, i, 'operation')}
+              options={badgeOperationTypes}
+              placeholder="Select how you'll gauge this metric"
+              value={op[0]}
+            />
+          </div>
+          <div className='form__input-unit form__input-unit--half'>
+            <label
+              className='form__label'
+              htmlFor='badge-metric-number'
+            >
+              Number
+            </label>
+            <input
+              id='badge-metric-number'
+              min={0}
+              name='badge-metric-number'
+              onChange={(e) => this.handleOperationChange(e, i, 'number')}
+              placeholder='50'
+              type='number'
+              value={op[2]}
+            />
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className='form__input-unit'>
+          <input
+            id='campaign-name'
+            name='campaign-name'
+            onChange={(e) => this.handleOperationChange(e, i, 'number')}
+            placeholder='Enter the hashtag associated with this campaign'
+            required
+            type='text'
+            value={op[2]}
+          />
+        </div>
+      )
+    }
+  }
+
   renderOperationsSection () {
     return (
       <div className='form__section'>
@@ -270,39 +326,6 @@ export class AdminBadgesEdit extends Component {
             key={`${i}`}
             style={{ borderBottom: '1px solid #eee', paddingBottom: '1em' }}
           >
-            <div className='form__input-unit form__input-unit--half'>
-              <label
-                className='form__label'
-                htmlFor='badge-operation-type'
-              >
-                Condition
-              </label>
-              <Select
-                id='badge-operation-type'
-                name='badge-operation-type'
-                onChange={(e) => this.handleOperationChange(e, i, 'operation')}
-                options={badgeOperationTypes}
-                placeholder="Select how you'll gauge this metric"
-                value={op[0]}
-              />
-            </div>
-            <div className='form__input-unit form__input-unit--half'>
-              <label
-                className='form__label'
-                htmlFor='badge-metric-number'
-              >
-                Number
-              </label>
-              <input
-                id='badge-metric-number'
-                min={0}
-                name='badge-metric-number'
-                onChange={(e) => this.handleOperationChange(e, i, 'number')}
-                placeholder='50'
-                type='number'
-                value={op[2]}
-              />
-            </div>
             <div className='form__input-unit'>
               <label
                 className='form__label'
@@ -319,6 +342,7 @@ export class AdminBadgesEdit extends Component {
                 value={op[1]}
               />
             </div>
+            {this.renderRequirements(op, i)}
             {i > 0 && (
               <button
                 className='button button--link'
@@ -380,7 +404,19 @@ export class AdminBadgesEdit extends Component {
       value = keyName === 'number' ? e.target.value : e.value
     }
 
-    targetOperation[badgeOperationIndex[keyName]] = value
+    if (keyName === 'metric' && value === 'campaigns') {
+      // make operation "=" and number an empty string
+      targetOperation[badgeOperationIndex[keyName]] = value
+      targetOperation[badgeOperationIndex['operation']] = '='
+      targetOperation[badgeOperationIndex['number']] = ''
+    } else if (keyName === 'metric' && targetOperation.metric === 'campaigns' && value !== 'campaigns') {
+      // reset number to numeric
+      targetOperation[badgeOperationIndex[keyName]] = value
+      targetOperation[badgeOperationIndex['operation']] = ''
+      targetOperation[badgeOperationIndex['number']] = 0
+    } else {
+      targetOperation[badgeOperationIndex[keyName]] = value
+    }
 
     this.setState((state) => {
       return {
