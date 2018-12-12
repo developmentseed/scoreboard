@@ -93,10 +93,11 @@ async function stats (req, res) {
     const realUsers = db('users').whereNotIn('osm_id', filteredUsers)
     const [{ subTotal }] = await applyFilters(realUsers.clone(), req).count('id as subTotal')
     const [{ total }] = await realUsers.clone().count('id as total')
+    const [{ active }] = await realUsers.clone().where('edit_count', '>', 0).count('id as active')
     const [{ editTotal }] = await realUsers.clone().sum('edit_count as editTotal')
 
     return res.send({
-      records, subTotal, total, editTotal, countries
+      records, subTotal, total, editTotal, countries, active
     })
   } catch (err) {
     console.error(err)

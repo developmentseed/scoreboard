@@ -74,11 +74,11 @@ export class Users extends Component {
       return <div />
     }
 
-    const { total, records, subTotal, editTotal, countries } = stats
+    const { total, records, subTotal, editTotal, countries, active } = stats
 
     return (
       <div className='Users'>
-        <AllUsersHeader countries={countries} users={total} edits={editTotal} />
+        <AllUsersHeader countries={countries} totalUsers={total} activeUsers={active} edits={editTotal} />
         <section>
           <div className='row'>
             <AllUsersFilter
