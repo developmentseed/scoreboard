@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "Example team",
+    "hashtag": "",
+    "bio": "",
+    "privacy": "public",
+    "require_join_request": false,
+    "created_at":	"2018-12-10T22:09:41.047Z",
+    "updated_at":	"2018-12-10T22:09:41.047Z"
+  }
+]

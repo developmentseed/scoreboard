@@ -44,7 +44,6 @@ $badgeyellow: #fef387;
     }
   }
   @media screen and (max-width: 894px) {
-    float: initial;
     margin-left: 0;
     width: 100%;
   }
@@ -114,13 +113,8 @@ $badgeyellow: #fef387;
   background-position: center;
   background-size: 140px;
   &.progress {
-    width: 135px;
-    height: 135px;
-    -webkit-filter: saturate(0) brightness(1) contrast(.8);
-       -moz-filter: saturate(0) brightness(1) contrast(.8);
-         -o-filter: saturate(0) brightness(1) contrast(.8);
-        -ms-filter: saturate(0) brightness(1) contrast(.8);
-            filter: saturate(0) brightness(1) contrast(.8);
+    width: 134px;
+    height: 134px;
   }
   &.upcoming {
     width: 71px;
@@ -128,12 +122,6 @@ $badgeyellow: #fef387;
     margin-top: 3px;
     margin-left: 3px;
     background-size: 75px;
-
-    -webkit-filter: saturate(0) brightness(1) contrast(.8);
-       -moz-filter: saturate(0) brightness(1) contrast(.8);
-         -o-filter: saturate(0) brightness(1) contrast(.8);
-        -ms-filter: saturate(0) brightness(1) contrast(.8);
-            filter: saturate(0) brightness(1) contrast(.8);
   }
 }
 

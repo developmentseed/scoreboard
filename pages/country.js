@@ -16,7 +16,7 @@ export class Country extends Component {
 
   render () {
     if (!this.props.country) return <div />
-    const { name, edit_count, users } = this.props.country
+    const { name, edit_count, users, numParticipants } = this.props.country
     users.map((user) => {
       user.uid = user.osm_id
       user.edits = user.count
@@ -25,7 +25,7 @@ export class Country extends Component {
     if (!name) return <div />
     return (
       <div className='Country'>
-        <CountryHeader name={name} num_participants={users.length} num_edits={edit_count} country={this.props.country} />
+        <CountryHeader name={name} num_participants={numParticipants} num_edits={edit_count} country={this.props.country} />
         <section>
           <div className='row'>
             <div className='section-sub--left section-width-fifty-plus'>

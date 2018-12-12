@@ -45,7 +45,7 @@ export class Admin extends Component {
     }
 
     return (
-      <div>
+      <div className='admin'>
         <header className='header--internal--green header--page'>
           <div className='row'>
             <div className='section-sub--left section-width-forty'>
