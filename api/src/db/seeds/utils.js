@@ -29,7 +29,6 @@ function generateUsers (n, knex) {
 }
 
 const randomInt = () => parseInt(Math.floor(Math.random() * 1000000))
-const randomFloat = () => parseFloat(Math.random() * 1000000).toFixed(2)
 
 function generateOSMesaUser (id, name) {
   let editedCountries = []

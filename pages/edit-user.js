@@ -51,7 +51,7 @@ class UserEdit extends Component {
             <div style={{ width: '50%' }}>
               <h4>Country</h4>
               <Select
-                options={countries.map(({ code, name }) => ({ value: code, label: name }))} 
+                options={countries.map(({ code, name }) => ({ value: code, label: name }))}
                 value={countryValue}
                 onChange={(country) => this.onCountryChange(country)}
               />
