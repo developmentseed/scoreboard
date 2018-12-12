@@ -388,11 +388,12 @@ export class AdminBadgesAdd extends Component {
         operation: '=',
         number: ''
       }
-    } else if (keyName === 'metric' && value !== 'campaigns') {
+    } else if (keyName === 'metric' && targetOperation.metric === 'campaigns' && value !== 'campaigns') {
       // reset number to numeric
       targetOperation = {
         ...targetOperation,
         [keyName]: value,
+        operation: '',
         number: 0
       }
     } else {
