@@ -25,6 +25,9 @@ async function get (req, res) {
   const countryPair = countryList.find((country_pair) => {
     return country_pair.code === code
   })
+  if (!countryPair) {
+    return res.boom.notFound('Could not find country')
+  }
   let countryName = countryPair.name
 
   try {
