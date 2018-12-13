@@ -6,33 +6,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Ability to login using OSM (using passport in the backend)
-- Dashboard page that allows users to see their personal stats
-- Allow badge creation, deletion, and updates through API routes
-- cli tool for debugging and administration in development
-- User roles
-  - db table & roles model
-  - role validation helpers
-  - API endpoints
-  - UI for managing the roles of users
-- Admin UI that allows admin users to manage users, roles, and badges
-- Mock passport strategy for testing routes that require authentication
-- Support for badges based on the time edits are made and the hashtags they're made with
-- Hashtag-based badges and expired date-specific badges are excluded from "In Progress" display
+- Scoreboard backend
+  - Ability to login using OSM (using passport in the backend)
+    - Mock passport strategy for testing routes that require authentication
+  - User roles
+    - db table & roles model
+    - role validation helpers
+    - API endpoints
+  - cli tool for debugging and administration in development
+  - Allow badge creation, deletion, and updates through API routes
+  - Support for badges based on the time edits are made and the hashtags they're made with
+  - Hashtag-based badges and expired date-specific badges are excluded from "In Progress" display
+  - Integration with [osm-teams](https://github.com/developmentseed/osm-teams) API
+  - Support both [tasking manager 2](https://github.com/hotosm/osm-tasking-manager2) and [tasking manager 3](https://github.com/hotosm/tasking-manager)
+
+- Scoreboard UI
+  - Admin UI that allows admin users with functionality including:
+    - Creating and editing users
+    - Creating and editing badges
+    - Creating and editing teams
+    - Assigning users and campaigns to teams
+  - User dashboard page that includes:
+    - List of teams you are on
+    - List of countries you have edited
+    - List of favorite campaigns
+    - List of campaigns assigned to the teams you are on
+    - List of badges that are in progress, and that have not yet been earned
+  - Home page is now replaced by the dashboard when a user is logged in
+  - Allow users to add favorite campaigns
+    - Add favorite campaigns via campaign pages to see a list of them on your dashboard
 
 ### Changed
-- Migrated to [next.js](https://github.com/zeit/next.js/)
-  - Instead of deploying the api and frontend separately, the two codebases are 
-    merged into one with server-rendering provided by next.js
-  - For changes to development process see the [updated README.md](README.md)
-- Move from Sqlite to Postgres
-- Drop some columns from the user schema
-- Move tests and fixtures for API into a single place
-- Move badge calculations to the backend
-- Move badge details to the database
-- Revise user model to be the same format as the roles model
-- Move existing `api/users` endpoint to `api/users/stats` and use `api/users` for a list of users without stats
-- Consecutive and total days mapped are calculated with dates formatted YYYY-MM-DD
+- Scoreboard backend
+  - Move from Sqlite to Postgres
+  - Migrated to [next.js](https://github.com/zeit/next.js/)
+    - Instead of deploying the api and frontend separately, the two codebases are 
+      merged into one with server-rendering provided by next.js
+    - For changes to development process see the [updated README.md](README.md)
+  - Move badge calculations to the backend
+  - Move badge details to the database
+  - Revise user model module to be the same format as the roles model
+  - Move existing `api/users` endpoint to `api/users/stats` and use `api/users` for a list of users without stats
+  - Consecutive and total days mapped are calculated with dates formatted YYYY-MM-DD
 
 ## [v0.2.4] - 2018-10-23
 ### Added
