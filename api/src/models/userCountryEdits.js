@@ -1,6 +1,4 @@
 const db = require('../db/connection')
-const util = require('util')
-
 /**
  * get a role
  *
