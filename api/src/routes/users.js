@@ -63,7 +63,7 @@ async function stats (req, res) {
         's.country',
         's.last_edit',
         db.raw(
-          'rank() over (order by s.edit_count desc) as rank'
+          'rank() over (order by s.edit_count desc nulls last) as rank'
         )
       ).from('edits as s')
 
@@ -79,7 +79,7 @@ async function stats (req, res) {
         recordQuery = recordQuery.orderBy('rank', 'desc')
         break
       default: // Most total edits
-        recordQuery = recordQuery.orderBy('rank', 'asc')
+        recordQuery = recordQuery.orderByRaw('edit_count DESC NULLS LAST')
         break
     }
 
@@ -93,10 +93,11 @@ async function stats (req, res) {
     const realUsers = db('users').whereNotIn('osm_id', filteredUsers)
     const [{ subTotal }] = await applyFilters(realUsers.clone(), req).count('id as subTotal')
     const [{ total }] = await realUsers.clone().count('id as total')
+    const [{ active }] = await realUsers.clone().where('edit_count', '>', 0).count('id as active')
     const [{ editTotal }] = await realUsers.clone().sum('edit_count as editTotal')
 
     return res.send({
-      records, subTotal, total, editTotal, countries
+      records, subTotal, total, editTotal, countries, active
     })
   } catch (err) {
     console.error(err)

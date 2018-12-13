@@ -106,7 +106,9 @@ module.exports = (userMetrics, badge) => {
       // Check whether any hashtags match the required one
       badgeOperationPass = currentPointValue.filter(
         // In this case, `requiredPointValue` will be the name of a hashtag
-        (tag) => execLogic(operator, tag, requiredPointValue)
+        (tag) => {
+          return execLogic(operator, tag, requiredPointValue)[0]
+        }
       ).length > 0
       excludeFromInProgress = true
     } else if (metricName === 'allDays') {
@@ -155,7 +157,8 @@ module.exports = (userMetrics, badge) => {
       badgeLevel,
       points: {
         percentage
-      }
+      },
+      badgeImage: badge.imageFile
     }
   }
   return null
