@@ -8,27 +8,11 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 import Link from '../../components/Link'
+import imageList from '../../lib/utils/loadImages'
+import { Carousel } from 'react-responsive-carousel'
+import '../../styles/Carousel.css'
 
-const badgeMetrics = [
-  { label: 'New buildings mapped', value: 'buildings' },
-  { label: 'Countries mapped', value: 'countries' },
-  { label: 'Total days mapped', value: 'daysTotal' },
-  { label: 'Days mapped in a row', value: 'daysInRow' },
-  { label: 'Campaigns participated in', value: 'hashtags' },
-  { label: 'Times using JOSM', value: 'josm' },
-  { label: 'Points of interest mapped', value: 'pois' },
-  { label: 'New roads mapped (km)', value: 'roadKms' },
-  { label: 'Roads modified (km)', value: 'roadKmMods' },
-  { label: 'Waterways mapped', value: 'waterways' }
-]
-
-const badgeOperationTypes = [
-  { label: 'More than', value: '>' },
-  { label: 'Fewer than', value: '<' },
-  { label: 'At least', value: '>=' },
-  { label: 'Up to', value: '<=' },
-  { label: 'Equal to', value: '=' }
-]
+import { badgeMetrics, badgeOperationTypes } from '../../lib/badge-utils'
 
 export class AdminBadgesAdd extends Component {
   constructor () {
@@ -46,7 +30,9 @@ export class AdminBadgesAdd extends Component {
           number: 0,
           operation: ''
         }
-      ]
+      ],
+      imageFile: imageList[0],
+      selectedImg: 0
     }
 
     // Event handlers
@@ -57,6 +43,7 @@ export class AdminBadgesAdd extends Component {
     this.handleOperationChange = this.handleOperationChange.bind(this)
     this.removeOperationFromBadge = this.removeOperationFromBadge.bind(this)
     this.resetInputs = this.resetInputs.bind(this)
+    this.handleBadgeImageChange = this.handleBadgeImageChange.bind(this)
   }
 
   async componentDidMount () {
@@ -157,6 +144,11 @@ export class AdminBadgesAdd extends Component {
           >
             Add another condition
           </button>
+        </div>
+        <div className='form__image'>
+          {this.renderImageSection()}
+        </div>
+        <div className='form__footer'>
           <button
             className='button'
             id='add-new-badge-submit-button'
@@ -212,6 +204,60 @@ export class AdminBadgesAdd extends Component {
     )
   }
 
+  renderRequirements (op, i) {
+    if (op.metric !== 'campaigns') {
+      return (
+        <div className='requirement__section'>
+          <div className='form__input-unit form__input-unit--half'>
+            <label
+              className='form__label'
+              htmlFor='badge-operation-type'
+            >
+              Condition
+            </label>
+            <Select
+              id='badge-operation-type'
+              name='badge-operation-type'
+              onChange={(e) => this.handleOperationChange(e, i, 'operation')}
+              options={badgeOperationTypes}
+              placeholder="Select how you'll gauge this metric"
+              value={op.operation}
+            />
+          </div>
+          <div className='form__input-unit form__input-unit--half'>
+            <label
+              className='form__label'
+              htmlFor='badge-metric-number'
+            >
+              Number
+            </label>
+            <input
+              id='badge-metric-number'
+              min={0}
+              name='badge-metric-number'
+              onChange={(e) => this.handleOperationChange(e, i, 'number')}
+              placeholder='50'
+              type='number'
+              value={op.number}
+            />
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <input
+          id='campaign-name'
+          name='campaign-name'
+          onChange={(e) => this.handleOperationChange(e, i, 'number')}
+          placeholder='Enter the hashtag associated with this campaign'
+          required
+          type='text'
+          value={op.number}
+        />
+      )
+    }
+  }
+
   renderOperationsSection () {
     return (
       <div className='form__section'>
@@ -239,39 +285,7 @@ export class AdminBadgesAdd extends Component {
                 value={op.metric}
               />
             </div>
-            <div className='form__input-unit form__input-unit--half'>
-              <label
-                className='form__label'
-                htmlFor='badge-operation-type'
-              >
-                Condition
-              </label>
-              <Select
-                id='badge-operation-type'
-                name='badge-operation-type'
-                onChange={(e) => this.handleOperationChange(e, i, 'operation')}
-                options={badgeOperationTypes}
-                placeholder="Select how you'll gauge this metric"
-                value={op.operation}
-              />
-            </div>
-            <div className='form__input-unit form__input-unit--half'>
-              <label
-                className='form__label'
-                htmlFor='badge-metric-number'
-              >
-                Number
-              </label>
-              <input
-                id='badge-metric-number'
-                min={0}
-                name='badge-metric-number'
-                onChange={(e) => this.handleOperationChange(e, i, 'number')}
-                placeholder='50'
-                type='number'
-                value={op.number}
-              />
-            </div>
+            {this.renderRequirements(op, i)}
             {i > 0 && (
               <button
                 className='button button--link'
@@ -284,6 +298,41 @@ export class AdminBadgesAdd extends Component {
             )}
           </fieldset>
         ))}
+      </div>
+    )
+  }
+
+  handleBadgeImageChange (badgeImage) {
+    this.setState({ imageFile: imageList[badgeImage], selectedImg: badgeImage })
+  }
+
+  displayImages (filename) {
+    const imageSource = `../../static/badges/${filename}`
+    return (
+      <div>
+        <img src={imageSource} max-height='500' />
+      </div>
+    )
+  }
+
+  renderImageSection () {
+    return (
+      <div className='form__input-unit'>
+        <h2 className='header--medium'>
+          What image should be shown with this badge?
+        </h2>
+        <Carousel
+          onChange={(e) => this.handleBadgeImageChange(e)}
+          onClickItem={(e) => this.handleBadgeImageChange(e)}
+          centerMode
+          infiniteLoop
+          centerSlidePercentage='65'
+          width='50'
+          selectedItem={this.state.selectedImg}
+          emulateTouch
+        >
+          {imageList.map((filename) => this.displayImages(filename))}
+        </Carousel>
       </div>
     )
   }
@@ -333,6 +382,21 @@ export class AdminBadgesAdd extends Component {
     })
   }
 
+  handleCampaignOperation (idx) {
+    let targetOperation = this.state.operations[idx]
+    if (!targetOperation) return
+    targetOperation = {
+      ...targetOperation,
+      operation: '='
+    }
+
+    this.setState((state) => {
+      return {
+        operations: Object.assign([...state.operations], { [idx]: targetOperation })
+      }
+    })
+  }
+
   handleOperationChange (e, idx, keyName) {
     let targetOperation = this.state.operations[idx]
     if (!targetOperation) return
@@ -340,10 +404,27 @@ export class AdminBadgesAdd extends Component {
     if (e !== null) {
       value = keyName === 'number' ? e.target.value : e.value
     }
-
-    targetOperation = {
-      ...targetOperation,
-      [keyName]: value
+    if (keyName === 'metric' && value === 'campaigns') {
+      // make operation "=" and number an empty string
+      targetOperation = {
+        ...targetOperation,
+        [keyName]: value,
+        operation: '=',
+        number: ''
+      }
+    } else if (keyName === 'metric' && targetOperation.metric === 'campaigns' && value !== 'campaigns') {
+      // reset number to numeric
+      targetOperation = {
+        ...targetOperation,
+        [keyName]: value,
+        operation: '',
+        number: 0
+      }
+    } else {
+      targetOperation = {
+        ...targetOperation,
+        [keyName]: value
+      }
     }
 
     this.setState((state) => {
@@ -359,7 +440,8 @@ export class AdminBadgesAdd extends Component {
     const {
       descriptionInput,
       nameInput,
-      operations
+      operations,
+      imageFile
     } = this.state
 
     // Verify that no empty operations objects are being passed
@@ -371,7 +453,8 @@ export class AdminBadgesAdd extends Component {
     const params = {
       description: descriptionInput,
       name: nameInput,
-      operations: parsedOperations
+      operations: parsedOperations,
+      imageFile
     }
 
     this.createBadge(params)
@@ -389,7 +472,9 @@ export class AdminBadgesAdd extends Component {
           number: 0,
           operation: ''
         }
-      ]
+      ],
+      imageFile: imageList[0],
+      selectedImg: 0
     })
   }
 }
