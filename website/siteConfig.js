@@ -9,16 +9,16 @@
 // site configuration options.
 
 // List of projects/orgs using your project for the users page.
-const users = [
-  {
-    caption: 'User1',
-    // You will need to prepend the image path with your baseUrl
-    // if it is not '/', like: '/test-site/img/docusaurus.svg'.
-    image: '/img/docusaurus.svg',
-    infoLink: 'https://www.facebook.com',
-    pinned: true,
-  },
-];
+// const users = [
+//   {
+//     caption: 'User1',
+//     // You will need to prepend the image path with your baseUrl
+//     // if it is not '/', like: '/test-site/img/docusaurus.svg'.
+//     image: '/img/docusaurus.svg',
+//     infoLink: 'https://www.facebook.com',
+//     pinned: true
+//   }
+// ]
 
 const siteConfig = {
   title: 'Test Site', // Title for your website.
@@ -38,8 +38,8 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {doc: 'doc1', label: 'Docs'},
-    {doc: 'examples/example1', label: 'weeeooo'},
+    { doc: 'doc1', label: 'Docs' },
+    { doc: 'examples/example1', label: 'weeeooo' }
     // {page: 'help', label: 'Help'},
     // {blog: true, label: 'Blog'},
   ],
@@ -55,7 +55,7 @@ const siteConfig = {
   /* Colors for website */
   colors: {
     primaryColor: '#2E8555',
-    secondaryColor: '#205C3B',
+    secondaryColor: '#205C3B'
   },
 
   /* Custom fonts for website */
@@ -77,7 +77,7 @@ const siteConfig = {
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
-    theme: 'default',
+    theme: 'default'
   },
 
   // Add custom scripts here that would be placed in <script> tags.
@@ -90,7 +90,7 @@ const siteConfig = {
 
   // Open Graph and Twitter card images.
   ogImage: 'img/docusaurus.png',
-  twitterImage: 'img/docusaurus.png',
+  twitterImage: 'img/docusaurus.png'
 
   // Show documentation's last contributor's name.
   // enableUpdateBy: true,
@@ -101,6 +101,6 @@ const siteConfig = {
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
   //   repoUrl: 'https://github.com/facebook/test-site',
-};
+}
 
-module.exports = siteConfig;
+module.exports = siteConfig
