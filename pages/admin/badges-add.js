@@ -135,7 +135,6 @@ export class AdminBadgesAdd extends Component {
       >
         {this.renderBasicDetailsSection()}
         {this.renderOperationsSection()}
-        {this.renderImageSection()}
         <div className='form__footer'>
           <button
             className='button button--secondary'
@@ -145,6 +144,11 @@ export class AdminBadgesAdd extends Component {
           >
             Add another condition
           </button>
+        </div>
+        <div className='form__image'>
+          {this.renderImageSection()}
+        </div>
+        <div className='form__footer'>
           <button
             className='button'
             id='add-new-badge-submit-button'
@@ -306,7 +310,7 @@ export class AdminBadgesAdd extends Component {
     const imageSource = `../../static/badges/${filename}`
     return (
       <div>
-        <img src={imageSource} />
+        <img src={imageSource} max-height='500' />
       </div>
     )
   }
