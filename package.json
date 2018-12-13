@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node server.js",
     "start": "NODE_ENV=production node server.js",
-    "build": "next build",
+    "build-docs": "cd website && npm run build",
+    "build": "next build && npm run build-docs",
     "test": "npm run test-ui && npm run test-api",
     "test-ui": "NODE_ENV=test jest tests/*.test.js",
     "test-api": "NODE_ENV=test ava api/tests/*.test.js --serial",
