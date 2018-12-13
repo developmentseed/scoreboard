@@ -380,7 +380,6 @@ export class AdminBadgesEdit extends Component {
   }
 
   renderImageSection () {
-    console.log(this.state.selectedImg)
     return (
       <div className='form__input-unit'>
         <h2 className='header--medium'>
@@ -388,6 +387,7 @@ export class AdminBadgesEdit extends Component {
         </h2>
         <Carousel
           onChange={(e) => this.handleBadgeImageChange(e)}
+          onClickItem={(e) => this.handleBadgeImageChange(e)}
           centerMode
           infiniteLoop
           centerSlidePercentage='65'

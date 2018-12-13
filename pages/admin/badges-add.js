@@ -319,6 +319,7 @@ export class AdminBadgesAdd extends Component {
         </h2>
         <Carousel
           onChange={(e) => this.handleBadgeImageChange(e)}
+          onClickItem={(e) => this.handleBadgeImageChange(e)}
           centerMode
           infiniteLoop
           centerSlidePercentage='65'
