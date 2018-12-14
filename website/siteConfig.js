@@ -1,6 +1,6 @@
 const join = require('url-join')
 const { APP_URL_PREFIX } = require('../api/src/config')
-  console.log('APP_URL_PREFIX', APP_URL_PREFIX)
+
 const siteConfig = {
   title: 'Scoreboard', // Title for your website.
   tagline: 'Analytics for mappers',
@@ -70,14 +70,14 @@ const siteConfig = {
   cleanUrl: true,
 
   // Open Graph and Twitter card images.
-  //ogImage: 'img/docusaurus.png',
-  //twitterImage: 'img/docusaurus.png'
+  // ogImage: 'img/docusaurus.png',
+  // twitterImage: 'img/docusaurus.png'
 
   // Show documentation's last contributor's name.
   // enableUpdateBy: true,
 
   // Show documentation's last update time.
-  enableUpdateTime: true,
+  enableUpdateTime: true
 
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
