@@ -7,6 +7,8 @@
     "dev": "node server.js",
     "start": "NODE_ENV=production node server.js",
     "build-docs": "cd website && npm run build",
+    "docs-build": "npm run build-docs",
+    "docs-start": "cd website && npm start",
     "build": "next build && npm run build-docs",
     "test": "npm run test-ui && npm run test-api",
     "test-ui": "NODE_ENV=test jest tests/*.test.js",

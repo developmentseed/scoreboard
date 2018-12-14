@@ -5,36 +5,82 @@
     "previous": "Previous",
     "tagline": "Analytics for mappers",
     "docs": {
-      "doc1": {
-        "title": "Latin-ish",
-        "sidebar_label": "Example Page"
+      "admin/add-team-campaigns": {
+        "title": "Add campaigns to a team",
+        "sidebar_label": "Add campaigns to a team"
       },
-      "doc2": {
-        "title": "document number 2"
+      "admin/add-team-users": {
+        "title": "Add users to a team",
+        "sidebar_label": "Add users to a team"
       },
-      "doc3": {
-        "title": "This is document number 3"
+      "admin/assign-admin-role": {
+        "title": "Make a user an admin",
+        "sidebar_label": "Make a user an admin"
       },
-      "doc4": {
-        "title": "Other Document"
+      "admin/badges": {
+        "title": "Badges",
+        "sidebar_label": "Badges"
       },
-      "doc5": {
-        "title": "Fifth Document"
+      "admin/create-badge": {
+        "title": "Create a new badge",
+        "sidebar_label": "Create a new badge"
       },
-      "examples/example1": {
-        "title": "weeoooo",
-        "sidebar_label": "weeeoooo"
+      "admin/create-team": {
+        "title": "Create a team",
+        "sidebar_label": "Create a team"
+      },
+      "admin/overview": {
+        "title": "Administration",
+        "sidebar_label": "Administration"
+      },
+      "admin/teams": {
+        "title": "Teams",
+        "sidebar_label": "Teams"
+      },
+      "admin/users": {
+        "title": "Users",
+        "sidebar_label": "Users"
+      },
+      "developers/install": {
+        "title": "Install",
+        "sidebar_label": "Wut"
+      },
+      "users/earn-badges": {
+        "title": "View badges you can earn",
+        "sidebar_label": "View badges you can earn"
+      },
+      "users/favorite-campaigns": {
+        "title": "Create a list of favorite campaigns",
+        "sidebar_label": "Create a list of favorite campaigns"
+      },
+      "users/find-campaigns": {
+        "title": "Find campaigns to work on",
+        "sidebar_label": "Find campaigns to work on"
+      },
+      "users/getting-started": {
+        "title": "Getting Started",
+        "sidebar_label": "Getting Started"
+      },
+      "users/update-country": {
+        "title": "Update the country in your profile",
+        "sidebar_label": "Update the country in your profile"
       }
     },
     "links": {
-      "Docs": "Docs",
-      "weeeooo": "weeeooo"
+      "Getting Started": "Getting Started",
+      "Administration": "Administration",
+      "Developers": "Developers",
+      "API": "API"
     },
     "categories": {
-      "Docusaurus": "Docusaurus",
-      "First Category": "First Category",
-      "Second Category": "Second Category",
-      "Weeeoooo": "Weeeoooo"
+      "Getting Started": "Getting Started",
+      "Campaigns": "Campaigns",
+      "Badges": "Badges",
+      "Profile": "Profile",
+      "Overview": "Overview",
+      "Users": "Users",
+      "Teams": "Teams",
+      "Install": "Install"
     }
   },
   "pages-strings": {
