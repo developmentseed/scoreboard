@@ -43,7 +43,6 @@ export class AdminBadges extends Component {
         <table className='admin-table'>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Name</th>
             </tr>
           </thead>
@@ -52,7 +51,6 @@ export class AdminBadges extends Component {
               badges
                 .map((badge) => (
                   <tr key={`badge-${badge.id}`} onClick={() => this.onBadgeClick(badge)} className='admin-table-row'>
-                    <td>{badge.id}</td>
                     <td>{badge.name}</td>
                   </tr>
                 ))
