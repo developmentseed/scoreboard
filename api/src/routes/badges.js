@@ -29,6 +29,9 @@ async function post (req, res) {
     await db('badges').insert(body)
     return res.sendStatus(200)
   } catch (e) {
+    if (e.code === '23505') { // Uniqueness constraint
+      return res.boom.badRequest("Can't insert badge with same name")
+    }
     return res.sendStatus(500)
   }
 }

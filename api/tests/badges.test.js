@@ -58,6 +58,19 @@ test.serial('Inserting a badge into the db', async (t) => {
   t.deepEqual(res.body.badges[0].operations, [['>', 'daysTotal', '100']])
 })
 
+test.serial('Try inserting a badge with the same name', async t => {
+  await adminUser
+    .post('/scoreboard/api/badges')
+    .send({ name: 'Test Duplicate Badge', operations: [['>', 'daysTotal', '100']] })
+    .expect(200)
+  let res = await adminUser
+    .post('/scoreboard/api/badges')
+    .send({ name: 'Test Duplicate Badge', operations: [['>', 'daysTotal', '100']] })
+    .expect(400)
+
+  t.true(res.status === 400)
+})
+
 test.serial('Updating a badge in the db', async (t) => {
   let res = await adminUser
     .get('/scoreboard/api/badges')
