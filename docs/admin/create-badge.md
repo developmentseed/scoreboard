@@ -4,19 +4,17 @@ title: "Create a new badge"
 sidebar_label: "Create a new badge"
 ---
 
-To view the current badges available to Scoreboard, click on “Manage badges” from the Admin page
-
-![Admin Panel](../assets/AdminPanel.png)
-
-You will see the list of badges currently available to be earned on the right side, and a link to Create a New Badge on the left.
+Click the link to Create a New Badge on the left-hand side of the Admin Badge Panel.
 
 ![Badge List](../assets/BadgeList.png)
 
-When you select “Create New Badge”, you will be taken to an empty form with fields for the name and description for the badge, along with a section containing the requirements for earning that badge. 
+When you select “Create New Badge”, you will be taken to an empty form with fields for the name and description for the badge, along with a section containing the conditions for earning that badge. 
 
  ![Badge Requirement](../assets/BadgeRequirementSection.png)
 
-The first part of every type of requirement is the metric to measure against when determining whether someone has earned this badge. Click the arrow to see a dropdown containing all of the available metrics.
+## Setting the conditions for earning a badge
+
+The first part of every type of condition is the metric to measure against when determining whether someone has earned this badge. Click the arrow to see a dropdown containing all of the available metrics.
 
 ![Select Metric](../assets/SelectMetric.png)
 
@@ -38,10 +36,14 @@ You can add as many conditions as you like, and they can be of differing types; 
 
 Thus, a requirement to use a certain hashtag combined with a requirement to map a certain number of buildings will evaluate just that; it will *not* evaluate whether a user mapped that number of buildings *while using* that hashtag. This feature can be implemented later on if it is of interest.
 
+## Setting the badge image
+
 ![Default Badge Image](../assets/DefaultBadgeImage.png)
 
 Once you have selected all of your operations, you will see all of the available badge images. To select the image to be used for your badge, simply navigate to it by clicking the image, the thumbnail associated with that image, or the white dot corresponding to that image’s location in the list.
 
 ![Select New Badge Image](../assets/SelectNewBadgeImage.png)
 
-Click "Create badge" to complete the badge creation process, at which point you should see a pop-up reading "Badge created successfully!" Your badge should now be listed alongside the other badges on your admin panel, and will appear immediately in all eligible users' In-Progress and Earned Badge panels.
+## Complete your badge!
+
+Click "Create badge" to complete the badge creation process, at which point you should see a pop-up reading "Badge created successfully!" Your badge will be listed alongside the other badges on your admin panel, and will appear immediately in all eligible users' In-Progress and Earned Badge panels.

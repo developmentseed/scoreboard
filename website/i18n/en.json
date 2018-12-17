@@ -29,6 +29,10 @@
         "title": "Create a team",
         "sidebar_label": "Create a team"
       },
+      "admin/edit-badge": {
+        "title": "Edit an existing badge",
+        "sidebar_label": "Edit a badge"
+      },
       "admin/overview": {
         "title": "Administration",
         "sidebar_label": "Administration"
