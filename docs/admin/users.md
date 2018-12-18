@@ -4,14 +4,12 @@ title: "Users"
 sidebar_label: "Users"
 ---
 
-## Example text
+The admin section of Scoreboard allows admin users to manage other users.
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+## How do I make a user an admin?
 
-## Example text
+Learn about [making users admins](./assign-admin-role)
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+## How do I add users to a team?
 
-## Example text
-
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+Learn about [adding users to teams](./add-team-users)

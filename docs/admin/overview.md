@@ -4,14 +4,19 @@ title: "Administration"
 sidebar_label: "Administration"
 ---
 
-## Example text
+The admin section of Scoreboard allows admin users to manage badges, teams, and users.
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+## [Badges](./badges)
 
-## Example text
+- [Create new badges](./create-badge)
+- [Edit badges](./edit-badge)
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+## [Teams](./teams)
 
-## Example text
+- [Create new teams](./create-team)
+- [Add campaigns to teams](./add-team-campaigns)
+- [Add users to teams](./add-team-users)
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+## [Users](./users)
+
+- [Make users admins](./make-users-admins)

@@ -4,14 +4,16 @@ title: "Teams"
 sidebar_label: "Teams"
 ---
 
-## Example text
+The admin section of Scoreboard allows admin users to create, edit, and delete teams, as well as assign users and campaigns to teams.
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+## How do I create a team?
 
-## Example text
+Learn about [creating new teams](./create-team)
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+## How do I add users to a team?
 
-## Example text
+Learn about [adding users to teams](./add-team-users)
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+## How do I add campaigns to a team?
+
+Learn about [adding campaigns to teams](./add-team-campaigns)

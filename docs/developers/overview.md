@@ -4,14 +4,10 @@ title: "Overview for developers"
 sidebar_label: "Overvew for developers"
 ---
 
-## Example text
+## Installation and other development-focused information
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+See the [README.md file on GitHub](https://github.com/developmentseed/scoreboard#readme) for installation  instructions and other information focused on developers.
 
-## Example text
+## Documenting Scoreboard
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
-
-## Example text
-
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+Learn more about [documenting Scoreboard](./documenting-scoreboard)

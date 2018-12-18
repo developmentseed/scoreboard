@@ -4,14 +4,21 @@ title: "Make a user an admin"
 sidebar_label:  "Make a user an admin"
 ---
 
-## Example text
+Admin users can give other users the admin role.
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+To find and edit an existing user:
 
-## Example text
+- [Log in]({{appURL}}/auth/openstreetmap) if you haven't already
+- Visit the [users admin page]({{appURL}}/admin/users)
+- Choose a user from the list and click it to edit that user
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+### Add the admin role to a user
 
-## Example text
+To add the admin role to a user:
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+- Click the select box under **Roles** and select **admin**
+- After that the user will be updated automatically and you'll see a notification indicating the update was successful.
+
+An example:
+
+![Assigning admin role to a user](../assets/assign-admin-role.png)
