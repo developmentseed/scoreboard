@@ -29,6 +29,7 @@ async function get (req, res) {
     return res.boom.notFound('Could not find country')
   }
   let countryName = countryPair.name
+  let countryCode = countryPair.code
 
   try {
     let userData = await userCountryEdits.getParticipants(countryName, req.query.participantLimit)
@@ -42,7 +43,7 @@ async function get (req, res) {
       users: userData,
       numParticipants: count,
       edit_count: userData.reduce((total, { count }) => total + count, 0),
-      geography: getCountryGeo(countryName)
+      geography: getCountryGeo(countryCode)
     })
   } catch (err) {
     console.error(err)

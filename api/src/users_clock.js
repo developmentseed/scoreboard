@@ -5,7 +5,7 @@ const {
 const pLimit = require('p-limit')
 const OSMesa = require('./services/osmesa')
 const db = require('./db/connection')
-const { updateUserCountryEdit } = require('./models/userCountryEdits')
+const { updateUserCountryEdit, isState } = require('./models/userCountryEdits')
 
 /*
  * Given the edit times for a user get the last edit
@@ -43,6 +43,9 @@ async function updateCountries (userID, countryEditList) {
   // get total edits for a given user
   countryEditList.forEach((tuple) => {
     let countryName = tuple.name
+    if (isState(countryName)) {
+      countryName = 'United States of America'
+    }
     if (!countryTotal[countryName]) {
       countryTotal[countryName] = 0
     }

@@ -5,7 +5,7 @@ import { connect } from 'unistore/react'
 import { withAlert } from 'react-alert'
 import { actions } from '../lib/store'
 
-import countryList from '../lib/utils/country-list'
+import countryList from '../lib/utils/country-list.json'
 import BadgeInProgress from '../components/BadgeInProgress'
 import NotLoggedIn from '../components/NotLoggedIn'
 import DataNotAvailable from '../components/DataNotAvailable'
