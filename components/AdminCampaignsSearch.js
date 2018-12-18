@@ -2,6 +2,51 @@ import Pagination from 'react-js-pagination'
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
+import Select from 'react-select'
+
+class Assignment extends Component {
+  constructor (props) {
+    super(props)
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleRemove = this.handleRemove.bind(this)
+  }
+
+  handleChange (selectedOption) {
+    let record = Object.assign({}, this.props.record, { team_priority: selectedOption })
+    this.props.handleChange(record)
+  }
+
+  handleRemove () {
+    this.props.handleRemove(this.props.record)
+  }
+
+  render () {
+    const record = this.props.record
+    const { team_priority } = record
+
+    // Select
+    let selector = <Select
+      simpleValue
+      value={team_priority}
+      onChange={this.handleChange}
+      options={[
+        { value: 1, label: '1' },
+        { value: 2, label: '2' },
+        { value: 3, label: '3' }
+      ]}
+    />
+
+    return (
+      <tr key={`campaign-${record.name}`} className='admin-table-row'>
+        <td>{`${record.name} - project-${(record.tm_id || record.id)}`}</td>
+        <td>{ selector }</td>
+        <td><button style={{ 'padding': '5px' }} className='button' onClick={() => this.handleRemove(record)} >Remove</button></td>
+      </tr>
+    )
+
+  }
+}
 
 class CampaignSearch extends Component {
   constructor (props) {
@@ -11,6 +56,7 @@ class CampaignSearch extends Component {
     this.handlePageChange = this.handlePageChange.bind(this)
     this.onSearchCampaignClick = this.onSearchCampaignClick.bind(this)
     this.onSelectedCampaignClick = this.onSelectedCampaignClick.bind(this)
+    this.onTaskPriorityChange = this.onTaskPriorityChange.bind(this)
   }
 
   handleSearch (event) {
@@ -29,6 +75,10 @@ class CampaignSearch extends Component {
     this.props.handleCampaignsPageChange(pageNumber || 1)
   }
 
+  onTaskPriorityChange (campaign) {
+    this.props.addCampaign(campaign)
+  }
+
   componentDidMount () {
     this.props.handleCampaignsPageChange(1)
   }
@@ -41,6 +91,13 @@ class CampaignSearch extends Component {
     const { records: { total, records } } = this.props.campaigns
     if (!records) return <div />
 
+    let assignments = selectedCampaigns.map(record =>
+      <Assignment record={record}
+        handleChange={this.onTaskPriorityChange}
+        handleRemove={this.onSelectedCampaignClick}
+      />
+    )
+
     return (
       <div>
         {
@@ -51,16 +108,11 @@ class CampaignSearch extends Component {
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Priority</th>
+                    <th>Team Priority</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {selectedCampaigns.map(record => (
-                    <tr key={`campaign-${record.name}`} onClick={() => this.onSelectedCampaignClick(record)} className='admin-table-row'>
-                      <td>{`${record.name} - project-${(record.tm_id || record.id)}`}</td>
-                      <td>{record.priority}</td>
-                    </tr>
-                  ))}
+                  {assignments}
                 </tbody>
               </table>
             </section>)
@@ -81,7 +133,7 @@ class CampaignSearch extends Component {
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Priority</th>
+                  <th>Task Priority</th>
                 </tr>
               </thead>
               <tbody>

@@ -59,9 +59,12 @@ async function post (req, res) {
 async function get (req, res) {
   try {
     const data = JSON.parse(await OSMTeams.getTeam(req.params.id))
-    const campaigns = await db('campaigns').select().whereIn('id', function () {
-      this.select('campaign_id').from('team_assignments').where('team_id', req.params.id)
-    })
+    const campaigns = await db('campaigns').join(
+      db('team_assignments').where('team_id', req.params.id).as('team_assignments'),
+      'team_assignments.campaign_id',
+      '=',
+      'campaigns.id'
+    )
     const users = await db('users').whereIn('osm_id', data.members)
     const team = {
       id: data.id,
@@ -106,7 +109,14 @@ async function put (req, res) {
     await OSMTeams.updateMembers(team_id, { add, remove })
 
     // Insert assignments
-    const assignments = campaigns.map(campaign_id => ({ team_id, campaign_id }))
+    const assignments = campaigns.map(campaign => ({
+      team_id,
+      campaign_id: campaign.id,
+      team_priority: campaign.team_priority,
+      created_at: db.fn.now(),
+      updated_at: db.fn.now()
+    }))
+
     await db.transaction(async t => {
       await t('team_assignments').where('team_id', team_id).del() // delete existing assingnments
       await t.batchInsert('team_assignments', assignments) // insert new assignments
