@@ -4,14 +4,12 @@ title: "Badges"
 sidebar_label:  "Badges"
 ---
 
-## Example text
+To view the current badges available to Scoreboard, click on “Manage badges” from the Admin page
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+![Admin Panel](../assets/AdminPanel.png)
 
-## Example text
+You will see the list of badges currently available to be earned on the right side, and a link to [Create a New Badge](create-badge.md) on the left.
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+![Badge List](../assets/BadgeList.png)
 
-## Example text
-
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+You can also click on the name of a badge to see and [edit](edit-badge.md) the badge details.
