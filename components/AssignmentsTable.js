@@ -14,7 +14,6 @@ export default ({ assignments }) => {
       <tbody>
         {
           assignments
-            .reverse()
             .map((assignment, idx) => {
               return (
                 <tr key={`assignment-${assignment.id}`}>

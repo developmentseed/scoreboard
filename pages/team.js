@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import CampaignCard from '../components/CampaignCard'
+import { sortBy, prop } from 'ramda'
 
 export class Team extends Component {
   componentDidMount () {
@@ -65,7 +66,7 @@ export class Team extends Component {
         <section className='section--tertiary'>
           <div className='row'>
             <h2>Assigned Campaigns</h2>
-            {team.campaigns.map(record => <CampaignCard key={record.id} campaign={record} />)}
+            {sortBy(prop('team_priority'), team.campaigns).map(record => <CampaignCard key={record.id} campaign={record} />)}
           </div>
         </section>
       </div>
