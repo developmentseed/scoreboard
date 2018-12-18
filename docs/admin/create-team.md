@@ -4,14 +4,24 @@ title: "Create a team"
 sidebar_label: "Create a team"
 ---
 
-## Example text
+Admin users of Scoreboard are able to create teams using the admin section of the site.
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+To create a team:
 
-## Example text
+- [Log in]({{appURL}}/auth/openstreetmap) if you haven't already
+- Visit the [teams admin page]({{appURL}}/admin/teams)
+- Click the [Create New Team]({{appURL}}/admin/teams/add) link
+- Enter information about the team:
+  - name
+  - hashtag
+  - bio
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+![Adding a new team](../assets/add-new-team.png)
 
-## Example text
+## Adding users to a team
 
-fknweqjfnkje fjqwe fkqwje fkqjwe fwje f
+Learn more about [adding users to a team](./add-team-users).
+
+## Adding campaigns to a team
+
+Learn more about [adding campaigns to a team](./add-team-campaigns).
