@@ -11,7 +11,7 @@ const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 export default ({
   handleSearch, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
-  handleToggleActive, selectedActive
+  handleActiveSelect, selectedActive
 }) => (
   <div className='sidebar'>
     <h3 className='header--medium'>Filter</h3>
@@ -42,15 +42,31 @@ export default ({
           value={selectedSortValue}
           onChange={handleSortSelect}
           options={
-            [{ value: 'Most recent', label: 'Most recent edit' }, { value: 'Least recent', label: 'Least recent edit' },
-              { value: 'Most total', label: 'Most total edits' }, { value: 'Least total', label: 'Least total edits' }]
+            [
+              { value: 'Most recent', label: 'Most recent edit' },
+              { value: 'Least recent', label: 'Least recent edit' },
+              { value: 'Most total', label: 'Most total edits' },
+              { value: 'Least total', label: 'Least total edits' }
+            ]
           }
         />
       </fieldset>
       <fieldset>
         <legend>Active Users</legend>
-        <input type='checkbox' checked={selectedActive} onChange={handleToggleActive} />
-        Filter active users (edited in the past 6 months)
+        <Select name='active-select'
+          simpleValue
+          value={selectedActive}
+          onChange={handleActiveSelect}
+          options={
+            [
+              { value: 'all', label: 'All users' },
+              { value: 'active', label: 'Active users' },
+              { value: 'active-6-mo', label: 'Active in the past 6 months' },
+              { value: 'active-3-mo', label: 'Active in the past 3 months' },
+              { value: 'active-1-mo', label: 'Active in the past month' }
+            ]
+          }
+        />
       </fieldset>
     </form>
   </div>

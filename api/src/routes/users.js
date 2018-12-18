@@ -24,9 +24,28 @@ function applyFilters (query, req) {
     query = query.whereIn('country', countries)
   }
 
-  if (active && active === 'true') {
-    // Filter for users that have edited in the past 6 months
-    query = query.whereBetween('last_edit', [subMonths(Date.now(), 6), new Date(Date.now())])
+  if (active) {
+    switch (active) {
+      case 'active': {
+        query = query.where('edit_count', '>', 0)
+        break
+      }
+      case 'active-6-mo': {
+        query = query.whereBetween('last_edit', [subMonths(Date.now(), 6), new Date(Date.now())])
+        break
+      }
+      case 'active-3-mo': {
+        query = query.whereBetween('last_edit', [subMonths(Date.now(), 3), new Date(Date.now())])
+        break
+      }
+      case 'active-1-mo': {
+        query = query.whereBetween('last_edit', [subMonths(Date.now(), 1), new Date(Date.now())])
+        break
+      }
+      default: {
+        break
+      }
+    }
   }
 
   return query
