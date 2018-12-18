@@ -61,17 +61,9 @@
         "title": "Campaigns introduction",
         "sidebar_label": "Campaigns introduction"
       },
-      "users/earn-badges": {
-        "title": "View badges you can earn",
-        "sidebar_label": "View badges you can earn"
-      },
       "users/favorite-campaigns": {
         "title": "Create a list of favorite campaigns",
         "sidebar_label": "Create a list of favorite campaigns"
-      },
-      "users/find-campaigns": {
-        "title": "Find campaigns to work on",
-        "sidebar_label": "Find campaigns to work on"
       },
       "users/getting-started": {
         "title": "Getting Started",
@@ -85,7 +77,7 @@
         "title": "Update the country in your profile",
         "sidebar_label": "Update the country in your profile"
       },
-      "users/your-mapping-statistics": {
+      "users/user-statistics": {
         "title": "View your mapping statistics",
         "sidebar_label": "View your mapping statistics"
       }
