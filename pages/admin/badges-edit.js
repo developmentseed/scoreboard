@@ -503,7 +503,7 @@ export class AdminBadgesEdit extends Component {
   }
 }
 
-const Page = connect(['authenticatedUser', 'error', 'badge', 'admin', 'notification'], actions)(AdminBadgesEdit)
+const Page = connect(['authenticatedUser', 'error', 'badge', 'admin'], actions)(AdminBadgesEdit)
 
 Page.getInitialProps = function ({ req }) {
   const { id } = req.params
