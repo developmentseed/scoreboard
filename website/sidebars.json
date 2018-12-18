@@ -1,9 +1,10 @@
 {
   "users": {
     "Getting Started": ["users/getting-started"],
-    "Campaigns": ["users/find-campaigns", "users/favorite-campaigns"],
+    "Profile": ["users/your-mapping-statistics", "users/update-country"],
+    "Campaigns": ["users/campaigns", "users/find-campaigns", "users/favorite-campaigns"],
     "Badges": ["users/earn-badges"],
-    "Profile": ["users/update-country"]
+    "Teams": ["users/teams"]
   },
   "admins": {
     "Overview": ["admin/overview"],

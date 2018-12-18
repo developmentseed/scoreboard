@@ -1,5 +1,5 @@
 ---
-id: badges
+id: badges-admin
 title: "Badges"
 sidebar_label:  "Badges"
 ---

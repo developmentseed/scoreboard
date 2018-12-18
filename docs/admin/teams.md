@@ -1,5 +1,5 @@
 ---
-id: teams
+id: teams-admin
 title: "Teams"
 sidebar_label: "Teams"
 ---

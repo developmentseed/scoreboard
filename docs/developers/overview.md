@@ -1,7 +1,7 @@
 ---
-id: earn-badges
-title: "View badges you can earn"
-sidebar_label: "View badges you can earn"
+id: overview
+title: "Overview for developers"
+sidebar_label: "Overvew for developers"
 ---
 
 ## Example text

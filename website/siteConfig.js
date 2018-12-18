@@ -1,28 +1,31 @@
 const join = require('url-join')
-const { APP_URL_PREFIX } = require('../api/src/config')
+const createTemplatePlugin = require('./template-plugin')
 
-const siteConfig = {
+const { APP_URL_FINAL } = require('../api/src/config')
+const appURL = APP_URL_FINAL.slice(0, APP_URL_FINAL.length - 1)
+
+const siteVariables = {
   title: 'Scoreboard', // Title for your website.
   tagline: 'Analytics for mappers',
   url: 'https://example.com', // Your website URL
   baseUrl: '/docs/', // Base URL for your project */
-  // For github.io type URLs, you would set the url and baseUrl like:
-  //   url: 'https://facebook.github.io',
-  //   baseUrl: '/test-site/',
-
-  // Used for publishing and more
   projectName: 'scoreboard',
   organizationName: '',
-  // For top-level user or org sites, the organization is still the same.
-  // e.g., for the https://JoelMarcey.github.io site, it would be set like...
-  //   organizationName: 'JoelMarcey'
+  appURL
+}
+
+const siteConfig = {
+  docsUrl: '',
+  markdownPlugins: [
+    createTemplatePlugin(siteVariables)
+  ],
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     { doc: 'users/getting-started', label: 'Getting Started' },
     { doc: 'admin/overview', label: 'Administration' },
-    { doc: 'developers/install', label: 'Developers' },
-    { href: join(APP_URL_PREFIX, 'api/docs'), label: 'API' }
+    { doc: 'developers/overview', label: 'Developers' },
+    { href: join(appURL, 'api/docs'), label: 'API' }
   ],
 
   // If you have users set above, you add it here:
@@ -84,4 +87,4 @@ const siteConfig = {
   enableUpdateTime: true
 }
 
-module.exports = siteConfig
+module.exports = Object.assign(siteVariables, siteConfig)

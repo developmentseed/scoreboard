@@ -1,5 +1,5 @@
 ---
-id: users
+id: users-admin
 title: "Users"
 sidebar_label: "Users"
 ---
