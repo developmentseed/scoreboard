@@ -69,8 +69,9 @@ export class AdminBadgesEdit extends Component {
       await this.props.updateBadge(id, params)
       Router.push('/admin/badges')
     } catch (e) {
-      console.error(e)
+      window.scroll(0, 0)
       this.setState({ disableInteraction: false })
+      this.props.setNotification({ type: 'error', message: e.message || e })
     }
   }
 

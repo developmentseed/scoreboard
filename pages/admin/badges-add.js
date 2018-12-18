@@ -63,8 +63,10 @@ export class AdminBadgesAdd extends Component {
       await this.props.createBadge(params)
       Router.push('/admin/badges')
     } catch (e) {
+      window.scroll(0, 0)
       console.error(e)
       this.setState({ disableInteraction: false })
+      this.props.setNotification({ type: 'error', message: e.message || e })
     }
   }
 
@@ -479,4 +481,4 @@ export class AdminBadgesAdd extends Component {
   }
 }
 
-export default connect(['authenticatedUser', 'error', 'badges', 'admin'], actions)(AdminBadgesAdd)
+export default connect(['authenticatedUser', 'error', 'badges', 'admin', 'notification'], actions)(AdminBadgesAdd)
