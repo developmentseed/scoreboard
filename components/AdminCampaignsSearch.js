@@ -40,11 +40,10 @@ class Assignment extends Component {
     return (
       <tr key={`campaign-${record.name}`} className='admin-table-row'>
         <td>{`${record.name} - project-${(record.tm_id || record.id)}`}</td>
-        <td>{ selector }</td>
+        <td><div style={{ 'padding': '5px' }}>{ selector }</div></td>
         <td><button style={{ 'padding': '5px' }} className='button' onClick={() => this.handleRemove(record)} >Remove</button></td>
       </tr>
     )
-
   }
 }
 
