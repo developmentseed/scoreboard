@@ -12,6 +12,7 @@ import DataNotAvailable from '../components/DataNotAvailable'
 import InlineList from '../components/InlineList'
 import FilterBar from '../components/FilterBar'
 import AssignmentsTable from '../components/AssignmentsTable'
+import { sortBy, prop } from 'ramda'
 
 const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
   ssr: false
@@ -198,9 +199,9 @@ class Dashboard extends Component {
       { name: 'All', id: 'all' }
     ]
 
-    let teamAssignments = assignments.map(task => {
+    let teamAssignments = sortBy(prop('team_priority'), assignments).map(task => {
       return {
-        priority: task.priority,
+        priority: task.team_priority ? `team priority: ${task.team_priority}` : task.priority,
         name: task.name,
         assigned_by: task.team_name,
         campaign_hashtag: task.campaign_hashtag
@@ -208,7 +209,7 @@ class Dashboard extends Component {
     })
 
     const allCampaigns = {
-      favorites,
+      favorites: sortBy(prop('priority'), favorites),
       teams: teamAssignments,
       all: teamAssignments.concat(favorites)
     }
