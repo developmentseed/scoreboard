@@ -13,6 +13,6 @@
     "Badges": ["admin/badges", "admin/create-badge", "admin/edit-badge"]
   },
   "developers": {
-    "Install": ["developers/install.md"]
+    "Install": ["developers/overview", "developers/documenting-scoreboard"]
   }
 }

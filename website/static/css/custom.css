@@ -5,6 +5,12 @@ article img {
   box-shadow: rgba(0,0,0,0.1) 1px 1px 8px;
 }
 
+hr {
+  margin: 20px 40%;
+  border: 0px;
+  border-top: 1px solid #ccc;
+}
+
 @media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
 }
 

@@ -1,7 +1,7 @@
 const join = require('url-join')
 const createTemplatePlugin = require('./template-plugin')
 
-const { APP_URL_FINAL } = require('../api/src/config')
+const { APP_URL_FINAL, PROJECT_NAME } = require('../api/src/config')
 const appURL = APP_URL_FINAL.slice(0, APP_URL_FINAL.length - 1)
 
 const siteVariables = {
@@ -10,7 +10,9 @@ const siteVariables = {
   url: 'https://example.com', // Your website URL
   baseUrl: '/docs/', // Base URL for your project */
   projectName: 'scoreboard',
+  repoUrl: 'https://github.com/developmentseed/scoreboard',
   organizationName: '',
+  osmProjectName: PROJECT_NAME,
   appURL
 }
 
@@ -38,8 +40,8 @@ const siteConfig = {
 
   /* Colors for website */
   colors: {
-    primaryColor: '#2E8555',
-    secondaryColor: '#205C3B'
+    primaryColor: '#4FCA9E',
+    secondaryColor: '#353533'
   },
 
   /* Custom fonts for website */

@@ -21,6 +21,7 @@ To add campaigns to a team:
 - Scroll down to the **Team campaigns** section
 - Click the campaigns from the list that you want to add
   - After clicking each campaign you'll see it is both highlighted and added to the **Assigned** list
+- Optional: You can assign a team priority to each campaign in the **Assigned** list to indicate to users which campaigns they should prioritize
 - Click the **Update team** button to save your changes
 
 An example:
