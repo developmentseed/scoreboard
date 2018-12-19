@@ -31,7 +31,7 @@ const PromoSection = props => (
 class HomeSplash extends React.Component {
   render () {
     const { siteConfig, language = '' } = this.props
-    const { baseUrl, docsUrl, osmProjectName } = siteConfig
+    const { baseUrl, docsUrl } = siteConfig
     const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`
     const langPart = `${language ? `${language}/` : ''}`
     const docUrl = doc => `${baseUrl}${docsPart}${langPart}${doc}`
@@ -41,12 +41,6 @@ class HomeSplash extends React.Component {
         <div className='homeSplashFade'>
           <div className='wrapper homeWrapper'>{props.children}</div>
         </div>
-      </div>
-    )
-
-    const Logo = props => (
-      <div className='projectLogo'>
-        <img src={props.img_src} alt='Project Logo' />
       </div>
     )
 
@@ -75,10 +69,7 @@ class HomeSplash extends React.Component {
 class Index extends React.Component {
   render () {
     const { config: siteConfig, language = '' } = this.props
-    const { baseUrl, docsUrl, osmProjectName } = siteConfig
-    const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`
-    const langPart = `${language ? `${language}/` : ''}`
-    const docUrl = doc => `${baseUrl}${docsPart}${langPart}${doc}`
+    const { baseUrl, osmProjectName } = siteConfig
 
     const Block = props => (
       <Container
@@ -91,16 +82,6 @@ class Index extends React.Component {
           layout={props.layout}
         />
       </Container>
-    )
-
-    const DocsList = () => (
-      <div
-        className='paddingBottom'
-        style={{ textAlign: 'center' }}>
-        <h2>Documentation</h2>
-
-        
-      </div>
     )
 
     const Mappers = () => (
