@@ -5,27 +5,43 @@ import { APP_URL_PREFIX } from '../api/src/config'
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
-export default (props) => {
-  const {
-    searchText,
-    completeness: { compl_min, compl_max },
-    handleSearch,
-    handleFilterChange
-  } = props
+export default class extends React.Component {
+  constructor (props) {
+    super(props)
 
-  return (
-    <form onSubmit={e => e.preventDefault()}>
-      <fieldset>
-        <legend>Search</legend>
-        <div className='search'>
-          <input className='input--text' value={searchText} onChange={handleSearch} />
-          <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Completeness</legend>
-        <InputRange maxValue={100} minValue={0} value={{ min: compl_min, max: compl_max }} onChange={handleFilterChange} />
-      </fieldset>
-    </form>
-  )
+    this.state = {
+      min: 0,
+      max: 100
+    }
+  }
+
+  render () {
+    const {
+      handleSearch
+    } = this.props
+
+    let { min, max } = this.state
+
+    return (
+      <form onSubmit={e => e.preventDefault()}>
+        <fieldset>
+          <legend>Search</legend>
+          <div className='search'>
+            <input className='input--text' onChange={handleSearch} />
+            <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Completeness</legend>
+          <InputRange
+            maxValue={100}
+            minValue={0}
+            value={{ min, max }}
+            onChange={value => this.setState(value)}
+            onChangeComplete={this.props.handleFilterChange}
+          />
+        </fieldset>
+      </form>
+    )
+  }
 }
