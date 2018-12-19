@@ -14,4 +14,4 @@ Currently admins assign users to teams. Please contact a site admin to be added 
 
 ## How do I administer teams?
 
-To learn about managing teams on Scoreboard, visit the [teams admin docs](/admin/teams)
+To learn about managing teams on Scoreboard, visit the [teams admin docs](/docs/admin/teams)

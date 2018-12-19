@@ -17,9 +17,9 @@
         "title": "Make a user an admin",
         "sidebar_label": "Make a user an admin"
       },
-      "admin/badges-admin": {
+      "admin/badges": {
         "title": "Badges",
-        "sidebar_label": "Badges"
+        "sidebar_label": "Overview"
       },
       "admin/create-badge": {
         "title": "Create a new badge",
@@ -37,13 +37,13 @@
         "title": "Administration",
         "sidebar_label": "Administration"
       },
-      "admin/teams-admin": {
+      "admin/teams": {
         "title": "Teams",
-        "sidebar_label": "Teams"
+        "sidebar_label": "Overview"
       },
-      "admin/users-admin": {
+      "admin/users": {
         "title": "Users",
-        "sidebar_label": "Users"
+        "sidebar_label": "Overview"
       },
       "developers/documenting-scoreboard": {
         "title": "Documenting Scoreboard",

@@ -88,7 +88,7 @@ class Index extends React.Component {
       <Block align='left'>
         {[
           {
-            content: 'For mappers, Scoreboard provides motivation. Through their profile page, Scoreboard keeps track of users edits, awarding them badges as they progress. Find your profile or those of other mappers here.',
+            content: 'For mappers, Scoreboard provides motivation. Through their profile page, Scoreboard keeps track of users edits, awarding them badges as they progress.',
             image: `${baseUrl}img/about-mapper.jpg`,
             imageAlign: 'left',
             title: 'Mappers'
@@ -112,14 +112,14 @@ class Index extends React.Component {
       </Block>
     )
 
-    const CampaignManagers = () => (
+    const Overview = () => (
       <Block align='left'>
         {[
           {
-            content: 'For campaign managers, Scoreboard provides an overview of what’s happening on the system, and also a way to get detailed information on individual mappers or campaigns. Discover all active campaigns.',
+            content: 'Scoreboard provides an overview of what’s happening on the system as well as detailed information on individual mappers, teams, campaigns, and countries.',
             image: `${baseUrl}img/about-campaignmanager.jpg`,
             imageAlign: 'right',
-            title: 'Manage Campaigns'
+            title: 'Campaigns'
           }
         ]}
       </Block>
@@ -131,7 +131,7 @@ class Index extends React.Component {
         <div className='mainContainer'>
           <Description />
           <hr />
-          <CampaignManagers />
+          <Overview />
           <hr />
           <Mappers />
         </div>

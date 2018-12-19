@@ -6,11 +6,11 @@ sidebar_label: "Add users to a team"
 
 Admin users can edit existing teams to add users as team members.
 
-> Learn about [creating teams](./create-team).
+> Learn about [creating teams](/docs/admin/create-team).
 
 To find and edit an existing team:
 
-- [Log in]({{appURL}}/auth/openstreetmap) if you haven't already
+- [Log in to Scoreboard]({{appURL}}/auth/openstreetmap) if you haven't already
 - Visit the [teams admin page]({{appURL}}/admin/teams)
 - Choose a team from the list and click it to edit that team
 
@@ -25,7 +25,7 @@ To add users to a team:
 
 An example:
 
-![Assigning users to a team](../assets/add-team-users.png)
+![Assigning users to a team](/docs/img/add-team-users.png)
 
 ### Remove users
 

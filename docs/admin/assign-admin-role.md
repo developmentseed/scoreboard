@@ -8,7 +8,7 @@ Admin users can give other users the admin role.
 
 To find and edit an existing user:
 
-- [Log in]({{appURL}}/auth/openstreetmap) if you haven't already
+- [Log in to Scoreboard]({{appURL}}/auth/openstreetmap) if you haven't already
 - Visit the [users admin page]({{appURL}}/admin/users)
 - Choose a user from the list and click it to edit that user
 
@@ -21,4 +21,4 @@ To add the admin role to a user:
 
 An example:
 
-![Assigning admin role to a user](../assets/assign-admin-role.png)
+![Assigning admin role to a user](/docs/img/assign-admin-role.png)

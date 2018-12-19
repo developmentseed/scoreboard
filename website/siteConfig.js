@@ -18,6 +18,7 @@ const siteVariables = {
 
 const siteConfig = {
   docsUrl: '',
+  customDocsPath: 'docs/',
   markdownPlugins: [
     createTemplatePlugin(siteVariables)
   ],

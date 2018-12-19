@@ -10,6 +10,6 @@ To add a campaign as a favorite, go to the [campaigns list]({{appURL}}/campaigns
 
 Next click the **Add Favorite** button.
 
-![Add favorite campaign button](../assets/add-favorite-campaign.png)
+![Add favorite campaign button](/docs/img/add-favorite-campaign.png)
 
 To remove the campaign from your favorites list, navigate back to that campaign and click the **Remove Favorite** button.

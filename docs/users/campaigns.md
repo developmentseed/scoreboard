@@ -17,6 +17,6 @@ Visit the [campaigns]({{appURL}}/campaigns) page to see a list of campaigns.
 On your dashbaord you can view campaigns that you've favorited and campaigns that have been assigned by teams.
 
 - **Favorite campaigns**
-  - See a list of campaigns you've personally chosen to work on by [favoriting campaigns](/users/favorite-campaigns)
+  - See a list of campaigns you've personally chosen to work on by [favoriting campaigns](/docs/users/favorite-campaigns)
 - **Team campaigns**
-  - The [teams you join](/users/teams) assign campaigns
+  - The [teams you join](/docs/users/teams) assign campaigns

@@ -6,13 +6,12 @@ sidebar_label: "Update the country in your profile"
 
 To view your mapping statistics:
 
-- visit [Scoreboard]({{appURL}})
-- if you're not already logged in, log in using the login link in the top-right of the header navigation
+- [Log in to Scoreboard]({{appURL}}/auth/openstreetmap) if you haven't already
   
-![navigation menu](../assets/nav-menu.png)
+![navigation menu](/docs/img/nav-menu.png)
 
-- in the top right corner click the avatar icon to open a navigation menu
-- click **Edit Profile**
+- In the top right corner click the avatar icon to open a navigation menu
+- Click **Edit Profile**
 - Change your country using the select field
 
-![Edit profile](../assets/edit-profile.png)
+![Edit profile](/docs/img/edit-profile.png)

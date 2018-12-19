@@ -14,4 +14,4 @@ Get familiar with the Scoreboard API using our [swagger docs]({{appURL}}/api/doc
 
 ## Documenting Scoreboard
 
-Learn more about [documenting Scoreboard](./documenting-scoreboard)
+Learn more about [documenting Scoreboard](/docs/developers/documenting-scoreboard)

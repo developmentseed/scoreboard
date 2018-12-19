@@ -14,6 +14,24 @@ Start the docs server by running:
 yarn docs-start
 ```
 
+## Linking to documents from markdown
+
+Use the absolute path. For example, if you're referring to the file in `docs/admin/badges.md` use:
+
+```
+[badges](/docs/admin/badges)
+```
+
+## Linking to images from markdown
+
+Use the absolute path. For example, if you're referring to the file in `static/img/BadgeList.png` use:
+
+```
+[badges](/docs/img/BadgeList.png)
+```
+
+Note that images are served in the `img` directory rather than `static/img`.
+
 ## Using site variables in markdown
 
 In markdown files you can use simple template tags to add variables to the site.
