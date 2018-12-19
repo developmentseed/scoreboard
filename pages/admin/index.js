@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Link from '../../components/Link'
-import Router from 'next/router'
 import { connect } from 'unistore/react'
 
+import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
