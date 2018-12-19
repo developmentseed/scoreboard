@@ -83,7 +83,11 @@ class Dashboard extends Component {
         <section>
           <div className='row'>
             <div className='sidebar-right'>
-              <h2 className='header--large' style={{ marginBottom: 5 }}>Teams</h2>
+              <h2 className='header--large' style={{ marginBottom: 5 }}>
+                <Link href='/teams'>
+                  <a class='header-link'>Teams</a>
+                </Link>
+              </h2>
               {
                 teams && teams.length
                   ? (
@@ -102,7 +106,11 @@ class Dashboard extends Component {
                   )
               }
 
-              <h2 className='header--large' style={{ marginBottom: 5 }}>Countries</h2>
+              <h2 className='header--large' style={{ marginBottom: 5 }}>
+                <Link href='/countries'>
+                  <a class='header-link'>Countries</a>
+                </Link>
+              </h2>
               {
                 countries.length
                   ? (
@@ -224,7 +232,11 @@ class Dashboard extends Component {
 
     return (
       <div>
-        <h2 className='header--large header--with-description'>Campaigns</h2>
+        <h2 className='header--large header--with-description'>
+          <Link href='/campaigns'>
+            <a class='header-link'>Campaigns</a>
+          </Link>
+        </h2>
         <FilterBar
           filters={assignmentFilters}
           active={this.state.assignmentsFilter}

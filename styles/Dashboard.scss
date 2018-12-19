@@ -493,3 +493,13 @@
   padding: 10px;
   margin-bottom: 30px;
 }
+
+.header-link {
+  color: #292929;
+
+  &:hover {
+    cursor: pointer;
+    color: #000;
+    text-decoration: underline;
+  }
+}
