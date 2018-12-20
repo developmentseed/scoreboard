@@ -12,4 +12,4 @@ Next click the **Add Favorite** button.
 
 ![Add favorite campaign button](/docs/img/add-favorite-campaign.png)
 
-To remove the campaign from your favorites list, navigate back to that campaign and click the **Remove Favorite** button.
+You'll see the **Add Favorite** button become a **Remove Favorite** button. Any time you want to remove the campaign from your favorites list, navigate back to that campaign and click the **Remove Favorite** button.
