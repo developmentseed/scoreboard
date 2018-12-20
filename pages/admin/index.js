@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Link from '../../components/Link'
 import { connect } from 'unistore/react'
 
 import Router from '../../lib/router'
@@ -55,8 +54,8 @@ export class Admin extends Component {
           </div>
         </header>
         <section>
-          <div class="row">
-            <div class="content">
+          <div class='row'>
+            <div class='content'>
               <AdminSectionList />
             </div>
           </div>

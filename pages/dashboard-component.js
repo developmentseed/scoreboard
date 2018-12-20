@@ -194,7 +194,7 @@ class Dashboard extends Component {
 
   renderAdmin () {
     return (
-      <div  style={{ marginBottom: 50 }}>
+      <div style={{ marginBottom: 50 }}>
         <h2 className='header--large header--with-description'>
           <Link href='/campaigns'>
             <a class='header-link'>Admin</a>
