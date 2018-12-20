@@ -2,7 +2,7 @@ const users = require('../../src/models/users')
 const roles = require('../../src/models/roles')
 
 async function command (args, flags) {
-  const { id, osmId, fullName, username } = flags
+  const { id, osmId, username } = flags
 
   if (!id && !osmId && !username) {
     console.error('--id or --osm-id or --username is required')
