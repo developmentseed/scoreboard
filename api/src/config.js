@@ -29,7 +29,7 @@ module.exports = {
   OSM_CONSUMER_SECRET: process.env.OSM_CONSUMER_SECRET,
   OSM_DOMAIN: process.env.OSM_DOMAIN || 'https://www.openstreetmap.org',
   OSM_TEAMS_SERVICE: process.env.OSM_TEAMS_SERVICE || 'http://localhost:3000',
-
+  PROJECT_NAME: process.env.PROJECT_NAME || 'OpenStreetMap',
   // to handle cases where the OSM deployment is behind a firewall
   OSM_DOMAIN_INTERNAL: process.env.OSM_DOMAIN_INTERNAL || process.env.OSM_DOMAIN || 'https://www.openstreetmap.org',
   SESSION_SECRET: process.env.SESSION_SECRET || 'SUPER SECRET',
