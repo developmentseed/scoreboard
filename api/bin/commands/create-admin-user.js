@@ -21,11 +21,11 @@ async function command (args, flags) {
   }
 
   if (!user) {
-    if (!fullName) {
-      console.error('--full-name is required to make a new user and must be your osm username')
+    if (!username || !osmId) {
+      console.error('both --username and --osm-id are required to make a new user and must be your osm username and id')
       return process.exit(1)
     }
-    await users.create({ osm_id: osmId, full_name: fullName, roles: [1] })
+    await users.create({ osm_id: osmId, full_name: username, roles: [1] })
     return process.exit()
   }
 
@@ -56,8 +56,8 @@ const flags = [
     type: 'integer'
   },
   {
-    name: 'full-name',
-    alias: 'fullName',
+    name: 'username',
+    alias: 'u',
     type: 'string'
   }
 ]
