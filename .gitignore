@@ -9,3 +9,4 @@ tmp
 *.env
 *.sqlite3*
 users.csv
+docs-build
