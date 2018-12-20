@@ -51,8 +51,8 @@ function DBPromises (db, sqlObjects, features) {
 async function tmWorker () {
   // Get projects from TM2
   try {
-    const response = await TM.getProjects()
-    const json = JSON.parse(response)
+    let response = await TM.getProjects()
+    let json = JSON.parse(response)
     let features = ''
     switch (TM_VERSION) {
       case '3':
