@@ -3,8 +3,9 @@ import dynamic from 'next/dynamic'
 import Link from '../components/Link'
 import { connect } from 'unistore/react'
 import { withAlert } from 'react-alert'
-import { actions } from '../lib/store'
 
+import { actions } from '../lib/store'
+import { isAdmin } from '../lib/utils/roles'
 import countryList from '../lib/utils/country-list'
 import BadgeInProgress from '../components/BadgeInProgress'
 import NotLoggedIn from '../components/NotLoggedIn'
@@ -12,6 +13,7 @@ import DataNotAvailable from '../components/DataNotAvailable'
 import InlineList from '../components/InlineList'
 import FilterBar from '../components/FilterBar'
 import AssignmentsTable from '../components/AssignmentsTable'
+import AdminSectionList from '../components/AdminSectionList'
 import { sortBy, prop } from 'ramda'
 
 const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
@@ -130,6 +132,7 @@ class Dashboard extends Component {
               }
             </div>
             <div className='content--with-sidebar'>
+              {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
               {this.renderAssignments()}
               {this.renderBadges()}
             </div>
@@ -186,6 +189,19 @@ class Dashboard extends Component {
         <div className='wrapper--map' />
         <UserExtentMap extent={account.records.extent_uri} uid={osmUser['@']['id']} />
       </header>
+    )
+  }
+
+  renderAdmin () {
+    return (
+      <div  style={{ marginBottom: 50 }}>
+        <h2 className='header--large header--with-description'>
+          <Link href='/campaigns'>
+            <a class='header-link'>Admin</a>
+          </Link>
+        </h2>
+        <AdminSectionList />
+      </div>
     )
   }
 
