@@ -419,7 +419,7 @@
   ],
   "country_list": [
     {
-      "name": "Alabama",
+      "name": "United States",
       "count": 114391
     },
     {
@@ -433,10 +433,6 @@
     {
       "name": "Papua New Guinea",
       "count": 201541
-    },
-    {
-      "name": "Rhode Island",
-      "count": 1205
     },
     {
       "name": "Romania",

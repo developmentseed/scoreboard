@@ -13,21 +13,11 @@ export class Users extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      records: {},
-      apiStatus: 'LOADING',
-      searchText: '',
-      page: 1,
-      selectedValue: null,
-      selectedSortValue: null,
-      selectedActive: false
-    }
-
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
     this.handleSortSelect = this.handleSortSelect.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
-    this.handleToggleActive = this.handleToggleActive.bind(this)
+    this.handleActiveSelect = this.handleActiveSelect.bind(this)
   }
 
   componentDidMount () {
@@ -56,8 +46,8 @@ export class Users extends Component {
     this.props.changePage(pageNumber || 1)
   }
 
-  handleToggleActive (event) {
-    this.props.toggleActive(event.target.checked)
+  handleActiveSelect (selectedOption) {
+    this.props.handleActiveSelect(selectedOption || null)
   }
 
   render () {
@@ -74,11 +64,11 @@ export class Users extends Component {
       return <div />
     }
 
-    const { total, records, subTotal, editTotal, countries } = stats
+    const { total, records, subTotal, editTotal, countries, active } = stats
 
     return (
       <div className='Users'>
-        <AllUsersHeader countries={countries} users={total} edits={editTotal} />
+        <AllUsersHeader countries={countries} totalUsers={total} activeUsers={active} edits={editTotal} />
         <section>
           <div className='row'>
             <AllUsersFilter
@@ -88,8 +78,8 @@ export class Users extends Component {
               selectedValue={selectedValue}
               selectedSortValue={selectedSortValue}
               searchText={searchText}
-              activeValue={selectedActive}
-              handleToggleActive={this.handleToggleActive}
+              selectedActive={selectedActive}
+              handleActiveSelect={this.handleActiveSelect}
               countries={countries || []}
             />
             <div className='content--with-sidebar'>

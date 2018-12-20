@@ -15,7 +15,7 @@ const pckg = require('../../package.json')
 const router = require('./routes')
 
 const app = express()
-const connection = require('./db/connection')
+const db = require('./db/connection')
 
 const { SESSION_SECRET, NODE_ENV } = require('./config')
 const { passport, authRouter } = require('./passport')
@@ -40,7 +40,7 @@ let sessionConfig = {
 
 if (NODE_ENV === 'production') {
   const store = new KnexSessionStore({
-    knex: connection()
+    knex: db
   })
 
   Object.assign(sessionConfig, {
@@ -51,7 +51,6 @@ if (NODE_ENV === 'production') {
     store: store
   })
 }
-
 app.use(bodyParser.json())
 app.use(compression())
 app.use(boom())
@@ -62,5 +61,6 @@ app.use('/auth', authRouter)
 app.use('/api', router)
 app.use('/scoreboard/api', router)
 app.use(['/api', '/api/docs'], swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use('/fonts', express.static(path.join(__dirname, '../../static/fonts')))
 
 module.exports = app

@@ -1,5 +1,5 @@
 const osmesa = require('../services/osmesa')
-const connection = require('../db/connection')
+const db = require('../db/connection')
 
 /**
  * Campaign Stats Route
@@ -19,7 +19,6 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const db = connection()
     const osmesaResponse = await osmesa.getCampaign(id)
     const [tmData] = await db('campaigns').where('campaign_hashtag', id)
     const records = Object.assign(

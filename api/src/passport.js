@@ -96,6 +96,7 @@ if (NODE_ENV === 'test') {
       let [user] = await users.findByOsmId(profile.id)
       if (user) {
         profile.roles = await roles.getRoles(user.roles || [])
+        profile.uid = user.id
         done(null, profile)
       } else {
         const data = {
@@ -104,6 +105,7 @@ if (NODE_ENV === 'test') {
           roles: []
         }
         user = await users.create(data)
+        profile.uid = user.id
         done(null, profile)
       }
     } catch (err) {

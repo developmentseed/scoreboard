@@ -1,9 +1,11 @@
-const OSMesa = require('./services/osmesa')
 const { compareDesc, parse } = require('date-fns')
 const {
   merge, map, props, sum, head
 } = require('ramda')
-const conn = require('./db/connection')
+const pLimit = require('p-limit')
+const OSMesa = require('./services/osmesa')
+const db = require('./db/connection')
+const { updateUserCountryEdit, isState } = require('./models/userCountryEdits')
 
 /*
  * Given the edit times for a user get the last edit
@@ -35,6 +37,32 @@ const sumEdits = (records) => {
   return sum(summableProperties)
 }
 
+async function updateCountries (userID, countryEditList) {
+  const countryTotal = {}
+
+  // get total edits for a given user
+  countryEditList.forEach((tuple) => {
+    let countryName = tuple.name
+    if (isState(countryName)) {
+      countryName = 'United States of America'
+    }
+    if (!countryTotal[countryName]) {
+      countryTotal[countryName] = 0
+    }
+    countryTotal[countryName] += tuple.count
+  })
+
+  // edit countries for each user
+  const promises = Object.keys(
+    countryTotal
+  ).map((country) => updateUserCountryEdit(
+    userID,
+    country,
+    countryTotal[country]
+  ))
+  return Promise.all(promises)
+}
+
 /*
  * Worker runs in a clock process and updates the cache
  * that holds users
@@ -43,14 +71,12 @@ const sumEdits = (records) => {
  */
 async function usersWorker () {
   try {
-    const db = conn()
     const users = await db('users').select('id', 'osm_id') // Get all users
 
-    // Map user info to knex objects
-    const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(), time))
-    const promises = users.map(async (obj) => {
+    // run only 100 concurrent events
+    const limit = pLimit(100)
+    const promises = users.map((obj) => limit(async () => {
       // Get edit count from OSMesa
-      await delay(50)
       try {
         const resp = await OSMesa.getUser(obj.osm_id)
 
@@ -58,6 +84,7 @@ async function usersWorker () {
           const data = JSON.parse(resp)
           obj.edit_count = sumEdits(data) || 0
           obj.last_edit = getLastEdit(data.edit_times)
+          await updateCountries(obj.id, data.country_list)
         }
       } catch (e) {
         console.error(`${obj.osm_id} not retrieved from OSMesa`, e.message)
@@ -70,7 +97,7 @@ async function usersWorker () {
             updated_at: db.fn.now()
           })
         ))
-    })
+    }))
 
     // Return a single promise wrapping all the
     // SQL statements

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Link from '../../components/Link'
-import Router from 'next/router'
 import { connect } from 'unistore/react'
 
+import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
@@ -45,7 +45,7 @@ export class Admin extends Component {
     }
 
     return (
-      <div>
+      <div className='admin'>
         <header className='header--internal--green header--page'>
           <div className='row'>
             <div className='section-sub--left section-width-forty'>
@@ -73,6 +73,16 @@ export class Admin extends Component {
                       <div>
                         <h2 className='header--large'>Badges</h2>
                         <p>Manage badges</p>
+                      </div>
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href='/admin/teams'>
+                    <a>
+                      <div>
+                        <h2 className='header--large'>Teams</h2>
+                        <p>Manage teams</p>
                       </div>
                     </a>
                   </Link>

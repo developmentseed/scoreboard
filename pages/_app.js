@@ -18,6 +18,7 @@ import '../styles/App.scss'
 import '../styles/Admin.scss'
 import '../styles/Dashboard.scss'
 import '../styles/Campaigns.scss'
+import '../styles/Country.scss'
 import '../styles/Users.scss'
 import '../styles/Badges.scss'
 
@@ -76,9 +77,6 @@ class Layout extends React.Component {
       <div className='App'>
         <Head>
           <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
-          <link href='https://fonts.googleapis.com/css?family=Heebo' rel='stylesheet' />
-          <link href='https://fonts.googleapis.com/css?family=Crimson+Text' rel='stylesheet' />
-          <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' />
         </Head>
         <header className='header-nav'>
           <div className='row'>
@@ -87,6 +85,8 @@ class Layout extends React.Component {
                 <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
                 <li><Link href='/campaigns'><a>Campaigns</a></Link></li>
                 <li><Link href='/users'><a>Users</a></Link></li>
+                <li><Link href='/teams'><a>Teams</a></Link></li>
+                <li><Link href='/countries'><a>Countries</a></Link></li>
                 <li><Link href='/about'><a>About</a></Link></li>
               </ul>
               {
@@ -99,7 +99,7 @@ class Layout extends React.Component {
                       this.state.menuVisible && (
                         <div className='login-menu'>
                           <ul>
-                            <li><Link href='/dashboard'><a>Dashboard</a></Link></li>
+                            <li><Link href='/'><a>Dashboard</a></Link></li>
                             <li><Link href={`/users/${osm.id}`}><a>Public Profile</a></Link></li>
                             <li><Link href={`/edit-user?id=${osm.id}`} as={join(APP_URL_PREFIX, `/users/${osm.id}/edit`)}><a>Edit Profile</a></Link></li>
                             {

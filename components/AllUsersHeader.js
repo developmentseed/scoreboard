@@ -1,7 +1,7 @@
 import React from 'react'
 import { formatDecimal } from '../lib/utils/format'
 
-export default ({ countries, users, edits }) => (
+export default ({ countries, totalUsers, activeUsers, edits }) => (
   <header className='header--internal--green header--page'>
     <div className='row'>
       <div className='section-sub--left section-width-forty'>
@@ -13,8 +13,12 @@ export default ({ countries, users, edits }) => (
           <span className='num--large'>{(countries && countries.length) || 0}</span>
         </li>
         <li className='list--inline'>
+          <span className='descriptor-chart'>Active Users</span>
+          <span className='num--large'>{formatDecimal(activeUsers)}</span>
+        </li>
+        <li className='list--inline'>
           <span className='descriptor-chart'>Total Users</span>
-          <span className='num--large'>{formatDecimal(users)}</span>
+          <span className='num--large'>{formatDecimal(totalUsers)}</span>
         </li>
         <li className='list--inline'>
           <span className='descriptor-chart'>Total Edits</span>

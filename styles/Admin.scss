@@ -12,6 +12,17 @@
   }
 }
 
+.sidebar-right {
+  width: 20%;
+  left: 5%;
+  float: right;
+  @include media(xsmall-only) {
+    float: none;
+    width: 100%;
+    margin-right: 0%;
+  }
+}
+
 .content--with-sidebar {
   width: 75%;
   float: left;
@@ -64,6 +75,10 @@
   cursor: pointer;
 }
 
+.admin-table-row-alt {
+  background-color: #f0f0f0;
+}
+
 .admin-table-row:hover {
   background-color: #fafafc;
 }
@@ -112,6 +127,10 @@ $border-color: #ccc;
     margin-bottom: 2rem;
   }
 
+  &__image {
+    padding-top: 20px;
+  }
+
   fieldset {
     padding-inline-start: 0;
   }
@@ -133,7 +152,7 @@ $border-color: #ccc;
   }
 }
 
-.button {
+.admin .button {
   background-color: $base-color;
   border-radius: $border-radius;
   border: 1px solid $base-color;

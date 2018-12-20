@@ -7,11 +7,11 @@ export default class BadgeCompleted extends Component {
     let badgeUrl = join(APP_URL_PREFIX, '/static/badges/blank-graphic.svg')
     let borderUrl = join(APP_URL_PREFIX, '/static/badges/blank-border.svg')
 
-    var { category, badgeLevel } = this.props.badge
+    var { badgeImage } = this.props.badge
 
-    if (category && badgeLevel) {
-      badgeUrl = join(APP_URL_PREFIX, `/static/badges/${category}-${badgeLevel}-graphic.svg`)
-      borderUrl = join(APP_URL_PREFIX, `/static/badges/border${badgeLevel}.svg`)
+    if (badgeImage) {
+      badgeUrl = join(APP_URL_PREFIX, `/static/badges/${badgeImage}`)
+      borderUrl = join(APP_URL_PREFIX, `/static/badges/border0.svg`)
     }
 
     return (
