@@ -26,9 +26,12 @@ async function post (req, res) {
   }
 
   try {
-    await db('badges').insert(body)
-    return res.sendStatus(200)
+    let [ id ] = await db('badges').insert(body).returning('id')
+    return res.send({ id })
   } catch (e) {
+    if (e.code === '23505') { // Uniqueness constraint
+      return res.boom.badRequest('Badge name already exists')
+    }
     return res.sendStatus(500)
   }
 }
@@ -67,6 +70,10 @@ async function put (req, res) {
     await db('badges').where('id', '=', id).update(body)
     return res.sendStatus(200)
   } catch (err) {
+    if (err.code === '23505') { // Uniqueness constraint
+      return res.boom.badRequest('Badge name already exists')
+    }
+    console.error(err)
     return res.sendStatus(500)
   }
 }

@@ -31,6 +31,7 @@ export class AdminTeamsEdit extends Component {
     this.handleHashtagInputChange = this.handleHashtagInputChange.bind(this)
     this.resetInputs = this.resetInputs.bind(this)
     this.renderCampaignsSelectSection = this.renderCampaignsSelectSection.bind(this)
+
     this.addCampaignToTeam = this.addCampaignToTeam.bind(this)
     this.removeCampaignFromTeam = this.removeCampaignFromTeam.bind(this)
 
@@ -357,7 +358,7 @@ export class AdminTeamsEdit extends Component {
       bio: descriptionInput,
       name: nameInput,
       hashtag: hashtagInput,
-      campaigns: teamCampaigns.map(c => c.id),
+      campaigns: teamCampaigns.map(c => ({ 'id': c.id, 'team_priority': c.team_priority })),
       newusers: teamUsers.map(u => u.osm_id),
       oldusers: initialUsers.map(u => u.osm_id)
     }

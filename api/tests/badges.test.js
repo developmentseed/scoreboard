@@ -43,19 +43,29 @@ test.serial('Getting a badge from the db', async (t) => {
 })
 
 test.serial('Inserting a badge into the db', async (t) => {
-  let res = await adminUser
-    .get('/scoreboard/api/badges')
-    .expect(200)
-  const numBadges = res.body.badges.length
-  await adminUser
+  let postRes = await adminUser
     .post('/scoreboard/api/badges')
     .send({ name: 'Test Badge', operations: [['>', 'daysTotal', '100']] })
     .expect(200)
-  res = await adminUser
-    .get(`/scoreboard/api/badges/${numBadges + 1}`)
+
+  let getRes = await adminUser
+    .get(`/scoreboard/api/badges/${postRes.body.id}`)
     .expect(200)
-  t.true(res.body.badges[0].name === 'Test Badge')
-  t.deepEqual(res.body.badges[0].operations, [['>', 'daysTotal', '100']])
+  t.true(getRes.body.badges[0].name === 'Test Badge')
+  t.deepEqual(getRes.body.badges[0].operations, [['>', 'daysTotal', '100']])
+})
+
+test.serial('Try inserting a badge with the same name', async t => {
+  await adminUser
+    .post('/scoreboard/api/badges')
+    .send({ name: 'Test Duplicate Badge', operations: [['>', 'daysTotal', '100']] })
+    .expect(200)
+  let res = await adminUser
+    .post('/scoreboard/api/badges')
+    .send({ name: 'Test Duplicate Badge', operations: [['>', 'daysTotal', '100']] })
+    .expect(400)
+
+  t.true(res.status === 400)
 })
 
 test.serial('Updating a badge in the db', async (t) => {
@@ -80,6 +90,28 @@ test.serial('Updating a badge in the db', async (t) => {
   t.true(res.body.badges[0].name === 'Test Badge Edit')
   t.deepEqual(res.body.badges[0].operations,
     [['>', 'daysTotal', '1'], ['>=', 'daysInRow', '1']])
+})
+
+test.serial('Try updating a badge with the same name', async t => {
+  let postRes = await adminUser
+    .post('/scoreboard/api/badges')
+    .send({ name: 'Test Badge 1', operations: [['>', 'daysTotal', '100']] })
+    .expect(200)
+
+  await adminUser
+    .post('/scoreboard/api/badges')
+    .send({ name: 'Test Badge 2', operations: [['>', 'daysTotal', '100']] })
+    .expect(200)
+
+  let res2 = await adminUser
+    .put(`/scoreboard/api/badges/${postRes.body.id}`)
+    .set('Accept-Encoding', 'identity')
+    .send({
+      name: 'Test Badge 2'
+    })
+    .expect(400)
+
+  t.true(res2.status === 400)
 })
 
 // test.serial('Earning a badge in the db', async (t) => {

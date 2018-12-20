@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
+import Link from '../components/Link'
 import CampaignCard from '../components/CampaignCard'
+import { sortBy, prop } from 'ramda'
 
 export class Team extends Component {
   componentDidMount () {
@@ -52,7 +54,7 @@ export class Team extends Component {
                   <tbody>
                     {team.users.map(record => (
                       <tr key={`users-${record.osm_id}`} className=''>
-                        <td>{`${record.full_name}`}</td>
+                        <td><Link href={`/users/${record.osm_id}`}><a className='link--normal'>{`${record.full_name}`}</a></Link></td>
                         <td>{record.osm_id}</td>
                       </tr>
                     ))}
@@ -65,7 +67,7 @@ export class Team extends Component {
         <section className='section--tertiary'>
           <div className='row'>
             <h2>Assigned Campaigns</h2>
-            {team.campaigns.map(record => <CampaignCard key={record.id} campaign={record} />)}
+            {sortBy(prop('team_priority'), team.campaigns).map(record => <CampaignCard key={record.id} campaign={record} />)}
           </div>
         </section>
       </div>

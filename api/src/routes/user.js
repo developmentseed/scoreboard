@@ -100,7 +100,7 @@ async function get (req, res) {
     if (teams && teams.length > 0) {
       assignments = await db('team_assignments').whereIn('team_id', teams.map(t => t.id))
         .join('campaigns', 'campaigns.id', '=', 'team_assignments.campaign_id')
-        .select('campaign_id', 'team_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
+        .select('campaign_id', 'team_id', 'team_priority', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
 
       // Map names
       assignments = assignments.map(assignment => {

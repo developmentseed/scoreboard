@@ -12,6 +12,7 @@ import DataNotAvailable from '../components/DataNotAvailable'
 import InlineList from '../components/InlineList'
 import FilterBar from '../components/FilterBar'
 import AssignmentsTable from '../components/AssignmentsTable'
+import { sortBy, prop } from 'ramda'
 
 const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
   ssr: false
@@ -82,7 +83,11 @@ class Dashboard extends Component {
         <section>
           <div className='row'>
             <div className='sidebar-right'>
-              <h2 className='header--large' style={{ marginBottom: 5 }}>Teams</h2>
+              <h2 className='header--large' style={{ marginBottom: 5 }}>
+                <Link href='/teams'>
+                  <a class='header-link'>Teams</a>
+                </Link>
+              </h2>
               {
                 teams && teams.length
                   ? (
@@ -101,7 +106,11 @@ class Dashboard extends Component {
                   )
               }
 
-              <h2 className='header--large' style={{ marginBottom: 5 }}>Countries</h2>
+              <h2 className='header--large' style={{ marginBottom: 5 }}>
+                <Link href='/countries'>
+                  <a class='header-link'>Countries</a>
+                </Link>
+              </h2>
               {
                 countries.length
                   ? (
@@ -198,9 +207,9 @@ class Dashboard extends Component {
       { name: 'All', id: 'all' }
     ]
 
-    let teamAssignments = assignments.map(task => {
+    let teamAssignments = sortBy(prop('team_priority'), assignments).map(task => {
       return {
-        priority: task.priority,
+        priority: task.team_priority ? `team priority: ${task.team_priority}` : task.priority,
         name: task.name,
         assigned_by: task.team_name,
         campaign_hashtag: task.campaign_hashtag
@@ -208,7 +217,7 @@ class Dashboard extends Component {
     })
 
     const allCampaigns = {
-      favorites,
+      favorites: sortBy(prop('priority'), favorites),
       teams: teamAssignments,
       all: teamAssignments.concat(favorites)
     }
@@ -223,7 +232,11 @@ class Dashboard extends Component {
 
     return (
       <div>
-        <h2 className='header--large header--with-description'>Campaigns</h2>
+        <h2 className='header--large header--with-description'>
+          <Link href='/campaigns'>
+            <a class='header-link'>Campaigns</a>
+          </Link>
+        </h2>
         <FilterBar
           filters={assignmentFilters}
           active={this.state.assignmentsFilter}
