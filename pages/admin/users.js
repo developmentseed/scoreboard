@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
-import Router from 'next/router'
+import Link from '../../components/Link'
 import { connect } from 'unistore/react'
 
+import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
-
-import '../../styles/Admin.scss'
 
 export class AdminUsers extends Component {
   constructor () {
@@ -43,9 +41,9 @@ export class AdminUsers extends Component {
     if (!admin || !admin.users) return
 
     return (
-      <div>
+      <div className='admin'>
         <h1>List</h1>
-        <table className='admin-user-table'>
+        <table className='admin-table'>
           <thead>
             <tr>
               <th>ID</th>
@@ -57,7 +55,7 @@ export class AdminUsers extends Component {
             {
               admin.users
                 .map((user) => (
-                  <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-user-table-row'>
+                  <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-table-row'>
                     <td>{user.osm_id}</td>
                     <td>{user.full_name}</td>
                     <td>{this.renderUserRoles(user.roles)}</td>

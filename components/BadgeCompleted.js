@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
-import '../styles/Badges.scss'
+import join from 'url-join'
+import { APP_URL_PREFIX } from '../api/src/config'
 
 export default class BadgeCompleted extends Component {
   render () {
-    let badgeUrl = '/static/badges/blank-graphic.svg'
-    let borderUrl = '/static/badges/blank-border.svg'
+    let badgeUrl = join(APP_URL_PREFIX, '/static/badges/blank-graphic.svg')
+    let borderUrl = join(APP_URL_PREFIX, '/static/badges/blank-border.svg')
 
-    var { category, badgeLevel } = this.props.badge
+    var { badgeImage } = this.props.badge
 
-    if (category && badgeLevel) {
-      badgeUrl = `/static/badges/${category}-${badgeLevel}-graphic.svg`
-      borderUrl = `/static/badges/border${badgeLevel}.svg`
+    if (badgeImage) {
+      badgeUrl = join(APP_URL_PREFIX, `/static/badges/${badgeImage}`)
+      borderUrl = join(APP_URL_PREFIX, `/static/badges/border0.svg`)
     }
 
     return (

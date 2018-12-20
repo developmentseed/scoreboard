@@ -1,4 +1,4 @@
-const connection = require('../db/connection')
+const db = require('../db/connection')
 const {
   split, trim
 } = require('ramda')
@@ -16,7 +16,7 @@ function applyFilters (query, req) {
   const active = req.query.active || false
 
   if (search.length > 0) {
-    query = query.where('full_name', 'like', `%${search}%`)
+    query = query.where('full_name', 'ilike', `%${search}%`)
   }
 
   if (country.length > 0) {
@@ -24,9 +24,28 @@ function applyFilters (query, req) {
     query = query.whereIn('country', countries)
   }
 
-  if (active && active === 'true') {
-    // Filter for users that have edited in the past 6 months
-    query = query.whereBetween('last_edit', [subMonths(Date.now(), 6), Date.now()])
+  if (active) {
+    switch (active) {
+      case 'active': {
+        query = query.where('edit_count', '>', 0)
+        break
+      }
+      case 'active-6-mo': {
+        query = query.whereBetween('last_edit', [subMonths(Date.now(), 6), new Date(Date.now())])
+        break
+      }
+      case 'active-3-mo': {
+        query = query.whereBetween('last_edit', [subMonths(Date.now(), 3), new Date(Date.now())])
+        break
+      }
+      case 'active-1-mo': {
+        query = query.whereBetween('last_edit', [subMonths(Date.now(), 1), new Date(Date.now())])
+        break
+      }
+      default: {
+        break
+      }
+    }
   }
 
   return query
@@ -49,11 +68,11 @@ async function stats (req, res) {
   const sortType = req.query.sortType || ''
 
   try {
-    const db = connection()
-
     // Create table with ranking
     const allUsers = db.with('edits', (conn) => conn
-      .select('osm_id', 'full_name', 'edit_count', 'country', 'last_edit')
+      .select('osm_id', 'full_name',
+        db.raw('case "edit_count" when NULL then 0 else "edit_count" end'),
+        'country', 'last_edit')
       .from('users')
       .whereNotIn('osm_id', filteredUsers))
       .select(
@@ -63,8 +82,7 @@ async function stats (req, res) {
         's.country',
         's.last_edit',
         db.raw(
-          `(select count(*)+1 from edits as r
-        where r.edit_count > s.edit_count) as rank`
+          'rank() over (order by s.edit_count desc nulls last) as rank'
         )
       ).from('edits as s')
 
@@ -77,10 +95,10 @@ async function stats (req, res) {
         recordQuery = recordQuery.orderBy('last_edit', 'asc')
         break
       case 'Least total':
-        recordQuery = recordQuery.orderBy('edit_count', 'asc')
+        recordQuery = recordQuery.orderBy('rank', 'desc')
         break
       default: // Most total edits
-        recordQuery = recordQuery.orderBy('edit_count', 'desc')
+        recordQuery = recordQuery.orderByRaw('edit_count DESC NULLS LAST')
         break
     }
 
@@ -94,10 +112,11 @@ async function stats (req, res) {
     const realUsers = db('users').whereNotIn('osm_id', filteredUsers)
     const [{ subTotal }] = await applyFilters(realUsers.clone(), req).count('id as subTotal')
     const [{ total }] = await realUsers.clone().count('id as total')
+    const [{ active }] = await realUsers.clone().where('edit_count', '>', 0).count('id as active')
     const [{ editTotal }] = await realUsers.clone().sum('edit_count as editTotal')
 
     return res.send({
-      records, subTotal, total, editTotal, countries
+      records, subTotal, total, editTotal, countries, active
     })
   } catch (err) {
     console.error(err)

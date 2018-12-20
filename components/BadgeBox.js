@@ -10,6 +10,7 @@ function stripWS (text) {
 
 export default ({ badges }) => {
   if (badges && badges.all) {
+    console.log(badges.all)
     var progressBadges = Object.keys(badges.all).map(val => {
       var badge = badges.all[val]
       if (badge) {
@@ -19,7 +20,8 @@ export default ({ badges }) => {
           name: badge.name,
           category: badge.category,
           badgeLevel: badge.badgeLevel,
-          points: badge.points
+          points: badge.points,
+          badgeImage: badge.badgeImage
         }
       } else {
         return null

@@ -1,8 +1,10 @@
 import React from 'react'
-import Link from 'next/link'
+import Link from '../components/Link'
+import join from 'url-join'
+import { APP_URL_PREFIX } from '../api/src/config'
 
-const image1 = '/static/about-campaignmanager.jpg'
-const image2 = '/static/about-mapper.jpg'
+const image1 = join(APP_URL_PREFIX, '/static/about-campaignmanager.jpg')
+const image2 = join(APP_URL_PREFIX, '/static/about-mapper.jpg')
 
 const About = ({ project }) => (
   <div className='About'>

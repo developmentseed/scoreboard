@@ -1,28 +1,47 @@
 import React from 'react'
 import InputRange from 'react-input-range'
-import 'react-input-range/lib/css/index.css'
+import join from 'url-join'
+import { APP_URL_PREFIX } from '../api/src/config'
 
-export default (props) => {
-  const {
-    searchText,
-    completeness: { compl_min, compl_max },
-    handleSearch,
-    handleFilterChange
-  } = props
+const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
-  return (
-    <form onSubmit={e => e.preventDefault()}>
-      <fieldset>
-        <legend>Search</legend>
-        <div className='search'>
-          <input className='input--text' value={searchText} onChange={handleSearch} />
-          <span className='search-icon' />
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Completeness</legend>
-        <InputRange maxValue={100} minValue={0} value={{ min: compl_min, max: compl_max }} onChange={handleFilterChange} />
-      </fieldset>
-    </form>
-  )
+export default class extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      min: 0,
+      max: 100
+    }
+  }
+
+  render () {
+    const {
+      handleSearch
+    } = this.props
+
+    let { min, max } = this.state
+
+    return (
+      <form onSubmit={e => e.preventDefault()}>
+        <fieldset>
+          <legend>Search</legend>
+          <div className='search'>
+            <input className='input--text' onChange={handleSearch} />
+            <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Completeness</legend>
+          <InputRange
+            maxValue={100}
+            minValue={0}
+            value={{ min, max }}
+            onChange={value => this.setState(value)}
+            onChangeComplete={this.props.handleFilterChange}
+          />
+        </fieldset>
+      </form>
+    )
+  }
 }

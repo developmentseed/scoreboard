@@ -1,18 +1,20 @@
 const path = require('path')
 const test = require('ava')
 const request = require('supertest')
-const connection = require('../src/db/connection')
+const db = require('../src/db/connection')
 const app = require('../src/index')
+const { createAuthenticatedUser } = require('./helpers')
 
-let db
+let adminUser
+
 const dbDirectory = path.join(__dirname, '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async () => {
-  db = connection()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
+  adminUser = await createAuthenticatedUser(app, [1])
 })
 
 test.after.always(async () => {
@@ -20,7 +22,7 @@ test.after.always(async () => {
   await db.destroy()
 })
 
-test('Pull all badges', async (t) => {
+test.serial('Pull all badges', async (t) => {
   const res = await request(app)
     .get('/scoreboard/api/badges')
     .expect(200)
@@ -32,7 +34,7 @@ test('Pull all badges', async (t) => {
   t.true(numBadges === 10)
 })
 
-test('Getting a badge from the db', async (t) => {
+test.serial('Getting a badge from the db', async (t) => {
   const res = await request(app)
     .get('/scoreboard/api/badges/1')
     .expect(200)
@@ -41,33 +43,47 @@ test('Getting a badge from the db', async (t) => {
 })
 
 test.serial('Inserting a badge into the db', async (t) => {
-  let res = await request(app)
-    .get('/scoreboard/api/badges')
-    .expect(200)
-  const numBadges = res.body.badges.length
-  await request(app)
+  let postRes = await adminUser
     .post('/scoreboard/api/badges')
     .send({ name: 'Test Badge', operations: [['>', 'daysTotal', '100']] })
     .expect(200)
-  res = await request(app)
-    .get(`/scoreboard/api/badges/${numBadges + 1}`)
+
+  let getRes = await adminUser
+    .get(`/scoreboard/api/badges/${postRes.body.id}`)
     .expect(200)
-  t.true(res.body.badges[0].name === 'Test Badge')
-  t.deepEqual(res.body.badges[0].operations, [['>', 'daysTotal', '100']])
+  t.true(getRes.body.badges[0].name === 'Test Badge')
+  t.deepEqual(getRes.body.badges[0].operations, [['>', 'daysTotal', '100']])
+})
+
+test.serial('Try inserting a badge with the same name', async t => {
+  await adminUser
+    .post('/scoreboard/api/badges')
+    .send({ name: 'Test Duplicate Badge', operations: [['>', 'daysTotal', '100']] })
+    .expect(200)
+  let res = await adminUser
+    .post('/scoreboard/api/badges')
+    .send({ name: 'Test Duplicate Badge', operations: [['>', 'daysTotal', '100']] })
+    .expect(400)
+
+  t.true(res.status === 400)
 })
 
 test.serial('Updating a badge in the db', async (t) => {
-  let res = await request(app)
+  let res = await adminUser
     .get('/scoreboard/api/badges')
     .expect(200)
+
   const numBadges = res.body.badges.length
-  await request(app)
+
+  await adminUser
     .put(`/scoreboard/api/badges/${numBadges}`)
+    .set('Accept-Encoding', 'identity')
     .send({
       name: 'Test Badge Edit',
       operations: [['>', 'daysTotal', '1'], ['>=', 'daysInRow', '1']]
     })
     .expect(200)
+
   res = await request(app)
     .get(`/scoreboard/api/badges/${numBadges}`)
     .expect(200)
@@ -76,31 +92,57 @@ test.serial('Updating a badge in the db', async (t) => {
     [['>', 'daysTotal', '1'], ['>=', 'daysInRow', '1']])
 })
 
-test.serial('Earning a badge in the db', async (t) => {
-  const users = await db('users')
-    .select('osm_id').where('edit_count', '>', 1)
-  let stats = await request(app)
-    .get(`/scoreboard/api/users/${users[0].osm_id}`)
+test.serial('Try updating a badge with the same name', async t => {
+  let postRes = await adminUser
+    .post('/scoreboard/api/badges')
+    .send({ name: 'Test Badge 1', operations: [['>', 'daysTotal', '100']] })
     .expect(200)
-  stats = JSON.parse(stats.text)
-  const badgeDetails = Object.entries(stats.badges.earnedBadges).map((eachBadge) => {
-    return eachBadge[1]
-  })
-  t.false(badgeDetails.find((badge) => {
-    return badge.name === 'Test Badge Edit'
-  }) === null)
+
+  await adminUser
+    .post('/scoreboard/api/badges')
+    .send({ name: 'Test Badge 2', operations: [['>', 'daysTotal', '100']] })
+    .expect(200)
+
+  let res2 = await adminUser
+    .put(`/scoreboard/api/badges/${postRes.body.id}`)
+    .set('Accept-Encoding', 'identity')
+    .send({
+      name: 'Test Badge 2'
+    })
+    .expect(400)
+
+  t.true(res2.status === 400)
 })
 
+// test.serial('Earning a badge in the db', async (t) => {
+//   const users = await db('users')
+//     .select('osm_id').where('edit_count', '>', 1)
+//   let stats = await request(app)
+//     .get(`/scoreboard/api/users/${users[0].osm_id}`)
+//     .expect(200)
+//   stats = JSON.parse(stats.text)
+//   const badgeDetails = Object.entries(stats.badges.earnedBadges).map((eachBadge) => {
+//     return eachBadge[1]
+//   })
+//   t.false(badgeDetails.find((badge) => {
+//     return badge.name === 'Test Badge Edit'
+//   }) === null)
+// })
+
 test.serial('Deleting a badge from the db', async (t) => {
-  let res = await request(app)
+  let res = await adminUser
     .get('/scoreboard/api/badges')
     .expect(200)
+
   const numBadges = res.body.badges.length
-  await request(app)
+
+  await adminUser
     .delete(`/scoreboard/api/badges/${numBadges}`)
     .expect(200)
-  res = await request(app)
+
+  res = await adminUser
     .get('/scoreboard/api/badges')
     .expect(200)
+
   t.true(res.body.badges.length === numBadges - 1)
 })

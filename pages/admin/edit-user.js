@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
-import Link from 'next/link'
-import Router from 'next/router'
+import Link from '../../components/Link'
 import Select from 'react-select'
 import { connect } from 'unistore/react'
 
+import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
-
-import '../../styles/Admin.scss'
-import 'react-select/dist/react-select.css'
 
 export class AdminUserEdit extends Component {
   constructor () {
@@ -45,10 +42,10 @@ export class AdminUserEdit extends Component {
     this.props.updateUserRoles(admin.user.id, roles.map((role) => role.value))
       .then(() => {
         this.setState({ saved: true })
-        this.props.setNotification({ type: 'error', message: '✓ Saved' })
+        this.props.setNotification({ type: 'success', message: 'Profile updated successfully' })
       })
       .catch(err => {
-        console.log(err)
+        console.error(err)
         this.props.setNotification({ type: 'error', message: 'Could not update user' })
       })
   }
@@ -79,7 +76,7 @@ export class AdminUserEdit extends Component {
     }
 
     return (
-      <div>
+      <div className='admin'>
         <AdminHeader />
         <section>
           <div className='row'>

@@ -19,12 +19,14 @@ function mapBadgeToTask (badge, x) {
   return map[badge]
 }
 
-function execLogic (op, compValue, requiredValue) {
+function execLogic (op, compValue, requiredValue, excludeFromInProgress) {
   let bp = ''
   switch (op[0]) {
     case '<':
       if (op === '<=') (bp = compValue <= requiredValue)
       else (bp = compValue < requiredValue)
+      // if someone has surpassed this badge requirement, excludeFromInProgress
+      excludeFromInProgress = true
       break
     case '>':
       if (op === '>=') (bp = compValue >= requiredValue)
@@ -32,9 +34,11 @@ function execLogic (op, compValue, requiredValue) {
       break
     case '=':
       bp = (compValue === requiredValue)
+      // if someone has surpassed this badge requirement, excludeFromInProgress
+      if (compValue > requiredValue) excludeFromInProgress = true
       break
   }
-  return bp
+  return [ bp, excludeFromInProgress ]
 }
 
 function betweenDates (firstValidDay, lastValidDay, days, today, excluded) {
@@ -102,7 +106,9 @@ module.exports = (userMetrics, badge) => {
       // Check whether any hashtags match the required one
       badgeOperationPass = currentPointValue.filter(
         // In this case, `requiredPointValue` will be the name of a hashtag
-        (tag) => execLogic(operator, tag, requiredPointValue)
+        (tag) => {
+          return execLogic(operator, tag, requiredPointValue)[0]
+        }
       ).length > 0
       excludeFromInProgress = true
     } else if (metricName === 'allDays') {
@@ -118,7 +124,7 @@ module.exports = (userMetrics, badge) => {
           simpleDateComp(requiredPointValue, currentPointValue, operator, today, excludeFromInProgress)
       }
     } else {
-      badgeOperationPass = execLogic(operator, currentPointValue, requiredPointValue)
+      [ badgeOperationPass, excludeFromInProgress ] = execLogic(operator, currentPointValue, requiredPointValue, excludeFromInProgress)
     }
     if (badgeOperationPass === false) {
       nextPoints = badgeOpArray[valueIndex]
@@ -151,7 +157,8 @@ module.exports = (userMetrics, badge) => {
       badgeLevel,
       points: {
         percentage
-      }
+      },
+      badgeImage: badge.imageFile
     }
   }
   return null

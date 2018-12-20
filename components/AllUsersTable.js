@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import Link from './Link'
 import { formatDecimal } from '../lib/utils/format'
 import { distanceInWordsToNow, parse } from 'date-fns'
 import countries from 'i18n-iso-countries'

@@ -2,10 +2,10 @@ const users = require('../../src/models/users')
 const roles = require('../../src/models/roles')
 
 async function command (args, flags) {
-  const { id, osmId, fullName } = flags
+  const { id, osmId, username } = flags
 
-  if (!id && !osmId) {
-    console.error('--id or --osm-id is required')
+  if (!id && !osmId && !username) {
+    console.error('--id or --osm-id or --username is required')
     return process.exit(1)
   }
 
@@ -16,15 +16,21 @@ async function command (args, flags) {
     [user] = await users.get(id)
   } else if (osmId) {
     [user] = await users.findByOsmId(osmId)
+  } else if (username) {
+    [user] = await users.find('full_name', username)
   }
 
   if (!user) {
-    if (!fullName) {
-      console.error('--full-name is required to make a new user and must be your osm username')
+    if (!username || !osmId) {
+      console.error('both --username and --osm-id are required to make a new user and must be your osm username and id')
       return process.exit(1)
     }
-    await users.create({ osm_id: osmId, full_name: fullName, roles: [1] })
+    await users.create({ osm_id: osmId, full_name: username, roles: [1] })
     return process.exit()
+  }
+
+  if (!user.roles) {
+    user.roles = []
   }
 
   if (user.roles.includes(adminRole.id)) {
@@ -50,8 +56,8 @@ const flags = [
     type: 'integer'
   },
   {
-    name: 'full-name',
-    alias: 'fullName',
+    name: 'username',
+    alias: 'u',
     type: 'string'
   }
 ]
