@@ -34,8 +34,10 @@ scoreboard users destroy --id {user id}
 
 ### Create a new admin user
 
+To create an admin user that has not yet logged in to the site, include both their osm id and username:
+
 ```console
-scoreboard create-admin-user --osm-id {osm id} --full-name {osm username}
+scoreboard create-admin-user --osm-id {osm id} --username {osm username}
 ```
 
 ### Assign admin rights to an existing user
