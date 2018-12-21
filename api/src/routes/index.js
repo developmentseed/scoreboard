@@ -13,6 +13,7 @@ const favorites = require('./favorite-campaigns')
 const teams = require('./teams')
 const countries = require('./countries')
 const country = require('./country')
+const taskers = require('./taskers')
 
 const { OSMESA_API } = require('../config')
 
@@ -60,5 +61,12 @@ router.post('/teams', teams.post)
 router.get('/teams/:id', teams.get)
 router.put('/teams/:id', teams.put)
 router.delete('/teams/:id', teams.del)
+
+// taskers routes
+router.get('/taskers', taskers.list)
+router.post('/taskers', taskers.post)
+router.get('/taskers/:id', taskers.get)
+router.put('/taskers/:id', taskers.put)
+router.delete('/taskers/:id', taskers.del)
 
 module.exports = router

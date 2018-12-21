@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",
+    "debug": "node --inspect server.js",
     "start": "NODE_ENV=production node server.js",
     "build": "next build",
     "test": "npm run test-ui && npm run test-api",

@@ -61,6 +61,15 @@ app.prepare()
       app.render(req, res, '/admin/edit-user', { id })
     })
 
+    api.get('/admin/taskers/add', (req, res) => {
+      app.render(req, res, '/admin/taskers-add')
+    })
+
+    api.get('/admin/taskers/:id', (req, res) => {
+      const { id } = req.params
+      app.render(req, res, '/admin/taskers-edit', { id })
+    })
+
     api.get('/admin/teams/add', (req, res) => {
       app.render(req, res, '/admin/teams-add')
     })

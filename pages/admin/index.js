@@ -87,6 +87,16 @@ export class Admin extends Component {
                     </a>
                   </Link>
                 </li>
+                <li>
+                  <Link href='/admin/taskers'>
+                    <a>
+                      <div>
+                        <h2 className='header--large'>Taskers</h2>
+                        <p>Manage tasking managers</p>
+                      </div>
+                    </a>
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
