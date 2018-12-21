@@ -120,7 +120,7 @@ export class Home extends Component {
                 <h3>Edits By Country</h3>
                 <EditorsByCountry edits={editsByCountry} />
               </div>
-              <div className='side-by-side section-width-eighty' style={{ height: '430px', marginBottom: '50px' }}>
+              <div className='side-by-side section-width-eighty chart' style={{ height: '430px', marginBottom: '50px' }}>
                 <h3>Top Editors</h3>
                 {
                   topEdits ? <TopEditorsChart edits={topEdits} /> : <div>Loading...</div>

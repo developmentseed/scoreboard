@@ -534,6 +534,9 @@ dl {
     margin-right: 3em;
   }
 }
+.header--internal--green .list--two-column li {
+  font-family: $heading-font-regular;
+}
 
 .list--horizontal {
   li {
@@ -546,6 +549,7 @@ dl {
   margin-top: 1.5em;
   text-align: center;
   padding-right: 8%;
+  font-family: $heading-font-regular;
   li {
     display: inline-block;
     margin: 0 .4em;
@@ -553,7 +557,7 @@ dl {
   a, a:visited {
     padding: 0 .2em;
     color: $med-text-color;
-    font-size: 1.2em;
+    font-size: 1em;
     &:hover {
       color: $blue-color;
     }

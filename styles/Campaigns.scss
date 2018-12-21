@@ -91,6 +91,7 @@ fieldset {
   }
   .descriptor-chart {
     margin-right: 1.5em;
+    font-size: 1.5em;
   }
   .card-content {
     padding: 2em 2.2em 1.9em;
@@ -112,10 +113,24 @@ fieldset {
     height: 9em;
     margin-bottom: 1em;
   }
+  // changing box shadow hover properties for smoother animations
+  &:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    box-shadow: 0 4px 16px rgba(30, 30, 30, .1);
+    transition: opacity 0.3s ease-in-out;
+  }
   &:hover {
-    margin-top: -.5em;
-    margin-bottom: 3em;
-    box-shadow: 0 4px 8px rgba(60, 60, 60, .1);
+    transform: translateY(-.5em);
+    &:after {
+      opacity: 1;
+    }
   }
 }
 

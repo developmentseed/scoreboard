@@ -212,8 +212,8 @@ nav {
 .chart-bar--wrapper {
   position: relative;
   display: inline-block;
-  background-color: $background-color-light;
-  width: 70%;
+  background-color: lighten($light-text-color, 50%);
+  width: 80%;
   height: 8px;
 }
 
@@ -230,7 +230,7 @@ nav {
   color: lighten($green-color, 5%);
   font-size: .86em;
   position: absolute;
-  right: 0;
+  right: -3em;
   top: -.5em;
 }
 
