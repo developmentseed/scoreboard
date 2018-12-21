@@ -61,6 +61,10 @@ nav {
       border-bottom: 2px solid rgba(255,255,255,.8);
       padding-bottom: .8em;
     }
+    // The below .active class should be added to the navigation list item of the active page
+    li a .active {
+      border-bottom: 2px solid rgba(255,255,255,1);
+    }
   }
   .nav--right {
     float: right;

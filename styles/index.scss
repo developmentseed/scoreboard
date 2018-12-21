@@ -268,6 +268,7 @@ section {
     margin-top: .5em;
     &:hover {
       color: darken(#fff, 7%);
+      border-bottom: 1px solid darken(#fff, 7%);
     }
   }
 }
@@ -435,6 +436,7 @@ a, a:visited {
   padding-bottom: 4px;
   &:hover {
     color: darken($blue-color, 10%);
+    border-bottom: 1px solid darken($blue-color, 10%);
   }
 }
 
@@ -443,7 +445,8 @@ a, a:visited {
   transition: all 0.2s ease 0s;
   padding-bottom: 1px;
   &:hover {
-    border-bottom: 1px solid darken($blue-color, 30%);
+    border-bottom: 1px solid darken($blue-color, 25%);
+    color: ($blue-color, 25%);
   }
 }
 

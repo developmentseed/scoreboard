@@ -19,32 +19,32 @@ $background-color-light: #FBFBFB;
     font-family: 'CrimsonText-reg';
     src: url(#{$appUrlFinal}fonts/CrimsonText-Regular.ttf)  format('truetype');
   }
- 
+
   @font-face {
     font-family: 'CrimsonText-semi';
     src: url(#{$appUrlFinal}fonts/CrimsonText-SemiBold.ttf)  format('truetype');
   }
- 
+
   @font-face {
     font-family: 'CrimsonText-bold';
     src: url(#{$appUrlFinal}fonts/CrimsonText-Bold.ttf)  format('truetype');
   }
- 
+
   @font-face {
     font-family: 'Heebo-light';
     src: url(#{$appUrlFinal}fonts/Heebo-Light.ttf)  format('truetype');
   }
- 
+
   @font-face {
     font-family: 'Heebo-reg';
     src: url(#{$appUrlFinal}fonts/Heebo-Regular.ttf)  format('truetype');
   }
- 
+
   @font-face {
     font-family: 'Heebo-bold';
     src: url(#{$appUrlFinal}fonts/Heebo-Bold.ttf)  format('truetype');
   }
- 
+
   @font-face {
     font-family: 'Abel';
     src: url(#{$appUrlFinal}fonts/Abel-Regular.ttf)  format('truetype');
@@ -60,7 +60,7 @@ $base-font-weight: $base-font-regular;
 $base-font-size: 1rem;
 $base-line-height: 1.5;
 
-$base-header-color: #292929;
+$base-header-color: #343536;
 $heading-font-family: 'Heebo-reg', "Helvetica Neue", Helvetica, Arial, sans-serif;
 $heading-font-light: 'Heebo-light', "Helvetica Neue", Helvetica, Arial, sans-serif;;
 $heading-font-regular: 'Heebo-reg', "Helvetica Neue", Helvetica, Arial, sans-serif;
