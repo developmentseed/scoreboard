@@ -5,6 +5,7 @@
   background-color: $base-color;
   position: relative;
   z-index: 5;
+  box-shadow: 0 4px 26px rgba(0,0,0,.3)
 }
 
 nav {
@@ -13,6 +14,8 @@ nav {
     margin-top: 1.4em;
     font-family: $tertiary-font-family;
     float: left;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     .active a {
       padding-bottom: .8em;
       border-bottom: 2px solid rgba(255,255,255,.4);
@@ -58,7 +61,7 @@ nav {
     }
 
     li a:hover {
-      border-bottom: 2px solid rgba(255,255,255,.8);
+      border-bottom: 2px solid rgba(255,255,255,0.7);
       padding-bottom: .8em;
     }
     // The below .active class should be added to the navigation list item of the active page
