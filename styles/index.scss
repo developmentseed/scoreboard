@@ -377,6 +377,7 @@ section {
   transition: all 0.2s ease 0s;
   &:hover {
     border-bottom: 3px solid $blue-color;
+    color: $blue-color;
   }
 }
 

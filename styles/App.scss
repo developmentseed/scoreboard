@@ -152,17 +152,21 @@ nav {
 }
 
 .block--campaign {
-  width: 45%;
+  width: 48%;
   float: left;
-  margin-bottom: 5.8em;
+  margin-bottom: 3.5em;
+  box-sizing: border-box;
   &:nth-of-type(odd) {
-    margin-right: 7%;
+    margin-right: 4%;
   }
   @include media(small-down) {
     width: 100%;
   }
   p {
     min-height: 69px;
+  }
+  &.card {
+    min-height: 270px;
   }
 }
 
