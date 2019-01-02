@@ -62,5 +62,6 @@ app.use('/api', router)
 app.use('/scoreboard/api', router)
 app.use(['/api', '/api/docs'], swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/fonts', express.static(path.join(__dirname, '../../static/fonts')))
+app.use('/docs', express.static(path.join(__dirname, '../../docs-build')))
 
 module.exports = app

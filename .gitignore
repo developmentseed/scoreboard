@@ -10,3 +10,4 @@ tmp
 *.sqlite3*
 users.csv
 .vscode
+docs-build
