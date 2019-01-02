@@ -11,7 +11,7 @@ export default () => {
         <ul>
           <li>
             <Link href='/admin/badges'>
-              <a className='link--normal'>Badge list</a>
+              <a className='link--normal'>See all badges</a>
             </Link>
           </li>
           <li>
@@ -28,7 +28,7 @@ export default () => {
         <ul>
           <li>
             <Link href='/admin/teams'>
-              <a className='link--normal'>Team list</a>
+              <a className='link--normal'>See all teams</a>
             </Link>
           </li>
           <li>
@@ -45,7 +45,7 @@ export default () => {
         <ul>
           <li>
             <Link href='/admin/users'>
-              <a className='link--normal'>User list</a>
+              <a className='link--normal'>See all users</a>
             </Link>
           </li>
         </ul>
