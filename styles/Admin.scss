@@ -44,21 +44,25 @@
 }
 
 .list-grid {
-  li {
+  > li {
     display: inline-block;
     width: 20%;
-
-    a {
-      padding: 20px;
-      display: block;
-      margin-right: 4%; 
-      border-radius: 2px;
-    }
-
-    a:hover {
-      background-color: #fafafc;
-    }
+    vertical-align: top;
   }
+
+  h3 {
+    margin: 0;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
 }
 
 .admin-sidebar-links {
