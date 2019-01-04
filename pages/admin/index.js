@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Link from '../../components/Link'
 import { connect } from 'unistore/react'
 
 import Router from '../../lib/router'
@@ -7,6 +6,7 @@ import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
+import AdminSectionList from '../../components/AdminSectionList'
 
 export class Admin extends Component {
   constructor () {
@@ -54,40 +54,9 @@ export class Admin extends Component {
           </div>
         </header>
         <section>
-          <div className='row'>
-            <div className='content'>
-              <ul className='list-grid'>
-                <li>
-                  <Link href='/admin/users'>
-                    <a>
-                      <div>
-                        <h2 className='header--large'>Users</h2>
-                        <p>Manage user roles</p>
-                      </div>
-                    </a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href='/admin/badges'>
-                    <a>
-                      <div>
-                        <h2 className='header--large'>Badges</h2>
-                        <p>Manage badges</p>
-                      </div>
-                    </a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href='/admin/teams'>
-                    <a>
-                      <div>
-                        <h2 className='header--large'>Teams</h2>
-                        <p>Manage teams</p>
-                      </div>
-                    </a>
-                  </Link>
-                </li>
-              </ul>
+          <div class='row'>
+            <div class='content'>
+              <AdminSectionList />
             </div>
           </div>
         </section>
