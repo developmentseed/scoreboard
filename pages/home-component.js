@@ -80,29 +80,31 @@ export class Home extends Component {
               <ul className='clearfix'>
                 {
                   records.map(record =>
-                    <li key={`block-${record.id}`} className='block--campaign'>
-                      <h3 className='header--small header--with-description-xlg'>
-                        <Link href={`/campaigns/${record.campaign_hashtag}`}>
-                          <a className='header--underlined'>{record.name}</a>
-                        </Link>
-                      </h3>
-                      <p>{trimLength(record.description, 195)}</p>
-                      <ul className='chart-bar--main'>
-                        <li>
-                          <span className='chart-bar--title'>Complete</span>
-                          <span className='chart-bar--wrapper'>
-                            <span className='chart-bar' style={{ 'width': `${parseInt(record.done * 0.5, 10) + parseInt(record.validated, 10)}%` }} />
-                            <span className='chart-bar--percent'>{parseInt(record.done * 0.5, 10) + parseInt(record.validated, 10)}%</span>
-                          </span>
-                        </li>
-                        <li>
-                          <span className='chart-bar--title'>Validated</span>
-                          <span className='chart-bar--wrapper'>
-                            <span className='chart-bar' style={{ 'width': `${parseInt(record.validated, 10)}%` }} />
-                            <span className='chart-bar--percent'>{parseInt(record.validated, 10)}%</span>
-                          </span>
-                        </li>
-                      </ul>
+                    <li key={`block-${record.id}`} className='block--campaign card'>
+                      <div className='card-content'>
+                        <h3 className='header--small header--with-description-xlg'>
+                          <Link href={`/campaigns/${record.campaign_hashtag}`}>
+                            <a className='header--underlined'>{record.name}</a>
+                          </Link>
+                        </h3>
+                        <p>{trimLength(record.description, 195)}</p>
+                        <ul className='chart-bar--main'>
+                          <li>
+                            <span className='chart-bar--title'>Complete</span>
+                            <span className='chart-bar--wrapper'>
+                              <span className='chart-bar' style={{ 'width': `${parseInt(record.done * 0.5, 10) + parseInt(record.validated, 10)}%` }} />
+                              <span className='chart-bar--percent'>{parseInt(record.done * 0.5, 10) + parseInt(record.validated, 10)}%</span>
+                            </span>
+                          </li>
+                          <li>
+                            <span className='chart-bar--title'>Validated</span>
+                            <span className='chart-bar--wrapper'>
+                              <span className='chart-bar' style={{ 'width': `${parseInt(record.validated, 10)}%` }} />
+                              <span className='chart-bar--percent'>{parseInt(record.validated, 10)}%</span>
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
                     </li>
                   )}
               </ul>
@@ -120,7 +122,7 @@ export class Home extends Component {
                 <h3>Edits By Country</h3>
                 <EditorsByCountry edits={editsByCountry} />
               </div>
-              <div className='side-by-side section-width-eighty' style={{ height: '430px', marginBottom: '50px' }}>
+              <div className='side-by-side section-width-eighty chart' style={{ height: '430px', marginBottom: '50px' }}>
                 <h3>Top Editors</h3>
                 {
                   topEdits ? <TopEditorsChart edits={topEdits} /> : <div>Loading...</div>

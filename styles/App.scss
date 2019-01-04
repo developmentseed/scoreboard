@@ -5,6 +5,7 @@
   background-color: $base-color;
   position: relative;
   z-index: 5;
+  box-shadow: 0 4px 26px rgba(0,0,0,.3)
 }
 
 nav {
@@ -13,6 +14,8 @@ nav {
     margin-top: 1.4em;
     font-family: $tertiary-font-family;
     float: left;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     .active a {
       padding-bottom: .8em;
       border-bottom: 2px solid rgba(255,255,255,.4);
@@ -58,8 +61,12 @@ nav {
     }
 
     li a:hover {
-      border-bottom: 2px solid rgba(255,255,255,.8);
+      border-bottom: 2px solid rgba(255,255,255,0.7);
       padding-bottom: .8em;
+    }
+    // The below .active class should be added to the navigation list item of the active page
+    li a.active {
+      border-bottom: 2px solid rgba(255,255,255,1);
     }
   }
   .nav--right {
@@ -148,17 +155,21 @@ nav {
 }
 
 .block--campaign {
-  width: 45%;
+  width: 48%;
   float: left;
-  margin-bottom: 5.8em;
+  margin-bottom: 3.5em;
+  box-sizing: border-box;
   &:nth-of-type(odd) {
-    margin-right: 7%;
+    margin-right: 4%;
   }
   @include media(small-down) {
     width: 100%;
   }
   p {
     min-height: 69px;
+  }
+  &.card {
+    min-height: 270px;
   }
 }
 
@@ -208,8 +219,8 @@ nav {
 .chart-bar--wrapper {
   position: relative;
   display: inline-block;
-  background-color: $background-color-light;
-  width: 70%;
+  background-color: lighten($light-text-color, 50%);
+  width: 80%;
   height: 8px;
 }
 
@@ -226,7 +237,7 @@ nav {
   color: lighten($green-color, 5%);
   font-size: .86em;
   position: absolute;
-  right: 0;
+  right: -3em;
   top: -.5em;
 }
 
