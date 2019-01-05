@@ -6,10 +6,7 @@ const {
 } = require('../config')
 
 class TM {
-  constructor ({ url, type }) {
-    this.url = url
-    this.type = type
-
+  constructor (id, type, url) {
     if (!type) {
       throw new Error('TM needs type')
     }
@@ -18,17 +15,33 @@ class TM {
       throw new Error('TM needs URL')
     }
 
+    this.url = url
+    this.type = type
+
     switch (type) {
-      case 'TM2': {
-        return new TM2API(url)
+      case 'tm2': {
+        return new TM2API(url, id)
       }
-      case 'TM3': {
-        return new TM3API(url)
+      case 'tm3': {
+        return new TM3API(url, id)
       }
       default: {
         return new FakeTMAPI()
       }
     }
+  }
+
+  static updateDB (db, dbObjects) {
+    const promises = dbObjects.map(async obj => {
+      let rows = await db('campaigns').where({ 'tm_id': obj.tm_id, 'tasker_id': obj.tasker_id })
+      if (rows.length === 0) {
+        // not found
+        return db('campaigns').insert(obj)
+      } else {
+        return db('campaigns').where('tm_id', obj.tm_id).update(obj)
+      }
+    })
+    return Promise.all(promises)
   }
 }
 
@@ -45,7 +58,7 @@ class FakeTMAPI {
 }
 
 if (NODE_ENV === 'test') {
-  module.exports.TM = new FakeTMAPI()
+  module.exports.TM = FakeTMAPI
 } else {
-  module.exports.TM = new TM()
+  module.exports.TM = TM
 }
