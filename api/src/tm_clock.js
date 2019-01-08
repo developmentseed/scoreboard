@@ -1,5 +1,8 @@
 const db = require('./db/connection')
 const { TM } = require('./services/tm')
+const bbox = require('@turf/bbox').default
+const bboxPolygon = require('@turf/bbox-polygon').default
+const { featureCollection } = require('@turf/helpers')
 
 /**
  * Worker runs in a clock process and updates the cache
@@ -24,6 +27,21 @@ async function tmWorker () {
       await db('taskers').where('id', id).update('last_update', db.fn.now())
       console.log(`${name} updated\n\n`)
     }
+
+    // Get all features and turn them into a single featurecollection
+    let geometries = await db('campaigns').select('geometry')
+    let bboxes = geometries.map(geom => bbox(JSON.parse(geom.geometry)))
+    let features = bboxes.map(bboxPolygon)
+    let fc = featureCollection(features)
+    await db.transaction(async trx => {
+      await trx('features').where('name', 'tm_campaigns').del()
+      await trx('features').insert({
+        'name': 'tm_campaigns',
+        'feature': fc,
+        'created_at': db.fn.now(),
+        'updated_at': db.fn.now()
+      })
+    })
   } catch (e) {
     console.error(e)
     return Promise.reject(e)
