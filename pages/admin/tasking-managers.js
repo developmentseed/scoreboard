@@ -29,7 +29,7 @@ export class AdminTaskers extends Component {
   }
 
   onTMClick (tm) {
-    Router.push(`/admin/taskers/${tm.id}`)
+    Router.push(`/admin/tasking-managers/${tm.id}`)
   }
 
   renderList () {
@@ -87,9 +87,9 @@ export class AdminTaskers extends Component {
               <h2 className='header--large'>Tasking Managers</h2>
               <ul className='admin-sidebar-links'>
                 <li>
-                  <Link href='/admin/taskers/add'>
+                  <Link href='/admin/tasking-managers/add'>
                     <a className='link--large'>
-                    Add new Source for Tasks
+                    Add new tasking manager
                     </a>
                   </Link>
                 </li>

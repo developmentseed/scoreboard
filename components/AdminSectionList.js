@@ -56,7 +56,7 @@ export default () => {
         </h3>
         <ul>
           <li>
-            <Link href='/admin/taskers'>
+            <Link href='/admin/tasking-managers'>
               <a className='link--normal'>See all tasking managers</a>
             </Link>
           </li>

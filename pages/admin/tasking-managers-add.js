@@ -46,7 +46,7 @@ export class AdminTaskersAdd extends Component {
 
     try {
       await this.props.createTasker(params)
-      Router.push('/admin/taskers')
+      Router.push('/admin/tasking-managers')
     } catch (e) {
       console.log(e)
       this.setState({ disableInteraction: false })
@@ -79,7 +79,7 @@ export class AdminTaskersAdd extends Component {
               <h2 className='header--large'>Tasking Managers</h2>
               <ul className='admin-sidebar-links'>
                 <li>
-                  <Link href='/admin/taskers'>
+                  <Link href='/admin/tasking-managers'>
                     <a className='link--large'>
                       Tasking Managers List
                     </a>
@@ -125,7 +125,7 @@ export class AdminTaskersAdd extends Component {
             id='add-new-badge-submit-button'
             type='submit'
           >
-            Create Tasker
+            Create tasking manager
           </button>
         </div>
       </form >

@@ -39,7 +39,7 @@ class TM3API {
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
     let json = JSON.parse(firstResp)
-    let mapResultsIndex = buildMapResultsIndex(json.mapResults);
+    let mapResultsIndex = buildMapResultsIndex(json.mapResults)
 
     concat(records, json.results)
 

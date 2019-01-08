@@ -63,7 +63,7 @@ export class AdminTaskersEdit extends Component {
 
     try {
       await this.props.updateTasker(id, params)
-      Router.push('/admin/taskers')
+      Router.push('/admin/tasking-managers')
     } catch (e) {
       window.scroll(0, 0)
       this.setState({ disableInteraction: false })
@@ -98,7 +98,7 @@ export class AdminTaskersEdit extends Component {
               <h2 className='header--large'>Tasking Managers</h2>
               <ul className='admin-sidebar-links'>
                 <li>
-                  <Link href='/admin/taskers'>
+                  <Link href='/admin/tasking-managers'>
                     <a className='link--large'>
                       Tasking Managers List
                     </a>
@@ -133,13 +133,13 @@ export class AdminTaskersEdit extends Component {
 
     return (
       <div className='form__footer'>
-        <p>Are you sure you want to delete this tasking manager?</p>
+        <p>Are you sure you want to delete this tasking manager? This will remove all associated campaigns and assignments.</p>
         <button className='button button--destroy'
           id='delete-badge-confirmation-operation-button'
           type='button'
           onClick={async () => {
             await this.props.deleteTasker(id)
-            Router.push('/admin/taskers')
+            Router.push('/admin/tasking-managers')
           }}
         >
           Delete this tasking manager permanently
