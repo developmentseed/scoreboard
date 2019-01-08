@@ -4,22 +4,6 @@ const limit = require('p-limit')(5)
 const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
 
 /**
- * @param {FeatureCollection} fc
- * @returns {Map[ProjectId, Feature]}
- * Takes the feature collection of mapResults from the projects
- * of the TM3 api and builds a reverse index of project ids to geometries
- */
-function buildMapResultsIndex (fc) {
-  let features = {}
-  for (let i = 0; i < fc.features.length; i++) {
-    let feature = fc.features[i]
-    let projectId = feature.properties.projectId
-    features[projectId] = feature
-  }
-  return features
-}
-
-/**
  * Methods to grab data from tasking manager version 3
  */
 class TM3API {
@@ -39,7 +23,6 @@ class TM3API {
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
     let json = JSON.parse(firstResp)
-    let mapResultsIndex = buildMapResultsIndex(json.mapResults)
 
     concat(records, json.results)
 
@@ -54,11 +37,9 @@ class TM3API {
     return Promise.all(promises).then(responses => {
       let projects = []
 
-      // Combine mapResults with records
       responses.forEach(response => {
         let results = JSON.parse(response).results
         results.forEach(project => {
-          project.geometry = mapResultsIndex[project.projectId]
           projects.push(project)
         })
       })
@@ -69,6 +50,12 @@ class TM3API {
 
   getProject (id) {
     return rp(`${this.url}/api/v1/project/${id}`)
+  }
+
+  getProjectAoi (id) {
+    return rp({
+      uri: `${this.url}/api/v1/project/${id}/aoi?as_file=false`
+    })
   }
 
   getTasks (id) {
@@ -88,7 +75,6 @@ class TM3API {
         campaign_hashtag: mainHashtag,
         created_at,
         updated_at,
-        geometry: feature.geometry,
         name: feature.name,
         description: feature.shortDescription,
         validated: feature.percentValidated,
@@ -99,6 +85,25 @@ class TM3API {
     })
 
     return sqlObjects
+  }
+
+  updateDB (db, dbObjects) {
+    const promises = dbObjects.map(obj => limit(async () => {
+      let rows = await db('campaigns').where({ 'tm_id': obj.tm_id, 'tasker_id': obj.tasker_id })
+      if (rows.length === 0) {
+        // not found
+        let aoi = await this.getProjectAoi(obj.tm_id)
+        obj.geometry = aoi
+        return db('campaigns').insert(obj)
+      } else {
+        if (!rows[0].geometry) { // Only get the geometry once
+          let aoi = await this.getProjectAoi(obj.tm_id)
+          obj.geometry = aoi
+        }
+        return db('campaigns').where('tm_id', obj.tm_id).update(obj)
+      }
+    }))
+    return Promise.all(promises)
   }
 }
 

@@ -13,12 +13,16 @@ async function tmWorker () {
     let taskers = await db('taskers').select()
     for (let i = 0; i < taskers.length; i++) {
       let { id, type, url, name } = taskers[i]
+      console.log(`Updating projects for ${name}`)
       let tm = new TM(id, type, url)
+      console.log('Getting projects from API..')
       let projects = await tm.getProjects()
       let dbObjects = await tm.toDBObjects(projects)
-      await TM.updateDB(db, dbObjects)
+
+      console.log('Updating database..')
+      await tm.updateDB(db, dbObjects)
       await db('taskers').where('id', id).update('last_update', db.fn.now())
-      console.log(`Updated ${name}`)
+      console.log(`${name} updated\n\n`)
     }
   } catch (e) {
     console.error(e)

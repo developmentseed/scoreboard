@@ -84,6 +84,19 @@ class TM2API {
 
     return sqlObjects
   }
+
+  updateDB (db, dbObjects) {
+    const promises = dbObjects.map(async obj => {
+      let rows = await db('campaigns').where({ 'tm_id': obj.tm_id, 'tasker_id': obj.tasker_id })
+      if (rows.length === 0) {
+        // not found
+        return db('campaigns').insert(obj)
+      } else {
+        return db('campaigns').where('tm_id', obj.tm_id).update(obj)
+      }
+    })
+    return Promise.all(promises)
+  }
 }
 
 module.exports = TM2API
