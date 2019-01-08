@@ -49,7 +49,10 @@ class TM3API {
   }
 
   getProject (id) {
-    return rp(`${this.url}/api/v1/project/${id}`)
+    return rp({
+      uri: `${this.url}/api/v1/project/${id}?as_file=false`,
+      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+    })
   }
 
   getProjectAoi (id) {
@@ -66,15 +69,8 @@ class TM3API {
 
   toDBObjects (records) {
     const sqlObjects = records.map(feature => {
-      const {
-        created: created_at, last_update: updated_at // eslint-disable-line camelcase
-      } = feature
-      const mainHashtag = extractCampaignHashtag(rp.changesetComment, feature.projectId)
       return {
         priority: feature.priority,
-        campaign_hashtag: mainHashtag,
-        created_at,
-        updated_at,
         name: feature.name,
         description: feature.shortDescription,
         validated: feature.percentValidated,
@@ -90,16 +86,26 @@ class TM3API {
   updateDB (db, dbObjects) {
     const promises = dbObjects.map(obj => limit(async () => {
       let rows = await db('campaigns').where({ 'tm_id': obj.tm_id, 'tasker_id': obj.tasker_id })
+
+      // First time we're getting static data for this project
+      if (rows.length === 0 || (rows.length > 0 && !rows[0].geometry)) {
+        try {
+          let { author, areaOfInterest, created, changesetComment } = JSON.parse(await this.getProject(obj.tm_id))
+          obj.geometry = areaOfInterest
+          obj.created_at = created
+          obj.changeset_comment = changesetComment
+          obj.campaign_hashtag = extractCampaignHashtag(changesetComment, obj.tm_id)
+          obj.author = author
+        } catch (e) {
+          console.error(`Could not add details for project ${obj.tm_id}`)
+          console.error(e)
+        }
+      }
+
       if (rows.length === 0) {
         // not found
-        let aoi = await this.getProjectAoi(obj.tm_id)
-        obj.geometry = aoi
         return db('campaigns').insert(obj)
       } else {
-        if (!rows[0].geometry) { // Only get the geometry once
-          let aoi = await this.getProjectAoi(obj.tm_id)
-          obj.geometry = aoi
-        }
         return db('campaigns').where('tm_id', obj.tm_id).update(obj)
       }
     }))
