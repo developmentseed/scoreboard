@@ -73,6 +73,7 @@ export class AdminTaskersEdit extends Component {
 
   render () {
     const { authenticatedUser } = this.props
+    const { destroyConfirmation } = this.state
 
     if (this.state.loading) {
       return (
@@ -112,10 +113,62 @@ export class AdminTaskersEdit extends Component {
               <div className='row'>
                 {this.renderUpdateForm()}
               </div>
+              <div className='row' style={{ marginTop: 50 }}>
+                <h2 className='header--large' style={{ borderTop: '1px solid #efefef', paddingTop: 20 }}>Delete tasking manager</h2>
+                {
+                  destroyConfirmation
+                    ? this.renderDestroyConfirmation()
+                    : this.renderDestroyButton()
+                }
+              </div>
             </div>
           </div>
         </section>
       </div>
+    )
+  }
+
+  renderDestroyConfirmation () {
+    const { id } = this.props
+
+    return (
+      <div className='form__footer'>
+        <p>Are you sure you want to delete this tasking manager?</p>
+        <button className='button button--destroy'
+          id='delete-badge-confirmation-operation-button'
+          type='button'
+          onClick={async () => {
+            await this.props.deleteTasker(id)
+            Router.push('/admin/taskers')
+          }}
+        >
+          Delete this tasking manager permanently
+        </button>
+
+        <button className='button button--secondary'
+          id='cancel-delete-badge-operation-button'
+          type='button'
+          onClick={() => {
+            this.setState({ destroyConfirmation: false })
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    )
+  }
+
+  renderDestroyButton () {
+    return (
+      <button className='button button--destroy'
+        id='delete-badge-operation-button'
+        type='button'
+        onClick={() => {
+          this.setState({ destroyConfirmation: true })
+        }}
+      >
+        Delete this tasking manager
+      </button>
     )
   }
 
@@ -143,7 +196,7 @@ export class AdminTaskersEdit extends Component {
             id='add-new-badge-submit-button'
             type='submit'
           >
-            Update Tasker
+            Update tasking manager
           </button>
         </div>
       </form >

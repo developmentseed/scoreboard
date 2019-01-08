@@ -79,7 +79,7 @@ export class AdminTaskersAdd extends Component {
               <h2 className='header--large'>Tasking Managers</h2>
               <ul className='admin-sidebar-links'>
                 <li>
-                  <Link href='/admin/badges'>
+                  <Link href='/admin/taskers'>
                     <a className='link--large'>
                       Tasking Managers List
                     </a>

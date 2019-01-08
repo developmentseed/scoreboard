@@ -58,7 +58,10 @@ function update (id, data) {
  * @returns {Promise} a response
  */
 function destroy (id) {
-  return db('taskers').where('id', id).del()
+  return db.transaction(async trx => {
+    await trx('campaigns').where('tasker_id', id).del()
+    await trx('taskers').where('id', id).del()
+  })
 }
 
 module.exports = {
