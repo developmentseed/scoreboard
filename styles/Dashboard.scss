@@ -449,12 +449,12 @@
   }
 
   a {
-    background-color: #f3f3f3;
+    background-color: #E4E4E4;
     padding: 3px 5px;
     border-radius: 3px;
     color: #333;
     margin-right: 3px;
-  
+
     &:hover {
       background-color: #888;
       color: #fcfcfc;
@@ -476,7 +476,9 @@
     padding: 0;
     margin-right: 10px;
     color: #777;
-  
+    font-size: 14px;
+    font-family: $tertiary-font-family;
+    
     &:hover {
       cursor: pointer;
       color: #222;

@@ -16,10 +16,6 @@ nav {
     float: left;
     text-transform: uppercase;
     letter-spacing: 2px;
-    .active a {
-      padding-bottom: .8em;
-      border-bottom: 2px solid rgba(255,255,255,.4);
-    }
     button {
       background: none;
       border: 0;
@@ -60,11 +56,11 @@ nav {
       padding: 0 .5em 1.4em;
     }
 
-    li a:hover {
+    li a:hover,
+    li a.active {
       border-bottom: 2px solid rgba(255,255,255,0.7);
       padding-bottom: .8em;
     }
-    // The below .active class should be added to the navigation list item of the active page
     li a.active {
       border-bottom: 2px solid rgba(255,255,255,1);
     }

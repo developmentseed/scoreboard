@@ -44,7 +44,28 @@
 }
 
 .stats-user {
-  margin-top: -1em;
+  max-width: 80%;
+  margin: 0 auto 2em;
+  ul {
+    display: flex;
+    justify-content: center;
+
+    li {
+      padding: 0 2em;
+      text-align: center;
+      ~li {
+        border-left: 1px solid $background-color-light;
+      }
+    }
+  }
+  .descriptor-chart {
+    text-transform: uppercase;
+  }
+  .num--large {
+    font-family: $heading-font-bold;
+    color: $base-color;
+    margin-bottom: 0.2em;
+  }
 }
 
 .graphs--user {
