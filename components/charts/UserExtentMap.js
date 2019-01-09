@@ -9,7 +9,7 @@ class UserExtentMap extends Component {
 
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/devseed/cj9iy816wb9x02smisy4y7id3',
+      style: 'mapbox://styles/devseed/cjqpb3z440t302smfnewsl6vb',
       zoom: 1,
       center: [0, 0]
     })
