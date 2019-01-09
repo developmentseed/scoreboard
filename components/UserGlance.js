@@ -28,10 +28,6 @@ export default ({ records, badges }) =>
           </div>
 
         </div>
-        <div className='user-glance-graphs'>
-          <h4 className='header--small'>Recently Earned Badges</h4>
-          <MiniBadgeBox badges={badges} />
-        </div>
       </div>
     </div>
   </section>
