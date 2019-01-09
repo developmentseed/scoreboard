@@ -12,7 +12,7 @@ import imageList from '../../lib/utils/loadImages'
 import { Carousel } from 'react-responsive-carousel'
 import '../../styles/Carousel.css'
 
-import { badgeMetrics, badgeOperationTypes, badgeDateOperationTypes, isDateMetric, badgeOperationIndex } from '../../lib/badge-utils'
+import { badgeMetrics, badgeOperationTypes, badgeDateOperationTypes, badgeOperationIndex } from '../../lib/badge-utils'
 
 export class AdminBadgesAdd extends Component {
   constructor () {
