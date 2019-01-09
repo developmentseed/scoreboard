@@ -70,7 +70,7 @@ function simpleDateComp (requiredDay, days, operator, today, excluded) {
   const validDate = new Date(validDay[0], Number(validDay[1] - 1), validDay[2])
   if (!(execLogic(operator, today, validDate))) {
     return [ pass, true, '' ]
-  } else if (operator[0] === '<') {
+  } else {
     return [ pass, excluded, mapBadgeToTask('allDays', requiredDay) ]
   }
 }

@@ -12,7 +12,7 @@ import imageList from '../../lib/utils/loadImages'
 import { Carousel } from 'react-responsive-carousel'
 import '../../styles/Carousel.css'
 
-import { badgeMetrics, badgeOperationTypes, isDateMetric, badgeOperationIndex } from '../../lib/badge-utils'
+import { badgeMetrics, badgeOperationTypes, badgeDateOperationTypes, isDateMetric, badgeOperationIndex } from '../../lib/badge-utils'
 
 export class AdminBadgesAdd extends Component {
   constructor () {
@@ -203,67 +203,89 @@ export class AdminBadgesAdd extends Component {
   }
 
   renderRequirements (op, i) {
-    if (isDateMetric(op)) {
-      if (op[1] === 'allDays:singleDate') {
-        return (
-          <div className='form__input-unit'>
+    const isBetweenCondition = op[0] === 'between'
+
+    if (op[1] === 'allDays') {
+      return (
+        <div className='requirement__section'>
+          <div className='form__input-unit form__input-unit--half'>
             <label
               className='form__label'
-              htmlFor='start-date'
+              htmlFor='badge-operation-type'
             >
-              Date
+              Condition
             </label>
-            <input
-              id='single-date'
-              name='single-date'
-              onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
-              placeholder='Enter the days'
-              required
-              type='date'
-              value={op[2]}
+            <Select
+              id='badge-operation-type'
+              name='badge-operation-type'
+              onChange={(e) => this.handleOperationChange(i, 'operation', e.value)}
+              options={badgeDateOperationTypes}
+              placeholder="Select how you'll gauge this metric"
+              value={op[0]}
             />
           </div>
-        )
-      } else if (op[1] === 'allDays:betweenDates') {
-        return (
-          <div className='requirement__section'>
-            <div className='form__input-unit'>
-              <label
-                className='form__label'
-                htmlFor='start-date'
-              >
-                Start date
-              </label>
-              <input
-                id='start-date'
-                name='start-date'
-                onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
-                placeholder='Enter the days'
-                required
-                type='date'
-                value={op[2]}
-              />
-            </div>
-            <div className='form__input-unit'>
-              <label
-                className='form__label'
-                htmlFor='end-date'
-              >
-                End date
-              </label>
-              <input
-                id='end-date'
-                name='end-date'
-                onChange={(e) => this.handleOperationChange(i, 'secondValue', e.target.value)}
-                placeholder='Enter the days'
-                required
-                type='date'
-                value={op[3]}
-              />
-            </div>
-          </div>
-        )
-      }
+          {
+            isBetweenCondition
+              ? (
+                <div style={{ display: 'inline' }}>
+                  <div className='form__input-unit form__input-unit--half'>
+                    <label
+                      className='form__label'
+                      htmlFor='start-date'
+                    >
+                      Start date
+                    </label>
+                    <input
+                      id='start-date'
+                      name='start-date'
+                      onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
+                      placeholder='Enter the days'
+                      required
+                      type='date'
+                      value={op[2]}
+                    />
+                  </div>
+                  <div className='form__input-unit form__input-unit--half' style={{ paddingLeft: 0, paddingRight: '1rem' }}>
+                    <label
+                      className='form__label'
+                      htmlFor='end-date'
+                    >
+                      End date
+                    </label>
+                    <input
+                      id='end-date'
+                      name='end-date'
+                      onChange={(e) => this.handleOperationChange(i, 'secondValue', e.target.value)}
+                      placeholder='Enter the days'
+                      required
+                      type='date'
+                      value={op[3]}
+                    />
+                  </div>
+                </div>
+              )
+              : (
+                <div className='form__input-unit form__input-unit--half'>
+                  <label
+                    className='form__label'
+                    htmlFor='start-date'
+                  >
+                    Date
+                  </label>
+                  <input
+                    id='single-date'
+                    name='single-date'
+                    onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
+                    placeholder='Enter the days'
+                    required
+                    type='date'
+                    value={op[2]}
+                  />
+                </div>
+              )
+          }
+        </div>
+      )
     } else if (op[1] === 'campaigns') {
       return (
         <input
@@ -490,18 +512,6 @@ export class AdminBadgesAdd extends Component {
     // Properly format date-specific operations,
     // verify that no empty operations objects are being passed
     const parsedOperations = operations
-      .map((op) => {
-        if (isDateMetric(op)) {
-          const operation = op[1].split(':')[1]
-          op[1] = 'allDays'
-          if (operation === 'singleDate') {
-            op[0] = '='
-          } else if (operation === 'betweenDates') {
-            op[0] = 'between'
-          }
-        }
-        return op
-      })
       .filter(op => op && op[0] && op[1])
 
     const params = {
