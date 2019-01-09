@@ -408,7 +408,7 @@ export class AdminBadgesEdit extends Component {
         ...prevState,
         operations: [
           ...prevState.operations,
-          ['', 0, '']
+          ['', '', '']
         ]
       }
     })
@@ -452,7 +452,7 @@ export class AdminBadgesEdit extends Component {
       targetOperation[badgeOperationIndex[keyName]] = value
       targetOperation[badgeOperationIndex['operation']] = '='
       targetOperation[badgeOperationIndex['number']] = ''
-    } else if (keyName === 'metric' && targetOperation.metric === 'campaigns' && value !== 'campaigns') {
+    } else if (keyName === 'metric' && targetOperation[1] === 'campaigns' && value !== 'campaigns') {
       // reset number to numeric
       targetOperation[badgeOperationIndex[keyName]] = value
       targetOperation[badgeOperationIndex['operation']] = ''
@@ -495,7 +495,7 @@ export class AdminBadgesEdit extends Component {
       name: '',
       number: '',
       operations: [
-        ['', 0, '']
+        ['', '', '']
       ],
       imageFile: null,
       selectedImg: 0

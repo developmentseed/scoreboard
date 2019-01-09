@@ -12,7 +12,7 @@ import imageList from '../../lib/utils/loadImages'
 import { Carousel } from 'react-responsive-carousel'
 import '../../styles/Carousel.css'
 
-import { badgeMetrics, badgeOperationTypes } from '../../lib/badge-utils'
+import { badgeMetrics, badgeOperationTypes, isDateMetric, badgeOperationIndex } from '../../lib/badge-utils'
 
 export class AdminBadgesAdd extends Component {
   constructor () {
@@ -20,16 +20,12 @@ export class AdminBadgesAdd extends Component {
 
     this.state = {
       loading: true,
-      descriptionInput: '',
       disableInteraction: false,
-      nameInput: '',
-      numberInput: '',
+      name: '',
+      description: '',
+      number: '',
       operations: [
-        {
-          metric: '',
-          number: 0,
-          operation: ''
-        }
+        ['', '', '']
       ],
       imageFile: imageList[0],
       selectedImg: 0
@@ -207,7 +203,80 @@ export class AdminBadgesAdd extends Component {
   }
 
   renderRequirements (op, i) {
-    if (op.metric !== 'campaigns') {
+    if (isDateMetric(op)) {
+      if (op[1] === 'allDays:singleDate') {
+        return (
+          <div className='form__input-unit'>
+            <label
+              className='form__label'
+              htmlFor='start-date'
+            >
+              Date
+            </label>
+            <input
+              id='single-date'
+              name='single-date'
+              onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
+              placeholder='Enter the days'
+              required
+              type='date'
+              value={op[2]}
+            />
+          </div>
+        )
+      } else if (op[1] === 'allDays:betweenDates') {
+        return (
+          <div className='requirement__section'>
+            <div className='form__input-unit'>
+              <label
+                className='form__label'
+                htmlFor='start-date'
+              >
+                Start date
+              </label>
+              <input
+                id='start-date'
+                name='start-date'
+                onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
+                placeholder='Enter the days'
+                required
+                type='date'
+                value={op[2]}
+              />
+            </div>
+            <div className='form__input-unit'>
+              <label
+                className='form__label'
+                htmlFor='end-date'
+              >
+                End date
+              </label>
+              <input
+                id='end-date'
+                name='end-date'
+                onChange={(e) => this.handleOperationChange(i, 'secondValue', e.target.value)}
+                placeholder='Enter the days'
+                required
+                type='date'
+                value={op[3]}
+              />
+            </div>
+          </div>
+        )
+      }
+    } else if (op[1] === 'campaigns') {
+      return (
+        <input
+          id='campaign-name'
+          name='campaign-name'
+          onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
+          placeholder='Enter the hashtag associated with this campaign'
+          required
+          type='text'
+          value={op[2]}
+        />
+      )
+    } else {
       return (
         <div className='requirement__section'>
           <div className='form__input-unit form__input-unit--half'>
@@ -220,10 +289,10 @@ export class AdminBadgesAdd extends Component {
             <Select
               id='badge-operation-type'
               name='badge-operation-type'
-              onChange={(e) => this.handleOperationChange(e, i, 'operation')}
+              onChange={(e) => this.handleOperationChange(i, 'operation', e.value)}
               options={badgeOperationTypes}
               placeholder="Select how you'll gauge this metric"
-              value={op.operation}
+              value={op[0]}
             />
           </div>
           <div className='form__input-unit form__input-unit--half'>
@@ -237,25 +306,13 @@ export class AdminBadgesAdd extends Component {
               id='badge-metric-number'
               min={0}
               name='badge-metric-number'
-              onChange={(e) => this.handleOperationChange(e, i, 'number')}
+              onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
               placeholder='50'
               type='number'
-              value={op.number}
+              value={op[2]}
             />
           </div>
         </div>
-      )
-    } else {
-      return (
-        <input
-          id='campaign-name'
-          name='campaign-name'
-          onChange={(e) => this.handleOperationChange(e, i, 'number')}
-          placeholder='Enter the hashtag associated with this campaign'
-          required
-          type='text'
-          value={op.number}
-        />
       )
     }
   }
@@ -281,10 +338,10 @@ export class AdminBadgesAdd extends Component {
               <Select
                 id='badge-metric'
                 name='badge-metric'
-                onChange={(e) => this.handleOperationChange(e, i, 'metric')}
+                onChange={(e) => this.handleOperationChange(i, 'metric', e.value)}
                 options={badgeMetrics}
                 placeholder='Select the metric your badge will measure...'
-                value={op.metric}
+                value={op[1]}
               />
             </div>
             {this.renderRequirements(op, i)}
@@ -345,11 +402,7 @@ export class AdminBadgesAdd extends Component {
         ...prevState,
         operations: [
           ...prevState.operations,
-          {
-            metric: '',
-            number: 0,
-            operation: ''
-          }
+          ['', '', '']
         ]
       }
     })
@@ -399,34 +452,22 @@ export class AdminBadgesAdd extends Component {
     })
   }
 
-  handleOperationChange (e, idx, keyName) {
+  handleOperationChange (idx, key, value) {
     let targetOperation = this.state.operations[idx]
     if (!targetOperation) return
-    let value = ''
-    if (e !== null) {
-      value = keyName === 'number' ? e.target.value : e.value
-    }
-    if (keyName === 'metric' && value === 'campaigns') {
+
+    if (key === 'metric' && value === 'campaigns') {
       // make operation "=" and number an empty string
-      targetOperation = {
-        ...targetOperation,
-        [keyName]: value,
-        operation: '=',
-        number: ''
-      }
-    } else if (keyName === 'metric' && targetOperation.metric === 'campaigns' && value !== 'campaigns') {
+      targetOperation[badgeOperationIndex[key]] = value
+      targetOperation[badgeOperationIndex['operation']] = '='
+      targetOperation[badgeOperationIndex['number']] = ''
+    } else if (key === 'metric' && targetOperation[1] === 'campaigns' && value !== 'campaigns') {
       // reset number to numeric
-      targetOperation = {
-        ...targetOperation,
-        [keyName]: value,
-        operation: '',
-        number: 0
-      }
+      targetOperation[badgeOperationIndex[key]] = value
+      targetOperation[badgeOperationIndex['operation']] = ''
+      targetOperation[badgeOperationIndex['number']] = 0
     } else {
-      targetOperation = {
-        ...targetOperation,
-        [keyName]: value
-      }
+      targetOperation[badgeOperationIndex[key]] = value
     }
 
     this.setState((state) => {
@@ -446,11 +487,22 @@ export class AdminBadgesAdd extends Component {
       imageFile
     } = this.state
 
-    // Verify that no empty operations objects are being passed
-    // and also collapse the object into an array
+    // Properly format date-specific operations,
+    // verify that no empty operations objects are being passed
     const parsedOperations = operations
-      .filter(op => op.metric && op.operation)
-      .map(op => [op.operation, op.metric, op.number])
+      .map((op) => {
+        if (isDateMetric(op)) {
+          const operation = op[1].split(':')[1]
+          op[1] = 'allDays'
+          if (operation === 'singleDate') {
+            op[0] = '='
+          } else if (operation === 'betweenDates') {
+            op[0] = 'between'
+          }
+        }
+        return op
+      })
+      .filter(op => op && op[0] && op[1])
 
     const params = {
       description: descriptionInput,
