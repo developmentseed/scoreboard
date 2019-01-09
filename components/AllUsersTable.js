@@ -9,30 +9,32 @@ export default ({ apiStatus, users }) => {
   let content = <div />
   switch (apiStatus) {
     case 'SUCCESS':
-      content = (<table>
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Name</th>
-            <th>Country</th>
-            <th>Total Edits</th>
-            <th>Last Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            users.map(user => (
-              <tr key={user.osm_id}>
-                <td>{((user.edit_count > 0) ? user.rank : 'N/A')}</td>
-                <td><Link href={`/users/${user.osm_id}`}><a className='link--normal'>{user.full_name}</a></Link></td>
-                <td>{countries.getName(user.country, 'en')}</td>
-                <td>{formatDecimal(user.edit_count)}</td>
-                <td>{user.edit_count > 0 ? `${distanceInWordsToNow(parse(user.last_edit))} ago` : 'N/A'}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+      content = (<div className="widget">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Name</th>
+              <th>Country</th>
+              <th>Total Edits</th>
+              <th>Last Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              users.map(user => (
+                <tr key={user.osm_id}>
+                  <td>{((user.edit_count > 0) ? user.rank : 'N/A')}</td>
+                  <td><Link href={`/users/${user.osm_id}`}><a className='link--normal'>{user.full_name}</a></Link></td>
+                  <td>{countries.getName(user.country, 'en')}</td>
+                  <td>{formatDecimal(user.edit_count)}</td>
+                  <td>{user.edit_count > 0 ? `${distanceInWordsToNow(parse(user.last_edit))} ago` : 'N/A'}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
       )
       break
     case 'LOADING':

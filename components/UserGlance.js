@@ -9,7 +9,7 @@ export default ({ records, badges }) =>
       <div className='graphs--user'>
         <div className='section-sub--left section-width-sixty user-glance-graphs'>
           <h4 className='header--small'>Top Campaigns</h4>
-          <div className='chart' style={{ height: '150px' }}>
+          <div className='chart widget' style={{ height: '150px' }}>
             {
               (records && records.hashtags)
                 ? <CampaignsChart {...records} />
@@ -19,7 +19,7 @@ export default ({ records, badges }) =>
         </div>
         <div className='section-sub--left section-width-thirty user-glance-graphs'>
           <h4 className='header--small'>Type Of Edits</h4>
-          <div className='chart chart-pie' style={{ height: '150px' }}>
+          <div className='chart chart-pie widget' style={{ height: '150px' }}>
             {
               (records)
                 ? <EditBreakdownChart {...records} />

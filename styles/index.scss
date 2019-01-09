@@ -3,7 +3,7 @@
 
 body {
   -webkit-print-color-adjust: exact;
-  background: #FFF;
+  background: $background-color-light;
   color: $base-font-color;
   font-size: 14px;
   line-height: 20px;
@@ -285,6 +285,13 @@ section {
 
 .margin-top-sm {
   margin-top: .3em;
+}
+
+.widget {
+  background: #FFFFFF;
+  box-shadow: 0 2px 14px 0 rgba(132,132,132,0.13);
+  padding: 2em 1em;
+  margin: 1em 0;
 }
 
 //Type //
@@ -655,10 +662,7 @@ legend {
 
 //tables //
 table {
-  // Removing set width on tables to allow table to be set based on data width, except at large desktop size
-  @include media(xlarge-up) {
-     // min-width: 60%;
-  }
+  width: 100%;
   text-align: left;
   border-collapse: collapse;
   th {

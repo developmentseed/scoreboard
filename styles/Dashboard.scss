@@ -144,14 +144,17 @@
 
 .tri-fold {
   margin-bottom: 2em;
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   li {
-    float: left;
-    width: 33%;
-    min-height: 350px;
-
+    width: 45%;
+    display: flex;
     &:last-of-type {
       margin-right: 0;
+      &:after {
+        content: " ";
+      }
     }
     @include media(small-down) {
       float: inherit;

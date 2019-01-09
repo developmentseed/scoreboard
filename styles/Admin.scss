@@ -44,10 +44,24 @@
 }
 
 .list-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include media(medium-up){
+    flex-direction: row;
+  }
   > li {
     display: inline-block;
-    width: 20%;
     vertical-align: top;
+    line-height: 2em;
+    @include media(medium-up) {
+      width: 26%;
+    }
+    a {
+      font-family: $tertiary-font-family;
+      line-height: $base-line-height;
+      text-transform: uppercase;
+    }
   }
 
   h3 {

@@ -295,13 +295,13 @@ class Dashboard extends Component {
           onClick={this.onBadgesFilterClick}
         />
 
-        <ul className='tri-fold clearfix'>
+        <ul className='tri-fold'>
           {
             badgeKeys.map((badgeKey, i) => {
               const badge = badges[badgesFilter][badgeKey]
 
               return (
-                <li key={`upcoming-badge-${i}`}>
+                <li className="widget" key={`upcoming-badge-${i}`}>
                   <BadgeInProgress badge={badge} badgeClass='progress' />
                   <div className='badge-Details'>
                     <h3 className='header--small sub-head header--with-description'>{badge.name}</h3>

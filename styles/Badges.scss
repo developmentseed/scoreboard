@@ -1,4 +1,6 @@
 @import 'settings/variables.scss';
+@import 'settings/mixins.scss';
+
 /*----------------------------------------------*/
 /*             Badge Views Style    */
 /*                                   */
@@ -17,6 +19,8 @@ $badgeyellow: #fef387;
 }
 
 .badge-home {
+  display: flex;
+  justify-content: space-around;
   hr {
     max-width: 80%;
   }
@@ -31,10 +35,9 @@ $badgeyellow: #fef387;
 }
 
 .badge-Details {
-  float: left;
-  width: 50%;
+  width: 65%;
   text-align: left;
-  margin-left: 1.2em;
+  margin-left: 1em;
   margin-top: 1.5em;
   .sub-head {
     padding-bottom: .3em;
@@ -42,10 +45,6 @@ $badgeyellow: #fef387;
     @media screen and (max-width: 894px) {
       margin-top: 15px;
     }
-  }
-  @media screen and (max-width: 894px) {
-    margin-left: 0;
-    width: 100%;
   }
 }
 
@@ -93,8 +92,9 @@ $badgeyellow: #fef387;
   background-image: linear-gradient(90deg, $lightgrey 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)),
   linear-gradient(90deg, $green-color 50%, $lightgrey 50%, $lightgrey);
   &.progress {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
   }
   &.upcoming {
     width: 80px;
@@ -105,9 +105,9 @@ $badgeyellow: #fef387;
 
 .Badge-Interior {
   position: absolute;
-  margin-top: 6px;
-  margin-left: 6px;
-  border: 2px solid $darkgrey;
+  margin-top: 11px;
+  margin-left: 11px;
+  border: 2px solid lighten($lightgrey, 20%);
   border-radius: 50%;
   background-repeat: no-repeat;
   background-position: center;
@@ -199,12 +199,16 @@ $badgeyellow: #fef387;
 }
 
 .Badge-Roll {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: column;
+  @include media(medium-up) {
+    flex-direction: row;
+  }
   li {
-    width: 45%;
-    float: left;
-    margin-bottom: 3em;
-    &:nth-of-type(odd) {
-      margin-right: 5%;
+    @include media(medium-up) {
+      width: 45%;
     }
   }
   .Badge-Border {

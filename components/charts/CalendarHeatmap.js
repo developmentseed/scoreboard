@@ -39,7 +39,7 @@ class CalendarHeatmap extends React.Component {
     const { height, values, earliestYear } = this.state
 
     return (
-      <div style={{ position: 'relative', height: `${height}px` }} >
+      <div className="widget" style={{ position: 'relative', height: `${height}px` }} >
         <ResponsiveCalendar
           data={values}
           from={`${earliestYear}-02-01`}

@@ -16,7 +16,7 @@ export default ({ badges }) => {
           <li key={`${badge.name}-earned`}>
             <div className='badge-home'>
               <BadgeCompleted badge={badge} />
-              <div className='badge-Details'>
+              <div className='badge-Details widget'>
                 <h5 className='header--small sub-head header--with-description'>{badge.name}</h5>
                 <p className='badge-Description'>
                   {badge.description}
