@@ -70,7 +70,7 @@ export class Home extends Component {
         <section className='section--tertiary'>
           <div className='row'>
             <div className='width--shortened'>
-              <h2 className='header--large'>Top Campaigns</h2>
+              <h2 className='header--large'>Campaigns</h2>
               <div style={{ width: '100%', height: '275px', 'marginBottom': '40px' }}>
                 {features
                   ? <Map overlay={features} />
@@ -117,7 +117,7 @@ export class Home extends Component {
         <section>
           <div className='row'>
             <div className='width--shortened graphs--users'>
-              <h2 className='header--large'>Users</h2>
+              <h2 className='header--large'>Mappers</h2>
               <div className='side-by-side section-width-twenty section-width--first'>
                 <h3>Edits By Country</h3>
                 <EditorsByCountry edits={editsByCountry} />

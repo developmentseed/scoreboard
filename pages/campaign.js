@@ -23,7 +23,7 @@ const Blurb = ({
   km_waterways_add
 }) => {
   return <h2 className='header--medium list--block'>
-    {`${users.length} users, mapping
+    {`${users.length} mappers, mapping
     ${km_roads_add.toFixed(1)} km of roads,
     ${formatDecimal(buildings_add)} buildings,
     ${formatDecimal(poi_add)} Points of Interest, and
