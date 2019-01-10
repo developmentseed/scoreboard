@@ -29,11 +29,11 @@ export default ({ campaign }) => {
             <p>{trimLength(description, 190)}</p>
             <ul className='card-stats'>
               <li className='list--inline'>
-                <span className='num--large'>{parseInt(done * 0.5, 10) + parseInt(validated, 10)}%</span>
+                <span className='num--large'>{parseInt(Math.min(100, done), 10)}%</span>
                 <span className='descriptor-chart'>Complete</span>
               </li>
               <li className='list--inline'>
-                <span className='num--large'>{parseInt(validated, 10)}%</span>
+                <span className='num--large'>{parseInt(Math.min(100, validated), 10)}%</span>
                 <span className='descriptor-chart'>Validated</span>
               </li>
             </ul>
