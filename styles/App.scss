@@ -300,3 +300,42 @@ nav {
   padding-bottom: .8em;
   border-bottom: 2px solid rgba(255,255,255,.4);
 }
+
+footer {
+  background-color: darken($med-text-color, 15%);
+  color: $background-color-light;
+  font-family: $tertiary-font-family;
+  text-transform: uppercase;
+  line-height: 2;
+  padding: 2em;
+  .row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    // padding: 2em 0;
+    margin: 0 auto;
+    @include media(small-up) {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+  .footer__logo{
+    max-height: 5em;
+    mix-blend-mode: luminosity;
+  }
+}
+.nav--footer {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  margin-bottom: 1em;
+  .logo {
+    font-size: 1.5em;
+    margin-bottom: .5em;
+    border-bottom: 1px solid #fff;
+  }
+  li {
+    padding: 0;
+    margin: 0;
+  }
+}
