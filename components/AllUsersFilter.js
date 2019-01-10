@@ -4,14 +4,13 @@ import { sortBy, prop } from 'ramda'
 import join from 'url-join'
 
 import { APP_URL_PREFIX } from '../api/src/config'
-import countries, { getName } from 'i18n-iso-countries'
-countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
+import countries from '../lib/utils/country-list.json'
 
 const sortByLabel = sortBy(prop('label'))
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 export default ({
-  handleSearch, countries, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
+  handleSearch, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
   handleActiveSelect, selectedActive
 }) => (
   <div className='sidebar'>
@@ -32,7 +31,7 @@ export default ({
           value={selectedValue}
           onChange={handleSelect}
           options={
-            sortByLabel(countries.map(({ country }) => { return { value: country, label: getName(country, 'en') } }).filter((country) => country.label))
+            sortByLabel(countries.map(({ name }) => { return { value: name, label: name } }).filter((country) => country.label))
           }
         />
       </fieldset>

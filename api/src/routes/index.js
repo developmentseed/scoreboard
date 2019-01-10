@@ -39,7 +39,7 @@ router.get('/roles/:id', roles.get)
 router.put('/roles/:id', roles.put)
 router.delete('/roles/:id', roles.del)
 router.get('/countries', countries.stats)
-router.get('/countries/:alpha2', country.get)
+router.get('/countries/:code', country.get)
 
 // badges routes
 router.get('/badges', badges.get)
