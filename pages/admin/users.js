@@ -42,28 +42,30 @@ export class AdminUsers extends Component {
 
     return (
       <div className='admin'>
-        <h1>List</h1>
-        <table className='admin-table'>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Roles</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              admin.users
-                .map((user) => (
-                  <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-table-row'>
-                    <td>{user.osm_id}</td>
-                    <td>{user.full_name}</td>
-                    <td>{this.renderUserRoles(user.roles)}</td>
-                  </tr>
-                ))
-            }
-          </tbody>
-        </table>
+        <h1>All Users</h1>
+        <div className='widget'>
+          <table className='admin-table'>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Roles</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                admin.users
+                  .map((user) => (
+                    <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-table-row'>
+                      <td>{user.osm_id}</td>
+                      <td>{user.full_name}</td>
+                      <td>{this.renderUserRoles(user.roles)}</td>
+                    </tr>
+                  ))
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }

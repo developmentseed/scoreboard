@@ -39,24 +39,26 @@ export class AdminBadges extends Component {
 
     return (
       <div>
-        <h1>List</h1>
-        <table className='admin-table'>
-          <thead>
-            <tr>
-              <th>Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              badges
-                .map((badge) => (
-                  <tr key={`badge-${badge.id}`} onClick={() => this.onBadgeClick(badge)} className='admin-table-row'>
-                    <td>{badge.name}</td>
-                  </tr>
-                ))
-            }
-          </tbody>
-        </table>
+        <h1>All Badges</h1>
+        <div className='widget'>
+          <table className='admin-table'>
+            <thead>
+              <tr>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                badges
+                  .map((badge) => (
+                    <tr key={`badge-${badge.id}`} onClick={() => this.onBadgeClick(badge)} className='admin-table-row'>
+                      <td>{badge.name}</td>
+                    </tr>
+                  ))
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }

@@ -39,26 +39,28 @@ export class AdminTeams extends Component {
 
     return (
       <div>
-        <h1>List</h1>
-        <table className='admin-table'>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Hashtag</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              teams.records
-                .map((team) => (
-                  <tr key={`team-${team.name}`} onClick={() => this.onTeamClick(team)} className='admin-table-row'>
-                    <td>{team.name}</td>
-                    <td>{team.hashtag}</td>
-                  </tr>
-                ))
-            }
-          </tbody>
-        </table>
+        <h1>All Teams</h1>
+        <div className='widget'>
+          <table className='admin-table'>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Hashtag</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                teams.records
+                  .map((team) => (
+                    <tr key={`team-${team.name}`} onClick={() => this.onTeamClick(team)} className='admin-table-row'>
+                      <td>{team.name}</td>
+                      <td>{team.hashtag}</td>
+                    </tr>
+                  ))
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }
