@@ -15,6 +15,14 @@ function chartify ({ hashtags }) {
     sortBy(prop('count'))
   )(hashtags)
 }
+const theme = {
+  axis: {
+    fontSize: '14px',
+  },
+  legend: {
+    fontSize: '14px',
+  },
+};
 
 export default props =>
   <ResponsiveBar
@@ -27,22 +35,23 @@ export default props =>
       'bottom': 50,
       'left': 120
     }}
-    padding={0.2}
+    theme={theme}
+    padding={0.1}
     innerPadding={0}
     minValue='auto'
     maxValue='auto'
     groupMode='grouped'
     layout='horizontal'
     reverse={false}
-    colors='#8BC544'
-    colorBy='id'
+    colors='#4FCA9E'
+    colorBy='index'
     borderRadius={0}
     borderWidth={0}
     borderColor='inherit:brighter(1.6)'
     axisBottom={{
       'orient': 'bottom',
-      'tickSize': 5,
-      'tickPadding': 3,
+      'tickSize': 3,
+      'tickPadding': 5,
       'tickRotation': 0,
       'legend': 'Number of Edits',
       'legendPosition': 'center',

@@ -71,12 +71,17 @@
 .graphs--user {
   .section-width-thirty {
     margin-left: 5%;
+    @include media(medium-down) {
+      margin: 0;
+    }
   }
 }
 
 .user-glance-graphs {
   margin-bottom: 2em;
-
+  @include media(medium-down) {
+    margin-bottom: .5em;
+  }
   .Badge-Border {
     width: 140px;
     height: 140px;

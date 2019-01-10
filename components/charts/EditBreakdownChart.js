@@ -35,6 +35,16 @@ function chartify ({
     }
   ]
 }
+const theme = {
+  axis: {
+    textColor: '#eee',
+    fontSize: '14px',
+  },
+  legends: {
+    textColor: '#eee',
+    fontSize: '14px',
+  },
+};
 
 export default (props) => <ResponsivePie
   data={chartify(props)}
@@ -44,9 +54,10 @@ export default (props) => <ResponsivePie
     'bottom': 0,
     'left': 0
   }}
+  theme={theme}
   sortByValue={false}
-  innerRadius={0.5}
-  padAngle={1}
+  innerRadius={0.65}
+  padAngle={0.3}
   cornerRadius={1}
   colors='paired'
   colorBy='id'
@@ -65,18 +76,18 @@ export default (props) => <ResponsivePie
   enableSlicesLabels
   sliceLabel='value'
   slicesLabelsSkipAngle={10}
-  slicesLabelsTextColor='#333333'
+  slicesLabelsTextColor='#f5f5f5'
   animate
   motionStiffness={90}
   motionDamping={15}
   isInteractive
   legends={[
     {
-      'anchor': 'top-right',
+      'anchor': 'center-left',
       'direction': 'column',
-      'translateY': 56,
+      'translateY': 20,
       'itemWidth': 100,
-      'itemHeight': 18,
+      'itemHeight': 28,
       'symbolSize': 16,
       'symbolShape': 'square'
     }
