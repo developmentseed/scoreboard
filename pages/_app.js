@@ -2,6 +2,7 @@ import React from 'react'
 import join from 'url-join'
 import App, { Container } from 'next/app'
 import Head from 'next/head'
+import { withRouter } from 'next/router'
 import { Provider, connect } from 'unistore/react'
 import { Provider as AlertProvider, withAlert } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
@@ -28,6 +29,11 @@ import 'react-input-range/lib/css/index.css'
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.png')
+
+const NavLink = withRouter(({ children, router, href }) => {
+  const activeClass = router.pathname === href ? 'active' : ''
+  return <Link href={href}><a className={activeClass}>{children}</a></Link>
+})
 
 class Layout extends React.Component {
   constructor () {
@@ -83,11 +89,11 @@ class Layout extends React.Component {
             <nav className='clearfix'>
               <ul className='nav--left'>
                 <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
-                <li><Link href='/campaigns'><a>Campaigns</a></Link></li>
-                <li><Link href='/users'><a>Users</a></Link></li>
-                <li><Link href='/teams'><a>Teams</a></Link></li>
-                <li><Link href='/countries'><a>Countries</a></Link></li>
-                <li><Link href='/about'><a>About</a></Link></li>
+                <li><NavLink href='/campaigns'>Campaigns</NavLink></li>
+                <li><NavLink href='/users'>Users</NavLink></li>
+                <li><NavLink href='/teams'>Teams</NavLink></li>
+                <li><NavLink href='/countries'>Countries</NavLink></li>
+                <li><NavLink href='/about'>About</NavLink></li>
               </ul>
               {
                 loggedIn
