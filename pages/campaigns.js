@@ -44,7 +44,7 @@ export class Campaigns extends Component {
   }
 
   render () {
-    const { page, searchText, compl_min, compl_max, valid_min, valid_max } = this.props.campaigns
+    const { page, searchText } = this.props.campaigns
     const { records: { total, records, all_count }, apiStatus } = this.props.campaigns
 
     return (
