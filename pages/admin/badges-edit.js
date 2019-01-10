@@ -12,7 +12,7 @@ import imageList from '../../lib/utils/loadImages'
 import { Carousel } from 'react-responsive-carousel'
 import '../../styles/Carousel.css'
 
-import { badgeMetrics, badgeOperationTypes, badgeOperationIndex } from '../../lib/badge-utils'
+import { badgeMetrics, badgeOperationTypes, badgeDateOperationTypes, badgeOperationIndex } from '../../lib/badge-utils'
 
 export class AdminBadgesEdit extends Component {
   constructor () {
@@ -57,7 +57,16 @@ export class AdminBadgesEdit extends Component {
   componentDidUpdate () {
     const { badge } = this.props
     if (badge && !this.state.name) {
-      this.setState(this.props.badge)
+      // format date metrics with between condition for form
+      badge.operations = badge.operations.map((op) => {
+        if (op[0] === 'between') {
+          const dateRange = op[2].split('/')
+          op.pop()
+          op = op.concat(dateRange)
+        }
+        return op
+      })
+      this.setState(badge)
     }
   }
 
@@ -268,7 +277,9 @@ export class AdminBadgesEdit extends Component {
   }
 
   renderRequirements (op, i) {
-    if (op[1] !== 'campaigns') {
+    const isBetweenCondition = op[0] === 'between'
+
+    if (op[1] === 'allDays') {
       return (
         <div className='requirement__section'>
           <div className='form__input-unit form__input-unit--half'>
@@ -281,7 +292,100 @@ export class AdminBadgesEdit extends Component {
             <Select
               id='badge-operation-type'
               name='badge-operation-type'
-              onChange={(e) => this.handleOperationChange(e, i, 'operation')}
+              onChange={(e) => this.handleOperationChange(i, 'operation', e.value)}
+              options={badgeDateOperationTypes}
+              placeholder="Select how you'll gauge this metric"
+              value={op[0]}
+            />
+          </div>
+          {
+            isBetweenCondition
+              ? (
+                <div style={{ display: 'inline' }}>
+                  <div className='form__input-unit form__input-unit--half'>
+                    <label
+                      className='form__label'
+                      htmlFor='start-date'
+                    >
+                      Start date
+                    </label>
+                    <input
+                      id='start-date'
+                      name='start-date'
+                      onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
+                      placeholder='Enter the days'
+                      required
+                      type='date'
+                      value={op[2]}
+                    />
+                  </div>
+                  <div className='form__input-unit form__input-unit--half' style={{ paddingLeft: 0, paddingRight: '1rem' }}>
+                    <label
+                      className='form__label'
+                      htmlFor='end-date'
+                    >
+                      End date
+                    </label>
+                    <input
+                      id='end-date'
+                      name='end-date'
+                      onChange={(e) => this.handleOperationChange(i, 'secondValue', e.target.value)}
+                      placeholder='Enter the days'
+                      required
+                      type='date'
+                      value={op[3]}
+                    />
+                  </div>
+                </div>
+              )
+              : (
+                <div className='form__input-unit form__input-unit--half'>
+                  <label
+                    className='form__label'
+                    htmlFor='start-date'
+                  >
+                    Date
+                  </label>
+                  <input
+                    id='single-date'
+                    name='single-date'
+                    onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
+                    placeholder='Enter the days'
+                    required
+                    type='date'
+                    value={op[2]}
+                  />
+                </div>
+              )
+          }
+        </div>
+      )
+    } else if (op[1] === 'campaigns') {
+      return (
+        <input
+          id='campaign-name'
+          name='campaign-name'
+          onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
+          placeholder='Enter the hashtag associated with this campaign'
+          required
+          type='text'
+          value={op[2]}
+        />
+      )
+    } else {
+      return (
+        <div className='requirement__section'>
+          <div className='form__input-unit form__input-unit--half'>
+            <label
+              className='form__label'
+              htmlFor='badge-operation-type'
+            >
+              Condition
+            </label>
+            <Select
+              id='badge-operation-type'
+              name='badge-operation-type'
+              onChange={(e) => this.handleOperationChange(i, 'operation', e.value)}
               options={badgeOperationTypes}
               placeholder="Select how you'll gauge this metric"
               value={op[0]}
@@ -298,26 +402,12 @@ export class AdminBadgesEdit extends Component {
               id='badge-metric-number'
               min={0}
               name='badge-metric-number'
-              onChange={(e) => this.handleOperationChange(e, i, 'number')}
+              onChange={(e) => this.handleOperationChange(i, 'value', e.target.value)}
               placeholder='50'
               type='number'
               value={op[2]}
             />
           </div>
-        </div>
-      )
-    } else {
-      return (
-        <div className='form__input-unit'>
-          <input
-            id='campaign-name'
-            name='campaign-name'
-            onChange={(e) => this.handleOperationChange(e, i, 'number')}
-            placeholder='Enter the hashtag associated with this campaign'
-            required
-            type='text'
-            value={op[2]}
-          />
         </div>
       )
     }
@@ -439,26 +529,22 @@ export class AdminBadgesEdit extends Component {
     this.setState({ description: value })
   }
 
-  handleOperationChange (e, idx, keyName) {
+  handleOperationChange (idx, key, value) {
     let targetOperation = this.state.operations[idx]
     if (!targetOperation) return
-    let value = ''
-    if (e !== null) {
-      value = keyName === 'number' ? e.target.value : e.value
-    }
 
-    if (keyName === 'metric' && value === 'campaigns') {
+    if (key === 'metric' && value === 'campaigns') {
       // make operation "=" and number an empty string
-      targetOperation[badgeOperationIndex[keyName]] = value
+      targetOperation[badgeOperationIndex[key]] = value
       targetOperation[badgeOperationIndex['operation']] = '='
       targetOperation[badgeOperationIndex['number']] = ''
-    } else if (keyName === 'metric' && targetOperation[1] === 'campaigns' && value !== 'campaigns') {
+    } else if (key === 'metric' && targetOperation[1] === 'campaigns' && value !== 'campaigns') {
       // reset number to numeric
-      targetOperation[badgeOperationIndex[keyName]] = value
+      targetOperation[badgeOperationIndex[key]] = value
       targetOperation[badgeOperationIndex['operation']] = ''
       targetOperation[badgeOperationIndex['number']] = 0
     } else {
-      targetOperation[badgeOperationIndex[keyName]] = value
+      targetOperation[badgeOperationIndex[key]] = value
     }
 
     this.setState((state) => {
@@ -478,10 +564,22 @@ export class AdminBadgesEdit extends Component {
       imageFile
     } = this.state
 
+    // Verify that no empty operations objects are being passed,
+    // properly format date-specific operations
+    const parsedOperations = operations
+      .filter(op => op && op[0] && op[1])
+      .map(op => {
+        if (op[0] === 'between') {
+          op[2] = `${op[2]}/${op[3]}`
+          op.pop()
+        }
+        return op
+      })
+
     const params = {
       description,
       name,
-      operations,
+      operations: parsedOperations,
       imageFile
     }
 

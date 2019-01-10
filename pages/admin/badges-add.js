@@ -509,10 +509,17 @@ export class AdminBadgesAdd extends Component {
       imageFile
     } = this.state
 
-    // Properly format date-specific operations,
-    // verify that no empty operations objects are being passed
+    // Verify that no empty operations objects are being passed,
+    // properly format date-specific operations
     const parsedOperations = operations
       .filter(op => op && op[0] && op[1])
+      .map(op => {
+        if (op[0] === 'between') {
+          op[2] = `${op[2]}/${op[3]}`
+          op.pop()
+        }
+        return op
+      })
 
     const params = {
       description: descriptionInput,

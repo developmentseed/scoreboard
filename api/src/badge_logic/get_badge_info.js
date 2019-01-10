@@ -114,11 +114,13 @@ module.exports = (userMetrics, badge) => {
     } else if (metricName === 'allDays') {
       const today = new Date()
       if (operator === 'between') {
+        const dateRange = badgeOpArray[valueIndex].split('/');
+
         // the `between` operator assumes two dates in the order of [firstDate, lastDate]
         // where to earn a badge a user must have mapped on some validDay
         // where firstDate <= validDay <= lastDate
         [ badgeOperationPass, excludeFromInProgress, dateTaskPhrase ] =
-          betweenDates(badgeOpArray[valueIndex], badgeOpArray[valueIndex + 1], currentPointValue, today, excludeFromInProgress)
+          betweenDates(dateRange[0], dateRange[1], currentPointValue, today, excludeFromInProgress)
       } else {
         [ badgeOperationPass, excludeFromInProgress, dateTaskPhrase ] =
           simpleDateComp(requiredPointValue, currentPointValue, operator, today, excludeFromInProgress)
