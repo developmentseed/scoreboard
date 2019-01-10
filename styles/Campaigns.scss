@@ -202,4 +202,8 @@ fieldset {
   .input-range__label--value {
     color: $green-color;
   }
+
+  .input-range__label--min, .input-range__label--max {
+    display: none
+  }
 }
