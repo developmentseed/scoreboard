@@ -172,18 +172,16 @@ $border-color: #ccc;
 
 .admin .button {
   background-color: $base-color;
-  border-radius: $border-radius;
   border: 1px solid $base-color;
   color: white;
   cursor: pointer;
   font-size: $base-font-size;
-  padding: 0.5em;
-  text-transform: none;
   transition: background-color 300ms ease-in-out;
 
   &:hover,
   &:active {
     background-color: darken($base-color, 10%);
+    color: white;
   }
 }
 
