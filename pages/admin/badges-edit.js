@@ -302,7 +302,7 @@ export class AdminBadgesEdit extends Component {
             isBetweenCondition
               ? (
                 <div style={{ display: 'inline' }}>
-                  <div className='form__input-unit form__input-unit--half'>
+                  <div className='form__input-unit form__input-unit--half' style={{ paddingLeft: 0, paddingRight: 0 }}>
                     <label
                       className='form__label'
                       htmlFor='start-date'
@@ -339,7 +339,7 @@ export class AdminBadgesEdit extends Component {
                 </div>
               )
               : (
-                <div className='form__input-unit form__input-unit--half'>
+                <div className='form__input-unit form__input-unit--half' style={{ paddingLeft: 0, paddingRight: 0 }}>
                   <label
                     className='form__label'
                     htmlFor='start-date'
@@ -434,7 +434,7 @@ export class AdminBadgesEdit extends Component {
               <Select
                 id='badge-metric'
                 name='badge-metric'
-                onChange={(e) => this.handleOperationChange(e, i, 'metric')}
+                onChange={(e) => this.handleOperationChange(i, 'metric', e.value)}
                 options={badgeMetrics}
                 placeholder='Select the metric your badge will measure...'
                 value={op[1]}

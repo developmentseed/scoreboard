@@ -228,7 +228,7 @@ export class AdminBadgesAdd extends Component {
             isBetweenCondition
               ? (
                 <div style={{ display: 'inline' }}>
-                  <div className='form__input-unit form__input-unit--half'>
+                  <div className='form__input-unit form__input-unit--half' style={{ paddingLeft: 0, paddingRight: 0 }}>
                     <label
                       className='form__label'
                       htmlFor='start-date'
@@ -265,7 +265,7 @@ export class AdminBadgesAdd extends Component {
                 </div>
               )
               : (
-                <div className='form__input-unit form__input-unit--half'>
+                <div className='form__input-unit form__input-unit--half' style={{ paddingLeft: 0, paddingRight: 0 }}>
                   <label
                     className='form__label'
                     htmlFor='start-date'

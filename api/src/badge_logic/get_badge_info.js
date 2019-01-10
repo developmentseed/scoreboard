@@ -49,8 +49,8 @@ function betweenDates (firstValidDay, lastValidDay, days, today, excluded) {
     Number(firstDateSplit[1] - 1), firstDateSplit[2])
   const pass = days.filter(
     // In this case, `requiredPointValue` will be the list [firstDate, lastDate]
-    (day) => (execLogic('>=', day, firstValidDay) &&
-      execLogic('<=', day, lastValidDay))
+    (day) => (execLogic('>=', day, firstValidDay)[0] &&
+      execLogic('<=', day, lastValidDay)[0])
   ).length > 0
   if ((lastValidDate < today) || (today < firstValidDate)) {
     return [ pass, true, '' ]
@@ -63,12 +63,12 @@ function simpleDateComp (requiredDay, days, operator, today, excluded) {
   // Check whether any days mapped are before, after, or equal to the requested date
   const pass = days.filter(
     // In this case, `requiredPointValue` will be a date in string format
-    (day) => execLogic(operator, day, requiredDay)
+    (day) => execLogic(operator, day, requiredDay)[0]
   ).length > 0
   // Only show gettable badges in progress
   const validDay = requiredDay.split('-')
   const validDate = new Date(validDay[0], Number(validDay[1] - 1), validDay[2])
-  if (!(execLogic(operator, today, validDate))) {
+  if (!(execLogic(operator, today, validDate)[0])) {
     return [ pass, true, '' ]
   } else {
     return [ pass, excluded, mapBadgeToTask('allDays', requiredDay) ]
