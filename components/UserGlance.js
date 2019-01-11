@@ -1,7 +1,6 @@
 import React from 'react'
 import CampaignsChart from './charts/CampaignsChart'
 import EditBreakdownChart from './charts/EditBreakdownChart'
-import MiniBadgeBox from '../components/MiniBadgeBox'
 
 export default ({ records, badges }) =>
   <section>
