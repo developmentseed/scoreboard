@@ -293,7 +293,49 @@ section {
   padding: 2em 1em;
   margin: 1em 0;
 }
+.home .widget {
+  margin: 0 auto;
+  box-sizing: border-box;
+}
 
+.banner {
+  .row {
+      display: flex;
+      align-items: center;
+      padding: 8vw 4em;
+  }
+  h1,
+  h2,
+  p,
+  a {
+    color: #FFFFFF;
+    max-width: none;
+  }
+  &__badges {
+    background: $blue-purple-color;
+    @include media (medium-up) {
+      background: url("/static/Banner-badges.png"), $blue-purple-color;
+      background-size: fit;
+      background-repeat: no-repeat;
+      background-position: right;
+    }
+  }
+  &__signup {
+    background: $base-color;
+    @include media (medium-up) {
+      background: url("/static/Banner-signup.png"), $base-color;
+      background-size: fit;
+      background-repeat: no-repeat;
+      background-position: right;
+    }
+  }
+  &--content {
+    @include media (medium-up) {
+      width: 32vw;
+      text-shadow: 0 2px 2px rgba(0,0,0,0.5);
+    }
+  }
+}
 //Type //
 
 .heading, h1, h2, h3, h4, h5, h6 {
