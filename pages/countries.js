@@ -73,7 +73,7 @@ export class Countries extends Component {
               searchText={searchText}
             />
             <div className='content--with-sidebar'>
-              <h3 className='header--medium'>{subTotal} Results</h3>
+              <h3 className='header--medium'>{subTotal} Countries</h3>
               <AllCountriesTable countries={records} apiStatus={apiStatus} />
             </div>
           </div>

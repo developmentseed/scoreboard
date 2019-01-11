@@ -111,7 +111,7 @@ class Teams extends Component {
           <div className='row'>
             <Sidebar handleSearch={this.handleSearch} />
             <div className='content--with-sidebar'>
-              <h3 className='header--medium'>{`${teams.length} Results`}</h3>
+              <h3 className='header--medium'>{`${teams.length} Teams`}</h3>
               {this.renderList()}
             </div>
           </div>

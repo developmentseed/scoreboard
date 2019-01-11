@@ -7,7 +7,7 @@ export default ({ records, apiStatus, total }) => {
     case 'SUCCESS':
       content = (
         <div>
-          <h3 className='header--medium'>{total} Results</h3>
+          <h3 className='header--medium'>{total} Campaigns</h3>
           <div className='clearfix'>
             {records.map(record => <CampaignCard key={record.id} campaign={record} />)}
           </div>

@@ -83,7 +83,7 @@ export class Users extends Component {
               countries={countries || []}
             />
             <div className='content--with-sidebar'>
-              <h3 className='header--medium'>{subTotal} Results</h3>
+              <h3 className='header--medium'>{subTotal} Mappers</h3>
               <AllUsersTable users={records} apiStatus={apiStatus} />
               <Pagination
                 activePage={page}
