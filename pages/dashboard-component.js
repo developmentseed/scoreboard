@@ -301,7 +301,7 @@ class Dashboard extends Component {
               const badge = badges[badgesFilter][badgeKey]
 
               return (
-                <li className="widget" key={`upcoming-badge-${i}`}>
+                <li className='widget' key={`upcoming-badge-${i}`}>
                   <BadgeInProgress badge={badge} badgeClass='progress' />
                   <div className='badge-Details'>
                     <h3 className='header--small sub-head header--with-description'>{badge.name}</h3>

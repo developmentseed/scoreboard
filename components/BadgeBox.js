@@ -35,7 +35,7 @@ export default ({ badges }) => {
 
     var earnedList = earnedBadges.map(badge => {
       return (
-        <li className="widget" key={stripWS(badge.name)}>
+        <li className='widget' key={stripWS(badge.name)}>
           <div className='badge-home'>
             <BadgeCompleted badge={badge} />
             <div className='badge-Details'>

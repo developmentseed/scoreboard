@@ -38,13 +38,13 @@ function chartify ({
 const theme = {
   axis: {
     textColor: '#eee',
-    fontSize: '14px',
+    fontSize: '14px'
   },
   legends: {
     textColor: '#eee',
-    fontSize: '14px',
-  },
-};
+    fontSize: '14px'
+  }
+}
 
 export default (props) => <ResponsivePie
   data={chartify(props)}

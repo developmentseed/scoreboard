@@ -9,7 +9,7 @@ export default ({ apiStatus, users }) => {
   let content = <div />
   switch (apiStatus) {
     case 'SUCCESS':
-      content = (<div className="widget">
+      content = (<div className='widget'>
         <table>
           <thead>
             <tr>

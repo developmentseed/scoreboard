@@ -4,7 +4,7 @@ import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../lib/utils/format'
 
 export default (props) => (
-  <div className="widget">
+  <div className='widget'>
     <table>
       <thead>
         <tr>

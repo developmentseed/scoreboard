@@ -3,7 +3,7 @@ import Link from './Link'
 
 export default ({ assignments }) => {
   return (
-    <div className="widget">
+    <div className='widget'>
       <table>
         <thead>
           <tr>

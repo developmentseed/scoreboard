@@ -16,12 +16,12 @@ function chartify ({ edits }) {
 }
 const theme = {
   axis: {
-    fontSize: '14px',
+    fontSize: '14px'
   },
   legend: {
-    fontSize: '14px',
-  },
-};
+    fontSize: '14px'
+  }
+}
 
 export default props =>
   <ResponsiveBar
@@ -43,12 +43,12 @@ export default props =>
     layout='horizontal'
     reverse={false}
     colors={[
-            '#8BC544',
-            "#98CF54",
-            "#B5E37B",
-            "#CCF19E",
-            "#E3FDC3"
-        ]}
+      '#8BC544',
+      '#98CF54',
+      '#B5E37B',
+      '#CCF19E',
+      '#E3FDC3'
+    ]}
     colorBy='index'
     borderRadius={0}
     borderWidth={0}
