@@ -6,6 +6,10 @@ function mapBadgeToTask (badge, x) {
   const map = {
     roadKms: `Add ${x} more km of roads`,
     roadKmMods: `Modify ${x} more km of roads`,
+    coastlineKms: `Add ${x} more km of coastlines`,
+    coastlineKmMods: `Modify ${x} more km of coastlines`,
+    coastlines_add: `Add ${x} more coastlines`,
+    coastlines_mod: `Modify ${x} more coastlines`,
     buildings: `Build ${x} more buildings`,
     daysInRow: `Map ${x} more consecutive days`,
     josm: `Use JOSM to map an area ${x} more times`,

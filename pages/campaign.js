@@ -20,13 +20,15 @@ const Blurb = ({
   km_roads_add,
   buildings_add,
   poi_add,
-  km_waterways_add
+  km_waterways_add,
+  km_coastlines_add
 }) => {
   return <h2 className='header--medium list--block'>
     {`${users.length} users, mapping
     ${km_roads_add.toFixed(1)} km of roads,
     ${formatDecimal(buildings_add)} buildings,
-    ${formatDecimal(poi_add)} Points of Interest, and
+    ${formatDecimal(poi_add)} Points of Interest,
+    ${km_coastlines_add.toFixed(1)} km of coastlines, and
     ${km_waterways_add.toFixed(1)} km of waterways.`}
   </h2>
 }
