@@ -1,6 +1,10 @@
 @import 'settings/variables.scss';
 @import 'settings/mixins.scss';
 
+//SASS Variable to randomly generate header background background-image
+$nth: random(4);
+//
+
 body {
   -webkit-print-color-adjust: exact;
   background: $background-color-light;
@@ -30,6 +34,7 @@ body {
   padding: 0 64px;
   display: block;
   width: auto;
+  margin: 0 auto;
   @include media(medium-down) {
     padding: 0 40px;
   }
@@ -72,7 +77,14 @@ body {
 }
 
 .header--internal--green {
-  background-color: $base-color;
+  background: linear-gradient(to bottom, rgba(#2CAF80, .8), rgba(#56D483, .9)), url("/static/backgrounds/homepage-background-#{$nth}.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: top;
   color: white;
   border-bottom: 1px solid darken($base-color, 5%);
   padding-bottom: 1em;
@@ -244,11 +256,14 @@ section {
 
 .header--homepage {
   margin-top: -6em;
-  background: url("/static/homepage-background.jpg") no-repeat center top;
+  background: linear-gradient(to bottom, rgba(#2CAF80, 1), rgba(#56E483, .7)), url("/static/backgrounds/homepage-background-#{$nth}.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: top;
   color: #fff;
   @include media(medium-down) {
     margin-top: -5em;
