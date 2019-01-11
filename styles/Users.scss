@@ -5,12 +5,8 @@
   font-family: $tertiary-font-family;
 }
 
-.chart-pie {
-  margin-left: -2.5em;
-}
-
 .chart-pie--legend {
-  padding: 1em 0 0 1em;
+  padding: 1em 0 0;
 }
 
 .legend-buildings, .legend-roads, .legend-pois, .legend-waterways {

@@ -32,7 +32,7 @@ export class Home extends Component {
 
     return (
       <div className='home'>
-        <header className='header--homepage header--page' style={{ backgroundImage: `url(${homePageBg})` }}>
+        <header className='header--homepage header--page'>
           <div className='overlay-dark'>
             <div className='row'>
               <div className='width--shortened'>
@@ -116,7 +116,7 @@ export class Home extends Component {
         </section>
         <section>
           <div className='row'>
-            <div className='width--shortened graphs--users'>
+            <div className='width--shortened graphs--users widget'>
               <h2 className='header--large'>Mappers</h2>
               <div className='side-by-side section-width-twenty section-width--first'>
                 <h3>Edits By Country</h3>

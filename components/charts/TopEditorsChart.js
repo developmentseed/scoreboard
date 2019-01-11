@@ -14,6 +14,14 @@ function chartify ({ edits }) {
     }
   }).reverse()
 }
+const theme = {
+  axis: {
+    fontSize: '14px',
+  },
+  legend: {
+    fontSize: '14px',
+  },
+};
 
 export default props =>
   <ResponsiveBar
@@ -26,6 +34,7 @@ export default props =>
       'bottom': 50,
       'left': 120
     }}
+    theme={theme}
     padding={0.2}
     innerPadding={0}
     minValue='auto'
@@ -33,7 +42,14 @@ export default props =>
     groupMode='grouped'
     layout='horizontal'
     reverse={false}
-    colors='#8BC544'
+    colors={[
+            '#8BC544',
+            "#98CF54",
+            "#B5E37B",
+            "#CCF19E",
+            "#E3FDC3"
+        ]}
+    colorBy='index'
     borderRadius={0}
     borderWidth={0}
     borderColor='inherit:brighter(1.6)'

@@ -43,7 +43,13 @@ export default props =>
     groupMode='grouped'
     layout='horizontal'
     reverse={false}
-    colors='#4FCA9E'
+    colors={[
+            '#8BC544',
+            "#98CF54",
+            "#B5E37B",
+            "#CCF19E",
+            "#E3FDC3"
+        ]}
     colorBy='index'
     borderRadius={0}
     borderWidth={0}

@@ -40,7 +40,7 @@ class CampaignMap extends Component {
     const style = {
       textAlign: 'left',
       height: '100%',
-      backgroundColor: 'rgb(106,214,217)'
+      backgroundColor: 'rgb(222,234,238)'
     }
 
     return <div style={style} ref={el => { this.mapContainer = el }} />
