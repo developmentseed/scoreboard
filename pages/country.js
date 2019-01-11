@@ -11,7 +11,7 @@ const CountryMap = dynamic(() => import('../components/charts/CountryMap'), {
 
 export class Country extends Component {
   componentDidMount () {
-    this.props.getCountry(this.props.alpha2)
+    this.props.getCountry(this.props.code)
   }
 
   render () {
@@ -46,9 +46,9 @@ export class Country extends Component {
 
 const connectedCountry = connect(['country'], actions)(Country)
 connectedCountry.getInitialProps = function ({ req }) {
-  const { alpha2 } = req.params
+  const { code } = req.params
   return {
-    alpha2
+    code
   }
 }
 
