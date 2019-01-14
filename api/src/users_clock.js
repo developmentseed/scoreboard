@@ -111,8 +111,9 @@ async function usersWorker () {
 // Run
 if (require.main === module) {
   usersWorker()
-    .then((resp) => {
+    .then(async resp => {
       console.log(`Updated ${resp.length} records.`)
+      await db.destroy()
       process.exit(0)
     })
     .catch((e) => {

@@ -2,8 +2,6 @@ import React from 'react'
 import Link from './Link'
 import { formatDecimal } from '../lib/utils/format'
 import { distanceInWordsToNow, parse } from 'date-fns'
-import countries from 'i18n-iso-countries'
-countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
 
 export default ({ apiStatus, users }) => {
   let content = <div />
@@ -35,6 +33,7 @@ export default ({ apiStatus, users }) => {
           </tbody>
         </table>
       </div>
+
       )
       break
     case 'LOADING':

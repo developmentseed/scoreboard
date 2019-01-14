@@ -26,6 +26,7 @@ export default ({ apiStatus, countries }) => {
           </tbody>
         </table>
       </div>
+
       )
       break
     case 'LOADING':

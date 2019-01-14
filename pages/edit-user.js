@@ -3,7 +3,7 @@ import Select from 'react-select'
 import { connect } from 'unistore/react'
 
 import fetch from '../lib/utils/api'
-import countries from '../lib/utils/country-list'
+import countries from '../lib/utils/country-list.json'
 import { actions } from '../lib/store'
 
 import NotLoggedIn from '../components/NotLoggedIn'
@@ -23,13 +23,17 @@ class UserEdit extends Component {
     const { currentCountry } = this.state
     if (!country || country.value === currentCountry) return
     this.setState({ currentCountry: country.value })
-    this.updateUser({ country: country.value })
+    this.updateUser({ country: country.label })
   }
 
   render () {
     const { authenticatedUser, currentCountry } = this.props
 
     const country = this.state.currentCountry || currentCountry
+    let countryValue = null
+    if (country) {
+      countryValue = countries.find(c => (c.name === country) || (c.code === country)).code
+    }
 
     if (!authenticatedUser.loggedIn) {
       return <NotLoggedIn message='Log in with your OSM account to edit your Scoreboard profile' />
@@ -47,8 +51,8 @@ class UserEdit extends Component {
             <div style={{ width: '50%' }}>
               <h4>Country</h4>
               <Select
-                options={countries}
-                value={country}
+                options={countries.map(({ code, name }) => ({ value: code, label: name }))}
+                value={countryValue}
                 onChange={(country) => this.onCountryChange(country)}
               />
             </div>

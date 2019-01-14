@@ -2,8 +2,6 @@ import React from 'react'
 import { distanceInWordsToNow, parse, compareDesc } from 'date-fns'
 import { formatDecimal } from '../lib/utils/format'
 import { head } from 'ramda'
-import countries, { getName } from 'i18n-iso-countries'
-countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
 
 /**
  * Given the edit times for a user return the difference between now()
@@ -33,7 +31,7 @@ export default ({ name, edit_times, num_badges, num_hashtags, num_edits, country
           </li>
           <li>
             <span className='list-label'>Country:</span>
-            <span>{getName(country, 'en')}</span>
+            <span>{country}</span>
           </li>
         </ul>
       </div>
