@@ -40,19 +40,13 @@ export class Campaigns extends Component {
 
   render () {
     const { page, searchText, compl_min, compl_max } = this.props.campaigns
-    const { records: { total, records, all_count }, apiStatus } = this.props.campaigns
+    const { records: { total, records, allCount }, apiStatus } = this.props.campaigns
 
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
           <div className='row'>
             <h1 className='section-sub--left header--xlarge margin-top-sm'>Campaigns</h1>
-            <ul className='section-sub--right'>
-              <li className='list--inline'>
-                <span className='descriptor-chart'>Campaigns</span>
-                <span className='num--large'>{all_count}</span>
-              </li>
-            </ul>
           </div>
         </header>
         <section className='section--tertiary'>
@@ -67,7 +61,7 @@ export class Campaigns extends Component {
               />
             </div>
             <div className='content--with-sidebar'>
-              <CampaignsListing records={records} apiStatus={apiStatus} total={total} />
+              <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
               <Pagination
                 activePage={page}
                 itemsCountPerPage={10}
