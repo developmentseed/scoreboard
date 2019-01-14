@@ -75,8 +75,8 @@ export class Home extends Component {
                           <li>
                             <span className='chart-bar--title'>Complete</span>
                             <span className='chart-bar--wrapper'>
-                              <span className='chart-bar' style={{ 'width': `${parseInt(record.done * 0.5, 10) + parseInt(record.validated, 10)}%` }} />
-                              <span className='chart-bar--percent'>{parseInt(record.done * 0.5, 10) + parseInt(record.validated, 10)}%</span>
+                              <span className='chart-bar' style={{ 'width': `${parseInt(record.done, 10)}%` }} />
+                              <span className='chart-bar--percent'>{parseInt(record.done, 10)}%</span>
                             </span>
                           </li>
                           <li>
