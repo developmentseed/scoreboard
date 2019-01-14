@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import CountryHeader from '../components/CountryHeader'
 import UserTable from '../components/UserTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
+import ScoreboardPanel from '../components/ScoreboardPanel';
+import { formatDecimal } from '../lib/utils/format';
 
 const CountryMap = dynamic(() => import('../components/charts/CountryMap'), {
   ssr: false
@@ -25,7 +26,17 @@ export class Country extends Component {
     if (!name) return <div />
     return (
       <div className='Country'>
-        <CountryHeader name={name} num_participants={numParticipants} num_edits={edit_count} country={this.props.country} />
+        <header className='header--internal--green header--page'>
+          <div className='row'>
+            <div className='section-sub--left section-width-fifty-plus'>
+              <h1 className='header--xlarge header--with-description-lg'>{name}</h1>
+            </div>
+          </div>
+        </header>
+        <ScoreboardPanel title='' facets={[
+          { label: 'Participants', value: formatDecimal(numParticipants)},
+          { label: 'Edits', value: formatDecimal(edit_count)},
+        ]} />
         <section>
           <div className='row'>
             <div className='section-sub--left section-width-fifty-plus'>
