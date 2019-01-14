@@ -19,9 +19,12 @@ module.exports = async (req, res) => {
   const filteredUsers = split(',', FILTERED_USERS).map(trim)
 
   try {
-    const [{ total }] = await db('campaigns')
-      .whereNotNull('campaign_hashtag').count('id as total')
-    const records = await db('campaigns')
+    const [{ numCampaigns }] = await db('campaigns')
+      .whereNotNull('campaign_hashtag').count('id as numCampaigns')
+
+    const [{ numCountries }] = await db('user_country_edits').countDistinct('country_name as numCountries')
+
+    const priorityCampaigns = await db('campaigns')
       .whereNotNull('campaign_hashtag')
       .orderBy('priority')
       .limit(4)
@@ -36,11 +39,14 @@ module.exports = async (req, res) => {
     if (features.length > 0) {
       feature = features[0].feature
     }
+
     const topEdits = await db('users')
       .whereNotIn('osm_id', filteredUsers)
       .select('full_name', 'country', 'edit_count')
       .orderBy('edit_count', 'desc')
       .limit(10)
+
+    const [{ totalEdits }] = await db('users').sum('edit_count as totalEdits')
 
     const [{ numUsers }] = await db('users').count('id as numUsers')
     const editsByCountry = await db('users')
@@ -49,8 +55,10 @@ module.exports = async (req, res) => {
       .sum('edit_count as edit_count')
 
     return res.send({
-      total,
-      records,
+      numCampaigns,
+      priorityCampaigns,
+      numCountries,
+      totalEdits,
       numUsers,
       editsByCountry,
       topEdits,

@@ -9,6 +9,7 @@ import trimLength from '../lib/utils/trim_length'
 import { formatDecimal } from '../lib/utils/format'
 import TopEditorsChart from '../components/charts/TopEditorsChart'
 import EditorsByCountry from '../components/charts/EditorsByCountryChart'
+import ScoreboardPanel from '../components/ScoreboardPanel'
 
 const Map = dynamic(() => import('../components/charts/HomeMap'), {
   ssr: false
@@ -24,7 +25,7 @@ export class Home extends Component {
     const { topStats } = this.props
     if (!topStats) return <div />
 
-    const { total, records, numUsers, features, topEdits, editsByCountry } = topStats
+    const { numCampaigns, priorityCampaigns, numUsers, features, topEdits, editsByCountry, totalEdits, numCountries } = topStats
 
     return (
       <div className='home'>
@@ -39,30 +40,16 @@ export class Home extends Component {
                     <a className='link--large'>Learn More</a>
                   </Link>
                 </div>
-                <div className='section-sub--right section-sub--right--home'>
-                  <ul>
-                    <li className='list--block'>
-                      <Link href='/users'>
-                        <a className='link--white'>
-                          <span className='num--large'>{formatDecimal(numUsers)}</span>
-                          <span className='descriptor-chart'>Users</span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className='list--block'>
-                      <Link href='/campaigns'>
-                        <a className='link--white'>
-                          <span className='num--large'>{formatDecimal(total)}</span>
-                          <span className='descriptor-chart'>Campaigns</span>
-                        </a>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>
         </header>
+        <ScoreboardPanel title='Global Mapping Metrics' facets={[
+          { label: 'Mappers', value: formatDecimal(numUsers) },
+          { label: 'Campaigns', value: formatDecimal(numCampaigns) },
+          { label: 'Countries Mapped', value: formatDecimal(numCountries)},
+          { label: 'Edits', value: formatDecimal(totalEdits)}
+        ]} />
         <section className='section--tertiary'>
           <div className='row'>
             <div className='width--shortened'>
@@ -75,7 +62,7 @@ export class Home extends Component {
               </div>
               <ul className='clearfix'>
                 {
-                  records.map(record =>
+                  priorityCampaigns.map(record =>
                     <li key={`block-${record.id}`} className='block--campaign card'>
                       <div className='card-content'>
                         <h3 className='header--small header--with-description-xlg'>
