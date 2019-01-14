@@ -26,7 +26,7 @@ class CampaignMap extends Component {
         },
         'layout': {},
         'paint': {
-          'fill-color': '#5657C2',
+          'fill-color': '#4FCA9C',
           'fill-opacity': 0.7
         }
       })

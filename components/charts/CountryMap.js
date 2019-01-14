@@ -22,7 +22,7 @@ class CountryMap extends Component {
         },
         'layout': {},
         'paint': {
-          'fill-color': '#7cff00',
+          'fill-color': '#4FCA9C',
           'fill-opacity': 0.7
         }
       })
