@@ -39,10 +39,18 @@
   }
 }
 
+.panel-container {
+  text-align: center;
+  h2 {
+    max-width: none;
+  }
+}
+
 .stats-user {
-  max-width: 80%;
+  display: inline-block;
   margin: 0 auto 2em;
   ul {
+    margin: 0 auto;
     display: flex;
     justify-content: center;
 
