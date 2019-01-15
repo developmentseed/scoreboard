@@ -79,6 +79,18 @@ class Dashboard extends Component {
             </div>
           </div>
         </section>
+        <div class='banner banner__badges'>
+          <div class='row'>
+            <div class='banner--content'>
+              <h2 class='header--xlarge'>Map to Earn Badges</h2>
+              <p>Track your best work. Earn badges for edits you’ve made and campaigns you've helped complete. Share your progress and contribution to the global mapping ecosystem. </p>
+              {
+                // TODO when badge overview page is added
+                //    <a href='#' class='link--large'>See all badges</a>
+              }
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
