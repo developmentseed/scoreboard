@@ -47,8 +47,8 @@ export class Home extends Component {
         <ScoreboardPanel title='Global Mapping Metrics' facets={[
           { label: 'Mappers', value: formatDecimal(numUsers) },
           { label: 'Campaigns', value: formatDecimal(numCampaigns) },
-          { label: 'Countries Mapped', value: formatDecimal(numCountries)},
-          { label: 'Edits', value: formatDecimal(totalEdits)}
+          { label: 'Countries Mapped', value: formatDecimal(numCountries) },
+          { label: 'Edits', value: formatDecimal(totalEdits) }
         ]} />
         <section className='section--tertiary'>
           <div className='row'>
@@ -112,7 +112,7 @@ export class Home extends Component {
                 }
               </div>
               <Link href='/users'>
-                <a className='link--large'>View All Users</a>
+                <a className='link--large'>View All Mappers</a>
               </Link>
             </div>
           </div>

@@ -23,7 +23,13 @@
   right: 0;
   z-index: 2;
 }
-
+.header--content--wrapper {
+  margin-right: auto;
+  flex: 1;
+  a {
+    color: #FFFFFF;
+  }
+}
 .header--internal--dashboard {
   margin-top: -6em;
   background-size: cover;
@@ -37,9 +43,6 @@
   .row {
     z-index: 3;
     position: relative;
-  }
-  .header--content--wrapper {
-    padding-top: 280px;
   }
   h1 {
     color: #fff;
@@ -478,7 +481,7 @@
     color: #777;
     font-size: 14px;
     font-family: $tertiary-font-family;
-    
+
     &:hover {
       cursor: pointer;
       color: #222;

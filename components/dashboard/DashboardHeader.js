@@ -12,7 +12,7 @@ function DashboardHeader (props) {
     profileImage = osmUser.img['@']['href']
   }
   return (
-    <header className='header--internal--dashboard header--page'>
+    <header className='header--internal--green header--page'>
       <div className='row'>
         <div className='header--content--wrapper'>
           <div className='section-sub--left section-width-fifty-plus'>
@@ -22,7 +22,6 @@ function DashboardHeader (props) {
           </div>
         </div>
       </div>
-      <div className='wrapper--map' />
     </header>
   )
 }

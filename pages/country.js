@@ -3,8 +3,8 @@ import UserTable from '../components/UserTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
-import ScoreboardPanel from '../components/ScoreboardPanel';
-import { formatDecimal } from '../lib/utils/format';
+import ScoreboardPanel from '../components/ScoreboardPanel'
+import { formatDecimal } from '../lib/utils/format'
 
 const CountryMap = dynamic(() => import('../components/charts/CountryMap'), {
   ssr: false
@@ -34,8 +34,8 @@ export class Country extends Component {
           </div>
         </header>
         <ScoreboardPanel title='' facets={[
-          { label: 'Participants', value: formatDecimal(numParticipants)},
-          { label: 'Edits', value: formatDecimal(edit_count)},
+          { label: 'Participants', value: formatDecimal(numParticipants) },
+          { label: 'Edits', value: formatDecimal(edit_count) }
         ]} />
         <section>
           <div className='row'>

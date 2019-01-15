@@ -123,10 +123,10 @@ export class Campaign extends Component {
         </header>
         <ScoreboardPanel title='' facets={
           [
-            {label: 'Complete', value: `${parseInt(tmData.done, 10)}%`},
-            {label: 'Validates', value: `${parseInt(tmData.validated, 10)}%`},
-            {label: 'Participants', value: users.length},
-            {label: 'Total features mapped', value: formatDecimal(sumEdits(records))},
+            { label: 'Complete', value: `${parseInt(tmData.done, 10)}%` },
+            { label: 'Validates', value: `${parseInt(tmData.validated, 10)}%` },
+            { label: 'Participants', value: users.length },
+            { label: 'Total features mapped', value: formatDecimal(sumEdits(records)) }
           ]
         } />
 
