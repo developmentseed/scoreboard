@@ -36,6 +36,11 @@ class Dashboard extends Component {
   }
 
   render () {
+    if (this.state.loading) {
+      return (
+        <div />
+      )
+    }
     const { authenticatedUser } = this.props
     const { loggedIn, account } = authenticatedUser
     const { assignments, favorites } = account
@@ -48,11 +53,6 @@ class Dashboard extends Component {
     const campaignCount = osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0
     const editCount = osmesaData ? osmesaData.edit_count : 0
 
-    if (this.state.loading) {
-      return (
-        <div />
-      )
-    }
 
     if (!loggedIn || !account) {
       return <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />

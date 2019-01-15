@@ -4,6 +4,8 @@ import Link from '../components/Link'
 import { connect } from 'unistore/react'
 import { withAlert } from 'react-alert'
 
+import join from 'url-join'
+import { APP_URL_FINAL } from '../api/src/config'
 import { actions } from '../lib/store'
 import trimLength from '../lib/utils/trim_length'
 import { formatDecimal } from '../lib/utils/format'
@@ -22,7 +24,9 @@ export class Home extends Component {
   }
 
   render () {
-    const { topStats } = this.props
+    const { topStats, authenticatedUser } = this.props
+    const { loggedIn } = authenticatedUser
+
     if (!topStats) return <div />
 
     const { numCampaigns, priorityCampaigns, numUsers, features, topEdits, editsByCountry, totalEdits, numCountries } = topStats
@@ -117,9 +121,22 @@ export class Home extends Component {
             </div>
           </div>
         </section>
+        {
+          !loggedIn
+            ? (<div class="banner banner__signup">
+              <div class="row">
+                <div class="banner--content">
+                  <h2 class="header--xlarge">Earn a spot on the board</h2>
+                  <p>Join other mappers and track your progress. Earn badges for edits you’ve made and campaigns you've helped complete. Share your contributions to the global mapping ecosystem.</p>
+                  <a href={join(APP_URL_FINAL, '/auth/openstreetmap')} class="link--large">Sign up with {projectName}</a>
+                </div>
+              </div>
+            </div>)
+            : <div></div>
+        }
       </div>
     )
   }
 }
 
-export default connect(['topStats', 'notification'], actions)(withAlert(Home))
+export default connect(['topStats', 'notification', 'authenticatedUser'], actions)(withAlert(Home))
