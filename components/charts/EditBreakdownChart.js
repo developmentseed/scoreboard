@@ -46,50 +46,54 @@ const theme = {
   }
 }
 
-export default (props) => <ResponsivePie
-  data={chartify(props)}
-  margin={{
-    'top': 0,
-    'right': 0,
-    'bottom': 0,
-    'left': 0
-  }}
-  theme={theme}
-  sortByValue={false}
-  innerRadius={0.65}
-  padAngle={0.3}
-  cornerRadius={1}
-  colors='paired'
-  colorBy='id'
-  borderWidth={0}
-  borderColor='inherit:darker(0.6)'
-  enableRadialLabels={false}
-  radialLabel='id'
-  radialLabelsSkipAngle={10}
-  radialLabelsTextXOffset={6}
-  radialLabelsTextColor='#333333'
-  radialLabelsLinkOffset={0}
-  radialLabelsLinkDiagonalLength={16}
-  radialLabelsLinkHorizontalLength={24}
-  radialLabelsLinkStrokeWidth={1}
-  radialLabelsLinkColor='inherit'
-  enableSlicesLabels
-  sliceLabel='value'
-  slicesLabelsSkipAngle={10}
-  slicesLabelsTextColor='#f5f5f5'
-  animate
-  motionStiffness={90}
-  motionDamping={15}
-  isInteractive
-  legends={[
-    {
-      'anchor': 'center-left',
-      'direction': 'column',
-      'translateY': 20,
-      'itemWidth': 100,
-      'itemHeight': 28,
-      'symbolSize': 16,
-      'symbolShape': 'square'
-    }
-  ]}
-/>
+export default (props) =>
+  (
+    <div className='chart chart-pie widget' style={{ height: props.height }}>
+      <h4 className='header--small'>Type Of Edits</h4>
+      <ResponsivePie
+        data={chartify(props)}
+        margin={{
+          'top': 0,
+          'right': 0,
+          'bottom': 0,
+          'left': 0
+        }}
+        theme={theme}
+        sortByValue={false}
+        innerRadius={0.65}
+        padAngle={0.3}
+        cornerRadius={1}
+        colors='paired'
+        colorBy='id'
+        borderWidth={0}
+        borderColor='inherit:darker(0.6)'
+        enableRadialLabels={false}
+        radialLabel='id'
+        radialLabelsSkipAngle={10}
+        radialLabelsTextXOffset={6}
+        radialLabelsTextColor='#333333'
+        radialLabelsLinkOffset={0}
+        radialLabelsLinkDiagonalLength={16}
+        radialLabelsLinkHorizontalLength={24}
+        radialLabelsLinkStrokeWidth={1}
+        radialLabelsLinkColor='inherit'
+        enableSlicesLabels
+        sliceLabel='value'
+        slicesLabelsSkipAngle={10}
+        slicesLabelsTextColor='#f5f5f5'
+        animate
+        motionStiffness={90}
+        motionDamping={15}
+        isInteractive
+        legends={[
+          {
+            'anchor': 'center-left',
+            'direction': 'column',
+            'translateY': 20,
+            'itemWidth': 100,
+            'itemHeight': 28,
+            'symbolSize': 16,
+            'symbolShape': 'square'
+          }
+        ]}
+      /></div>)

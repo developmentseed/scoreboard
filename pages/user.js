@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import UserGlance from '../components/UserGlance'
 import UserHeader from '../components/UserHeader'
 import UserStats from '../components/UserStats'
 import getSumEdits from '../lib/utils/sum_edits'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
+import CampaignsChart from '../components/charts/CampaignsChart'
+import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 
 export class User extends Component {
   componentDidMount () {
@@ -37,7 +38,26 @@ export class User extends Component {
       numBadges = Object.keys(badges.earnedBadges).length
       BadgeSection = (
         <div>
-          <UserGlance records={records} badges={badges} />
+          <section>
+            <div className='row'>
+              <div className='graphs--user'>
+                <div className='section-sub--left section-width-sixty user-glance-graphs'>
+                  {
+                    (records && records.hashtags)
+                      ? <CampaignsChart {...records} height='200px' />
+                      : <div />
+                  }
+                </div>
+                <div className='section-sub--left section-width-thirty user-glance-graphs'>
+                  {
+                    (records)
+                      ? <EditBreakdownChart {...records} height='200px' />
+                      : <div />
+                  }
+                </div>
+              </div>
+            </div>
+          </section>
           <UserStats records={records} badges={badges} />
         </div>
       )
@@ -53,7 +73,7 @@ export class User extends Component {
           num_hashtags={records.hashtags.length}
           country={country}
         />
-        { BadgeSection }
+        {BadgeSection}
       </div>
     )
   }

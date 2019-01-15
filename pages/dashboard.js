@@ -13,6 +13,8 @@ import DashboardBadges from '../components/dashboard/DashboardBadges'
 import DashboardAssignments from '../components/dashboard/DashboardAssignments'
 import DashboardHeader from '../components/dashboard/DashboardHeader'
 import DashboardSidebar from '../components/dashboard/DashboardSidebar'
+import CampaignsChart from '../components/charts/CampaignsChart'
+import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import { formatDecimal } from '../lib/utils/format'
 
 class Dashboard extends Component {
@@ -69,6 +71,8 @@ class Dashboard extends Component {
             { label: 'Edits', value: formatDecimal(editCount) }
           ]}
         />
+        <CampaignsChart {...osmesaData} height='200px' />
+        <EditBreakdownChart {...osmesaData} height='200px' />
         <section>
           <div className='row'>
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
