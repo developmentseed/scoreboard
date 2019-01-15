@@ -24,7 +24,7 @@ export default ({ apiStatus, users }) => {
                 <tr key={user.osm_id}>
                   <td>{((user.edit_count > 0) ? user.rank : 'N/A')}</td>
                   <td><Link href={`/users/${user.osm_id}`}><a className='link--normal'>{user.full_name}</a></Link></td>
-                  <td>{countries.getName(user.country, 'en')}</td>
+                  <td>{user.country}</td>
                   <td>{formatDecimal(user.edit_count)}</td>
                   <td>{user.edit_count > 0 ? `${distanceInWordsToNow(parse(user.last_edit))} ago` : 'N/A'}</td>
                 </tr>
@@ -33,7 +33,6 @@ export default ({ apiStatus, users }) => {
           </tbody>
         </table>
       </div>
-
       )
       break
     case 'LOADING':

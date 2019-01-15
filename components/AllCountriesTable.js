@@ -18,7 +18,7 @@ export default ({ apiStatus, countries }) => {
             {
               countries.map(country => (
                 <tr key={country.id}>
-                  <td><Link href={`/countries/${country.alpha2}`}><a className='link--normal'>{country.name}</a></Link></td>
+                  <td><Link href={`/countries/${country.code}`}><a className='link--normal'>{country.name}</a></Link></td>
                   <td>{formatDecimal(country.edit_count)}</td>
                 </tr>
               ))
