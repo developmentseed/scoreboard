@@ -5,7 +5,7 @@
   background-color: $base-color;
   position: relative;
   z-index: 5;
-  box-shadow: 0 4px 26px rgba(0,0,0,.3)
+  box-shadow: 0 4px 24px rgba(0,0,0,.3)
 }
 
 nav {
@@ -313,11 +313,19 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    // padding: 2em 0;
     margin: 0 auto;
+    max-width: 1200px;
     @include media(small-up) {
       flex-direction: row;
       align-items: center;
+    }
+    &:before,
+    &:after {
+      content: none;
+    }
+    div:last-of-type {
+      text-align: right;
+      line-height: 3;
     }
   }
   .footer__logo{
@@ -334,9 +342,19 @@ footer {
     font-size: 1.5em;
     margin-bottom: .5em;
     border-bottom: 1px solid #fff;
+    a:hover {
+      border-bottom: none;
+    }
   }
   li {
     padding: 0;
     margin: 0;
+  }
+  a, a:visited {
+    color: $background-color-light;
+  }
+  a:hover {
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff;
   }
 }

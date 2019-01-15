@@ -1,7 +1,7 @@
 @import 'settings/variables.scss';
 @import 'settings/mixins.scss';
 
-//SASS Variable to randomly generate header background background-image
+//SASS Variable to randomly generate header background background-image on site build
 $nth: random(4);
 //
 
@@ -97,7 +97,7 @@ body {
     margin-bottom: 0;
   }
   .section-sub--left {
-    position: absolute;
+    // position: absolute;
     bottom: .1em;
   }
   .descriptor-chart {
@@ -115,6 +115,10 @@ body {
     width: 60%;
     color: rgba(255, 255, 255, .8);
     margin-bottom: .4em;
+  }
+  .link--large,
+  .link--large:visited {
+    color: #FFFFFF;
   }
 }
 
@@ -471,12 +475,26 @@ section {
 }
 
 .header--page {
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    .section-sub--left {
+      // width: auto;
+      float: none;
+      margin-right: auto;
+    }
+    .section-sub--right {
+      width: auto;
+      float: none;
+    }
+  }
   .button, .button:visited {
     border-color: #fff;
-    background-color: $base-color;
+    background-color: transparent;
     color: #fff;
     font-size: 14px;
-    display: inline;
+    display: inline-block;
     margin-left: 5px;
 
     &:hover {
