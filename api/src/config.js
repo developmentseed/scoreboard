@@ -14,6 +14,9 @@ let final = join(appUrl, prefix)
 // add a trailing slash if it is missing
 if (final[final.length - 1] !== '/') final += '/'
 
+let docsBaseURL = process.env.DOCS_BASE_URL || '/docs/'
+if (docsBaseURL[docsBaseURL.length - 1] !== '/') docsBaseURL += '/'
+
 module.exports = {
   PORT: process.env.PORT || 8181,
   NODE_ENV: process.env.NODE_ENV || 'development',
@@ -33,5 +36,6 @@ module.exports = {
   // to handle cases where the OSM deployment is behind a firewall
   OSM_DOMAIN_INTERNAL: process.env.OSM_DOMAIN_INTERNAL || process.env.OSM_DOMAIN || 'https://www.openstreetmap.org',
   SESSION_SECRET: process.env.SESSION_SECRET || 'SUPER SECRET',
-  DATABASE_URL
+  DATABASE_URL,
+  DOCS_BASE_URL: docsBaseURL
 }

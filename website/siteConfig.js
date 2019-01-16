@@ -1,14 +1,14 @@
 const join = require('url-join')
 const createTemplatePlugin = require('./template-plugin')
 
-const { APP_URL_FINAL, PROJECT_NAME } = require('../api/src/config')
+const { APP_URL_FINAL, PROJECT_NAME, DOCS_BASE_URL } = require('../api/src/config')
 const appURL = APP_URL_FINAL.slice(0, APP_URL_FINAL.length - 1)
 
 const siteVariables = {
   title: 'Scoreboard', // Title for your website.
   tagline: 'Analytics for mappers',
-  url: 'https://example.com', // Your website URL
-  baseUrl: '/docs/', // Base URL for your project */
+  url: appURL, // Your website URL
+  baseUrl: DOCS_BASE_URL, // Base URL for your project `/docs/` by default */
   projectName: 'scoreboard',
   repoUrl: 'https://github.com/developmentseed/scoreboard',
   organizationName: '',
