@@ -5,6 +5,7 @@ import { withAlert } from 'react-alert'
 
 import { actions } from '../lib/store'
 import { isAdmin } from '../lib/utils/roles'
+import { pick } from 'ramda'
 
 import NotLoggedIn from '../components/NotLoggedIn'
 import AdminSectionList from '../components/AdminSectionList'
@@ -16,6 +17,15 @@ import DashboardSidebar from '../components/dashboard/DashboardSidebar'
 import CampaignsChart from '../components/charts/CampaignsChart'
 import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import { formatDecimal } from '../lib/utils/format'
+
+import dynamic from 'next/dynamic'
+
+const CalendarHeatmap = dynamic(() => import('../components/charts/CalendarHeatmap'), {
+  ssr: false
+})
+const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
+  ssr: false
+})
 
 class Dashboard extends Component {
   constructor () {
@@ -49,12 +59,23 @@ class Dashboard extends Component {
 
     const { badges, teams } = account
     const osmesaData = account.records
+    const { 
+      hashtags, 
+      edit_times, 
+      extent_uri,
+      uid
+     } = osmesaData
+     const breakdownChartProps = pick([
+       'waterways_add',
+       'poi_add',
+       'roads_add',
+       'buildings_add'
+      ], osmesaData)
 
     // Calculate counts for panel
     const badgeCount = account.badges && badges.earnedBadges ? Object.keys(badges.earnedBadges).length : 0
     const campaignCount = osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0
     const editCount = osmesaData ? osmesaData.edit_count : 0
-
 
     if (!loggedIn || !account) {
       return <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
@@ -71,8 +92,9 @@ class Dashboard extends Component {
             { label: 'Edits', value: formatDecimal(editCount) }
           ]}
         />
-        <CampaignsChart {...osmesaData} height='200px' />
-        <EditBreakdownChart {...osmesaData} height='200px' />
+        <UserExtentMap uid={uid} extent={extent_uri} />
+        <CampaignsChart hashtags={hashtags} height='200px' />
+        <EditBreakdownChart {...breakdownChartProps} height='200px' />
         <section>
           <div className='row'>
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
@@ -83,6 +105,7 @@ class Dashboard extends Component {
             </div>
           </div>
         </section>
+        <CalendarHeatmap times={edit_times} />
         <div class='banner banner__badges'>
           <div class='row'>
             <div class='banner--content'>

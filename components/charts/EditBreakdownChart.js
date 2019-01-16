@@ -1,12 +1,13 @@
 import React from 'react'
 import { ResponsivePie } from '@nivo/pie'
+import { pick, isNil, values, any } from 'ramda'
 
 /**
  * chartify
  * Takes props and turns them into chart data
  * @param {*} props
  */
-function chartify ({
+function chartify({
   waterways_add,
   poi_add,
   roads_add,
@@ -46,8 +47,23 @@ const theme = {
   }
 }
 
-export default (props) =>
-  (
+export default (props) => {
+  const dataToChart = pick([
+    'waterways_add',
+    'poi_add',
+    'roads_add',
+    'buildings_add'
+  ], props)
+  if (any(isNil, values(dataToChart))) {
+    return (
+      <div className='chart chart-pie widget' style={{ height: props.height }}>
+        <h4 className='header--small'>Type Of Edits</h4>
+        No data available
+      </div>
+    )
+  }
+
+  return (
     <div className='chart chart-pie widget' style={{ height: props.height }}>
       <h4 className='header--small'>Type Of Edits</h4>
       <ResponsivePie
@@ -97,3 +113,5 @@ export default (props) =>
           }
         ]}
       /></div>)
+
+}

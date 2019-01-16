@@ -21,21 +21,10 @@ const editBox = (records) => (
   <div className='row'>
     <div className='section-sub--tertiary'>
       <h2 className='header--large'>Edits</h2>
-      <h4 className='header--small header--with-description-lg'>Edits Over Time</h4>
-      {
-        (records && records.edit_times)
-          ? <CalendarHeatmap times={records.edit_times} />
-          : <div>Edit time chart unavailable</div>
-      }
+      <CalendarHeatmap times={records.edit_times} />
     </div>
     <div>
-      <h4 className='header--small header--with-description-lg'>Extent of Edits</h4>
-      <div style={{ position: 'relative', height: '350px' }}>
-        {(records && records.extent_uri)
-          ? <UserExtentMap extent={records.extent_uri} uid={records.uid} />
-          : <div>Extent map unavailable</div>
-        }
-      </div>
+      <UserExtentMap extent={records.extent_uri} uid={records.uid} />
     </div>
   </div>
 )
