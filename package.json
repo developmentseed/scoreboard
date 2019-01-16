@@ -17,6 +17,7 @@
     "rollback": "knex migrate:rollback --cwd api/src/db/",
     "clocks": "nf start users_clock && nf start tm_clock",
     "users": "nf start populate_users",
+    "clock_updates": "npm run users && npm run clocks",
     "docs": "swagger-markdown -i api/docs/api.yml -o api/README.md",
     "lint": "devseed-standard",
     "lintfix": "devseed-standard --fix"
