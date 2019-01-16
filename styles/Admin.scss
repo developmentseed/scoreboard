@@ -141,6 +141,7 @@ $border-color: #ccc;
 
   input[type="text"],
   input[type="number"],
+  input[type="date"],
   textarea {
     border-radius: $border-radius;
     border: 1px solid $border-color;
