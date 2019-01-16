@@ -15,7 +15,11 @@ body {
   font-style: $base-font-style;
   margin: 0;
 }
-
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 //sections //
 .clearfix {
   &:before,
@@ -97,7 +101,6 @@ body {
     margin-bottom: 0;
   }
   .section-sub--left {
-    // position: absolute;
     bottom: .1em;
   }
   .descriptor-chart {
@@ -164,17 +167,6 @@ body {
       border-top: 1px solid rgba(255,255,255, .4);
     }
   }
-}
-
-.side-by-side {
-  float: left;
-  @include media(small-down) {
-    float: none;
-  }
-}
-
-.section-width--first {
-  margin-right: 4%;
 }
 
 .section-width-sixty {
@@ -305,7 +297,63 @@ section {
 .margin-top-sm {
   margin-top: .3em;
 }
-
+.widget-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  @include media(medium-up) {
+    flex-direction: row;
+    margin-bottom: 2em;
+    flex-wrap: wrap;
+  }
+  .widget {
+    flex: 1;
+    box-sizing: border-box;
+    @include media(medium-up) {
+      margin-right: 2em;
+    }
+    &:last-of-type {
+      margin-right: 0;
+    }
+    &-25 {
+      flex-basis: 100%;
+      @include media(large-up) {
+        flex: 0 0 calc(25% - 2em);
+      }
+    }
+    &-33 {
+      flex-basis: 100%;
+      @include media(large-up) {
+        flex: 0 0 calc(33% - 2em);
+      }
+    }
+    &-50 {
+      flex-basis: 100%;
+      @include media(large-up) {
+        flex: 0 0 calc(50% - 2em);
+      }
+    }
+    &-66 {
+      flex-basis: 100%;
+      @include media(large-up) {
+        flex: 0 0 66.66%;
+      }
+    }
+    &-75 {
+      flex-basis: 100%;
+      @include media(large-up) {
+        flex: 0 0 calc(75% - 2em);
+      }
+    }
+    &-100 {
+      flex-basis: 100%;
+      @include media(large-up) {
+        flex: 100%;
+      }
+    }
+  }
+}
 .widget {
   background: #FFFFFF;
   box-shadow: 0 2px 14px 0 rgba(132,132,132,0.13);
@@ -316,17 +364,21 @@ section {
   margin: 0 auto;
   box-sizing: border-box;
 }
+.Badge-Roll .widget {
+
+}
 
 .banner {
   .row {
       display: flex;
       align-items: center;
-      padding: 8vw 4em;
+      padding: 8vw 8vw;
   }
   h1,
   h2,
   p,
-  a {
+  a,
+  a:visited {
     color: #FFFFFF;
     max-width: none;
   }
@@ -334,7 +386,7 @@ section {
     background: $blue-purple-color;
     @include media (medium-up) {
       background: url("/static/Banner-badges.png"), $blue-purple-color;
-      background-size: fit;
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: right;
     }
@@ -343,7 +395,7 @@ section {
     background: $base-color;
     @include media (medium-up) {
       background: url("/static/Banner-signup.png"), $base-color;
-      background-size: fit;
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: right;
     }
@@ -351,7 +403,8 @@ section {
   &--content {
     @include media (medium-up) {
       width: 32vw;
-      text-shadow: 0 2px 2px rgba(0,0,0,0.5);
+      position: relative;
+      z-index: 10;
     }
   }
 }

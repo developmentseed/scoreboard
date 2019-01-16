@@ -59,9 +59,9 @@ class Dashboard extends Component {
 
     const { badges, teams } = account
     const osmesaData = account.records
-    const { 
-      hashtags, 
-      edit_times, 
+    const {
+      hashtags,
+      edit_times,
       extent_uri,
       uid
      } = osmesaData
@@ -92,9 +92,19 @@ class Dashboard extends Component {
             { label: 'Edits', value: formatDecimal(editCount) }
           ]}
         />
-        <UserExtentMap uid={uid} extent={extent_uri} />
-        <CampaignsChart hashtags={hashtags} height='200px' />
-        <EditBreakdownChart {...breakdownChartProps} height='200px' />
+        <section className='row'>
+          <UserExtentMap uid={uid} extent={extent_uri} />
+        </section>
+        <section className='row'>
+          <div className='widget-container'>
+            <div className='widget-66'>
+              <CampaignsChart hashtags={hashtags} height='240px' />
+            </div>
+            <div className='widget-33'>
+              <EditBreakdownChart {...breakdownChartProps} height='240px' />
+            </div>
+          </div>
+        </section>
         <section>
           <div className='row'>
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
@@ -104,12 +114,14 @@ class Dashboard extends Component {
               <DashboardBadges badges={badges} />
             </div>
           </div>
+          <div className='row'>
+            <CalendarHeatmap times={edit_times} />
+          </div>
         </section>
-        <CalendarHeatmap times={edit_times} />
-        <div class='banner banner__badges'>
-          <div class='row'>
-            <div class='banner--content'>
-              <h2 class='header--xlarge'>Map to Earn Badges</h2>
+        <div className='banner banner__badges'>
+          <div className='row'>
+            <div className='banner--content'>
+              <h2 className='header--xlarge'>Map to Earn Badges</h2>
               <p>Track your best work. Earn badges for edits you’ve made and campaigns you've helped complete. Share your progress and contribution to the global mapping ecosystem. </p>
               {
                 // TODO when badge overview page is added

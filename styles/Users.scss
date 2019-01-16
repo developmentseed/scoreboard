@@ -3,6 +3,9 @@
 
 .chart {
   font-family: $tertiary-font-family;
+  .header--small {
+    margin: 0;
+  }
 }
 
 .chart-pie--legend {

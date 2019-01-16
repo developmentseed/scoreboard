@@ -82,7 +82,7 @@ class CalendarHeatmap extends React.Component {
               dayBorderColor='#ffffff'
               legends={[
                 {
-                  'anchor': 'top-right',
+                  'anchor': 'bottom-right',
                   'direction': 'row',
                   'itemCount': 4,
                   'itemWidth': 34,
@@ -93,7 +93,7 @@ class CalendarHeatmap extends React.Component {
               theme={{
                 'tooltip': {
                   'container': {
-                    'fontSize': '13px'
+                    'fontSize': '14px'
                   }
                 },
                 'labels': {

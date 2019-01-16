@@ -72,16 +72,15 @@ $badgeyellow: #fef387;
 }
 
 .Badge-Container {
-  min-width: 300px;
-  max-width: 100%;
-  margin: 20px 24px;
-  margin-bottom: 0;
-  @media screen and (max-width: 1100px) {
-    position: relative;
-    max-width: 75%;
-    margin: 50px 10px 0 10px;
-    margin-right: auto;
-    margin-left: auto;
+  display: flex;
+  &:nth-of-type(even) {
+    margin-right: 0;
+  }
+  &:last-of-type {
+    margin-right: 0;
+    &:after {
+      content: " ";
+    }
   }
 }
 
@@ -105,16 +104,16 @@ $badgeyellow: #fef387;
 
 .Badge-Interior {
   position: absolute;
-  margin-top: 11px;
-  margin-left: 11px;
+  margin-top: 14px;
+  margin-left: 14px;
   border: 2px solid lighten($lightgrey, 20%);
   border-radius: 50%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 140px;
   &.progress {
-    width: 134px;
-    height: 134px;
+    width: 132px;
+    height: 132px;
   }
   &.upcoming {
     width: 71px;

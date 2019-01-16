@@ -43,40 +43,14 @@
   }
 }
 
-.list-grid {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  @include media(medium-up){
-    flex-direction: row;
-  }
-  > li {
-    display: inline-block;
-    vertical-align: top;
+.admin-widget {
+  line-height: 2em;
+  a {
+    font-family: $tertiary-font-family;
+    line-height: $base-line-height;
+    text-transform: uppercase;
     line-height: 2em;
-    @include media(medium-up) {
-      width: 26%;
-    }
-    a {
-      font-family: $tertiary-font-family;
-      line-height: $base-line-height;
-      text-transform: uppercase;
-    }
   }
-
-  h3 {
-    margin: 0;
-  }
-
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-
-  p {
-    margin: 0;
-  }
-
 }
 
 .admin-sidebar-links {

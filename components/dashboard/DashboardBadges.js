@@ -48,13 +48,13 @@ class DashboardBadges extends Component {
           onClick={this.onBadgesFilterClick}
         />
 
-        <ul className='tri-fold'>
+        <ul className='widget-container Badge-Roll'>
           {
             badgeKeys.map((badgeKey, i) => {
               const badge = badges[badgesFilter][badgeKey]
 
               return (
-                <li className='widget' key={`upcoming-badge-${i}`}>
+                <li className='widget widget-50 Badge-Container' key={`upcoming-badge-${i}`}>
                   <BadgeInProgress badge={badge} badgeClass='progress' />
                   <div className='badge-Details'>
                     <h3 className='header--small sub-head header--with-description'>{badge.name}</h3>

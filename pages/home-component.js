@@ -103,13 +103,13 @@ export class Home extends Component {
         </section>
         <section>
           <div className='row'>
-            <div className='width--shortened graphs--users widget'>
-              <h2 className='header--large'>Mappers</h2>
-              <div className='side-by-side section-width-twenty section-width--first'>
+            <div className='width--shortened graphs--users widget widget-container'>
+              <h2 className='header--large widget-100'>Mappers</h2>
+              <div className='widget-25'>
                 <h3>Edits By Country</h3>
                 <EditorsByCountry edits={editsByCountry} />
               </div>
-              <div className='side-by-side section-width-eighty chart' style={{ height: '430px', marginBottom: '50px' }}>
+              <div className='widget-75' style={{ height: '430px', marginBottom: '50px' }}>
                 <h3>Top Editors</h3>
                 {
                   topEdits ? <TopEditorsChart edits={topEdits} /> : <div>Loading...</div>

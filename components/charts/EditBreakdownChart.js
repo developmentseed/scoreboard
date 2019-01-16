@@ -113,5 +113,4 @@ export default (props) => {
           }
         ]}
       /></div>)
-
 }

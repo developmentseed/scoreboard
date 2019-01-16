@@ -3,7 +3,7 @@ import Link from './Link'
 
 export default () => {
   return (
-    <ul className='list-grid'>
+    <ul className='widget-container admin-widget'>
       <li className='widget'>
         <h3 className='header--medium'>
           Badges

@@ -7,7 +7,7 @@ export default ({ records, apiStatus, total, allCount }) => {
     case 'SUCCESS':
       content = (
         <div>
-          <h3 className='header--medium'>{(parseInt(total) < parseInt(allCount)) ? `${total} campaigns out of ${allCount}`: `${total} campaigns`}</h3>
+          <h3 className='header--medium'>{(parseInt(total) < parseInt(allCount)) ? `${total} campaigns out of ${allCount}` : `${total} campaigns`}</h3>
           <div className='clearfix'>
             {records.map(record => <CampaignCard key={record.id} campaign={record} />)}
           </div>
