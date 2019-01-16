@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '../.env' })
 const join = require('url-join')
 const createTemplatePlugin = require('./template-plugin')
 
@@ -25,9 +26,9 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: 'users/getting-started', label: 'Getting Started' },
-    { doc: 'admin/overview', label: 'Administration' },
-    { doc: 'developers/overview', label: 'Developers' },
+    { href: join(appURL, 'docs/users/getting-started/'), label: 'Getting Started' },
+    { href: join(appURL, 'docs/admin/overview/'), label: 'Administration' },
+    { href: join(appURL, 'docs/developers/overview/'), label: 'Developers' },
     { href: join(appURL, 'api/docs'), label: 'API' }
   ],
 
