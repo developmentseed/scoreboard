@@ -18,7 +18,7 @@ function mapBadgeToTask (badge, x, cond) {
       pois: `Add ${x} more nodes`,
       waterways: `Add ${x} more km of waterways`,
       countries: `Map in ${x} more different countries`,
-      daysTotal: `Map ${x} more days in total`,
+      daysTotal: `Map ${x} more days in total`
     }
     return map[badge]
   } else {
