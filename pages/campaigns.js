@@ -46,12 +46,12 @@ export class Campaigns extends Component {
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
           <div className='row'>
-            <h1 className='section-sub--left header--xlarge margin-top-sm'>Campaigns</h1>
+            <h1 className='header--xlarge'>Campaigns</h1>
           </div>
         </header>
-        <section className='section--tertiary'>
-          <div className='row'>
-            <div className='sidebar'>
+        <section>
+          <div className='row widget-container'>
+            <div className='widget-25'>
               <h3 className='header--medium'>Filter</h3>
               <CampaignFilters
                 handleFilterChange={this.handleFilterChange}
@@ -60,7 +60,7 @@ export class Campaigns extends Component {
                 completeness={{ compl_min, compl_max }}
               />
             </div>
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
               <Pagination
                 activePage={page}

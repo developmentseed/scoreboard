@@ -113,7 +113,7 @@ class Layout extends React.Component {
         </Head>
         <header className='header-nav'>
           <div className='row'>
-            <nav className='clearfix'>
+            <nav>
               <ul className='nav--left'>
                 <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
                 <li><NavLink href='/campaigns'>Campaigns</NavLink></li>

@@ -92,27 +92,33 @@ class Dashboard extends Component {
             { label: 'Edits', value: formatDecimal(editCount) }
           ]}
         />
-        <section className='row'>
-          <UserExtentMap uid={uid} extent={extent_uri} />
+        <section>
+          <div  className='row'>
+            <UserExtentMap uid={uid} extent={extent_uri} />
+          </div>
         </section>
-        <section className='row'>
-          <div className='widget-container'>
-            <div className='widget-66'>
-              <CampaignsChart hashtags={hashtags} height='240px' />
-            </div>
-            <div className='widget-33'>
-              <EditBreakdownChart {...breakdownChartProps} height='240px' />
+        <section>
+          <div  className='row'>
+            <div className='widget-container'>
+              <div className='widget-66'>
+                <CampaignsChart hashtags={hashtags} height='240px' />
+              </div>
+              <div className='widget-33'>
+                <EditBreakdownChart {...breakdownChartProps} height='240px' />
+              </div>
             </div>
           </div>
         </section>
         <section>
-          <div className='row'>
+          <div className='row widget-container'>
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
               <DashboardAssignments favorites={favorites} assignments={assignments} authenticatedUser={authenticatedUser} />
-              <DashboardBadges badges={badges} />
             </div>
+          </div>
+          <div className='row'>
+            <DashboardBadges badges={badges} />
           </div>
           <div className='row'>
             <CalendarHeatmap times={edit_times} />
@@ -136,7 +142,7 @@ class Dashboard extends Component {
 
   renderAdmin () {
     return (
-      <div style={{ marginBottom: 50 }}>
+      <div>
         <h2 className='header--large header--with-description'>
           <Link href='/admin'>
             <a class='header-link'>Admin</a>

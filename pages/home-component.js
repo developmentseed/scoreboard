@@ -115,6 +115,8 @@ export class Home extends Component {
                   topEdits ? <TopEditorsChart edits={topEdits} /> : <div>Loading...</div>
                 }
               </div>
+            </div>
+            <div className='width--shortened'>
               <Link href='/users'>
                 <a className='link--large'>View All Mappers</a>
               </Link>

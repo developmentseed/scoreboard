@@ -14,18 +14,10 @@
   }
 }
 
-.wrapper--map {
-  background-color: rgba(79,202,156,.6);
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-}
 .header--content--wrapper {
   margin-right: auto;
   flex: 1;
+  display: flex;
   a {
     color: #FFFFFF;
   }

@@ -15,8 +15,10 @@ function DashboardHeader (props) {
     <header className='header--internal--green header--page'>
       <div className='row'>
         <div className='header--content--wrapper'>
-          <div className='section-sub--left section-width-fifty-plus'>
+          <div>
             {<img className='profile--thumb' style={{ float: 'left' }} src={profileImage} alt='Profile pic' />}
+          </div>
+          <div>
             <h1 className='header--xlarge header--with-description'>{osmUser['@']['display_name']}</h1>
             <Link href={`/users/${account.id}`}><a className='link--large'>View Public Profile</a></Link>
           </div>

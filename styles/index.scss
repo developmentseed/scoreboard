@@ -26,6 +26,8 @@ body {
   &:after {
     content: " ";
     display: table;
+    flex-basis: 100%;
+    order: 2;
   }
   &:after {
     clear: both;
@@ -214,6 +216,12 @@ body {
 
 section {
   padding: 5em 0;
+  &~section {
+    padding-bottom: 0;
+  }
+  &:last-of-type {
+    padding-bottom: 5em;
+  }
 }
 
 .section-first {
@@ -311,44 +319,53 @@ section {
     flex: 1;
     box-sizing: border-box;
     @include media(medium-up) {
-      margin-right: 2em;
+      margin-right: 1em;
+      &:last-of-type {
+        margin-right: 0;
+      }
     }
-    &:last-of-type {
+    @include media(large-up) {
+      margin-right: 2em;
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+    &.Badge-Container {
       margin-right: 0;
     }
     &-25 {
       flex-basis: 100%;
-      @include media(large-up) {
-        flex: 0 0 calc(25% - 2em);
+      @include media(medium-up) {
+        flex: 0 0 calc(25% - 1em);
       }
     }
     &-33 {
       flex-basis: 100%;
-      @include media(large-up) {
-        flex: 0 0 calc(33% - 2em);
+      @include media(medium-up) {
+        flex: 0 0 calc(33.33% - 1em);
       }
     }
     &-50 {
       flex-basis: 100%;
-      @include media(large-up) {
-        flex: 0 0 calc(50% - 2em);
+      @include media(medium-up) {
+        flex: 0 0 calc(50% - 1em);
       }
     }
     &-66 {
       flex-basis: 100%;
-      @include media(large-up) {
-        flex: 0 0 66.66%;
+      @include media(medium-up) {
+        flex: 0 0 calc(66.66% - 1em);
       }
     }
     &-75 {
       flex-basis: 100%;
-      @include media(large-up) {
-        flex: 0 0 calc(75% - 2em);
+      @include media(medium-up) {
+        flex: 0 0 calc(75% - 1em);
       }
     }
     &-100 {
       flex-basis: 100%;
-      @include media(large-up) {
+      @include media(medium-up) {
         flex: 100%;
       }
     }
@@ -364,14 +381,9 @@ section {
   margin: 0 auto;
   box-sizing: border-box;
 }
-.Badge-Roll .widget {
-
-}
 
 .banner {
   .row {
-      display: flex;
-      align-items: center;
       padding: 8vw 8vw;
   }
   h1,
@@ -529,9 +541,9 @@ section {
 
 .header--page {
   .row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: flex-end;
     .section-sub--left {
       // width: auto;
       float: none;
@@ -766,7 +778,7 @@ legend {
 
 .input--text {
   padding: .7em;
-  width: 80%;
+  width: 100%;
 }
 
 .checkbox {
@@ -785,7 +797,7 @@ legend {
   height: 15px;
   background-size: 15px 15px;
   top: .6em;
-  right: 15%;
+  right: 5%;
 }
 
 //tables //

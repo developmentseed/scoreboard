@@ -24,7 +24,7 @@ function DashboardSidebar (props) {
   const { teams, osmesaData } = props
   const countries = osmesaData ? formatCountryList(osmesaData.country_list) : []
   return (
-    <div className='sidebar-right'>
+    <div className='sidebar-right widget-25'>
       <h2 className='header--large' style={{ marginBottom: 5 }}>
         <Link href='/teams'>
           <a class='header-link'>Teams</a>

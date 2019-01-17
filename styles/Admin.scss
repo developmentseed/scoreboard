@@ -13,9 +13,7 @@
 }
 
 .sidebar-right {
-  width: 20%;
-  left: 5%;
-  float: right;
+  order: 1;
   @include media(xsmall-only) {
     float: none;
     width: 100%;

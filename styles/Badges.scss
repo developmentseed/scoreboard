@@ -205,11 +205,6 @@ $badgeyellow: #fef387;
   @include media(medium-up) {
     flex-direction: row;
   }
-  li {
-    @include media(medium-up) {
-      width: 45%;
-    }
-  }
   .Badge-Border {
     width: 160px;
     height: 160px;

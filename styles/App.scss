@@ -9,11 +9,12 @@
 }
 
 nav {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  overflow: hidden;
   li {
-    display: block;
-    margin-top: 1.4em;
     font-family: $tertiary-font-family;
-    float: left;
     text-transform: uppercase;
     letter-spacing: 2px;
     button {
@@ -28,23 +29,27 @@ nav {
   }
 
   .nav--left {
-    float: left;
+    display: flex;
+    flex-direction: column;
+    @include media(small-up) {
+      flex-direction: row;
+      align-items: center;
+    }
     li {
-      margin-right: 1.6em;
+      margin-right: .5em;
       &:first-of-type {
-        margin-right: .5em;
+        margin-right: .6em;
       }
-      @include media(small-down) {
-        margin-right: 1.2em;
+      @include media(medium-up) {
+        margin-right: 1.6em;
         &:first-of-type {
-          margin-right: 1em;
+          margin-right: .5em;
         }
       }
     }
     .logo {
       font-size: 1.8em;
-      margin-top: .8em;
-      padding-bottom: .7em;
+      padding: .7em 0;
       a:hover {
         border-bottom: 0;
       }
@@ -53,7 +58,12 @@ nav {
       color: #fff;
       transition: all 0.2s ease 0s;
       border-bottom: 2px solid rgba(255,255,255,0);
-      padding: 0 .5em 1.4em;
+      @include media(small-up) {
+        padding: 0 .5em 1.4em;
+      }
+      &:first-of-type {
+        padding-left: 0;
+      }
     }
 
     li a:hover,
@@ -66,16 +76,13 @@ nav {
     }
   }
   .nav--right {
-    float: right;
-    position: relative;
-    .nav--icons {
-      float: right;
-      margin-left: 1em;
-      margin-top: .4em;
-      &:first-of-type {
-        margin-top: .9em;
-      }
+    display: flex;
+    flex-direction: column;
+    @include media(small-up) {
+      flex-direction: row;
+      align-items: center;
     }
+    position: relative;
     li {
       border: 0;
       img {
@@ -256,7 +263,13 @@ nav {
 }
 
 .users--country {
+  display: flex;
+  flex-direction: row;
+  @include media(medium-up) {
+    flex-direction: column;
+  }
   .list--block--sm {
+    flex: 1;
     &:first-of-type {
       a {
         color: darken($blue-purple-color, 25%);
@@ -281,6 +294,11 @@ nav {
       a {
         color: lighten($blue-purple-color, 18%);
       }
+    }
+  }
+  .num--large {
+    @include media(small-down) {
+      font-size: 4vw;
     }
   }
 }
@@ -308,13 +326,13 @@ footer {
   font-family: $tertiary-font-family;
   text-transform: uppercase;
   line-height: 2;
-  padding: 2em;
+  padding: 2em 0;
   .row {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin: 0 auto;
-    max-width: 1200px;
+    max-width: 1280px;
     @include media(small-up) {
       flex-direction: row;
       align-items: center;
