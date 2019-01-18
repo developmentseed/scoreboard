@@ -71,8 +71,8 @@ export default (props) => {
         margin={{
           'top': 0,
           'right': 0,
-          'bottom': 0,
-          'left': 0
+          'bottom': 20,
+          'left': 50
         }}
         theme={theme}
         sortByValue={false}
@@ -96,16 +96,18 @@ export default (props) => {
         enableSlicesLabels
         sliceLabel='value'
         slicesLabelsSkipAngle={10}
-        slicesLabelsTextColor='#f5f5f5'
+        slicesLabelsTextColor='inherit:lighter(1.6)'
         animate
         motionStiffness={90}
         motionDamping={15}
         isInteractive
+        tooltipFormat={value => value.toLocaleString()}
         legends={[
           {
             'anchor': 'center-left',
             'direction': 'column',
             'translateY': 20,
+            'translateX': -50,
             'itemWidth': 100,
             'itemHeight': 28,
             'symbolSize': 16,

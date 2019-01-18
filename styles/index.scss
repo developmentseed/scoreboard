@@ -292,7 +292,10 @@ section {
     }
   }
 }
-
+.home>section:last-of-type .link--large {
+  display: inline-block;
+  margin-top: 2.5em;
+}
 .margin-top-sm {
   margin-top: .3em;
 }

@@ -101,10 +101,10 @@ class Dashboard extends Component {
           <div  className='row'>
             <div className='widget-container'>
               <div className='widget-66'>
-                <CampaignsChart hashtags={hashtags} height='240px' />
+                <CampaignsChart hashtags={hashtags} height='260px' />
               </div>
               <div className='widget-33'>
-                <EditBreakdownChart {...breakdownChartProps} height='240px' />
+                <EditBreakdownChart {...breakdownChartProps} height='260px' />
               </div>
             </div>
           </div>
