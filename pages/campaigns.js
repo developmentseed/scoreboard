@@ -11,7 +11,8 @@ export class Campaigns extends Component {
     super()
 
     this.handlePageChange = this.handlePageChange.bind(this)
-    this.handleFilterChange = this.handleFilterChange.bind(this)
+    this.handleCompletenessChange = this.handleCompletenessChange.bind(this)
+    this.handleValidationChange = this.handleValidationChange.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
   }
 
@@ -19,8 +20,12 @@ export class Campaigns extends Component {
     this.props.handleCampaignsSearch(event.target.value)
   }
 
-  handleFilterChange (completeness) {
-    this.props.handleCampaignsFilterChange(completeness)
+  handleCompletenessChange (completeness) {
+    this.props.handleCampaignsCompletenessChange(completeness)
+  }
+
+  handleValidationChange (validation) {
+    this.props.handleCampaignsValidationChange(validation)
   }
 
   handlePageChange (pageNumber) {
@@ -39,7 +44,7 @@ export class Campaigns extends Component {
   }
 
   render () {
-    const { page, searchText, compl_min, compl_max } = this.props.campaigns
+    const { page, searchText } = this.props.campaigns
     const { records: { total, records, all_count }, apiStatus } = this.props.campaigns
 
     return (
@@ -60,10 +65,10 @@ export class Campaigns extends Component {
             <div className='sidebar'>
               <h3 className='header--medium'>Filter</h3>
               <CampaignFilters
-                handleFilterChange={this.handleFilterChange}
+                handleCompletenessChange={this.handleCompletenessChange}
+                handleValidationChange={this.handleValidationChange}
                 handleSearch={this.handleSearch}
                 searchText={searchText}
-                completeness={{ compl_min, compl_max }}
               />
             </div>
             <div className='content--with-sidebar'>

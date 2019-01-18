@@ -10,8 +10,10 @@ export default class extends React.Component {
     super(props)
 
     this.state = {
-      min: 0,
-      max: 100
+      compl_min: 0,
+      compl_max: 100,
+      valid_min: 0,
+      valid_max: 100
     }
   }
 
@@ -20,7 +22,7 @@ export default class extends React.Component {
       handleSearch
     } = this.props
 
-    let { min, max } = this.state
+    let { compl_min, compl_max, valid_min, valid_max } = this.state
 
     return (
       <form onSubmit={e => e.preventDefault()}>
@@ -36,9 +38,19 @@ export default class extends React.Component {
           <InputRange
             maxValue={100}
             minValue={0}
-            value={{ min, max }}
-            onChange={value => this.setState(value)}
-            onChangeComplete={this.props.handleFilterChange}
+            value={{ min: compl_min, max: compl_max }}
+            onChange={({ min, max }) => this.setState({ compl_min: min, compl_max: max })}
+            onChangeComplete={this.props.handleCompletenessChange}
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Validation</legend>
+          <InputRange
+            maxValue={100}
+            minValue={0}
+            value={{ min: valid_min, max: valid_max }}
+            onChange={({ min, max }) => this.setState({ valid_min: min, valid_max: max })}
+            onChangeComplete={this.props.handleValidationChange}
           />
         </fieldset>
       </form>
