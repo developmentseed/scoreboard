@@ -46,7 +46,6 @@ export class User extends Component {
         <DashboardHeader
           id={this.props.id}
           name={name}
-          loggedIn={false}
           edit_times={edit_times}
           country={country}
         />
