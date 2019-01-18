@@ -795,7 +795,22 @@ legend {
   top: .6em;
   right: 5%;
 }
-
+form.filters {
+  display: flex;
+  flex-direction: column;
+  @include media(small-only) {
+    flex-direction: row;
+    margin-bottom: 1em;
+  }
+  fieldset {
+    width: 100%;
+    &~fieldset {
+      @include media(small-only) {
+        margin-left: 1em;
+      }
+    }
+  }
+}
 //tables //
 table {
   width: 100%;
@@ -837,7 +852,7 @@ table {
     padding: .9em 4em .8em 0;
     margin: 0;
     @include media(xlarge-up) {
-      padding-right: 6em;
+      padding-right: 4em;
     }
     @include media(medium-down) {
       padding-right: 1em;

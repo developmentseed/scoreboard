@@ -131,11 +131,11 @@ export class Campaign extends Component {
         } />
 
         <section>
-          <div className='row'>
-            <div className='section-sub--left section-width-fifty-plus'>
+          <div className='row widget-container'>
+            <div className='widget-50'>
               <div className='text-body'><ReactMarkdown source={tmData.description} /></div>
             </div>
-            <div className='section-sub--right section-width-fifty-minus'>
+            <div className='widget-50'>
               <div className='map-lg'>
                 <CampaignMap feature={JSON.parse(tmData.geometry)} interactive />
               </div>

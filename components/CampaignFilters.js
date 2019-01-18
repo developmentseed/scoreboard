@@ -23,7 +23,7 @@ export default class extends React.Component {
     let { min, max } = this.state
 
     return (
-      <form onSubmit={e => e.preventDefault()}>
+      <form className='filters' onSubmit={e => e.preventDefault()}>
         <fieldset>
           <legend>Search</legend>
           <div className='search'>

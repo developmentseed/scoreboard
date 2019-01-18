@@ -38,12 +38,12 @@ export class Country extends Component {
           { label: 'Edits', value: formatDecimal(edit_count) }
         ]} />
         <section>
-          <div className='row'>
-            <div className='section-sub--left section-width-fifty-plus'>
+          <div className='row widget-container'>
+            <div className='widget-50'>
               <h3 className='header--medium'>Top 15 Participants</h3>
               <UserTable users={users} />
             </div>
-            <div className='section-sub--right section-width-fifty-minus'>
+            <div className='widget-50'>
               <div className='map-lg'>
                 <CountryMap geography={this.props.country.geography} centroid={this.props.country.center} interactive />
               </div>

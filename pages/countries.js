@@ -80,14 +80,14 @@ export class Countries extends Component {
           { label: 'Total Edits', value: formatDecimal(editTotal) }
         ]} />
         <section>
-          <div className='row'>
+          <div className='row widget-container'>
             <AllCountriesFilter
               handleSearch={this.handleSearch}
               handleSortSelect={this.handleSortSelect}
               selectedSortValue={selectedSortValue}
               searchText={searchText}
             />
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               <h3 className='header--medium'>{label}</h3>
               <AllCountriesTable countries={records} apiStatus={apiStatus} />
             </div>
