@@ -71,13 +71,15 @@ export default props =>
             enableGridX={false}
             enableGridY={false}
             enableLabel
-            labelSkipWidth={12}
+            labelFormat={(value, d) => <tspan x={50}>{d}{value.toLocaleString()}</tspan>}
+            labelSkipWidth={32}
             labelSkipHeight={12}
             labelTextColor='inherit:darker(1.6)'
             animate
             motionStiffness={90}
             motionDamping={15}
             isInteractive
+            tooltipFormat={value => value.toLocaleString()}
           />
           : <div>No data available</div>
       }

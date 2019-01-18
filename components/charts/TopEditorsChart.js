@@ -55,16 +55,18 @@ export default props =>
     borderColor='inherit:brighter(1.6)'
     axisBottom={{
       'orient': 'bottom',
-      'tickSize': 5,
+      'tickSize': 2,
       'tickPadding': 3,
       'tickRotation': 0,
       'legend': 'Number of Edits',
       'legendPosition': 'center',
-      'legendOffset': 40
+      'legendOffset': 40,
+      'format': '.2s'
     }}
     enableGridX={false}
     enableGridY={false}
     enableLabel
+    labelFormat={(value, d) => <tspan x={50}>{d}{value.toLocaleString()}</tspan>}
     labelSkipWidth={12}
     labelSkipHeight={12}
     labelTextColor='inherit:darker(1.6)'
@@ -72,4 +74,5 @@ export default props =>
     motionStiffness={90}
     motionDamping={15}
     isInteractive
+    tooltipFormat={value => value.toLocaleString()}
   />
