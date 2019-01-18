@@ -19,7 +19,6 @@ import '../styles/App.scss'
 import '../styles/Admin.scss'
 import '../styles/Dashboard.scss'
 import '../styles/Campaigns.scss'
-import '../styles/Country.scss'
 import '../styles/Users.scss'
 import '../styles/Badges.scss'
 

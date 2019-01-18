@@ -176,6 +176,13 @@ nav {
   }
 }
 
+.map-lg {
+  height: 400px;
+  @include media(medium-up) {
+      margin-left: 10%;
+  }
+}
+
 .section-sub--right--home {
   width: 22%;
   margin-left: 12%;

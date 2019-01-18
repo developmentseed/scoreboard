@@ -136,7 +136,7 @@ export class Campaign extends Component {
               <div className='text-body'><ReactMarkdown source={tmData.description} /></div>
             </div>
             <div className='section-sub--right section-width-fifty-minus'>
-              <div className='map-campaign-lg'>
+              <div className='map-lg'>
                 <CampaignMap feature={JSON.parse(tmData.geometry)} interactive />
               </div>
             </div>

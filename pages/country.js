@@ -44,7 +44,7 @@ export class Country extends Component {
               <UserTable users={users} />
             </div>
             <div className='section-sub--right section-width-fifty-minus'>
-              <div className='map-country-lg'>
+              <div className='map-lg'>
                 <CountryMap geography={this.props.country.geography} centroid={this.props.country.center} interactive />
               </div>
             </div>
