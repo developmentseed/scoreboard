@@ -332,11 +332,17 @@ section {
       @include media(medium-up) {
         flex: 0 0 calc(25% - 1em);
       }
+      @include media(large-up) {
+        flex-basis: calc(25% - 2em);
+      }
     }
     &-33 {
       flex-basis: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(33.33% - 1em);
+      }
+      @include media(large-up) {
+        flex-basis: calc(33.33% - 2em);
       }
     }
     &-50 {
@@ -344,17 +350,26 @@ section {
       @include media(medium-up) {
         flex: 0 0 calc(50% - 1em);
       }
+      @include media(large-up) {
+        flex-basis: calc(50% - 2em);
+      }
     }
     &-66 {
       flex-basis: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(66.66% - 1em);
       }
+      @include media(large-up) {
+        flex-basis: calc(66.66% - 2em);
+      }
     }
     &-75 {
       flex-basis: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(75% - 1em);
+      }
+      @include media(large-up) {
+        flex-basis: calc(75% - 2em);
       }
     }
     &-100 {

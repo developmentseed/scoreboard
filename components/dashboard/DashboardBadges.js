@@ -40,7 +40,7 @@ class DashboardBadges extends Component {
     const badgeKeys = Object.keys(filteredBadges)
 
     return (
-      <div style={{ marginTop: 50 }}>
+      <div>
         <h2 className='header--large header--with-description'>Badges</h2>
         <FilterBar
           filters={badgeFilters}

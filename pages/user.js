@@ -78,9 +78,9 @@ export class User extends Component {
         <section>
           <div className='row widget-container'>
             <DashboardSidebar teams={teams} osmesaData={records} />
-          </div>
-          <div className='row'>
-            <DashboardBadges badges={badges} />
+            <div className='widget-75'>
+              <DashboardBadges badges={badges} />
+            </div>
           </div>
           <div className='row'>
             <CalendarHeatmap times={edit_times} />
