@@ -349,8 +349,10 @@ footer {
       content: none;
     }
     div:last-of-type {
-      text-align: right;
-      line-height: 3;
+      @include media(small-up) {
+        text-align: right;
+        line-height: 3;
+      }
     }
   }
   .footer__logo{

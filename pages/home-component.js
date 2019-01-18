@@ -34,16 +34,14 @@ export class Home extends Component {
     return (
       <div className='home'>
         <header className='header--homepage header--page'>
-          <div className='overlay-dark'>
-            <div className='row'>
-              <div className='width--shortened'>
-                <div className='section-sub--left'>
-                  <h1 className='header--xxlarge header--with-description'>Tracking Map Edits Around the World</h1>
-                  <p className='description--header'>{'See what’s happening throughout the ' + projectName + ' ecosystem. From which campaigns are the most active, to detailed information about the contributing mappers.'}</p>
-                  <Link href='/about'>
-                    <a className='link--large'>Learn More</a>
-                  </Link>
-                </div>
+          <div className='row'>
+            <div className='width--shortened'>
+              <div className='section-sub--left'>
+                <h1 className='header--xxlarge header--with-description'>Tracking Map Edits Around the World</h1>
+                <p className='description--header'>{'See what’s happening throughout the ' + projectName + ' ecosystem. From which campaigns are the most active, to detailed information about the contributing mappers.'}</p>
+                <Link href='/about'>
+                  <a className='link--large'>Learn More</a>
+                </Link>
               </div>
             </div>
           </div>

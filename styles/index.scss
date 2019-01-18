@@ -259,7 +259,8 @@ section {
 }
 
 .header--homepage {
-  margin-top: -6em;
+  margin-top: -5em;
+  margin-bottom: 1em;
   background: linear-gradient(to bottom, rgba(#2CAF80, 1), rgba(#56E483, .7)), url("/static/backgrounds/homepage-background-#{$nth}.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -269,8 +270,10 @@ section {
   background-position: center;
   background-origin: top;
   color: #fff;
-  @include media(medium-down) {
-    margin-top: -5em;
+  padding: 10em 0 3em;
+  @include media(medium-up) {
+    padding: 12em 0 6em;
+    margin-top: -6em;
   }
   h1 {
     color: #fff;
@@ -278,7 +281,6 @@ section {
   p {
     color: rgba(255, 255, 255, .8);
     font-size: 1.3em;
-    margin-top: -5px;
   }
   .link--large, .link--large:visited{
     color: #fff;
@@ -289,16 +291,6 @@ section {
       color: darken(#fff, 7%);
       border-bottom: 1px solid darken(#fff, 7%);
     }
-  }
-}
-
-.overlay-dark {
-  display: block;
-  padding: 12em 0 9em;
-  width: 100%;
-  height: 100%;
-  @include media(medium-down) {
-    padding: 10em 0 3em;
   }
 }
 
@@ -384,7 +376,8 @@ section {
 
 .banner {
   .row {
-      padding: 8vw 8vw;
+      padding-top: 8vw;
+      padding-bottom: 8vw;
   }
   h1,
   h2,
@@ -413,6 +406,9 @@ section {
     }
   }
   &--content {
+    p {
+      font-size: 1.3em;
+    }
     @include media (medium-up) {
       width: 32vw;
       position: relative;
