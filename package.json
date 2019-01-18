@@ -95,7 +95,6 @@
     "file-loader": "^2.0.0",
     "foreman": "^3.0.1",
     "fs-extra": "^7.0.0",
-    "i18n-iso-countries": "^3.7.4",
     "isomorphic-unfetch": "^3.0.0",
     "knex": "^0.15.2",
     "lodash-es": "^4.17.5",
