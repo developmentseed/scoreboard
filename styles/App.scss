@@ -11,12 +11,17 @@
 nav {
   display: flex;
   justify-content: space-between;
-  align-content: center;
-  overflow: hidden;
+  flex-direction: column;
+  @include media(small-up) {
+    flex-direction: row;
+  }
   li {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    @include media(medium-up) {
+      letter-spacing: 2px;
+    }
     button {
       background: none;
       border: 0;
@@ -31,19 +36,25 @@ nav {
   .nav--left {
     display: flex;
     flex-direction: column;
+    text-align: center;
     @include media(small-up) {
       flex-direction: row;
       align-items: center;
+      text-align: left;
     }
     li {
-      margin-right: .5em;
-      &:first-of-type {
-        margin-right: .6em;
+      margin-bottom: .5em;
+      @include media(small-up) {
+        margin-bottom: 0;
+        margin-right: .75em;
+        &:first-of-type {
+          margin-right: .6em;
+        }
       }
       @include media(medium-up) {
-        margin-right: 1.6em;
+        margin-right: 3em;
         &:first-of-type {
-          margin-right: .5em;
+          margin-right: 2em;
         }
       }
     }
@@ -58,18 +69,13 @@ nav {
       color: #fff;
       transition: all 0.2s ease 0s;
       border-bottom: 2px solid rgba(255,255,255,0);
-      @include media(small-up) {
-        padding: 0 .5em 1.4em;
-      }
-      &:first-of-type {
-        padding-left: 0;
-      }
     }
-
     li a:hover,
     li a.active {
       border-bottom: 2px solid rgba(255,255,255,0.7);
-      padding-bottom: .8em;
+      @include media(small-up) {
+        padding-bottom: .8em;
+      }
     }
     li a.active {
       border-bottom: 2px solid rgba(255,255,255,1);
