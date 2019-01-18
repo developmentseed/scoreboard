@@ -7,7 +7,7 @@ import { pick, isNil, values, any } from 'ramda'
  * Takes props and turns them into chart data
  * @param {*} props
  */
-function chartify({
+function chartify ({
   waterways_add,
   poi_add,
   roads_add,
@@ -93,7 +93,7 @@ export default (props) => {
         radialLabelsLinkHorizontalLength={24}
         radialLabelsLinkStrokeWidth={1}
         radialLabelsLinkColor='inherit'
-        enableSlicesLabels
+        enableSlicesLabels={false}
         sliceLabel='value'
         slicesLabelsSkipAngle={10}
         slicesLabelsTextColor='inherit:lighter(1.6)'

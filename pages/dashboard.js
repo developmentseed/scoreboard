@@ -64,13 +64,13 @@ class Dashboard extends Component {
       edit_times,
       extent_uri,
       uid
-     } = osmesaData
-     const breakdownChartProps = pick([
-       'waterways_add',
-       'poi_add',
-       'roads_add',
-       'buildings_add'
-      ], osmesaData)
+    } = osmesaData
+    const breakdownChartProps = pick([
+      'waterways_add',
+      'poi_add',
+      'roads_add',
+      'buildings_add'
+    ], osmesaData)
 
     // Calculate counts for panel
     const badgeCount = account.badges && badges.earnedBadges ? Object.keys(badges.earnedBadges).length : 0
@@ -93,12 +93,12 @@ class Dashboard extends Component {
           ]}
         />
         <section>
-          <div  className='row'>
+          <div className='row'>
             <UserExtentMap uid={uid} extent={extent_uri} />
           </div>
         </section>
         <section>
-          <div  className='row'>
+          <div className='row'>
             <div className='widget-container'>
               <div className='widget-66'>
                 <CampaignsChart hashtags={hashtags} height='260px' />

@@ -123,22 +123,22 @@ export class Home extends Component {
         </section>
         {
           !loggedIn
-            ? (<div class="banner banner__signup">
-              <div class="row">
-                <div class="banner--content">
-                  <h2 class="header--xlarge">Earn a spot on the board</h2>
+            ? (<div class='banner banner__signup'>
+              <div class='row'>
+                <div class='banner--content'>
+                  <h2 class='header--xlarge'>Earn a spot on the board</h2>
                   <p>Join other mappers and track your progress. Earn badges for edits you’ve made and campaigns you've helped complete. Share your contributions to the global mapping ecosystem.</p>
-                  <a href={join(APP_URL_FINAL, '/auth/openstreetmap')} class="link--large">Sign up with {projectName}</a>
+                  <a href={join(APP_URL_FINAL, '/auth/openstreetmap')} class='link--large'>Sign up with {projectName}</a>
                 </div>
               </div>
             </div>
             )
 
             : (
-              <div class="banner banner__badges">
-                <div class="row">
-                  <div class="banner--content">
-                    <h2 class="header--xlarge">Map to Earn Badges</h2>
+              <div class='banner banner__badges'>
+                <div class='row'>
+                  <div class='banner--content'>
+                    <h2 class='header--xlarge'>Map to Earn Badges</h2>
                     <p>Track your best work. Earn badges for edits you’ve made and campaigns you've helped complete. Share your progress and contribution to the global mapping ecosystem. </p>
                   </div>
                 </div>

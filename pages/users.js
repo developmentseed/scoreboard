@@ -5,7 +5,6 @@ import AllUsersTable from '../components/AllUsersTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
-import AllUsersHeader from '../components/AllUsersHeader'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal } from '../lib/utils/format'
 
@@ -66,7 +65,7 @@ export class Users extends Component {
       return <div />
     }
 
-    const { total, records, subTotal, editTotal, countries, active, totalUsers, activeUsers, edits } = stats
+    const { total, records, subTotal, editTotal, countries, active } = stats
 
     return (
       <div className='Users'>
@@ -78,9 +77,9 @@ export class Users extends Component {
           </div>
         </header>
         <ScoreboardPanel title='' facets={[
-          { label: 'Rep. Countries', value: (countries && countries.length) || 0},
+          { label: 'Rep. Countries', value: (countries && countries.length) || 0 },
           { label: 'Active Mappers', value: formatDecimal(active) },
-          { label: 'Total Mappers', value: formatDecimal(total)},
+          { label: 'Total Mappers', value: formatDecimal(total) },
           { label: 'Total Edits', value: formatDecimal(editTotal) }
         ]} />
         <section>
