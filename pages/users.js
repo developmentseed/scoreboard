@@ -6,6 +6,8 @@ import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import AllUsersHeader from '../components/AllUsersHeader'
+import ScoreboardPanel from '../components/ScoreboardPanel'
+import { formatDecimal } from '../lib/utils/format'
 
 const AllUsersFilter = dynamic(() => import('../components/AllUsersFilter'), { ssr: false })
 
@@ -64,13 +66,25 @@ export class Users extends Component {
       return <div />
     }
 
-    const { total, records, subTotal, editTotal, countries, active } = stats
+    const { total, records, subTotal, editTotal, countries, active, totalUsers, activeUsers, edits } = stats
 
     return (
       <div className='Users'>
-        <AllUsersHeader countries={countries} totalUsers={total} activeUsers={active} edits={editTotal} />
-        <section>
+        <header className='header--internal--green header--page'>
           <div className='row'>
+            <div className='section-sub--left section-width-forty'>
+              <h1 className='header--xlarge'>Users</h1>
+            </div>
+          </div>
+        </header>
+        <ScoreboardPanel title='' facets={[
+          { label: 'Rep. Countries', value: (countries && countries.length) || 0},
+          { label: 'Active Mappers', value: formatDecimal(active) },
+          { label: 'Total Mappers', value: formatDecimal(total)},
+          { label: 'Total Edits', value: formatDecimal(editTotal) }
+        ]} />
+        <section>
+          <div className='row widget-container'>
             <AllUsersFilter
               handleSearch={this.handleSearch}
               handleSelect={this.handleSelect}
@@ -82,7 +96,7 @@ export class Users extends Component {
               handleActiveSelect={this.handleActiveSelect}
               countries={countries || []}
             />
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               <h3 className='header--medium'>{subTotal} Mappers</h3>
               <AllUsersTable users={records} apiStatus={apiStatus} />
               <Pagination
