@@ -117,7 +117,6 @@ body {
     }
   }
   .list--two-column {
-    width: 60%;
     color: rgba(255, 255, 255, .8);
     margin-bottom: .4em;
   }
@@ -422,7 +421,9 @@ section {
   font-family: $heading-font-bold;
   margin-top: 0;
   color: $base-header-color;
-  max-width: 80%;
+  @include media(medium-up) {
+    max-width: 80%;
+  }
 }
 
 .header--xxlarge {
@@ -537,11 +538,7 @@ section {
 
 .header--page {
   .row {
-    // display: flex;
-    // justify-content: space-between;
-    // align-items: flex-end;
     .section-sub--left {
-      // width: auto;
       float: none;
       margin-right: auto;
     }
@@ -556,8 +553,12 @@ section {
     color: #fff;
     font-size: 14px;
     display: inline-block;
-    margin-left: 5px;
-
+    &~.button {
+      margin-left: .5em;
+    }
+    @include media(medium-only) {
+      padding: .7em 1.2em .5em;
+    }
     &:hover {
       color: $base-color;
       background-color: #fff;
@@ -675,7 +676,7 @@ dl {
   li {
     margin-bottom: .3em;
     float: left;
-    margin-right: 3em;
+    margin-right: 2em;
   }
 }
 .header--internal--green .list--two-column li {

@@ -173,6 +173,30 @@ fieldset {
       margin-bottom: 3em;
     }
   }
+  .header--page .widget-container {
+    margin-bottom: 1em;
+    @include media(medium-up) {
+      align-items: flex-end;
+    }
+    .widget-33{
+      display: flex;
+      @include media(medium-only) {
+        flex-direction: column;
+        text-align: center;
+        .button {
+          width: 100%;
+          text-align: center;
+          margin-left: 0;
+          margin-bottom: 1em;
+        }
+      }
+      @include media(medium-up) {
+        text-align: right;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+  }
 }
 
 .filters {

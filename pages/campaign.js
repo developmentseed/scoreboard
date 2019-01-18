@@ -101,10 +101,10 @@ export class Campaign extends Component {
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
-          <div className='row'>
-            <div className='section-sub--left' style={{ 'pointer-events': 'none' }}>
+          <div className='row widget-container'>
+            <div className='widget-66' style={{ 'pointer-events': 'none' }}>
               <h1 className='header--xlarge margin-top-sm'>{tmData.name}</h1>
-              <ul className='list--two-column clearfix'>
+              <ul className='list--two-column'>
                 <li>
                   <span className='list-label'>Project Number:</span>
                   <span>#{tmData.tm_id}</span>
@@ -115,7 +115,7 @@ export class Campaign extends Component {
                 </li>
               </ul>
             </div>
-            <div className='section-sub--right'>
+            <div className='widget-33'>
               {this.renderFavoriteButton()}
               {contribute}
             </div>
