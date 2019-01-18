@@ -55,7 +55,7 @@ class Dashboard extends Component {
     }
     const { authenticatedUser } = this.props
     const { loggedIn, account } = authenticatedUser
-    const { assignments, favorites } = account
+    const { assignments, favorites, country } = account
 
     const { badges, teams } = account
     const osmesaData = account.records
@@ -81,9 +81,24 @@ class Dashboard extends Component {
       return <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
     }
 
+    // Dashboard header variables
+    let profileImage = null
+    let name = null
+    let accountId = null
+    if (authenticatedUser) {
+      const osmUser = authenticatedUser.osm._xml2json.user
+      if (osmUser && osmUser.img && osmUser.img['@'] && osmUser.img['@']['href']) {
+        profileImage = osmUser.img['@']['href']
+      } else {
+        profileImage = 'https://www.gravatar.com/avatar/00000000000000000000000000000000'
+      }
+      name = osmUser['@']['display_name']
+      accountId = authenticatedUser.account.id
+    }
+
     return (
       <div className='dashboard'>
-        <DashboardHeader authenticatedUser={authenticatedUser} />
+        <DashboardHeader id={accountId} loggedIn={true} name={name} profileImage={profileImage} edit_times={edit_times} country={country} />
         <ScoreboardPanel
           title='Your mapping Scoreboard'
           facets={[
@@ -124,18 +139,6 @@ class Dashboard extends Component {
             <CalendarHeatmap times={edit_times} />
           </div>
         </section>
-        <div className='banner banner__badges'>
-          <div className='row'>
-            <div className='banner--content'>
-              <h2 className='header--xlarge'>Map to Earn Badges</h2>
-              <p>Track your best work. Earn badges for edits you’ve made and campaigns you've helped complete. Share your progress and contribution to the global mapping ecosystem. </p>
-              {
-                // TODO when badge overview page is added
-                //    <a href='#' class='link--large'>See all badges</a>
-              }
-            </div>
-          </div>
-        </div>
       </div>
     )
   }

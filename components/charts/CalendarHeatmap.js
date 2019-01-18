@@ -50,7 +50,6 @@ class CalendarHeatmap extends React.Component {
 
   render () {
     const { height, values, earliestYear } = this.state
-    console.log(earliestYear)
 
     return (
       <div className='widget' style={{ position: 'relative', height: `${height}px` }} >

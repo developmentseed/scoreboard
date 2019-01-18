@@ -35,29 +35,57 @@ const NavLink = withRouter(({ children, router, href }) => {
   return <Link href={href}><a className={activeClass}>{children}</a></Link>
 })
 
-function Footer () {
+function Footer (props) {
   return (
-    <footer>
-      <div className='row'>
-        <nav>
-          <ul className='nav--footer'>
-            <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
-            <li><NavLink href='/campaigns'>Campaigns</NavLink></li>
-            <li><NavLink href='/users'>Users</NavLink></li>
-            <li><NavLink href='/teams'>Teams</NavLink></li>
-            <li><NavLink href='/countries'>Countries</NavLink></li>
-            <li><NavLink href='/about'>About</NavLink></li>
-          </ul>
-        </nav>
-        <div>
-          <a href='https://www.openstreetmap.org'><img src={osmLogo} alt='OpenStreetMap Logo' className='footer__logo' /><br /></a>
-        </div>
-        <div>
-          &copy; 2018 All Rights Reserved<br />
-          <a href='/terms' className='link--normal'>Terms</a>
-        </div>
+    <div>
+      <div>
+        {
+          !props.loggedIn
+            ? (<div class='banner banner__signup'>
+              <div class='row'>
+                <div class='banner--content'>
+                  <h2 class='header--xlarge'>Earn a spot on the board</h2>
+                  <p>Join other mappers and track your progress. Earn badges for edits you’ve made and campaigns you've helped complete. Share your contributions to the global mapping ecosystem.</p>
+                  <a href={join(APP_URL_FINAL, '/auth/openstreetmap')} class='link--large'>Sign up with {projectName}</a>
+                </div>
+              </div>
+            </div>
+            )
+
+            : (
+              <div class='banner banner__badges'>
+                <div class='row'>
+                  <div class='banner--content'>
+                    <h2 class='header--xlarge'>Map to Earn Badges</h2>
+                    <p>Track your best work. Earn badges for edits you’ve made and campaigns you've helped complete. Share your progress and contribution to the global mapping ecosystem. </p>
+                  </div>
+                </div>
+              </div>
+            )
+        }
       </div>
-    </footer>
+      <footer>
+        <div className='row'>
+          <nav>
+            <ul className='nav--footer'>
+              <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
+              <li><NavLink href='/campaigns'>Campaigns</NavLink></li>
+              <li><NavLink href='/users'>Users</NavLink></li>
+              <li><NavLink href='/teams'>Teams</NavLink></li>
+              <li><NavLink href='/countries'>Countries</NavLink></li>
+              <li><NavLink href='/about'>About</NavLink></li>
+            </ul>
+          </nav>
+          <div>
+            <a href='https://www.openstreetmap.org'><img src={osmLogo} alt='OpenStreetMap Logo' className='footer__logo' /><br /></a>
+          </div>
+          <div>
+            &copy; 2018 All Rights Reserved<br />
+            <a href='/terms' className='link--normal'>Terms</a>
+          </div>
+        </div>
+      </footer>
+    </div>
   )
 }
 
@@ -153,7 +181,7 @@ class Layout extends React.Component {
           </div>
         </header>
         {children}
-        <Footer />
+        <Footer loggedIn={loggedIn} />
       </div>
     )
   }
