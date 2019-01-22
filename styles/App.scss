@@ -1,19 +1,34 @@
 @import 'settings/variables.scss';
 @import 'settings/mixins.scss';
 
+.mobile-only {
+  @include media(small-up) {
+    display: none;
+  }
+}
+.mobile-hidden {
+  @include media(xsmall-only) {
+    display: none;
+  }
+}
+
 .header-nav {
   background-color: $base-color;
   position: relative;
   z-index: 5;
-  box-shadow: 0 4px 24px rgba(0,0,0,.3)
+  box-shadow: 0 4px 24px rgba(0,0,0,.3);
+  @include media(xsmall-only) {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+  }
 }
 
 nav {
   display: flex;
   justify-content: space-between;
-  flex-direction: column;
-  @include media(small-up) {
-    flex-direction: row;
+  @include media (xsmall-only) {
+    flex-wrap: wrap;
   }
   li {
     font-family: $tertiary-font-family;
@@ -32,41 +47,57 @@ nav {
       text-align: left;
     }
   }
-
+  a {
+    color: #fff;
+  }
+  .logo {
+    font-size: 1.8em;
+    padding: .7em 0;
+    margin-right: .6em;
+    @include media(medium-up) {
+      margin-right: 2em;
+    }
+    a:hover {
+      border-bottom: 0;
+    }
+  }
+  .nav--mobile {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    @include media(xsmall-only) {
+      flex: 2;
+      li {
+        margin-right: auto;
+      }
+    }
+  }
   .nav--left {
     display: flex;
     flex-direction: column;
     text-align: center;
+    @include media(xsmall-only) {
+      flex-basis: 100%;
+      order: 2;
+      display: none;
+    }
     @include media(small-up) {
       flex-direction: row;
       align-items: center;
       text-align: left;
+      margin-right: auto;
     }
     li {
       margin-bottom: .5em;
       @include media(small-up) {
         margin-bottom: 0;
         margin-right: .75em;
-        &:first-of-type {
-          margin-right: .6em;
-        }
       }
       @include media(medium-up) {
         margin-right: 3em;
-        &:first-of-type {
-          margin-right: 2em;
-        }
-      }
-    }
-    .logo {
-      font-size: 1.8em;
-      padding: .7em 0;
-      a:hover {
-        border-bottom: 0;
       }
     }
     li a {
-      color: #fff;
       transition: all 0.2s ease 0s;
       border-bottom: 2px solid rgba(255,255,255,0);
     }
@@ -77,17 +108,15 @@ nav {
         padding-bottom: .8em;
       }
     }
-    li a.active {
-      border-bottom: 2px solid rgba(255,255,255,1);
+    .logo {
+      a:hover {
+        border-bottom: 0;
+      }
     }
   }
   .nav--right {
     display: flex;
-    flex-direction: column;
-    @include media(small-up) {
-      flex-direction: row;
-      align-items: center;
-    }
+    align-items: center;
     position: relative;
     li {
       border: 0;
@@ -106,6 +135,9 @@ nav {
   }
 }
 
+.nav--icons img{
+  width: 30px;
+}
 .login-menu {
   position: absolute;
   background-color: #fff;

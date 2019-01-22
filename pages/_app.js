@@ -27,7 +27,8 @@ import 'react-select/dist/react-select.css'
 import 'react-input-range/lib/css/index.css'
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
-const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.png')
+const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.svg')
+const menuIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/menu-icon.svg')
 const osmLogo = join(APP_URL_PREFIX, '/static/osm_logo.svg')
 
 const NavLink = withRouter(({ children, router, href }) => {
@@ -136,13 +137,17 @@ class Layout extends React.Component {
     return (
       <div className='App'>
         <Head>
+          <meta name='viewport' content='width=device-width, initial-scale=1.0' />
           <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css' rel='stylesheet' />
         </Head>
         <header className='header-nav'>
           <div className='row'>
             <nav>
-              <ul className='nav--left'>
+              <ul className='nav--mobile'>
+                <li className='nav--icons mobile-only' ref={node => { this.navButton = node }} onClick={this.handleMenuClick}><img src={menuIcon} alt='Menu icon' /></li>
                 <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
+              </ul>
+              <ul className='nav--left'>
                 <li><NavLink href='/campaigns'>Campaigns</NavLink></li>
                 <li><NavLink href='/users'>Users</NavLink></li>
                 <li><NavLink href='/teams'>Teams</NavLink></li>
@@ -153,7 +158,8 @@ class Layout extends React.Component {
                 loggedIn
                   ? <div className='nav--right'>
                     <ul>
-                      <li className='nav--icons' ref={node => { this.navButton = node }} onClick={this.handleMenuClick}><img style={{ width: '30px' }} src={profileIcon} alt='Profile icon' /></li>
+                      <li>{name}</li>
+                      <li className='nav--icons' ref={node => { this.navButton = node }} onClick={this.handleMenuClick}><img src={profileIcon} alt='Profile icon' /></li>
                     </ul>
                     {
                       this.state.menuVisible && (
