@@ -260,7 +260,7 @@
           }
         }
         &:after {
-          background-image: url("../static/icon-arrow.svg");
+          background-image: url($appUrlFinal + "static/icon-arrow.svg");
           content: " ";
           width: 58px;
           height: 35px;
@@ -347,13 +347,13 @@
 
 .message--direct {
   img {
-    background-image: url("../static/icons-direct.jpg");
+    background-image: url($appUrlFinal + "static/icons-direct.jpg");
   }
 }
 
 .message--notes {
   img {
-    background-image: url("../static/icons-note.jpg");
+    background-image: url($appUrlFinal + "static/icons-note.jpg");
   }
 }
 
@@ -417,7 +417,7 @@
   top: 1.3em;
   right: 2em;
   &:before {
-    background-image: url("../static/sm-xmark.svg");
+    background-image: url($appUrlFinal + "static/sm-xmark.svg");
     content: " ";
     width: 20px;
     height: 20px;
