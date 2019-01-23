@@ -17,7 +17,7 @@ export class Team extends Component {
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
-          <div className='row'>
+          <div className='row widget-container'>
             <div className='section-sub--left'>
               <h1 className='header--xlarge margin-top-sm'>{team.name}</h1>
               <ul className='list--two-column clearfix'>

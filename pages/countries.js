@@ -4,7 +4,8 @@ import AllCountriesTable from '../components/AllCountriesTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
-import AllCountriesHeader from '../components/AllCountriesHeader'
+import ScoreboardPanel from '../components/ScoreboardPanel'
+import { formatDecimal } from '../lib/utils/format'
 
 const AllCountriesFilter = dynamic(() => import('../components/AllCountriesFilter'), { ssr: false })
 
@@ -60,20 +61,34 @@ export class Countries extends Component {
     }
 
     const { total, records, subTotal, editTotal } = stats
+    let label = `${subTotal} countries`
+    if (parseInt(subTotal) < parseInt(total)) {
+      label = `${subTotal} countries out of ${total}`
+    }
 
     return (
       <div className='Countries'>
-        <AllCountriesHeader countries={total} edits={editTotal} />
-        <section>
+        <header className='header--internal--green header--page'>
           <div className='row'>
+            <div className='section-sub--left section-width-forty'>
+              <h1 className='header--xlarge'>Countries</h1>
+            </div>
+          </div>
+        </header>
+        <ScoreboardPanel title='' facets={[
+          { label: 'Total Countries', value: formatDecimal(total) },
+          { label: 'Total Edits', value: formatDecimal(editTotal) }
+        ]} />
+        <section>
+          <div className='row widget-container'>
             <AllCountriesFilter
               handleSearch={this.handleSearch}
               handleSortSelect={this.handleSortSelect}
               selectedSortValue={selectedSortValue}
               searchText={searchText}
             />
-            <div className='content--with-sidebar'>
-              <h3 className='header--medium'>{subTotal} Results</h3>
+            <div className='widget-75'>
+              <h3 className='header--medium'>{label}</h3>
               <AllCountriesTable countries={records} apiStatus={apiStatus} />
             </div>
           </div>

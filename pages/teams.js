@@ -8,9 +8,9 @@ import { APP_URL_PREFIX } from '../api/src/config'
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 const Sidebar = ({ handleSearch }) => (
-  <div className='sidebar'>
+  <div className='widget-25'>
     <h3 className='header--medium'>Filter</h3>
-    <form onSubmit={e => e.preventDefault()}>
+    <form className='filters' onSubmit={e => e.preventDefault()}>
       <fieldset>
         <legend>Search</legend>
         <div className='search'>
@@ -108,10 +108,10 @@ class Teams extends Component {
           </div>
         </header>
         <section>
-          <div className='row'>
+          <div className='row widget-container'>
             <Sidebar handleSearch={this.handleSearch} />
-            <div className='content--with-sidebar'>
-              <h3 className='header--medium'>{`${teams.length} Results`}</h3>
+            <div className='widget-75'>
+              <h3 className='header--medium'>{`${teams.length} Teams`}</h3>
               {this.renderList()}
             </div>
           </div>

@@ -135,7 +135,7 @@ router.get('/openstreetmap/callback',
   passport.authenticate('openstreetmap'),
   (req, res) => {
     if (req.user) {
-      res.redirect(APP_URL_FINAL)
+      res.redirect(join(APP_URL_FINAL, '/dashboard'))
     } else {
       res.boom.unauthorized('could not authenticate')
     }

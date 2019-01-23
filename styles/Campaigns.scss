@@ -140,12 +140,6 @@ fieldset {
   display: block;
 }
 
-.map-campaign-lg {
-  width: 90%;
-  margin-left: 10%;
-  height: 400px;
-}
-
 .map-campaign-sm {
   margin-left: 0;
   height: 140px;
@@ -179,27 +173,55 @@ fieldset {
       margin-bottom: 3em;
     }
   }
+  .header--page .widget-container {
+    margin-bottom: 1em;
+    @include media(medium-up) {
+      align-items: flex-end;
+    }
+    .widget-33{
+      display: flex;
+      @include media(medium-only) {
+        flex-direction: column;
+        text-align: center;
+        .button {
+          width: 100%;
+          text-align: center;
+          margin-left: 0;
+          margin-bottom: 1em;
+        }
+      }
+      @include media(medium-up) {
+        text-align: right;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+  }
 }
 
-.sidebar {
+.filters {
   .input-range {
-    width: 85%;
+    width: 92%;
     margin-left: .5em;
     margin-top: 1em;
   }
 
   .input-range__slider {
-    background: $blue-color;
-    border: 1px solid $blue-color;
+    background: $green-color;
+    border: 1px solid $green-color;
     width: .7em;
     height: .7em;
     top: 70%;
     margin-top: -0.5rem;
   }
   .input-range__track--active {
-    background: $blue-color;
+    background: $green-color;
   }
   .input-range__label--value {
-    color: $blue-color;
+    color: $green-color;
+  }
+
+  .input-range__label--min, .input-range__label--max {
+    display: none
   }
 }
