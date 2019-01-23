@@ -10,6 +10,7 @@ import ReactMarkdown from 'react-markdown'
 import { formatDecimal } from '../lib/utils/format'
 import sumEdits from '../lib/utils/sum_edits'
 import { TM_URL } from '../api/src/config'
+import ScoreboardPanel from '../components/ScoreboardPanel'
 
 const CampaignMap = dynamic(() => import('../components/charts/CampaignMap'), {
   ssr: false
@@ -20,13 +21,15 @@ const Blurb = ({
   km_roads_add,
   buildings_add,
   poi_add,
-  km_waterways_add
+  km_waterways_add,
+  km_coastlines_add
 }) => {
   return <h2 className='header--medium list--block'>
-    {`${users.length} users, mapping
+    {`${users.length} mappers, mapping
     ${km_roads_add.toFixed(1)} km of roads,
     ${formatDecimal(buildings_add)} buildings,
-    ${formatDecimal(poi_add)} Points of Interest, and
+    ${formatDecimal(poi_add)} Points of Interest,
+    ${km_coastlines_add.toFixed(1)} km of coastlines, and
     ${km_waterways_add.toFixed(1)} km of waterways.`}
   </h2>
 }
@@ -100,10 +103,10 @@ export class Campaign extends Component {
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
-          <div className='row'>
-            <div className='section-sub--left' style={{ 'pointer-events': 'none' }}>
+          <div className='row widget-container'>
+            <div className='widget-66' style={{ 'pointer-events': 'none' }}>
               <h1 className='header--xlarge margin-top-sm'>{tmData.name}</h1>
-              <ul className='list--two-column clearfix'>
+              <ul className='list--two-column'>
                 <li>
                   <span className='list-label'>Project Number:</span>
                   <span>#{tmData.tm_id}</span>
@@ -114,37 +117,28 @@ export class Campaign extends Component {
                 </li>
               </ul>
             </div>
-            <div className='section-sub--right'>
+            <div className='widget-33'>
               {this.renderFavoriteButton()}
               {contribute}
             </div>
           </div>
         </header>
+        <ScoreboardPanel title='' facets={
+          [
+            { label: 'Complete', value: `${parseInt(tmData.done, 10)}%` },
+            { label: 'Validated', value: `${parseInt(tmData.validated, 10)}%` },
+            { label: 'Participants', value: users.length },
+            { label: 'Total features mapped', value: formatDecimal(sumEdits(records)) }
+          ]
+        } />
+
         <section>
-          <div className='row'>
-            <div className='section-sub--left section-width-fifty-plus'>
+          <div className='row widget-container'>
+            <div className='widget-50'>
               <div className='text-body'><ReactMarkdown source={tmData.description} /></div>
             </div>
-            <div className='section-sub--right section-width-fifty-minus'>
-              <div className='map-campaign-lg'>
-                <div className='campagin-body-header'>
-                  <ul className='list--horizontal'>
-                    <li className='list--inline'>
-                      <span className='descriptor-chart'>Complete</span>
-                      <span className='num--large'>{parseInt(tmData.done * 0.5, 10) + parseInt(tmData.validated, 10)}%</span>
-                    </li>
-                    <li className='list--inline'>
-                      <span className='descriptor-chart'>Participants</span>
-                      <span className='num--large'>{users.length}</span>
-                    </li>
-                    <li className='list--inline'>
-                      <span className='descriptor-chart'>Total Features Mapped</span>
-                      <span className='num--large'>
-                        {formatDecimal(sumEdits(records))}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
+            <div className='widget-50'>
+              <div className='map-lg'>
                 <CampaignMap feature={JSON.parse(tmData.geometry)} interactive />
               </div>
             </div>

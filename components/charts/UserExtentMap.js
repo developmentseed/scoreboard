@@ -4,12 +4,31 @@ import mapboxgl from 'mapbox-gl'
 mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0tdtaT2QNe2Q'
 
 class UserExtentMap extends Component {
+  constructor (props) {
+    super(props)
+    this.state = { loading: true }
+  }
+
   componentDidMount () {
+    if (this.props.extent && this.state.loading) {
+      this.loadMap()
+      this.setState({ loading: false })
+    }
+  }
+
+  componentDidUpdate () {
+    if (this.props.extent && this.state.loading) {
+      this.loadMap()
+      this.setState({ loading: false })
+    }
+  }
+
+  loadMap () {
     const { uid } = this.props
 
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/devseed/cj9iy816wb9x02smisy4y7id3',
+      style: 'mapbox://styles/devseed/cjqpb3z440t302smfnewsl6vb',
       zoom: 1,
       center: [0, 0]
     })
@@ -144,7 +163,19 @@ class UserExtentMap extends Component {
       width: '100%'
     }
 
-    return <div style={style} ref={el => { this.mapContainer = el }} />
+    let map = <div>Extent map unavailable</div>
+    const { extent, uid } = this.props
+    if (uid && extent) {
+      map = <div style={style} ref={el => { this.mapContainer = el }} />
+    }
+    return (
+      <div>
+        <h4 className='header--small header--with-description-lg'>Extent of Edits</h4>
+        <div style={{ position: 'relative', height: '350px' }}>
+          {map}
+        </div>
+      </div>
+    )
   }
 }
 

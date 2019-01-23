@@ -15,6 +15,8 @@ module.exports = async (req, res) => {
   const search = req.query.q || ''
   const complMin = req.query.compl_min || 0
   const complMax = req.query.compl_max || 100
+  const validMin = req.query.valid_min || 0
+  const validMax = req.query.valid_max || 100
 
   try {
     let query = db('campaigns').whereNotNull('campaign_hashtag')
@@ -25,7 +27,11 @@ module.exports = async (req, res) => {
         .orWhere('name', 'ilike', `%${search}%`)
     }
     if (complMin > 0 || complMax < 100) {
-      query = query.whereRaw(`(done / 2) + validated between ${complMin} and ${complMax}`)
+      query = query.whereRaw(`done between ${complMin} and ${complMax}`)
+    }
+
+    if (validMin > 0 || validMax < 100) {
+      query = query.whereRaw(`validated between ${validMin} and ${validMax}`)
     }
 
     const records = await query.clone().limit(10).offset((parseInt(page) - 1) * 10)

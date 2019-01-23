@@ -71,8 +71,8 @@ export class AdminTeamsAdd extends Component {
       <div className='admin'>
         <AdminHeader />
         <section>
-          <div className='row'>
-            <div className='sidebar'>
+          <div className='row widget-container'>
+            <div className='widget-25'>
               <h2 className='header--large'>Teams</h2>
               <ul className='admin-sidebar-links'>
                 <li>
@@ -84,7 +84,7 @@ export class AdminTeamsAdd extends Component {
                 </li>
               </ul>
             </div>
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               <div className='row'>
                 <h1 className='header--xlarge'>Add a new team</h1>
               </div>

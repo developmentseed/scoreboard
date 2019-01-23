@@ -3,8 +3,8 @@ import Link from './Link'
 
 export default () => {
   return (
-    <ul className='list-grid'>
-      <li>
+    <ul className='widget-container admin-widget'>
+      <li className='widget'>
         <h3 className='header--medium'>
           Badges
         </h3>
@@ -21,7 +21,7 @@ export default () => {
           </li>
         </ul>
       </li>
-      <li>
+      <li className='widget'>
         <h3 className='header--medium'>
           Teams
         </h3>
@@ -38,7 +38,7 @@ export default () => {
           </li>
         </ul>
       </li>
-      <li>
+      <li className='widget'>
         <h3 className='header--medium'>
           Users
         </h3>
