@@ -118,6 +118,7 @@ wget https://github.com/developmentseed/scoreboard/blob/<put-version-number-here
 ### Start Services
 The deploy script in the previous step automatically restart the services, but in case you need to do it manually this how to do it.
 ```
+npm run build
 sudo systemctl restart scoreboard-api
 sudo systemctl restart scoreboard-timer
 sudo systemctl restart nginx 
