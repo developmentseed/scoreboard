@@ -12,6 +12,10 @@ class TM3API {
     this.tasker_id = tasker_id
   }
 
+  getUrlForProject (id) {
+    return `${this.url}/project/${id}`
+  }
+
   /* Get all projects from the tasking manager
    *
    * @returns {Promise} response

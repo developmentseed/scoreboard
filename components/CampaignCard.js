@@ -15,11 +15,11 @@ export default ({ campaign }) => {
     geometry,
     done,
     validated,
-    campaign_hashtag,
+    tasker_id,
     team_priority
   } = campaign
   return (
-    <Link href={`/campaigns/${campaign_hashtag}`}>
+    <Link href={`/campaigns/${tasker_id}-${tm_id}`}>
       <a className='card--wrapper'>
         <div className='card'>
           <div className='map-campaign-sm'><CampaignMap feature={JSON.parse(geometry)} interactive={false} /></div>

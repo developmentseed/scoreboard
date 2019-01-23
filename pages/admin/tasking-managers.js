@@ -44,6 +44,7 @@ export class AdminTaskers extends Component {
           <thead>
             <tr>
               <th>Name</th>
+              <th>Last run time</th>
             </tr>
           </thead>
           <tbody>
@@ -52,6 +53,7 @@ export class AdminTaskers extends Component {
                 .map((tasker) => (
                   <tr key={`tasker-${tasker.id}`} onClick={() => this.onTMClick(tasker)} className='admin-table-row'>
                     <td>{tasker.name}</td>
+                    <td>{ tasker.last_update ? tasker.last_update : 'Never' }</td>
                   </tr>
                 ))
             }
