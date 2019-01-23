@@ -12,7 +12,7 @@
     "build": "next build && npm run docs-build",
     "test": "npm run test-ui && npm run test-api",
     "test-ui": "NODE_ENV=test jest tests/*.test.js",
-    "test-api": "NODE_ENV=test ava api/tests/*.test.js --serial",
+    "test-api": "NODE_ENV=test ava api/tests/**/*.test.js --serial",
     "migrate": "knex migrate:latest --cwd api/src/db/",
     "seed": "knex seed:run --cwd api/src/db",
     "rollback": "knex migrate:rollback --cwd api/src/db/",
@@ -129,6 +129,7 @@
     "unistore": "^3.1.0",
     "url-join": "^4.0.0",
     "url-loader": "^1.1.2",
+    "yakbak": "^3.0.0",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {

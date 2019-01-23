@@ -1,9 +1,4 @@
-const { TM2API, TM3API } = require('./tm_types')
-const sampleprojects = require('../fixtures/sampleprojects.json')
-
-const {
-  NODE_ENV
-} = require('../config')
+const { TM2API, TM3API, FakeTMAPI } = require('./tm_types')
 
 class TM {
   constructor (id, type, url) {
@@ -25,27 +20,11 @@ class TM {
       case 'tm3': {
         return new TM3API(url, id)
       }
-      default: {
+      case 'test': {
         return new FakeTMAPI()
       }
     }
   }
 }
 
-class FakeTMAPI {
-  getProjects () {
-    return Promise.resolve(JSON.stringify(sampleprojects))
-  }
-
-  getProject (id) {
-    return JSON.stringify(Promise.resolve(sampleprojects.features.find((project) => {
-      return String(project.id) === id
-    })))
-  }
-}
-
-if (NODE_ENV === 'test') {
-  module.exports.TM = FakeTMAPI
-} else {
-  module.exports.TM = TM
-}
+module.exports.TM = TM
