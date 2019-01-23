@@ -15,7 +15,6 @@ const { TM } = require('../services/tm')
  */
 module.exports = async (req, res) => {
   const { tasker_id, tm_id } = req.params
-  console.log(req.params)
   if (!tm_id || !tasker_id) {
     return res.boom.badRequest('Invalid id')
   }
