@@ -9,7 +9,7 @@ export default ({ message }) => {
           <h2 className='header--large'>You are not logged in!</h2>
           <p>
             <Link href='/auth/openstreetmap'>
-              <a>{message || 'Log in with your OSM account'}</a>
+              <a className='link--large'>{message || 'Log in with your OSM account'}</a>
             </Link>
           </p>
         </div>

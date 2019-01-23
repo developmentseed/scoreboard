@@ -34,7 +34,7 @@ export default ({ badges }) => {
 
     var earnedList = earnedBadges.map(badge => {
       return (
-        <li key={stripWS(badge.name)}>
+        <li className='widget' key={stripWS(badge.name)}>
           <div className='badge-home'>
             <BadgeCompleted badge={badge} />
             <div className='badge-Details'>
@@ -50,7 +50,7 @@ export default ({ badges }) => {
 
     var progressList = progressBadges.map(badge => {
       return (
-        <li className='clearfix' key={stripWS(badge.name)}>
+        <li className='clearfix widget' key={stripWS(badge.name)}>
           <div className='badge-home'>
             <BadgeInProgress badge={badge} badgeClass={'progress'} />
             <div className='badge-Details'>

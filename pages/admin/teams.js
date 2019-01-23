@@ -39,26 +39,28 @@ export class AdminTeams extends Component {
 
     return (
       <div>
-        <h1>List</h1>
-        <table className='admin-table'>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Hashtag</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              teams.records
-                .map((team) => (
-                  <tr key={`team-${team.name}`} onClick={() => this.onTeamClick(team)} className='admin-table-row'>
-                    <td>{team.name}</td>
-                    <td>{team.hashtag}</td>
-                  </tr>
-                ))
-            }
-          </tbody>
-        </table>
+        <h1>All Teams</h1>
+        <div className='widget'>
+          <table className='admin-table'>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Hashtag</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                teams.records
+                  .map((team) => (
+                    <tr key={`team-${team.name}`} onClick={() => this.onTeamClick(team)} className='admin-table-row'>
+                      <td>{team.name}</td>
+                      <td>{team.hashtag}</td>
+                    </tr>
+                  ))
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }
@@ -84,8 +86,8 @@ export class AdminTeams extends Component {
       <div className='admin'>
         <AdminHeader />
         <section>
-          <div className='row'>
-            <div className='sidebar'>
+          <div className='row widget-container'>
+            <div className='widget-25'>
               <h2 className='header--large'>Teams</h2>
               <ul className='admin-sidebar-links'>
                 <li>
@@ -97,7 +99,7 @@ export class AdminTeams extends Component {
                 </li>
               </ul>
             </div>
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               {this.renderList()}
             </div>
           </div>

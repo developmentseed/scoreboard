@@ -14,6 +14,14 @@ function chartify ({ edits }) {
     }
   }).reverse()
 }
+const theme = {
+  axis: {
+    fontSize: '14px'
+  },
+  legend: {
+    fontSize: '14px'
+  }
+}
 
 export default props =>
   <ResponsiveBar
@@ -26,6 +34,7 @@ export default props =>
       'bottom': 50,
       'left': 120
     }}
+    theme={theme}
     padding={0.2}
     innerPadding={0}
     minValue='auto'
@@ -33,22 +42,31 @@ export default props =>
     groupMode='grouped'
     layout='horizontal'
     reverse={false}
-    colors='#8BC544'
+    colors={[
+      '#8BC544',
+      '#98CF54',
+      '#B5E37B',
+      '#CCF19E',
+      '#E3FDC3'
+    ]}
+    colorBy='index'
     borderRadius={0}
     borderWidth={0}
     borderColor='inherit:brighter(1.6)'
     axisBottom={{
       'orient': 'bottom',
-      'tickSize': 5,
+      'tickSize': 2,
       'tickPadding': 3,
       'tickRotation': 0,
       'legend': 'Number of Edits',
       'legendPosition': 'center',
-      'legendOffset': 40
+      'legendOffset': 40,
+      'format': '.2s'
     }}
     enableGridX={false}
     enableGridY={false}
     enableLabel
+    labelFormat={(value, d) => <tspan x={50}>{d}{value.toLocaleString()}</tspan>}
     labelSkipWidth={12}
     labelSkipHeight={12}
     labelTextColor='inherit:darker(1.6)'
@@ -56,4 +74,5 @@ export default props =>
     motionStiffness={90}
     motionDamping={15}
     isInteractive
+    tooltipFormat={value => value.toLocaleString()}
   />

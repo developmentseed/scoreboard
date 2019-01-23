@@ -13,9 +13,9 @@ export default ({
   handleSearch, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
   handleActiveSelect, selectedActive
 }) => (
-  <div className='sidebar'>
+  <div className='widget-25'>
     <h3 className='header--medium'>Filter</h3>
-    <form onSubmit={e => e.preventDefault()}>
+    <form className='filters' onSubmit={e => e.preventDefault()}>
       <fieldset>
         <legend>Search</legend>
         <div className='search'>

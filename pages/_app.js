@@ -19,7 +19,6 @@ import '../styles/App.scss'
 import '../styles/Admin.scss'
 import '../styles/Dashboard.scss'
 import '../styles/Campaigns.scss'
-import '../styles/Country.scss'
 import '../styles/Users.scss'
 import '../styles/Badges.scss'
 
@@ -34,6 +33,57 @@ const NavLink = withRouter(({ children, router, href }) => {
   const activeClass = router.pathname === href ? 'active' : ''
   return <Link href={href}><a className={activeClass}>{children}</a></Link>
 })
+
+function Footer (props) {
+  return (
+    <div>
+      <div>
+        {
+          !props.loggedIn
+            ? (<div class='banner banner__signup'>
+              <div class='row'>
+                <div class='banner--content'>
+                  <h2 class='header--xlarge'>Earn a spot on the board</h2>
+                  <p>Join other mappers and track your progress. Earn badges for edits you’ve made and campaigns you've helped complete. Share your contributions to the global mapping ecosystem.</p>
+                  <a href={join(APP_URL_FINAL, '/auth/openstreetmap')} class='link--large'>Sign up with {projectName}</a>
+                </div>
+              </div>
+            </div>
+            )
+
+            : (
+              <div class='banner banner__badges'>
+                <div class='row'>
+                  <div class='banner--content'>
+                    <h2 class='header--xlarge'>Map to Earn Badges</h2>
+                    <p>Track your best work. Earn badges for edits you’ve made and campaigns you've helped complete. Share your progress and contribution to the global mapping ecosystem. </p>
+                  </div>
+                </div>
+              </div>
+            )
+        }
+      </div>
+      <footer>
+        <div className='row'>
+          <nav>
+            <ul className='nav--footer'>
+              <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
+              <li><NavLink href='/campaigns'>Campaigns</NavLink></li>
+              <li><NavLink href='/users'>Users</NavLink></li>
+              <li><NavLink href='/teams'>Teams</NavLink></li>
+              <li><NavLink href='/countries'>Countries</NavLink></li>
+              <li><NavLink href='/about'>About</NavLink></li>
+            </ul>
+          </nav>
+          <div>
+            &copy; 2018 All Rights Reserved<br />
+            <a href='/terms' className='link--normal'>Terms</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
 
 class Layout extends React.Component {
   constructor () {
@@ -86,7 +136,7 @@ class Layout extends React.Component {
         </Head>
         <header className='header-nav'>
           <div className='row'>
-            <nav className='clearfix'>
+            <nav>
               <ul className='nav--left'>
                 <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
                 <li><NavLink href='/campaigns'>Campaigns</NavLink></li>
@@ -99,13 +149,13 @@ class Layout extends React.Component {
                 loggedIn
                   ? <div className='nav--right'>
                     <ul>
-                      <li className='nav--icons' ref={node => { this.navButton = node }} onClick={this.handleMenuClick}><img style={{ float: 'right', width: '30px' }} src={profileIcon} alt='Profile icon' /></li>
+                      <li className='nav--icons' ref={node => { this.navButton = node }} onClick={this.handleMenuClick}><img style={{ width: '30px' }} src={profileIcon} alt='Profile icon' /></li>
                     </ul>
                     {
                       this.state.menuVisible && (
                         <div className='login-menu'>
                           <ul>
-                            <li><Link href='/'><a>Dashboard</a></Link></li>
+                            <li><Link href='/dashboard'><a>Dashboard</a></Link></li>
                             <li><Link href={`/users/${osm.id}`}><a>Public Profile</a></Link></li>
                             <li><Link href={`/edit-user?id=${osm.id}`} as={join(APP_URL_PREFIX, `/users/${osm.id}/edit`)}><a>Edit Profile</a></Link></li>
                             {
@@ -127,6 +177,7 @@ class Layout extends React.Component {
           </div>
         </header>
         {children}
+        <Footer loggedIn={loggedIn} />
       </div>
     )
   }
