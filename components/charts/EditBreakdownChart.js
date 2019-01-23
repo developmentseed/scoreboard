@@ -58,7 +58,8 @@ export default (props) => {
     'waterways_add',
     'poi_add',
     'roads_add',
-    'buildings_add'
+    'buildings_add',
+    'coastlines_mod'
   ], props)
   if (any(isNil, values(dataToChart))) {
     return (
