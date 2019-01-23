@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
 
   try {
     const [tmData] = await db('campaigns').where({ tasker_id, tm_id })
-    console.log(tmData)
     const osmesaResponse = await osmesa.getCampaign(tmData.campaignHashtag)
 
     // Add tasking manager info
