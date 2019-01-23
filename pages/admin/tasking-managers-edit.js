@@ -57,7 +57,6 @@ export class AdminTaskersEdit extends Component {
   }
 
   async updateTasker (params) {
-    console.log(params)
     const { id } = this.props
     this.setState({ disableInteraction: true })
 
