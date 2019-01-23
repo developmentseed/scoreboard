@@ -22,6 +22,11 @@
     "lint": "devseed-standard",
     "lintfix": "devseed-standard --fix"
   },
+  "devseed-standard": {
+    "ignore": [
+      "api/tests/tapes/**"
+    ]
+  },
   "babel": {
     "env": {
       "production": {
