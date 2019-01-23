@@ -28,7 +28,6 @@ import 'react-input-range/lib/css/index.css'
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.png')
-const osmLogo = join(APP_URL_PREFIX, '/static/osm_logo.svg')
 
 const NavLink = withRouter(({ children, router, href }) => {
   const activeClass = router.pathname === href ? 'active' : ''
@@ -76,9 +75,6 @@ function Footer (props) {
               <li><NavLink href='/about'>About</NavLink></li>
             </ul>
           </nav>
-          <div>
-            <a href='https://www.openstreetmap.org'><img src={osmLogo} alt='OpenStreetMap Logo' className='footer__logo' /><br /></a>
-          </div>
           <div>
             &copy; 2018 All Rights Reserved<br />
             <a href='/terms' className='link--normal'>Terms</a>
