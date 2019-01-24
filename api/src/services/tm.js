@@ -10,7 +10,7 @@ class TM {
       throw new Error('TM needs URL')
     }
 
-    this.url = url
+    this.url = url.replace(/\/+$/, '') // Ensure no trailing slashes in URL
     this.type = type
 
     switch (type) {
