@@ -7,6 +7,7 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/AdminHeader'
 import Link from '../../components/Link'
+import { distanceInWordsToNow, parse } from 'date-fns'
 
 export class AdminTaskers extends Component {
   constructor () {
@@ -53,7 +54,7 @@ export class AdminTaskers extends Component {
                 .map((tasker) => (
                   <tr key={`tasker-${tasker.id}`} onClick={() => this.onTMClick(tasker)} className='admin-table-row'>
                     <td>{tasker.name}</td>
-                    <td>{ tasker.last_update ? tasker.last_update : 'Never' }</td>
+                    <td>{ tasker.last_update ? `${distanceInWordsToNow(parse(tasker.last_update))} ago` : 'Will run in the next 10 minutes' }</td>
                   </tr>
                 ))
             }
