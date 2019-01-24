@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import Link from '../components/Link'
-import CampaignCard from '../components/CampaignCard'
+import CampaignCard from '../components/campaigns/CampaignCard'
 import { sortBy, prop } from 'ramda'
 
 export class Team extends Component {
@@ -13,6 +13,7 @@ export class Team extends Component {
   render () {
     const { team } = this.props
     if (!team) return <div />
+    console.log(team)
 
     return (
       <div className='Campaigns'>
@@ -27,13 +28,6 @@ export class Team extends Component {
                 </li>
               </ul>
             </div>
-            {
-            // <div className='section-sub--right'>
-            //   <Link href='/about'>
-            //     <a className='button'>Join</a>
-            //   </Link>
-            // </div>
-            }
           </div>
         </header>
         <section>

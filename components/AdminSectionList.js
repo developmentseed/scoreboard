@@ -50,6 +50,23 @@ export default () => {
           </li>
         </ul>
       </li>
+      <li className='widget'>
+        <h3 className='header--medium'>
+          Tasking Managers
+        </h3>
+        <ul>
+          <li>
+            <Link href='/admin/tasking-managers'>
+              <a className='link--normal'>See all tasking managers</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/admin/tasking-managers/add'>
+              <a className='link--normal'>Add new tasking manager</a>
+            </Link>
+          </li>
+        </ul>
+      </li>
     </ul>
   )
 }
