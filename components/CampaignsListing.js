@@ -8,7 +8,7 @@ export default ({ records, apiStatus, total, allCount }) => {
       content = (
         <div>
           <h3 className='header--medium'>{(parseInt(total) < parseInt(allCount)) ? `${total} campaigns out of ${allCount}` : `${total} campaigns`}</h3>
-          <div className='clearfix'>
+          <div className='clearfix cards-container widget-container'>
             {records.map(record => <CampaignCard key={record.id} campaign={record} />)}
           </div>
 
