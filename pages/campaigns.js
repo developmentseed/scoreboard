@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
-import CampaignFilters from '../components/CampaignFilters'
-import CampaignsListing from '../components/CampaignsListing'
+import CampaignFilters from '../components/campaigns/CampaignFilters'
+import CampaignsListing from '../components/campaigns/CampaignsListing'
 
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
@@ -13,11 +13,16 @@ export class Campaigns extends Component {
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handleCompletenessChange = this.handleCompletenessChange.bind(this)
     this.handleValidationChange = this.handleValidationChange.bind(this)
+    this.handleSelectTM = this.handleSelectTM.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
   }
 
   handleSearch (event) {
     this.props.handleCampaignsSearch(event.target.value)
+  }
+
+  handleSelectTM (selectedTM) {
+    this.props.handleSelectTM(selectedTM)
   }
 
   handleCompletenessChange (completeness) {
@@ -44,8 +49,16 @@ export class Campaigns extends Component {
   }
 
   render () {
-    const { page, searchText } = this.props.campaigns
-    const { records: { total, records, allCount }, apiStatus } = this.props.campaigns
+    const {
+      page,
+      searchText,
+      records: { total, records, allCount, tms },
+      apiStatus,
+      selectedTM
+    } = this.props.campaigns
+    if (!records) {
+      return <div />
+    }
 
     return (
       <div className='Campaigns'>
@@ -61,6 +74,9 @@ export class Campaigns extends Component {
               <CampaignFilters
                 handleCompletenessChange={this.handleCompletenessChange}
                 handleValidationChange={this.handleValidationChange}
+                handleSelectTM={this.handleSelectTM}
+                tmList={tms}
+                selectedTM={selectedTM}
                 handleSearch={this.handleSearch}
                 searchText={searchText}
               />

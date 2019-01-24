@@ -100,7 +100,8 @@ export class Campaign extends Component {
               <h1 className='header--xlarge margin-top-sm'>{tmData.name}</h1>
               <ul className='list--two-column'>
                 <li>
-                  <span className='list-label'>{tmData.tm_name}</span>
+                  <span className='list-label'>Tasking Manager:</span>
+                  <span>{tmData.tm_name}</span>
                 </li>
                 <li>
                   <span className='list-label'>Project Number:</span>

@@ -1,7 +1,8 @@
 import React from 'react'
 import InputRange from 'react-input-range'
+import Select from 'react-select'
 import join from 'url-join'
-import { APP_URL_PREFIX } from '../api/src/config'
+import { APP_URL_PREFIX } from '../../api/src/config'
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
@@ -19,7 +20,12 @@ export default class extends React.Component {
 
   render () {
     const {
-      handleSearch
+      handleSearch,
+      selectedTM,
+      handleSelectTM,
+      tmList,
+      handleCompletenessChange,
+      handleValidationChange
     } = this.props
 
     let { compl_min, compl_max, valid_min, valid_max } = this.state
@@ -34,13 +40,25 @@ export default class extends React.Component {
           </div>
         </fieldset>
         <fieldset>
+          <legend>Tasking Manager</legend>
+          <Select name='tm-select'
+            multi
+            simpleValue
+            value={selectedTM}
+            onChange={handleSelectTM}
+            options={
+              tmList.map(({ name, id }) => ({ value: id, label: name }))
+            }
+          />
+        </fieldset>
+        <fieldset>
           <legend>Completeness</legend>
           <InputRange
             maxValue={100}
             minValue={0}
             value={{ min: compl_min, max: compl_max }}
             onChange={({ min, max }) => this.setState({ compl_min: min, compl_max: max })}
-            onChangeComplete={this.props.handleCompletenessChange}
+            onChangeComplete={handleCompletenessChange}
           />
         </fieldset>
         <fieldset>
@@ -50,7 +68,7 @@ export default class extends React.Component {
             minValue={0}
             value={{ min: valid_min, max: valid_max }}
             onChange={({ min, max }) => this.setState({ valid_min: min, valid_max: max })}
-            onChangeComplete={this.props.handleValidationChange}
+            onChangeComplete={handleValidationChange}
           />
         </fieldset>
       </form>

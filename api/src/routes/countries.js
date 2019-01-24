@@ -12,10 +12,10 @@ function applyFilters (query, req) {
 }
 
 /**
- * All Users and their stats route
- * /users/stats
+ * All Countries and their stats route
+ * /countries/stats
  *
- * The users route displays all the users from the external
+ * The countries route displays all the users from the external
  * users source
  *
  * @param {Object} req - the request object
