@@ -88,7 +88,7 @@ export class Campaign extends Component {
   render () {
     if (!this.props.campaign) return <div />
 
-    const { records } = this.props.campaign
+    const { records, lastUpdate } = this.props.campaign
     const { tmData, users } = records
     if (!tmData || !users) return <div />
 
@@ -109,7 +109,7 @@ export class Campaign extends Component {
                 </li>
                 <li>
                   <span className='list-label'>Last Update:</span>
-                  <span>{distanceInWordsToNow(tmData.updated_at)} ago.</span>
+                  <span>{distanceInWordsToNow(lastUpdate)} ago.</span>
                 </li>
               </ul>
             </div>

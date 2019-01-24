@@ -16,6 +16,14 @@ class TM3API {
     return `${this.url}/project/${id}`
   }
 
+  getLastUpdated (id) {
+    return this.getProject(id).then(data => {
+      return JSON.parse(data)
+    }).then(parsed => {
+      return parsed.lastUpdated
+    })
+  }
+
   /* Get all projects from the tasking manager
    *
    * @returns {Promise} response

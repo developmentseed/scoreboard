@@ -53,6 +53,14 @@ class TM2API {
     return rp(`${this.url}/project/${id}.json`)
   }
 
+  getLastUpdated (id) {
+    return this.getProject(id).then(data => {
+      return JSON.parse(data)
+    }).then(parsed => {
+      return parsed.properties.last_update
+    })
+  }
+
   getTasks (id) {
     return rp(`${this.url}/project/${id}/tasks.json`)
   }
