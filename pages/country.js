@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal } from '../lib/utils/format'
 
-const CountryMap = dynamic(() => import('../components/charts/CountryMap'), {
+const CountryMap = dynamic(() => import('../components/charts/LeafletCountryMap'), {
   ssr: false
 })
 

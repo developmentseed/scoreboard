@@ -9,6 +9,7 @@ const OSMTeams = require('../services/teams')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const db = require('../db/connection')
+const getCountriesEdited = require('../utils/getCountriesEdited')
 
 /**
  * User Stats Route
@@ -78,6 +79,9 @@ async function get (req, res) {
     osmesaData.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', osmesaData.extent_uri)
   }
 
+  let countriesEdited = getCountriesEdited(osmesaData.country_list)
+  console.log('countries edited', countriesEdited)
+
   let badges
   try {
     const badgesFromDB = await db('badges').select() // array of all badges
@@ -139,6 +143,7 @@ async function get (req, res) {
     favorites,
     records: osmesaData,
     roles: rolesList,
+    countriesEdited,
     country: user.country
   })
 }

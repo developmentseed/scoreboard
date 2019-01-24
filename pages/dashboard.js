@@ -23,7 +23,7 @@ import dynamic from 'next/dynamic'
 const CalendarHeatmap = dynamic(() => import('../components/charts/CalendarHeatmap'), {
   ssr: false
 })
-const UserExtentMap = dynamic(() => import('../components/charts/UserExtentMap'), {
+const UserExtentMap = dynamic(() => import('../components/charts/LeafletUserExtentMap'), {
   ssr: false
 })
 
@@ -62,8 +62,7 @@ class Dashboard extends Component {
     const {
       hashtags,
       edit_times,
-      extent_uri,
-      uid
+      countries
     } = osmesaData
     const breakdownChartProps = pick([
       'waterways_add',
@@ -110,7 +109,7 @@ class Dashboard extends Component {
         />
         <section>
           <div className='row'>
-            <UserExtentMap uid={uid} extent={extent_uri} />
+            <UserExtentMap countries={countries} />
           </div>
         </section>
         <section>
