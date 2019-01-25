@@ -145,7 +145,7 @@
     "babel-jest": "^23.6.0",
     "babel-plugin-transform-dynamic-import": "^2.1.0",
     "devseed-standard": "^1.1.0",
-    "docusaurus": "^1.6.2",
+    "docusaurus": "^1.7.1",
     "jest": "^23.6.0",
     "supertest": "^3.1.0",
     "swagger-markdown": "^1.1.5"

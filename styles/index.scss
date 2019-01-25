@@ -328,7 +328,7 @@ section {
       margin-right: 0;
     }
     &-25 {
-      flex-basis: 100%;
+      width: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(25% - 1em);
       }
@@ -337,7 +337,7 @@ section {
       }
     }
     &-33 {
-      flex-basis: 100%;
+      width: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(33.33% - 1em);
       }
@@ -346,7 +346,7 @@ section {
       }
     }
     &-50 {
-      flex-basis: 100%;
+      width: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(50% - 1em);
       }
@@ -355,7 +355,7 @@ section {
       }
     }
     &-66 {
-      flex-basis: 100%;
+      width: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(66.66% - 1em);
       }
@@ -364,7 +364,7 @@ section {
       }
     }
     &-75 {
-      flex-basis: 100%;
+      width: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(75% - 1em);
       }
@@ -373,7 +373,7 @@ section {
       }
     }
     &-100 {
-      flex-basis: 100%;
+      width: 100%;
       @include media(medium-up) {
         flex: 100%;
       }
@@ -435,13 +435,15 @@ section {
 }
 //Type //
 
+mark {
+  background-color: inherit;
+  color: $base-color;
+}
 .heading, h1, h2, h3, h4, h5, h6 {
   font-family: $heading-font-bold;
   margin-top: 0;
   color: $base-header-color;
-  @include media(medium-up) {
-    max-width: 80%;
-  }
+  font-weight: inherit;
 }
 
 .header--xxlarge {

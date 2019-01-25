@@ -27,12 +27,6 @@ export default function Blurb ({
   }
 
   return <h2 className='header--medium list--block'>
-    {`Since ${firstYearEdited}, ${sentence} 
-    ${formatKm(km_roads_add)} of roads,
-    ${formatDecimal(buildings_add)} buildings,
-    ${formatDecimal(poi_add)} Points of Interest,
-    ${formatKm(km_coastlines_add + km_coastlines_mod)} of coastlines, and
-    ${formatKm(km_waterways_add)} of waterways in ${country_list.length} ${countryWord}.`
-    }
+    Since <mark>{firstYearEdited}</mark>, <mark>{sentence}</mark> <mark>{formatKm(km_roads_add)}</mark> of roads, <mark>{formatDecimal(buildings_add)}</mark> buildings, <mark>{formatDecimal(poi_add)}</mark> Points of Interest, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add)}</mark> of waterways in <mark>{country_list.length}</mark> <mark>{countryWord}</mark>.
   </h2>
 }
