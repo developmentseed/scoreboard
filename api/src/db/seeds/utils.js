@@ -36,7 +36,7 @@ function generateOSMesaUser (id, name) {
   let editedTimes = []
 
   const randomInt = () => parseInt(Math.floor(rand.random() * 1000000))
- 
+
   for (let i = 1; i < Math.floor(rand.random() * 20); i++) {
     let index = Math.floor(rand.random() * (countries.length - 1))
 
