@@ -114,7 +114,7 @@ class Dashboard extends Component {
           <DashboardBlurb
             {...osmesaData}
           />
-         </div>
+        </div>
         <section>
           <div className='row'>
             <UserExtentMap uid={uid} extent={extent_uri} />

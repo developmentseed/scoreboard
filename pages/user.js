@@ -65,7 +65,7 @@ export class User extends Component {
             {...records}
             username={name}
           />
-         </div>
+        </div>
         <section>
           <div className='row'>
             <UserExtentMap uid={uid} extent={extent_uri} />
