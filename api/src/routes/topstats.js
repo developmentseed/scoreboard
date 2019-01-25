@@ -50,7 +50,10 @@ module.exports = async (req, res) => {
 
     const [{ numUsers }] = await db('users').count('id as numUsers')
     const editsByCountry = await db('user_country_edits')
-      .select('country_name', db.sum('edit_count').as('edits'))
+      .innerJoin(
+        db('users').select('id').whereNotIn('osm_id', filteredUsers).as('users'), 'user_id', 'users.id'
+      )
+      .select('country_name', db.sum('user_country_edits.edit_count').as('edits'))
       .groupBy('country_name')
       .orderBy('edits', 'desc')
       .limit(5)
