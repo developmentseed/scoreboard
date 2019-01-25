@@ -11,7 +11,7 @@ import { formatDecimal } from '../lib/utils/format'
 import sumEdits from '../lib/utils/sum_edits'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 
-const CampaignMap = dynamic(() => import('../components/charts/CampaignMap'), {
+const CampaignMap = dynamic(() => import('../components/charts/LeafletCampaignMap'), {
   ssr: false
 })
 
