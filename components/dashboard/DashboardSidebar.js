@@ -6,17 +6,14 @@ import InlineList from '../InlineList'
 
 function findCountryByName (countryName) {
   return countryList.find((country) => {
-    return countryName === country.label
+    return countryName === country.name
   })
 }
 
 function formatCountryList (userCountries) {
   if (!userCountries) return
   return userCountries.map((country) => {
-    const c = findCountryByName(country.name)
-    if (!c) return
-    country.code = findCountryByName(country.name).value
-    return country
+    return findCountryByName(country.name)
   }).filter((country) => !!country)
 }
 
