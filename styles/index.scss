@@ -26,7 +26,7 @@ body {
   &:after {
     content: " ";
     display: table;
-    flex-basis: 100%;
+    width: 100%;
     order: 2;
   }
   &:after {
@@ -437,6 +437,7 @@ section {
 
 .heading, h1, h2, h3, h4, h5, h6 {
   font-family: $heading-font-bold;
+  font-weight: inherit;
   margin-top: 0;
   color: $base-header-color;
   @include media(medium-up) {
