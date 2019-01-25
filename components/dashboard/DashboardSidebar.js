@@ -1,22 +1,13 @@
 import React from 'react'
 import Link from '../Link'
-import countryList from '../../lib/utils/country-list.json'
 import DataNotAvailable from '../DataNotAvailable'
 import InlineList from '../InlineList'
-
-function findCountryByName (countryName) {
-  return countryList.find((country) => {
-    return countryName === country.label
-  })
-}
+import findCountryByName from '../../lib/utils/findCountryByName'
 
 function formatCountryList (userCountries) {
   if (!userCountries) return
   return userCountries.map((country) => {
-    const c = findCountryByName(country.name)
-    if (!c) return
-    country.code = findCountryByName(country.name).value
-    return country
+    return findCountryByName(country.name)
   }).filter((country) => !!country)
 }
 
