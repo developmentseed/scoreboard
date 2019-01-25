@@ -14,6 +14,7 @@ import DashboardBadges from '../components/dashboard/DashboardBadges'
 import DashboardAssignments from '../components/dashboard/DashboardAssignments'
 import DashboardHeader from '../components/dashboard/DashboardHeader'
 import DashboardSidebar from '../components/dashboard/DashboardSidebar'
+import DashboardBlurb from '../components/dashboard/DashboardBlurb'
 import CampaignsChart from '../components/charts/CampaignsChart'
 import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import { formatDecimal } from '../lib/utils/format'
@@ -70,6 +71,7 @@ class Dashboard extends Component {
       'poi_add',
       'roads_add',
       'buildings_add',
+      'coastlines_add',
       'coastlines_mod'
     ], osmesaData)
 
@@ -108,6 +110,11 @@ class Dashboard extends Component {
             { label: 'Edits', value: formatDecimal(editCount) }
           ]}
         />
+        <div className='row'>
+          <DashboardBlurb
+            {...osmesaData}
+          />
+         </div>
         <section>
           <div className='row'>
             <UserExtentMap uid={uid} extent={extent_uri} />

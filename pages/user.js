@@ -6,6 +6,7 @@ import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import CampaignsChart from '../components/charts/CampaignsChart'
 import DashboardBadges from '../components/dashboard/DashboardBadges'
 import DashboardSidebar from '../components/dashboard/DashboardSidebar'
+import DashboardBlurb from '../components/dashboard/DashboardBlurb'
 
 import { formatDecimal } from '../lib/utils/format'
 import { actions } from '../lib/store'
@@ -39,6 +40,7 @@ export class User extends Component {
       'poi_add',
       'roads_add',
       'buildings_add',
+      'coastlines_add',
       'coastlines_mod'
     ], records)
 
@@ -58,6 +60,12 @@ export class User extends Component {
             { label: 'Edits', value: formatDecimal(editCount) }
           ]}
         />
+        <div className='row'>
+          <DashboardBlurb
+            {...records}
+            username={name}
+          />
+         </div>
         <section>
           <div className='row'>
             <UserExtentMap uid={uid} extent={extent_uri} />

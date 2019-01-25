@@ -10,28 +10,11 @@ import ReactMarkdown from 'react-markdown'
 import { formatDecimal } from '../lib/utils/format'
 import sumEdits from '../lib/utils/sum_edits'
 import ScoreboardPanel from '../components/ScoreboardPanel'
+import Blurb from '../components/campaign/CampaignBlurb'
 
 const CampaignMap = dynamic(() => import('../components/charts/CampaignMap'), {
   ssr: false
 })
-
-const Blurb = ({
-  users,
-  km_roads_add,
-  buildings_add,
-  poi_add,
-  km_waterways_add,
-  km_coastlines_add
-}) => {
-  return <h2 className='header--medium list--block'>
-    {`${users.length} mappers, mapping
-    ${km_roads_add.toFixed(1)} km of roads,
-    ${formatDecimal(buildings_add)} buildings,
-    ${formatDecimal(poi_add)} Points of Interest,
-    ${km_coastlines_add.toFixed(1)} km of coastlines, and
-    ${km_waterways_add.toFixed(1)} km of waterways.`}
-  </h2>
-}
 
 export class Campaign extends Component {
   componentDidMount () {
