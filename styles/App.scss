@@ -8,10 +8,9 @@
 }
 .mobile-hidden {
   @include media(xsmall-only) {
-    display: none;
+    display: none !important;
   }
 }
-
 .header-nav {
   background-color: $base-color;
   position: relative;
@@ -79,7 +78,7 @@ nav {
     @include media(xsmall-only) {
       flex-basis: 100%;
       order: 2;
-      display: none;
+      transition: all ease-in-out .2s;
     }
     @include media(small-up) {
       flex-direction: row;
