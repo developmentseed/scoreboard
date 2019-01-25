@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import mapboxgl from 'mapbox-gl'
+import bbox from '@turf/bbox'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0tdtaT2QNe2Q'
 
 class CountryMap extends Component {
   componentDidMount () {
+    const bounds = bbox(this.props.geography)
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/devseed/cj9iy816wb9x02smisy4y7id3',
+      style: 'mapbox://styles/devseed/cjqpb3z440t302smfnewsl6vb',
       zoom: 1,
-      center: this.props.centroid,
       interactive: this.props.interactive
     })
     this.map.on('load', () => {
@@ -22,9 +23,12 @@ class CountryMap extends Component {
         },
         'layout': {},
         'paint': {
-          'fill-color': '#9E14C3',
+          'fill-color': '#4FCA9C',
           'fill-opacity': 0.7
         }
+      })
+      this.map.fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]], {
+        padding: { top: 10, bottom: 10, left: 10, right: 10 }
       })
     })
   }

@@ -64,7 +64,8 @@ async function get (req, res) {
       'team_assignments.campaign_id',
       '=',
       'campaigns.id'
-    )
+    ).join(db('taskers').select('name as tm_name', 'id as taskers_t_id').as('t'),
+      'campaigns.tasker_id', '=', 't.taskers_t_id')
     const users = await db('users').whereIn('osm_id', data.members)
     const team = {
       id: data.id,

@@ -1,5 +1,6 @@
 const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
+const { TM } = require('../services/tm')
 
 /**
  * Campaign Stats Route
@@ -13,19 +14,30 @@ const db = require('../db/connection')
  * @returns {Promise} a response
  */
 module.exports = async (req, res) => {
-  const { id } = req.params
-  if (!id) {
+  const { tasker_id, tm_id } = req.params
+  if (!tm_id || !tasker_id) {
     return res.boom.badRequest('Invalid id')
   }
 
   try {
-    const osmesaResponse = await osmesa.getCampaign(id)
-    const [tmData] = await db('campaigns').where('campaign_hashtag', id)
+    const [tmData] = await db('campaigns').where({ tasker_id, tm_id })
+    const osmesaResponse = await osmesa.getCampaign(tmData.campaignHashtag)
+
+    // Add tasking manager info
+    const [tm] = await db('taskers').where('id', tmData.tasker_id)
+    const T = new TM(tm.id, tm.type, tm.url)
+    tmData.url = T.getUrlForProject(tmData.tm_id)
+    tmData.tm_name = tm.name
+    let lastUpdate = tmData.updated_at
+    if (!lastUpdate) {
+      lastUpdate = await T.getLastUpdated(tmData.tm_id)
+    }
+
     const records = Object.assign(
       { tmData: tmData },
       JSON.parse(osmesaResponse)
     )
-    return res.send({ id, records })
+    return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate })
   } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve campaign stats')

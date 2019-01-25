@@ -1,7 +1,8 @@
 const { compareDesc, parse } = require('date-fns')
 const {
-  merge, map, props, sum, head
+  merge, head
 } = require('ramda')
+const sumEdits = require('../../lib/utils/sum_edits')
 const pLimit = require('p-limit')
 const OSMesa = require('./services/osmesa')
 const db = require('./db/connection')
@@ -15,26 +16,6 @@ const { updateUserCountryEdit, isState } = require('./models/userCountryEdits')
 function getLastEdit (editTimes) {
   const days = editTimes.map((time) => parse(time.day))
   return head(days.sort(compareDesc))
-}
-
-const summable = [
-  'buildings_add',
-  'buildings_mod',
-  'poi_add',
-  'roads_add',
-  'roads_mod',
-  'waterways_add'
-]
-
-/*
- * Given a records object, sum all the summable edits
- * and return the number back as the sum of all edits
- *
- * @param {Object} records
- */
-const sumEdits = (records) => {
-  const summableProperties = map((x) => Number(x))(props(summable, records))
-  return sum(summableProperties)
 }
 
 async function updateCountries (userID, countryEditList) {
@@ -111,8 +92,9 @@ async function usersWorker () {
 // Run
 if (require.main === module) {
   usersWorker()
-    .then((resp) => {
+    .then(async resp => {
       console.log(`Updated ${resp.length} records.`)
+      await db.destroy()
       process.exit(0)
     })
     .catch((e) => {

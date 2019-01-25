@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
-import CampaignFilters from '../components/CampaignFilters'
-import CampaignsListing from '../components/CampaignsListing'
+import CampaignFilters from '../components/campaigns/CampaignFilters'
+import CampaignsListing from '../components/campaigns/CampaignsListing'
 
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
@@ -11,7 +11,9 @@ export class Campaigns extends Component {
     super()
 
     this.handlePageChange = this.handlePageChange.bind(this)
-    this.handleFilterChange = this.handleFilterChange.bind(this)
+    this.handleCompletenessChange = this.handleCompletenessChange.bind(this)
+    this.handleValidationChange = this.handleValidationChange.bind(this)
+    this.handleSelectTM = this.handleSelectTM.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
   }
 
@@ -19,8 +21,16 @@ export class Campaigns extends Component {
     this.props.handleCampaignsSearch(event.target.value)
   }
 
-  handleFilterChange (completeness) {
-    this.props.handleCampaignsFilterChange(completeness)
+  handleSelectTM (selectedTM) {
+    this.props.handleSelectTM(selectedTM)
+  }
+
+  handleCompletenessChange (completeness) {
+    this.props.handleCampaignsCompletenessChange(completeness)
+  }
+
+  handleValidationChange (validation) {
+    this.props.handleCampaignsValidationChange(validation)
   }
 
   handlePageChange (pageNumber) {
@@ -39,35 +49,40 @@ export class Campaigns extends Component {
   }
 
   render () {
-    const { page, searchText, compl_min, compl_max } = this.props.campaigns
-    const { records: { total, records, all_count }, apiStatus } = this.props.campaigns
+    const {
+      page,
+      searchText,
+      records: { total, records, allCount, tms },
+      apiStatus,
+      selectedTM
+    } = this.props.campaigns
+    if (!records) {
+      return <div />
+    }
 
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
           <div className='row'>
-            <h1 className='section-sub--left header--xlarge margin-top-sm'>Campaigns</h1>
-            <ul className='section-sub--right'>
-              <li className='list--inline'>
-                <span className='descriptor-chart'>Campaigns</span>
-                <span className='num--large'>{all_count}</span>
-              </li>
-            </ul>
+            <h1 className='header--xlarge'>Campaigns</h1>
           </div>
         </header>
-        <section className='section--tertiary'>
-          <div className='row'>
-            <div className='sidebar'>
+        <section>
+          <div className='row widget-container'>
+            <div className='widget-25'>
               <h3 className='header--medium'>Filter</h3>
               <CampaignFilters
-                handleFilterChange={this.handleFilterChange}
+                handleCompletenessChange={this.handleCompletenessChange}
+                handleValidationChange={this.handleValidationChange}
+                handleSelectTM={this.handleSelectTM}
+                tmList={tms}
+                selectedTM={selectedTM}
                 handleSearch={this.handleSearch}
                 searchText={searchText}
-                completeness={{ compl_min, compl_max }}
               />
             </div>
-            <div className='content--with-sidebar'>
-              <CampaignsListing records={records} apiStatus={apiStatus} total={total} />
+            <div className='widget-75'>
+              <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
               <Pagination
                 activePage={page}
                 itemsCountPerPage={10}

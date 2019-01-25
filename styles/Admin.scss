@@ -13,9 +13,7 @@
 }
 
 .sidebar-right {
-  width: 20%;
-  left: 5%;
-  float: right;
+  order: 1;
   @include media(xsmall-only) {
     float: none;
     width: 100%;
@@ -43,21 +41,13 @@
   }
 }
 
-.list-grid {
-  li {
-    display: inline-block;
-    width: 20%;
-
-    a {
-      padding: 20px;
-      display: block;
-      margin-right: 4%; 
-      border-radius: 2px;
-    }
-
-    a:hover {
-      background-color: #fafafc;
-    }
+.admin-widget {
+  line-height: 2em;
+  a {
+    font-family: $tertiary-font-family;
+    line-height: $base-line-height;
+    text-transform: uppercase;
+    line-height: 2em;
   }
 }
 
@@ -137,6 +127,7 @@ $border-color: #ccc;
 
   input[type="text"],
   input[type="number"],
+  input[type="date"],
   textarea {
     border-radius: $border-radius;
     border: 1px solid $border-color;
@@ -154,18 +145,16 @@ $border-color: #ccc;
 
 .admin .button {
   background-color: $base-color;
-  border-radius: $border-radius;
   border: 1px solid $base-color;
   color: white;
   cursor: pointer;
   font-size: $base-font-size;
-  padding: 0.5em;
-  text-transform: none;
   transition: background-color 300ms ease-in-out;
 
   &:hover,
   &:active {
     background-color: darken($base-color, 10%);
+    color: white;
   }
 }
 

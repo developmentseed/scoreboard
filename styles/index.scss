@@ -1,9 +1,13 @@
 @import 'settings/variables.scss';
 @import 'settings/mixins.scss';
 
+//SASS Variable to randomly generate header background background-image on site build
+$nth: random(4);
+//
+
 body {
   -webkit-print-color-adjust: exact;
-  background: #FFF;
+  background: $background-color-light;
   color: $base-font-color;
   font-size: 14px;
   line-height: 20px;
@@ -11,13 +15,19 @@ body {
   font-style: $base-font-style;
   margin: 0;
 }
-
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 //sections //
 .clearfix {
   &:before,
   &:after {
     content: " ";
     display: table;
+    flex-basis: 100%;
+    order: 2;
   }
   &:after {
     clear: both;
@@ -30,6 +40,7 @@ body {
   padding: 0 64px;
   display: block;
   width: auto;
+  margin: 0 auto;
   @include media(medium-down) {
     padding: 0 40px;
   }
@@ -72,7 +83,14 @@ body {
 }
 
 .header--internal--green {
-  background-color: $base-color;
+  background: linear-gradient(to bottom, rgba(#2CAF80, .8), rgba(#56D483, .9)), url($appUrlFinal + "static/backgrounds/homepage-background-#{$nth}.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: top;
   color: white;
   border-bottom: 1px solid darken($base-color, 5%);
   padding-bottom: 1em;
@@ -85,7 +103,6 @@ body {
     margin-bottom: 0;
   }
   .section-sub--left {
-    position: absolute;
     bottom: .1em;
   }
   .descriptor-chart {
@@ -100,9 +117,12 @@ body {
     }
   }
   .list--two-column {
-    width: 60%;
     color: rgba(255, 255, 255, .8);
     margin-bottom: .4em;
+  }
+  .link--large,
+  .link--large:visited {
+    color: #FFFFFF;
   }
 }
 
@@ -150,17 +170,6 @@ body {
   }
 }
 
-.side-by-side {
-  float: left;
-  @include media(small-down) {
-    float: none;
-  }
-}
-
-.section-width--first {
-  margin-right: 4%;
-}
-
 .section-width-sixty {
   width: 60%;
   @include media(small-down) {
@@ -206,6 +215,12 @@ body {
 
 section {
   padding: 5em 0;
+  &~section {
+    padding-bottom: 0;
+  }
+  &:last-of-type {
+    padding-bottom: 5em;
+  }
 }
 
 .section-first {
@@ -243,15 +258,21 @@ section {
 }
 
 .header--homepage {
-  margin-top: -6em;
-  background: url("/static/homepage-background.jpg") no-repeat center top;
+  margin-top: -5em;
+  margin-bottom: 1em;
+  background: linear-gradient(to bottom, rgba(#2CAF80, 1), rgba(#56E483, .7)), url($appUrlFinal + "static/backgrounds/homepage-background-#{$nth}.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: top;
   color: #fff;
-  @include media(medium-down) {
-    margin-top: -5em;
+  padding: 10em 0 3em;
+  @include media(medium-up) {
+    padding: 12em 0 6em;
+    margin-top: -6em;
   }
   h1 {
     color: #fff;
@@ -259,7 +280,6 @@ section {
   p {
     color: rgba(255, 255, 255, .8);
     font-size: 1.3em;
-    margin-top: -5px;
   }
   .link--large, .link--large:visited{
     color: #fff;
@@ -268,31 +288,160 @@ section {
     margin-top: .5em;
     &:hover {
       color: darken(#fff, 7%);
+      border-bottom: 1px solid darken(#fff, 7%);
     }
   }
 }
-
-.overlay-dark {
-  display: block;
-  padding: 12em 0 9em;
-  width: 100%;
-  height: 100%;
-  @include media(medium-down) {
-    padding: 10em 0 3em;
-  }
+.home>section:last-of-type .link--large {
+  display: inline-block;
+  margin-top: 2.5em;
 }
-
 .margin-top-sm {
   margin-top: .3em;
 }
+.widget-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  @include media(medium-up) {
+    flex-direction: row;
+    margin-bottom: 2em;
+    flex-wrap: wrap;
+  }
+  .widget {
+    flex: 1;
+    box-sizing: border-box;
+    @include media(medium-up) {
+      margin-right: 1em;
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+    @include media(large-up) {
+      margin-right: 2em;
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+    &.Badge-Container {
+      margin-right: 0;
+    }
+    &-25 {
+      flex-basis: 100%;
+      @include media(medium-up) {
+        flex: 0 0 calc(25% - 1em);
+      }
+      @include media(large-up) {
+        flex-basis: calc(25% - 2em);
+      }
+    }
+    &-33 {
+      flex-basis: 100%;
+      @include media(medium-up) {
+        flex: 0 0 calc(33.33% - 1em);
+      }
+      @include media(large-up) {
+        flex-basis: calc(33.33% - 2em);
+      }
+    }
+    &-50 {
+      flex-basis: 100%;
+      @include media(medium-up) {
+        flex: 0 0 calc(50% - 1em);
+      }
+      @include media(large-up) {
+        flex-basis: calc(50% - 2em);
+      }
+    }
+    &-66 {
+      flex-basis: 100%;
+      @include media(medium-up) {
+        flex: 0 0 calc(66.66% - 1em);
+      }
+      @include media(large-up) {
+        flex-basis: calc(66.66% - 2em);
+      }
+    }
+    &-75 {
+      flex-basis: 100%;
+      @include media(medium-up) {
+        flex: 0 0 calc(75% - 1em);
+      }
+      @include media(large-up) {
+        flex-basis: calc(75% - 2em);
+      }
+    }
+    &-100 {
+      flex-basis: 100%;
+      @include media(medium-up) {
+        flex: 100%;
+      }
+    }
+  }
+}
+.widget {
+  background: #FFFFFF;
+  box-shadow: 0 2px 14px 0 rgba(132,132,132,0.13);
+  padding: 2em 1em;
+  margin: 1em 0;
+}
+.home .widget {
+  margin: 0 auto;
+  box-sizing: border-box;
+}
 
+.banner {
+  .row {
+      padding-top: 8vw;
+      padding-bottom: 8vw;
+  }
+  h1,
+  h2,
+  p,
+  a,
+  a:visited {
+    color: #FFFFFF;
+    max-width: none;
+  }
+  &__badges {
+    background: $blue-purple-color;
+    @include media (medium-up) {
+      background: url($appUrlFinal + "static/Banner-badges.png"), $blue-purple-color;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: right;
+    }
+  }
+  &__signup {
+    background: $base-color;
+    @include media (medium-up) {
+      background: url($appUrlFinal + "static/Banner-signup.png"), $base-color;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: right;
+    }
+  }
+  &--content {
+    p {
+      font-size: 1.3em;
+    }
+    @include media (medium-up) {
+      width: 32vw;
+      position: relative;
+      z-index: 10;
+    }
+  }
+}
 //Type //
 
 .heading, h1, h2, h3, h4, h5, h6 {
   font-family: $heading-font-bold;
   margin-top: 0;
   color: $base-header-color;
-  max-width: 80%;
+  @include media(medium-up) {
+    max-width: 80%;
+  }
 }
 
 .header--xxlarge {
@@ -376,6 +525,7 @@ section {
   transition: all 0.2s ease 0s;
   &:hover {
     border-bottom: 3px solid $blue-color;
+    color: $blue-color;
   }
 }
 
@@ -405,14 +555,28 @@ section {
 }
 
 .header--page {
+  .row {
+    .section-sub--left {
+      float: none;
+      margin-right: auto;
+    }
+    .section-sub--right {
+      width: auto;
+      float: none;
+    }
+  }
   .button, .button:visited {
     border-color: #fff;
-    background-color: $base-color;
+    background-color: transparent;
     color: #fff;
     font-size: 14px;
-    display: inline;
-    margin-left: 5px;
-
+    display: inline-block;
+    &~.button {
+      margin-left: .5em;
+    }
+    @include media(medium-only) {
+      padding: .7em 1.2em .5em;
+    }
     &:hover {
       color: $base-color;
       background-color: #fff;
@@ -435,6 +599,7 @@ a, a:visited {
   padding-bottom: 4px;
   &:hover {
     color: darken($blue-color, 10%);
+    border-bottom: 1px solid darken($blue-color, 10%);
   }
 }
 
@@ -443,7 +608,8 @@ a, a:visited {
   transition: all 0.2s ease 0s;
   padding-bottom: 1px;
   &:hover {
-    border-bottom: 1px solid darken($blue-color, 30%);
+    border-bottom: 1px solid darken($blue-color, 25%);
+    color: darken($blue-color, 25%);
   }
 }
 
@@ -528,8 +694,11 @@ dl {
   li {
     margin-bottom: .3em;
     float: left;
-    margin-right: 3em;
+    margin-right: 2em;
   }
+}
+.header--internal--green .list--two-column li {
+  font-family: $heading-font-regular;
 }
 
 .list--horizontal {
@@ -543,6 +712,7 @@ dl {
   margin-top: 1.5em;
   text-align: center;
   padding-right: 8%;
+  font-family: $heading-font-regular;
   li {
     display: inline-block;
     margin: 0 .4em;
@@ -550,7 +720,7 @@ dl {
   a, a:visited {
     padding: 0 .2em;
     color: $med-text-color;
-    font-size: 1.2em;
+    font-size: 1em;
     &:hover {
       color: $blue-color;
     }
@@ -613,15 +783,17 @@ dl {
 fieldset {
   border: 0;
   padding: 0;
+  margin: 0 0 2em;
 }
-
 legend {
   margin-bottom: .5em;
+  padding: 0;
+  font-family: $heading-font-bold;
 }
 
 .input--text {
   padding: .7em;
-  width: 80%;
+  width: 100%;
 }
 
 .checkbox {
@@ -634,33 +806,76 @@ legend {
 
 .search-icon {
   position: absolute;
-  background-image: url("/static/magnifier-left.svg");
+  background-image: url($appUrlFinal + "static/magnifier-left.svg");
   content: " ";
   width: 15px;
   height: 15px;
   background-size: 15px 15px;
   top: .6em;
-  right: 15%;
+  right: 5%;
 }
-
+form.filters {
+  display: flex;
+  flex-direction: column;
+  @include media(small-only) {
+    flex-direction: row;
+    margin-bottom: 1em;
+  }
+  fieldset {
+    width: 100%;
+    &~fieldset {
+      @include media(small-only) {
+        margin-left: 1em;
+      }
+    }
+  }
+}
 //tables //
 table {
   width: 100%;
   text-align: left;
+  border-collapse: collapse;
   th {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
-    padding-bottom: .5em;
+    color: $base-header-color;
+    padding-top: .8em;
+    padding-bottom: .8em;
+    border-bottom: 1px solid lighten($light-text-color, 25%);
+    border-top: 1px solid lighten($light-text-color, 25%);
+    &:first-child {
+      padding-left: .8em;
+    }
+    &:last-child {
+      padding-right: .8em;
+    }
   }
   tbody {
+    font-family: $heading-font-family;
+    @include media(small-down) {
+      font-size: .86em;
+    }
     tr {
-
+      // the borders for the rows were previously set on each cell
+      border-bottom: 1px solid lighten($light-text-color, 40%);
+      td:first-child {
+        font-family: $heading-font-bold;
+        padding-left: .8em;
+      }
+      td:last-child {
+        padding-right: .8em;
+      }
     }
   }
   td {
-    padding: .8em 0;
+    padding: .9em 4em .8em 0;
     margin: 0;
-    border-bottom: 1px solid lighten($light-text-color, 50%);
+    @include media(xlarge-up) {
+      padding-right: 4em;
+    }
+    @include media(medium-down) {
+      padding-right: 1em;
+    }
   }
 }
 

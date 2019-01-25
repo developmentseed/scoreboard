@@ -51,14 +51,23 @@ app.prepare()
       app.render(req, res, '/campaign', { id })
     })
 
-    api.get('/countries/:alpha2', (req, res) => {
-      const { alpha2 } = req.params
-      app.render(req, res, '/country', { alpha2 })
+    api.get('/countries/:code', (req, res) => {
+      const { code } = req.params
+      app.render(req, res, '/country', { code })
     })
 
     api.get('/admin/users/:id', (req, res) => {
       const { id } = req.params
       app.render(req, res, '/admin/edit-user', { id })
+    })
+
+    api.get('/admin/tasking-managers/add', (req, res) => {
+      app.render(req, res, '/admin/tasking-managers-add')
+    })
+
+    api.get('/admin/tasking-managers/:id', (req, res) => {
+      const { id } = req.params
+      app.render(req, res, '/admin/tasking-managers-edit', { id })
     })
 
     api.get('/admin/teams/add', (req, res) => {

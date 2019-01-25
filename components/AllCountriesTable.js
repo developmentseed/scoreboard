@@ -6,24 +6,27 @@ export default ({ apiStatus, countries }) => {
   let content = <div />
   switch (apiStatus) {
     case 'SUCCESS':
-      content = (<table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Total Edits</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            countries.map(country => (
-              <tr key={country.id}>
-                <td><Link href={`/countries/${country.alpha2}`}><a className='link--normal'>{country.name}</a></Link></td>
-                <td>{formatDecimal(country.edit_count)}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+      content = (<div className='widget'>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Total Edits</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              countries.map(country => (
+                <tr key={country.id}>
+                  <td><Link href={`/countries/${country.code}`}><a className='link--normal'>{country.name}</a></Link></td>
+                  <td>{formatDecimal(country.edit_count)}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
       )
       break
     case 'LOADING':

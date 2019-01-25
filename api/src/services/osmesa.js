@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 
 const { OSMESA_API } = require('../config')
+const { generateOSMesaUser } = require('../db/seeds/utils')
 
 /**
  * Methods to grab data from OSMesa
@@ -24,9 +25,7 @@ class OSMesaAPI {
 
 class FakeOSMesaAPI {
   getUser (id) {
-    const sampleuser = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'sampleuser.json'), 'utf-8'))
-    sampleuser.uid = id
-    sampleuser.name = `test${(id - 100000000)}` // Users start at 100000000
+    const sampleuser = generateOSMesaUser(id, `test${(id - 100000000)}`)
     return Promise.resolve(JSON.stringify(sampleuser))
   }
 

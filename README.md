@@ -131,7 +131,7 @@ To use scoreboard in production follow these steps:
 2. Install dependencies: `yarn`
 3. Setup a production Postgres database
 4. Create the database by running [these commands](scripts/create-dev-db.sh).
-5. Setup an `.env` file with correct values -> [example](.env.example).
+5. Setup an `.env` file with correct values -> [example](.env.sample).
   - make sure to set `NODE_ENV=production` in your `.env` file
 6. Run the migrations: `npm run migrate`
 7. Add initial data to the database `npm run seed`

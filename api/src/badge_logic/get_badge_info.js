@@ -2,21 +2,35 @@ const metricIndex = 1
 const opIndex = 0
 const valueIndex = 2
 
-function mapBadgeToTask (badge, x) {
-  const map = {
-    roadKms: `Add ${x} more km of roads`,
-    roadKmMods: `Modify ${x} more km of roads`,
-    buildings: `Build ${x} more buildings`,
-    daysInRow: `Map ${x} more consecutive days`,
-    josm: `Use JOSM to map an area ${x} more times`,
-    hashtags: `Participate in ${x} more campaigns`,
-    pois: `Add ${x} more nodes`,
-    waterways: `Add ${x} more km of waterways`,
-    countries: `Map in ${x} more different countries`,
-    daysTotal: `Map ${x} more days in total`,
-    allDays: `Map before ${x}`
+function mapBadgeToTask (badge, x, cond) {
+  if (badge !== 'allDays') {
+    const map = {
+      roadKms: `Add ${x} more km of roads`,
+      roadKmMods: `Modify ${x} more km of roads`,
+      coastlineKms: `Add ${x} more km of coastlines`,
+      coastlineKmMods: `Modify ${x} more km of coastlines`,
+      coastlines_add: `Add ${x} more coastlines`,
+      coastlines_mod: `Modify ${x} more coastlines`,
+      buildings: `Build ${x} more buildings`,
+      daysInRow: `Map ${x} more consecutive days`,
+      josm: `Use JOSM to map an area ${x} more times`,
+      hashtags: `Participate in ${x} more campaigns`,
+      pois: `Add ${x} more nodes`,
+      waterways: `Add ${x} more km of waterways`,
+      countries: `Map in ${x} more different countries`,
+      daysTotal: `Map ${x} more days in total`
+    }
+    return map[badge]
+  } else {
+    switch (cond) {
+      case '<':
+        return `Map before ${x}`
+      case '>':
+        return `Map after ${x}`
+      case '=':
+        return `Map on ${x}`
+    }
   }
-  return map[badge]
 }
 
 function execLogic (op, compValue, requiredValue, excludeFromInProgress) {
@@ -49,13 +63,13 @@ function betweenDates (firstValidDay, lastValidDay, days, today, excluded) {
     Number(firstDateSplit[1] - 1), firstDateSplit[2])
   const pass = days.filter(
     // In this case, `requiredPointValue` will be the list [firstDate, lastDate]
-    (day) => (execLogic('>=', day, firstValidDay) &&
-      execLogic('<=', day, lastValidDay))
+    (day) => (execLogic('>=', day, firstValidDay)[0] &&
+      execLogic('<=', day, lastValidDay)[0])
   ).length > 0
   if ((lastValidDate < today) || (today < firstValidDate)) {
     return [ pass, true, '' ]
   } else {
-    return [ pass, excluded, mapBadgeToTask('allDays', lastValidDay) ]
+    return [ pass, excluded, mapBadgeToTask('allDays', lastValidDay, '<') ]
   }
 }
 
@@ -63,15 +77,15 @@ function simpleDateComp (requiredDay, days, operator, today, excluded) {
   // Check whether any days mapped are before, after, or equal to the requested date
   const pass = days.filter(
     // In this case, `requiredPointValue` will be a date in string format
-    (day) => execLogic(operator, day, requiredDay)
+    (day) => execLogic(operator, day, requiredDay)[0]
   ).length > 0
   // Only show gettable badges in progress
   const validDay = requiredDay.split('-')
   const validDate = new Date(validDay[0], Number(validDay[1] - 1), validDay[2])
-  if (!(execLogic(operator, today, validDate))) {
+  if (!(execLogic(operator, today, validDate)[0])) {
     return [ pass, true, '' ]
-  } else if (operator[0] === '<') {
-    return [ pass, excluded, mapBadgeToTask('allDays', requiredDay) ]
+  } else {
+    return [ pass, excluded, mapBadgeToTask('allDays', requiredDay, operator[0]) ]
   }
 }
 
@@ -113,12 +127,15 @@ module.exports = (userMetrics, badge) => {
       excludeFromInProgress = true
     } else if (metricName === 'allDays') {
       const today = new Date()
+      today.setHours(0, 0, 0, 0)
       if (operator === 'between') {
+        const dateRange = badgeOpArray[valueIndex].split('/');
+
         // the `between` operator assumes two dates in the order of [firstDate, lastDate]
         // where to earn a badge a user must have mapped on some validDay
         // where firstDate <= validDay <= lastDate
         [ badgeOperationPass, excludeFromInProgress, dateTaskPhrase ] =
-          betweenDates(badgeOpArray[valueIndex], badgeOpArray[valueIndex + 1], currentPointValue, today, excludeFromInProgress)
+          betweenDates(dateRange[0], dateRange[1], currentPointValue, today, excludeFromInProgress)
       } else {
         [ badgeOperationPass, excludeFromInProgress, dateTaskPhrase ] =
           simpleDateComp(requiredPointValue, currentPointValue, operator, today, excludeFromInProgress)

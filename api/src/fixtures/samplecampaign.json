@@ -11,6 +11,10 @@
   "km_waterways_add": 95.22816263038682,
   "waterways_mod": 288,
   "km_waterways_mod": 127.86867039987462,
+  "coastlines_add": 97,
+  "km_coastlines_add": 95.22816263038682,
+  "coastlines_mod": 288,
+  "km_coastlines_mod": 127.86867039987462,
   "poi_add": 29,
   "poi_mod": 423,
   "users": [

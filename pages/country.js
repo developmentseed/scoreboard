@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import CountryHeader from '../components/CountryHeader'
 import UserTable from '../components/UserTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
+import ScoreboardPanel from '../components/ScoreboardPanel'
+import { formatDecimal } from '../lib/utils/format'
 
 const CountryMap = dynamic(() => import('../components/charts/CountryMap'), {
   ssr: false
@@ -11,7 +12,7 @@ const CountryMap = dynamic(() => import('../components/charts/CountryMap'), {
 
 export class Country extends Component {
   componentDidMount () {
-    this.props.getCountry(this.props.alpha2)
+    this.props.getCountry(this.props.code)
   }
 
   render () {
@@ -25,15 +26,25 @@ export class Country extends Component {
     if (!name) return <div />
     return (
       <div className='Country'>
-        <CountryHeader name={name} num_participants={numParticipants} num_edits={edit_count} country={this.props.country} />
-        <section>
+        <header className='header--internal--green header--page'>
           <div className='row'>
             <div className='section-sub--left section-width-fifty-plus'>
+              <h1 className='header--xlarge header--with-description-lg'>{name}</h1>
+            </div>
+          </div>
+        </header>
+        <ScoreboardPanel title='' facets={[
+          { label: 'Participants', value: formatDecimal(numParticipants) },
+          { label: 'Edits', value: formatDecimal(edit_count) }
+        ]} />
+        <section>
+          <div className='row widget-container'>
+            <div className='widget-50'>
               <h3 className='header--medium'>Top 15 Participants</h3>
               <UserTable users={users} />
             </div>
-            <div className='section-sub--right section-width-fifty-minus'>
-              <div className='map-country-lg'>
+            <div className='widget-50'>
+              <div className='map-lg'>
                 <CountryMap geography={this.props.country.geography} centroid={this.props.country.center} interactive />
               </div>
             </div>
@@ -46,9 +57,9 @@ export class Country extends Component {
 
 const connectedCountry = connect(['country'], actions)(Country)
 connectedCountry.getInitialProps = function ({ req }) {
-  const { alpha2 } = req.params
+  const { code } = req.params
   return {
-    alpha2
+    code
   }
 }
 

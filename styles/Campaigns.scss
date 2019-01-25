@@ -13,10 +13,6 @@
 }
 
 fieldset {
-  margin-bottom: 2em;
-  legend {
-    font-family: $heading-font-bold;
-  }
   label {
     display: block;
     margin-bottom: .5em;
@@ -95,6 +91,7 @@ fieldset {
   }
   .descriptor-chart {
     margin-right: 1.5em;
+    font-size: 1.5em;
   }
   .card-content {
     padding: 2em 2.2em 1.9em;
@@ -116,10 +113,24 @@ fieldset {
     height: 9em;
     margin-bottom: 1em;
   }
+  // changing box shadow hover properties for smoother animations
+  &:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    box-shadow: 0 4px 16px rgba(30, 30, 30, .1);
+    transition: opacity 0.3s ease-in-out;
+  }
   &:hover {
-    margin-top: -.5em;
-    margin-bottom: 3em;
-    box-shadow: 0 4px 8px rgba(60, 60, 60, .1);
+    transform: translateY(-.5em);
+    &:after {
+      opacity: 1;
+    }
   }
 }
 
@@ -127,12 +138,6 @@ fieldset {
   color: $light-text-color;
   margin-bottom: .7em;
   display: block;
-}
-
-.map-campaign-lg {
-  width: 90%;
-  margin-left: 10%;
-  height: 400px;
 }
 
 .map-campaign-sm {
@@ -168,27 +173,55 @@ fieldset {
       margin-bottom: 3em;
     }
   }
+  .header--page .widget-container {
+    margin-bottom: 1em;
+    @include media(medium-up) {
+      align-items: flex-end;
+    }
+    .widget-33{
+      display: flex;
+      @include media(medium-only) {
+        flex-direction: column;
+        text-align: center;
+        .button {
+          width: 100%;
+          text-align: center;
+          margin-left: 0;
+          margin-bottom: 1em;
+        }
+      }
+      @include media(medium-up) {
+        text-align: right;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+  }
 }
 
-.sidebar {
+.filters {
   .input-range {
-    width: 85%;
+    width: 92%;
     margin-left: .5em;
     margin-top: 1em;
   }
 
   .input-range__slider {
-    background: $blue-color;
-    border: 1px solid $blue-color;
+    background: $green-color;
+    border: 1px solid $green-color;
     width: .7em;
     height: .7em;
     top: 70%;
     margin-top: -0.5rem;
   }
   .input-range__track--active {
-    background: $blue-color;
+    background: $green-color;
   }
   .input-range__label--value {
-    color: $blue-color;
+    color: $green-color;
+  }
+
+  .input-range__label--min, .input-range__label--max {
+    display: none
   }
 }

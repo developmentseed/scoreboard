@@ -1,11 +1,7 @@
 import React from 'react'
 import { sortBy, prop, splitAt } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
-import countries from 'i18n-iso-countries'
 import Link from '../Link'
-import enLocale from 'i18n-iso-countries/langs/en.json'
-
-countries.registerLocale(enLocale)
 
 export default ({ edits }) => {
   if (!edits) return <div>Loading...</div>
@@ -13,7 +9,7 @@ export default ({ edits }) => {
     return <li className='list--block--sm' key={record.country}>
       <Link href='/users'>
         <a>
-          <span className='descriptor-chart'>{countries.getName(record.country, 'en')}</span>
+          <span className='descriptor-chart'>{record.country}</span>
           <span className='num--large'>{formatDecimal(record.edit_count)}</span>
         </a>
       </Link></li>
