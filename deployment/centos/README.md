@@ -4,7 +4,7 @@ These instructions are only useful if you are trying to deploy and run the score
 
 * [Provisioning](#provisioning)
     * [General deps](#general-deps)
-    * [sqlite3](#sqlite3)
+    * [Postgresql](#postgresql)
     * [Node](#node)
     * [Nginx](#nginx)
 * [Installing Scoreboard](#installing-scoreboard)
@@ -28,9 +28,44 @@ sudo yum update -y
 sudo yum install -y vim git wget bzip2 nano htop
 ```
 
-### sqlite3
+### Postgresql
+Follow instructions to get postgresql set up on centos ([source](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-centos-7)).
+
 ```
-sudo yum install sqlite3
+sudo yum install postgresql-server postgresql-contrib
+```
+
+Create a new PostgreSQL database cluster:
+```
+sudo postgresql-setup initdb
+```
+
+Ensure that postgres allows password authentication
+
+Open the HBA configuration with your favorite text editor. We will use vi:
+
+```
+sudo vi /var/lib/pgsql/data/pg_hba.conf
+```
+
+Find the lines in pg_hba.conf that look like this, near the bottom of the file:
+
+```
+host    all             all             127.0.0.1/32            ident
+host    all             all             ::1/128                 ident
+```
+
+Replace `ident` with `md5`, so they look like this:
+```
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+```
+
+Start and enable PostgreSQL:
+
+```
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
 ```
 
 ### Node
@@ -41,14 +76,15 @@ sudo yum groupinstall "Development Tools"
 ```
 
 #### Download/Install Node
-https://www.liquidweb.com/kb/how-to-install-nvm-node-version-manager-for-node-js-on-centos-7/
+Follow these instructions for installing node using nvm on centos: https://www.liquidweb.com/kb/how-to-install-nvm-node-version-manager-for-node-js-on-centos-7/
+
 ```
-curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
 ---Exit and Re-enter server
 
-nvm install 8.4
-nvm alias default 8.4
+nvm install 8.13
+nvm alias default 8.13
 ```
 
 #### Symlink to system
@@ -74,10 +110,6 @@ sudo yum install nginx
 
 This guide assumes that you will store your secret environment variables at `/var/scoreboard-data/.env`.
 
-We also strongly recommend that you move your sqlite3 database file to a location outside of the default `/var/www/scoreboard/api`.
-
-One place to store it is `/var/scoreboard-data/`. If you change the location of the database file, make sure to add `DB_PATH` to your `.env` file.
-
 Also make sure to run `sudo chown -R centos:centos /var/scoreboard-data` on the folder to ensure the nginx webserver has access to the .env and db files.
 
 #### Add .env file
@@ -86,8 +118,9 @@ Add a file with the following content to `/var/scoreboard-data/.env`
 
 ```
 NODE_ENV=production
-DB_PATH=/var/scoreboard-data/db.sqlite3
+DATABASE_URL=postgres://scoreboard:test@localhost:5433/scoreboard
 TM_URL=xxxxx
+TM_VERSION=xxx
 USERS_URL=xxxx
 TM_HASHTAG=xxxx
 OSMESA_API=xxxxx
@@ -117,6 +150,7 @@ wget https://github.com/developmentseed/scoreboard/blob/<put-version-number-here
 
 ### Start Services
 The deploy script in the previous step automatically restart the services, but in case you need to do it manually this how to do it.
+
 ```
 npm run build
 sudo systemctl restart scoreboard-api
