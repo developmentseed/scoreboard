@@ -99,13 +99,13 @@ export class Home extends Component {
         <section>
           <div className='row'>
             <div className='width--shortened graphs--users widget widget-container'>
-              <h2 className='header--large widget-100'>Mappers</h2>
+              <h2 className='header--large widget-100'>Leaderboard</h2>
               <div className='widget-25'>
-                <h3>Edits By Country</h3>
+                <h3>Countries Mapped</h3>
                 <EditsByCountry edits={editsByCountry} />
               </div>
               <div className='widget-75 chart' style={{ height: '430px', marginBottom: '50px' }}>
-                <h3>Top Editors</h3>
+                <h3>Editors</h3>
                 {
                   topEdits ? <TopEditorsChart edits={topEdits} /> : <div>Loading...</div>
                 }
