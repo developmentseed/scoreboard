@@ -5,4 +5,5 @@
 **/coverage/**
 tmp/**
 **/frontend/build
+api/tests/tapes/**
 .next

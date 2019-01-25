@@ -38,7 +38,8 @@ export class User extends Component {
       'waterways_add',
       'poi_add',
       'roads_add',
-      'buildings_add'
+      'buildings_add',
+      'coastlines_mod'
     ], records)
 
     return (

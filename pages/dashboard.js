@@ -69,7 +69,8 @@ class Dashboard extends Component {
       'waterways_add',
       'poi_add',
       'roads_add',
-      'buildings_add'
+      'buildings_add',
+      'coastlines_mod'
     ], osmesaData)
 
     // Calculate counts for panel
