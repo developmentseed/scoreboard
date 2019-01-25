@@ -8,7 +8,7 @@ import { actions } from '../lib/store'
 import trimLength from '../lib/utils/trim_length'
 import { formatDecimal } from '../lib/utils/format'
 import TopEditorsChart from '../components/charts/TopEditorsChart'
-import EditorsByCountry from '../components/charts/EditorsByCountryChart'
+import EditsByCountry from '../components/charts/EditsByCountryChart'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 
 const Map = dynamic(() => import('../components/charts/HomeMap'), {
@@ -102,7 +102,7 @@ export class Home extends Component {
               <h2 className='header--large widget-100'>Mappers</h2>
               <div className='widget-25'>
                 <h3>Edits By Country</h3>
-                <EditorsByCountry edits={editsByCountry} />
+                <EditsByCountry edits={editsByCountry} />
               </div>
               <div className='widget-75 chart' style={{ height: '430px', marginBottom: '50px' }}>
                 <h3>Top Editors</h3>
