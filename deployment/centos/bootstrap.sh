@@ -9,6 +9,16 @@ git fetch --tags --all
 git checkout -b v0.2.1 tags/v0.2.1
 echo 'Repo is cloned and ready'
 
+echo 'Create postgresql database and user'
+POSTGRES_USER=${1:-postgres}
+
+psql $POSTGRES_USER -v ON_ERROR_STOP=1 <<-EOSQL
+  CREATE DATABASE scoreboard;
+  CREATE ROLE scoreboard WITH ENCRYPTED PASSWORD 'test';
+  GRANT ALL PRIVILEGES ON DATABASE "scoreboard" TO "scoreboard";
+  ALTER ROLE "scoreboard" WITH LOGIN;
+EOSQL
+
 echo 'Copy services'
 cd deployment/centos
 sudo mv *.service *.timer /etc/systemd/system/
