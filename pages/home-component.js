@@ -11,7 +11,7 @@ import TopEditorsChart from '../components/charts/TopEditorsChart'
 import EditsByCountry from '../components/charts/EditsByCountryChart'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 
-const Map = dynamic(() => import('../components/charts/HomeMap'), {
+const Map = dynamic(() => import('../components/charts/LeafletHomeMap'), {
   ssr: false
 })
 
@@ -53,7 +53,7 @@ export class Home extends Component {
           <div className='row'>
             <div className='width--shortened'>
               <h2 className='header--large'>Campaigns</h2>
-              <div style={{ width: '100%', height: '275px', 'marginBottom': '40px' }}>
+              <div className='home-map' style={{ width: '100%', height: '275px', 'marginBottom': '40px' }}>
                 {features
                   ? <Map overlay={features} />
                   : <div>Loading map...</div>

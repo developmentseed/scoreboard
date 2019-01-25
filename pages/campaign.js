@@ -12,7 +12,7 @@ import sumEdits from '../lib/utils/sum_edits'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import Blurb from '../components/campaign/CampaignBlurb'
 
-const CampaignMap = dynamic(() => import('../components/charts/CampaignMap'), {
+const CampaignMap = dynamic(() => import('../components/charts/LeafletCampaignMap'), {
   ssr: false
 })
 

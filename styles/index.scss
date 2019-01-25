@@ -890,3 +890,18 @@ table {
     margin-top: 3em;
   }
 }
+
+.home-map > .leaflet-container {
+  height: 265px;
+  background: rgb(222,234,238);
+ }
+
+.map-campaign-sm > .leaflet-container {
+  height: 150px;
+  background: rgb(222,234,238);
+ }
+
+.map-lg > .leaflet-container {
+  height: 300px;
+  background: rgb(222,234,238);
+ }
