@@ -12,7 +12,8 @@ function chartify ({
   poi_add,
   roads_add,
   buildings_add,
-  coastlines_mod
+  coastlines_mod,
+  coastlines_add
 }) {
   return [
     {
@@ -38,7 +39,7 @@ function chartify ({
     {
       'id': 'coastlines',
       'label': 'Coastlines',
-      'value': coastlines_mod || 0
+      'value': coastlines_add + coastlines_mod || 0
     }
   ]
 }
