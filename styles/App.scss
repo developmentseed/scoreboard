@@ -250,6 +250,7 @@ nav {
 }
 
 .chart-bar--main {
+  margin-top: auto;
   li {
     margin-bottom: .2em;
   }
@@ -309,8 +310,10 @@ nav {
 .users--country {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
   @include media(medium-up) {
     flex-direction: column;
+    align-items: flex-start;
   }
   .list--block--sm {
     flex: 1;

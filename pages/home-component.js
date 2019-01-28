@@ -8,10 +8,10 @@ import { actions } from '../lib/store'
 import trimLength from '../lib/utils/trim_length'
 import { formatDecimal } from '../lib/utils/format'
 import TopEditorsChart from '../components/charts/TopEditorsChart'
-import EditorsByCountry from '../components/charts/EditorsByCountryChart'
+import EditsByCountry from '../components/charts/EditsByCountryChart'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 
-const Map = dynamic(() => import('../components/charts/HomeMap'), {
+const Map = dynamic(() => import('../components/charts/LeafletHomeMap'), {
   ssr: false
 })
 
@@ -53,39 +53,41 @@ export class Home extends Component {
           <div className='row'>
             <div className='width--shortened'>
               <h2 className='header--large'>Campaigns</h2>
-              <div style={{ width: '100%', height: '275px', 'marginBottom': '40px' }}>
+              <div className='home-map' style={{ width: '100%', height: '275px', 'marginBottom': '40px' }}>
                 {features
                   ? <Map overlay={features} />
                   : <div>Loading map...</div>
                 }
               </div>
-              <ul className='clearfix'>
+              <ul className='clearfix widget-container'>
                 {
                   priorityCampaigns.map(record =>
-                    <li key={`block-${record.id}`} className='block--campaign card'>
-                      <div className='card-content'>
-                        <h3 className='header--small header--with-description-xlg'>
-                          <Link href={`/campaigns/${record.campaign_hashtag}`}>
-                            <a className='header--underlined'>{record.name}</a>
-                          </Link>
-                        </h3>
-                        <p>{trimLength(record.description, 195)}</p>
-                        <ul className='chart-bar--main'>
-                          <li>
-                            <span className='chart-bar--title'>Complete</span>
-                            <span className='chart-bar--wrapper'>
-                              <span className='chart-bar' style={{ 'width': `${parseInt(record.done, 10)}%` }} />
-                              <span className='chart-bar--percent'>{parseInt(record.done, 10)}%</span>
-                            </span>
-                          </li>
-                          <li>
-                            <span className='chart-bar--title'>Validated</span>
-                            <span className='chart-bar--wrapper'>
-                              <span className='chart-bar' style={{ 'width': `${parseInt(record.validated, 10)}%` }} />
-                              <span className='chart-bar--percent'>{parseInt(record.validated, 10)}%</span>
-                            </span>
-                          </li>
-                        </ul>
+                    <li key={`block-${record.id}`} className='card--wrapper'>
+                      <div className='card'>
+                        <div className='card-content'>
+                          <h3 className='header--small header--with-description-xlg'>
+                            <Link href={`/campaigns/${record.campaign_hashtag}`}>
+                              <a className='header--underlined'>{record.name}</a>
+                            </Link>
+                          </h3>
+                          <p>{trimLength(record.description, 195)}</p>
+                          <ul className='chart-bar--main'>
+                            <li>
+                              <span className='chart-bar--title'>Complete</span>
+                              <span className='chart-bar--wrapper'>
+                                <span className='chart-bar' style={{ 'width': `${parseInt(record.done, 10)}%` }} />
+                                <span className='chart-bar--percent'>{parseInt(record.done, 10)}%</span>
+                              </span>
+                            </li>
+                            <li>
+                              <span className='chart-bar--title'>Validated</span>
+                              <span className='chart-bar--wrapper'>
+                                <span className='chart-bar' style={{ 'width': `${parseInt(record.validated, 10)}%` }} />
+                                <span className='chart-bar--percent'>{parseInt(record.validated, 10)}%</span>
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </li>
                   )}
@@ -99,13 +101,13 @@ export class Home extends Component {
         <section>
           <div className='row'>
             <div className='width--shortened graphs--users widget widget-container'>
-              <h2 className='header--large widget-100'>Mappers</h2>
+              <h2 className='header--large widget-100'>Leaderboard</h2>
               <div className='widget-25'>
-                <h3>Edits By Country</h3>
-                <EditorsByCountry edits={editsByCountry} />
+                <h3>Countries Mapped</h3>
+                <EditsByCountry edits={editsByCountry} />
               </div>
               <div className='widget-75 chart' style={{ height: '430px', marginBottom: '50px' }}>
-                <h3>Top Editors</h3>
+                <h3>Editors</h3>
                 {
                   topEdits ? <TopEditorsChart edits={topEdits} /> : <div>Loading...</div>
                 }

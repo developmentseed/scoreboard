@@ -9,11 +9,7 @@ git checkout -b v0.2
 
 # installation
 npm install
-cd api
-npm install
-cd ../frontend
-npm install
-npm run build
+npm run migrate
 
 # move to nginx folder
 cd ../..

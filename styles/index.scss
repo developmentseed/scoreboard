@@ -26,7 +26,7 @@ body {
   &:after {
     content: " ";
     display: table;
-    flex-basis: 100%;
+    width: 100%;
     order: 2;
   }
   &:after {
@@ -437,6 +437,7 @@ section {
 
 .heading, h1, h2, h3, h4, h5, h6 {
   font-family: $heading-font-bold;
+  font-weight: inherit;
   margin-top: 0;
   color: $base-header-color;
   @include media(medium-up) {
@@ -524,7 +525,6 @@ section {
   color: $dark-text-color;
   transition: all 0.2s ease 0s;
   &:hover {
-    border-bottom: 3px solid $blue-color;
     color: $blue-color;
   }
 }
@@ -811,8 +811,11 @@ legend {
   width: 15px;
   height: 15px;
   background-size: 15px 15px;
-  top: .6em;
+  top: .8em;
   right: 5%;
+  @include media(xsmall-only) {
+    right: 2%;
+  }
 }
 form.filters {
   display: flex;
@@ -825,7 +828,7 @@ form.filters {
     width: 100%;
     &~fieldset {
       @include media(small-only) {
-        margin-left: 1em;
+        margin-left: .7em;
       }
     }
   }
@@ -885,6 +888,7 @@ table {
     margin-top: 3em;
   }
 }
+
 .home-map > .leaflet-container {
   height: 265px;
   background: rgb(222,234,238);

@@ -3,7 +3,7 @@ import Link from '../Link'
 import trimLength from '../../lib/utils/trim_length'
 import dynamic from 'next/dynamic'
 
-const CampaignMap = dynamic(() => import('../charts/CampaignMap'), {
+const CampaignMap = dynamic(() => import('../charts/LeafletCampaignMap'), {
   ssr: false
 })
 
