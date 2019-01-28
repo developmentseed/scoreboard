@@ -151,11 +151,11 @@ class Layout extends React.Component {
                 <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
               </ul>
               <ul className={menuClass.join(' ')}>
-                <li><NavLink href='/campaigns'>Campaigns</NavLink></li>
-                <li><NavLink href='/users'>Users</NavLink></li>
-                <li><NavLink href='/teams'>Teams</NavLink></li>
-                <li><NavLink href='/countries'>Countries</NavLink></li>
-                <li><NavLink href='/about'>About</NavLink></li>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/campaigns'>Campaigns</NavLink></li>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/users'>Users</NavLink></li>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/teams'>Teams</NavLink></li>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/countries'>Countries</NavLink></li>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/about'>About</NavLink></li>
               </ul>
               {
                 loggedIn
