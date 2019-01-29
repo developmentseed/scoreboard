@@ -42,13 +42,20 @@ export default props =>
     groupMode='grouped'
     layout='horizontal'
     reverse={false}
-    colors={[
-      '#8BC544',
-      '#98CF54',
-      '#B5E37B',
-      '#CCF19E',
-      '#E3FDC3'
-    ]}
+    colors={
+      [
+        'hsl(87, 53%, 70%)',
+        'hsl(87, 53%, 68%)',
+        'hsl(87, 53%, 66%)',
+        'hsl(87, 53%, 64%)',
+        'hsl(87, 53%, 62%)',
+        'hsl(87, 53%, 60%)',
+        'hsl(87, 53%, 58%)',
+        'hsl(87, 53%, 56%)',
+        'hsl(87, 53%, 54%)',
+        'hsl(87, 53%, 52%)'
+      ]
+    }
     colorBy='index'
     borderRadius={0}
     borderWidth={0}
