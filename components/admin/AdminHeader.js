@@ -1,7 +1,10 @@
 import React from 'react'
-import Link from './Link'
+import Link from '../Link'
 
-export default () => {
+/**
+ * Renders above each admin page
+ */
+export default function AdminHeader () {
   return (
     <header className='header--internal--green header--page header--admin'>
       <div className='row'>
