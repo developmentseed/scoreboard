@@ -116,7 +116,9 @@ class Dashboard extends Component {
         </div>
         <section>
           <div className='row'>
-            <UserExtentMap countries={countries} />
+            <div className='map-lg'>
+              <UserExtentMap countries={countries} />
+            </div>
           </div>
         </section>
         <section>
