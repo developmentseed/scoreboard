@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Icons/User</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icons/User" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-8" transform="translate(1.000000, 1.000000)" stroke="#FFFFFF" stroke-width="2">
+            <path d="M11,14 C13.209139,14 15,12.209139 15,10 C15,7.790861 13.209139,6 11,6 C8.790861,6 7,7.790861 7,10 C7,12.209139 8.790861,14 11,14 Z" id="Oval-6"></path>
+            <path d="M5,19.85392 C5.39948659,18.046305 6.55928607,14 11.2101082,14 C14.3106562,14 16.5739535,15.7456994 18,19.2370981 C15.3050188,21.0161099 13.0417215,21.9354848 11.2101082,21.9952227 C8.46268812,22.0848295 6.29112602,20.8969814 5,19.85392 Z" id="Path-3"></path>
+            <circle id="Oval-5" cx="11" cy="11" r="11"></circle>
+        </g>
+    </g>
+</svg>

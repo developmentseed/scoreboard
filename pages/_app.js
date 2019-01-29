@@ -27,7 +27,8 @@ import 'react-select/dist/react-select.css'
 import 'react-input-range/lib/css/index.css'
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
-const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.png')
+const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.svg')
+const menuIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/menu-icon.svg')
 
 const NavLink = withRouter(({ children, router, href }) => {
   const activeClass = router.pathname === href ? 'active' : ''
@@ -40,22 +41,22 @@ function Footer (props) {
       <div>
         {
           !props.loggedIn
-            ? (<div class='banner banner__signup'>
-              <div class='row'>
-                <div class='banner--content'>
-                  <h2 class='header--xlarge'>Earn a spot on the board</h2>
+            ? (<div className='banner banner__signup'>
+              <div className='row'>
+                <div className='banner--content'>
+                  <h2 className='header--xlarge'>Earn a spot on the board</h2>
                   <p>Join other mappers and track your progress. Earn badges for edits you’ve made and campaigns you've helped complete. Share your contributions to the global mapping ecosystem.</p>
-                  <a href={join(APP_URL_FINAL, '/auth/openstreetmap')} class='link--large'>Sign up with {projectName}</a>
+                  <a href={join(APP_URL_FINAL, '/auth/openstreetmap')} className='link--large'>Sign up with {projectName}</a>
                 </div>
               </div>
             </div>
             )
 
             : (
-              <div class='banner banner__badges'>
-                <div class='row'>
-                  <div class='banner--content'>
-                    <h2 class='header--xlarge'>Map to Earn Badges</h2>
+              <div className='banner banner__badges'>
+                <div className='row'>
+                  <div className='banner--content'>
+                    <h2 className='header--xlarge'>Map to Earn Badges</h2>
                     <p>Track your best work. Earn badges for edits you’ve made and campaigns you've helped complete. Share your progress and contribution to the global mapping ecosystem. </p>
                   </div>
                 </div>
@@ -89,10 +90,14 @@ class Layout extends React.Component {
   constructor () {
     super()
     this.state = {
-      menuVisible: false
+      menuVisible: false,
+      removeClass: false
     }
     this.handleMenuClick = this.handleMenuClick.bind(this)
     this.handleOutsideClick = this.handleOutsideClick.bind(this)
+  }
+  toggle () {
+    this.setState({ removeClass: !this.state.removeClass })
   }
 
   componentDidMount () {
@@ -127,8 +132,11 @@ class Layout extends React.Component {
 
   render () {
     const { authenticatedUser, children } = this.props
-    const { loggedIn, osm, account } = authenticatedUser
-
+    const { loggedIn, osm, account, name } = authenticatedUser
+    let menuClass = ['nav--left', 'mobile-hidden']
+    if (this.state.removeClass) {
+      menuClass.pop('mobile-hidden')
+    }
     return (
       <div className='App'>
         <Head>
@@ -139,19 +147,23 @@ class Layout extends React.Component {
         <header className='header-nav'>
           <div className='row'>
             <nav>
-              <ul className='nav--left'>
+              <ul className='nav--mobile'>
+                <li className='nav--icons mobile-only'><img src={menuIcon} alt='Menu icon' onClick={this.toggle.bind(this)} /></li>
                 <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
-                <li><NavLink href='/campaigns'>Campaigns</NavLink></li>
-                <li><NavLink href='/users'>Users</NavLink></li>
-                <li><NavLink href='/teams'>Teams</NavLink></li>
-                <li><NavLink href='/countries'>Countries</NavLink></li>
-                <li><NavLink href='/about'>About</NavLink></li>
+              </ul>
+              <ul className={menuClass.join(' ')}>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/campaigns'>Campaigns</NavLink></li>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/users'>Users</NavLink></li>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/teams'>Teams</NavLink></li>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/countries'>Countries</NavLink></li>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/about'>About</NavLink></li>
               </ul>
               {
                 loggedIn
                   ? <div className='nav--right'>
                     <ul>
-                      <li className='nav--icons' ref={node => { this.navButton = node }} onClick={this.handleMenuClick}><img style={{ width: '30px' }} src={profileIcon} alt='Profile icon' /></li>
+                      <li>{name}</li>
+                      <li className='nav--icons' ref={node => { this.navButton = node }} onClick={this.handleMenuClick}><img src={profileIcon} alt='Profile icon' /></li>
                     </ul>
                     {
                       this.state.menuVisible && (
