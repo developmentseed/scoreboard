@@ -66,7 +66,7 @@ export class Home extends Component {
                       <div className='card'>
                         <div className='card-content'>
                           <h3 className='header--small header--with-description-xlg'>
-                            <Link href={`/campaigns/${record.campaign_hashtag}`}>
+                            <Link href={`/campaigns/${record.tasker_id}-${record.tm_id}`}>
                               <a className='header--underlined'>{record.name}</a>
                             </Link>
                           </h3>
