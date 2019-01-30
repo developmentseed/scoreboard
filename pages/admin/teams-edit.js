@@ -6,8 +6,8 @@ import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
-import AdminCampaignsSearch from '../../components/AdminCampaignsSearch'
-import AdminUsersSearch from '../../components/AdminUsersSearch'
+import AdminCampaignsSearch from '../../components/admin/AdminCampaignsSearch'
+import AdminUsersSearch from '../../components/admin/AdminUsersSearch'
 import Link from '../../components/Link'
 
 export class AdminTeamsEdit extends Component {

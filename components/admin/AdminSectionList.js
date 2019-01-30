@@ -52,6 +52,11 @@ export default function AdminSectionList () {
               <a className='link--normal'>See all users</a>
             </Link>
           </li>
+          <li>
+            <Link href='/admin/users-exclusion'>
+              <a className='link--normal'>Modify exclusion list</a>
+            </Link>
+          </li>
         </ul>
       </li>
       <li className='widget'>

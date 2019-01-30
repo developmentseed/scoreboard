@@ -102,6 +102,13 @@ export class AdminUsers extends Component {
                     </a>
                   </Link>
                 </li>
+                <li>
+                  <Link href='/admin/users-exclusion'>
+                    <a className='link--large'>
+                      Exclusion List
+                    </a>
+                  </Link>
+                </li>
               </ul>
             </div>
             <div className='widget-75'>

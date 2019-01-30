@@ -1,7 +1,7 @@
 import Pagination from 'react-js-pagination'
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
-import { actions } from '../lib/store'
+import { actions } from '../../lib/store'
 
 class UsersSearch extends Component {
   constructor (props) {
@@ -47,7 +47,7 @@ class UsersSearch extends Component {
         {
           (selectedUsers.length > 0)
             ? (<section className='section-sub'>
-              <h1>Team Members</h1>
+              <h1>Selected</h1>
               <table className='admin-table'>
                 <thead>
                   <tr>
