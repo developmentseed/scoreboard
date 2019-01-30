@@ -1,14 +1,10 @@
 const db = require('../db/connection')
-const {
-  split, trim
-} = require('ramda')
 const { subMonths } = require('date-fns')
 
 const users = require('../models/users')
 const roles = require('../models/roles')
+const exclusion = require('../models/exclusion-list')
 const { validateRole } = require('../utils/roles')
-
-const { FILTERED_USERS } = require('../config')
 
 function applyFilters (query, req) {
   const search = req.query.q || ''
@@ -64,7 +60,6 @@ function applyFilters (query, req) {
  */
 async function stats (req, res) {
   const page = req.query.page || 1
-  const filteredUsers = split(',', FILTERED_USERS).map(trim)
   const sortType = req.query.sortType || ''
 
   try {
@@ -74,7 +69,7 @@ async function stats (req, res) {
         db.raw('case "edit_count" when NULL then 0 else "edit_count" end'),
         'country', 'last_edit')
       .from('users')
-      .whereNotIn('osm_id', filteredUsers))
+      .whereNotIn('id', exclusion.list()))
       .select(
         's.osm_id',
         's.edit_count',
@@ -109,7 +104,7 @@ async function stats (req, res) {
     const countries = await db('users').distinct('country').select()
 
     // Create counts
-    const realUsers = db('users').whereNotIn('osm_id', filteredUsers)
+    const realUsers = db('users').whereNotIn('id', exclusion.list())
     const [{ subTotal }] = await applyFilters(realUsers.clone(), req).count('id as subTotal')
     const [{ total }] = await realUsers.clone().count('id as total')
     const [{ active }] = await realUsers.clone().where('edit_count', '>', 0).count('id as active')

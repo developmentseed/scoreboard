@@ -1,8 +1,5 @@
-const {
-  FILTERED_USERS
-} = require('../config')
-const { trim, split } = require('ramda')
 const db = require('../db/connection')
+const exclusion = require('../models/exclusion-list')
 
 /**
  * Top level stats
@@ -16,8 +13,6 @@ const db = require('../db/connection')
  * @returns {Promise} a response
  */
 module.exports = async (req, res) => {
-  const filteredUsers = split(',', FILTERED_USERS).map(trim)
-
   try {
     const [{ numCampaigns }] = await db('campaigns')
       .whereNotNull('campaign_hashtag').count('id as numCampaigns')
@@ -41,7 +36,7 @@ module.exports = async (req, res) => {
     }
 
     const topEdits = await db('users')
-      .whereNotIn('osm_id', filteredUsers)
+      .whereNotIn('id', exclusion.list())
       .select('full_name', 'country', 'edit_count')
       .orderBy('edit_count', 'desc')
       .limit(10)
@@ -51,7 +46,7 @@ module.exports = async (req, res) => {
     const [{ numUsers }] = await db('users').count('id as numUsers')
     const editsByCountry = await db('user_country_edits')
       .innerJoin(
-        db('users').select('id').whereNotIn('osm_id', filteredUsers).as('users'), 'user_id', 'users.id'
+        db('users').select('id').whereNotIn('id', exclusion.list()).as('users'), 'user_id', 'users.id'
       )
       .select('country_name', db.sum('user_country_edits.edit_count').as('edits'))
       .groupBy('country_name')
