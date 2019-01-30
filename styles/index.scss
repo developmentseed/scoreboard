@@ -407,7 +407,7 @@ section {
   &__badges {
     background: $blue-purple-color;
     @include media (medium-up) {
-      background: url($appUrlFinal + "static/Banner-badges.png"), $blue-purple-color;
+      background: linear-gradient(to right, $blue-purple-color 20%, transparent), url($appUrlFinal + "static/Banner-badges.png"), $blue-purple-color;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: right;
@@ -416,7 +416,7 @@ section {
   &__signup {
     background: $base-color;
     @include media (medium-up) {
-      background: url($appUrlFinal + "static/Banner-signup.png"), $base-color;
+      background: linear-gradient(to right, $base-color 50%, transparent), url($appUrlFinal + "static/Banner-signup.png"), $base-color;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: right;
@@ -697,6 +697,9 @@ dl {
     margin-bottom: .3em;
     float: left;
     margin-right: 2em;
+    @include media (small-down) {
+      float: none;
+    }
   }
 }
 .header--internal--green .list--two-column li {
@@ -892,16 +895,16 @@ table {
 }
 
 .home-map > .leaflet-container {
-  height: 265px;
+  height: 100%;
   background: rgb(222,234,238);
  }
 
 .map-campaign-sm > .leaflet-container {
-  height: 150px;
+  height: 100%;
   background: rgb(222,234,238);
  }
 
 .map-lg > .leaflet-container {
-  height: 300px;
+  height: 100%;
   background: rgb(222,234,238);
  }

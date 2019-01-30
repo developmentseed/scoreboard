@@ -51,7 +51,8 @@ const theme = {
   legends: {
     textColor: '#eee',
     fontSize: '14px'
-  }
+  },
+  colors: ['#22BDC1', '#8BC544', '#334A42', '#5657C2', '#4FCA9C']
 }
 
 export default (props) => {
@@ -87,7 +88,7 @@ export default (props) => {
         innerRadius={0.65}
         padAngle={0.3}
         cornerRadius={1}
-        colors='paired'
+        colors={theme.colors}
         colorBy='id'
         borderWidth={0}
         borderColor='inherit:darker(0.6)'
