@@ -48,22 +48,24 @@ class UsersSearch extends Component {
           (selectedUsers.length > 0)
             ? (<section className='section-sub'>
               <h1>Selected</h1>
-              <table className='admin-table'>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>User ID</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {selectedUsers.map(record => (
-                    <tr key={`user-${record.osm_id}`} onClick={() => this.onSelectedUsersClick(record)} className='admin-table-row'>
-                      <td>{`${record.full_name}`}</td>
-                      <td>{`${record.osm_id}`}</td>
+              <div className='widget'>
+                <table className='admin-table'>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>User ID</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {selectedUsers.map(record => (
+                      <tr key={`user-${record.osm_id}`} onClick={() => this.onSelectedUsersClick(record)} className='admin-table-row'>
+                        <td>{`${record.full_name}`}</td>
+                        <td>{`${record.osm_id}`}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </section>)
             : <div />
         }
@@ -77,7 +79,7 @@ class UsersSearch extends Component {
               </div>
             </fieldset>
           </div>
-          <div className=''>
+          <div className='widget'>
             <table className='admin-table'>
               <thead>
                 <tr>

@@ -380,6 +380,11 @@ section {
     }
   }
 }
+[class^="widget-"] ~ [class^="widget-"] {
+  @include media(small-down){
+    margin-top: 2em;
+  }
+}
 .widget {
   background: #FFFFFF;
   box-shadow: 0 2px 14px 0 rgba(132,132,132,0.13);
