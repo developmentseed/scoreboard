@@ -1,6 +1,5 @@
 const exclusion = require('../models/exclusion-list')
 const { validateRole } = require('../utils/roles')
-const { prop } = require('ramda')
 
 /**
  * Exclusion list details route
@@ -18,7 +17,7 @@ async function list (req, res) {
   }
 
   try {
-    const list = await exclusion.list().map(prop('user_id'))
+    const list = await exclusion.listOSMIds()
 
     return res.send(list)
   } catch (err) {
@@ -45,7 +44,7 @@ async function put (req, res) {
   }
 
   try {
-    await exclusion.update(body.list)
+    await exclusion.updateOSMIds(body.list)
     return res.sendStatus(200)
   } catch (err) {
     console.error(err)
