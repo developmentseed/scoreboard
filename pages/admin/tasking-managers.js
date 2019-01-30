@@ -41,25 +41,27 @@ export class AdminTaskers extends Component {
     return (
       <div>
         <h1>List</h1>
-        <table className='admin-table'>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Last run time</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              taskers
-                .map((tasker) => (
-                  <tr key={`tasker-${tasker.id}`} onClick={() => this.onTMClick(tasker)} className='admin-table-row'>
-                    <td>{tasker.name}</td>
-                    <td>{ tasker.last_update ? `${distanceInWordsToNow(parse(tasker.last_update))} ago` : 'Will run in the next 10 minutes' }</td>
-                  </tr>
-                ))
-            }
-          </tbody>
-        </table>
+        <div className='widget'>
+          <table className='admin-table'>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Last run time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                taskers
+                  .map((tasker) => (
+                    <tr key={`tasker-${tasker.id}`} onClick={() => this.onTMClick(tasker)} className='admin-table-row'>
+                      <td>{tasker.name}</td>
+                      <td>{ tasker.last_update ? `${distanceInWordsToNow(parse(tasker.last_update))} ago` : 'Will run in the next 10 minutes' }</td>
+                    </tr>
+                  ))
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }
@@ -85,8 +87,8 @@ export class AdminTaskers extends Component {
       <div className='admin'>
         <AdminHeader />
         <section>
-          <div className='row'>
-            <div className='sidebar'>
+          <div className='row widget-container'>
+            <div className='widget-25'>
               <h2 className='header--large'>Tasking Managers</h2>
               <ul className='admin-sidebar-links'>
                 <li>
@@ -98,7 +100,7 @@ export class AdminTaskers extends Component {
                 </li>
               </ul>
             </div>
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               {this.renderList()}
             </div>
           </div>
