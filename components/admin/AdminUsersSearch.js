@@ -58,9 +58,10 @@ class UsersSearch extends Component {
                   </thead>
                   <tbody>
                     {selectedUsers.map(record => (
-                      <tr key={`user-${record.osm_id}`} onClick={() => this.onSelectedUsersClick(record)} className='admin-table-row'>
+                      <tr key={`user-${record.osm_id}`} className='admin-table-row'>
                         <td>{`${record.full_name}`}</td>
                         <td>{`${record.osm_id}`}</td>
+                        <td><button style={{ 'padding': '5px' }} className='button' onClick={() => this.onSelectedUsersClick(record)} >Remove</button></td>
                       </tr>
                     ))}
                   </tbody>

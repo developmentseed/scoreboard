@@ -22,8 +22,7 @@ export class AdminExclusionList extends Component {
     this.updateExclusionList = this.updateExclusionList.bind(this)
   }
 
-  async updateExclusionList (e) {
-    e.preventDefault()
+  async updateExclusionList () {
     try {
       await this.props.updateExclusionList(this.state.exclusionList.map(prop('osm_id')))
       this.props.setNotification({ type: 'success', message: 'Successfully updated exclusion list' })
@@ -36,13 +35,13 @@ export class AdminExclusionList extends Component {
     let { exclusionList } = this.state
     exclusionList = exclusionList.filter(u => u.osm_id.toString() !== user.osm_id.toString())
     exclusionList.push(user)
-    this.setState({ exclusionList })
+    this.setState({ exclusionList }, this.updateExclusionList.bind(this))
   }
 
   removeUserFromExclusionList (user) {
     let { exclusionList } = this.state
     exclusionList = exclusionList.filter(u => u.osm_id.toString() !== user.osm_id.toString())
-    this.setState({ exclusionList })
+    this.setState({ exclusionList }, this.updateExclusionList.bind(this))
   }
 
   async componentDidMount () {
@@ -105,18 +104,11 @@ export class AdminExclusionList extends Component {
                 <h2 className='header-xlarge'>Add to exclusion list</h2>
               </div>
               <div className='row'>
-                <form className='form' onSubmit={this.updateExclusionList}>
+                <form className='form'>
                   <AdminUsersSearch selectedUsers={exclusionList}
                     addUser={this.addUserToExclusionList}
                     removeUser={this.removeUserFromExclusionList}
                   />
-                  <div className='form__footer'>
-                    <button className='button'
-                      id='update-exclusions-button'
-                      type='submit'>
-                      Update Exclusion List
-                    </button>
-                  </div>
                 </form>
               </div >
             </div >
