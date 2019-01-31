@@ -101,7 +101,7 @@ export class AdminExclusionList extends Component {
             <div className='widget-75'>
               <div className='row'>
                 <h2 className='header-xlarge'>Add to exclusion list</h2>
-                <p>Exclude mappers from statistics aggregations in the leaderboards.</p>
+                <p>Exclude mappers from leaderboard statistics.</p>
               </div>
               <div className='row'>
                 <form className='form'>
