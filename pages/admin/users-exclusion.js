@@ -8,7 +8,6 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import AdminUsersSearch from '../../components/admin/AdminUsersSearch'
 import Link from '../../components/Link'
-import { prop } from 'ramda'
 
 export class AdminExclusionList extends Component {
   constructor () {
@@ -24,7 +23,7 @@ export class AdminExclusionList extends Component {
 
   async updateExclusionList () {
     try {
-      await this.props.updateExclusionList(this.state.exclusionList.map(prop('osm_id')))
+      await this.props.updateExclusionList(this.state.exclusionList)
       this.props.setNotification({ type: 'success', message: 'Successfully updated exclusion list' })
     } catch (e) {
       this.props.setNotification({ type: 'error', message: e.message || e })
@@ -102,6 +101,7 @@ export class AdminExclusionList extends Component {
             <div className='widget-75'>
               <div className='row'>
                 <h2 className='header-xlarge'>Add to exclusion list</h2>
+                <p>Exclude mappers from statistics aggregations in the leaderboards.</p>
               </div>
               <div className='row'>
                 <form className='form'>

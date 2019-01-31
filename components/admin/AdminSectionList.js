@@ -54,7 +54,7 @@ export default function AdminSectionList () {
           </li>
           <li>
             <Link href='/admin/users-exclusion'>
-              <a className='link--normal'>Modify exclusion list</a>
+              <a className='link--normal'>Modify list of excluded users</a>
             </Link>
           </li>
         </ul>
