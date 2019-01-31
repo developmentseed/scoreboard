@@ -23,7 +23,7 @@ See [this tutorial](https://www.postgresql.org/download/) for details and instru
 
 There should be an env file in the root project directory with the following environment variables.
 
-For development simply run: `cp api/.env.sample api/.env`. In development, the Osmesa and Tasking Manager services are mocked, so the environment variables `TM_URL`, `TM_HASHTAG`, `FILTERED_USERS` and `OSMESA_API` are not required. 
+For development simply run: `cp api/.env.sample api/.env`. In development, the Osmesa and Tasking Manager services are mocked, so the environment variables `TM_URL`, `TM_HASHTAG`, and `OSMESA_API` are not required. 
 
 | name | description
 | ---  | -----
@@ -32,7 +32,6 @@ For development simply run: `cp api/.env.sample api/.env`. In development, the O
 | TM_HASHTAG | The default prefix the tasking manager uses as a hashtag (e.g. "osmus-project")
 | OSMESA_API | URL to the OSMESA http server that serves out statistics
 | APP_URL | URL where the site will be hosted
-| FILTERED_USERS | Comma separated user list, to filter imported users
 | OSM_CONSUMER_KEY | An Oauth Key/Secret pair to authenticate with OSM
 | OSM_CONSUMER_SECRET | An Oauth Key/Secret pair to authenticate with OSM
 | OSM_DOMAIN | OSM endpoint (defaults to openstreetmap.com)

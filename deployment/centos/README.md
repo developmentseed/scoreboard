@@ -125,7 +125,6 @@ USERS_URL=xxxx
 TM_HASHTAG=xxxx
 OSMESA_API=xxxxx
 APP_URL=xxxxx
-FILTERED_USERS="0,1"
 ```
 
 ### Setup NGINX and Services
