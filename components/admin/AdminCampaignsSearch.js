@@ -1,7 +1,7 @@
 import Pagination from 'react-js-pagination'
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
-import { actions } from '../lib/store'
+import { actions } from '../../lib/store'
 import Select from 'react-select'
 
 class Assignment extends Component {

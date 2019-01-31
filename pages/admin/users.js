@@ -6,7 +6,7 @@ import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
-import AdminHeader from '../../components/AdminHeader'
+import AdminHeader from '../../components/admin/AdminHeader'
 
 export class AdminUsers extends Component {
   constructor () {
@@ -99,6 +99,13 @@ export class AdminUsers extends Component {
                   <Link href='/admin/users'>
                     <a className='link--large'>
                       Users List
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href='/admin/users-exclusion'>
+                    <a className='link--large'>
+                      Exclusion List
                     </a>
                   </Link>
                 </li>
