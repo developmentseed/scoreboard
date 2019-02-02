@@ -52,16 +52,16 @@ module.exports = async (req, res) => {
 
     switch (sortType) {
       case 'Most Recently Created':
-        query = query.orderBy('created_at', 'desc')
+        query = query.orderBy('created_at', db.raw('desc NULLS LAST'))
         break
       case 'Least Recently Created':
-        query = query.orderBy('created_at', 'asc')
+        query = query.orderBy('created_at', db.raw('asc NULLS LAST'))
         break
       case 'Most Recently Updated':
-        query = query.orderBy('updated_at', 'asc')
+        query = query.orderBy('updated_at', db.raw('desc NULLS LAST'))
         break
       case 'Least Recently Updated':
-        query = query.orderBy('updated_at', 'asc')
+        query = query.orderBy('updated_at', db.raw('asc NULLS LAST'))
         break
     }
     const records = await query.clone().limit(10).offset((parseInt(page) - 1) * 10)
