@@ -97,23 +97,21 @@ class TM3API {
 
   updateDB (db, dbObjects) {
     const promises = dbObjects.map(obj => limit(async () => {
-      let rows = await db('campaigns').where({ 'tm_id': obj.tm_id, 'tasker_id': obj.tasker_id })
 
-      // First time we're getting static data for this project
-      if (rows.length === 0 || (rows.length > 0 && !rows[0].geometry)) {
-        try {
-          let { author, areaOfInterest, created, changesetComment } = JSON.parse(await this.getProject(obj.tm_id))
-          obj.geometry = areaOfInterest
-          obj.created_at = created
-          obj.changeset_comment = changesetComment
-          obj.campaign_hashtag = extractCampaignHashtag(changesetComment, obj.tm_id)
-          obj.author = author
-        } catch (e) {
-          console.error(`Could not add details for project ${obj.tm_id}`)
-          console.error(e)
-        }
+      try {
+        let { author, areaOfInterest, lastUpdated, created, changesetComment } = JSON.parse(await this.getProject(obj.tm_id))
+        obj.geometry = areaOfInterest
+        obj.created_at = created
+        obj.updated_at = lastUpdated
+        obj.changeset_comment = changesetComment
+        obj.campaign_hashtag = extractCampaignHashtag(changesetComment, obj.tm_id)
+        obj.author = author
+      } catch (e) {
+        console.error(`Could not add details for project ${obj.tm_id}`)
+        console.error(e)
       }
 
+      let rows = await db('campaigns').where({ 'tm_id': obj.tm_id, 'tasker_id': obj.tasker_id })
       if (rows.length === 0) {
         // not found
         return db('campaigns').insert(obj)
