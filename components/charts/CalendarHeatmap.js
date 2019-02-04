@@ -42,6 +42,8 @@ class CalendarHeatmap extends React.Component {
 
     if (height > 525) {
       height = 525
+    } else if (height < 400) {
+      height = 400
     }
 
     const values = times.map(time => ({ day: time.day, value: time.count }))
@@ -62,10 +64,10 @@ class CalendarHeatmap extends React.Component {
               to={new Date()}
               emptyColor='#eeeeee'
               colors={[
-                '#61cdbb',
-                '#97e3d5',
-                '#e8c1a0',
-                '#f47560'
+                '#7DFFCE',
+                '#4FCA9C',
+                '#257D5C',
+                '#0D4A33'
               ]}
               margin={{
                 'top': 30,

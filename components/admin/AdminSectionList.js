@@ -1,7 +1,11 @@
 import React from 'react'
-import Link from './Link'
+import Link from '../Link'
 
-export default () => {
+/**
+ * Displays a list of actions that an administrator can do
+ * organized into cards. Each card is a "section"
+ */
+export default function AdminSectionList () {
   return (
     <ul className='widget-container admin-widget'>
       <li className='widget'>
@@ -46,6 +50,11 @@ export default () => {
           <li>
             <Link href='/admin/users'>
               <a className='link--normal'>See all users</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/admin/users-exclusion'>
+              <a className='link--normal'>Modify list of excluded users</a>
             </Link>
           </li>
         </ul>

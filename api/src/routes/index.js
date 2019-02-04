@@ -9,6 +9,7 @@ const topstats = require('./topstats')
 const badges = require('./badges')
 const roles = require('./roles')
 const favorites = require('./favorite-campaigns')
+const exclusion = require('./exclusion-list')
 const teams = require('./teams')
 const countries = require('./countries')
 const country = require('./country')
@@ -64,5 +65,9 @@ router.post('/taskers', taskers.post)
 router.get('/taskers/:id', taskers.get)
 router.put('/taskers/:id', taskers.put)
 router.delete('/taskers/:id', taskers.del)
+
+// exclusion list routes
+router.get('/exclusion', exclusion.list)
+router.put('/exclusion', exclusion.put)
 
 module.exports = router

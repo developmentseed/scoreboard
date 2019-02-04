@@ -5,7 +5,7 @@ import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
-import AdminHeader from '../../components/AdminHeader'
+import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 
 export class AdminTeamsAdd extends Component {

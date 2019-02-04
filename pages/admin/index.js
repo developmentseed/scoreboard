@@ -5,8 +5,8 @@ import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
-import AdminHeader from '../../components/AdminHeader'
-import AdminSectionList from '../../components/AdminSectionList'
+import AdminHeader from '../../components/admin/AdminHeader'
+import AdminSectionList from '../../components/admin/AdminSectionList'
 
 export class Admin extends Component {
   constructor () {

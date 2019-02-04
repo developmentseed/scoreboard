@@ -24,7 +24,6 @@ module.exports = {
   APP_URL: appUrl,
   APP_URL_PREFIX: prefix,
   APP_URL_FINAL: final,
-  FILTERED_USERS: process.env.FILTERED_USERS || '0',
   OSM_CONSUMER_KEY: process.env.OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET: process.env.OSM_CONSUMER_SECRET,
   OSM_DOMAIN: process.env.OSM_DOMAIN || 'https://www.openstreetmap.org',

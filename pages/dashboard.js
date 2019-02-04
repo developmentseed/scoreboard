@@ -8,7 +8,7 @@ import { isAdmin } from '../lib/utils/roles'
 import { pick } from 'ramda'
 
 import NotLoggedIn from '../components/NotLoggedIn'
-import AdminSectionList from '../components/AdminSectionList'
+import AdminSectionList from '../components/admin/AdminSectionList'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import DashboardBadges from '../components/dashboard/DashboardBadges'
 import DashboardAssignments from '../components/dashboard/DashboardAssignments'
@@ -116,7 +116,9 @@ class Dashboard extends Component {
         </div>
         <section>
           <div className='row'>
-            <UserExtentMap countries={countries} />
+            <div className='map-lg'>
+              <UserExtentMap countries={countries} />
+            </div>
           </div>
         </section>
         <section>

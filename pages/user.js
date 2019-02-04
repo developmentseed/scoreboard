@@ -67,8 +67,10 @@ export class User extends Component {
           />
         </div>
         <section>
-          <div className='row map-lg'>
-            <UserExtentMap countries={countriesEdited} />
+          <div className='row'>
+            <div className='map-lg'>
+              <UserExtentMap countries={countriesEdited} />
+            </div>
           </div>
         </section>
         <section>
