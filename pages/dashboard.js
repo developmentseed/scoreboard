@@ -58,12 +58,11 @@ class Dashboard extends Component {
     const { loggedIn, account } = authenticatedUser
     const { assignments, favorites, country } = account
 
-    const { badges, teams } = account
+    const { badges, teams, countriesEdited } = account
     const osmesaData = account.records
     const {
       hashtags,
-      edit_times,
-      countries
+      edit_times
     } = osmesaData
     const breakdownChartProps = pick([
       'waterways_add',
@@ -117,7 +116,7 @@ class Dashboard extends Component {
         <section>
           <div className='row'>
             <div className='map-lg'>
-              <UserExtentMap countries={countries} />
+              <UserExtentMap countries={countriesEdited} />
             </div>
           </div>
         </section>
