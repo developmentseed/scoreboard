@@ -48,7 +48,7 @@ async function get (req, res) {
     const osmesaResponse = await osmesa.getUser(id)
     osmesaData = JSON.parse(osmesaResponse)
   } catch (err) {
-    console.error(err)
+    console.error(err.message)
 
     osmesaData = {
       uid: parseInt(id, 10),
@@ -80,7 +80,6 @@ async function get (req, res) {
   }
 
   let countriesEdited = getCountriesEdited(osmesaData.country_list)
-  console.log('countries edited', countriesEdited)
 
   let badges
   try {

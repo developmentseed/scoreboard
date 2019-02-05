@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
 
   try {
     const [tmData] = await db('campaigns').where({ tasker_id, tm_id })
-    const osmesaResponse = await osmesa.getCampaign(tmData.campaignHashtag)
+    const osmesaResponse = await osmesa.getCampaign(tmData.campaign_hashtag)
 
     // Add tasking manager info
     const [tm] = await db('taskers').where('id', tmData.tasker_id)
@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
     )
     return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate })
   } catch (err) {
-    console.error(err)
+    console.error(err.message)
     return res.boom.notFound('Could not retrieve campaign stats')
   }
 }
