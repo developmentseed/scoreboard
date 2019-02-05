@@ -503,3 +503,15 @@
     text-decoration: underline;
   }
 }
+.dashboard .section--dark {
+  .header-link {
+    color: white;
+  }
+  .filter-bar button {
+    color: $background-color-light;
+    &:hover,
+    &.active {
+      color: $base-color
+    }
+  }
+}
