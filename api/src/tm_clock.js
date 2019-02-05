@@ -15,9 +15,9 @@ async function tmWorker () {
     // Get taskers
     let taskers = await db('taskers').select()
     for (let i = 0; i < taskers.length; i++) {
-      let { id, type, url, name } = taskers[i]
+      let { id, type, url, name, url_proxy } = taskers[i]
       console.log(`Updating projects for ${name}`)
-      let tm = new TM(id, type, url)
+      let tm = new TM(id, type, url, url_proxy)
       console.log('Getting projects from API..')
       let projects = await tm.getProjects()
       let dbObjects = await tm.toDBObjects(projects)
