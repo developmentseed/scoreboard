@@ -9,9 +9,9 @@ export default function Blurb ({
   km_waterways_add,
   km_coastlines_add,
   km_coastlines_mod,
-  country
+  name
 }) {
   return <h2 className='header--small width--shortened list--block'>
-    <mark>{users.length}</mark> mappers in <mark>{country}</mark> are mapping <mark>{formatKm(km_roads_add)}</mark> of roads, <mark>{formatDecimal(buildings_add)}</mark> buildings, <mark>{formatDecimal(poi_add)}</mark> Points of Interest, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add)}</mark> of waterways.
+    <mark>{users.length}</mark> mappers in <mark>{name}</mark> are mapping <mark>{formatKm(km_roads_add)}</mark> of roads, <mark>{formatDecimal(buildings_add)}</mark> buildings, <mark>{formatDecimal(poi_add)}</mark> Points of Interest, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add)}</mark> of waterways.
   </h2>
 }
