@@ -21,6 +21,10 @@ class OSMesaAPI {
   getCampaign (id) {
     return rp(`${OSMESA_API}/campaigns/${id}`)
   }
+
+  getCountry (code) {
+    return rp(`${OSMESA_API}/country-stats/${code}`)
+  }
 }
 
 class FakeOSMesaAPI {
@@ -37,6 +41,16 @@ class FakeOSMesaAPI {
     const samplecampaign = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecampaign.json'), 'utf-8'))
     samplecampaign.tag = `project-${id}`
     return Promise.resolve(JSON.stringify(samplecampaign))
+  }
+
+  getCountry (code) {
+    // to check the notfound page we fake a 404 response
+    if (code === 'notfound') {
+      return Promise.reject(new Error('not found'))
+    }
+    const samplecountry = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecountry.json'), 'utf-8'))
+    samplecountry.tag = `${code}`
+    return Promise.resolve(JSON.stringify(samplecountry))
   }
 }
 

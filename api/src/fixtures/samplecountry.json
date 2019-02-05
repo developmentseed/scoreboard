@@ -1,0 +1,88 @@
+{
+  "country_id": 89,
+  "name": "Colombia",
+  "km_roads_add": 2.44381335262716,
+  "km_roads_mod": 1.0176232048626849E-5,
+  "km_waterways_add": 32.1572045873569,
+  "km_waterways_mod": 1.1886189521604379E-4,
+  "km_coastline_add": 3.763615338623854,
+  "km_coastline_mod": 1.5871402700965355E-5,
+  "roads_add": 828,
+  "roads_mod": 268,
+  "waterways_add": 103,
+  "waterways_mod": 229,
+  "coastlines_add": 541,
+  "coastlines_mod": 73,
+  "buildings_add": 15,
+  "buildings_mod": 17,
+  "poi_add": 114,
+  "poi_mod": 3,
+  "last_edit": 1548381499000,
+  "updated_at": 1548381499000,
+  "changeset_count": 10,
+  "edit_count": 5000,
+  "user_edits": [
+    {
+      "user": 55,
+      "count": 2084
+    },
+    {
+      "user": 36,
+      "count": 1061
+    },
+    {
+      "user": 63,
+      "count": 312
+    },
+    {
+      "user": 35,
+      "count": 173
+    },
+    {
+      "user": 132,
+      "count": 65
+    },
+    {
+      "user": 70,
+      "count": 45
+    },
+    {
+      "user": 8,
+      "count": 16
+    },
+    {
+      "user": 5,
+      "count": 13
+    },
+    {
+      "user": 40,
+      "count": 1
+    },
+    {
+      "user": 53,
+      "count": 1
+    }
+  ],
+  "hashtag_edits": [
+    {
+      "hashtag": "project-26",
+      "count": 3976
+    },
+    {
+      "hashtag": "project-16",
+      "count": 775
+    },
+    {
+      "hashtag": "project-10",
+      "count": 685
+    },
+    {
+      "hashtag": "project-29",
+      "count": 222
+    },
+    {
+      "hashtag": "project-7",
+      "count": 80
+    }
+  ]
+}
