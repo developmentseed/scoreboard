@@ -64,7 +64,7 @@ test.serial('Test URL forming', async t => {
 
   const project = projects.find(p => p.projectId === 77)
   t.truthy(project)
-  
+
   const url = tm.getUrlForProject(project.projectId)
   t.is(url, `http://tasks.openstreetmap.us/project/77`)
 })

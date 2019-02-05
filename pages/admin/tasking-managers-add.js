@@ -20,7 +20,7 @@ export class AdminTaskersAdd extends Component {
       nameInput: '',
       typeInput: null,
       urlInput: '',
-      urlProxyInput: '',
+      urlProxyInput: ''
     }
 
     // Event handlers
