@@ -19,7 +19,8 @@ export class AdminTaskersAdd extends Component {
       disableInteraction: false,
       nameInput: '',
       typeInput: null,
-      hashtagInput: ''
+      urlInput: '',
+      urlProxyInput: '',
     }
 
     // Event handlers
@@ -27,6 +28,7 @@ export class AdminTaskersAdd extends Component {
     this.handleDescriptionInputChange = this.handleDescriptionInputChange.bind(this)
     this.handleNameInputChange = this.handleNameInputChange.bind(this)
     this.handleUrlInputChange = this.handleUrlInputChange.bind(this)
+    this.handleUrlProxyInputChange = this.handleUrlProxyInputChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
     this.resetInputs = this.resetInputs.bind(this)
   }
@@ -204,6 +206,23 @@ export class AdminTaskersAdd extends Component {
             value={this.state.descriptionInput}
           />
         </div>
+        <h2 className='header--medium'>Advanced Settings</h2>
+        <div className='form__input-unit'>
+          <label
+            className='form__label'
+            htmlFor='add-new-tasker-url-proxy'
+          >
+            Proxy URL (API behind firewall)
+          </label>
+          <input
+            id='tasker-url-proxy'
+            name='tasker-url-proxy'
+            onChange={this.handleUrlProxyInputChange}
+            placeholder='https://internal-ip/tasks'
+            type='text'
+            value={this.state.urlProxyInput}
+          />
+        </div>
       </div>
     )
   }
@@ -229,6 +248,13 @@ export class AdminTaskersAdd extends Component {
     })
   }
 
+  handleUrlProxyInputChange (e) {
+    const { value } = e.target
+    this.setState({
+      urlProxyInput: value
+    })
+  }
+
   handleTypeChange (typeInput) {
     this.setState({
       typeInput
@@ -242,6 +268,7 @@ export class AdminTaskersAdd extends Component {
       descriptionInput,
       nameInput,
       urlInput,
+      urlProxyInput,
       typeInput
     } = this.state
 
@@ -249,6 +276,7 @@ export class AdminTaskersAdd extends Component {
       description: descriptionInput,
       name: nameInput,
       url: urlInput,
+      url_proxy: urlProxyInput,
       type: typeInput.value
     }
 
@@ -259,6 +287,7 @@ export class AdminTaskersAdd extends Component {
     this.setState({
       descriptionInput: '',
       urlInput: '',
+      urlProxyInput: '',
       disableInteraction: false,
       nameInput: ''
     })
