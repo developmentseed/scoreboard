@@ -1,10 +1,11 @@
 const userCountryEdits = require('../models/userCountryEdits')
 const { getCountryGeo } = require('../utils/countryGeometry')
 const countryList = require('../../../lib/utils/country-list.json')
+const osmesa = require('../services/osmesa')
 
 /**
- * User Stats Route
- * /user/:id
+ * Country Stats Route
+ * /country/:code
  *
  * The country stats route will display the OSM stats for a user with code :code The
  * API will get the stats from the database tables countries, users, and user_country_edits
@@ -32,6 +33,8 @@ async function get (req, res) {
   let countryCode = countryPair.code
 
   try {
+    const osmesaResponse = await osmesa.getCountry(countryCode)
+    const osmesaData = JSON.parse(osmesaResponse)
     let userData = await userCountryEdits.getParticipants(countryName, req.query.participantLimit)
     if (userData === null) {
       return res.boom.notFound('Could not retrieve user stats')
@@ -43,11 +46,12 @@ async function get (req, res) {
       users: userData,
       numParticipants: count,
       edit_count: userData.reduce((total, { count }) => total + count, 0),
-      geography: getCountryGeo(countryCode)
+      geography: getCountryGeo(countryCode),
+      records: osmesaData
     })
   } catch (err) {
     console.error(err)
-    return res.boom.notFound('Could not retrieve user stats')
+    return res.boom.notFound('Could not retrieve country stats')
   }
 }
 
