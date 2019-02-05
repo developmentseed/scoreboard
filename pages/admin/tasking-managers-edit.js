@@ -18,8 +18,9 @@ export class AdminTaskersEdit extends Component {
       descriptionInput: '',
       disableInteraction: false,
       nameInput: '',
-      typeInput: null,
-      hashtagInput: ''
+      urlInput: '',
+      urlProxyInput: '',
+      typeInput: null
     }
 
     // Event handlers
@@ -27,6 +28,7 @@ export class AdminTaskersEdit extends Component {
     this.handleDescriptionInputChange = this.handleDescriptionInputChange.bind(this)
     this.handleNameInputChange = this.handleNameInputChange.bind(this)
     this.handleUrlInputChange = this.handleUrlInputChange.bind(this)
+    this.handleUrlProxyInputChange = this.handleUrlProxyInputChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
     this.resetInputs = this.resetInputs.bind(this)
   }
@@ -51,6 +53,7 @@ export class AdminTaskersEdit extends Component {
         nameInput: tasker.name,
         descriptionInput: tasker.description,
         urlInput: tasker.url,
+        urlProxyInput: tasker.url_proxy,
         typeInput: tasker.type
       })
     }
@@ -107,7 +110,7 @@ export class AdminTaskersEdit extends Component {
             </div>
             <div className='widget-75'>
               <div className='row'>
-                <h1 className='header--xlarge'>Add a new tasking manager</h1>
+                <h1 className='header--xlarge'>Edit tasking manager</h1>
               </div>
               <div className='row'>
                 {this.renderUpdateForm()}
@@ -189,6 +192,7 @@ export class AdminTaskersEdit extends Component {
         onSubmit={this.handleUpdateFormSubmit}
       >
         {this.renderBasicDetailsSection()}
+
         <div className='form__footer'>
           <button
             className='button'
@@ -274,6 +278,23 @@ export class AdminTaskersEdit extends Component {
             value={this.state.descriptionInput}
           />
         </div>
+        <h2 className='header--medium'>Advanced Settings</h2>
+        <div className='form__input-unit'>
+          <label
+            className='form__label'
+            htmlFor='add-new-tasker-url'
+          >
+            Proxy URL (API behind firewall)
+          </label>
+          <input
+            id='tasker-url-proxy'
+            name='tasker-url-proxy'
+            onChange={this.handleUrlProxyInputChange}
+            placeholder='https://internal-ip/tasks'
+            type='text'
+            value={this.state.urlProxyInput}
+          />
+        </div>
       </div>
     )
   }
@@ -299,6 +320,13 @@ export class AdminTaskersEdit extends Component {
     })
   }
 
+  handleUrlProxyInputChange (e) {
+    const { value } = e.target
+    this.setState({
+      urlProxyInput: value
+    })
+  }
+
   handleTypeChange (typeInput) {
     this.setState({
       typeInput
@@ -312,6 +340,7 @@ export class AdminTaskersEdit extends Component {
       descriptionInput,
       nameInput,
       urlInput,
+      urlProxyInput,
       typeInput
     } = this.state
 
@@ -319,6 +348,7 @@ export class AdminTaskersEdit extends Component {
       description: descriptionInput,
       name: nameInput,
       url: urlInput,
+      url_proxy: urlProxyInput,
       type: typeInput.value
     }
 
@@ -329,6 +359,7 @@ export class AdminTaskersEdit extends Component {
     this.setState({
       descriptionInput: '',
       urlInput: '',
+      urlProxyInput: '',
       disableInteraction: false,
       nameInput: ''
     })
