@@ -8,8 +8,8 @@ export default function Blurb ({
   buildings_add,
   poi_add,
   km_waterways_add,
-  km_coastlines_add,
-  km_coastlines_mod,
+  km_coastline_add,
+  km_coastline_mod,
   country_list,
   edit_times,
   username
@@ -27,6 +27,6 @@ export default function Blurb ({
   }
 
   return <h2 className='header--small width--shortened list--block'>
-    Since <mark>{firstYearEdited}</mark>, {sentence} <mark>{formatKm(km_roads_add)}</mark> of roads, <mark>{formatDecimal(buildings_add)}</mark> buildings, <mark>{formatDecimal(poi_add)}</mark> Points of Interest, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add)}</mark> of waterways in <mark>{country_list.length}</mark> <mark>{countryWord}</mark>.
+    Since <mark>{firstYearEdited}</mark>, {sentence} <mark>{formatKm(km_roads_add)}</mark> of roads, <mark>{formatDecimal(buildings_add)}</mark> buildings, <mark>{formatDecimal(poi_add)}</mark> Points of Interest, <mark>{formatKm(km_coastline_add + km_coastline_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add)}</mark> of waterways in <mark>{country_list.length}</mark> <mark>{countryWord}</mark>.
   </h2>
 }
