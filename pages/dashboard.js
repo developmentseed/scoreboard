@@ -114,6 +114,12 @@ class Dashboard extends Component {
             {...osmesaData}
           />
         </div>
+        <section className='section--dark'>
+          <div className='row'>
+            {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
+            <DashboardAssignments favorites={favorites} assignments={assignments} authenticatedUser={authenticatedUser} />
+          </div>
+        </section>
         <section>
           <div className='row'>
             <div className='map-lg'>
@@ -137,12 +143,8 @@ class Dashboard extends Component {
           <div className='row widget-container'>
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
             <div className='widget-75'>
-              {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
-              <DashboardAssignments favorites={favorites} assignments={assignments} authenticatedUser={authenticatedUser} />
+              <DashboardBadges badges={badges} />
             </div>
-          </div>
-          <div className='row'>
-            <DashboardBadges badges={badges} />
           </div>
           <div className='row'>
             <CalendarHeatmap times={edit_times} />
@@ -161,6 +163,9 @@ class Dashboard extends Component {
           </Link>
         </h2>
         <AdminSectionList />
+        <hr />
+        <br />
+        <br />
       </div>
     )
   }

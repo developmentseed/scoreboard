@@ -29,7 +29,7 @@ class DashboardBadges extends Component {
 
     if (!badges || !badges.all || !badges.all.length) {
       return (
-        <div style={{ marginTop: 50 }}>
+        <div>
           <h2 className='header--large header--with-description'>Badges</h2>
           <DataNotAvailable message={'No badges available'} />
         </div>

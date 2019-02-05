@@ -245,6 +245,11 @@ section {
   border-bottom: 1px solid darken($background-color-light, 4%);
 }
 
+.section--dark {
+  background-color: $background-color-dark;
+  padding-bottom: 5em;
+}
+
 .width--shortened {
   width: 80%;
   margin: 0 auto;
