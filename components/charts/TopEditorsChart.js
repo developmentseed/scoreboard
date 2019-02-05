@@ -9,7 +9,7 @@ import { ResponsiveBar } from '@nivo/bar'
 function chartify ({ edits }) {
   return edits.map(({ full_name, country, edit_count }) => {
     return {
-      display_name: `${full_name} (${country})`,
+      display_name: `${full_name}`,
       edits: edit_count || 0
     }
   }).reverse()
