@@ -6,8 +6,9 @@ const { pick, merge } = require('ramda')
  * Methods to grab data from tasking manager version 2
  */
 class TM2API {
-  constructor (url, tasker_id) {
+  constructor (url, tasker_id, api_url) {
     this.url = url
+    this.api_url = api_url
     this.tasker_id = tasker_id
   }
 
@@ -26,7 +27,7 @@ class TM2API {
     let records = []
 
     while (keepGoing) {
-      let resp = JSON.parse(await rp(`${this.url}/projects.json?page=${page}`))
+      let resp = JSON.parse(await rp(`${this.api_url}/projects.json?page=${page}`))
       let features = resp.features
       for (let i = 0; i < features.length; i++) {
         let feature = features[i]
@@ -50,7 +51,7 @@ class TM2API {
   }
 
   getProject (id) {
-    return rp(`${this.url}/project/${id}.json`)
+    return rp(`${this.api_url}/project/${id}.json`)
   }
 
   getLastUpdated (id) {
@@ -62,7 +63,7 @@ class TM2API {
   }
 
   getTasks (id) {
-    return rp(`${this.url}/project/${id}/tasks.json`)
+    return rp(`${this.api_url}/project/${id}/tasks.json`)
   }
 
   toDBObjects (records) {
