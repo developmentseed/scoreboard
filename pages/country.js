@@ -24,7 +24,7 @@ export class Country extends Component {
       user.edits = user.count
       user.name = user.full_name
     })
-    records.users = users
+    records.numParticipants = numParticipants
     if (!name) return <div />
     return (
       <div className='Country'>
