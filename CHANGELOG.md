@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## v1 - 2019-02-09
 ### Added
 - Scoreboard backend
   - Ability to login using OSM (using passport in the backend)
@@ -14,27 +16,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - role validation helpers
     - API endpoints
   - cli tool for debugging and administration in development
-  - Allow badge creation, deletion, and updates through API routes
+  - Add country geojson for looking up ISO codes and geometries
+  - Allow badge creation, deletion, and updates through API routes and Admin interface
   - Support for badges based on the time edits are made and the hashtags they're made with
   - Hashtag-based badges and expired date-specific badges are excluded from "In Progress" display
+  - Exclusion list that allows admins to exclude bots from statistics 
   - Integration with [osm-teams](https://github.com/developmentseed/osm-teams) API
   - Support both [tasking manager 2](https://github.com/hotosm/osm-tasking-manager2) and [tasking manager 3](https://github.com/hotosm/tasking-manager)
+  - Ability to add multiple tasking managers in the Admin interface
 
 - Scoreboard UI
+  - UI updates, with a new responsive design
+  - Homepage and logo
+  - Coastline metrics
+  - Reformatted campaign URLs
+  - Country pages
+  - Team pages
+  - Teams can assign priorities to campaigns and assign themselves a campaign
   - Admin UI that allows admin users with functionality including:
     - Creating and editing users
     - Creating and editing badges
     - Creating and editing teams
     - Assigning users and campaigns to teams
   - User dashboard page that includes:
+    - Summary statistics
     - List of teams you are on
     - List of countries you have edited
     - List of favorite campaigns
     - List of campaigns assigned to the teams you are on
     - List of badges that are in progress, and that have not yet been earned
-  - Home page is now replaced by the dashboard when a user is logged in
+  - Home page reroutes to the dashboard when a user is logged in
   - Allow users to add favorite campaigns
-    - Add favorite campaigns via campaign pages to see a list of them on your dashboard
+  - Add favorite campaigns via campaign pages to see a list of them on your dashboard
 
 ### Changed
 - Scoreboard backend
@@ -48,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Revise user model module to be the same format as the roles model
   - Move existing `api/users` endpoint to `api/users/stats` and use `api/users` for a list of users without stats
   - Consecutive and total days mapped are calculated with dates formatted YYYY-MM-DD
+  - Validation and completeness metrics are separated
 
 ## [v0.2.4] - 2018-10-23
 ### Added
