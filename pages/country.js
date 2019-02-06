@@ -5,6 +5,7 @@ import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal } from '../lib/utils/format'
+import Blurb from '../components/charts/CountryBlurb'
 
 const CountryMap = dynamic(() => import('../components/charts/LeafletCountryMap'), {
   ssr: false
@@ -17,12 +18,13 @@ export class Country extends Component {
 
   render () {
     if (!this.props.country) return <div />
-    const { name, edit_count, users, numParticipants } = this.props.country
+    const { name, edit_count, users, numParticipants, records } = this.props.country
     users.map((user) => {
       user.uid = user.osm_id
       user.edits = user.count
       user.name = user.full_name
     })
+    records.numParticipants = numParticipants
     if (!name) return <div />
     return (
       <div className='Country'>
@@ -37,6 +39,11 @@ export class Country extends Component {
           { label: 'Participants', value: formatDecimal(numParticipants) },
           { label: 'Edits', value: formatDecimal(edit_count) }
         ]} />
+        <section className='section--tertiary'>
+          <div className='row'>
+            <Blurb {...records} />
+          </div>
+        </section>
         <section>
           <div className='row widget-container'>
             <div className='widget-50'>

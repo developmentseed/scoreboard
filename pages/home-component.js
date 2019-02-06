@@ -53,7 +53,7 @@ export class Home extends Component {
           <div className='row'>
             <div className='width--shortened'>
               <h2 className='header--large'>Campaigns</h2>
-              <div className='home-map' style={{ width: '100%', height: '275px', 'marginBottom': '40px' }}>
+              <div className='home-map' style={{ width: '100%', height: '375px', 'marginBottom': '40px' }}>
                 {features
                   ? <Map overlay={features} />
                   : <div>Loading map...</div>
@@ -66,7 +66,7 @@ export class Home extends Component {
                       <div className='card'>
                         <div className='card-content'>
                           <h3 className='header--small header--with-description-xlg'>
-                            <Link href={`/campaigns/${record.campaign_hashtag}`}>
+                            <Link href={`/campaigns/${record.tasker_id}-${record.tm_id}`}>
                               <a className='header--underlined'>{record.name}</a>
                             </Link>
                           </h3>

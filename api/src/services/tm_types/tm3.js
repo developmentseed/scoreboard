@@ -7,8 +7,9 @@ const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
  * Methods to grab data from tasking manager version 3
  */
 class TM3API {
-  constructor (url, tasker_id) {
+  constructor (url, tasker_id, api_url) {
     this.url = url
+    this.api_url = api_url
     this.tasker_id = tasker_id
   }
 
@@ -31,7 +32,7 @@ class TM3API {
   async getProjects () {
     let records = []
     let firstResp = await rp({
-      uri: `${this.url}/api/v1/project/search`,
+      uri: `${this.api_url}/api/v1/project/search`,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
     let json = JSON.parse(firstResp)
@@ -42,7 +43,7 @@ class TM3API {
     let promises = []
     for (let i = 2; i < numPages; i++) {
       promises.push(limit(() => rp({
-        uri: `${this.url}/api/v1/project/search?page=${i}`,
+        uri: `${this.api_url}/api/v1/project/search?page=${i}`,
         headers: { 'Accept-Language': 'en-US,en;q=0.9' }
       })))
     }
@@ -62,20 +63,20 @@ class TM3API {
 
   getProject (id) {
     return rp({
-      uri: `${this.url}/api/v1/project/${id}?as_file=false`,
+      uri: `${this.api_url}/api/v1/project/${id}?as_file=false`,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
   }
 
   getProjectAoi (id) {
     return rp({
-      uri: `${this.url}/api/v1/project/${id}/aoi?as_file=false`
+      uri: `${this.api_url}/api/v1/project/${id}/aoi?as_file=false`
     })
   }
 
   getTasks (id) {
     return rp({
-      uri: `${this.url}/api/v1/project/${id}/tasks`
+      uri: `${this.api_url}/api/v1/project/${id}/tasks`
     })
   }
 

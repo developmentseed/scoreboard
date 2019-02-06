@@ -58,12 +58,11 @@ class Dashboard extends Component {
     const { loggedIn, account } = authenticatedUser
     const { assignments, favorites, country } = account
 
-    const { badges, teams } = account
+    const { badges, teams, countriesEdited } = account
     const osmesaData = account.records
     const {
       hashtags,
-      edit_times,
-      countries
+      edit_times
     } = osmesaData
     const breakdownChartProps = pick([
       'waterways_add',
@@ -114,10 +113,16 @@ class Dashboard extends Component {
             {...osmesaData}
           />
         </div>
+        <section className='section--dark'>
+          <div className='row'>
+            {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
+            <DashboardAssignments favorites={favorites} assignments={assignments} authenticatedUser={authenticatedUser} />
+          </div>
+        </section>
         <section>
           <div className='row'>
             <div className='map-lg'>
-              <UserExtentMap countries={countries} />
+              <UserExtentMap countries={countriesEdited} />
             </div>
           </div>
         </section>
@@ -137,12 +142,8 @@ class Dashboard extends Component {
           <div className='row widget-container'>
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
             <div className='widget-75'>
-              {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
-              <DashboardAssignments favorites={favorites} assignments={assignments} authenticatedUser={authenticatedUser} />
+              <DashboardBadges badges={badges} />
             </div>
-          </div>
-          <div className='row'>
-            <DashboardBadges badges={badges} />
           </div>
           <div className='row'>
             <CalendarHeatmap times={edit_times} />
@@ -161,6 +162,9 @@ class Dashboard extends Component {
           </Link>
         </h2>
         <AdminSectionList />
+        <hr />
+        <br />
+        <br />
       </div>
     )
   }

@@ -60,7 +60,6 @@ test('Test getting one country', async (t) => {
   const [oneCountry] = await db('user_country_edits').limit(1)
 
   const code = countryList.filter(c => c.name === oneCountry.country_name)[0].code
-
   const res = await request(app)
     .get(`/scoreboard/api/countries/${code}`)
     .expect(200)

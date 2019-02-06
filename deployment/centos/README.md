@@ -157,6 +157,12 @@ sudo systemctl restart scoreboard-timer
 sudo systemctl restart nginx 
 ```
 
+#### Note
+If you have changed one of the systemd unit scripts, such as `scoreboard-timer`, you must run the following in order for those changes to take effect:
+```
+sudo systemctl daemon-reload
+```
+
 Voila! 👏
 
 Navigate to your server's URL and you should see Scoreboard
