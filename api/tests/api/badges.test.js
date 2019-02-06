@@ -3,6 +3,7 @@ const test = require('ava')
 const request = require('supertest')
 const db = require('../../src/db/connection')
 const app = require('../../src/index')
+const runBadgeSeed = require('../../src/db/seeds/test/badges').seed
 const { createAuthenticatedUser } = require('./helpers')
 
 let adminUser
@@ -15,6 +16,10 @@ test.before(async () => {
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
   adminUser = await createAuthenticatedUser(app, [1])
+})
+
+test.beforeEach(async () => {
+  await runBadgeSeed(db)
 })
 
 test.after.always(async () => {
@@ -112,21 +117,6 @@ test.serial('Try updating a badge with the same name', async t => {
 
   t.true(res2.status === 400)
 })
-
-// test.serial('Earning a badge in the db', async (t) => {
-//   const users = await db('users')
-//     .select('osm_id').where('edit_count', '>', 1)
-//   let stats = await request(app)
-//     .get(`/scoreboard/api/users/${users[0].osm_id}`)
-//     .expect(200)
-//   stats = JSON.parse(stats.text)
-//   const badgeDetails = Object.entries(stats.badges.earnedBadges).map((eachBadge) => {
-//     return eachBadge[1]
-//   })
-//   t.false(badgeDetails.find((badge) => {
-//     return badge.name === 'Test Badge Edit'
-//   }) === null)
-// })
 
 test.serial('Deleting a badge from the db', async (t) => {
   let res = await adminUser
