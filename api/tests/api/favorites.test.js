@@ -20,9 +20,10 @@ test.after.always(async () => {
 
 test.serial('create favorite', async (t) => {
   const [campaign] = await db('campaigns').select().limit(2)
+  const users = await db('users').select('id').limit(1)
 
   const [result] = await favorites.create({
-    user_id: 2,
+    user_id: users[1],
     campaign_id: campaign.id
   })
 
