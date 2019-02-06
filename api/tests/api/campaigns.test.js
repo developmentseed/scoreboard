@@ -14,7 +14,6 @@ test.before(async t => {
 })
 
 test.after.always(async t => {
-  await db.migrate.rollback({ directory: migrationsDirectory })
   await db.destroy()
 })
 
