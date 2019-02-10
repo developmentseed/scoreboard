@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Reformatted campaign URLs
   - Country pages
   - Team pages
-  - Teams can assign priorities to campaigns and assign themselves a campaign
+  - Team admins can assign campaigns to team members and team-specific priorities to campaigns
   - Admin UI that allows admin users with functionality including:
     - Creating and editing users
     - Creating and editing badges
