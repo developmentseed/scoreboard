@@ -9,6 +9,9 @@ const withImages = require('next-images')
 const { APP_URL_FINAL } = require('./api/src/config')
 
 module.exports = withImages(withSass(withCss({
+  publicRuntimeConfig: {
+    env: process.env.NODE_ENV || 'development'
+  },
   sassLoaderOptions: { data: `$appUrlFinal: "${APP_URL_FINAL}";` },
   webpack: (config) => {
     config.plugins = config.plugins || []
