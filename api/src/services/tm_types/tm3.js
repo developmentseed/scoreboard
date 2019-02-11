@@ -98,7 +98,6 @@ class TM3API {
 
   updateDB (db, dbObjects) {
     const promises = dbObjects.map(obj => limit(async () => {
-
       try {
         let { author, areaOfInterest, lastUpdated, created, changesetComment } = JSON.parse(await this.getProject(obj.tm_id))
         obj.geometry = areaOfInterest
