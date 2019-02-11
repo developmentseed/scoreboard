@@ -20,7 +20,7 @@ const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 test.before(async () => {
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
-  adminUser = await createAuthenticatedUser(app, [1])
+  adminUser = await createAuthenticatedUser(app, ['admin'])
   authenticatedUser = await createAuthenticatedUser(app, [])
   anonymousUser = createAnonymousUser(app)
 })

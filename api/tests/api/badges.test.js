@@ -15,7 +15,7 @@ const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 test.before(async () => {
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
-  adminUser = await createAuthenticatedUser(app, [1])
+  adminUser = await createAuthenticatedUser(app, ['admin'])
 })
 
 test.beforeEach(async () => {
@@ -39,8 +39,9 @@ test.serial('Pull all badges', async (t) => {
 })
 
 test.serial('Getting a badge from the db', async (t) => {
+  const [badge] = await db('badges').select().limit(1)
   const res = await request(app)
-    .get('/scoreboard/api/badges/1')
+    .get(`/scoreboard/api/badges/${badge.id}`)
     .expect(200)
   // name should always be included
   t.true('name' in res.body.badges[0])
@@ -77,10 +78,10 @@ test.serial('Updating a badge in the db', async (t) => {
     .get('/scoreboard/api/badges')
     .expect(200)
 
-  const numBadges = res.body.badges.length
+  const badge = res.body.badges[0]
 
   await adminUser
-    .put(`/scoreboard/api/badges/${numBadges}`)
+    .put(`/scoreboard/api/badges/${badge.id}`)
     .set('Accept-Encoding', 'identity')
     .send({
       name: 'Test Badge Edit',
@@ -89,8 +90,9 @@ test.serial('Updating a badge in the db', async (t) => {
     .expect(200)
 
   res = await request(app)
-    .get(`/scoreboard/api/badges/${numBadges}`)
+    .get(`/scoreboard/api/badges/${badge.id}`)
     .expect(200)
+
   t.true(res.body.badges[0].name === 'Test Badge Edit')
   t.deepEqual(res.body.badges[0].operations,
     [['>', 'daysTotal', '1'], ['>=', 'daysInRow', '1']])
@@ -124,9 +126,10 @@ test.serial('Deleting a badge from the db', async (t) => {
     .expect(200)
 
   const numBadges = res.body.badges.length
+  const badge = res.body.badges[0]
 
   await adminUser
-    .delete(`/scoreboard/api/badges/${numBadges}`)
+    .delete(`/scoreboard/api/badges/${badge.id}`)
     .expect(200)
 
   res = await adminUser
