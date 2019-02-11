@@ -54,8 +54,8 @@
     justify-content: space-between;
     flex-wrap: wrap;
     > figure {
-      flex-basis: 25%;
-      flex-grow: 1;
+      text-align: center;
+      width:20%;
       margin: 0;
       padding: 2em;
       &:last-of-type {
