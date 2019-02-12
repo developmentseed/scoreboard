@@ -14,7 +14,7 @@ import { connect } from 'unistore/react'
 import { pick } from 'ramda'
 import dynamic from 'next/dynamic'
 
-const UserExtentMap = dynamic(() => import('../components/charts/LeafletUserExtentMap'), {
+const UserExtentMap = dynamic(() => import('../components/charts/OLUserExtentMap'), {
   ssr: false
 })
 const CalendarHeatmap = dynamic(() => import('../components/charts/CalendarHeatmap'), {
@@ -28,7 +28,8 @@ export class User extends Component {
 
   render () {
     if (!this.props.user) return <div />
-    const { records, country, badges, teams, countriesEdited } = this.props.user
+    const { records, country, badges, teams } = this.props.user
+    const { extent_uri, uid } = records
     if (!records) return <div />
     const editCount = getSumEdits(records)
     const badgeCount = Object.keys(badges.earnedBadges).length
@@ -69,7 +70,7 @@ export class User extends Component {
         <section>
           <div className='row'>
             <div className='map-lg'>
-              <UserExtentMap countries={countriesEdited} />
+              <UserExtentMap uid={uid} extent={extent_uri} />
             </div>
           </div>
         </section>
