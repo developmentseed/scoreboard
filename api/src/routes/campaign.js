@@ -32,12 +32,13 @@ module.exports = async (req, res) => {
     if (!lastUpdate) {
       lastUpdate = await T.getLastUpdated(tmData.tm_id)
     }
+    const creationDate = tmData.created_at
 
     const records = Object.assign(
       { tmData: tmData },
       JSON.parse(osmesaResponse)
     )
-    return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate })
+    return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate, creationDate })
   } catch (err) {
     console.error(err.message)
     return res.boom.notFound('Could not retrieve campaign stats')
