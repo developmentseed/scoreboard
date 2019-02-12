@@ -71,6 +71,7 @@
   "homepage": "https://github.com/developmentseed/scoreboard#readme",
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
+    "@mapbox/mbtiles": "^0.10.0",
     "@nivo/bar": "^0.33.0",
     "@nivo/calendar": "^0.43.0",
     "@nivo/line": "^0.33.0",
@@ -117,6 +118,7 @@
     "passport-mock-strategy": "^1.1.1",
     "passport-openstreetmap": "^0.1.2",
     "pg": "^7.4.3",
+    "pify": "^4.0.1",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
     "ramda": "^0.25.0",
