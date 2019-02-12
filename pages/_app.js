@@ -29,6 +29,12 @@ import 'react-input-range/lib/css/index.css'
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.svg')
 const menuIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/menu-icon.svg')
+const manifest = join(APP_URL_PREFIX, '/static/manifest.json')
+
+/* Favicons */
+const appleIcon = join(APP_URL_PREFIX, '/static/apple-touch-icon.png')
+const msBrowserconfig = join(APP_URL_PREFIX, '/static/browserconfig.xml')
+const safariIcon = join(APP_URL_PREFIX, '/static/safari-pinned-tab.svg')
 
 const NavLink = withRouter(({ children, router, href }) => {
   const activeClass = router.pathname === href ? 'active' : ''
@@ -143,6 +149,12 @@ class Layout extends React.Component {
           <link rel='stylesheet' href='https://unpkg.com/leaflet@1.4.0/dist/leaflet.css'
             integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
             crossOrigin='' />
+
+          <link rel='manifest' href={manifest} />
+          <link rel='apple-touch-icon' href={appleIcon} />
+          <link rel='mask-icon' href={safariIcon} color='#ff0000' />
+          <meta name='msapplication-config' content={msBrowserconfig} />
+
         </Head>
         <header className='header-nav'>
           <div className='row'>

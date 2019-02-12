@@ -64,4 +64,6 @@ app.use(['/api', '/api/docs'], swaggerUi.serve, swaggerUi.setup(swaggerDocument)
 app.use('/fonts', express.static(path.join(__dirname, '../../static/fonts')))
 app.use('/docs', express.static(path.join(__dirname, '../../docs-build')))
 
+app.get('/favicon.ico', (req, res) => res.status(200).sendFile('favicon.ico', { root: path.join(__dirname, '../../static/') }))
+
 module.exports = app
