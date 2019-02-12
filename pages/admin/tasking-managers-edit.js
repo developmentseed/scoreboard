@@ -270,7 +270,7 @@ export class AdminTaskersEdit extends Component {
           <textarea
             id='tasker-description'
             name='tasker-description'
-            maxLength={150}
+            maxLength={400}
             onChange={this.handleDescriptionInputChange}
             placeholder='Let other users know about this tasking manager'
             required

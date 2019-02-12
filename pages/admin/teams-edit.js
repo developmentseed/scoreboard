@@ -330,7 +330,7 @@ export class AdminTeamsEdit extends Component {
           <textarea
             id='badge-description'
             name='badge-description'
-            maxLength={150}
+            maxLength={400}
             onChange={this.handleDescriptionInputChange}
             placeholder='Let users know about this team'
             required
