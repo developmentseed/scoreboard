@@ -407,8 +407,8 @@ export class AdminBadgesAdd extends Component {
           onClickItem={(e) => this.handleBadgeImageChange(e)}
           centerMode
           infiniteLoop
-          centerSlidePercentage='65'
-          width='50'
+          centerSlidePercentage={65}
+          width='100%'
           selectedItem={this.state.selectedImg}
           emulateTouch
         >

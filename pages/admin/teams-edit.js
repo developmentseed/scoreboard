@@ -268,7 +268,7 @@ export class AdminTeamsEdit extends Component {
         onSubmit={this.handleAddNewTeamFormSubmit}
       >
         {this.renderBasicDetailsSection()}
-        <div className='form__footer' style={{ 'margin-bottom': '30px' }}>
+        <div className='form__footer' style={{ 'marginBottom': '30px' }}>
           <button
             className='button'
             id='update-details-submit-button'

@@ -464,7 +464,7 @@ export class AdminBadgesEdit extends Component {
   displayImages (filename) {
     const imageSource = `../../static/badges/${filename}`
     return (
-      <div>
+      <div key={imageSource}>
         <img src={imageSource} />
       </div>
     )
@@ -481,8 +481,8 @@ export class AdminBadgesEdit extends Component {
           onClickItem={(e) => this.handleBadgeImageChange(e)}
           centerMode
           infiniteLoop
-          centerSlidePercentage='65'
-          width='50'
+          centerSlidePercentage={65}
+          width='100%'
           selectedItem={this.state.selectedImg}
           emulateTouch
         >
