@@ -1,13 +1,13 @@
 import React from 'react'
 import Link from './Link'
 
-export default ({ list }) => {
+export default function InlineList ({ list }) {
   return (
     <ul className='inline-list'>
       {
         list && list.map((item) => {
           return (
-            <li>
+            <li key={item.name}>
               <Link href={item.href}>
                 <a>
                   {item.name}

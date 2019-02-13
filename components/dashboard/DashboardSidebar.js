@@ -18,7 +18,7 @@ function DashboardSidebar (props) {
     <div className='sidebar-right widget-25'>
       <h2 className='header--large' style={{ marginBottom: 5 }}>
         <Link href='/teams'>
-          <a class='header-link'>Teams</a>
+          <a className='header-link'>Teams</a>
         </Link>
       </h2>
       {
@@ -41,7 +41,7 @@ function DashboardSidebar (props) {
 
       <h2 className='header--large' style={{ marginBottom: 5 }}>
         <Link href='/countries'>
-          <a class='header-link'>Countries</a>
+          <a className='header-link'>Countries</a>
         </Link>
       </h2>
       {

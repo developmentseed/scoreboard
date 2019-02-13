@@ -158,7 +158,7 @@ class Dashboard extends Component {
       <div>
         <h2 className='header--large header--with-description'>
           <Link href='/admin'>
-            <a class='header-link'>Admin</a>
+            <a className='header-link'>Admin</a>
           </Link>
         </h2>
         <AdminSectionList />
