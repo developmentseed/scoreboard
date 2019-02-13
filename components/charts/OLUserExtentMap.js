@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import 'ol/ol.css'
 import { Map, View } from 'ol'
+import VectorTileSource from 'ol/source/VectorTile'
+import VectorTileLayer from 'ol/layer/VectorTile'
+import MVT from 'ol/format/MVT'
 import olms from 'ol-mapbox-style'
 
 const mapboxUrl = 'https://api.mapbox.com/styles/v1/devseed/cjqpb3z440t302smfnewsl6vb?access_token=pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0tdtaT2QNe2Q'
+const isDev = process.env.NODE_ENV === 'development'
 
 class UserExtentMap extends Component {
   constructor (props) {
@@ -27,6 +31,15 @@ class UserExtentMap extends Component {
 
   loadMap () {
     const { uid } = this.props
+    var vector = new VectorTileLayer({
+      source: new VectorTileSource({
+        format: new MVT({
+          layers: isDev ? ['earthquakes'] : [uid.toString()]
+        }),
+        overlaps: false,
+        url: this.props.extent
+      })
+    })
     this.map = new Map({
       target: this.mapContainer,
       view: new View({
@@ -35,6 +48,9 @@ class UserExtentMap extends Component {
       })
     })
     olms(this.map, mapboxUrl)
+    setTimeout(() => {
+      this.map.addLayer(vector)
+    }, 1000)
   }
 
   componentWillUnmount () {
