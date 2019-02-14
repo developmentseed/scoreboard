@@ -14,7 +14,7 @@ import { connect } from 'unistore/react'
 import { pick } from 'ramda'
 import dynamic from 'next/dynamic'
 
-const UserExtentMap = dynamic(() => import('../components/charts/OLUserExtentMap'), {
+const UserExtentMap = dynamic(() => import('../components/charts/LeafletUserExtentMap'), {
   ssr: false
 })
 const CalendarHeatmap = dynamic(() => import('../components/charts/CalendarHeatmap'), {
