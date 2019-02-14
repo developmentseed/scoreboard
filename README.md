@@ -10,6 +10,10 @@ Engaging and encouraging mappers of OpenStreetMap by rewarding contributions, pr
   <a href="https://circleci.com/gh/developmentseed/scoreboard">
     <img src="https://circleci.com/gh/developmentseed/scoreboard.png" />
   </a>
+  <a href="https://standardjs.com">
+    <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square"
+      alt="Standard" />
+  </a>
 </div>
 
 # 🔨 Development
