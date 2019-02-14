@@ -54,8 +54,8 @@ export class Admin extends Component {
           </div>
         </header>
         <section>
-          <div class='row'>
-            <div class='content'>
+          <div className='row'>
+            <div className='content'>
               <AdminSectionList />
             </div>
           </div>

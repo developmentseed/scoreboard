@@ -23,9 +23,11 @@ export default class extends React.Component {
       handleSearch,
       selectedTM,
       handleSelectTM,
+      sortOrder,
       tmList,
       handleCompletenessChange,
-      handleValidationChange
+      handleValidationChange,
+      handleSortChange
     } = this.props
 
     let { compl_min, compl_max, valid_min, valid_max } = this.state
@@ -48,6 +50,22 @@ export default class extends React.Component {
             onChange={handleSelectTM}
             options={
               tmList.map(({ name, id }) => ({ value: id, label: name }))
+            }
+          />
+        </fieldset>
+        <fieldset>
+          <legend>Sort by</legend>
+          <Select name='sort-select'
+            simpleValue
+            value={sortOrder}
+            onChange={handleSortChange}
+            options={
+              [
+                { value: 'Most Recently Created', label: 'Most Recently Created' },
+                { value: 'Least Recently Created', label: 'Least Recently Created' },
+                { value: 'Most Recently Updated', label: 'Most Recently Updated' },
+                { value: 'Least Recently Updated', label: 'Least Recently Updated' }
+              ]
             }
           />
         </fieldset>

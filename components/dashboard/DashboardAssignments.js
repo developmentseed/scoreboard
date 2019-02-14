@@ -54,7 +54,7 @@ class DashboardAssignments extends Component {
       <div>
         <h2 className='header--large header--with-description'>
           <Link href='/campaigns'>
-            <a class='header-link'>Campaigns</a>
+            <a className='header-link'>Campaigns</a>
           </Link>
         </h2>
         <FilterBar

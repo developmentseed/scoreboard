@@ -21,6 +21,16 @@ function getRoles (ids) {
 }
 
 /**
+ * get an array of roles from an array of role names
+ *
+ * @param {int[]} ids - array of role ids
+ * @returns {Promise[]} a response
+ */
+function getRolesByName (names) {
+  return db('roles').whereIn('name', names)
+}
+
+/**
  * find a role by name
  *
  * @param {string} name - role name
@@ -76,6 +86,7 @@ module.exports = {
   get,
   findByName,
   getRoles,
+  getRolesByName,
   list,
   create,
   update,

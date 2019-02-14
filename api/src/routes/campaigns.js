@@ -18,12 +18,14 @@ module.exports = async (req, res) => {
   const complMax = req.query.compl_max || 100
   const validMin = req.query.valid_min || 0
   const validMax = req.query.valid_max || 100
+  const sortType = req.query.sortType || 'Most Recently Created'
 
   try {
     let query = db('campaigns').whereNotNull('campaign_hashtag').join(
       db('taskers').select('name as tm_name', 'id as tasker_t_id', 'type').as('t'),
       'tasker_id', 't.tasker_t_id')
 
+    // Total count of campaigns that have a hashtag
     const [{ allCount }] = await query.clone().count('id as allCount')
 
     if (search.length > 0) {
@@ -45,8 +47,24 @@ module.exports = async (req, res) => {
       query = query.whereRaw(`validated between ${validMin} and ${validMax}`)
     }
 
-    const records = await query.clone().limit(10).offset((parseInt(page) - 1) * 10)
+    // Count of campaigns after filters
     const [{ total }] = await query.clone().count('id as total')
+
+    switch (sortType) {
+      case 'Most Recently Created':
+        query = query.orderBy('created_at', db.raw('desc NULLS LAST'))
+        break
+      case 'Least Recently Created':
+        query = query.orderBy('created_at', db.raw('asc NULLS LAST'))
+        break
+      case 'Most Recently Updated':
+        query = query.orderBy('updated_at', db.raw('desc NULLS LAST'))
+        break
+      case 'Least Recently Updated':
+        query = query.orderBy('updated_at', db.raw('asc NULLS LAST'))
+        break
+    }
+    const records = await query.clone().limit(10).offset((parseInt(page) - 1) * 10)
     const tms = await db('taskers').select('id', 'name')
 
     return res.send({ records, total, allCount, tms })

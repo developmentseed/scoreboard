@@ -190,7 +190,7 @@ export class AdminBadgesAdd extends Component {
           <textarea
             id='badge-description'
             name='badge-description'
-            maxLength={150}
+            maxLength={400}
             onChange={this.handleDescriptionInputChange}
             placeholder='Let users know about how this badge works'
             required
@@ -407,8 +407,8 @@ export class AdminBadgesAdd extends Component {
           onClickItem={(e) => this.handleBadgeImageChange(e)}
           centerMode
           infiniteLoop
-          centerSlidePercentage='65'
-          width='50'
+          centerSlidePercentage={65}
+          width='100%'
           selectedItem={this.state.selectedImg}
           emulateTouch
         >
