@@ -1,8 +1,16 @@
-# Scoreboard 🗺 🎯
 
-[![CircleCI](https://circleci.com/gh/developmentseed/scoreboard.svg?style=svg)](https://circleci.com/gh/developmentseed/scoreboard)
+<h1 align="center">Scoreboard 🗺🎯</h1>
 
-Designed to engage and encourage mappers of OpenStreetMap by rewarding contributions, promoting campaigns, and reporting current mapper statistics
+<div align="center">
+Engaging and encouraging mappers of OpenStreetMap by rewarding contributions, promoting campaigns, and reporting current mapper statistics
+</div>
+
+<br />
+<div align="center">
+  <a href="https://circleci.com/gh/developmentseed/scoreboard">
+    <img src="https://circleci.com/gh/developmentseed/scoreboard.png" />
+  </a>
+</div>
 
 # 🔨 Development
 
