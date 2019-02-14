@@ -50,11 +50,11 @@ export class AdminTaskersEdit extends Component {
     if (tasker && this.state.loading) {
       this.setState({
         loading: false,
-        nameInput: tasker.name,
-        descriptionInput: tasker.description,
-        urlInput: tasker.url,
-        urlProxyInput: tasker.url_proxy,
-        typeInput: tasker.type
+        nameInput: tasker.name || '',
+        descriptionInput: tasker.description || '',
+        urlInput: tasker.url || '',
+        urlProxyInput: tasker.url_proxy || '',
+        typeInput: tasker.type || null
       })
     }
   }
@@ -241,7 +241,7 @@ export class AdminTaskersEdit extends Component {
             placeholder='https://tasks.hotosm.org'
             required
             type='text'
-            value={this.state.urlInput}
+            value={this.state.urlInput || ''}
           />
         </div>
         <div className='form__input-unit'>
@@ -270,7 +270,7 @@ export class AdminTaskersEdit extends Component {
           <textarea
             id='tasker-description'
             name='tasker-description'
-            maxLength={150}
+            maxLength={400}
             onChange={this.handleDescriptionInputChange}
             placeholder='Let other users know about this tasking manager'
             required
@@ -360,6 +360,7 @@ export class AdminTaskersEdit extends Component {
       descriptionInput: '',
       urlInput: '',
       urlProxyInput: '',
+      typeInput: undefined,
       disableInteraction: false,
       nameInput: ''
     })

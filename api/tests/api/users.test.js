@@ -4,7 +4,7 @@ const path = require('path')
 const test = require('ava')
 const request = require('supertest')
 const db = require('../../src/db/connection')
-const app = require('../../src/index')
+let app = require('../../src/index')
 const { omit } = require('ramda')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
@@ -12,12 +12,12 @@ const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async () => {
+  app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
 })
 
 test.after.always(async () => {
-  await db.migrate.rollback({ directory: migrationsDirectory })
   await db.destroy()
 })
 

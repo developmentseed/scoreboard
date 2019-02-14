@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import mapboxgl from 'mapbox-gl'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0tdtaT2QNe2Q'
+const isDev = process.env.NODE_ENV === 'development'
 
 class UserExtentMap extends Component {
   constructor (props) {
@@ -54,7 +55,7 @@ class UserExtentMap extends Component {
         'id': 'footprint-heat',
         'type': 'heatmap',
         'source': 'footprint',
-        'source-layer': uid.toString(),
+        'source-layer': isDev ? 'earthquakes' : uid.toString(),
         'maxzoom': 14,
         'paint': {
           // Increase the heatmap weight based on frequency and property magnitude
@@ -112,7 +113,7 @@ class UserExtentMap extends Component {
         'id': 'footprint-point',
         'type': 'circle',
         'source': 'footprint',
-        'source-layer': uid.toString(),
+        'source-layer': isDev ? 'earthquakes' : uid.toString(),
         'minzoom': 7,
         'paint': {
           // Size circle raidus by earthquake magnitude and zoom level

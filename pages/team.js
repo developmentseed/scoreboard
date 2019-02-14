@@ -13,7 +13,6 @@ export class Team extends Component {
   render () {
     const { team } = this.props
     if (!team) return <div />
-    console.log(team)
 
     return (
       <div className='Campaigns'>

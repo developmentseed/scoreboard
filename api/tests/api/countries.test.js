@@ -4,7 +4,7 @@ const path = require('path')
 const test = require('ava')
 const request = require('supertest')
 const db = require('../../src/db/connection')
-const app = require('../../src/index')
+let app = require('../../src/index')
 const userClocks = require('../../src/users_clock')
 const countryList = require('../../../lib/utils/country-list.json')
 
@@ -13,6 +13,7 @@ const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async () => {
+  app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
 
@@ -21,7 +22,6 @@ test.before(async () => {
 })
 
 test.after.always(async () => {
-  await db.migrate.rollback({ directory: migrationsDirectory })
   await db.destroy()
 })
 

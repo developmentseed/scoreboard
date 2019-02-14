@@ -1,8 +1,6 @@
 const path = require('path')
 const test = require('ava')
-// const request = require('supertest')
 const db = require('../../src/db/connection')
-// const app = require('../src/index')
 const favorites = require('../../src/models/favorite-campaigns')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
@@ -15,15 +13,15 @@ test.before(async () => {
 })
 
 test.after.always(async () => {
-  await db.migrate.rollback({ directory: migrationsDirectory })
   await db.destroy()
 })
 
 test.serial('create favorite', async (t) => {
   const [campaign] = await db('campaigns').select().limit(2)
+  const users = await db('users').select('id').limit(1)
 
   const [result] = await favorites.create({
-    user_id: 2,
+    user_id: users[1],
     campaign_id: campaign.id
   })
 

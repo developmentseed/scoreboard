@@ -3,7 +3,7 @@
 const path = require('path')
 const test = require('ava')
 const db = require('../../src/db/connection')
-const app = require('../../src/index')
+let app = require('../../src/index')
 const { validateRole } = require('../../src/utils/roles')
 const roles = require('../../src/models/roles')
 
@@ -18,20 +18,19 @@ const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async () => {
+  app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
-  adminUser = await createAuthenticatedUser(app, [1])
+  adminUser = await createAuthenticatedUser(app, ['admin'])
   authenticatedUser = await createAuthenticatedUser(app, [])
   anonymousUser = createAnonymousUser(app)
 })
 
 test.after.always(async () => {
-  await db.migrate.rollback({ directory: migrationsDirectory })
   await db.destroy()
 })
 
 const userRoles = [{
-  id: 1,
   name: 'admin'
 }]
 
@@ -51,13 +50,17 @@ test('get roles list via js', async (t) => {
 })
 
 test('get role via js', async (t) => {
-  const [role] = await roles.get(1)
+  const [admin] = await db('roles').where({ 'name': 'admin' })
+
+  const [role] = await roles.get(admin.id)
   t.true(role.name === 'admin')
 })
 
 test('get role via js by name', async (t) => {
+  const [admin] = await db('roles').where({ 'name': 'admin' })
+
   const [role] = await roles.findByName('admin')
-  t.true(role.id === 1)
+  t.true(role.id === admin.id)
 })
 
 test('create role via js', async (t) => {
@@ -78,9 +81,16 @@ test('delete role via js', async (t) => {
   t.true(notFound.length === 0)
 })
 
-test('get roles using id array via js', async (t) => {
-  const list = await roles.getRoles([1, 2])
-  t.true(list.length > 0)
+test.only('get roles using id array via js', async (t) => {
+  await roles.create({ name: 'additional role' })
+  const tworoles = await db('roles').select('name', 'id').limit(2)
+
+  const list1 = await roles.getRolesByName([tworoles[0].name, tworoles[1].name])
+  const list2 = await roles.getRoles([tworoles[0].id, tworoles[1].id])
+
+  t.true(list1.length > 0)
+  t.true(list2.length > 0)
+  t.deepEqual(list1, list2)
 })
 
 test('userinfo route includes roles', async (t) => {
@@ -113,9 +123,10 @@ test('get roles list via api', async (t) => {
 })
 
 test('get role via api', async (t) => {
+  const [admin] = await roles.findByName('admin')
   const { body } = await new Promise((resolve, reject) => {
     adminUser
-      .get('/scoreboard/api/roles/1')
+      .get(`/scoreboard/api/roles/${admin.id}`)
       .expect(200)
       .end((err, res) => {
         if (err) return reject(err)
@@ -123,7 +134,7 @@ test('get role via api', async (t) => {
       })
   })
 
-  t.true(body.id === 1)
+  t.true(body.id === admin.id)
   t.true(body.name === 'admin')
 })
 

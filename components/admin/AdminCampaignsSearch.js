@@ -142,21 +142,21 @@ class CampaignSearch extends Component {
                     if (record.id === task.id) isAssigned = true
                   })
 
-                  return <tr key={`campaign-${record.name}`} onClick={isAssigned ? null : () => this.onSearchCampaignClick(record)} className={isAssigned ? 'admin-table-row-alt' : 'admin-table-row'} >
+                  return <tr key={`campaign-${record.id}`} onClick={isAssigned ? null : () => this.onSearchCampaignClick(record)} className={isAssigned ? 'admin-table-row-alt' : 'admin-table-row'} >
                     <td>{`${record.name} - project-${(record.tm_id || record.id)}`}</td>
                     <td>{record.priority}</td>
                   </tr>
                 })
                 }
               </tbody>
-              <Pagination
-                activePage={page}
-                itemsCountPerPage={10}
-                totalItemsCount={total}
-                pageRangeDisplayed={5}
-                onChange={this.handlePageChange}
-              />
             </table>
+            <Pagination
+              activePage={page}
+              itemsCountPerPage={10}
+              totalItemsCount={total}
+              pageRangeDisplayed={5}
+              onChange={this.handlePageChange}
+            />
           </div>
         </section>
       </div>
