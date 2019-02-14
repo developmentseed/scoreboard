@@ -1,8 +1,8 @@
-# OSM Scoreboard 🗺 🎯
+# Scoreboard 🗺 🎯
 
 [![CircleCI](https://circleci.com/gh/developmentseed/scoreboard.svg?style=svg)](https://circleci.com/gh/developmentseed/scoreboard)
 
-A project to display OSM user contribution metrics and campaign metrics.
+Designed to engage and encourage mappers of OpenStreetMap by rewarding contributions, promoting campaigns, and reporting current mapper statistics
 
 # 🔨 Development
 
