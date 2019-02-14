@@ -24,8 +24,8 @@ const theme = {
   }
 }
 
-export default props =>
-  (
+export default function CampaignCharts (props) {
+  return (
     <div className={`chart widget`} style={{ height: props.height }}>
       <h4 className='header--small'>Top Campaigns</h4>
       {
@@ -65,7 +65,7 @@ export default props =>
               'tickPadding': 5,
               'tickRotation': 0,
               'legend': 'Number of Edits',
-              'legendPosition': 'center',
+              'legendPosition': 'middle',
               'legendOffset': 40
             }}
             enableGridX={false}
@@ -85,3 +85,4 @@ export default props =>
       }
     </div >
   )
+}

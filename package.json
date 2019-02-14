@@ -71,7 +71,7 @@
   "homepage": "https://github.com/developmentseed/scoreboard#readme",
   "dependencies": {
     "@babel/preset-react": "^7.0.0",
-    "@nivo/bar": "^0.33.0",
+    "@nivo/bar": "^0.52.1",
     "@nivo/calendar": "^0.43.0",
     "@nivo/line": "^0.33.0",
     "@nivo/pie": "^0.33.0",

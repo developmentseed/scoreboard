@@ -102,14 +102,14 @@ class UsersSearch extends Component {
                 })
                 }
               </tbody>
-              <Pagination
-                activePage={page}
-                itemsCountPerPage={10}
-                totalItemsCount={total}
-                pageRangeDisplayed={5}
-                onChange={this.handlePageChange}
-              />
             </table>
+            <Pagination
+              activePage={page}
+              itemsCountPerPage={10}
+              totalItemsCount={total}
+              pageRangeDisplayed={5}
+              onChange={this.handlePageChange}
+            />
           </div>
         </section>
       </div>

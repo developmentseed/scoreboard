@@ -55,7 +55,7 @@ const theme = {
   colors: ['#22BDC1', '#8BC544', '#334A42', '#5657C2', '#4FCA9C']
 }
 
-export default (props) => {
+export default function EditBreakdownChart (props) {
   const dataToChart = pick([
     'waterways_add',
     'poi_add',
@@ -113,7 +113,7 @@ export default (props) => {
         tooltipFormat={value => value.toLocaleString()}
         legends={[
           {
-            'anchor': 'center-left',
+            'anchor': 'left',
             'direction': 'column',
             'translateY': 20,
             'translateX': -50,

@@ -15,6 +15,7 @@ export class Campaigns extends Component {
     this.handleValidationChange = this.handleValidationChange.bind(this)
     this.handleSelectTM = this.handleSelectTM.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
+    this.handleCampaignsSortChange = this.handleCampaignsSortChange.bind(this)
   }
 
   handleSearch (event) {
@@ -27,6 +28,10 @@ export class Campaigns extends Component {
 
   handleCompletenessChange (completeness) {
     this.props.handleCampaignsCompletenessChange(completeness)
+  }
+
+  handleCampaignsSortChange (selectedOption) {
+    this.props.handleCampaignsSortChange(selectedOption)
   }
 
   handleValidationChange (validation) {
@@ -54,7 +59,8 @@ export class Campaigns extends Component {
       searchText,
       records: { total, records, allCount, tms },
       apiStatus,
-      selectedTM
+      selectedTM,
+      sortOrder
     } = this.props.campaigns
     if (!records) {
       return <div />
@@ -74,9 +80,11 @@ export class Campaigns extends Component {
               <CampaignFilters
                 handleCompletenessChange={this.handleCompletenessChange}
                 handleValidationChange={this.handleValidationChange}
+                handleSortChange={this.handleCampaignsSortChange}
                 handleSelectTM={this.handleSelectTM}
                 tmList={tms}
                 selectedTM={selectedTM}
+                sortOrder={sortOrder}
                 handleSearch={this.handleSearch}
                 searchText={searchText}
               />
