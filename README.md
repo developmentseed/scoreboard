@@ -19,11 +19,17 @@ To set the Node version as specified above:
 
 See [this tutorial](https://www.postgresql.org/download/) for details and instructions for installing PostgreSQL on your operating system
 
+### Services
+Scoreboard depends on three external services/APIs for statistics and functionality:
+- [OSMesa](https://github.com/azavea/osmesa) is a toolkit for processing large amounts of OSM vector data and turning them into stats (e.g: km of road added by user by country)
+- Scoreboard pulls campaigns from the [Tasking Manager](https://github.com/hotosm/tasking-manager) and uses the campaign hashtags to pull campaign specific aggregations from OSMesa
+- [OSM Teams](https://github.com/developmentseed/osm-teams) is a service that allows Scoreboard users to create teams and assign campaigns to a team.
+
 ### Env file
 
 There should be an env file in the root project directory with the following environment variables.
 
-For development simply run: `cp .env.sample .env`. In development, the Osmesa service is mocked, so the environment variables `OSMESA_API` is not required. 
+For development simply run: `cp .env.sample .env`. In development, the Osmesa service is mocked, so the environment variables `OSMESA_API` is not required.
 
 | name | description
 | ---  | -----
@@ -36,6 +42,9 @@ For development simply run: `cp .env.sample .env`. In development, the Osmesa se
 | OSM_TEAMS_SERVICE | Location of the OSM teams API
 | SESSION_SECRET | A secret phrase to sign session tokens
 | DATABASE_URL | The location of the postgres database
+
+Once the Scoreboard app is running, you can add a tasking manager in the admin panel
+
 
 ## Installation and Dev
 
@@ -68,7 +77,7 @@ To generate fake user data run:
 
      $ yarn seed
 
-To populate fake campaign and tasking manager data run: 
+To populate tasking manager data run: 
 
      $ yarn clocks 
 
