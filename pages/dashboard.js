@@ -124,7 +124,7 @@ class Dashboard extends Component {
         <section>
           <div className='row'>
             <div className='map-lg'>
-              <UserExtentMap uid={uid} extent={extent_uri}  />
+              <UserExtentMap uid={uid} extent={extent_uri} />
             </div>
           </div>
         </section>
