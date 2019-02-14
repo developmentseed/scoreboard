@@ -2,7 +2,7 @@ const path = require('path')
 const test = require('ava')
 const request = require('supertest')
 const db = require('../../src/db/connection')
-const app = require('../../src/index')
+let app = require('../../src/index')
 const runBadgeSeed = require('../../src/db/seeds/test/badges').seed
 const { createAuthenticatedUser } = require('./helpers')
 
@@ -13,6 +13,7 @@ const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async () => {
+  app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
   adminUser = await createAuthenticatedUser(app, ['admin'])
