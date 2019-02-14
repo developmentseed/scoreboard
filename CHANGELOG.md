@@ -10,12 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Scoreboard backend
   - Ability to login using OSM (using passport in the backend)
-    - Mock passport strategy for testing routes that require authentication
-  - User roles
-    - db table & roles model
-    - role validation helpers
-    - API endpoints
-  - cli tool for debugging and administration in development
+  - Add support for multiple roles with different permissions
+    - Currently stratified into `users` and `admins`
+  - Simple command for upgrading users to administrators via cli
   - Add country geojson for looking up ISO codes and geometries
   - Admins can create, delete, and update badges through API routes and the admin interface
   - Support for badges based on the date edits are made and the hashtags they're made with
@@ -34,11 +31,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Team pages
   - Team admins can assign campaigns to team members and team-specific priorities to campaigns
   - Ability to "favorite" a campaign to see it on your dashboard
-  - Admin UI that allows admin users with functionality including:
-    - Creating and editing users
-    - Creating and editing badges
-    - Creating and editing teams
-    - Assigning users and campaigns to teams
+  - Admin UI that enables admins to:
+    - Give admin access to other users
+    - Create and edit badges
+    - Create and edit teams
+    - Assign users and campaigns to teams
   - User dashboard page that includes:
     - Summary statistics
     - Team membership
