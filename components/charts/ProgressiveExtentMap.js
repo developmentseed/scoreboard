@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Head from 'next/head'
 import LeafletExtentMap from './LeafletUserExtentMap'
 import GLExtentMap from './UserExtentMap'
 
