@@ -47,6 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Team-favorited campaigns
     - Earned and unearned (in-progress) badges
   - Route to the dashboard when a user is logged in
+  - Comprehensive documentation published at `/docs`
 
 ### Changed
 - Scoreboard backend
