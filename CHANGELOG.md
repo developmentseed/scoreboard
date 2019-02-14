@@ -5,36 +5,47 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## v1 - 2019-02-14
 ### Added
 - Scoreboard backend
   - Ability to login using OSM (using passport in the backend)
-    - Mock passport strategy for testing routes that require authentication
-  - User roles
-    - db table & roles model
-    - role validation helpers
-    - API endpoints
-  - cli tool for debugging and administration in development
-  - Allow badge creation, deletion, and updates through API routes
-  - Support for badges based on the time edits are made and the hashtags they're made with
+  - Add support for multiple roles with different permissions
+    - Currently stratified into `users` and `admins`
+  - Simple command for upgrading users to administrators via cli
+  - Add country geojson for looking up ISO codes and geometries
+  - Admins can create, delete, and update badges through API routes and the admin interface
+  - Support for badges based on the date edits are made and the hashtags they're made with
   - Hashtag-based badges and expired date-specific badges are excluded from "In Progress" display
+  - Exclusion list that allows admins to exclude bots from overview page statistics
   - Integration with [osm-teams](https://github.com/developmentseed/osm-teams) API
   - Support both [tasking manager 2](https://github.com/hotosm/osm-tasking-manager2) and [tasking manager 3](https://github.com/hotosm/tasking-manager)
+  - Admins can add multiple tasking managers via the admin interface
 
 - Scoreboard UI
-  - Admin UI that allows admin users with functionality including:
-    - Creating and editing users
-    - Creating and editing badges
-    - Creating and editing teams
-    - Assigning users and campaigns to teams
+  - UI updates, with a new responsive design
+  - Homepage and logo
+  - Coastline metrics
+  - Reformatted campaign URLs to be independent of fault-prone hashtags
+  - Country pages
+  - Team pages
+  - Team admins can assign campaigns to team members and team-specific priorities to campaigns
+  - Ability to "favorite" a campaign to see it on your dashboard
+  - Admin UI that enables admins to:
+    - Give admin access to other users
+    - Create and edit badges
+    - Create and edit teams
+    - Assign users and campaigns to teams
   - User dashboard page that includes:
-    - List of teams you are on
-    - List of countries you have edited
-    - List of favorite campaigns
-    - List of campaigns assigned to the teams you are on
-    - List of badges that are in progress, and that have not yet been earned
-  - Home page is now replaced by the dashboard when a user is logged in
-  - Allow users to add favorite campaigns
-    - Add favorite campaigns via campaign pages to see a list of them on your dashboard
+    - Summary statistics
+    - Team membership
+    - Edited countries
+    - Favorited campaigns
+    - Team-favorited campaigns
+    - Earned and unearned (in-progress) badges
+  - Route to the dashboard when a user is logged in
+  - Comprehensive documentation published at `/docs`
+  - Ability to sort campaigns by last update and creation date
 
 ### Changed
 - Scoreboard backend
@@ -48,6 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Revise user model module to be the same format as the roles model
   - Move existing `api/users` endpoint to `api/users/stats` and use `api/users` for a list of users without stats
   - Consecutive and total days mapped are calculated with dates formatted YYYY-MM-DD
+  - Validation and completeness sliders are separated on the Campaigns page.
+  - Updated favicon
 
 ## [v0.2.4] - 2018-10-23
 ### Added
