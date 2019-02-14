@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Earned and unearned (in-progress) badges
   - Route to the dashboard when a user is logged in
   - Comprehensive documentation published at `/docs`
+  - Ability to sort campaigns by last update and creation date
 
 ### Changed
 - Scoreboard backend
@@ -59,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Move existing `api/users` endpoint to `api/users/stats` and use `api/users` for a list of users without stats
   - Consecutive and total days mapped are calculated with dates formatted YYYY-MM-DD
   - Validation and completeness sliders are separated on the Campaigns page.
+  - Updated favicon
 
 ## [v0.2.4] - 2018-10-23
 ### Added
