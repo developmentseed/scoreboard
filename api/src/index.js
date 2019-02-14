@@ -10,6 +10,8 @@ const compression = require('compression')
 const YAML = require('yamljs')
 const swaggerUi = require('swagger-ui-express')
 const path = require('path')
+const pify = require('pify')
+const request = require('request')
 
 const pckg = require('../../package.json')
 const router = require('./routes')
@@ -17,8 +19,16 @@ const router = require('./routes')
 const app = express()
 const db = require('./db/connection')
 
-const { SESSION_SECRET, NODE_ENV } = require('./config')
+const { SESSION_SECRET, NODE_ENV, OSMESA_API } = require('./config')
 const { passport, authRouter } = require('./passport')
+
+/**
+ * Methods for local mbtiles
+ */
+const Mbtiles = require('@mapbox/mbtiles')
+const mbtiles = pify(function (params, callback) {
+  return new Mbtiles(params, callback)
+})
 
 /**
  * Config
@@ -66,4 +76,26 @@ app.use('/docs', express.static(path.join(__dirname, '../../docs-build')))
 
 app.get('/favicon.ico', (req, res) => res.status(200).sendFile('favicon.ico', { root: path.join(__dirname, '../../static/') }))
 
-module.exports = app
+module.exports = async function () {
+  if (NODE_ENV === 'development') {
+    let tiles = await mbtiles(path.join(__dirname, 'db', 'earthquakes.mbtiles'))
+    app.get(['/api/extents/user/test/:z/:x/:y.mvt', '/scoreboard/api/extents/user/test/:z/:x/:y.mvt'], (req, res) => {
+      var p = req.params
+      tiles.getTile(p.z, p.x, p.y, function (err, tile, headers) {
+        if (err) {
+          res.end()
+        } else {
+          res.writeHead(200, headers)
+          res.end(tile)
+        }
+      })
+    })
+    return app
+  } else {
+    app.get(['/api/extents/*', '/scoreboard/api/extents/*'], (req, res) => {
+      const url = `${OSMESA_API}/tiles/${req.params[0]}`
+      req.pipe(request(url)).pipe(res)
+    })
+    return app
+  }
+}

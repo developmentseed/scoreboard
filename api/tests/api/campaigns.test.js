@@ -1,7 +1,7 @@
 const test = require('ava')
 const request = require('supertest')
 const db = require('../../src/db/connection')
-const app = require('../../src/index')
+let app = require('../../src/index')
 const path = require('path')
 const { prop } = require('ramda')
 const { isBefore, isAfter } = require('date-fns')
@@ -11,6 +11,7 @@ const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async t => {
+  app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
 })

@@ -1,8 +1,6 @@
 const path = require('path')
 const test = require('ava')
-// const request = require('supertest')
 const db = require('../../src/db/connection')
-// const app = require('../src/index')
 const favorites = require('../../src/models/favorite-campaigns')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')

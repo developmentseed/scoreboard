@@ -22,7 +22,8 @@ const api = require('./api/src/index')
  */
 app.setAssetPrefix(APP_URL_FINAL)
 app.prepare()
-  .then(() => {
+  .then(api)
+  .then((api) => {
     api.get('/', (req, res) => {
       return app.render(req, res, '/')
     })
