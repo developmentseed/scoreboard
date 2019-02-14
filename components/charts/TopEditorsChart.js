@@ -7,7 +7,7 @@ import { ResponsiveBar } from '@nivo/bar'
  * @param {*} props
  */
 function chartify ({ edits }) {
-  return edits.map(({ full_name, country, edit_count }) => {
+  return edits.map(({ full_name, edit_count }) => {
     return {
       display_name: `${full_name}`,
       edits: edit_count || 0
@@ -23,8 +23,8 @@ const theme = {
   }
 }
 
-export default props =>
-  <ResponsiveBar
+export default function TopEditorsChart (props) {
+  return <ResponsiveBar
     data={chartify(props)}
     keys={['edits']}
     indexBy='display_name'
@@ -66,7 +66,7 @@ export default props =>
       'tickPadding': 3,
       'tickRotation': 0,
       'legend': 'Number of Edits',
-      'legendPosition': 'center',
+      'legendPosition': 'middle',
       'legendOffset': 40,
       'format': '.2s'
     }}
@@ -83,3 +83,4 @@ export default props =>
     isInteractive
     tooltipFormat={value => value.toLocaleString()}
   />
+}

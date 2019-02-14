@@ -13,7 +13,7 @@ export default class FilterBar extends React.Component {
         {
           filters.map((filter) => {
             return (
-              <li>
+              <li key={filter.name}>
                 <button
                   className={active === filter.id ? 'active' : ''}
                   onClick={() => onClick(filter.id)}
