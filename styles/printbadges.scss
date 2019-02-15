@@ -97,8 +97,14 @@
     margin-top: 2cm;
   	max-height:100%;
   	max-width:100%;
-    &:footer {color: #fff;}
-    &:header {color: #fff;}
+    &:footer {
+      color: #fff;
+      display: none;
+    }
+    &:header {
+      color: #fff;
+      display: none;
+    }
   }
   .print-badges__certificate > img {
     display: block;
@@ -116,7 +122,7 @@
     -webkit-box-decoration-break: clone;
     box-shadow: none;
     border-radius: none;
-    padding-right: 6em;
+    padding:10em;
   }
   .print-badges__certificate:after {
     width: 98%;
@@ -127,7 +133,7 @@
     padding-right: 0;
   }
   .print-badges__badge-container figure {
-    padding: 1.5em;
+    padding: 0 2em;
     &:nth-of-type(10) {
       page-break-after: always;
       &:before {
