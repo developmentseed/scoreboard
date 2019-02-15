@@ -1,4 +1,5 @@
 # OSM Scoreboard 🗺 🎯
+![Scoreboard Logo](https://github.com/developmentseed/scoreboard/raw/feature/print-badges/ScoreboardWordmark480.png)
 
 [![CircleCI](https://circleci.com/gh/developmentseed/scoreboard.svg?style=svg)](https://circleci.com/gh/developmentseed/scoreboard)
 
