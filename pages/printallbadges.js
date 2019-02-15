@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { withAlert } from 'react-alert'
-
+import join from 'url-join'
+import { APP_URL_PREFIX } from '../api/src/config'
 import { actions } from '../lib/store'
 
-import DashboardBadges from '../components/dashboard/DashboardBadges'
-
-import dynamic from 'next/dynamic'
-
-class Dashboard extends Component {
+class PrintBadges extends Component {
   constructor () {
     super()
     this.state = {
@@ -35,11 +32,9 @@ class Dashboard extends Component {
       )
     }
     const { authenticatedUser } = this.props
-    const { loggedIn, account } = authenticatedUser
+    const { account } = authenticatedUser
     const { badges } = account
-
-    // Calculate counts for panel
-    const badgeCount = account.badges && badges.earnedBadges ? Object.keys(badges.earnedBadges).length : 0
+    const { earnedBadges } = badges
 
     let name = null
     if (authenticatedUser) {
@@ -47,50 +42,28 @@ class Dashboard extends Component {
       name = osmUser['@']['display_name']
     }
     return (
-      <div className='print-badges'>
+      <div className='print-badges admin'>
+        <div className='row'>
+          <h1 className='header--large'>Your Scoreboard Certificate</h1>
+          <button className='button' onClick={() => window.print()}>Print certificate</button>
+        </div>
         <section className='print-badges__certificate row'>
+          <img src='../static/android-chrome-192x192.png' />
           <h1 className='print-badges--title'>{name}</h1>
           <h4 className='print-badges--subtitle'>Scoreboard Badges</h4>
           <div className='print-badges__badge-container'>
-            <figure>
-              <img src='http://localhost:8181/static/badges/0-1-graphic.svg' />
-              <h4 className='header--medium'>`${'Badge Name'}`</h4>
-            </figure>
-            <figure>
-              <img src='http://localhost:8181/static/badges/9-1-graphic.svg' />
-              <h4 className='header--medium'>`${'Badge Name'}`</h4>
-            </figure>
-            <figure>
-              <img src='http://localhost:8181/static/badges/10-1-graphic.svg' />
-              <h4 className='header--medium'>`${'Badge Name'}`</h4>
-            </figure>
-            <figure>
-              <img src='http://localhost:8181/static/badges/11-1-graphic.svg' />
-              <h4 className='header--medium'>`${'Badge Name'}`</h4>
-            </figure>
-            <figure>
-              <img src='http://localhost:8181/static/badges/12-1-graphic.svg' />
-              <h4 className='header--medium'>`${'Badge Name'}`</h4>
-            </figure>
-            <figure>
-              <img src='http://localhost:8181/static/badges/8-1-graphic.svg' />
-              <h4 className='header--medium'>`${'Badge Name'}`</h4>
-            </figure>
-            <figure>
-              <img src='http://localhost:8181/static/badges/7-1-graphic.svg' />
-              <h4 className='header--medium'>`${'Badge Name'}`</h4>
-            </figure>
-            <figure>
-              <img src='http://localhost:8181/static/badges/4-1-graphic.svg' />
-              <h4 className='header--medium'>`${'Badge Name'}`</h4>
-            </figure>
-          </div>
-        </section>
-        <section>
-          <div className='row widget-container'>
-            <div className='widge-75'>
-              <DashboardBadges badges={badges} />
-            </div>
+            {
+              Object.keys(earnedBadges).map((x, i) => {
+                let earnedBadge = earnedBadges[i]
+                const imgSrc = join(APP_URL_PREFIX, `/static/badges/${earnedBadge.badgeImage}`)
+                return (
+                  <figure className='print-badges__badge'>
+                    <img src={imgSrc} />
+                    <h4 className='header--small'>{earnedBadge.name}</h4>
+                  </figure>
+                )
+              })
+            }
           </div>
         </section>
       </div>
@@ -98,4 +71,4 @@ class Dashboard extends Component {
   }
 }
 
-export default connect(['authenticatedUser', 'error'], actions)(withAlert(Dashboard))
+export default connect(['authenticatedUser', 'error'], actions)(withAlert(PrintBadges))

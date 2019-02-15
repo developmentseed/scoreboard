@@ -145,6 +145,9 @@ class Dashboard extends Component {
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
             <div className='widget-75'>
               <DashboardBadges badges={badges} />
+              <Link href='/printallbadges'>
+                <a className='link--large'>View Your Badges Certificate</a>
+              </Link>
             </div>
           </div>
           <div className='row'>

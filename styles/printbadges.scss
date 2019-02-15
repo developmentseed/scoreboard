@@ -1,68 +1,145 @@
 @import 'settings/variables.scss';
 @import 'settings/mixins.scss';
 
-@media print {
-  @page {
-      size: landscape;
-      background: #ffffff;
-      size: A4 landscape;
-    	max-height:100%;
-    	max-width:100%;
+.print-badges {
+  margin: 5em auto;
+  >div:first-of-type {
+    text-align: center;
+    margin-bottom: 4em;
+  }
+}
+.print-badges__certificate {
+  position: relative;
+  padding: 5em;
+  background: #ffffff;
+  border-radius: 12px;
+  border-image: url('../static/android-chrome-192x192.png');
+  box-shadow: 0px 4px 14px rgba(14,15,15, 0.2);
+  &:before {
+    border-top: 3px solid $base-color;
+    border-bottom: 3px solid $base-color;
+    position: absolute;
+    top: 1em;
+    bottom: 1.5em;
+    left: 0;
+    right: 0;
+    content: '';
+    display: block;
+    transform: scale(.75, 1);
+  }
+  &:after {
+    border-left: 3px solid $base-color;
+    border-right: 3px solid $base-color;
+    position: absolute;
+    width: 100%;
+    top: 0em;
+    bottom: 0em;
+    left: 0em;
+    right: 0em;
+    content: '';
+    display: block;
+    transform: scale(.95, .75);
+  }
+  .print-badges--title {
+    font-family: $heading-font-family;
+    font-size: 4em;
+    color: $dark-text-color;
+  }
+  .print-badges--subtitle {
+    font-family: $tertiary-font-family;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    color: $med-text-color;
+  }
+  >img {
+    display: none;
+  }
+}
+.print-badges__badge-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  > figure {
+    text-align: center;
+    margin: 0;
+    padding: 2em;
+    width: 20%;
+    min-width: 14em;
+    &:last-of-type {
+      margin-right: auto;
     }
-  .print-badges__certificate {
-    position: relative;
-    padding: 5em;
-    &:before {
-      border-top: 5px solid $base-color;
-      border-bottom: 5px solid $base-color;
-      position: absolute;
-      top: 0em;
-      bottom: 1em;
-      left: 1em;
-      right: 1em;
-      content: '';
-      display: block;
-      transform: scale(.75, 1);
-    }
-    &:after {
-      border-left: 5px solid $base-color;
-      border-right: 5px solid $base-color;
-      position: absolute;
-      top: 1em;
-      bottom: 1em;
-      left: 1em;
-      right: 1em;
-      content: '';
-      display: block;
-      transform: scale(1, .75);
-    }
-    .print-badges--title {
-      font-family: $heading-font-family;
-      font-size: 4em;
-      color: $dark-text-color;
-    }
-    .print-badges--subtitle {
-      font-family: $tertiary-font-family;
-      text-transform: uppercase;
-      font-size: 1.25rem;
-      letter-spacing: 2px;
-      color: $med-text-color;
+    img {
+      width: 100%;
     }
   }
+}
+@media print {
+  header.header-nav,
+  .row:first-child {
+    display: none;
+  }
+  body {
+    visibility: hidden;
+  }
+  .print-badges {
+    visibility: visible;
+    position: absolute;
+    font-size: .8em;
+    padding-left: 2em;
+    margin: 0 auto;
+  }
+  @page {
+    size: A4 landscape;
+    size: landscape;
+    background: #ffffff;
+    margin: 0mm;
+    margin-top: 2cm;
+  	max-height:100%;
+  	max-width:100%;
+    &:footer {color: #fff;}
+    &:header {color: #fff;}
+  }
+  .print-badges__certificate > img {
+    display: block;
+    position: absolute;
+    height: 10%;
+    top: 0;
+    left: 45%;
+    background-color: white;
+    z-index: 10;
+  }
+  .print-badges__certificate,
+  .print-badges__certificate:before,
+  .print-badges__certificate:after {
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    box-shadow: none;
+    border-radius: none;
+    padding-right: 6em;
+  }
+  .print-badges__certificate:after {
+    width: 98%;
+  }
   .print-badges__badge-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    > figure {
-      text-align: center;
-      width:20%;
-      margin: 0;
-      padding: 2em;
-      &:last-of-type {
-        margin-right: auto;
-      }
-      img {
-        width: 100%;
+    margin: 0 auto;
+    justify-content: flex-start;
+    padding-right: 0;
+  }
+  .print-badges__badge-container figure {
+    padding: 1.5em;
+    &:nth-of-type(10) {
+      page-break-after: always;
+      &:before {
+        border-top: 5px solid $base-color;
+        position: absolute;
+        top: 0em;
+        bottom: 1em;
+        left: 1em;
+        right: 1em;
+        content: '';
+        display: block;
+        transform: scale(.75, 1);
       }
     }
   }
