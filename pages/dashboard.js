@@ -18,6 +18,7 @@ import DashboardBlurb from '../components/dashboard/DashboardBlurb'
 import CampaignsChart from '../components/charts/CampaignsChart'
 import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import { formatDecimal } from '../lib/utils/format'
+import generatePDF from '../lib/utils/generatePDF'
 
 import dynamic from 'next/dynamic'
 
@@ -27,6 +28,7 @@ const CalendarHeatmap = dynamic(() => import('../components/charts/CalendarHeatm
 const UserExtentMap = dynamic(() => import('../components/charts/ProgressiveExtentMap'), {
   ssr: false
 })
+
 
 class Dashboard extends Component {
   constructor () {
@@ -59,6 +61,7 @@ class Dashboard extends Component {
     const { assignments, favorites, country } = account
 
     const { badges, teams } = account
+    const { earnedBadges } = badges
     const osmesaData = account.records
     const {
       hashtags,
@@ -145,6 +148,7 @@ class Dashboard extends Component {
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
             <div className='widget-75'>
               <DashboardBadges badges={badges} />
+              <button onClick={() => generatePDF(name, earnedBadges)}>Download from dashboard.js</button>
             </div>
           </div>
           <div className='row'>

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import DataNotAvailable from '../DataNotAvailable'
 import FilterBar from '../FilterBar'
 import BadgeInProgress from '../BadgeInProgress'
-import generatePDF from '../../lib/utils/generatePDF'
 
 class DashboardBadges extends Component {
   constructor (props) {
@@ -36,9 +35,9 @@ class DashboardBadges extends Component {
         </div>
       )
     }
-
     const filteredBadges = badges[badgesFilter]
     const badgeKeys = Object.keys(filteredBadges)
+    const { earnedBadges } = badges
 
     return (
       <div>
@@ -68,7 +67,6 @@ class DashboardBadges extends Component {
             })
           }
         </ul>
-        <button onClick={() => generatePDF(badges)}>Download</button>
       </div>
     )
   }
