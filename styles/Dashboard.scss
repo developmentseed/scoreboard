@@ -14,16 +14,14 @@
   }
 }
 
-.wrapper--map {
-  background-color: rgba(79,202,156,.6);
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
+.header--content--wrapper {
+  margin-right: auto;
+  flex: 1;
+  display: flex;
+  a {
+    color: #FFFFFF;
+  }
 }
-
 .header--internal--dashboard {
   margin-top: -6em;
   background-size: cover;
@@ -37,9 +35,6 @@
   .row {
     z-index: 3;
     position: relative;
-  }
-  .header--content--wrapper {
-    padding-top: 280px;
   }
   h1 {
     color: #fff;
@@ -144,14 +139,17 @@
 
 .tri-fold {
   margin-bottom: 2em;
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   li {
-    float: left;
-    width: 33%;
-    min-height: 350px;
-
+    width: 45%;
+    display: flex;
     &:last-of-type {
       margin-right: 0;
+      &:after {
+        content: " ";
+      }
     }
     @include media(small-down) {
       float: inherit;
@@ -262,7 +260,7 @@
           }
         }
         &:after {
-          background-image: url("../static/icon-arrow.svg");
+          background-image: url($appUrlFinal + "static/icon-arrow.svg");
           content: " ";
           width: 58px;
           height: 35px;
@@ -349,13 +347,13 @@
 
 .message--direct {
   img {
-    background-image: url("../static/icons-direct.jpg");
+    background-image: url($appUrlFinal + "static/icons-direct.jpg");
   }
 }
 
 .message--notes {
   img {
-    background-image: url("../static/icons-note.jpg");
+    background-image: url($appUrlFinal + "static/icons-note.jpg");
   }
 }
 
@@ -419,7 +417,7 @@
   top: 1.3em;
   right: 2em;
   &:before {
-    background-image: url("../static/sm-xmark.svg");
+    background-image: url($appUrlFinal + "static/sm-xmark.svg");
     content: " ";
     width: 20px;
     height: 20px;
@@ -446,12 +444,12 @@
   }
 
   a {
-    background-color: #f3f3f3;
+    background-color: #E4E4E4;
     padding: 3px 5px;
     border-radius: 3px;
     color: #333;
     margin-right: 3px;
-  
+
     &:hover {
       background-color: #888;
       color: #fcfcfc;
@@ -473,7 +471,9 @@
     padding: 0;
     margin-right: 10px;
     color: #777;
-  
+    font-size: 14px;
+    font-family: $tertiary-font-family;
+
     &:hover {
       cursor: pointer;
       color: #222;
@@ -501,5 +501,17 @@
     cursor: pointer;
     color: #000;
     text-decoration: underline;
+  }
+}
+.dashboard .section--dark {
+  .header-link {
+    color: white;
+  }
+  .filter-bar button {
+    color: $background-color-light;
+    &:hover,
+    &.active {
+      color: $base-color
+    }
   }
 }

@@ -6,7 +6,7 @@ import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
-import AdminHeader from '../../components/AdminHeader'
+import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 import imageList from '../../lib/utils/loadImages'
 import { Carousel } from 'react-responsive-carousel'
@@ -87,8 +87,8 @@ export class AdminBadgesAdd extends Component {
       <div className='admin'>
         <AdminHeader />
         <section>
-          <div className='row'>
-            <div className='sidebar'>
+          <div className='row widget-container'>
+            <div className='widget-25'>
               <h2 className='header--large'>Badges</h2>
               <ul className='admin-sidebar-links'>
                 <li>
@@ -100,7 +100,7 @@ export class AdminBadgesAdd extends Component {
                 </li>
               </ul>
             </div>
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               <div className='row'>
                 <h1 className='header--xlarge'>Add a new badge</h1>
               </div>
@@ -190,7 +190,7 @@ export class AdminBadgesAdd extends Component {
           <textarea
             id='badge-description'
             name='badge-description'
-            maxLength={150}
+            maxLength={400}
             onChange={this.handleDescriptionInputChange}
             placeholder='Let users know about how this badge works'
             required
@@ -407,8 +407,8 @@ export class AdminBadgesAdd extends Component {
           onClickItem={(e) => this.handleBadgeImageChange(e)}
           centerMode
           infiniteLoop
-          centerSlidePercentage='65'
-          width='50'
+          centerSlidePercentage={65}
+          width='100%'
           selectedItem={this.state.selectedImg}
           emulateTouch
         >

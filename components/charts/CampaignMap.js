@@ -10,7 +10,7 @@ class CampaignMap extends Component {
 
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/devseed/cj9iy816wb9x02smisy4y7id3',
+      style: 'mapbox://styles/devseed/cjqpb3z440t302smfnewsl6vb',
       zoom: 6,
       center: center.geometry.coordinates,
       interactive: this.props.interactive
@@ -26,7 +26,7 @@ class CampaignMap extends Component {
         },
         'layout': {},
         'paint': {
-          'fill-color': '#9E14C3',
+          'fill-color': '#4FCA9C',
           'fill-opacity': 0.7
         }
       })

@@ -1,10 +1,25 @@
 import React, { Component } from 'react'
-import UserGlance from '../components/UserGlance'
-import UserHeader from '../components/UserHeader'
-import UserStats from '../components/UserStats'
+import DashboardHeader from '../components/dashboard/DashboardHeader'
 import getSumEdits from '../lib/utils/sum_edits'
+import ScoreboardPanel from '../components/ScoreboardPanel'
+import EditBreakdownChart from '../components/charts/EditBreakdownChart'
+import CampaignsChart from '../components/charts/CampaignsChart'
+import DashboardBadges from '../components/dashboard/DashboardBadges'
+import DashboardSidebar from '../components/dashboard/DashboardSidebar'
+import DashboardBlurb from '../components/dashboard/DashboardBlurb'
+
+import { formatDecimal } from '../lib/utils/format'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
+import { pick } from 'ramda'
+import dynamic from 'next/dynamic'
+
+const UserExtentMap = dynamic(() => import('../components/charts/ProgressiveExtentMap'), {
+  ssr: false
+})
+const CalendarHeatmap = dynamic(() => import('../components/charts/CalendarHeatmap'), {
+  ssr: false
+})
 
 export class User extends Component {
   componentDidMount () {
@@ -13,47 +28,75 @@ export class User extends Component {
 
   render () {
     if (!this.props.user) return <div />
-    const { records, country, badges } = this.props.user
+    const { records, country, badges, teams } = this.props.user
+    const { extent_uri, uid } = records
     if (!records) return <div />
+    const editCount = getSumEdits(records)
+    const badgeCount = Object.keys(badges.earnedBadges).length
+    const campaignCount = records.hashtags.length
+    const { name, hashtags, edit_times } = records
 
-    const edits = getSumEdits(records)
-
-    let numBadges = 0
-    let BadgeSection = (
-      <div className='About'>
-        <header className='header--internal '>
-          <div className='row'>
-            <h1 className='header--xlarge'>User stats are missing!</h1>
-          </div>
-        </header>
-        <section className='text-body section-first--sm'>
-          <div className='row'>
-            <p className='text-body--large'>We couldn't find stats for this user. Please contact an administrator.</p>
-          </div>
-        </section>
-      </div>
-    )
-    if (badges) {
-      numBadges = Object.keys(badges.earnedBadges).length
-      BadgeSection = (
-        <div>
-          <UserGlance records={records} badges={badges} />
-          <UserStats records={records} badges={badges} />
-        </div>
-      )
-    }
+    const breakdownChartProps = pick([
+      'waterways_add',
+      'poi_add',
+      'roads_add',
+      'buildings_add',
+      'coastlines_add',
+      'coastlines_mod'
+    ], records)
 
     return (
-      <div className='User'>
-        <UserHeader
-          name={records.name}
-          edit_times={records.edit_times}
-          num_badges={numBadges}
-          num_edits={edits}
-          num_hashtags={records.hashtags.length}
+      <div className='dashboard'>
+        <DashboardHeader
+          id={this.props.id}
+          name={name}
+          edit_times={edit_times}
           country={country}
         />
-        { BadgeSection }
+        <ScoreboardPanel
+          title={`${records.name}'s Scoreboard`}
+          facets={[
+            { label: 'Campaigns', value: formatDecimal(campaignCount) },
+            { label: 'Badges', value: formatDecimal(badgeCount) },
+            { label: 'Edits', value: formatDecimal(editCount) }
+          ]}
+        />
+        <div className='row'>
+          <DashboardBlurb
+            {...records}
+            username={name}
+          />
+        </div>
+        <section>
+          <div className='row'>
+            <div className='map-lg'>
+              <UserExtentMap uid={uid} extent={extent_uri} />
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className='row'>
+            <div className='widget-container'>
+              <div className='widget-66'>
+                <CampaignsChart hashtags={hashtags} height='260px' />
+              </div>
+              <div className='widget-33'>
+                <EditBreakdownChart {...breakdownChartProps} height='260px' />
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className='row widget-container'>
+            <DashboardSidebar teams={teams} osmesaData={records} />
+            <div className='widget-75'>
+              <DashboardBadges badges={badges} />
+            </div>
+          </div>
+          <div className='row'>
+            <CalendarHeatmap times={edit_times} />
+          </div>
+        </section>
       </div>
     )
   }

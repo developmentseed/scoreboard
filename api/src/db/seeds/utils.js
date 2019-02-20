@@ -1,5 +1,6 @@
 const countries = require('../../../../lib/utils/country-list.json')
 const { subDays, format, getTime } = require('date-fns')
+const gen = require('random-seed')
 
 /*
  * n => [users] array of size n
@@ -28,30 +29,32 @@ function generateUsers (n, knex) {
   return usersWithStamps
 }
 
-const randomInt = () => parseInt(Math.floor(Math.random() * 1000000))
-
 function generateOSMesaUser (id, name) {
+  const rand = gen.create(id)
   let editedCountries = []
   let editedHashtags = []
   let editedTimes = []
-  for (let i = 0; i < Math.floor(Math.random() * 10); i++) {
-    let index = Math.floor(Math.random() * (countries.length - 1))
+
+  const randomInt = () => parseInt(Math.floor(rand.random() * 1000000))
+
+  for (let i = 1; i < Math.floor(rand.random() * 20); i++) {
+    let index = Math.floor(rand.random() * (countries.length - 1))
 
     editedCountries.push({
       'name': countries[index].name,
-      'count': Math.floor(Math.random() * 100)
+      'count': Math.floor(rand.random() * 100)
     })
 
     editedHashtags.push({
       'tag': `project-${i}`,
-      'count': Math.floor(Math.random() * 1000)
+      'count': Math.floor(rand.random() * 1000)
     })
   }
 
-  for (let i = 0; i < Math.floor(Math.random() * 100); i++) {
+  for (let i = 0; i < Math.floor(rand.random() * 100); i++) {
     editedTimes.push({
-      'day': format(subDays(new Date(), Math.floor(Math.random() * 365 * 2)), 'YYYY-MM-DD'),
-      'count': Math.floor(Math.random() * 10)
+      'day': format(subDays(new Date(), Math.floor(rand.random() * 365 * 2)), 'YYYY-MM-DD'),
+      'count': Math.floor(rand.random() * 10)
     })
   }
 
@@ -67,6 +70,10 @@ function generateOSMesaUser (id, name) {
     'km_roads_mod': randomInt(),
     'waterways_add': randomInt(),
     'km_waterways_add': randomInt(),
+    'coastlines_add': randomInt(),
+    'km_coastline_add': randomInt(),
+    'coastlines_mod': randomInt(),
+    'km_coastline_mod': randomInt(),
     'poi_add': randomInt(),
     'changeset_count': randomInt(),
     'edit_count': randomInt(),

@@ -5,7 +5,7 @@ import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
-import AdminHeader from '../../components/AdminHeader'
+import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 
 export class AdminTeamsAdd extends Component {
@@ -71,8 +71,8 @@ export class AdminTeamsAdd extends Component {
       <div className='admin'>
         <AdminHeader />
         <section>
-          <div className='row'>
-            <div className='sidebar'>
+          <div className='row widget-container'>
+            <div className='widget-25'>
               <h2 className='header--large'>Teams</h2>
               <ul className='admin-sidebar-links'>
                 <li>
@@ -84,7 +84,7 @@ export class AdminTeamsAdd extends Component {
                 </li>
               </ul>
             </div>
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               <div className='row'>
                 <h1 className='header--xlarge'>Add a new team</h1>
               </div>
@@ -177,7 +177,7 @@ export class AdminTeamsAdd extends Component {
           <textarea
             id='badge-description'
             name='badge-description'
-            maxLength={150}
+            maxLength={400}
             onChange={this.handleDescriptionInputChange}
             placeholder='Let users know about this team'
             required

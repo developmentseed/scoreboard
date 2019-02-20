@@ -1,5 +1,4 @@
 const router = require('express-promise-router')()
-const request = require('request')
 
 const user = require('./user')
 const users = require('./users')
@@ -7,32 +6,24 @@ const campaign = require('./campaign')
 const campaigns = require('./campaigns')
 const topstats = require('./topstats')
 const badges = require('./badges')
-const projects = require('./projects')
 const roles = require('./roles')
 const favorites = require('./favorite-campaigns')
+const exclusion = require('./exclusion-list')
 const teams = require('./teams')
 const countries = require('./countries')
 const country = require('./country')
-
-const { OSMESA_API } = require('../config')
+const taskers = require('./taskers')
 
 /**
  * Route registration
  */
-router.get('/extents/*', (req, res) => {
-  const url = `${OSMESA_API}/tiles/${req.params[0]}`
-  req.pipe(request(url)).pipe(res)
-})
 router.get('/users', users.list)
 router.get('/users/stats', users.stats)
 router.get('/users/:id', user.get)
 router.put('/users/:id', user.put)
-router.get('/campaigns/:id', campaign)
+router.get('/campaigns/:tasker_id-:tm_id', campaign)
 router.get('/campaigns', campaigns)
 router.get('/topstats', topstats)
-router.get('/projects', projects.list)
-router.get('/projects/:id', projects.get)
-router.get('/projects/:id/tasks', projects.getTasks)
 router.get('/roles', roles.list)
 router.post('/roles', roles.post)
 router.get('/roles/:id', roles.get)
@@ -60,5 +51,16 @@ router.post('/teams', teams.post)
 router.get('/teams/:id', teams.get)
 router.put('/teams/:id', teams.put)
 router.delete('/teams/:id', teams.del)
+
+// taskers routes
+router.get('/taskers', taskers.list)
+router.post('/taskers', taskers.post)
+router.get('/taskers/:id', taskers.get)
+router.put('/taskers/:id', taskers.put)
+router.delete('/taskers/:id', taskers.del)
+
+// exclusion list routes
+router.get('/exclusion', exclusion.list)
+router.put('/exclusion', exclusion.put)
 
 module.exports = router

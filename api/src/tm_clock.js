@@ -1,46 +1,8 @@
-const {
-  pick, merge, omit
-} = require('ramda')
-const { TM, extractCampaignHashtag } = require('./services/tm')
 const db = require('./db/connection')
-const { TM_VERSION } = require('./config')
-
-function DBPromises (db, sqlObjects, features) {
-  // Add all features as single feature collection geometry
-  const onlyGeometries = features.map(omit(['properties']))
-  const fc = { type: 'FeatureCollection', features: onlyGeometries }
-  // Map feature collection to prepared SQL statement
-  const featureSQL = db('features')
-    .where('name', 'tm_campaigns')
-    .then((rows) => {
-      if (rows.length === 0) {
-        return db('features').insert({
-          name: 'tm_campaigns',
-          feature: fc,
-          created_at: db.fn.now(),
-          updated_at: db.fn.now()
-        })
-      }
-      return db('features')
-        .where('name', 'tm_campaigns')
-        .update({
-          updated_at: db.fn.now(),
-          feature: JSON.stringify(fc)
-        })
-    })
-
-  // Map campaign attributes to prepared SQL statements
-  const promises = sqlObjects.map((obj) => db('campaigns')
-    .where('tm_id', obj.tm_id)
-    .then((rows) => {
-      if (rows.length === 0) { // Not found
-        return db('campaigns').insert(obj)
-      }
-      return db('campaigns').where('tm_id', obj.tm_id).update(obj)
-    }))
-  promises.push(featureSQL)
-  return promises
-}
+const { TM } = require('./services/tm')
+const bbox = require('@turf/bbox').default
+const bboxPolygon = require('@turf/bbox-polygon').default
+const { featureCollection } = require('@turf/helpers')
 
 /**
  * Worker runs in a clock process and updates the cache
@@ -48,90 +10,49 @@ function DBPromises (db, sqlObjects, features) {
  *
  * @returns {Promise} a response
  */
-async function tmWorker () {
-  // Get projects from TM2
+async function tmWorker (isCmd) {
   try {
-    const response = await TM.getProjects()
-    const json = JSON.parse(response)
-    let features = ''
-    switch (TM_VERSION) {
-      case '3':
-        features = json.results
-        if (features) {
-          // Map the features to objects for sql insertion
-          const sqlPromises = features.map(async (feature) => {
-            const rp = await TM.getProject(feature.projectId)
-            const geometry = JSON.parse(rp).areaOfInterest
-            const {
-              created: created_at, last_update: updated_at // eslint-disable-line camelcase
-            } = feature
-            return {
-              priority: feature.priority,
-              campaign_hashtag: feature.campaignTag,
-              created_at,
-              updated_at,
-              geometry,
-              name: feature.name,
-              description: feature.shortDescription,
-              validated: feature.percentValidated,
-              done: feature.percentMapped,
-              tm_id: feature.projectId
-            }
-          })
-          const sqlObjects = await Promise.all(sqlPromises)
+    // Get taskers
+    let taskers = await db('taskers').select()
+    for (let i = 0; i < taskers.length; i++) {
+      let { id, type, url, name, url_proxy } = taskers[i]
+      if (isCmd) console.log(`Updating projects for ${name}`)
+      let tm = new TM(id, type, url, url_proxy)
+      if (isCmd) console.log('Getting projects from API..')
+      let projects = await tm.getProjects()
+      let dbObjects = await tm.toDBObjects(projects)
 
-          const promises = DBPromises(db, sqlObjects, features)
-          // Return a single promise wrapping all the
-          // SQL statements
-          return Promise.all(promises)
-        }
-        throw new Error('Invalid response from Tasking Manager')
-      case '2':
-        features = json.features
-        if (features) {
-          const sqlObjects = features.map((feature) => {
-            const properties = pick([
-              'done',
-              'description',
-              'author',
-              'status',
-              'changeset_comment',
-              'priority',
-              'name',
-              'instructions',
-              'validated'
-            ], feature.properties)
-            // priority is now stored as a string
-            properties.priority = properties.priority.toString()
-            const noPropertiesFeature = merge(feature, { properties: {} })
-            const mainHashtag = extractCampaignHashtag(properties.changeset_comment)
-            const {
-              created: created_at, last_update: updated_at // eslint-disable-line camelcase
-            } = feature.properties
-            return merge(properties, {
-              campaign_hashtag: mainHashtag,
-              created_at,
-              updated_at,
-              geometry: JSON.stringify(noPropertiesFeature),
-              tm_id: feature.id
-            })
-          })
-          const promises = DBPromises(db, sqlObjects, features)
-          return Promise.all(promises)
-        }
-        throw new Error('Invalid response from Tasking Manager')
+      if (isCmd) console.log('Updating database..')
+      await tm.updateDB(db, dbObjects)
+      await db('taskers').where('id', id).update('last_update', db.fn.now())
+      if (isCmd) console.log(`${name} updated\n\n`)
     }
+
+    // Get all features and turn them into a single featurecollection
+    let geometries = await db('campaigns').select('geometry')
+    let bboxes = geometries.map(geom => bbox(JSON.parse(geom.geometry)))
+    let features = bboxes.map(bboxPolygon)
+    let fc = featureCollection(features)
+    await db.transaction(async trx => {
+      await trx('features').where('name', 'tm_campaigns').del()
+      await trx('features').insert({
+        'name': 'tm_campaigns',
+        'feature': fc,
+        'created_at': db.fn.now(),
+        'updated_at': db.fn.now()
+      })
+    })
   } catch (e) {
     console.error(e)
-    return Promise.resolve()
+    return Promise.reject(e)
   }
 }
 
 // Run
 if (require.main === module) {
-  tmWorker()
-    .then((resp) => {
-      console.log(`Updated ${resp.length} records.`)
+  tmWorker(true)
+    .then(() => {
+      console.log(`Updated task records.`)
       process.exit(0)
     })
     .catch((e) => {

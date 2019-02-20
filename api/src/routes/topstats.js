@@ -1,8 +1,5 @@
-const {
-  FILTERED_USERS
-} = require('../config')
-const { trim, split } = require('ramda')
 const db = require('../db/connection')
+const exclusion = require('../models/exclusion-list')
 
 /**
  * Top level stats
@@ -16,12 +13,13 @@ const db = require('../db/connection')
  * @returns {Promise} a response
  */
 module.exports = async (req, res) => {
-  const filteredUsers = split(',', FILTERED_USERS).map(trim)
-
   try {
-    const [{ total }] = await db('campaigns')
-      .whereNotNull('campaign_hashtag').count('id as total')
-    const records = await db('campaigns')
+    const [{ numCampaigns }] = await db('campaigns')
+      .whereNotNull('campaign_hashtag').count('id as numCampaigns')
+
+    const [{ numCountries }] = await db('user_country_edits').countDistinct('country_name as numCountries')
+
+    const priorityCampaigns = await db('campaigns')
       .whereNotNull('campaign_hashtag')
       .orderBy('priority')
       .limit(4)
@@ -36,21 +34,30 @@ module.exports = async (req, res) => {
     if (features.length > 0) {
       feature = features[0].feature
     }
+
     const topEdits = await db('users')
-      .whereNotIn('osm_id', filteredUsers)
+      .whereNotIn('id', exclusion.list())
       .select('full_name', 'country', 'edit_count')
       .orderBy('edit_count', 'desc')
       .limit(10)
 
+    const [{ totalEdits }] = await db('users').sum('edit_count as totalEdits')
+
     const [{ numUsers }] = await db('users').count('id as numUsers')
-    const editsByCountry = await db('users')
-      .whereNotIn('osm_id', filteredUsers)
-      .groupBy('country').select('country')
-      .sum('edit_count as edit_count')
+    const editsByCountry = await db('user_country_edits')
+      .innerJoin(
+        db('users').select('id').whereNotIn('id', exclusion.list()).as('users'), 'user_id', 'users.id'
+      )
+      .select('country_name', db.sum('user_country_edits.edit_count').as('edits'))
+      .groupBy('country_name')
+      .orderBy('edits', 'desc')
+      .limit(5)
 
     return res.send({
-      total,
-      records,
+      numCampaigns,
+      priorityCampaigns,
+      numCountries,
+      totalEdits,
       numUsers,
       editsByCountry,
       topEdits,

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import Link from '../components/Link'
-import CampaignCard from '../components/CampaignCard'
+import CampaignCard from '../components/campaigns/CampaignCard'
 import { sortBy, prop } from 'ramda'
 
 export class Team extends Component {
@@ -17,7 +17,7 @@ export class Team extends Component {
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
-          <div className='row'>
+          <div className='row widget-container'>
             <div className='section-sub--left'>
               <h1 className='header--xlarge margin-top-sm'>{team.name}</h1>
               <ul className='list--two-column clearfix'>
@@ -27,13 +27,6 @@ export class Team extends Component {
                 </li>
               </ul>
             </div>
-            {
-            // <div className='section-sub--right'>
-            //   <Link href='/about'>
-            //     <a className='button'>Join</a>
-            //   </Link>
-            // </div>
-            }
           </div>
         </header>
         <section>

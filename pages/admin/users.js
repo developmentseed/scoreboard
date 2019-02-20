@@ -6,7 +6,7 @@ import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
-import AdminHeader from '../../components/AdminHeader'
+import AdminHeader from '../../components/admin/AdminHeader'
 
 export class AdminUsers extends Component {
   constructor () {
@@ -42,28 +42,30 @@ export class AdminUsers extends Component {
 
     return (
       <div className='admin'>
-        <h1>List</h1>
-        <table className='admin-table'>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Roles</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              admin.users
-                .map((user) => (
-                  <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-table-row'>
-                    <td>{user.osm_id}</td>
-                    <td>{user.full_name}</td>
-                    <td>{this.renderUserRoles(user.roles)}</td>
-                  </tr>
-                ))
-            }
-          </tbody>
-        </table>
+        <h1>All Users</h1>
+        <div className='widget'>
+          <table className='admin-table'>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Roles</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                admin.users
+                  .map((user) => (
+                    <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-table-row'>
+                      <td>{user.osm_id}</td>
+                      <td>{user.full_name}</td>
+                      <td>{this.renderUserRoles(user.roles)}</td>
+                    </tr>
+                  ))
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }
@@ -89,8 +91,8 @@ export class AdminUsers extends Component {
       <div>
         <AdminHeader />
         <section>
-          <div className='row'>
-            <div className='sidebar'>
+          <div className='row widget-container'>
+            <div className='widget-25'>
               <h2 className='header--large'>Users</h2>
               <ul className='admin-sidebar-links'>
                 <li>
@@ -100,9 +102,16 @@ export class AdminUsers extends Component {
                     </a>
                   </Link>
                 </li>
+                <li>
+                  <Link href='/admin/users-exclusion'>
+                    <a className='link--large'>
+                      Exclusion List
+                    </a>
+                  </Link>
+                </li>
               </ul>
             </div>
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               {this.renderList()}
             </div>
           </div>

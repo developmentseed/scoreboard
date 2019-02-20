@@ -49,52 +49,57 @@ fieldset {
   }
 }
 
-.card--wrapper {
-  width: 45%;
-  display: block;
-  float: left;
-  &:nth-of-type(odd) {
-    margin-right: 4%;
-  }
-  @include media(medium-down) {
-    width: 48.5%;
-    &:nth-of-type(odd) {
-      margin-right: 3%;
-    }
-  }
-  @include media(small-down) {
-    width: 100%;
-    &:nth-of-type(odd) {
-      margin-right: 0;
-    }
+.cards-container {
+  @include media(small-up) {
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 
+.card--wrapper {
+  width: 100%;
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  @include media(small-up) {
+    width: 48%;
+  }
+  &:hover .card .header--small {
+    color: $blue-color;
+  }
+}
+.home .card--wrapper {
+  width: 100%;
+  @include media(medium-up) {
+    width: 48%;
+  }
+}
 .card {
   background-color: #fff;
   border: 1px solid darken($background-color-light, 10%);
-  margin-bottom: 2.5em;
-  min-height: 434px;
   box-shadow: 0 2px 5px rgba(60, 60, 60, .07);
   transition: all 0.4s ease 0s;
   position: relative;
-  @include media(medium-down) {
-    min-height: 440px;
-  }
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
   .header--small {
     max-width: 100%;
   }
   .num--large {
-    font-size: 1.5em;
+    font-size: 1.25em;
     display: inline-block;
     margin-right: .3em;
   }
   .descriptor-chart {
-    margin-right: 1.5em;
-    font-size: 1.5em;
+    font-size: 1.25em;
   }
   .card-content {
     padding: 2em 2.2em 1.9em;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     @include media(medium-down) {
       padding: 2em 1.5em 1.9em;
     }
@@ -102,10 +107,13 @@ fieldset {
   .card-stats {
     margin-top: 2em;
     color: $light-text-color;
-    position: absolute;
-    bottom: 1.8em;
+    display: flex;
+    justify-content: flex-start;
     .num--large {
       color: $green-color;
+    }
+    >li:first-child {
+      margin-right: 1em;
     }
   }
   .map {
@@ -140,12 +148,6 @@ fieldset {
   display: block;
 }
 
-.map-campaign-lg {
-  width: 90%;
-  margin-left: 10%;
-  height: 400px;
-}
-
 .map-campaign-sm {
   margin-left: 0;
   height: 140px;
@@ -175,31 +177,57 @@ fieldset {
         margin-left: 3em;
       }
     }
-    .list--two-column {
-      margin-bottom: 3em;
+  }
+  .header--page .widget-container {
+    margin-bottom: 1em;
+    @include media(medium-up) {
+      align-items: flex-end;
+    }
+    .widget-33{
+      display: flex;
+      margin-top: 1em;
+      @include media(medium-only) {
+        flex-direction: column;
+        text-align: center;
+        .button {
+          width: 100%;
+          text-align: center;
+          margin-left: 0;
+          margin-bottom: 1em;
+        }
+      }
+      @include media(medium-up) {
+        text-align: right;
+        justify-content: flex-end;
+        align-items: center;
+      }
     }
   }
 }
 
-.sidebar {
+.filters {
   .input-range {
-    width: 85%;
+    width: 92%;
     margin-left: .5em;
     margin-top: 1em;
   }
 
   .input-range__slider {
-    background: $blue-color;
-    border: 1px solid $blue-color;
+    background: $green-color;
+    border: 1px solid $green-color;
     width: .7em;
     height: .7em;
     top: 70%;
     margin-top: -0.5rem;
   }
   .input-range__track--active {
-    background: $blue-color;
+    background: $green-color;
   }
   .input-range__label--value {
-    color: $blue-color;
+    color: $green-color;
+  }
+
+  .input-range__label--min, .input-range__label--max {
+    display: none
   }
 }

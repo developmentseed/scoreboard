@@ -9,6 +9,7 @@ const OSMTeams = require('../services/teams')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const db = require('../db/connection')
+const getCountriesEdited = require('../utils/getCountriesEdited')
 
 /**
  * User Stats Route
@@ -47,7 +48,7 @@ async function get (req, res) {
     const osmesaResponse = await osmesa.getUser(id)
     osmesaData = JSON.parse(osmesaResponse)
   } catch (err) {
-    console.error(err)
+    console.error(err.message)
 
     osmesaData = {
       uid: parseInt(id, 10),
@@ -61,6 +62,10 @@ async function get (req, res) {
       km_roads_mod: 0,
       waterways_add: 0,
       km_waterways_add: 0,
+      coastlines_add: 0,
+      coastlines_mod: 0,
+      km_coastlines_add: 0,
+      km_coastlines_mod: 0,
       poi_add: 0,
       changeset_count: 0,
       editors: [],
@@ -73,6 +78,8 @@ async function get (req, res) {
   if (osmesaData.extent_uri) {
     osmesaData.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', osmesaData.extent_uri)
   }
+
+  let countriesEdited = getCountriesEdited(osmesaData.country_list)
 
   let badges
   try {
@@ -135,6 +142,7 @@ async function get (req, res) {
     favorites,
     records: osmesaData,
     roles: rolesList,
+    countriesEdited,
     country: user.country
   })
 }

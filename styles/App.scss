@@ -1,24 +1,40 @@
 @import 'settings/variables.scss';
 @import 'settings/mixins.scss';
 
+.mobile-only {
+  @include media(small-up) {
+    display: none;
+  }
+}
+.mobile-hidden {
+  @include media(xsmall-only) {
+    display: none !important;
+  }
+}
 .header-nav {
   background-color: $base-color;
   position: relative;
   z-index: 5;
-  box-shadow: 0 4px 26px rgba(0,0,0,.3)
+  box-shadow: 0 4px 24px rgba(0,0,0,.3);
+  @include media(xsmall-only) {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+  }
 }
 
 nav {
+  display: flex;
+  justify-content: space-between;
+  @include media (xsmall-only) {
+    flex-wrap: wrap;
+  }
   li {
-    display: block;
-    margin-top: 1.4em;
     font-family: $tertiary-font-family;
-    float: left;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    .active a {
-      padding-bottom: .8em;
-      border-bottom: 2px solid rgba(255,255,255,.4);
+    letter-spacing: 1px;
+    @include media(medium-up) {
+      letter-spacing: 2px;
     }
     button {
       background: none;
@@ -30,56 +46,77 @@ nav {
       text-align: left;
     }
   }
-
-  .nav--left {
-    float: left;
-    li {
-      margin-right: 1.6em;
-      &:first-of-type {
-        margin-right: .5em;
+  a {
+    color: #fff;
+  }
+  .logo {
+    font-size: 1.8em;
+    padding: .7em 0;
+    margin-right: .6em;
+    @include media(medium-up) {
+      margin-right: 2em;
+    }
+    a:hover {
+      border-bottom: 0;
+    }
+  }
+  .nav--mobile {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    @include media(xsmall-only) {
+      flex: 2;
+      li {
+        margin-right: auto;
       }
-      @include media(small-down) {
-        margin-right: 1.2em;
-        &:first-of-type {
-          margin-right: 1em;
-        }
+    }
+  }
+  .nav--left {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    @include media(xsmall-only) {
+      flex-basis: 100%;
+      order: 2;
+      transition: all ease-in-out .2s;
+    }
+    @include media(small-up) {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      margin-right: auto;
+    }
+    li {
+      margin-bottom: .5em;
+      @include media(small-up) {
+        margin-bottom: 0;
+        margin-right: .75em;
+      }
+      @include media(medium-up) {
+        margin-right: 3em;
+      }
+    }
+    li a {
+      transition: all 0.2s ease 0s;
+      border-bottom: 2px solid rgba(255,255,255,0);
+    }
+    li a:hover,
+    li a.active {
+      border-bottom: 2px solid rgba(255,255,255,0.7);
+      @include media(small-up) {
+        padding-bottom: .8em;
       }
     }
     .logo {
-      font-size: 1.8em;
-      margin-top: .8em;
-      padding-bottom: .7em;
       a:hover {
         border-bottom: 0;
       }
     }
-    li a {
-      color: #fff;
-      transition: all 0.2s ease 0s;
-      border-bottom: 2px solid rgba(255,255,255,0);
-      padding: 0 .5em 1.4em;
-    }
-
-    li a:hover {
-      border-bottom: 2px solid rgba(255,255,255,0.7);
-      padding-bottom: .8em;
-    }
-    // The below .active class should be added to the navigation list item of the active page
-    li a.active {
-      border-bottom: 2px solid rgba(255,255,255,1);
-    }
   }
   .nav--right {
-    float: right;
+    display: flex;
+    align-items: center;
     position: relative;
-    .nav--icons {
-      float: right;
-      margin-left: 1em;
-      margin-top: .4em;
-      &:first-of-type {
-        margin-top: .9em;
-      }
-    }
     li {
       border: 0;
       img {
@@ -97,6 +134,9 @@ nav {
   }
 }
 
+.nav--icons img{
+  width: 30px;
+}
 .login-menu {
   position: absolute;
   background-color: #fff;
@@ -173,6 +213,10 @@ nav {
   }
 }
 
+.map-lg {
+  height: 400px;
+}
+
 .section-sub--right--home {
   width: 22%;
   margin-left: 12%;
@@ -203,6 +247,7 @@ nav {
 }
 
 .chart-bar--main {
+  margin-top: auto;
   li {
     margin-bottom: .2em;
   }
@@ -230,6 +275,7 @@ nav {
   background-color: $green-color;
   height: 8px;
   margin-right: .5em;
+  max-width: 100%;
 }
 
 .chart-bar--percent {
@@ -259,7 +305,15 @@ nav {
 }
 
 .users--country {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  @include media(medium-up) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .list--block--sm {
+    flex: 1;
     &:first-of-type {
       a {
         color: darken($blue-purple-color, 25%);
@@ -286,6 +340,11 @@ nav {
       }
     }
   }
+  .num--large {
+    @include media(small-down) {
+      font-size: 4vw;
+    }
+  }
 }
 
 .link--login {
@@ -303,4 +362,63 @@ nav {
 .active .link--login {
   padding-bottom: .8em;
   border-bottom: 2px solid rgba(255,255,255,.4);
+}
+
+footer {
+  background-color: darken($med-text-color, 15%);
+  color: $background-color-light;
+  font-family: $tertiary-font-family;
+  text-transform: uppercase;
+  line-height: 2;
+  padding: 2em 0;
+  .row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1280px;
+    @include media(small-up) {
+      flex-direction: row;
+      align-items: center;
+    }
+    &:before,
+    &:after {
+      content: none;
+    }
+    div:last-of-type {
+      @include media(small-up) {
+        text-align: right;
+        line-height: 3;
+      }
+    }
+  }
+  .footer__logo{
+    max-height: 5em;
+    mix-blend-mode: luminosity;
+  }
+}
+.nav--footer {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  margin-bottom: 1em;
+  .logo {
+    font-size: 1.5em;
+    margin-bottom: .5em;
+    border-bottom: 1px solid #fff;
+    a:hover {
+      border-bottom: none;
+    }
+  }
+  li {
+    padding: 0;
+    margin: 0;
+  }
+  a, a:visited {
+    color: $background-color-light;
+  }
+  a:hover {
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff;
+  }
 }

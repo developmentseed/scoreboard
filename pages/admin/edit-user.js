@@ -7,7 +7,7 @@ import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
-import AdminHeader from '../../components/AdminHeader'
+import AdminHeader from '../../components/admin/AdminHeader'
 
 export class AdminUserEdit extends Component {
   constructor () {
@@ -79,8 +79,8 @@ export class AdminUserEdit extends Component {
       <div className='admin'>
         <AdminHeader />
         <section>
-          <div className='row'>
-            <div className='sidebar'>
+          <div className='row widget-container'>
+            <div className='widget-25'>
               <h2 className='header--large'>Users</h2>
               <ul className='admin-sidebar-links'>
                 <li>
@@ -92,7 +92,7 @@ export class AdminUserEdit extends Component {
                 </li>
               </ul>
             </div>
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               <div className='row'>
                 <h1 className='header--xlarge'>Edit User</h1>
               </div>

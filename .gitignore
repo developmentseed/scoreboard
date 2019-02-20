@@ -9,4 +9,6 @@ tmp
 *.env
 *.sqlite3*
 users.csv
+.vscode
 docs-build
+.swp

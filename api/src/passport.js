@@ -75,7 +75,7 @@ if (NODE_ENV === 'test') {
   }, async (req, user, done) => {
     // allow tests to set roles to test user permissions
     if (req.query.roles) {
-      user.roles = await roles.getRoles(req.query.roles.split(','))
+      user.roles = await roles.getRolesByName(req.query.roles.split(','))
     } else {
       user.roles = []
     }
@@ -135,7 +135,7 @@ router.get('/openstreetmap/callback',
   passport.authenticate('openstreetmap'),
   (req, res) => {
     if (req.user) {
-      res.redirect(APP_URL_FINAL)
+      res.redirect(join(APP_URL_FINAL, '/dashboard'))
     } else {
       res.boom.unauthorized('could not authenticate')
     }

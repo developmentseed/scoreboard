@@ -1,6 +1,10 @@
 
 const db = require('./db/connection')
 const rp = require('request-promise-native')
+const fs = require('fs')
+const path = require('path')
+const countriesGeoJSON = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'lib', 'utils', 'countries.geojson')))
+
 const {
   uniqBy, tail, zipObj, merge, prop
 } = require('ramda')
@@ -33,13 +37,22 @@ async function populateUsers () {
 
     // Map user info to knex objects
     const promises = sqlObjects.map(async (obj) => {
+      const country = countriesGeoJSON.features.find((countryArr) => {
+        return (countryArr.properties.ISO_A2 === obj.country)
+      })
+      let countryName = null
+
+      if (country) {
+        countryName = country.properties.NAME
+      }
+
       return db('users')
         .where('osm_id', obj.osm_id)
         .then((rows) => {
           const user = {
             osm_id: obj.osm_id,
             full_name: obj.display_name,
-            country: obj.country,
+            country: countryName,
             edit_count: 0,
             user_info: {
               full_name: obj.full_name,

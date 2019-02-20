@@ -5,9 +5,9 @@ import Router from '../../lib/router'
 import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
-import AdminHeader from '../../components/AdminHeader'
-import AdminCampaignsSearch from '../../components/AdminCampaignsSearch'
-import AdminUsersSearch from '../../components/AdminUsersSearch'
+import AdminHeader from '../../components/admin/AdminHeader'
+import AdminCampaignsSearch from '../../components/admin/AdminCampaignsSearch'
+import AdminUsersSearch from '../../components/admin/AdminUsersSearch'
 import Link from '../../components/Link'
 
 export class AdminTeamsEdit extends Component {
@@ -66,13 +66,30 @@ export class AdminTeamsEdit extends Component {
     }
   }
 
-  async updateTeam (params) {
+  async updateTeam () {
     const { id } = this.props
     this.setState({ disableInteraction: true })
 
+    const {
+      descriptionInput,
+      nameInput,
+      hashtagInput,
+      teamCampaigns,
+      teamUsers,
+      initialUsers
+    } = this.state
+
+    const params = {
+      bio: descriptionInput,
+      name: nameInput,
+      hashtag: hashtagInput,
+      campaigns: teamCampaigns.map(c => ({ 'id': c.id, 'team_priority': c.team_priority })),
+      newusers: teamUsers.map(u => u.osm_id),
+      oldusers: initialUsers.map(u => u.osm_id)
+    }
+
     try {
       await this.props.updateTeam(id, params)
-      Router.push('/admin/teams')
     } catch (e) {
       console.log(e)
       this.setState({ disableInteraction: false })
@@ -103,26 +120,26 @@ export class AdminTeamsEdit extends Component {
     let { teamCampaigns } = this.state
     teamCampaigns = teamCampaigns.filter(c => c.id !== campaign.id)
     teamCampaigns.push(campaign)
-    this.setState({ teamCampaigns })
+    this.setState({ teamCampaigns }, this.updateTeam.bind(this))
   }
 
   removeCampaignFromTeam (campaign) {
     let { teamCampaigns } = this.state
     teamCampaigns = teamCampaigns.filter(c => c.id !== campaign.id)
-    this.setState({ teamCampaigns })
+    this.setState({ teamCampaigns }, this.updateTeam.bind(this))
   }
 
   addUserToTeam (user) {
     let { teamUsers } = this.state
     teamUsers = teamUsers.filter(c => c.osm_id.toString() !== user.osm_id.toString())
     teamUsers.push(user)
-    this.setState({ teamUsers })
+    this.setState({ teamUsers }, this.updateTeam.bind(this))
   }
 
   removeUserFromTeam (user) {
     let { teamUsers } = this.state
     teamUsers = teamUsers.filter(c => c.osm_id.toString() !== user.osm_id.toString())
-    this.setState({ teamUsers })
+    this.setState({ teamUsers }, this.updateTeam.bind(this))
   }
 
   render () {
@@ -147,8 +164,8 @@ export class AdminTeamsEdit extends Component {
       <div className='admin'>
         <AdminHeader />
         <section>
-          <div className='row'>
-            <div className='sidebar'>
+          <div className='row widget-container'>
+            <div className='widget-25'>
               <h2 className='header--large'>Teams</h2>
               <ul className='admin-sidebar-links'>
                 <li>
@@ -167,7 +184,7 @@ export class AdminTeamsEdit extends Component {
                 </li>
               </ul>
             </div>
-            <div className='content--with-sidebar'>
+            <div className='widget-75'>
               <div className='row'>
                 <h1 className='header--xlarge'>Edit team</h1>
               </div>
@@ -251,16 +268,16 @@ export class AdminTeamsEdit extends Component {
         onSubmit={this.handleAddNewTeamFormSubmit}
       >
         {this.renderBasicDetailsSection()}
-        {this.renderCampaignsSelectSection()}
-        <div className='form__footer'>
+        <div className='form__footer' style={{ 'marginBottom': '30px' }}>
           <button
             className='button'
-            id='add-new-badge-submit-button'
+            id='update-details-submit-button'
             type='submit'
           >
-            Update Team
+            Update Details
           </button>
         </div>
+        {this.renderCampaignsSelectSection()}
       </form >
     )
   }
@@ -313,7 +330,7 @@ export class AdminTeamsEdit extends Component {
           <textarea
             id='badge-description'
             name='badge-description'
-            maxLength={150}
+            maxLength={400}
             onChange={this.handleDescriptionInputChange}
             placeholder='Let users know about this team'
             required
@@ -344,26 +361,7 @@ export class AdminTeamsEdit extends Component {
 
   handleAddNewTeamFormSubmit (e) {
     e.preventDefault()
-
-    const {
-      descriptionInput,
-      nameInput,
-      hashtagInput,
-      teamCampaigns,
-      teamUsers,
-      initialUsers
-    } = this.state
-
-    const params = {
-      bio: descriptionInput,
-      name: nameInput,
-      hashtag: hashtagInput,
-      campaigns: teamCampaigns.map(c => ({ 'id': c.id, 'team_priority': c.team_priority })),
-      newusers: teamUsers.map(u => u.osm_id),
-      oldusers: initialUsers.map(u => u.osm_id)
-    }
-
-    this.updateTeam(params)
+    this.updateTeam()
   }
 
   resetInputs () {
