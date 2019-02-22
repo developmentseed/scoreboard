@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Standardize how a user's last edit time is reported
 
 ### Fixed
 - Remove MVT artifacts produced by OSMesa in Leaflet fallback maps 
