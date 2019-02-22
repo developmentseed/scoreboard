@@ -146,9 +146,9 @@ class Dashboard extends Component {
         <section>
           <div className='row widget-container'>
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
-            <div className='widget-75'>
+            <div className='widget-75 admin'>
               <DashboardBadges badges={badges} />
-              <button onClick={() => generatePDF(name, earnedBadges)}>Download from dashboard.js</button>
+              <button className='button' onClick={() => generatePDF(name, earnedBadges)}>↧Download Certificate</button>
             </div>
           </div>
           <div className='row'>
