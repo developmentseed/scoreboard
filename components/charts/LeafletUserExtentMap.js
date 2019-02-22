@@ -19,6 +19,7 @@ class LeafletUserExtentMap extends Component {
       vectorTileLayerStyles['earthquakes'] = styleFunc
     } else {
       vectorTileLayerStyles[this.props.uid] = styleFunc
+      vectorTileLayerStyles['__sequences__'] = () => ({ opacity: 0 })
     }
 
     const options = {
