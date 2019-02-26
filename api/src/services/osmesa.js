@@ -28,9 +28,9 @@ class OSMesaAPI {
 
   getUpdates (category) {
     if (typeof category === 'undefined') {
-      return rp(`${OSMESA_API}/status/`)
+      return rp(`${OSMESA_API}/status`)
     } else {
-      return rp(`${OSMESA_API}/status/`)[`${category}_stats_refresh`]
+      return rp(`${OSMESA_API}/status`)[`${category}_stats_refresh`]
     }
   }
 }
