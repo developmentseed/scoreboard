@@ -7,6 +7,7 @@ import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal } from '../lib/utils/format'
+import { distanceInWords } from 'date-fns'
 
 const AllUsersFilter = dynamic(() => import('../components/AllUsersFilter'), { ssr: false })
 
@@ -65,7 +66,7 @@ export class Users extends Component {
       return <div />
     }
 
-    const { total, records, subTotal, editTotal, countries, active } = stats
+    const { total, records, subTotal, editTotal, countries, active, refreshDate } = stats
 
     return (
       <div className='Users'>
@@ -73,6 +74,16 @@ export class Users extends Component {
           <div className='row'>
             <div className='section-sub--left section-width-forty'>
               <h1 className='header--xlarge'>Users</h1>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='section-sub--right section-width-forty'>
+              <ul>
+                <li className='list--inline'>
+                  <span className='list-label'>Last refreshed: </span>
+                  <span>{`${distanceInWords(refreshDate, new Date())} ago`}</span>
+                </li>
+              </ul>
             </div>
           </div>
         </header>
