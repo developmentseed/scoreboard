@@ -56,7 +56,7 @@ function DashboardHeader (props) {
             <ul>
               <li className='list--inline'>
                 <span className='list-label'>Last refreshed: </span>
-                <span>{distanceInWords(new Date(), refresh_date)}</span>
+                <span>{`${distanceInWords(new Date(), refresh_date)} ago`}</span>
               </li>
             </ul>
           </div>
