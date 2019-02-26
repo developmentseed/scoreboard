@@ -83,7 +83,7 @@ async function get (req, res) {
   try {
     refresh = await osmesa.getUpdates('user')
   } catch (err) {
-    refresh = err
+    refresh = err.message
   }
 
   let countriesEdited = getCountriesEdited(osmesaData.country_list)
