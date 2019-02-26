@@ -25,6 +25,14 @@ class OSMesaAPI {
   getCountry (code) {
     return rp(`${OSMESA_API}/country-stats/${code}`)
   }
+
+  getUpdates (category) {
+    if (typeof category === 'undefined') {
+      return rp(`${OSMESA_API}/status/`)
+    } else {
+      return rp(`${OSMESA_API}/status/`)[`${category}_stats_refresh`]
+    }
+  }
 }
 
 class FakeOSMesaAPI {

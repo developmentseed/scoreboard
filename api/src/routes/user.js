@@ -79,6 +79,8 @@ async function get (req, res) {
     osmesaData.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', osmesaData.extent_uri)
   }
 
+  console.log(osmesa.getUpdates())
+
   let countriesEdited = getCountriesEdited(osmesaData.country_list)
 
   let badges
