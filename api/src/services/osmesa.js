@@ -26,12 +26,8 @@ class OSMesaAPI {
     return rp(`${OSMESA_API}/country-stats/${code}`)
   }
 
-  getUpdates (category) {
-    if (typeof category === 'undefined') {
-      return rp(`${OSMESA_API}/status`)
-    } else {
-      return rp(`${OSMESA_API}/status`)[`${category}_stats_refresh`]
-    }
+  getUpdates () {
+    return rp(`${OSMESA_API}/status`)
   }
 }
 
@@ -61,13 +57,9 @@ class FakeOSMesaAPI {
     return Promise.resolve(JSON.stringify(samplecountry))
   }
 
-  getUpdates (category) {
+  getUpdates () {
     const exResponse = { "user_stats_refresh": 1551206274510, "country_stats_refresh": 1551206276129, "hashtag_stats_refresh": 1551206327071 }
-    if (typeof category === 'undefined') {
-      return Promise.resolve(JSON.stringify(exResponse))
-    } else {
-      return Promise.resolve(exResponse[`${category}_stats_refresh`])
-    }
+    return Promise.resolve(JSON.stringify(exResponse))
   }
 }
 
