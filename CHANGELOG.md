@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Remove MVT artifacts produced by OSMesa in Leaflet fallback maps 
 
-## v1 - 2019-02-14
+## [v1] - 2019-02-14
 ### Added
 - Scoreboard backend
   - Ability to login using OSM (using passport in the backend)
