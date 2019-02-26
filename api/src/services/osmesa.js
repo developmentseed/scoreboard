@@ -58,7 +58,7 @@ class FakeOSMesaAPI {
   }
 
   getUpdates () {
-    const exResponse = { "user_stats_refresh": 1551206274510, "country_stats_refresh": 1551206276129, "hashtag_stats_refresh": 1551206327071 }
+    const exResponse = { 'user_stats_refresh': 1551206274510, 'country_stats_refresh': 1551206276129, 'hashtag_stats_refresh': 1551206327071 }
     return Promise.resolve(JSON.stringify(exResponse))
   }
 }
