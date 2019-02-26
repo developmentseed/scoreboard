@@ -79,7 +79,12 @@ async function get (req, res) {
     osmesaData.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', osmesaData.extent_uri)
   }
 
-  const refresh = osmesa.getUpdates()
+  let refresh = ''
+  try {
+    refresh = await osmesa.getUpdates('user')
+  } catch (err) {
+    refresh = err
+  }
 
   let countriesEdited = getCountriesEdited(osmesaData.country_list)
 

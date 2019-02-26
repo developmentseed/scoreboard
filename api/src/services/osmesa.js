@@ -60,6 +60,15 @@ class FakeOSMesaAPI {
     samplecountry.tag = `${code}`
     return Promise.resolve(JSON.stringify(samplecountry))
   }
+
+  getUpdates (category) {
+    const exResponse = { "user_stats_refresh": 1551206274510, "country_stats_refresh": 1551206276129, "hashtag_stats_refresh": 1551206327071 }
+    if (typeof category === 'undefined') {
+      return Promise.resolve(JSON.stringify(exResponse))
+    } else {
+      return Promise.resolve(exResponse[`${category}_stats_refresh`])
+    }
+  }
 }
 
 if (!OSMESA_API) {
