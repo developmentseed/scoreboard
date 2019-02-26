@@ -1,4 +1,5 @@
 const db = require('../db/connection')
+const osmesa = require('../services/osmesa')
 /**
  * All Campaigns Route
  * /campaigns
@@ -67,7 +68,15 @@ module.exports = async (req, res) => {
     const records = await query.clone().limit(10).offset((parseInt(page) - 1) * 10)
     const tms = await db('taskers').select('id', 'name')
 
-    return res.send({ records, total, allCount, tms })
+    let refreshDate = ''
+    try {
+      const refreshStats = await osmesa.getUpdates()
+      refreshDate = JSON.parse(refreshStats)['hashtag_stats_refresh']
+    } catch (err) {
+      console.error(err)
+    }
+
+    return res.send({ records, total, allCount, tms, refreshDate })
   } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve records')
