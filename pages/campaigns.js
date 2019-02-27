@@ -72,9 +72,7 @@ export class Campaigns extends Component {
         <header className='header--internal--green header--page'>
           <div className='row'>
             <h1 className='header--xlarge'>Campaigns</h1>
-          </div>
-          <div className='row'>
-            <div className='section-sub--right section-width-forty'>
+            <div className='section-sub--right'>
               <ul>
                 <li className='list--inline'>
                   <span className='list-label'>Last refreshed: </span>

@@ -136,15 +136,15 @@ body {
 }
 
 .section-sub--right {
-  width: 35%;
-  float: right;
+  margin-top: 1em;
+  margin-left: auto;
   text-align: right;
+  align-self: flex-end;
   li {
     margin-left: 2.5em;
   }
   @include media(small-down) {
     width: 100%;
-    float: none;
     text-align: left;
     clear: both;
     li {
@@ -568,6 +568,8 @@ mark {
 
 .header--page {
   .row {
+    display: flex;
+    justify-content: space-between;
     .section-sub--left {
       float: none;
       margin-right: auto;
@@ -575,6 +577,11 @@ mark {
     .section-sub--right {
       width: auto;
       float: none;
+    }
+    &:before,
+    &:after {
+      display: none;
+      content: "";
     }
   }
   .button, .button:visited {

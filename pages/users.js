@@ -75,9 +75,7 @@ export class Users extends Component {
             <div className='section-sub--left section-width-forty'>
               <h1 className='header--xlarge'>Users</h1>
             </div>
-          </div>
-          <div className='row'>
-            <div className='section-sub--right section-width-forty'>
+            <div className='section-sub--right'>
               <ul>
                 <li className='list--inline'>
                   <span className='list-label'>Last refreshed: </span>

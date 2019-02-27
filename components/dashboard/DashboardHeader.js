@@ -52,7 +52,7 @@ function DashboardHeader (props) {
                 : <div />
             }
           </div>
-          <div className='section-sub--right section-width-fifty-minus stats-user'>
+          <div className='section-sub--right'>
             <ul>
               <li className='list--inline'>
                 <span className='list-label'>Last refreshed: </span>
