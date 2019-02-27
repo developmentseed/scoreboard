@@ -444,7 +444,10 @@ section {
   }
 }
 //Type //
-
+.refresh {
+  font-style: italic;
+  opacity: .85;
+}
 mark {
   background-color: inherit;
   color: $base-color;
@@ -570,18 +573,13 @@ mark {
   .row {
     display: flex;
     justify-content: space-between;
-    .section-sub--left {
-      float: none;
-      margin-right: auto;
-    }
-    .section-sub--right {
-      width: auto;
-      float: none;
-    }
     &:before,
     &:after {
       display: none;
       content: "";
+    }
+    @include media(small-down) {
+      flex-wrap: wrap;
     }
   }
   .button, .button:visited {

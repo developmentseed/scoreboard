@@ -77,7 +77,7 @@ export class Users extends Component {
             </div>
             <div className='section-sub--right'>
               <ul>
-                <li className='list--inline'>
+                <li className='list--inline refresh'>
                   <span className='list-label'>Last refreshed: </span>
                   <span>{`${distanceInWords(refreshDate, new Date())} ago`}</span>
                 </li>
