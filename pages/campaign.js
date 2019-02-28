@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import dynamic from 'next/dynamic'
 import { connect } from 'unistore/react'
-import { distanceInWordsToNow } from 'date-fns'
+import { distanceInWords, distanceInWordsToNow } from 'date-fns'
 import Router from '../lib/router'
 
 import { actions } from '../lib/store'
@@ -71,7 +71,7 @@ export class Campaign extends Component {
   render () {
     if (!this.props.campaign) return <div />
 
-    const { records, lastUpdate, creationDate } = this.props.campaign
+    const { records, lastUpdate, creationDate, refreshDate } = this.props.campaign
     const { tmData, users } = records
     if (!tmData || !users) return <div />
 
@@ -97,6 +97,10 @@ export class Campaign extends Component {
                 <li>
                   <span className='list-label'>Created:</span>
                   <span>{distanceInWordsToNow(creationDate)} ago</span>
+                </li>
+                <li className='list--inline refresh'>
+                  <span className='list-label'>Last refreshed: </span>
+                  <span>{`${distanceInWords(refreshDate, new Date())} ago`}</span>
                 </li>
               </ul>
             </div>
