@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import dynamic from 'next/dynamic'
 import { connect } from 'unistore/react'
-import { distanceInWords, distanceInWordsToNow } from 'date-fns'
+import { distanceInWordsToNow } from 'date-fns'
 import Router from '../lib/router'
 
 import { actions } from '../lib/store'

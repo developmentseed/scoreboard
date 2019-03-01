@@ -1,5 +1,5 @@
 const countries = require('../../../../lib/utils/country-list.json')
-const { subDays, format, getTime, subMinutes, getMilliseconds } = require('date-fns')
+const { subDays, format, getTime, subMinutes } = require('date-fns')
 const gen = require('random-seed')
 
 /*

@@ -101,7 +101,7 @@ class Dashboard extends Component {
 
     return (
       <div className='dashboard'>
-        <DashboardHeader id={accountId} loggedIn name={name} profileImage={profileImage} edit_times={edit_times} country={country} refreshDate={refreshDate}/>
+        <DashboardHeader id={accountId} loggedIn name={name} profileImage={profileImage} edit_times={edit_times} country={country} refreshDate={refreshDate} />
         <ScoreboardPanel
           title='Your mapping Scoreboard'
           facets={[
