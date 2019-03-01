@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 
 const { OSMESA_API } = require('../config')
-const { generateOSMesaUser } = require('../db/seeds/utils')
+const { generateOSMesaUser, generateOSMesaStatus } = require('../db/seeds/utils')
 
 /**
  * Methods to grab data from OSMesa
@@ -58,8 +58,9 @@ class FakeOSMesaAPI {
   }
 
   getUpdates () {
-    const exResponse = { 'user_stats_refresh': 1551206274510, 'country_stats_refresh': 1551206276129, 'hashtag_stats_refresh': 1551206327071 }
-    return Promise.resolve(JSON.stringify(exResponse))
+    const status = generateOSMesaStatus()
+    console.log(status)
+    return Promise.resolve(JSON.stringify(status))
   }
 }
 

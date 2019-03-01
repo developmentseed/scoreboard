@@ -1,5 +1,5 @@
 const countries = require('../../../../lib/utils/country-list.json')
-const { subDays, format, getTime } = require('date-fns')
+const { subDays, format, getTime, subMinutes, getMilliseconds } = require('date-fns')
 const gen = require('random-seed')
 
 /*
@@ -27,6 +27,15 @@ function generateUsers (n, knex) {
   }, user))
 
   return usersWithStamps
+}
+
+function generateOSMesaStatus () {
+  const stats = ['user_stats_refresh', 'hashtag_stats_refresh', 'country_stats_refresh']
+  let stats_return = {}
+  stats.forEach((stat) => {
+    stats_return[stat] = getTime(subMinutes(new Date(), Math.floor(Math.random() * 120)))
+  })
+  return stats_return
 }
 
 function generateOSMesaUser (id, name) {
@@ -93,5 +102,8 @@ function generateOSMesaUser (id, name) {
   }
 }
 
-module.exports.generateUsers = generateUsers
-module.exports.generateOSMesaUser = generateOSMesaUser
+module.exports = {
+  generateUsers,
+  generateOSMesaUser,
+  generateOSMesaStatus
+}
