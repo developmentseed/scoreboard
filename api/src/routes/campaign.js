@@ -38,7 +38,16 @@ module.exports = async (req, res) => {
       { tmData: tmData },
       JSON.parse(osmesaResponse)
     )
-    return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate, creationDate })
+
+    let refreshDate = ''
+    try {
+      const refreshStats = await osmesa.getUpdates()
+      refreshDate = JSON.parse(refreshStats)['hashtag_stats_refresh']
+    } catch (err) {
+      console.error(err)
+    }
+
+    return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate, creationDate, refreshDate })
   } catch (err) {
     console.error(err.message)
     return res.boom.notFound('Could not retrieve campaign stats')
