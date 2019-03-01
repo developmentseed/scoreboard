@@ -1,6 +1,7 @@
 const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { TM } = require('../services/tm')
+const refreshStatus = require('../utils/osmesaStatus.js')
 
 /**
  * Campaign Stats Route
@@ -39,13 +40,7 @@ module.exports = async (req, res) => {
       JSON.parse(osmesaResponse)
     )
 
-    let refreshDate = ''
-    try {
-      const refreshStats = await osmesa.getUpdates()
-      refreshDate = JSON.parse(refreshStats)['hashtag_stats_refresh']
-    } catch (err) {
-      console.error(err)
-    }
+    const refreshDate = await refreshStatus('hashtag_stats_refresh')
 
     return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate, creationDate, refreshDate })
   } catch (err) {

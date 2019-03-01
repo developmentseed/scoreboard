@@ -3,7 +3,7 @@ import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
 import CampaignFilters from '../components/campaigns/CampaignFilters'
 import CampaignsListing from '../components/campaigns/CampaignsListing'
-import { distanceInWords } from 'date-fns'
+import { formatUpdateDescription } from '../lib/utils/format'
 
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
@@ -76,7 +76,7 @@ export class Campaigns extends Component {
               <ul>
                 <li className='list--inline refresh'>
                   <span className='list-label'>Last refreshed: </span>
-                  <span>{`${distanceInWords(refreshDate, new Date())} ago`}</span>
+                  <span>{formatUpdateDescription(refreshDate)}</span>
                 </li>
               </ul>
             </div>

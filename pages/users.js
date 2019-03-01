@@ -6,8 +6,7 @@ import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
-import { formatDecimal } from '../lib/utils/format'
-import { distanceInWords } from 'date-fns'
+import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 
 const AllUsersFilter = dynamic(() => import('../components/AllUsersFilter'), { ssr: false })
 
@@ -79,7 +78,7 @@ export class Users extends Component {
               <ul>
                 <li className='list--inline refresh'>
                   <span className='list-label'>Last refreshed: </span>
-                  <span>{`${distanceInWords(refreshDate, new Date())} ago`}</span>
+                  <span>{formatUpdateDescription(refreshDate)}</span>
                 </li>
               </ul>
             </div>

@@ -10,6 +10,7 @@ const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const db = require('../db/connection')
 const getCountriesEdited = require('../utils/getCountriesEdited')
+const refreshStatus = require('../utils/osmesaStatus.js')
 
 /**
  * User Stats Route
@@ -79,13 +80,7 @@ async function get (req, res) {
     osmesaData.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', osmesaData.extent_uri)
   }
 
-  let refreshDate = ''
-  try {
-    const refreshStats = await osmesa.getUpdates()
-    refreshDate = JSON.parse(refreshStats)['user_stats_refresh']
-  } catch (err) {
-    console.error(err)
-  }
+  const refreshDate = await refreshStatus('user_stats_refresh')
 
   let countriesEdited = getCountriesEdited(osmesaData.country_list)
 

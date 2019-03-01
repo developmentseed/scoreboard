@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from '../Link'
-import { parse, compareDesc, distanceInWords } from 'date-fns'
-import { formatTimeDescription } from '../../lib/utils/format'
+import { parse, compareDesc } from 'date-fns'
+import { formatEditTimeDescription, formatUpdateDescription } from '../../lib/utils/format'
 import { head } from 'ramda'
 
 /**
@@ -17,11 +17,11 @@ function getLastEdit (edit_times) {
 
   const days = edit_times.map(time => parse(time.day))
   const lastEdit = head(days.sort(compareDesc))
-  return formatTimeDescription(lastEdit)
+  return formatEditTimeDescription(lastEdit)
 }
 
 function DashboardHeader (props) {
-  const { loggedIn, id, edit_times, country, name, profileImage, refresh_date } = props
+  const { loggedIn, id, edit_times, country, name, profileImage, refreshDate } = props
 
   return (
     <header className='header--internal--green header--page'>
@@ -56,7 +56,7 @@ function DashboardHeader (props) {
             <ul>
               <li className='list--inline refresh'>
                 <span className='list-label'>Last refreshed: </span>
-                <span>{`${distanceInWords(new Date(), refresh_date)} ago`}</span>
+                <span>{formatUpdateDescription(refreshDate)}</span>
               </li>
             </ul>
           </div>

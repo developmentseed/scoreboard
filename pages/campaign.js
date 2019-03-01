@@ -7,7 +7,7 @@ import Router from '../lib/router'
 import { actions } from '../lib/store'
 import UserTable from '../components/UserTable'
 import ReactMarkdown from 'react-markdown'
-import { formatDecimal } from '../lib/utils/format'
+import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 import sumEdits from '../lib/utils/sum_edits'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import Blurb from '../components/campaign/CampaignBlurb'
@@ -100,7 +100,7 @@ export class Campaign extends Component {
                 </li>
                 <li className='list--inline refresh'>
                   <span className='list-label'>Last refreshed: </span>
-                  <span>{`${distanceInWords(refreshDate, new Date())} ago`}</span>
+                  <span>{formatUpdateDescription(refreshDate)}</span>
                 </li>
               </ul>
             </div>

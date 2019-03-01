@@ -5,7 +5,7 @@ const users = require('../models/users')
 const roles = require('../models/roles')
 const exclusion = require('../models/exclusion-list')
 const { validateRole } = require('../utils/roles')
-const osmesa = require('../services/osmesa')
+const refreshStatus = require('../utils/osmesaStatus.js')
 
 function applyFilters (query, req) {
   const search = req.query.q || ''
@@ -98,13 +98,7 @@ async function stats (req, res) {
         break
     }
 
-    let refreshDate = ''
-    try {
-      const refreshStats = await osmesa.getUpdates()
-      refreshDate = JSON.parse(refreshStats)['user_stats_refresh']
-    } catch (err) {
-      console.error(err)
-    }
+    const refreshDate = await refreshStatus('user_stats_refresh')
 
     const records = await recordQuery
       .limit(25)

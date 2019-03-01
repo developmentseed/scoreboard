@@ -52,7 +52,7 @@ export class User extends Component {
           name={name}
           edit_times={edit_times}
           country={country}
-          refresh_date={refreshDate}
+          refreshDate={refreshDate}
         />
         <ScoreboardPanel
           title={`${records.name}'s Scoreboard`}
