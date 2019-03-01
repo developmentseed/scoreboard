@@ -1,5 +1,6 @@
 const db = require('../db/connection')
 const countryList = require('../../../lib/utils/country-list.json')
+const refreshStatus = require('../utils/osmesaStatus.js')
 
 function applyFilters (query, req) {
   const search = req.query.q || ''
@@ -65,11 +66,14 @@ async function stats (req, res) {
       return c
     })
 
+    const refreshDate = await refreshStatus('country_stats_refresh')
+
     return res.send({
       records,
       subTotal: parseInt(subTotal[0].count, 10),
       total: parseInt(totalCountries[0].count, 10),
-      editTotal: records.reduce((sum, { edit_count }) => sum + parseInt(edit_count, 10), 0)
+      editTotal: records.reduce((sum, { edit_count }) => sum + parseInt(edit_count, 10), 0),
+      refreshDate
     })
   } catch (err) {
     console.error(err)
