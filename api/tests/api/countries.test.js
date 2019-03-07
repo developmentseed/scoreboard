@@ -59,7 +59,7 @@ test('Test countries list endpoint sorting', async (t) => {
 
 test('Test getting one country', async (t) => {
   const [oneCountry] = await db('user_country_edits').limit(1)
-  const { totalEdits } = await db('user_country_edits').sum('edit_count as totalEdits').where('country_name', 'ilike', oneCountry.country_name)
+  const [ { totalEdits } ] = await db('user_country_edits').sum('edit_count as totalEdits').where('country_name', 'ilike', oneCountry.country_name)
   const code = countryList.filter(c => c.name === oneCountry.country_name)[0].code
   const res = await request(app)
     .get(`/scoreboard/api/countries/${code}`)
