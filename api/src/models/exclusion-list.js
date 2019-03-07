@@ -19,6 +19,13 @@ function listOSMIds () {
       'users.id', 'exclusion_list.user_id')
 }
 
+/*
+* get included users
+*/
+function includedUsers () {
+  return db('users').whereNotIn('id', list())
+}
+
 /**
  * add to exclusion list
  *
@@ -91,6 +98,7 @@ module.exports = {
   remove,
   update,
   listOSMIds,
+  includedUsers,
   addOSMId,
   removeOSMId,
   updateOSMIds
