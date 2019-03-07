@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.3] - 2019-03-07
+
+### Fixed
+- Updated country statistics to not display users in the admin-selected exclusion list
+
 ## [v1.0.2] - 2019-03-07
 ### Fixed
 - Updated mock coastlines data to reflect new syntax
@@ -122,7 +127,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.0.3...HEAD
+[v1.0.3]: https://github.com/developmentseed/scoreboard/compare/v1.0.2...v1.0.3
 [v1.0.2]: https://github.com/developmentseed/scoreboard/compare/v1.0.1...v1.0.2
 [v1.0.1]: https://github.com/developmentseed/scoreboard/compare/v1...v1.0.1
 [v1]: https://github.com/developmentseed/scoreboard/compare/v0.2.4...v1
