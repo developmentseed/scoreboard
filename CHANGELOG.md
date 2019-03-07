@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.2] - 2019-03-07
+### Fixed
+- Updated mock coastlines data to reflect new syntax
+- Country statistics
+  - To get top participants, subset after ordering total list by number of changesets
+  - Accurate total edit count by country
+
 ## [v1.0.1] - 2019-02-22
 ### Changed
 - Standardize how a user's last edit time is reported
@@ -13,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Remove MVT artifacts produced by OSMesa in Leaflet fallback maps 
 
-## v1 - 2019-02-14
+## [v1] - 2019-02-14
 ### Added
 - Scoreboard backend
   - Ability to login using OSM (using passport in the backend)
@@ -115,7 +122,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.0.2...HEAD
+[v1.0.2]: https://github.com/developmentseed/scoreboard/compare/v1.0.1...v1.0.2
 [v1.0.1]: https://github.com/developmentseed/scoreboard/compare/v1...v1.0.1
 [v1]: https://github.com/developmentseed/scoreboard/compare/v0.2.4...v1
 [v0.2.4]: https://github.com/developmentseed/scoreboard/compare/v0.2.3...v0.2.4

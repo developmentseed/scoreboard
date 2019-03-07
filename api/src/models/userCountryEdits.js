@@ -39,6 +39,13 @@ function getNumberOfParticipants (country_name) {
     .where('country_name', 'ilike', country_name)
 }
 
+function getTotalEdits (country_name) {
+  return db('user_country_edits')
+    .leftJoin('users', 'user_id', 'users.id')
+    .sum('user_country_edits.edit_count as editCount')
+    .where('country_name', 'ilike', country_name)
+}
+
 /**
  * Get all users mapping in that country
  *
@@ -51,12 +58,12 @@ function getParticipants (country_name, limitNum) {
     return db('user_country_edits')
       .leftJoin('users', 'user_id', 'users.id')
       .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-      .where('country_name', 'ilike', country_name)
+      .where('country_name', 'ilike', country_name).orderBy('count', 'desc')
   } else {
     return db('user_country_edits')
       .leftJoin('users', 'user_id', 'users.id')
       .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-      .where('country_name', 'ilike', country_name).limit(limitNum)
+      .where('country_name', 'ilike', country_name).orderBy('count', 'desc').limit(limitNum)
   }
 }
 
@@ -83,5 +90,6 @@ module.exports = {
   getParticipants,
   update,
   isState,
-  updateUserCountryEdit
+  updateUserCountryEdit,
+  getTotalEdits
 }
