@@ -39,13 +39,13 @@ async function get (req, res) {
     if (userData === null) {
       return res.boom.notFound('Could not retrieve user stats')
     }
-    const [ { participantCount } ] = await userCountryEdits.getNumberOfParticipants(countryName)
-    const [{ editCount }] = await userCountryEdits.getTotalEdits(countryName)
+    const [ { count } ] = await userCountryEdits.getNumberOfParticipants(countryName)
+    const [ { editCount } ] = await userCountryEdits.getTotalEdits(countryName)
     return res.send({
       code,
       name: countryName,
       users: userData,
-      numParticipants: participantCount,
+      numParticipants: count,
       edit_count: editCount,
       geography: getCountryGeo(countryCode),
       records: osmesaData
