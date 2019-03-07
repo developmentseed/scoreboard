@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Updated mock coastlines data to reflect new syntax
+- Country statistics
+  - To get top participants, subset after ordering total list by number of changesets
+  - Accurate total edit count by country
+
 ## [v1.0.1] - 2019-02-22
 ### Changed
 - Standardize how a user's last edit time is reported
