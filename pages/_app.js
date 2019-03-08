@@ -35,6 +35,7 @@ const manifest = join(APP_URL_PREFIX, '/static/manifest.json')
 const appleIcon = join(APP_URL_PREFIX, '/static/apple-touch-icon.png')
 const msBrowserconfig = join(APP_URL_PREFIX, '/static/browserconfig.xml')
 const safariIcon = join(APP_URL_PREFIX, '/static/safari-pinned-tab.svg')
+const favicon = join(APP_URL_PREFIX, '/static/favicon.ico')
 
 const NavLink = withRouter(({ children, router, href }) => {
   const activeClass = router.pathname === href ? 'active' : ''
@@ -149,9 +150,11 @@ class Layout extends React.Component {
           <link rel='stylesheet' href='https://unpkg.com/leaflet@1.4.0/dist/leaflet.css'
             integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
             crossOrigin='' />
+          <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
 
           <link rel='manifest' href={manifest} />
           <link rel='apple-touch-icon' href={appleIcon} />
+          <link rel='shortcut icon' href={favicon} />
           <link rel='mask-icon' href={safariIcon} color='#ff0000' />
           <meta name='msapplication-config' content={msBrowserconfig} />
 

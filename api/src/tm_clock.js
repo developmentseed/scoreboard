@@ -10,22 +10,22 @@ const { featureCollection } = require('@turf/helpers')
  *
  * @returns {Promise} a response
  */
-async function tmWorker () {
+async function tmWorker (isCmd) {
   try {
     // Get taskers
     let taskers = await db('taskers').select()
     for (let i = 0; i < taskers.length; i++) {
       let { id, type, url, name, url_proxy } = taskers[i]
-      console.log(`Updating projects for ${name}`)
+      if (isCmd) console.log(`Updating projects for ${name}`)
       let tm = new TM(id, type, url, url_proxy)
-      console.log('Getting projects from API..')
+      if (isCmd) console.log('Getting projects from API..')
       let projects = await tm.getProjects()
       let dbObjects = await tm.toDBObjects(projects)
 
-      console.log('Updating database..')
+      if (isCmd) console.log('Updating database..')
       await tm.updateDB(db, dbObjects)
       await db('taskers').where('id', id).update('last_update', db.fn.now())
-      console.log(`${name} updated\n\n`)
+      if (isCmd) console.log(`${name} updated\n\n`)
     }
 
     // Get all features and turn them into a single featurecollection
@@ -50,7 +50,7 @@ async function tmWorker () {
 
 // Run
 if (require.main === module) {
-  tmWorker()
+  tmWorker(true)
     .then(() => {
       console.log(`Updated task records.`)
       process.exit(0)

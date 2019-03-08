@@ -1,5 +1,4 @@
 const router = require('express-promise-router')()
-const request = require('request')
 
 const user = require('./user')
 const users = require('./users')
@@ -15,15 +14,9 @@ const countries = require('./countries')
 const country = require('./country')
 const taskers = require('./taskers')
 
-const { OSMESA_API } = require('../config')
-
 /**
  * Route registration
  */
-router.get('/extents/*', (req, res) => {
-  const url = `${OSMESA_API}/tiles/${req.params[0]}`
-  req.pipe(request(url)).pipe(res)
-})
 router.get('/users', users.list)
 router.get('/users/stats', users.stats)
 router.get('/users/:id', user.get)

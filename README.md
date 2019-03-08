@@ -1,8 +1,20 @@
-# OSM Scoreboard 🗺 🎯
 
-[![CircleCI](https://circleci.com/gh/developmentseed/scoreboard.svg?style=svg)](https://circleci.com/gh/developmentseed/scoreboard)
+<h1 align="center">Scoreboard 🗺🎯</h1>
 
-A project to display OSM user contribution metrics and campaign metrics.
+<div align="center">
+Engaging and encouraging mappers of OpenStreetMap by rewarding contributions, promoting campaigns, and reporting current mapper statistics
+</div>
+
+<br />
+<div align="center">
+  <a href="https://circleci.com/gh/developmentseed/scoreboard">
+    <img src="https://circleci.com/gh/developmentseed/scoreboard.png" />
+  </a>
+  <a href="https://standardjs.com">
+    <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square"
+      alt="Standard" />
+  </a>
+</div>
 
 # 🔨 Development
 
@@ -19,24 +31,32 @@ To set the Node version as specified above:
 
 See [this tutorial](https://www.postgresql.org/download/) for details and instructions for installing PostgreSQL on your operating system
 
+### Services
+Scoreboard depends on three external services/APIs for statistics and functionality:
+- [OSMesa](https://github.com/azavea/osmesa) is a toolkit for processing large amounts of OSM vector data and turning them into stats (e.g: km of road added by user by country)
+- Scoreboard pulls campaigns from the [Tasking Manager](https://github.com/hotosm/tasking-manager) and uses the campaign hashtags to pull campaign specific aggregations from OSMesa
+- [OSM Teams](https://github.com/developmentseed/osm-teams) is a service that allows Scoreboard users to create teams and assign campaigns to a team.
+
 ### Env file
 
 There should be an env file in the root project directory with the following environment variables.
 
-For development simply run: `cp api/.env.sample api/.env`. In development, the Osmesa and Tasking Manager services are mocked, so the environment variables `TM_URL`, `TM_HASHTAG`, and `OSMESA_API` are not required. 
+For development simply run: `cp .env.sample .env`. In development, the Osmesa service is mocked, so the environment variables `OSMESA_API` is not required.
 
 | name | description
 | ---  | -----
 | NODE_ENV | The configuration to use, "test", "development" or "production"
-| TM_URL | The URL of the tasking manager to scrape
-| TM_HASHTAG | The default prefix the tasking manager uses as a hashtag (e.g. "osmus-project")
 | OSMESA_API | URL to the OSMESA http server that serves out statistics
 | APP_URL | URL where the site will be hosted
 | OSM_CONSUMER_KEY | An Oauth Key/Secret pair to authenticate with OSM
 | OSM_CONSUMER_SECRET | An Oauth Key/Secret pair to authenticate with OSM
 | OSM_DOMAIN | OSM endpoint (defaults to openstreetmap.com)
+| OSM_TEAMS_SERVICE | Location of the OSM teams API
 | SESSION_SECRET | A secret phrase to sign session tokens
 | DATABASE_URL | The location of the postgres database
+
+Once the Scoreboard app is running, you can add a tasking manager in the admin panel
+
 
 ## Installation and Dev
 
@@ -50,16 +70,7 @@ For development simply run: `cp api/.env.sample api/.env`. In development, the O
 
 This command will create and run the database on port `5433`. The database files are stored under `.tmp` folder.
 
-If you are running the command for the first time, you should wait until the database is created. This can take a few minutes. You'll see output like this when it is complete:
-
-```console
-db_1  | PostgreSQL init process complete; ready for start up.
-db_1  | 
-db_1  | LOG:  database system was shut down at 2018-11-09 16:11:05 UTC
-db_1  | LOG:  MultiXact member wraparound protections are now enabled
-db_1  | LOG:  database system is ready to accept connections
-db_1  | LOG:  autovacuum launcher started
-```
+If you are running the command for the first time, you should wait until the database is created. This can take a few minutes.
 
 To start with a new database with no data, stop the command, remove the `.tmp` folder and run the command again.
 
@@ -78,7 +89,7 @@ To generate fake user data run:
 
      $ yarn seed
 
-To populate fake campaign and tasking manager data run: 
+To populate tasking manager data run: 
 
      $ yarn clocks 
 

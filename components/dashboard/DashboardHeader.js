@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from '../Link'
-import { distanceInWordsToNow, parse, compareDesc } from 'date-fns'
+import { parse, compareDesc } from 'date-fns'
+import { formatTimeDescription } from '../../lib/utils/format'
 import { head } from 'ramda'
 
 /**
@@ -16,7 +17,7 @@ function getLastEdit (edit_times) {
 
   const days = edit_times.map(time => parse(time.day))
   const lastEdit = head(days.sort(compareDesc))
-  return `${distanceInWordsToNow(lastEdit)} ago`
+  return formatTimeDescription(lastEdit)
 }
 
 function DashboardHeader (props) {

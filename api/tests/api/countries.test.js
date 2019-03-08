@@ -4,7 +4,7 @@ const path = require('path')
 const test = require('ava')
 const request = require('supertest')
 const db = require('../../src/db/connection')
-const app = require('../../src/index')
+let app = require('../../src/index')
 const userClocks = require('../../src/users_clock')
 const countryList = require('../../../lib/utils/country-list.json')
 
@@ -13,6 +13,7 @@ const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async () => {
+  app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
 
@@ -21,7 +22,6 @@ test.before(async () => {
 })
 
 test.after.always(async () => {
-  await db.migrate.rollback({ directory: migrationsDirectory })
   await db.destroy()
 })
 
@@ -59,7 +59,7 @@ test('Test countries list endpoint sorting', async (t) => {
 
 test('Test getting one country', async (t) => {
   const [oneCountry] = await db('user_country_edits').limit(1)
-
+  const [ { totalEdits } ] = await db('user_country_edits').sum('edit_count as totalEdits').where('country_name', 'ilike', oneCountry.country_name)
   const code = countryList.filter(c => c.name === oneCountry.country_name)[0].code
   const res = await request(app)
     .get(`/scoreboard/api/countries/${code}`)
@@ -67,7 +67,8 @@ test('Test getting one country', async (t) => {
 
   t.is(res.body.code, code)
   t.truthy(res.body.users.length)
-  t.truthy(res.body.edit_count)
+  // Check total edit count
+  t.is(res.body.edit_count, totalEdits)
 })
 
 test('Test getting a country that doesnt exist', async (t) => {

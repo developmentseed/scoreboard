@@ -3,7 +3,7 @@
 const path = require('path')
 const test = require('ava')
 const db = require('../../src/db/connection')
-const app = require('../../src/index')
+let app = require('../../src/index')
 const { add, remove, list, update, listOSMIds, addOSMId, removeOSMId, updateOSMIds } = require('../../src/models/exclusion-list')
 const { prop } = require('ramda')
 
@@ -18,9 +18,10 @@ const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async () => {
+  app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
-  adminUser = await createAuthenticatedUser(app, [1])
+  adminUser = await createAuthenticatedUser(app, ['admin'])
   authenticatedUser = await createAuthenticatedUser(app, [])
   anonymousUser = createAnonymousUser(app)
 })
@@ -30,40 +31,41 @@ test.beforeEach(async () => {
 })
 
 test.after.always(async () => {
-  await db.migrate.rollback({ directory: migrationsDirectory })
   await db.destroy()
 })
 
 test.serial('add / remove / list', async t => {
   t.plan(6)
-  await add(1)
-  await add(2)
+  const users = await db('users').select('id').limit(2)
+  await add(users[0].id)
+  await add(users[1].id)
   let result = await list()
   t.true(result.length === 2)
 
   let resultSet = new Set(result.map(prop('user_id')))
-  t.true(resultSet.has(1))
-  t.true(resultSet.has(2))
+  t.true(resultSet.has(users[0].id))
+  t.true(resultSet.has(users[1].id))
 
-  await remove(2)
+  await remove(users[1].id)
   result = await list()
   t.true(result.length === 1)
   resultSet = new Set(result.map(prop('user_id')))
-  t.true(resultSet.has(1))
-  t.true(!resultSet.has(2))
+  t.true(resultSet.has(users[0].id))
+  t.true(!resultSet.has(users[1].id))
 })
 
 test.serial('update exclusion list', async t => {
-  await add(1)
-  await add(2)
-  await update([2, 3, 4])
+  const users = await db('users').select('id').limit(5)
+  await add(users[1].id)
+  await add(users[2].id)
+  await update([users[2].id, users[3].id, users[4].id])
   let result = await list()
   let resultSet = new Set(result.map(prop('user_id')))
   t.true(result.length === 3)
-  t.true(!resultSet.has(1))
-  t.true(resultSet.has(2))
-  t.true(resultSet.has(3))
-  t.true(resultSet.has(4))
+  t.true(!resultSet.has(users[1].id))
+  t.true(resultSet.has(users[2].id))
+  t.true(resultSet.has(users[3].id))
+  t.true(resultSet.has(users[4].id))
 })
 
 test.serial('add / remove / list using osm ids', async t => {
