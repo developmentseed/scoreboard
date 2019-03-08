@@ -42,7 +42,6 @@ function getNumberOfParticipants (country_name) {
 
 function getTotalEdits (country_name) {
   return db('user_country_edits')
-    .innerJoin(exclusionList.includedUsers().as('users'), 'user_id', 'users.id')
     .sum('user_country_edits.edit_count as editCount')
     .where('country_name', 'ilike', country_name).debug()
 }
