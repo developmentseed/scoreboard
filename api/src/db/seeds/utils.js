@@ -39,14 +39,15 @@ function generateOSMesaUser (id, name) {
 
   for (let i = 1; i < Math.floor(rand.random() * 20); i++) {
     let index = Math.floor(rand.random() * (countries.length - 1))
-
     editedCountries.push({
       'name': countries[index].name,
       'count': Math.floor(rand.random() * 100)
     })
 
+    let hashtagIndex = Math.floor(rand.random() * 100)
+
     editedHashtags.push({
-      'tag': `project-${i}`,
+      'tag': `project-${hashtagIndex}`,
       'count': Math.floor(rand.random() * 1000)
     })
   }
