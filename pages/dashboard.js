@@ -56,7 +56,7 @@ class Dashboard extends Component {
     }
     const { authenticatedUser } = this.props
     const { loggedIn, account } = authenticatedUser
-    const { assignments, favorites, country } = account
+    const { assignments, favorites, country, allCampaigns } = account
 
     const { badges, teams } = account
     const osmesaData = account.records
@@ -118,7 +118,7 @@ class Dashboard extends Component {
         <section className='section--dark'>
           <div className='row'>
             {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
-            <DashboardAssignments favorites={favorites} assignments={assignments} authenticatedUser={authenticatedUser} />
+            <DashboardAssignments favorites={favorites} assignments={assignments} authenticatedUser={authenticatedUser} all={allCampaigns} />
           </div>
         </section>
         <section>
