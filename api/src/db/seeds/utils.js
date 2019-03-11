@@ -37,18 +37,18 @@ function generateOSMesaUser (id, name) {
 
   const randomInt = () => parseInt(Math.floor(rand.random() * 1000000))
 
-  for (let i = 1; i < Math.floor(rand.random() * 20); i++) {
+  for (let i=20; i < 120; i++) {
+    editedHashtags.push({
+      'tag': `project-${i}`,
+      'count': Math.floor(rand.random() * 1000)
+    })
+  }
+
+  for (let i = 1; i < Math.floor(rand.random() * 30); i++) {
     let index = Math.floor(rand.random() * (countries.length - 1))
     editedCountries.push({
       'name': countries[index].name,
       'count': Math.floor(rand.random() * 100)
-    })
-
-    let hashtagIndex = Math.floor(rand.random() * 100)
-
-    editedHashtags.push({
-      'tag': `project-${hashtagIndex}`,
-      'count': Math.floor(rand.random() * 1000)
     })
   }
 
