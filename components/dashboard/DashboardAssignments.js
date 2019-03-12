@@ -19,7 +19,7 @@ class DashboardAssignments extends Component {
   }
 
   render () {
-    const { favorites, assignments, authenticatedUser } = this.props
+    const { favorites, assignments, authenticatedUser, all } = this.props
 
     const assignmentFilters = [
       { name: 'Teams', id: 'teams' },
@@ -39,7 +39,7 @@ class DashboardAssignments extends Component {
     const allCampaigns = {
       favorites: sortBy(prop('priority'), favorites),
       teams: teamAssignments,
-      all: teamAssignments.concat(favorites)
+      all
     }
 
     const assignmentsTable = allCampaigns[this.state.assignmentsFilter].map((assignment) => {
