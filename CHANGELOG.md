@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Leave excluded users' edits in aggregate statistics
+- Updated table header styles to fix bug in Admin "Exclude Users" table, applies to whole app
 
 ## [v1.0.3] - 2019-03-07
 
