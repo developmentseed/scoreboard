@@ -37,7 +37,7 @@ function generateOSMesaUser (id, name) {
 
   const randomInt = () => parseInt(Math.floor(rand.random() * 1000000))
 
-  for (let i=20; i < 120; i++) {
+  for (let i = 20; i < 120; i++) {
     editedHashtags.push({
       'tag': `project-${i}`,
       'count': Math.floor(rand.random() * 1000)
