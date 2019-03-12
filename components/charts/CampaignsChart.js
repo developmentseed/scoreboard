@@ -1,19 +1,35 @@
 import React from 'react'
 import { ResponsiveBar } from '@nivo/bar'
-import { sortBy, map, slice, compose, prop, reverse } from 'ramda'
+import { sortBy, slice, compose, prop, reverse } from 'ramda'
+import getTspanGroups from '../../lib/utils/getTspanGroups'
 
 /**
  * chartify
  * Takes props and turns them into chart data
  * @param {*} props
  */
-function chartify ({ hashtags }) {
+function chartify ({ campaigns, hashtags }) {
+  // merge campaigns and hashtags
+  let contributed = []
+  for (let i = 0; i < campaigns.length; i++) {
+    let tag = campaigns[i].campaign_hashtag
+    let hashtag = hashtags.find(h => {
+      return h.tag === tag
+    })
+    if (hashtag) {
+      contributed.push({
+        id: campaigns[i].name,
+        edits: hashtag.count
+      })
+    }
+  }
+
   return compose(
-    slice(0, 4),
-    map(({ tag, count }) => { return { id: tag, edits: count } }),
     reverse,
-    sortBy(prop('count'))
-  )(hashtags)
+    slice(0, 4),
+    reverse,
+    sortBy(prop('edits'))
+  )(contributed)
 }
 const theme = {
   axis: {
@@ -39,6 +55,38 @@ export default function CampaignCharts (props) {
               'right': 60,
               'bottom': 50,
               'left': 120
+            }}
+            axisLeft={{
+              tickSize: 0,
+              tickPadding: 25,
+              tickRotation: 0,
+              renderTick: ({
+                opacity,
+                textAnchor,
+                textBaseline,
+                textX,
+                textY,
+                theme,
+                value,
+                x,
+                y
+              }) => {
+                return (
+                  <g
+                    transform={`translate(${x},${y})`}
+                    style={{ opacity }}
+                  >
+                    <text
+                      alignmentBaseline={textBaseline}
+                      style={theme.axis.ticks.text}
+                      textAnchor={textAnchor}
+                      transform={`translate(${textX},${textY})`}
+                    >
+                      {getTspanGroups(value, 20)}
+                    </text>
+                  </g>
+                )
+              }
             }}
             theme={theme}
             padding={0.1}
