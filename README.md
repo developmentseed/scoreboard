@@ -85,13 +85,9 @@ You can rollback migrations with `yarn rollback`.
 ### Populate Data
 For the frontend and the API to work, you must have the data loaded on the local database.
 
-To generate fake user data run:
+To generate fake user and campaign data run:
 
      $ yarn seed
-
-To populate tasking manager data run: 
-
-     $ yarn clocks 
 
 ### Create an admin user
 
