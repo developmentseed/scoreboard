@@ -10,7 +10,7 @@ export default (props) => (
         <tr>
           <th>Rank</th>
           <th>Name</th>
-          <th>Changesets</th>
+          <th>{props.editType}</th>
         </tr>
       </thead>
       <tbody>

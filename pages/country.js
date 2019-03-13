@@ -48,7 +48,7 @@ export class Country extends Component {
           <div className='row widget-container'>
             <div className='widget-50'>
               <h3 className='header--medium'>Top 15 Participants</h3>
-              <UserTable users={users} />
+              <UserTable users={users} editType={'Edits'} />
             </div>
             <div className='widget-50'>
               <div className='map-lg'>
