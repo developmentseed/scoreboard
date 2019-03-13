@@ -136,7 +136,6 @@ body {
 }
 
 .section-sub--right {
-  margin-top: 1em;
   margin-left: auto;
   text-align: right;
   align-self: flex-end;
@@ -447,6 +446,7 @@ section {
 .refresh {
   font-style: italic;
   opacity: .85;
+  margin-bottom: 0.4rem;
 }
 mark {
   background-color: inherit;
