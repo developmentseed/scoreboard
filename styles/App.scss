@@ -39,7 +39,7 @@ nav {
     button {
       background: none;
       border: 0;
-      padding: 0 .5em 1.4em;
+      padding: 0 .5rem 1.4rem;
       color: #fff;
       font-size: 14px;
       font-family: $tertiary-font-family;
@@ -50,11 +50,11 @@ nav {
     color: #fff;
   }
   .logo {
-    font-size: 1.8em;
-    padding: .7em 0;
-    margin-right: .6em;
+    font-size: 1.8rem;
+    padding: .7rem 0;
+    margin-right: .6rem;
     @include media(medium-up) {
-      margin-right: 2em;
+      margin-right: 2rem;
     }
     a:hover {
       border-bottom: 0;
@@ -87,13 +87,13 @@ nav {
       margin-right: auto;
     }
     li {
-      margin-bottom: .5em;
+      margin-bottom: .5rem;
       @include media(small-up) {
         margin-bottom: 0;
-        margin-right: .75em;
+        margin-right: .75rem;
       }
       @include media(medium-up) {
-        margin-right: 3em;
+        margin-right: 3rem;
       }
     }
     li a {
@@ -104,7 +104,7 @@ nav {
     li a.active {
       border-bottom: 2px solid rgba(255,255,255,0.7);
       @include media(small-up) {
-        padding-bottom: .8em;
+        padding-bottom: 0.5rem;
       }
     }
     .logo {
@@ -140,8 +140,8 @@ nav {
 .login-menu {
   position: absolute;
   background-color: #fff;
-  top: 4em;
-  right: 0em;
+  top: 4rem;
+  right: 0rem;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -149,7 +149,7 @@ nav {
   a, a:visited, button, button:visited {
     color: $base-font-color;
     display: block;
-    padding: .8em 1em;
+    padding: .8rem 1rem;
     min-width: 180px;
     border-bottom: 0;
     transition: all 0.2s ease 0s;
@@ -159,12 +159,12 @@ nav {
     &:hover {
       border-bottom: 0;
       background-color: darken(#F7F7F7, 2%);
-      padding: .8em 1em;
+      padding: .8rem 1rem;
     }
   }
   button, button:visited {
     border-top: 1px solid lighten($light-text-color, 50%);
-    padding: 1em 1em;
+    padding: 1rem 1rem;
     width: 208px;
     &:hover {
       border-bottom: 0;
@@ -197,7 +197,7 @@ nav {
 .block--campaign {
   width: 48%;
   float: left;
-  margin-bottom: 3.5em;
+  margin-bottom: 3.5rem;
   box-sizing: border-box;
   &:nth-of-type(odd) {
     margin-right: 4%;
@@ -225,40 +225,40 @@ nav {
     border-top: 1px solid #fff;
     border-left: 0;
     width: 100%;
-    margin-top: 4em;
-    padding-top: 4em;
+    margin-top: 4rem;
+    padding-top: 4rem;
     margin-left: 0;
   }
 }
 
 .header--homepage {
   .num--large {
-    font-size: 4.25em;
+    font-size: 4.25rem;
     line-height: 54px;
     font-family: $heading-font-bold;
     @include media(small-down) {
-      font-size: 3.5em;
+      font-size: 3.5rem;
       line-height: 48px;
     }
   }
   .list--block {
-    margin-top: 1em;
+    margin-top: 1rem;
   }
 }
 
 .chart-bar--main {
   margin-top: auto;
   li {
-    margin-bottom: .2em;
+    margin-bottom: .2rem;
   }
 }
 
 .chart-bar--title {
   width: 12%;
   float: left;
-  margin-right: .5em;
+  margin-right: .5rem;
   font-family: $tertiary-font-family;
-  font-size: .86em;
+  font-size: .86rem;
 }
 
 .chart-bar--wrapper {
@@ -274,17 +274,17 @@ nav {
   position: absolute;
   background-color: $green-color;
   height: 8px;
-  margin-right: .5em;
+  margin-right: .5rem;
   max-width: 100%;
 }
 
 .chart-bar--percent {
   font-family: $tertiary-font-family;
   color: lighten($green-color, 5%);
-  font-size: .86em;
+  font-size: .86rem;
   position: absolute;
-  right: -3em;
-  top: -.5em;
+  right: -3rem;
+  top: -.5rem;
 }
 
 .img-about1 {
@@ -297,7 +297,7 @@ nav {
 
 .img-about2 {
   max-width: 700px;
-  margin-right: 5em;
+  margin-right: 5rem;
   width: 60%;
   @include media(small-down) {
     width: 100%;
@@ -351,16 +351,16 @@ nav {
   color: #fff;
   transition: all 0.2s ease 0s;
   border-bottom: 2px solid rgba(255,255,255,0);
-  padding: 0 .5em 1.4em;
+  padding: 0 .5rem 1.4rem;
 }
 
 .link--login:hover {
   border-bottom: 2px solid rgba(255,255,255,.8);
-  padding-bottom: .8em;
+  padding-bottom: .8rem;
 }
 
 .active .link--login {
-  padding-bottom: .8em;
+  padding-bottom: .8rem;
   border-bottom: 2px solid rgba(255,255,255,.4);
 }
 
@@ -370,7 +370,7 @@ footer {
   font-family: $tertiary-font-family;
   text-transform: uppercase;
   line-height: 2;
-  padding: 2em 0;
+  padding: 2rem 0;
   .row {
     display: flex;
     flex-direction: column;
@@ -393,7 +393,7 @@ footer {
     }
   }
   .footer__logo{
-    max-height: 5em;
+    max-height: 5rem;
     mix-blend-mode: luminosity;
   }
 }
@@ -401,13 +401,20 @@ footer {
   display: flex;
   flex-direction: column;
   color: #fff;
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
   .logo {
-    font-size: 1.5em;
-    margin-bottom: .5em;
+    font-size: 1.5rem;
+    margin-bottom: .5rem;
     border-bottom: 1px solid #fff;
     a:hover {
       border-bottom: none;
+    }
+    span {
+      font-size: 1rem;
+      letter-spacing: 0;
+      color: $base-color;
+      border-bottom: none;
+      padding-left: 0.5rem;
     }
   }
   li {
