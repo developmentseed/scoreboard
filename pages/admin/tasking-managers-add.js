@@ -6,6 +6,7 @@ import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
+import QueryParameters from '../../components/QueryParameters'
 import Select from 'react-select'
 import Link from '../../components/Link'
 
@@ -20,7 +21,8 @@ export class AdminTaskersAdd extends Component {
       nameInput: '',
       typeInput: null,
       urlInput: '',
-      urlProxyInput: ''
+      urlProxyInput: '',
+      qsInput: ''
     }
 
     // Event handlers
@@ -30,6 +32,7 @@ export class AdminTaskersAdd extends Component {
     this.handleUrlInputChange = this.handleUrlInputChange.bind(this)
     this.handleUrlProxyInputChange = this.handleUrlProxyInputChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
+    this.handleQSChange = this.handleQSChange.bind(this)
     this.resetInputs = this.resetInputs.bind(this)
   }
 
@@ -223,6 +226,15 @@ export class AdminTaskersAdd extends Component {
             value={this.state.urlProxyInput}
           />
         </div>
+        <div className='form__input-unit'>
+          <label
+            className='form__label'
+            htmlFor='add-tasker-qs'
+          >
+            Query parameters
+          </label>
+          <QueryParameters onChange={this.handleQSChange} />
+        </div>
       </div>
     )
   }
@@ -261,6 +273,13 @@ export class AdminTaskersAdd extends Component {
     })
   }
 
+  handleQSChange (qs) {
+    console.log(qs)
+    this.setState({
+      qsInput: qs
+    })
+  }
+
   handleAddNewTaskerFormSubmit (e) {
     e.preventDefault()
 
@@ -269,7 +288,8 @@ export class AdminTaskersAdd extends Component {
       nameInput,
       urlInput,
       urlProxyInput,
-      typeInput
+      typeInput,
+      qsInput
     } = this.state
 
     const params = {
@@ -277,7 +297,8 @@ export class AdminTaskersAdd extends Component {
       name: nameInput,
       url: urlInput,
       url_proxy: urlProxyInput,
-      type: typeInput.value
+      type: typeInput.value,
+      search_params: qsInput
     }
 
     this.createTasker(params)
@@ -289,7 +310,8 @@ export class AdminTaskersAdd extends Component {
       urlInput: '',
       urlProxyInput: '',
       disableInteraction: false,
-      nameInput: ''
+      nameInput: '',
+      qsInput: ''
     })
   }
 }
