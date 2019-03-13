@@ -46,17 +46,18 @@ function generateOSMesaUser (id, name) {
 
   const randomInt = () => parseInt(Math.floor(rand.random() * 1000000))
 
-  for (let i = 1; i < Math.floor(rand.random() * 20); i++) {
-    let index = Math.floor(rand.random() * (countries.length - 1))
-
-    editedCountries.push({
-      'name': countries[index].name,
-      'count': Math.floor(rand.random() * 100)
-    })
-
+  for (let i = 20; i < 120; i++) {
     editedHashtags.push({
       'tag': `project-${i}`,
       'count': Math.floor(rand.random() * 1000)
+    })
+  }
+
+  for (let i = 1; i < Math.floor(rand.random() * 30); i++) {
+    let index = Math.floor(rand.random() * (countries.length - 1))
+    editedCountries.push({
+      'name': countries[index].name,
+      'count': Math.floor(rand.random() * 100)
     })
   }
 
@@ -80,9 +81,9 @@ function generateOSMesaUser (id, name) {
     'waterways_add': randomInt(),
     'km_waterways_add': randomInt(),
     'coastlines_add': randomInt(),
-    'km_coastline_add': randomInt(),
+    'km_coastlines_add': randomInt(),
     'coastlines_mod': randomInt(),
-    'km_coastline_mod': randomInt(),
+    'km_coastlines_mod': randomInt(),
     'poi_add': randomInt(),
     'changeset_count': randomInt(),
     'edit_count': randomInt(),

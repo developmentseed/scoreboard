@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Add OSMESA status as "Last Refreshed" to pages using OSMESA stats
+- On user page and dashboard, top campaigns will now show names of campaigns contributed to instead of hashtags contributed to
+
+### Changed
+- On the user dashboard, the "all campaigns" component will show all campaigns contributed to instead of assignments + favorites
+
+### Fixed
+- Leave excluded users' edits in aggregate statistics
+- Updated table header styles to fix bug in Admin "Exclude Users" table, applies to whole app
+
+## [v1.0.3] - 2019-03-07
+
+### Fixed
+- Updated country statistics to not display users in the admin-selected exclusion list
+
+## [v1.0.2] - 2019-03-07
+### Fixed
+- Updated mock coastlines data to reflect new syntax
+- Country statistics
+  - To get top participants, subset after ordering total list by number of changesets
+  - Accurate total edit count by country
 
 ## [v1.0.1] - 2019-02-22
 ### Changed
@@ -117,7 +137,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.0.3...HEAD
+[v1.0.3]: https://github.com/developmentseed/scoreboard/compare/v1.0.2...v1.0.3
+[v1.0.2]: https://github.com/developmentseed/scoreboard/compare/v1.0.1...v1.0.2
 [v1.0.1]: https://github.com/developmentseed/scoreboard/compare/v1...v1.0.1
 [v1]: https://github.com/developmentseed/scoreboard/compare/v0.2.4...v1
 [v0.2.4]: https://github.com/developmentseed/scoreboard/compare/v0.2.3...v0.2.4

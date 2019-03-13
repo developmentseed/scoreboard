@@ -1,4 +1,5 @@
 const db = require('../db/connection')
+const exclusionList = require('./exclusion-list.js')
 
 // list of all US states
 const usStateNames = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
@@ -34,9 +35,15 @@ function get (id) {
  */
 function getNumberOfParticipants (country_name) {
   return db('user_country_edits')
-    .leftJoin('users', 'user_id', 'users.id')
+    .innerJoin(exclusionList.includedUsers().as('users'), 'user_id', 'users.id')
     .count('users.osm_id')
     .where('country_name', 'ilike', country_name)
+}
+
+function getTotalEdits (country_name) {
+  return db('user_country_edits')
+    .sum('user_country_edits.edit_count as editCount')
+    .where('country_name', 'ilike', country_name).debug()
 }
 
 /**
@@ -49,14 +56,14 @@ function getNumberOfParticipants (country_name) {
 function getParticipants (country_name, limitNum) {
   if (typeof limitNum === 'undefined') {
     return db('user_country_edits')
-      .leftJoin('users', 'user_id', 'users.id')
+      .innerJoin(exclusionList.includedUsers().as('users'), 'user_id', 'users.id')
       .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-      .where('country_name', 'ilike', country_name)
+      .where('country_name', 'ilike', country_name).orderBy('count', 'desc')
   } else {
     return db('user_country_edits')
-      .leftJoin('users', 'user_id', 'users.id')
+      .innerJoin(exclusionList.includedUsers().as('users'), 'user_id', 'users.id')
       .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-      .where('country_name', 'ilike', country_name).limit(limitNum)
+      .where('country_name', 'ilike', country_name).orderBy('count', 'desc').limit(limitNum)
   }
 }
 
@@ -83,5 +90,6 @@ module.exports = {
   getParticipants,
   update,
   isState,
-  updateUserCountryEdit
+  updateUserCountryEdit,
+  getTotalEdits
 }

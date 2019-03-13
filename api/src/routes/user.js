@@ -11,6 +11,7 @@ const { canEditUser } = require('../passport')
 const db = require('../db/connection')
 const getCountriesEdited = require('../utils/getCountriesEdited')
 const refreshStatus = require('../utils/osmesaStatus.js')
+const { prop } = require('ramda')
 
 /**
  * User Stats Route
@@ -136,6 +137,9 @@ async function get (req, res) {
     console.error(err)
   }
 
+  //
+  let allCampaigns = await db('campaigns').whereIn('campaign_hashtag', osmesaData.hashtags.map(prop('tag')))
+
   return res.send({
     id,
     uid,
@@ -144,6 +148,7 @@ async function get (req, res) {
     assignments,
     favorites,
     refreshDate,
+    allCampaigns,
     records: osmesaData,
     roles: rolesList,
     countriesEdited,
