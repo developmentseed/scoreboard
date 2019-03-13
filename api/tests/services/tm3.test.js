@@ -59,7 +59,7 @@ test.serial('Test TM3 schema', async t => {
 })
 
 test.serial('Test URL forming', async t => {
-  const tm = new TM(1, 'tm3', 'http://tasks.openstreetmap.us', 'http://localhost:4848')
+  const tm = new TM(1, 'tm3', 'http://tasks.openstreetmap.us', { proxy: 'http://localhost:4848' })
   let projects = await tm.getProjects() // Should get from the proxy
 
   const project = projects.find(p => p.projectId === 77)
