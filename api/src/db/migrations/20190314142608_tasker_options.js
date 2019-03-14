@@ -20,7 +20,6 @@ exports.up = async function (knex) {
     await knex.schema.alterTable('taskers', t => {
       t.dropColumn('url_proxy')
     })
-
   } catch (e) {
     console.error(e)
   }
