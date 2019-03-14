@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import qs from 'query-string'
-import { zipObj, map, prop, isNil } from 'ramda'
+import { zipObj, map, prop, isNil, remove } from 'ramda'
 
 const emptyParam = () => ({ key: null, value: null })
 
@@ -15,6 +15,7 @@ class QueryParameters extends Component {
     this.update = this.update.bind(this)
     this.onChange = this.onChange.bind(this)
     this.addNewParam = this.addNewParam.bind(this)
+    this.removeParam = this.removeParam.bind(this)
   }
 
   update (idx, field) {
@@ -25,7 +26,18 @@ class QueryParameters extends Component {
       params[idx][field] = e.target.value
       component.setState({
         params
-      }, component.onChange())
+      }, component.onChange)
+    }
+  }
+
+  removeParam (idx) {
+    const component = this
+    return function (e) {
+      e.preventDefault()
+      let params = remove(idx, 1, component.state.params)
+      component.setState({
+        params
+      }, component.onChange)
     }
   }
 
@@ -61,6 +73,13 @@ class QueryParameters extends Component {
             <div key={idx} style={{ marginBottom: '5px' }}>
               <input type='text' placeholder='Key' style={{ width: '40%', margin: 'auto' }} onChange={this.update(idx, 'key')} />
               <input type='text' placeholder='Value' style={{ width: '40%', marginLeft: '4px' }} onChange={this.update(idx, 'value')} />
+              <input
+                type='button'
+                className='button'
+                id='add-new-param-button'
+                onClick={this.removeParam(idx)}
+                value='-'
+              />
             </div>
           ))
         }
