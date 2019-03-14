@@ -47,7 +47,6 @@ const NavLink = withRouter(({ children, router, href }) => {
 const { publicRuntimeConfig } = getConfig()
 const VersionNumber = publicRuntimeConfig.versionNumber
 
-console.log(VersionNumber)
 
 function Footer (props) {
   return (
