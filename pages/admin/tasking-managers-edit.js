@@ -6,6 +6,7 @@ import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
+import QueryParameters from '../../components/QueryParameters'
 import Select from 'react-select'
 import Link from '../../components/Link'
 
@@ -20,7 +21,8 @@ export class AdminTaskersEdit extends Component {
       nameInput: '',
       urlInput: '',
       urlProxyInput: '',
-      typeInput: null
+      typeInput: null,
+      qsInput: ''
     }
 
     // Event handlers
@@ -30,6 +32,7 @@ export class AdminTaskersEdit extends Component {
     this.handleUrlInputChange = this.handleUrlInputChange.bind(this)
     this.handleUrlProxyInputChange = this.handleUrlProxyInputChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
+    this.handleQSChange = this.handleQSChange.bind(this)
     this.resetInputs = this.resetInputs.bind(this)
   }
 
@@ -53,7 +56,8 @@ export class AdminTaskersEdit extends Component {
         nameInput: tasker.name || '',
         descriptionInput: tasker.description || '',
         urlInput: tasker.url || '',
-        urlProxyInput: tasker.url_proxy || '',
+        urlProxyInput: tasker.options.proxy || '',
+        qsInput: tasker.options.search_params || '',
         typeInput: tasker.type || null
       })
     }
@@ -295,6 +299,15 @@ export class AdminTaskersEdit extends Component {
             value={this.state.urlProxyInput}
           />
         </div>
+        <div className='form__input-unit'>
+          <label
+            className='form__label'
+            htmlFor='add-tasker-qs'
+          >
+            Query parameters
+          </label>
+          <QueryParameters params={this.state.qsInput} onChange={this.handleQSChange} />
+        </div>
       </div>
     )
   }
@@ -333,6 +346,12 @@ export class AdminTaskersEdit extends Component {
     })
   }
 
+  handleQSChange (qs) {
+    this.setState({
+      qsInput: qs
+    })
+  }
+
   handleUpdateFormSubmit (e) {
     e.preventDefault()
 
@@ -341,15 +360,19 @@ export class AdminTaskersEdit extends Component {
       nameInput,
       urlInput,
       urlProxyInput,
-      typeInput
+      typeInput,
+      qsInput
     } = this.state
 
     const params = {
       description: descriptionInput,
       name: nameInput,
       url: urlInput,
-      url_proxy: urlProxyInput,
-      type: typeInput.value
+      type: typeInput.value,
+      options: {
+        search_params: qsInput,
+        proxy: urlProxyInput
+      }
     }
 
     this.updateTasker(params)
@@ -362,7 +385,8 @@ export class AdminTaskersEdit extends Component {
       urlProxyInput: '',
       typeInput: undefined,
       disableInteraction: false,
-      nameInput: ''
+      nameInput: '',
+      qsInput: ''
     })
   }
 }
