@@ -233,7 +233,7 @@ export class AdminTaskersAdd extends Component {
           >
             Query parameters
           </label>
-          <QueryParameters onChange={this.handleQSChange} />
+          <QueryParameters params={this.state.qsInput} onChange={this.handleQSChange} />
         </div>
       </div>
     )
@@ -274,7 +274,6 @@ export class AdminTaskersAdd extends Component {
   }
 
   handleQSChange (qs) {
-    console.log(qs)
     this.setState({
       qsInput: qs
     })
@@ -296,9 +295,11 @@ export class AdminTaskersAdd extends Component {
       description: descriptionInput,
       name: nameInput,
       url: urlInput,
-      url_proxy: urlProxyInput,
       type: typeInput.value,
-      search_params: qsInput
+      options: {
+        search_params: qsInput,
+        proxy: urlProxyInput
+      }
     }
 
     this.createTasker(params)
