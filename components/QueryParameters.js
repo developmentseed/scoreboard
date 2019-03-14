@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import qs from 'query-string'
-import { zipObj, map, prop } from 'ramda'
+import { zipObj, map, prop, isNil } from 'ramda'
 
 class QueryParameters extends Component {
   constructor (props) {
@@ -79,7 +79,7 @@ class QueryParameters extends Component {
         <div style={{ marginTop: '5px', marginBottom: '5px' }}>
           <input type='text' placeholder='Key' value={this.state.key} style={{ width: '30%', margin: 'auto' }} onChange={this.update('key')} />
           <input type='text' placeholder='Value' value={this.state.value} style={{ width: '30%', marginLeft: '4px' }} onChange={this.update('value')} />
-          <input type='button' value={'save'} style={{ width: '30%', marginLeft: '4px' }} onClick={this.addParam} />
+          <input type='button' disabled={isNil(this.state.key) || this.state.key.length === 0} value={'save'} style={{ width: '30%', marginLeft: '4px' }} onClick={this.addParam} />
         </div>
         <br />
       </div>
