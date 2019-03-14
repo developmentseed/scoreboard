@@ -130,7 +130,7 @@ export class Campaign extends Component {
         <section className='section--tertiary'>
           <div className='row'>
             <Blurb {...records} />
-            <UserTable users={users} />
+            <UserTable users={users} editType={'Changesets'} />
           </div>
         </section>
       </div>
