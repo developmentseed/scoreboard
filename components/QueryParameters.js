@@ -1,96 +1,87 @@
 import React, { Component } from 'react'
 import qs from 'query-string'
-import { zipObj, map, prop, isNil, remove } from 'ramda'
-
-const emptyParam = () => ({ key: null, value: null })
+import { zipObj, map, prop } from 'ramda'
 
 class QueryParameters extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      params: [emptyParam()]
+      key: '',
+      value: ''
     }
 
     this.update = this.update.bind(this)
+    this.parse = this.parse.bind(this)
     this.onChange = this.onChange.bind(this)
-    this.addNewParam = this.addNewParam.bind(this)
+    this.addParam = this.addParam.bind(this)
     this.removeParam = this.removeParam.bind(this)
   }
 
-  update (idx, field) {
-    const component = this
-    return function (e) {
-      e.preventDefault()
-      let params = component.state.params
-      params[idx][field] = e.target.value
-      component.setState({
-        params
-      }, component.onChange)
-    }
-  }
-
-  removeParam (idx) {
-    const component = this
-    return function (e) {
-      e.preventDefault()
-      let params = remove(idx, 1, component.state.params)
-      component.setState({
-        params
-      }, component.onChange)
-    }
-  }
-
-  addNewParam () {
-    let params = this.state.params
-    params.push(emptyParam())
-    this.setState({
-      params
+  parse (params) {
+    if (!params) return []
+    let places = (params).split('&')
+    let newParams = places.map(str => {
+      let pair = str.split('=')
+      return { 'key': pair[0] || '', 'value': pair[1] || '' }
     })
+    return newParams
   }
 
-  onChange () {
-    // Filter out not entirely filled out params
-    let params = this.state.params.filter(pair =>
-      !(isNil(pair.key) || isNil(pair.value) || (pair.key.length === 0) || (pair.value.length === 0))
-    )
+  addParam () {
+    let params = this.parse(this.props.params)
+    params.push({ 'key': this.state.key, 'value': this.state.value })
+    this.setState({
+      key: '',
+      value: ''
+    }, () => this.onChange(params))
+  }
 
-    if (params.length) {
-      // [{ key, value }, { key, value }] => {key:value, key:value}
-      let paramBuilder = zipObj(map(prop('key'), params), map(prop('value'), params))
+  removeParam (p) {
+    let params = this.parse(this.props.params)
+    params = params.filter(param => !((param.key === p.key) && param.value === p.value))
+    this.setState({
+      key: '',
+      value: ''
+    }, () => this.onChange(params))
+  }
 
-      this.props.onChange(qs.stringify(paramBuilder))
+  update (field) {
+    const component = this
+    return function (e) {
+      e.preventDefault()
+      component.setState({ [field]: e.target.value })
     }
+  }
+
+  onChange (params) {
+    // [{ key, value }, { key, value }] => {key:value, key:value}
+    let paramBuilder = zipObj(map(prop('key'), params), map(prop('value'), params))
+
+    this.props.onChange(qs.stringify(paramBuilder))
   }
 
   render () {
-    let { params } = this.state
+    let params = this.parse(this.props.params)
 
     return (
       <div>
         {
           params.map((p, idx) => (
             <div key={idx} style={{ marginBottom: '5px' }}>
-              <input type='text' placeholder='Key' style={{ width: '40%', margin: 'auto' }} onChange={this.update(idx, 'key')} />
-              <input type='text' placeholder='Value' style={{ width: '40%', marginLeft: '4px' }} onChange={this.update(idx, 'value')} />
-              <input
-                type='button'
-                className='button'
-                id='add-new-param-button'
-                onClick={this.removeParam(idx)}
-                value='-'
-              />
+              <input type='text' placeholder='Key' disabled value={p.key} style={{ width: '30%', margin: 'auto' }} />
+              <input type='text' placeholder='Value' disabled value={p.value} style={{ width: '30%', marginLeft: '4px' }} />
+              <input type='button' value={'remove'} style={{ width: '30%', marginLeft: '4px' }} onClick={() => this.removeParam(p)} />
             </div>
           ))
         }
         <br />
-        <input
-          type='button'
-          className='button'
-          id='add-new-param-button'
-          onClick={this.addNewParam}
-          value='Add new parameter'
-        />
+        <div style={{ marginTop: '5px', marginBottom: '5px' }}>
+          <input type='text' placeholder='Key' value={this.state.key} style={{ width: '30%', margin: 'auto' }} onChange={this.update('key')} />
+          <input type='text' placeholder='Value' value={this.state.value} style={{ width: '30%', marginLeft: '4px' }} onChange={this.update('value')} />
+          <input type='button' value={'save'} style={{ width: '30%', marginLeft: '4px' }} onClick={this.addParam} />
+        </div>
+        <br />
       </div>
     )
   }
