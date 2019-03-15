@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import qs from 'query-string'
-import { zipObj, map, prop, isNil, equals, reject } from 'ramda'
+import { isNil } from 'ramda'
 
 class QueryParameters extends Component {
   constructor (props) {
@@ -12,43 +11,34 @@ class QueryParameters extends Component {
     }
 
     this.update = this.update.bind(this)
-    this.parse = this.parse.bind(this)
     this.onChange = this.onChange.bind(this)
     this.addParam = this.addParam.bind(this)
     this.removeParam = this.removeParam.bind(this)
     this.editParam = this.editParam.bind(this)
   }
 
-  parse (params) {
-    if (!params) return []
-    let places = (params).split('&')
-    let newParams = places.map(str => {
-      let pair = str.split('=')
-      return { 'key': pair[0] || '', 'value': pair[1] || '' }
-    })
-    return newParams
-  }
-
   addParam () {
-    let params = this.parse(this.props.params)
-    params.push({ 'key': this.state.key, 'value': this.state.value })
+    let params = Object.assign({}, this.props.params)
+    params[this.state.key] = this.state.value
     this.setState({
       key: '',
       value: ''
     }, () => this.onChange(params))
   }
 
-  removeParam (p) {
-    let params = this.parse(this.props.params)
-    params = reject(equals(p), params)
+  removeParam (key) {
+    let params = Object.assign({}, this.props.params)
+    delete params[key]
     this.setState({
       key: '',
       value: ''
     }, () => this.onChange(params))
   }
 
-  editParam (p) {
-    this.setState(p)
+  editParam (key) {
+    let params = Object.assign({}, this.props.params)
+    let param = params[key]
+    this.setState(param)
   }
 
   update (field) {
@@ -60,24 +50,22 @@ class QueryParameters extends Component {
   }
 
   onChange (params) {
-    // [{ key, value }, { key, value }] => {key:value, key:value}
-    let paramBuilder = zipObj(map(prop('key'), params), map(prop('value'), params))
-
-    this.props.onChange(qs.stringify(paramBuilder))
+    this.props.onChange(params)
   }
 
   render () {
-    let params = this.parse(this.props.params)
+    let params = Object.assign({}, this.props.params)
+    console.log(params)
 
     return (
       <div>
         {
-          params.map((p, idx) => (
-            <div key={idx} style={{ marginBottom: '5px' }}>
-              <input type='text' placeholder='Key' disabled value={p.key} style={{ width: '20%', margin: 'auto' }} />
-              <input type='text' placeholder='Value' disabled value={p.value} style={{ width: '20%', marginLeft: '4px' }} />
-              <input type='button' value={'remove'} style={{ width: '20%', marginLeft: '4px' }} onClick={() => this.removeParam(p)} />
-              <input type='button' value={'edit'} style={{ width: '20%', marginLeft: '4px' }} onClick={() => this.editParam(p)} />
+          Object.keys(params).map(key => (
+            <div key={key} style={{ marginBottom: '5px' }}>
+              <input type='text' placeholder='Key' disabled value={key} style={{ width: '20%', margin: 'auto' }} />
+              <input type='text' placeholder='Value' disabled value={params[key]} style={{ width: '20%', marginLeft: '4px' }} />
+              <input type='button' value={'remove'} style={{ width: '20%', marginLeft: '4px' }} onClick={() => this.removeParam(key)} />
+              <input type='button' value={'edit'} style={{ width: '20%', marginLeft: '4px' }} onClick={() => this.editParam(key)} />
             </div>
           ))
         }
