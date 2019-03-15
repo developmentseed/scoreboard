@@ -89,6 +89,12 @@ $border-color: #ccc;
     margin-bottom: 1rem;
     .form-flex {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .button {
+        font-size: 0.8rem;
+        margin: 0 0.5rem;
+      }
     }
   }
 
@@ -160,7 +166,8 @@ $border-color: #ccc;
   }
 }
 
-.button--secondary {
+.button--secondary,
+.admin .button--secondary {
   background-color: white;
   color: $base-color;
   transition: color 300ms ease-in-out;
@@ -172,7 +179,8 @@ $border-color: #ccc;
   }
 }
 
-.button--destroy {
+.button--destroy,
+.admin .button--destroy {
   border-color: #CA4F4F;
   color: #CA4F4F;
   background-color: white;

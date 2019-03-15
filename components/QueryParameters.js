@@ -64,8 +64,8 @@ class QueryParameters extends Component {
             <div key={key} className='form-flex'>
               <input type='text' placeholder='Key' disabled value={key} />
               <input type='text' placeholder='Value' disabled value={params[key]} />
-              <input className='button button-destroy' type='button' value={'remove'} onClick={() => this.removeParam(key)} />
-              <input className='button' type='button' value={'edit'} onClick={() => this.editParam(key)} />
+              <input className='button button--destroy' type='button' value={'remove'} onClick={() => this.removeParam(key)} />
+              <input className='button button--secondary' type='button' value={'edit'} onClick={() => this.editParam(key)} />
             </div>
           ))
         }
