@@ -61,19 +61,19 @@ class QueryParameters extends Component {
       <div>
         {
           Object.keys(params).map(key => (
-            <div key={key} style={{ marginBottom: '5px' }}>
-              <input type='text' placeholder='Key' disabled value={key} style={{ width: '20%', margin: 'auto' }} />
-              <input type='text' placeholder='Value' disabled value={params[key]} style={{ width: '20%', marginLeft: '4px' }} />
-              <input type='button' value={'remove'} style={{ width: '20%', marginLeft: '4px' }} onClick={() => this.removeParam(key)} />
-              <input type='button' value={'edit'} style={{ width: '20%', marginLeft: '4px' }} onClick={() => this.editParam(key)} />
+            <div key={key} className='form-flex'>
+              <input type='text' placeholder='Key' disabled value={key} />
+              <input type='text' placeholder='Value' disabled value={params[key]} />
+              <input className='button button-destroy' type='button' value={'remove'} onClick={() => this.removeParam(key)} />
+              <input className='button' type='button' value={'edit'} onClick={() => this.editParam(key)} />
             </div>
           ))
         }
         <br />
-        <div style={{ marginTop: '5px', marginBottom: '5px' }}>
-          <input type='text' placeholder='Key' value={this.state.key} style={{ width: '30%', margin: 'auto' }} onChange={this.update('key')} />
-          <input type='text' placeholder='Value' value={this.state.value} style={{ width: '30%', marginLeft: '4px' }} onChange={this.update('value')} />
-          <input type='button' disabled={isNil(this.state.key) || this.state.key.length === 0} value={'save'} style={{ width: '30%', marginLeft: '4px' }} onClick={this.addParam} />
+        <div className='form-flex'>
+          <input type='text' placeholder='Key' value={this.state.key} onChange={this.update('key')} />
+          <input type='text' placeholder='Value' value={this.state.value} onChange={this.update('value')} />
+          <input className='button' type='button' disabled={isNil(this.state.key) || this.state.key.length === 0} value={'save'} onClick={this.addParam} />
         </div>
         <br />
       </div>
