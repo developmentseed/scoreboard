@@ -38,7 +38,6 @@ class TM3API {
       qs = Object.assign(this.opts.search_params, qs)
     }
 
-    let records = []
     let firstResp = await rp({
       uri: `${this.api_url}/api/v1/project/search`,
       qs,
@@ -46,7 +45,7 @@ class TM3API {
     })
     let json = JSON.parse(firstResp)
 
-    concat(records, json.results)
+    let projects = json.results
 
     let numPages = json.pagination.pages
     let promises = []
@@ -58,9 +57,8 @@ class TM3API {
         headers: { 'Accept-Language': 'en-US,en;q=0.9' }
       })))
     }
-    return Promise.all(promises).then(responses => {
-      let projects = []
 
+    return Promise.all(promises).then(responses => {
       responses.forEach(response => {
         let results = JSON.parse(response).results
         results.forEach(project => {
