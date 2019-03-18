@@ -1,7 +1,7 @@
 const join = require('url-join')
 const createTemplatePlugin = require('./template-plugin')
 
-const { APP_URL_FINAL, PROJECT_NAME } = require('../api/src/config')
+const { APP_URL_FINAL, PROJECT_NAME } = require('../../api/src/config')
 const appURL = APP_URL_FINAL.slice(0, APP_URL_FINAL.length - 1)
 
 const siteVariables = {
