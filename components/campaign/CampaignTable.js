@@ -11,11 +11,11 @@ export default function CampaignTable (props) {
           <tr>
             <th>Rank</th>
             <th>Name</th>
-            <th>Km of roads</th>
+            <th>Roads (Km)</th>
             <th>Buildings</th>
             <th>Points of Interest</th>
-            <th>Km of Coastlines</th>
-            <th>Km of Waterways</th>
+            <th>Coastlines (Km)</th>
+            <th>Waterways (Km)</th>
             <th>Changesets</th>
           </tr>
         </thead>
