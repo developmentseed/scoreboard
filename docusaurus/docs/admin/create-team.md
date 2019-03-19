@@ -8,9 +8,9 @@ Admin users of Scoreboard are able to create teams using the admin section of th
 
 To create a team:
 
-- [Log in to Scoreboard]({{appURL}}/auth/openstreetmap) if you haven't already
-- Visit the [teams admin page]({{appURL}}/admin/teams)
-- Click the [Create New Team]({{appURL}}/admin/teams/add) link
+- Log in to Scoreboard if you haven't already
+- Visit the teams admin page
+- Click the Create New Team link
 - Enter information about the team:
   - name
   - hashtag

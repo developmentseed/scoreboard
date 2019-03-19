@@ -10,8 +10,8 @@ Admin users can edit existing teams to add campaigns.
 
 To find and edit an existing team:
 
-- [Log in to Scoreboard]({{appURL}}/auth/openstreetmap) if you haven't already
-- Visit the [teams admin page]({{appURL}}/admin/teams)
+- Log in to Scoreboard if you haven't already
+- Visit the teams admin page
 - Choose a team from the list and click it to edit that team
 
 ### Add campaigns
