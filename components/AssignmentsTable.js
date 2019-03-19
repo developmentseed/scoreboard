@@ -15,11 +15,11 @@ export default ({ assignments }) => {
         <tbody>
           {
             assignments
-              .map((assignment, idx) => {
+              .map((assignment) => {
                 return (
                   <tr key={`assignment-${assignment.id}`}>
                     <td>
-                      <Link href={`/campaigns/${assignment.campaign_hashtag}`}>
+                      <Link href={`/campaigns/${assignment.tasker_id}-${assignment.tm_id}`}>
                         <a className='link--normal' >
                           {assignment.name}
                         </a>
