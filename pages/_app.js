@@ -163,7 +163,7 @@ class Layout extends React.Component {
           <link rel='mask-icon' href={safariIcon} color='#4FCA9E' />
           <meta name='msapplication-config' content={msBrowserconfig} />
           <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-          <title>Scoreboard</title>
+          <title>Scoreboard | Tracking Map Edits Around the World</title>
         </Head>
         <header className='header-nav'>
           <div className='row'>
