@@ -6,7 +6,7 @@ sidebar_label: "Add campaigns to a team"
 
 Admin users can edit existing teams to add campaigns.
 
-> Learn about [creating teams](/docs/admin/create-team).
+> Learn about [creating teams](admin/create-team.md).
 
 To find and edit an existing team:
 
@@ -26,7 +26,7 @@ To add campaigns to a team:
 
 An example:
 
-![Assigning campaigns to a team](/docs/img/add-team-campaigns.png)
+![Assigning campaigns to a team](assets/img/add-team-campaigns.png)
 
 ### Remove campaigns
 

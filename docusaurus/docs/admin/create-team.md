@@ -16,12 +16,12 @@ To create a team:
   - hashtag
   - bio
 
-![Adding a new team](/docs/img/add-new-team.png)
+![Adding a new team](assets/img/add-new-team.png)
 
 ## Adding users to a team
 
-Learn more about [adding users to a team](/docs/admin/add-team-users).
+Learn more about [adding users to a team](admin/add-team-users.md).
 
 ## Adding campaigns to a team
 
-Learn more about [adding campaigns to a team](/docs/admin/add-team-campaigns).
+Learn more about [adding campaigns to a team](admin/add-team-campaigns.md).

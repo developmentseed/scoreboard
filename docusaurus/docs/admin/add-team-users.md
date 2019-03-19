@@ -6,7 +6,7 @@ sidebar_label: "Add users to a team"
 
 Admin users can edit existing teams to add users as team members.
 
-> Learn about [creating teams](/docs/admin/create-team).
+> Learn about [creating teams](admin/create-team.md).
 
 To find and edit an existing team:
 
@@ -25,7 +25,7 @@ To add users to a team:
 
 An example:
 
-![Assigning users to a team](/docs/img/add-team-users.png)
+![Assigning users to a team](assets/img/add-team-users.png)
 
 ### Remove users
 

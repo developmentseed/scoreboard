@@ -8,12 +8,12 @@ The admin section of Scoreboard allows admin users to create, edit, and delete t
 
 ## How do I create a team?
 
-Learn about [creating new teams](/docs/admin/create-team)
+Learn about [creating new teams](admin/create-team.md)
 
 ## How do I add users to a team?
 
-Learn about [adding users to teams](/docs/admin/add-team-users)
+Learn about [adding users to teams](admin/add-team-users.md)
 
 ## How do I add campaigns to a team?
 
-Learn about [adding campaigns to teams](/docs/admin/add-team-campaigns)
+Learn about [adding campaigns to teams](admin/add-team-campaigns.md)

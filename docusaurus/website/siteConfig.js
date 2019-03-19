@@ -7,7 +7,7 @@ const appURL = APP_URL_FINAL.slice(0, APP_URL_FINAL.length - 1)
 const siteVariables = {
   title: 'Scoreboard', // Title for your website.
   tagline: 'Analytics for mappers',
-  url: 'https://developmentseed.github.io', 
+  url: 'https://developmentseed.github.io',
   baseUrl: '/scoreboard/', // Base URL for your project */
   projectName: 'scoreboard',
   repoUrl: 'https://github.com/developmentseed/scoreboard',
