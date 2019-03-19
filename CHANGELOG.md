@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - On the user dashboard, the "all campaigns" component will show all campaigns contributed to instead of assignments + favorites
 - Country page user tables read "Edits" while those on Campaign pages read "Changesets"
+- Docs site moved from being served from the API to statically hosted on https://developmentseed.org/scoreboard
 
 ### Fixed
 - Leave excluded users' edits in aggregate statistics
