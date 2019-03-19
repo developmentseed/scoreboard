@@ -6,7 +6,7 @@ sidebar_label: "Update the country in your profile"
 
 To view your mapping statistics:
 
-- [Log in to Scoreboard]({{appURL}}/auth/openstreetmap) if you haven't already
+- Log in to Scoreboard if you haven't already
   
 ![navigation menu](/docs/img/nav-menu.png)
 

@@ -10,7 +10,7 @@ Campaigns are mapping projects that you can contribute to by mapping or by verif
 
 ## How do I find campaigns?
 
-Visit the [campaigns]({{appURL}}/campaigns) page to see a list of campaigns.
+Visit the campaigns page to see a list of campaigns.
 
 ## How do I keep track of the campaigns I work on?
 

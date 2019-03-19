@@ -12,13 +12,13 @@ When you complete certain objectives, badges will show on your public profile to
 
 There are a wide range of badges you can earn by mapping.
 
-[Visit your dashboard]({{appURL}}) to see a list of the badges you've earned so far, that you're currently working on, and that you've not yet started.
+Visit your dashboard to see a list of the badges you've earned so far, that you're currently working on, and that you've not yet started.
 
 ## Where do I see a list of badges?
 
 To see a list of badges:
 
-- [Log in to Scoreboard]({{appURL}}/auth/openstreetmap) if you haven't already
+- Log in to Scoreboard if you haven't already
 - After logging in, you'll be redirected to your dashboard
 - At the bottom of your dashboard you can see badges that are in progress, that you've earned already, or a list of all badges
   
