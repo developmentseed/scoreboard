@@ -111,7 +111,7 @@ async function get (req, res) {
     if (teams && teams.length > 0) {
       assignments = await db('team_assignments').whereIn('team_id', teams.map(t => t.id))
         .join('campaigns', 'campaigns.id', '=', 'team_assignments.campaign_id')
-        .select('campaign_id', 'team_id', 'team_priority', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
+        .select('campaign_id', 'team_id', 'team_priority', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority', 'campaigns.tasker_id', 'campaigns.tm_id')
 
       // Map names
       assignments = assignments.map(assignment => {
@@ -132,12 +132,11 @@ async function get (req, res) {
   try {
     favorites = await db('favorite_campaigns')
       .join('campaigns', 'campaigns.id', '=', 'favorite_campaigns.campaign_id')
-      .select('favorite_campaigns.id', 'campaign_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority')
+      .select('favorite_campaigns.id', 'campaign_id', 'campaigns.name', 'campaigns.campaign_hashtag', 'campaigns.priority', 'campaigns.tasker_id', 'campaigns.tm_id')
   } catch (err) {
     console.error(err)
   }
 
-  //
   let allCampaigns = await db('campaigns').whereIn('campaign_hashtag', osmesaData.hashtags.map(prop('tag')))
 
   return res.send({
