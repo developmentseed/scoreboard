@@ -5,7 +5,7 @@ import { distanceInWordsToNow } from 'date-fns'
 import Router from '../lib/router'
 
 import { actions } from '../lib/store'
-import UserTable from '../components/UserTable'
+import CampaignTable from '../components/campaign/CampaignTable'
 import ReactMarkdown from 'react-markdown'
 import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 import sumEdits from '../lib/utils/sum_edits'
@@ -134,7 +134,7 @@ export class Campaign extends Component {
         <section className='section--tertiary'>
           <div className='row'>
             <Blurb {...records} />
-            <UserTable users={users} />
+            <CampaignTable users={users} />
           </div>
         </section>
       </div>
