@@ -44,7 +44,7 @@ const theme = {
 export default function CampaignCharts (props) {
   return (
     <div className={`chart widget`} style={{ height: props.height }}>
-      <h4 className='header--small'>Top Campaigns</h4>
+      <h4 className='header--small'>Top Hashtags</h4>
       {
         props.hashtags
           ? <ResponsiveBar
