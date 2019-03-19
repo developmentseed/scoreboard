@@ -28,7 +28,7 @@ export class User extends Component {
 
   render () {
     if (!this.props.user) return <div />
-    const { records, country, badges, teams, allCampaigns } = this.props.user
+    const { records, country, badges, teams, refreshDate, allCampaigns } = this.props.user
     const { extent_uri, uid } = records
     if (!records) return <div />
     const editCount = getSumEdits(records)
@@ -52,6 +52,7 @@ export class User extends Component {
           name={name}
           edit_times={edit_times}
           country={country}
+          refreshDate={refreshDate}
         />
         <ScoreboardPanel
           title={`${records.name}'s Scoreboard`}

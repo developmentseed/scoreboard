@@ -5,7 +5,7 @@ import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
-import { formatDecimal } from '../lib/utils/format'
+import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 
 const AllCountriesFilter = dynamic(() => import('../components/AllCountriesFilter'), { ssr: false })
 
@@ -60,7 +60,7 @@ export class Countries extends Component {
       return <div />
     }
 
-    const { total, records, subTotal, editTotal } = stats
+    const { total, records, subTotal, editTotal, refreshDate } = stats
     let label = `${subTotal} countries`
     if (parseInt(subTotal) < parseInt(total)) {
       label = `${subTotal} countries out of ${total}`
@@ -72,6 +72,14 @@ export class Countries extends Component {
           <div className='row'>
             <div className='section-sub--left section-width-forty'>
               <h1 className='header--xlarge'>Countries</h1>
+            </div>
+            <div className='section-sub--right'>
+              <ul>
+                <li className='list--inline refresh'>
+                  <span className='list-label'>Last refreshed: </span>
+                  <span>{formatUpdateDescription(refreshDate)}</span>
+                </li>
+              </ul>
             </div>
           </div>
         </header>

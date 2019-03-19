@@ -5,6 +5,8 @@ import Head from 'next/head'
 import { withRouter } from 'next/router'
 import { Provider, connect } from 'unistore/react'
 import { Provider as AlertProvider, withAlert } from 'react-alert'
+import getConfig from 'next/config'
+
 import AlertTemplate from 'react-alert-template-basic'
 
 import { APP_URL_FINAL, APP_URL_PREFIX } from '../api/src/config'
@@ -42,6 +44,9 @@ const NavLink = withRouter(({ children, router, href }) => {
   return <Link href={href}><a className={activeClass}>{children}</a></Link>
 })
 
+const { publicRuntimeConfig } = getConfig()
+const VersionNumber = publicRuntimeConfig.versionNumber
+
 function Footer (props) {
   return (
     <div>
@@ -75,7 +80,7 @@ function Footer (props) {
         <div className='row'>
           <nav>
             <ul className='nav--footer'>
-              <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
+              <li className='logo'><Link href='/'><a>ScoreBoard</a></Link><span>v {VersionNumber}</span></li>
               <li><NavLink href='/campaigns'>Campaigns</NavLink></li>
               <li><NavLink href='/users'>Users</NavLink></li>
               <li><NavLink href='/teams'>Teams</NavLink></li>

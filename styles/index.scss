@@ -136,15 +136,14 @@ body {
 }
 
 .section-sub--right {
-  width: 35%;
-  float: right;
+  margin-left: auto;
   text-align: right;
+  align-self: flex-end;
   li {
     margin-left: 2.5em;
   }
   @include media(small-down) {
     width: 100%;
-    float: none;
     text-align: left;
     clear: both;
     li {
@@ -444,7 +443,11 @@ section {
   }
 }
 //Type //
-
+.refresh {
+  font-style: italic;
+  opacity: .85;
+  margin-bottom: 0.4rem;
+}
 mark {
   background-color: inherit;
   color: $base-color;
@@ -568,13 +571,15 @@ mark {
 
 .header--page {
   .row {
-    .section-sub--left {
-      float: none;
-      margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    &:before,
+    &:after {
+      display: none;
+      content: "";
     }
-    .section-sub--right {
-      width: auto;
-      float: none;
+    @include media(small-down) {
+      flex-wrap: wrap;
     }
   }
   .button, .button:visited {
