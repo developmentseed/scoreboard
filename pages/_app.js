@@ -160,9 +160,10 @@ class Layout extends React.Component {
           <link rel='manifest' href={manifest} />
           <link rel='apple-touch-icon' href={appleIcon} />
           <link rel='shortcut icon' href={favicon} />
-          <link rel='mask-icon' href={safariIcon} color='#ff0000' />
+          <link rel='mask-icon' href={safariIcon} color='#4FCA9E' />
           <meta name='msapplication-config' content={msBrowserconfig} />
-
+          <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+          <title>Scoreboard</title>
         </Head>
         <header className='header-nav'>
           <div className='row'>
