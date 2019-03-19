@@ -1,4 +1,3 @@
-const join = require('url-join')
 const createTemplatePlugin = require('./template-plugin')
 
 const { APP_URL_FINAL, PROJECT_NAME } = require('../../api/src/config')
@@ -26,9 +25,7 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     { doc: 'users/getting-started', label: 'Getting Started' },
-    { doc: 'admin/overview', label: 'Administration' },
-    { doc: 'developers/overview', label: 'Developers' },
-    { href: join(appURL, 'api/docs'), label: 'API' }
+    { doc: 'admin/overview', label: 'Administration' }
   ],
 
   // If you have users set above, you add it here:
