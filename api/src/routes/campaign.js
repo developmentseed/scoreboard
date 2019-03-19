@@ -1,6 +1,7 @@
 const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { TM } = require('../services/tm')
+const refreshStatus = require('../utils/osmesaStatus.js')
 
 /**
  * Campaign Stats Route
@@ -38,7 +39,10 @@ module.exports = async (req, res) => {
       { tmData: tmData },
       JSON.parse(osmesaResponse)
     )
-    return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate, creationDate })
+
+    const refreshDate = await refreshStatus('campaign')
+
+    return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate, creationDate, refreshDate })
   } catch (err) {
     console.error(err.message)
     return res.boom.notFound('Could not retrieve campaign stats')

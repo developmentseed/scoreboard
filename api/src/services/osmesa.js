@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 
 const { OSMESA_API } = require('../config')
-const { generateOSMesaUser } = require('../db/seeds/utils')
+const { generateOSMesaUser, generateOSMesaStatus } = require('../db/seeds/utils')
 
 /**
  * Methods to grab data from OSMesa
@@ -24,6 +24,10 @@ class OSMesaAPI {
 
   getCountry (code) {
     return rp(`${OSMESA_API}/country-stats/${code}`)
+  }
+
+  getUpdates () {
+    return rp(`${OSMESA_API}/status`)
   }
 }
 
@@ -56,6 +60,11 @@ class FakeOSMesaAPI {
     const samplecountry = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecountry.json'), 'utf-8'))
     samplecountry.tag = `${code}`
     return Promise.resolve(JSON.stringify(samplecountry))
+  }
+
+  getUpdates () {
+    const status = generateOSMesaStatus()
+    return Promise.resolve(JSON.stringify(status))
   }
 }
 
