@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from './Link'
-import { formatDecimal, formatTimeDescription } from '../lib/utils/format'
+import { formatDecimal, formatEditTimeDescription } from '../lib/utils/format'
 import { parse } from 'date-fns'
 
 export default ({ apiStatus, users }) => {
@@ -26,7 +26,7 @@ export default ({ apiStatus, users }) => {
                   <td><Link href={`/users/${user.osm_id}`}><a className='link--normal'>{user.full_name}</a></Link></td>
                   <td>{user.country}</td>
                   <td>{formatDecimal(user.edit_count)}</td>
-                  <td>{user.edit_count > 0 ? formatTimeDescription(parse(user.last_edit)) : 'N/A'}</td>
+                  <td>{user.edit_count > 0 ? formatEditTimeDescription(parse(user.last_edit)) : 'N/A'}</td>
                 </tr>
               ))
             }

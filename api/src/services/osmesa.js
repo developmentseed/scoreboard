@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 
 const { OSMESA_API } = require('../config')
-const { generateOSMesaUser } = require('../db/seeds/utils')
+const { generateOSMesaUser, generateOSMesaStatus } = require('../db/seeds/utils')
 
 /**
  * Methods to grab data from OSMesa
@@ -25,6 +25,10 @@ class OSMesaAPI {
   getCountry (code) {
     return rp(`${OSMESA_API}/country-stats/${code}`)
   }
+
+  getUpdates () {
+    return rp(`${OSMESA_API}/status`)
+  }
 }
 
 class FakeOSMesaAPI {
@@ -39,6 +43,11 @@ class FakeOSMesaAPI {
       return Promise.reject(new Error('not found'))
     }
     const samplecampaign = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecampaign.json'), 'utf-8'))
+    for (let i = 0; i < 10; i++) {
+      let user = generateOSMesaUser(100000000 + i, `test${i}`)
+      user['edits'] = user['changeset_count']
+      samplecampaign.users.push(user)
+    }
     samplecampaign.tag = `project-${id}`
     return Promise.resolve(JSON.stringify(samplecampaign))
   }
@@ -51,6 +60,11 @@ class FakeOSMesaAPI {
     const samplecountry = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecountry.json'), 'utf-8'))
     samplecountry.tag = `${code}`
     return Promise.resolve(JSON.stringify(samplecountry))
+  }
+
+  getUpdates () {
+    const status = generateOSMesaStatus()
+    return Promise.resolve(JSON.stringify(status))
   }
 }
 

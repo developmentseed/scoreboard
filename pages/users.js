@@ -6,7 +6,7 @@ import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
-import { formatDecimal } from '../lib/utils/format'
+import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 
 const AllUsersFilter = dynamic(() => import('../components/AllUsersFilter'), { ssr: false })
 
@@ -65,7 +65,7 @@ export class Users extends Component {
       return <div />
     }
 
-    const { total, records, subTotal, editTotal, countries, active } = stats
+    const { total, records, subTotal, editTotal, countries, active, refreshDate } = stats
 
     return (
       <div className='Users'>
@@ -73,6 +73,14 @@ export class Users extends Component {
           <div className='row'>
             <div className='section-sub--left section-width-forty'>
               <h1 className='header--xlarge'>Users</h1>
+            </div>
+            <div className='section-sub--right'>
+              <ul>
+                <li className='list--inline refresh'>
+                  <span className='list-label'>Last refreshed: </span>
+                  <span>{formatUpdateDescription(refreshDate)}</span>
+                </li>
+              </ul>
             </div>
           </div>
         </header>

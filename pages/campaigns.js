@@ -3,6 +3,7 @@ import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
 import CampaignFilters from '../components/campaigns/CampaignFilters'
 import CampaignsListing from '../components/campaigns/CampaignsListing'
+import { formatUpdateDescription } from '../lib/utils/format'
 
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
@@ -57,7 +58,7 @@ export class Campaigns extends Component {
     const {
       page,
       searchText,
-      records: { total, records, allCount, tms },
+      records: { total, records, allCount, tms, refreshDate },
       apiStatus,
       selectedTM,
       sortOrder
@@ -71,6 +72,14 @@ export class Campaigns extends Component {
         <header className='header--internal--green header--page'>
           <div className='row'>
             <h1 className='header--xlarge'>Campaigns</h1>
+            <div className='section-sub--right'>
+              <ul>
+                <li className='list--inline refresh'>
+                  <span className='list-label'>Last refreshed: </span>
+                  <span>{formatUpdateDescription(refreshDate)}</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </header>
         <section>
