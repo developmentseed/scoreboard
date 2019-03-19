@@ -1,6 +1,6 @@
 import React from 'react'
 import { ResponsiveBar } from '@nivo/bar'
-import { sortBy, slice, compose, prop, reverse } from 'ramda'
+import { sortBy, slice, compose, prop, reverse, map } from 'ramda'
 import getTspanGroups from '../../lib/utils/getTspanGroups'
 
 /**
@@ -25,12 +25,13 @@ function chartify ({ campaigns, hashtags }) {
   }
 
   return compose(
-    reverse,
     slice(0, 4),
+    map(({ tag, count }) => { return { id: tag, edits: count } }),
     reverse,
-    sortBy(prop('edits'))
-  )(contributed)
+    sortBy(prop('count'))
+  )(hashtags)
 }
+
 const theme = {
   axis: {
     fontSize: '14px'
