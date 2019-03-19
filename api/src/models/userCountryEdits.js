@@ -43,7 +43,7 @@ function getNumberOfParticipants (country_name) {
 function getTotalEdits (country_name) {
   return db('user_country_edits')
     .sum('user_country_edits.edit_count as editCount')
-    .where('country_name', 'ilike', country_name).debug()
+    .where('country_name', 'ilike', country_name)
 }
 
 /**
