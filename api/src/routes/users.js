@@ -98,7 +98,7 @@ async function stats (req, res) {
         break
     }
 
-    const refreshDate = await refreshStatus('user_stats_refresh')
+    const refreshDate = await refreshStatus('users')
 
     const records = await recordQuery
       .limit(25)

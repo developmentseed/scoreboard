@@ -68,7 +68,7 @@ module.exports = async (req, res) => {
     const records = await query.clone().limit(10).offset((parseInt(page) - 1) * 10)
     const tms = await db('taskers').select('id', 'name')
 
-    const refreshDate = await refreshStatus('hashtag_stats_refresh')
+    const refreshDate = await refreshStatus('campaigns')
 
     return res.send({ records, total, allCount, tms, refreshDate })
   } catch (err) {

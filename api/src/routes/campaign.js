@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
       JSON.parse(osmesaResponse)
     )
 
-    const refreshDate = await refreshStatus('hashtag_stats_refresh')
+    const refreshDate = await refreshStatus('campaign')
 
     return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate, creationDate, refreshDate })
   } catch (err) {

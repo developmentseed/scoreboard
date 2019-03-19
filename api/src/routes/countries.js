@@ -66,7 +66,7 @@ async function stats (req, res) {
       return c
     })
 
-    const refreshDate = await refreshStatus('country_stats_refresh')
+    const refreshDate = await refreshStatus('country')
 
     return res.send({
       records,

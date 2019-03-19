@@ -40,9 +40,10 @@ async function get (req, res) {
     if (userData === null) {
       return res.boom.notFound('Could not retrieve user stats')
     }
-    const refreshDate = await refreshStatus('country_stats_refresh')
+    const refreshDate = await refreshStatus('country')
     const [ { count } ] = await userCountryEdits.getNumberOfParticipants(countryName)
     const [ { editCount } ] = await userCountryEdits.getTotalEdits(countryName)
+
     return res.send({
       code,
       name: countryName,
