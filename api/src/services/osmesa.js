@@ -59,7 +59,6 @@ class FakeOSMesaAPI {
 
   getUpdates () {
     const status = generateOSMesaStatus()
-    console.log(status)
     return Promise.resolve(JSON.stringify(status))
   }
 }
