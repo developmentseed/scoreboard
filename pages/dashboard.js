@@ -58,7 +58,7 @@ class Dashboard extends Component {
     const { loggedIn, account } = authenticatedUser
     const { assignments, favorites, country, allCampaigns } = account
 
-    const { badges, teams } = account
+    const { badges, teams, refreshDate } = account
     const osmesaData = account.records
     const {
       hashtags,
@@ -101,7 +101,7 @@ class Dashboard extends Component {
 
     return (
       <div className='dashboard'>
-        <DashboardHeader id={accountId} loggedIn name={name} profileImage={profileImage} edit_times={edit_times} country={country} />
+        <DashboardHeader id={accountId} loggedIn name={name} profileImage={profileImage} edit_times={edit_times} country={country} refreshDate={refreshDate} />
         <ScoreboardPanel
           title='Your mapping Scoreboard'
           facets={[

@@ -5,6 +5,7 @@ const users = require('../models/users')
 const roles = require('../models/roles')
 const exclusion = require('../models/exclusion-list')
 const { validateRole } = require('../utils/roles')
+const refreshStatus = require('../utils/osmesaStatus.js')
 
 function applyFilters (query, req) {
   const search = req.query.q || ''
@@ -97,6 +98,8 @@ async function stats (req, res) {
         break
     }
 
+    const refreshDate = await refreshStatus('users')
+
     const records = await recordQuery
       .limit(25)
       .offset((parseInt(page) - 1) * 25)
@@ -111,7 +114,7 @@ async function stats (req, res) {
     const [{ editTotal }] = await realUsers.clone().sum('edit_count as editTotal')
 
     return res.send({
-      records, subTotal, total, editTotal, countries, active
+      records, subTotal, total, editTotal, countries, active, refreshDate
     })
   } catch (err) {
     console.error(err)

@@ -94,6 +94,8 @@ if (require.main === module) {
   usersWorker()
     .then(async resp => {
       console.log(`Updated ${resp.length} records.`)
+      await db('user_update').where('id', '=', 1)
+        .update({ last_update: new Date() })
       await db.destroy()
       process.exit(0)
     })

@@ -7,7 +7,7 @@ import Router from '../lib/router'
 import { actions } from '../lib/store'
 import CampaignTable from '../components/campaign/CampaignTable'
 import ReactMarkdown from 'react-markdown'
-import { formatDecimal } from '../lib/utils/format'
+import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 import sumEdits from '../lib/utils/sum_edits'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import Blurb from '../components/campaign/CampaignBlurb'
@@ -71,7 +71,7 @@ export class Campaign extends Component {
   render () {
     if (!this.props.campaign) return <div />
 
-    const { records, lastUpdate, creationDate } = this.props.campaign
+    const { records, lastUpdate, creationDate, refreshDate } = this.props.campaign
     const { tmData, users } = records
     if (!tmData || !users) return <div />
 
@@ -97,6 +97,10 @@ export class Campaign extends Component {
                 <li>
                   <span className='list-label'>Created:</span>
                   <span>{distanceInWordsToNow(creationDate)} ago</span>
+                </li>
+                <li className='list--inline refresh'>
+                  <span className='list-label'>Last refreshed: </span>
+                  <span>{formatUpdateDescription(refreshDate)}</span>
                 </li>
               </ul>
             </div>
