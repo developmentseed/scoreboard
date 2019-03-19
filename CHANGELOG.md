@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - On user page and dashboard, top campaigns will now show names of campaigns contributed to instead of hashtags contributed to
 - The current version number of Scoreboard is now displayed in the footer
 - On Campaigns Page, "top 10" user table has more detailed statistics
+- Add <title> for pages
 
 ### Changed
 - On the user dashboard, the "all campaigns" component will show all campaigns contributed to instead of assignments + favorites
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Leave excluded users' edits in aggregate statistics
 - Updated table header styles to fix bug in Admin "Exclude Users" table, applies to whole app
+- Mask color for favicons
 
 ## [v1.0.3] - 2019-03-07
 
