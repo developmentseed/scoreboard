@@ -6,7 +6,7 @@ sidebar_label: "Badges introduction"
 
 ## What are badges?
 
-When you complete certain objectives, badges will show on your public profile to celebrate your achievement. There are a handful of badges built in to scoreboard, and [admins can create new ones](/docs/admin/create-badge).
+When you complete certain objectives, badges will show on your public profile to celebrate your achievement. There are a handful of badges built in to scoreboard, and [admins can create new ones](admin/create-badge.md).
 
 ## How do I earn badges?
 
@@ -24,4 +24,4 @@ To see a list of badges:
   
 ## How do I administer badges?
 
-To learn about managing badges on Scoreboard, visit the [badges admin docs](/docs/admin/badges)
+To learn about managing badges on Scoreboard, visit the [badges admin docs](admin/badges.md)

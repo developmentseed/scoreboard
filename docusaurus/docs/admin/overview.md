@@ -7,16 +7,16 @@ sidebar_label: "Administration"
 The admin section of Scoreboard allows admin users to manage badges, teams, and users.
 
 ## Users
-- [Users overview](/docs/admin/users)
-- [Make users admins](/docs/admin/assign-admin-role)
+- [Users overview](admin/users.md)
+- [Make users admins](admin/assign-admin-role.md)
 
 ## Teams
-- [Teams overview](/docs/admin/teams)
-- [Create new teams](/docs/admin/create-team)
-- [Add campaigns to teams](/docs/admin/add-team-campaigns)
-- [Add users to teams](/docs/admin/add-team-users)
+- [Teams overview](admin/teams.md)
+- [Create new teams](admin/create-team.md)
+- [Add campaigns to teams](admin/add-team-campaigns.md)
+- [Add users to teams](admin/add-team-users.md)
 
 ## Badges
-- [Badges overview](/docs/admin/badges)
-- [Create new badges](/docs/admin/create-badge)
-- [Edit badges](/docs/admin/edit-badge)
+- [Badges overview](admin/badges.md)
+- [Create new badges](admin/create-badge.md)
+- [Edit badges](admin/edit-badge.md)
