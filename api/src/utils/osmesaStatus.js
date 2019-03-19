@@ -24,7 +24,6 @@ async function getOsmesaStatus (category) {
         // Country and users pages rely on the users clock
         const [ { last_update } ] = await db('user_update').select('last_update').where('id', 1)
         const userUpdate = getTime(last_update)
-        console.log(status, userUpdate)
         status = Math.min(status, userUpdate)
       } else if (category === 'campaigns' || category === 'campaign') {
         // Campaign(s) pages rely on the TM clock
