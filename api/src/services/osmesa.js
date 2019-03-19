@@ -43,6 +43,11 @@ class FakeOSMesaAPI {
       return Promise.reject(new Error('not found'))
     }
     const samplecampaign = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecampaign.json'), 'utf-8'))
+    for (let i = 0; i < 10; i++) {
+      let user = generateOSMesaUser(100000000 + i, `test${i}`)
+      user['edits'] = user['changeset_count']
+      samplecampaign.users.push(user)
+    }
     samplecampaign.tag = `project-${id}`
     return Promise.resolve(JSON.stringify(samplecampaign))
   }
