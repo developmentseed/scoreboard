@@ -21,4 +21,4 @@ To add the admin role to a user:
 
 An example:
 
-![Assigning admin role to a user](/docs/img/assign-admin-role.png)
+![Assigning admin role to a user](assets/img/assign-admin-role.png)
