@@ -1,9 +1,9 @@
 import React from 'react'
-import Link from './Link'
+import Link from '../Link'
 import { sortBy, prop } from 'ramda'
-import { formatDecimal } from '../lib/utils/format'
+import { formatDecimal } from '../../lib/utils/format'
 
-export default function UserTable (props) {
+export default function CampaignTable (props) {
   return (
     <div className='widget'>
       <table>
@@ -11,7 +11,12 @@ export default function UserTable (props) {
           <tr>
             <th>Rank</th>
             <th>Name</th>
-            <th>{props.editType}</th>
+            <th>Roads (Km)</th>
+            <th>Buildings</th>
+            <th>Points of Interest</th>
+            <th>Coastlines (Km)</th>
+            <th>Waterways (Km)</th>
+            <th>Changesets</th>
           </tr>
         </thead>
         <tbody>
@@ -28,6 +33,11 @@ export default function UserTable (props) {
                       </a>
                     </Link>
                   </td>
+                  <td>{formatDecimal(user.km_roads_add)}</td>
+                  <td>{formatDecimal(user.buildings_add)}</td>
+                  <td>{formatDecimal(user.poi_add)}</td>
+                  <td>{formatDecimal(user.km_coastlines_add + user.km_coastlines_mod)}</td>
+                  <td>{formatDecimal(user.km_waterways_add)}</td>
                   <td>{formatDecimal(user.edits)}</td>
                 </tr>
               ))
