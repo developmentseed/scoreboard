@@ -12,7 +12,7 @@ In the Admin tasking manager panel, you should see a list of all tasking manager
 
 Click on the name of the tasking manager you want to edit.
 
-You will be able to edit the same details as if you were [adding a new tasking manager](admin/add-new-tasking-manager.md).
+You will be able to edit the same details as if you were [adding a new tasking manager](admin/add-tasking-manager.md).
 
 ![Editing Tasking Manager Details](assets/img/edit-tasking-manager.png)
 
