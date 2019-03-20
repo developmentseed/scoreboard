@@ -10,6 +10,7 @@
     "Overview": ["admin/overview"],
     "Users": ["admin/users", "admin/assign-admin-role"],
     "Teams": ["admin/teams", "admin/create-team", "admin/add-team-users", "admin/add-team-campaigns"],
+    "Tasking Managers": ["admin/tasking-managers", "admin/add-tasking-manager", "admin/edit-tasking-manager"],
     "Badges": ["admin/badges", "admin/create-badge", "admin/edit-badge"]
   },
   "developers": {

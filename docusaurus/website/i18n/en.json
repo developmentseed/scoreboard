@@ -5,6 +5,10 @@
     "previous": "Previous",
     "tagline": "Analytics for mappers",
     "docs": {
+      "admin/add-tasking-manager": {
+        "title": "Add a tasking manager",
+        "sidebar_label": "Add a tasking manager"
+      },
       "admin/add-team-campaigns": {
         "title": "Add campaigns to a team",
         "sidebar_label": "Add campaigns to a team"
@@ -33,9 +37,17 @@
         "title": "Edit an existing badge",
         "sidebar_label": "Edit a badge"
       },
+      "admin/edit-tasking-manager": {
+        "title": "Edit Tasking Manager",
+        "sidebar_label": "Edit Tasking Manager"
+      },
       "admin/overview": {
         "title": "Administration",
         "sidebar_label": "Administration"
+      },
+      "admin/tasking-managers": {
+        "title": "Tasking Managers",
+        "sidebar_label": "Overview"
       },
       "admin/teams": {
         "title": "Teams",
@@ -94,6 +106,7 @@
       "Teams": "Teams",
       "Overview": "Overview",
       "Users": "Users",
+      "Tasking Managers": "Tasking Managers",
       "Install": "Install"
     }
   },
