@@ -1,7 +1,7 @@
 ---
 id: getting-started
 title: "Getting Started"
-sidebar_label: "Getting Started"
+sidebar_label: "Overview"
 ---
 
 With Scoreboard you can:
@@ -13,7 +13,3 @@ With Scoreboard you can:
 ## Administering Scoreboard
 
 If you're an admin user on Scoreboard visit the [admin docs](admin/overview.md) to learn more about managing the site via an admin ui.
-
-## Developing Scoreboard
-
-If you're a developer looking to work on Scoreboard visit the [developer docs](developers/overview.md)
