@@ -21,6 +21,10 @@ const siteConfig = {
   markdownPlugins: [
     createTemplatePlugin(siteVariables)
   ],
+  algolia: {
+    apiKey: '193cfbb5bb7c23d258f9bed0d6a22707',
+    indexName: 'developmentseed_scoreboard'
+  },
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
