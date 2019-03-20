@@ -66,12 +66,12 @@
         "sidebar_label": "Overvew for developers"
       },
       "users/badges": {
-        "title": "Badges introduction",
-        "sidebar_label": "Badges introduction"
+        "title": "Badges",
+        "sidebar_label": "Overview"
       },
       "users/campaigns": {
-        "title": "Campaigns introduction",
-        "sidebar_label": "Campaigns introduction"
+        "title": "Campaigns",
+        "sidebar_label": "Overview"
       },
       "users/favorite-campaigns": {
         "title": "Create a list of favorite campaigns",
@@ -79,18 +79,26 @@
       },
       "users/getting-started": {
         "title": "Getting Started",
-        "sidebar_label": "Getting Started"
+        "sidebar_label": "Overview"
+      },
+      "users/profile": {
+        "title": "Overview",
+        "sidebar_label": "Overview"
+      },
+      "users/sharing-your-profile": {
+        "title": "Sharing your profile",
+        "sidebar_label": "Sharing your profile"
       },
       "users/teams": {
-        "title": "Teams introduction",
-        "sidebar_label": "Teams introduction"
+        "title": "Teams",
+        "sidebar_label": "Overview"
       },
       "users/update-country": {
         "title": "Update the country in your profile",
         "sidebar_label": "Update the country in your profile"
       },
       "users/user-statistics": {
-        "title": "View your mapping statistics",
+        "title": "Dashboard & Public Profile",
         "sidebar_label": "View your mapping statistics"
       }
     },
@@ -100,7 +108,7 @@
     },
     "categories": {
       "Getting Started": "Getting Started",
-      "Profile": "Profile",
+      "Personal Contributions": "Personal Contributions",
       "Campaigns": "Campaigns",
       "Badges": "Badges",
       "Teams": "Teams",

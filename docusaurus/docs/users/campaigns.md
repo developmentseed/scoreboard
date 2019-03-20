@@ -1,7 +1,7 @@
 ---
 id: campaigns
-title: "Campaigns introduction"
-sidebar_label: "Campaigns introduction"
+title: "Campaigns"
+sidebar_label: "Overview"
 ---
 
 ## What are campaigns?

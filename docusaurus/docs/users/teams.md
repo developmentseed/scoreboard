@@ -1,7 +1,7 @@
 ---
 id: teams
-title: "Teams introduction"
-sidebar_label: "Teams introduction"
+title: "Teams"
+sidebar_label: "Overview"
 ---
 
 ## What are teams?

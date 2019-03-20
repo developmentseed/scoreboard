@@ -1,7 +1,7 @@
 ---
 id: badges
-title: "Badges introduction"
-sidebar_label: "Badges introduction"
+title: "Badges"
+sidebar_label: "Overview"
 ---
 
 ## What are badges?
