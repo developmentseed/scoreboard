@@ -1,7 +1,7 @@
 ---
 id: campaign-statistics
 title: "Campaign Statistics"
-sidebar_label: "Campaign Statistics"
+sidebar_label: "Campaign statistics"
 ---
 
 ## How does it work?

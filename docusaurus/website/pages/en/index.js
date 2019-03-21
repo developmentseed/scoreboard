@@ -57,8 +57,8 @@ class HomeSplash extends React.Component {
           <img src={`${baseUrl}img/Logo-scoreboard.svg`} width='60px' />
           <ProjectTitle siteConfig={siteConfig} />
           <PromoSection>
-            <Button href={docUrl('users/getting-started')}>Getting Started</Button>
-            <Button href={docUrl('admin/overview')}>Administration</Button>
+            <Button href={docUrl('users/getting-started')}>Mappers</Button>
+            <Button href={docUrl('admin/overview')}>Administrators</Button>
           </PromoSection>
         </div>
       </SplashContainer>

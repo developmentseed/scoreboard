@@ -11,10 +11,13 @@
     ],
     "Campaigns": [
       "users/campaigns",
+      "users/campaigns-search",
+      "users/campaign-statistics",
       "users/favorite-campaigns"
     ],
     "Badges": [
-      "users/badges"
+      "users/badges",
+      "users/default-badges"
     ],
     "Teams": [
       "users/teams"

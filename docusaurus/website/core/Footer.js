@@ -38,10 +38,10 @@ class Footer extends React.Component {
           <div>
             <h5>Docs</h5>
             <a href={this.docUrl('users/getting-started', this.props.language)}>
-              Getting Started
+              Mappers
             </a>
             <a href={this.docUrl('admin/overview', this.props.language)}>
-              Administration
+              Administrators
             </a>
           </div>
           <div>

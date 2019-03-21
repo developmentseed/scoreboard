@@ -1,7 +1,7 @@
 ---
 id: profile
-title: "Overview"
-sidebar_label: "Overview"
+title: "Profile Overview"
+sidebar_label: "Profile Overview"
 ---
 
 ## What statistics are available?

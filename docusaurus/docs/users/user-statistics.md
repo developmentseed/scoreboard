@@ -48,6 +48,8 @@ Your profile contains a section for badges:
 
 ![Badges](assets/img/dashboard-badges.png)
 
+> Learn more about [badges](users/badges.md)
+
 ## Calendar
 
 Your profile contains a calendar to show your mapping activity over time. 
