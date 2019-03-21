@@ -1,7 +1,7 @@
 ---
 id: badges
-title: "Badges"
-sidebar_label: "Overview"
+title: "Badges Overview"
+sidebar_label: "Badges Overview"
 ---
 
 ## What are badges?
@@ -21,7 +21,9 @@ To see a list of badges:
 - Log in to Scoreboard if you haven't already
 - After logging in, you'll be redirected to your dashboard
 - At the bottom of your dashboard you can see badges that are in progress, that you've earned already, or a list of all badges
-  
-## How do I administer badges?
 
-To learn about managing badges on Scoreboard, visit the [badges admin docs](admin/badges.md)
+> Scoreboard also comes with a list of included badges, you can see the list [here](users/default-badges.md)
+  
+## How do I add a new badge?
+
+If you're an administrator, you can add or edit badge information. To learn about managing badges on Scoreboard, visit the [badges admin docs](admin/badges.md).
