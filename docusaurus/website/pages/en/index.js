@@ -37,7 +37,7 @@ class HomeSplash extends React.Component {
     const docUrl = doc => `${baseUrl}${docsPart}${langPart}${doc}`
 
     const SplashContainer = props => (
-      <div className='homeContainer'>
+      <div className='homeContainer dark-background'>
         <div className='homeSplashFade'>
           <div className='wrapper homeWrapper'>{props.children}</div>
         </div>
@@ -54,6 +54,7 @@ class HomeSplash extends React.Component {
     return (
       <SplashContainer>
         <div className='inner'>
+          <img src={`${baseUrl}img/Logo-scoreboard.svg`} width='60px' />
           <ProjectTitle siteConfig={siteConfig} />
           <PromoSection>
             <Button href={docUrl('users/getting-started')}>Getting Started</Button>
@@ -102,7 +103,7 @@ class Index extends React.Component {
           {
             content:
               `Scoreboard provides insight into the ${osmProjectName} ecosystem, making users more informed & more effective.`,
-            image: `${baseUrl}img/about-badge.png`,
+            image: `${baseUrl}img/about-homepage2.png`,
             imageAlign: 'left',
             align: 'right',
             title: 'About Scoreboard'
