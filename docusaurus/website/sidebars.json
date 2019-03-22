@@ -30,7 +30,8 @@
     ],
     "Users": [
       "admin/users",
-      "admin/assign-admin-role"
+      "admin/assign-admin-role",
+      "admin/exclusion-list"
     ],
     "Teams": [
       "admin/teams",
