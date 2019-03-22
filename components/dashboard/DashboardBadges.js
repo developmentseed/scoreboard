@@ -37,7 +37,6 @@ class DashboardBadges extends Component {
     }
     const filteredBadges = badges[badgesFilter]
     const badgeKeys = Object.keys(filteredBadges)
-    const { earnedBadges } = badges
 
     return (
       <div>

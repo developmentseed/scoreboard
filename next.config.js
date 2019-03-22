@@ -11,12 +11,10 @@ const PACKAGE = require('./package.json')
 
 module.exports = withImages(withSass(withCss({
   publicRuntimeConfig: {
-    env: process.env.NODE_ENV || 'development'
-  },
-  sassLoaderOptions: { data: `$appUrlFinal: "${APP_URL_FINAL}";` },
-  publicRuntimeConfig: {
+    env: process.env.NODE_ENV || 'development',
     versionNumber: PACKAGE.version
   },
+  sassLoaderOptions: { data: `$appUrlFinal: "${APP_URL_FINAL}";` },
   webpack: (config) => {
     config.plugins = config.plugins || []
 

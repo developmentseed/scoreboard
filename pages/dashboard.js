@@ -29,7 +29,6 @@ const UserExtentMap = dynamic(() => import('../components/charts/ProgressiveExte
   ssr: false
 })
 
-
 class Dashboard extends Component {
   constructor () {
     super()
