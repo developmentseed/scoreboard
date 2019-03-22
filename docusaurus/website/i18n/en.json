@@ -105,6 +105,10 @@
         "title": "Teams Overview",
         "sidebar_label": "Teams Overview"
       },
+      "users/tracked-metrics": {
+        "title": "Tracked Metrics",
+        "sidebar_label": "Tracked Metrics"
+      },
       "users/update-country": {
         "title": "Update the country in your profile",
         "sidebar_label": "Update the country in your profile"

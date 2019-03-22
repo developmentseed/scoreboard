@@ -10,6 +10,10 @@ With Scoreboard you can:
 - Find [mapping projects](users/campaigns.md) to work on
 - [Join teams](users/teams.md) to work on projects with a group
 
-## Administering Scoreboard
+## What metrics are tracked?
 
-If you're an admin user on Scoreboard visit the [admin docs](admin/overview.md) to learn more about managing the site via an admin ui.
+Scoreboard tracks a number of metrics to generate leaderboards and give you greater insight into your mapping. Learn more about what metrics are tracked [here](users/tracked-metrics.md).
+
+## For administrators
+
+If you're an administrative user on Scoreboard visit the [admin docs](admin/overview.md) to learn more about managing the site via an admin ui.

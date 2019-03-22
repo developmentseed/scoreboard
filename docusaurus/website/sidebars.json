@@ -1,7 +1,8 @@
 {
   "users": {
     "Getting Started": [
-      "users/getting-started"
+      "users/getting-started",
+      "users/tracked-metrics"
     ],
     "Personal Contributions": [
       "users/profile",
