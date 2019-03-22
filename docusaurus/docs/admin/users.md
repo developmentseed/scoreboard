@@ -1,7 +1,7 @@
 ---
 id: users
-title: "Users"
-sidebar_label: "Overview"
+title: "Users Overview"
+sidebar_label: "Users Overview"
 ---
 
 The admin section of Scoreboard allows admin users to manage other users.

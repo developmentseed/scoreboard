@@ -22,8 +22,8 @@
         "sidebar_label": "Make a user an admin"
       },
       "admin/badges": {
-        "title": "Badges",
-        "sidebar_label": "Overview"
+        "title": "Badges Overview",
+        "sidebar_label": "Badges Overview"
       },
       "admin/create-badge": {
         "title": "Create a new badge",
@@ -41,21 +41,25 @@
         "title": "Edit Tasking Manager",
         "sidebar_label": "Edit Tasking Manager"
       },
+      "admin/exclusion-list": {
+        "title": "Excluding certain users from statistics",
+        "sidebar_label": "Excluding certain users from statistics"
+      },
       "admin/overview": {
         "title": "Administration",
         "sidebar_label": "Administration"
       },
       "admin/tasking-managers": {
-        "title": "Tasking Managers",
-        "sidebar_label": "Overview"
+        "title": "Tasking Managers Overview",
+        "sidebar_label": "Tasking Managers Overview"
       },
       "admin/teams": {
-        "title": "Teams",
-        "sidebar_label": "Overview"
+        "title": "Teams Overview",
+        "sidebar_label": "Teams Overview"
       },
       "admin/users": {
-        "title": "Users",
-        "sidebar_label": "Overview"
+        "title": "Users Overview",
+        "sidebar_label": "Users Overview"
       },
       "developers/documenting-scoreboard": {
         "title": "Documenting Scoreboard",

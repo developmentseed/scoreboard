@@ -1,7 +1,7 @@
 ---
 id: tasking-managers
-title: "Tasking Managers"
-sidebar_label: "Overview"
+title: "Tasking Managers Overview"
+sidebar_label: "Tasking Managers Overview"
 ---
 
 To add campaign data to scoreboard, you need to add one or more tasking managers' details to Scoreboard. This allows Scoreboard to pull in the information periodically and match it with statistics.

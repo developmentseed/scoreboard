@@ -1,12 +1,12 @@
 ---
 id: badges
-title: "Badges"
-sidebar_label:  "Overview"
+title: "Badges Overview"
+sidebar_label: "Badges Overview"
 ---
 
 To view the current badges available to Scoreboard, click on “Manage badges” from the Admin page
 
-![Admin Panel](assets/img/AdminPanel.png)
+![Admin Panel](assets/img/admin-panel.png)
 
 You will see the list of badges currently available to be earned on the right side, and a link to [Create a New Badge](admin/create-badge.md) on the left.
 

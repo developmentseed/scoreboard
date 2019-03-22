@@ -9,6 +9,7 @@ The admin section of Scoreboard allows admin users to manage badges, teams, and 
 ## Users
 - [Users overview](admin/users.md)
 - [Make users admins](admin/assign-admin-role.md)
+- [Excluding certain users from statistics](admin/exclusion-list.md)
 
 ## Teams
 - [Teams overview](admin/teams.md)

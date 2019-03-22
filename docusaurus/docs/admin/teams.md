@@ -1,7 +1,7 @@
 ---
 id: teams
-title: "Teams"
-sidebar_label: "Overview"
+title: "Teams Overview"
+sidebar_label: "Teams Overview"
 ---
 
 The admin section of Scoreboard allows admin users to create, edit, and delete teams, as well as assign users and campaigns to teams.
