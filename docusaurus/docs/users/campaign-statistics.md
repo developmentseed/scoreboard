@@ -6,9 +6,9 @@ sidebar_label: "Campaign statistics"
 
 ## How does it work?
 
-Campaigns are synchronized with a source `Tasking Manager` added by a Scoreboard administrator. Campaign statistics are then matched using the unique `hashtag` for that campaign in OpenStreetMap to determine who mapped in this campaign and what types of edits they've made. This unique hashtag is usually of the form `tasking-manager-{project-number}`
+Campaigns are synchronized with a source `Tasking Manager` added by a Scoreboard administrator. Campaign statistics are then matched using the unique `hashtag` for that campaign in the changeset comments in OpenStreetMap to determine who mapped in this campaign and what types of edits they've made. This unique hashtag is usually of the form `tasking-manager-{project-number}`
 
-> If a campaign does not have a unique hashtag, then the statistics in Scoreboard might not be accurate.
+> If a campaign does not have a unique hashtag, or if you've omitted the hashtag from your edits, then the statistics in Scoreboard might not be accurate.
 
 
 ## Campaign header
