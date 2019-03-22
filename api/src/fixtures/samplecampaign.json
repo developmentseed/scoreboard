@@ -12,51 +12,10 @@
   "waterways_mod": 288,
   "km_waterways_mod": 127.86867039987462,
   "coastlines_add": 97,
-  "km_coastline_add": 95.22816263038682,
+  "km_coastlines_add": 95.22816263038682,
   "coastlines_mod": 288,
-  "km_coastline_mod": 127.86867039987462,
+  "km_coastlines_mod": 127.86867039987462,
   "poi_add": 29,
   "poi_mod": 423,
-  "users": [
-    {
-      "name": "test1",
-      "uid": 100000001,
-      "edits": 23
-    },
-    {
-      "name": "test2",
-      "uid": 100000002,
-      "edits": 176
-    },
-    {
-      "name": "test3",
-      "uid": 100000003,
-      "edits": 1
-    },
-    {
-      "name": "test4",
-      "uid": 100000004,
-      "edits": 8
-    },
-    {
-      "name": "test5",
-      "uid": 100000005,
-      "edits": 51
-    },
-    {
-      "name": "test6",
-      "uid": 100000006,
-      "edits": 1
-    },
-    {
-      "name": "test7",
-      "uid": 1000000007,
-      "edits": 44
-    },
-    {
-      "name": "test8",
-      "uid": 1000000008,
-      "edits": 181
-    }
-  ]
+  "users": []
 }

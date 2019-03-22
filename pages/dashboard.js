@@ -58,9 +58,9 @@ class Dashboard extends Component {
     }
     const { authenticatedUser } = this.props
     const { loggedIn, account } = authenticatedUser
-    const { assignments, favorites, country } = account
+    const { assignments, favorites, country, allCampaigns } = account
 
-    const { badges, teams } = account
+    const { badges, teams, refreshDate } = account
     const { earnedBadges } = badges
     const osmesaData = account.records
     const {
@@ -104,7 +104,7 @@ class Dashboard extends Component {
 
     return (
       <div className='dashboard'>
-        <DashboardHeader id={accountId} loggedIn name={name} profileImage={profileImage} edit_times={edit_times} country={country} />
+        <DashboardHeader id={accountId} loggedIn name={name} profileImage={profileImage} edit_times={edit_times} country={country} refreshDate={refreshDate} />
         <ScoreboardPanel
           title='Your mapping Scoreboard'
           facets={[
@@ -121,7 +121,7 @@ class Dashboard extends Component {
         <section className='section--dark'>
           <div className='row'>
             {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
-            <DashboardAssignments favorites={favorites} assignments={assignments} authenticatedUser={authenticatedUser} />
+            <DashboardAssignments favorites={favorites} assignments={assignments} authenticatedUser={authenticatedUser} all={allCampaigns} />
           </div>
         </section>
         <section>
@@ -135,7 +135,7 @@ class Dashboard extends Component {
           <div className='row'>
             <div className='widget-container'>
               <div className='widget-66'>
-                <CampaignsChart hashtags={hashtags} height='260px' />
+                <CampaignsChart campaigns={allCampaigns} hashtags={hashtags} height='260px' />
               </div>
               <div className='widget-33'>
                 <EditBreakdownChart {...breakdownChartProps} height='260px' />

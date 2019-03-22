@@ -2,6 +2,7 @@ const userCountryEdits = require('../models/userCountryEdits')
 const { getCountryGeo } = require('../utils/countryGeometry')
 const countryList = require('../../../lib/utils/country-list.json')
 const osmesa = require('../services/osmesa')
+const refreshStatus = require('../utils/osmesaStatus.js')
 
 /**
  * Country Stats Route
@@ -39,15 +40,19 @@ async function get (req, res) {
     if (userData === null) {
       return res.boom.notFound('Could not retrieve user stats')
     }
-    let [ { count } ] = await userCountryEdits.getNumberOfParticipants(countryName)
+    const refreshDate = await refreshStatus('country')
+    const [ { count } ] = await userCountryEdits.getNumberOfParticipants(countryName)
+    const [ { editCount } ] = await userCountryEdits.getTotalEdits(countryName)
+
     return res.send({
       code,
       name: countryName,
       users: userData,
       numParticipants: count,
-      edit_count: userData.reduce((total, { count }) => total + count, 0),
+      edit_count: editCount,
       geography: getCountryGeo(countryCode),
-      records: osmesaData
+      records: osmesaData,
+      refreshDate
     })
   } catch (err) {
     console.error(err)

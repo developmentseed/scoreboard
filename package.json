@@ -1,6 +1,6 @@
 {
   "name": "scoreboard",
-  "version": "1.0.0-beta.0",
+  "version": "1.1.0",
   "description": "OSM Scoreboard",
   "main": "index.js",
   "scripts": {
@@ -91,7 +91,7 @@
     "date-fns": "^1.29.0",
     "debounce-promise": "^3.0.2",
     "directory-command": "^4.0.1",
-    "dotenv": "^6.1.0",
+    "dotenv": "^6.2.0",
     "dotenv-webpack": "^1.5.7",
     "enzyme": "^3.7.0",
     "express": "^4.16.3",

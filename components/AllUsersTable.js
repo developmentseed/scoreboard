@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from './Link'
-import { formatDecimal } from '../lib/utils/format'
-import { distanceInWordsToNow, parse } from 'date-fns'
+import { formatDecimal, formatEditTimeDescription } from '../lib/utils/format'
+import { parse } from 'date-fns'
 
 export default ({ apiStatus, users }) => {
   let content = <div />
@@ -26,7 +26,7 @@ export default ({ apiStatus, users }) => {
                   <td><Link href={`/users/${user.osm_id}`}><a className='link--normal'>{user.full_name}</a></Link></td>
                   <td>{user.country}</td>
                   <td>{formatDecimal(user.edit_count)}</td>
-                  <td>{user.edit_count > 0 ? `${distanceInWordsToNow(parse(user.last_edit))} ago` : 'N/A'}</td>
+                  <td>{user.edit_count > 0 ? formatEditTimeDescription(parse(user.last_edit)) : 'N/A'}</td>
                 </tr>
               ))
             }

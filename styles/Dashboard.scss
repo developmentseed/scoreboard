@@ -21,6 +21,14 @@
   a {
     color: #FFFFFF;
   }
+  @include media(small-down) {
+    flex-wrap: wrap;
+  }
+  .section-sub--right {
+    @include media(small-down) {
+      margin-left: 6.6em;
+    }
+  }
 }
 .header--internal--dashboard {
   margin-top: -6em;
@@ -457,6 +465,7 @@
   }
 }
 
+/// Dashboard Tables ///
 .filter-bar {
   margin-bottom: 20px;
 
@@ -486,14 +495,16 @@
     }
   }
 }
-
+.assignments-table {
+  max-height: 28rem;
+  overflow-y: scroll;
+}
 .data-not-available {
   font-family: $heading-font-family;
   background-color: #efefea;
   padding: 10px;
   margin-bottom: 30px;
 }
-
 .header-link {
   color: #292929;
 
