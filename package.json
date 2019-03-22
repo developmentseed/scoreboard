@@ -121,6 +121,7 @@
     "passport-openstreetmap": "^0.1.2",
     "pg": "^7.4.3",
     "pify": "^4.0.1",
+    "promise-sequential": "^1.1.1",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
     "ramda": "^0.25.0",
