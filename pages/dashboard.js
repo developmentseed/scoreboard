@@ -147,7 +147,7 @@ class Dashboard extends Component {
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
             <div className='widget-75 admin'>
               <DashboardBadges badges={badges} />
-              <button className='button' onClick={() => generatePDF(name, earnedBadges)}>↧Download Certificate</button>
+              <button className='button' onClick={() => generatePDF(name, earnedBadges)}>Download Certificate</button>
             </div>
           </div>
           <div className='row'>
