@@ -1,0 +1,33 @@
+/* your custom css */
+
+article img {
+  border: 1px solid #efefea;
+  box-shadow: rgba(0,0,0,0.1) 1px 1px 8px;
+}
+
+hr {
+  margin: 20px 40%;
+  border: 0px;
+  border-top: 1px solid #ccc;
+}
+.light-background {
+  background-color: #F5F5F5;
+}
+.dark-background {
+  background-color: #3C3C3C;
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 736px) {
+}
+
+@media only screen and (min-width: 1024px) {
+}
+
+@media only screen and (max-width: 1023px) {
+}
+
+@media only screen and (min-width: 1400px) {
+}
+
+@media only screen and (min-width: 1500px) {
+}
