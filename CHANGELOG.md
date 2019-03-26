@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Users are able to download a PDF certificate of all their earned badges from their dashboard
 
 ## [v1.1.0] - 2019-03-19
 ### Added
@@ -13,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The current version number of Scoreboard is now displayed in the footer
 - On Campaigns Page, "top 10" user table has more detailed statistics
 - Add <title> for pages
-- Users are able to download a PDF certificate of all their earned badges from their dashboard
 
 ### Changed
 - On the user dashboard, the "all campaigns" component will show all campaigns contributed to instead of assignments + favorites
