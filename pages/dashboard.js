@@ -59,7 +59,6 @@ class Dashboard extends Component {
     const { assignments, favorites, country, allCampaigns } = account
 
     const { badges, teams, refreshDate } = account
-    const { earnedBadges } = badges
     const osmesaData = account.records
     const {
       hashtags,
