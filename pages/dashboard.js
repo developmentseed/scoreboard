@@ -18,7 +18,6 @@ import DashboardBlurb from '../components/dashboard/DashboardBlurb'
 import CampaignsChart from '../components/charts/CampaignsChart'
 import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import { formatDecimal } from '../lib/utils/format'
-import generatePDF from '../lib/utils/generatePDF'
 
 import dynamic from 'next/dynamic'
 
@@ -145,9 +144,8 @@ class Dashboard extends Component {
         <section>
           <div className='row widget-container'>
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
-            <div className='widget-75 admin'>
-              <DashboardBadges badges={badges} />
-              <button className='button' onClick={() => generatePDF(name, earnedBadges)}>Download Certificate</button>
+            <div className='widget-75'>
+              <DashboardBadges badges={badges} name={name} />
             </div>
           </div>
           <div className='row'>

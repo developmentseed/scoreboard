@@ -158,45 +158,6 @@ $border-color: #ccc;
   }
 }
 
-.button--secondary {
-  background-color: white;
-  color: $base-color;
-  transition: color 300ms ease-in-out;
-
-  &:hover,
-  &:active {
-    background-color: inherit;
-    color: darken($base-color, 10%);
-  }
-}
-
-.button--destroy {
-  border-color: #CA4F4F;
-  color: #CA4F4F;
-  background-color: white;
-
-  &:hover,
-  &:active {
-    background-color: #CA4F4F;
-    color: white;
-  }
-}
-
-.button--link {
-  background-color: transparent;
-  border: 0;
-  color: $light-text-color;
-  font-family: $tertiary-font-family;
-  padding: 0;
-  transition: color 300ms ease-in-out;
-
-  &:hover,
-  &:active {
-    background-color: inherit;
-    color: $med-text-color;
-  }
-}
-
 .alert {
   border-radius: $border-radius;
   box-sizing: border-box;
