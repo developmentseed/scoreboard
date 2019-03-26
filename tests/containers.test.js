@@ -9,7 +9,7 @@ import { User } from '../pages/user'
 import { Users } from '../pages/users'
 import About from '../pages/about'
 
-import store, { actions } from '../lib/store'
+import store, { actions, InitialState } from '../lib/store'
 
 function mockAction () {
   return Promise.resolve()
@@ -17,15 +17,9 @@ function mockAction () {
 
 it('Campaigns renders without crashing', () => {
   const div = document.createElement('div')
+  const campaigns = InitialState.campaigns
   const mockProps = {
-    campaigns: {
-      searchText: '',
-      compl_min: 0,
-      compl_max: 100,
-      page: 1,
-      apiStatus: 'LOADING',
-      records: {}
-    },
+    campaigns,
     handleCampaignsSearch: mockAction,
     handleCampaignsFilterChange: mockAction,
     handleCampaignsPageChange: mockAction
@@ -42,7 +36,9 @@ it('Campaigns renders without crashing', () => {
 
 it('Campaign renders without crashing', () => {
   const div = document.createElement('div')
+  const campaign = InitialState.campaign
   const mockProps = {
+    campaign,
     getCampaign: mockAction
   }
 
