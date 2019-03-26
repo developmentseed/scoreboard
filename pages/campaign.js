@@ -72,7 +72,7 @@ export class Campaign extends Component {
 
   render () {
     const { meta, lastUpdate, creationDate, refreshDate } = this.props.campaign
-    
+
     const stats = merge({
       users: [],
       km_roads_add: 0,
