@@ -87,7 +87,7 @@ export class Campaign extends Component {
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
           <div className='row widget-container'>
-            <div className='widget-66' style={{ 'pointer-events': 'none' }}>
+            <div className='widget-66' style={{ 'pointerEvents': 'none' }}>
               <h1 className='header--xlarge margin-top-sm'>{meta.name}</h1>
               <ul className='list--two-column'>
                 <li>
