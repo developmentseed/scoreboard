@@ -10,10 +10,11 @@ const { APP_URL_FINAL } = require('./api/src/config')
 const PACKAGE = require('./package.json')
 
 module.exports = withImages(withSass(withCss({
-  sassLoaderOptions: { data: `$appUrlFinal: "${APP_URL_FINAL}";` },
   publicRuntimeConfig: {
+    env: process.env.NODE_ENV || 'development',
     versionNumber: PACKAGE.version
   },
+  sassLoaderOptions: { data: `$appUrlFinal: "${APP_URL_FINAL}";` },
   webpack: (config) => {
     config.plugins = config.plugins || []
 
