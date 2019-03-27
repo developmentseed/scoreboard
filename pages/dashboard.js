@@ -144,7 +144,7 @@ class Dashboard extends Component {
           <div className='row widget-container'>
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
             <div className='widget-75'>
-              <DashboardBadges badges={badges} />
+              <DashboardBadges badges={badges} name={name} />
             </div>
           </div>
           <div className='row'>

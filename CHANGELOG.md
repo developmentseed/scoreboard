@@ -5,9 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
 - Add "Help" link to Scoreboard documentation 
+- Users are able to download a PDF certificate of all their earned badges from their dashboard
 
-## [v1.1.0] - 2019-04-19
+## [v1.1.0] - 2019-03-19
 ### Added
 - Add OSMESA status as "Last Refreshed" to pages using OSMESA stats
 - On user page and dashboard, top campaigns will now show names of campaigns contributed to instead of hashtags contributed to
@@ -42,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Standardize how a user's last edit time is reported
 
 ### Fixed
-- Remove MVT artifacts produced by OSMesa in Leaflet fallback maps 
+- Remove MVT artifacts produced by OSMesa in Leaflet fallback maps
 
 ## [v1] - 2019-02-14
 ### Added
@@ -89,7 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Scoreboard backend
   - Move from Sqlite to Postgres
   - Migrated to [next.js](https://github.com/zeit/next.js/)
-    - Instead of deploying the api and frontend separately, the two codebases are 
+    - Instead of deploying the api and frontend separately, the two codebases are
       merged into one with server-rendering provided by next.js
     - For changes to development process see the [updated README.md](README.md)
   - Move badge calculations to the backend
@@ -111,7 +113,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - allow setting custom project names
-- unregister existing service workers 
+- unregister existing service workers
 
 ## [v0.2.2] - 2018-10-12
 
