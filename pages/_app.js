@@ -198,7 +198,7 @@ class Layout extends React.Component {
                                 <li><Link href={`/admin`}><a>Admin</a></Link></li>
                               )
                             }
-                            <li><a href='https://developmentseed.org/scoreboard/'>Help</a></li>
+                            <li><a href='https://developmentseed.org/scoreboard/users/getting-started'>Help</a></li>
                             <li><Link href='/auth/logout'><a>Logout</a></Link></li>
                           </ul>
                         </div>
