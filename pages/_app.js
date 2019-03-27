@@ -90,7 +90,7 @@ function Footer (props) {
           </nav>
           <div>
             &copy; 2018 All Rights Reserved<br />
-            <a href='/terms' className='link--normal'>Terms</a>
+            <a href='https://developmentseed.org/scoreboard/' className='link--normal'>Scoreboard Documentation</a>
           </div>
         </div>
       </footer>
@@ -198,6 +198,7 @@ class Layout extends React.Component {
                                 <li><Link href={`/admin`}><a>Admin</a></Link></li>
                               )
                             }
+                            <li><a href='https://developmentseed.org/scoreboard/'>Help</a></li>
                             <li><Link href='/auth/logout'><a>Logout</a></Link></li>
                           </ul>
                         </div>
