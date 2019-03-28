@@ -155,7 +155,7 @@ class Dashboard extends Component {
             ]}
             filename={`${name}_ScoreboardData.csv`}
             >
-            Export User Data (CSV)
+            Export Your Data (CSV)
           </CSVLink>
         </div>
         <section className="section--dark">

@@ -55,7 +55,7 @@ export default function CampaignTable (props) {
         { label: 'Waterways (Km)', key: 'km_waterways_add' },
         { label: 'Changesets', key: 'edits' }
       ]}>
-        Export CSV
+        Export Data (CSV)
       </CSVLink>
     </div>
   )
