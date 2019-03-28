@@ -29,11 +29,11 @@ const CalendarHeatmap = dynamic(
 )
 
 export class User extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.getUser(this.props.id)
   }
 
-  render() {
+  render () {
     if (!this.props.user) return <div />
     const {
       records,
@@ -63,7 +63,7 @@ export class User extends Component {
     )
 
     return (
-      <div className="dashboard">
+      <div className='dashboard'>
         <DashboardHeader
           id={this.props.id}
           name={name}
@@ -79,10 +79,10 @@ export class User extends Component {
             { label: 'Edits', value: formatDecimal(editCount) }
           ]}
         />
-        <div className="row">
+        <div className='row'>
           <DashboardBlurb {...records} username={name} />
           <CSVLink
-            className="link--large"
+            className='link--large'
             style={{ float: 'right', marginBottom: '1rem' }}
             data={[
               {
@@ -110,36 +110,36 @@ export class User extends Component {
           </CSVLink>
         </div>
         <section>
-          <div className="row">
-            <div className="map-lg">
+          <div className='row'>
+            <div className='map-lg'>
               <UserExtentMap uid={uid} extent={extent_uri} />
             </div>
           </div>
         </section>
         <section>
-          <div className="row">
-            <div className="widget-container">
-              <div className="widget-66">
+          <div className='row'>
+            <div className='widget-container'>
+              <div className='widget-66'>
                 <CampaignsChart
                   hashtags={hashtags}
                   campaigns={allCampaigns}
-                  height="260px"
+                  height='260px'
                 />
               </div>
-              <div className="widget-33">
-                <EditBreakdownChart {...breakdownChartProps} height="260px" />
+              <div className='widget-33'>
+                <EditBreakdownChart {...breakdownChartProps} height='260px' />
               </div>
             </div>
           </div>
         </section>
         <section>
-          <div className="row widget-container">
+          <div className='row widget-container'>
             <DashboardSidebar teams={teams} osmesaData={records} />
-            <div className="widget-75">
+            <div className='widget-75'>
               <DashboardBadges badges={badges} />
             </div>
           </div>
-          <div className="row">
+          <div className='row'>
             <CalendarHeatmap times={edit_times} />
           </div>
         </section>
@@ -152,7 +152,7 @@ const connectedUser = connect(
   ['user'],
   actions
 )(User)
-connectedUser.getInitialProps = function({ req }) {
+connectedUser.getInitialProps = function ({ req }) {
   const { id } = req.params
   return {
     id

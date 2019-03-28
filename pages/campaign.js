@@ -20,11 +20,11 @@ const CampaignMap = dynamic(
 )
 
 export class Campaign extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.getCampaign(this.props.id)
   }
 
-  addFavoriteCampaign() {
+  addFavoriteCampaign () {
     const { authenticatedUser } = this.props
     const { account } = authenticatedUser
     if (!account) {
@@ -39,7 +39,7 @@ export class Campaign extends Component {
     })
   }
 
-  getFavoriteByCampaignId(id) {
+  getFavoriteByCampaignId (id) {
     const { authenticatedUser } = this.props
     const { favorites } = authenticatedUser.account
 
@@ -48,19 +48,19 @@ export class Campaign extends Component {
     })
   }
 
-  removeFavoriteCampaign() {
+  removeFavoriteCampaign () {
     const campaignId = this.props.campaign.records.tmData.id
     const { id } = this.getFavoriteByCampaignId(campaignId)
     this.props.removeFavoriteCampaign(id)
   }
 
-  renderFavoriteButton() {
+  renderFavoriteButton () {
     const { authenticatedUser, campaign } = this.props
     const campaignId = campaign.records.tmData.id
 
     if (!authenticatedUser || !authenticatedUser.loggedIn) {
       return (
-        <button className="button" onClick={() => this.addFavoriteCampaign()}>
+        <button className='button' onClick={() => this.addFavoriteCampaign()}>
           Log in to favorite
         </button>
       )
@@ -71,7 +71,7 @@ export class Campaign extends Component {
     if (alreadyFavorited) {
       return (
         <button
-          className="button"
+          className='button'
           onClick={() => this.removeFavoriteCampaign()}
         >
           Remove favorite
@@ -80,13 +80,13 @@ export class Campaign extends Component {
     }
 
     return (
-      <button className="button" onClick={() => this.addFavoriteCampaign()}>
+      <button className='button' onClick={() => this.addFavoriteCampaign()}>
         Add favorite
       </button>
     )
   }
 
-  render() {
+  render () {
     if (!this.props.campaign) return <div />
 
     const {
@@ -99,44 +99,44 @@ export class Campaign extends Component {
     if (!tmData || !users) return <div />
 
     return (
-      <div className="Campaigns">
-        <header className="header--internal--green header--page">
-          <div className="row widget-container">
-            <div className="widget-66" style={{ 'pointer-events': 'none' }}>
-              <h1 className="header--xlarge margin-top-sm">{tmData.name}</h1>
-              <ul className="list--two-column">
+      <div className='Campaigns'>
+        <header className='header--internal--green header--page'>
+          <div className='row widget-container'>
+            <div className='widget-66' style={{ 'pointer-events': 'none' }}>
+              <h1 className='header--xlarge margin-top-sm'>{tmData.name}</h1>
+              <ul className='list--two-column'>
                 <li>
-                  <span className="list-label">Tasking Manager:</span>
+                  <span className='list-label'>Tasking Manager:</span>
                   <span>{tmData.tm_name}</span>
                 </li>
                 <li>
-                  <span className="list-label">Project Number:</span>
+                  <span className='list-label'>Project Number:</span>
                   <span>#{tmData.tm_id}</span>
                 </li>
                 <li>
-                  <span className="list-label">Last Update:</span>
+                  <span className='list-label'>Last Update:</span>
                   <span>{distanceInWordsToNow(lastUpdate)} ago</span>
                 </li>
                 <li>
-                  <span className="list-label">Created:</span>
+                  <span className='list-label'>Created:</span>
                   <span>{distanceInWordsToNow(creationDate)} ago</span>
                 </li>
-                <li className="list--inline refresh">
-                  <span className="list-label">Last refreshed: </span>
+                <li className='list--inline refresh'>
+                  <span className='list-label'>Last refreshed: </span>
                   <span>{formatUpdateDescription(refreshDate)}</span>
                 </li>
               </ul>
             </div>
-            <div className="widget-33">
+            <div className='widget-33'>
               {this.renderFavoriteButton()}
-              <a className="button" href={tmData.url}>
+              <a className='button' href={tmData.url}>
                 Contribute
               </a>
             </div>
           </div>
         </header>
         <ScoreboardPanel
-          title=""
+          title=''
           facets={[
             { label: 'Complete', value: `${parseInt(tmData.done, 10)}%` },
             { label: 'Validated', value: `${parseInt(tmData.validated, 10)}%` },
@@ -149,14 +149,14 @@ export class Campaign extends Component {
         />
 
         <section>
-          <div className="row widget-container">
-            <div className="widget-50">
-              <div className="text-body">
+          <div className='row widget-container'>
+            <div className='widget-50'>
+              <div className='text-body'>
                 <ReactMarkdown source={tmData.description} />
               </div>
             </div>
-            <div className="widget-50">
-              <div className="map-lg">
+            <div className='widget-50'>
+              <div className='map-lg'>
                 <CampaignMap
                   feature={JSON.parse(tmData.geometry)}
                   interactive
@@ -165,8 +165,8 @@ export class Campaign extends Component {
             </div>
           </div>
         </section>
-        <section className="section--tertiary">
-          <div className="row">
+        <section className='section--tertiary'>
+          <div className='row'>
             <Blurb {...records} />
             <CampaignTable users={users} name={tmData.name} />
           </div>

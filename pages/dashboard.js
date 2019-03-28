@@ -36,18 +36,18 @@ const UserExtentMap = dynamic(
 )
 
 class Dashboard extends Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
       loading: true
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.getAuthenticatedUser()
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     const { authenticatedUser, error } = this.props
 
     if (this.state.loading && (authenticatedUser.loggedIn || error)) {
@@ -55,7 +55,7 @@ class Dashboard extends Component {
     }
   }
 
-  render() {
+  render () {
     if (this.state.loading) {
       return <div />
     }
@@ -89,7 +89,7 @@ class Dashboard extends Component {
 
     if (!loggedIn || !account) {
       return (
-        <NotLoggedIn message="Log in with your OSM account to see your personalized dashboard" />
+        <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
       )
     }
 
@@ -115,7 +115,7 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className="dashboard">
+      <div className='dashboard'>
         <DashboardHeader
           id={accountId}
           loggedIn
@@ -126,17 +126,17 @@ class Dashboard extends Component {
           refreshDate={refreshDate}
         />
         <ScoreboardPanel
-          title="Your mapping Scoreboard"
+          title='Your mapping Scoreboard'
           facets={[
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
             { label: 'Edits', value: formatDecimal(editCount) }
           ]}
         />
-        <div className="row">
+        <div className='row'>
           <DashboardBlurb {...osmesaData} />
           <CSVLink
-            className="link--large"
+            className='link--large'
             style={{ float: 'right', marginBottom: '1rem' }}
             data={[
               {
@@ -181,8 +181,8 @@ class Dashboard extends Component {
             Export Your Data (CSV)
           </CSVLink>
         </div>
-        <section className="section--dark">
-          <div className="row">
+        <section className='section--dark'>
+          <div className='row'>
             {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
             <DashboardAssignments
               favorites={favorites}
@@ -193,36 +193,36 @@ class Dashboard extends Component {
           </div>
         </section>
         <section>
-          <div className="row">
-            <div className="map-lg">
+          <div className='row'>
+            <div className='map-lg'>
               <UserExtentMap uid={uid} extent={extent_uri} />
             </div>
           </div>
         </section>
         <section>
-          <div className="row">
-            <div className="widget-container">
-              <div className="widget-66">
+          <div className='row'>
+            <div className='widget-container'>
+              <div className='widget-66'>
                 <CampaignsChart
                   campaigns={allCampaigns}
                   hashtags={hashtags}
-                  height="260px"
+                  height='260px'
                 />
               </div>
-              <div className="widget-33">
-                <EditBreakdownChart {...breakdownChartProps} height="260px" />
+              <div className='widget-33'>
+                <EditBreakdownChart {...breakdownChartProps} height='260px' />
               </div>
             </div>
           </div>
         </section>
         <section>
-          <div className="row widget-container">
+          <div className='row widget-container'>
             <DashboardSidebar teams={teams} osmesaData={osmesaData} />
-            <div className="widget-75">
+            <div className='widget-75'>
               <DashboardBadges badges={badges} />
             </div>
           </div>
-          <div className="row">
+          <div className='row'>
             <CalendarHeatmap times={edit_times} />
           </div>
         </section>
@@ -230,12 +230,12 @@ class Dashboard extends Component {
     )
   }
 
-  renderAdmin() {
+  renderAdmin () {
     return (
       <div>
-        <h2 className="header--large header--with-description">
-          <Link href="/admin">
-            <a className="header-link">Admin</a>
+        <h2 className='header--large header--with-description'>
+          <Link href='/admin'>
+            <a className='header-link'>Admin</a>
           </Link>
         </h2>
         <AdminSectionList />
