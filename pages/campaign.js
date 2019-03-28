@@ -134,7 +134,7 @@ export class Campaign extends Component {
         <section className='section--tertiary'>
           <div className='row'>
             <Blurb {...records} />
-            <CampaignTable users={users} />
+            <CampaignTable users={users} name={tmData.name} />
           </div>
         </section>
       </div>
