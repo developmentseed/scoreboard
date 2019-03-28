@@ -1,117 +1,117 @@
-import React, { Component } from "react";
-import Link from "../components/Link";
-import { connect } from "unistore/react";
-import { withAlert } from "react-alert";
+import React, { Component } from 'react'
+import Link from '../components/Link'
+import { connect } from 'unistore/react'
+import { withAlert } from 'react-alert'
 
-import { actions } from "../lib/store";
-import { isAdmin } from "../lib/utils/roles";
-import { pick } from "ramda";
+import { actions } from '../lib/store'
+import { isAdmin } from '../lib/utils/roles'
+import { pick } from 'ramda'
 
-import NotLoggedIn from "../components/NotLoggedIn";
-import AdminSectionList from "../components/admin/AdminSectionList";
-import ScoreboardPanel from "../components/ScoreboardPanel";
-import DashboardBadges from "../components/dashboard/DashboardBadges";
-import DashboardAssignments from "../components/dashboard/DashboardAssignments";
-import DashboardHeader from "../components/dashboard/DashboardHeader";
-import DashboardSidebar from "../components/dashboard/DashboardSidebar";
-import DashboardBlurb from "../components/dashboard/DashboardBlurb";
-import CampaignsChart from "../components/charts/CampaignsChart";
-import EditBreakdownChart from "../components/charts/EditBreakdownChart";
-import { formatDecimal } from "../lib/utils/format";
-import { CSVLink } from "react-csv";
+import NotLoggedIn from '../components/NotLoggedIn'
+import AdminSectionList from '../components/admin/AdminSectionList'
+import ScoreboardPanel from '../components/ScoreboardPanel'
+import DashboardBadges from '../components/dashboard/DashboardBadges'
+import DashboardAssignments from '../components/dashboard/DashboardAssignments'
+import DashboardHeader from '../components/dashboard/DashboardHeader'
+import DashboardSidebar from '../components/dashboard/DashboardSidebar'
+import DashboardBlurb from '../components/dashboard/DashboardBlurb'
+import CampaignsChart from '../components/charts/CampaignsChart'
+import EditBreakdownChart from '../components/charts/EditBreakdownChart'
+import { formatDecimal } from '../lib/utils/format'
+import { CSVLink } from 'react-csv'
 
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
 const CalendarHeatmap = dynamic(
-  () => import("../components/charts/CalendarHeatmap"),
+  () => import('../components/charts/CalendarHeatmap'),
   {
     ssr: false
   }
-);
+)
 const UserExtentMap = dynamic(
-  () => import("../components/charts/ProgressiveExtentMap"),
+  () => import('../components/charts/ProgressiveExtentMap'),
   {
     ssr: false
   }
-);
+)
 
 class Dashboard extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       loading: true
-    };
+    }
   }
 
   componentDidMount() {
-    this.props.getAuthenticatedUser();
+    this.props.getAuthenticatedUser()
   }
 
   componentDidUpdate() {
-    const { authenticatedUser, error } = this.props;
+    const { authenticatedUser, error } = this.props
 
     if (this.state.loading && (authenticatedUser.loggedIn || error)) {
-      this.setState({ loading: false });
+      this.setState({ loading: false })
     }
   }
 
   render() {
     if (this.state.loading) {
-      return <div />;
+      return <div />
     }
-    const { authenticatedUser } = this.props;
-    const { loggedIn, account } = authenticatedUser;
-    const { assignments, favorites, country, allCampaigns } = account;
+    const { authenticatedUser } = this.props
+    const { loggedIn, account } = authenticatedUser
+    const { assignments, favorites, country, allCampaigns } = account
 
-    const { badges, teams, refreshDate } = account;
-    const osmesaData = account.records;
-    const { hashtags, edit_times, extent_uri, uid } = osmesaData;
+    const { badges, teams, refreshDate } = account
+    const osmesaData = account.records
+    const { hashtags, edit_times, extent_uri, uid } = osmesaData
     const breakdownChartProps = pick(
       [
-        "waterways_add",
-        "poi_add",
-        "roads_add",
-        "buildings_add",
-        "coastlines_add",
-        "coastlines_mod"
+        'waterways_add',
+        'poi_add',
+        'roads_add',
+        'buildings_add',
+        'coastlines_add',
+        'coastlines_mod'
       ],
       osmesaData
-    );
+    )
 
     // Calculate counts for panel
     const badgeCount =
       account.badges && badges.earnedBadges
         ? Object.keys(badges.earnedBadges).length
-        : 0;
+        : 0
     const campaignCount =
-      osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0;
-    const editCount = osmesaData ? osmesaData.edit_count : 0;
+      osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0
+    const editCount = osmesaData ? osmesaData.edit_count : 0
 
     if (!loggedIn || !account) {
       return (
         <NotLoggedIn message="Log in with your OSM account to see your personalized dashboard" />
-      );
+      )
     }
 
     // Dashboard header variables
-    let profileImage = null;
-    let name = null;
-    let accountId = null;
+    let profileImage = null
+    let name = null
+    let accountId = null
     if (authenticatedUser) {
-      const osmUser = authenticatedUser.osm._xml2json.user;
+      const osmUser = authenticatedUser.osm._xml2json.user
       if (
         osmUser &&
         osmUser.img &&
-        osmUser.img["@"] &&
-        osmUser.img["@"]["href"]
+        osmUser.img['@'] &&
+        osmUser.img['@']['href']
       ) {
-        profileImage = osmUser.img["@"]["href"];
+        profileImage = osmUser.img['@']['href']
       } else {
         profileImage =
-          "https://www.gravatar.com/avatar/00000000000000000000000000000000";
+          'https://www.gravatar.com/avatar/00000000000000000000000000000000'
       }
-      name = osmUser["@"]["display_name"];
-      accountId = authenticatedUser.account.id;
+      name = osmUser['@']['display_name']
+      accountId = authenticatedUser.account.id
     }
 
     return (
@@ -128,33 +128,56 @@ class Dashboard extends Component {
         <ScoreboardPanel
           title="Your mapping Scoreboard"
           facets={[
-            { label: "Campaigns", value: formatDecimal(campaignCount) },
-            { label: "Badges", value: formatDecimal(badgeCount) },
-            { label: "Edits", value: formatDecimal(editCount) }
+            { label: 'Campaigns', value: formatDecimal(campaignCount) },
+            { label: 'Badges', value: formatDecimal(badgeCount) },
+            { label: 'Edits', value: formatDecimal(editCount) }
           ]}
         />
         <div className="row">
           <DashboardBlurb {...osmesaData} />
           <CSVLink
             className="link--large"
-            style={{ float: "right", marginBottom: "1rem" }}
-            data = {[{
+            style={{ float: 'right', marginBottom: '1rem' }}
+            data={[
+              {
                 authenticatedUser,
                 badgeCount
-              }]}
+              }
+            ]}
             headers={[
               { label: 'Name', key: 'authenticatedUser.osm.displayName' },
-              { label: 'Campaigns', key: 'authenticatedUser.account.allCampaigns.length' },
+              {
+                label: 'Campaigns',
+                key: 'authenticatedUser.account.allCampaigns.length'
+              },
               { label: 'Badges', key: 'badgeCount' },
-              { label: 'Roads (Km)', key: 'authenticatedUser.account.records.km_roads_add' },
-              { label: 'Buildings', key: 'authenticatedUser.account.records.buildings_add' },
-              { label: 'Points of Interest', key: 'authenticatedUser.account.records.poi_add' },
-              { label: 'Coastlines (Km)', key: 'authenticatedUser.account.records.km_coastlines_add' },
-              { label: 'Waterways (Km)', key: 'authenticatedUser.account.records.km_waterways_add' },
-              { label: 'Total Edits', key: 'authenticatedUser.account.records.edit_count' }
+              {
+                label: 'Roads (Km)',
+                key: 'authenticatedUser.account.records.km_roads_add'
+              },
+              {
+                label: 'Buildings',
+                key: 'authenticatedUser.account.records.buildings_add'
+              },
+              {
+                label: 'Points of Interest',
+                key: 'authenticatedUser.account.records.poi_add'
+              },
+              {
+                label: 'Coastlines (Km)',
+                key: 'authenticatedUser.account.records.km_coastlines_add'
+              },
+              {
+                label: 'Waterways (Km)',
+                key: 'authenticatedUser.account.records.km_waterways_add'
+              },
+              {
+                label: 'Total Edits',
+                key: 'authenticatedUser.account.records.edit_count'
+              }
             ]}
             filename={`${name}_ScoreboardData.csv`}
-            >
+          >
             Export Your Data (CSV)
           </CSVLink>
         </div>
@@ -204,7 +227,7 @@ class Dashboard extends Component {
           </div>
         </section>
       </div>
-    );
+    )
   }
 
   renderAdmin() {
@@ -220,11 +243,11 @@ class Dashboard extends Component {
         <br />
         <br />
       </div>
-    );
+    )
   }
 }
 
 export default connect(
-  ["authenticatedUser", "error"],
+  ['authenticatedUser', 'error'],
   actions
-)(withAlert(Dashboard));
+)(withAlert(Dashboard))

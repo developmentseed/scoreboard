@@ -13,23 +13,36 @@ import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import { pick } from 'ramda'
 import dynamic from 'next/dynamic'
-import { CSVLink } from 'react-csv';
+import { CSVLink } from 'react-csv'
 
-const UserExtentMap = dynamic(() => import('../components/charts/ProgressiveExtentMap'), {
-  ssr: false
-})
-const CalendarHeatmap = dynamic(() => import('../components/charts/CalendarHeatmap'), {
-  ssr: false
-})
+const UserExtentMap = dynamic(
+  () => import('../components/charts/ProgressiveExtentMap'),
+  {
+    ssr: false
+  }
+)
+const CalendarHeatmap = dynamic(
+  () => import('../components/charts/CalendarHeatmap'),
+  {
+    ssr: false
+  }
+)
 
 export class User extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.getUser(this.props.id)
   }
 
-  render () {
+  render() {
     if (!this.props.user) return <div />
-    const { records, country, badges, teams, refreshDate, allCampaigns } = this.props.user
+    const {
+      records,
+      country,
+      badges,
+      teams,
+      refreshDate,
+      allCampaigns
+    } = this.props.user
     const { extent_uri, uid } = records
     if (!records) return <div />
     const editCount = getSumEdits(records)
@@ -37,17 +50,20 @@ export class User extends Component {
     const campaignCount = records.hashtags.length
     const { name, hashtags, edit_times } = records
 
-    const breakdownChartProps = pick([
-      'waterways_add',
-      'poi_add',
-      'roads_add',
-      'buildings_add',
-      'coastlines_add',
-      'coastlines_mod'
-    ], records)
+    const breakdownChartProps = pick(
+      [
+        'waterways_add',
+        'poi_add',
+        'roads_add',
+        'buildings_add',
+        'coastlines_add',
+        'coastlines_mod'
+      ],
+      records
+    )
 
     return (
-      <div className='dashboard'>
+      <div className="dashboard">
         <DashboardHeader
           id={this.props.id}
           name={name}
@@ -63,25 +79,24 @@ export class User extends Component {
             { label: 'Edits', value: formatDecimal(editCount) }
           ]}
         />
-        <div className='row'>
-          <DashboardBlurb
-            {...records}
-            username={name}
-          />
+        <div className="row">
+          <DashboardBlurb {...records} username={name} />
           <CSVLink
             className="link--large"
-            style={{ float: "right", marginBottom: "1rem" }}
-            data = {[{
-              badgeCount,
-              editCount,
-              campaignCount,
-              records
-            }]}
+            style={{ float: 'right', marginBottom: '1rem' }}
+            data={[
+              {
+                badgeCount,
+                editCount,
+                campaignCount,
+                records
+              }
+            ]}
             headers={[
               { label: 'Name', key: 'records.name' },
               { label: 'Campaigns', key: 'campaignCount' },
               { label: 'Badges', key: 'badgeCount' },
-              { label: 'Countries', key: 'records.country_list.length'},
+              { label: 'Countries', key: 'records.country_list.length' },
               { label: 'Roads (Km)', key: 'records.km_roads_add' },
               { label: 'Buildings', key: 'records.buildings_add' },
               { label: 'Points of Interest', key: 'records.poi_add' },
@@ -90,37 +105,41 @@ export class User extends Component {
               { label: 'Total Edits', key: 'editCount' }
             ]}
             filename={`${name}_ScoreboardData.csv`}
-            >
+          >
             Export User Data (CSV)
           </CSVLink>
         </div>
         <section>
-          <div className='row'>
-            <div className='map-lg'>
+          <div className="row">
+            <div className="map-lg">
               <UserExtentMap uid={uid} extent={extent_uri} />
             </div>
           </div>
         </section>
         <section>
-          <div className='row'>
-            <div className='widget-container'>
-              <div className='widget-66'>
-                <CampaignsChart hashtags={hashtags} campaigns={allCampaigns} height='260px' />
+          <div className="row">
+            <div className="widget-container">
+              <div className="widget-66">
+                <CampaignsChart
+                  hashtags={hashtags}
+                  campaigns={allCampaigns}
+                  height="260px"
+                />
               </div>
-              <div className='widget-33'>
-                <EditBreakdownChart {...breakdownChartProps} height='260px' />
+              <div className="widget-33">
+                <EditBreakdownChart {...breakdownChartProps} height="260px" />
               </div>
             </div>
           </div>
         </section>
         <section>
-          <div className='row widget-container'>
+          <div className="row widget-container">
             <DashboardSidebar teams={teams} osmesaData={records} />
-            <div className='widget-75'>
+            <div className="widget-75">
               <DashboardBadges badges={badges} />
             </div>
           </div>
-          <div className='row'>
+          <div className="row">
             <CalendarHeatmap times={edit_times} />
           </div>
         </section>
@@ -129,8 +148,11 @@ export class User extends Component {
   }
 }
 
-const connectedUser = connect(['user'], actions)(User)
-connectedUser.getInitialProps = function ({ req }) {
+const connectedUser = connect(
+  ['user'],
+  actions
+)(User)
+connectedUser.getInitialProps = function({ req }) {
   const { id } = req.params
   return {
     id
