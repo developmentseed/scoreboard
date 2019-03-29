@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import DataNotAvailable from '../DataNotAvailable'
 import FilterBar from '../FilterBar'
 import BadgeInProgress from '../BadgeInProgress'
+import generatePDF from '../../lib/utils/generatePDF'
 
 class DashboardBadges extends Component {
   constructor (props) {
@@ -18,7 +19,7 @@ class DashboardBadges extends Component {
   }
 
   render () {
-    const { badges } = this.props
+    const { badges, name } = this.props
     const { badgesFilter } = this.state
 
     const badgeFilters = [
@@ -35,19 +36,21 @@ class DashboardBadges extends Component {
         </div>
       )
     }
-
     const filteredBadges = badges[badgesFilter]
     const badgeKeys = Object.keys(filteredBadges)
+    const { earnedBadges } = badges
 
     return (
       <div>
         <h2 className='header--large header--with-description'>Badges</h2>
-        <FilterBar
-          filters={badgeFilters}
-          active={this.state.badgesFilter}
-          onClick={this.onBadgesFilterClick}
-        />
-
+        <div style={{ display: 'flex' }}>
+          <FilterBar
+            filters={badgeFilters}
+            active={this.state.badgesFilter}
+            onClick={this.onBadgesFilterClick}
+          />
+          <button style={{ marginLeft: 'auto' }} className='button button--secondary' onClick={() => generatePDF(name, earnedBadges)}>Download Earned Badges</button>
+        </div>
         <ul className='widget-container Badge-Roll'>
           {
             badgeKeys.map((badgeKey, i) => {
