@@ -4,6 +4,10 @@ import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
 
 export default function CampaignTable (props) {
+  if (props.users.length === 0) {
+    return <div />
+  }
+
   return (
     <div className='widget'>
       <table>

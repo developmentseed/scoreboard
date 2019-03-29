@@ -141,8 +141,15 @@ export class Campaign extends Component {
         </section>
         <section className='section--tertiary'>
           <div className='row'>
-            <Blurb {...stats} />
-            <CampaignTable users={stats.users} />
+          {
+              (stats.success) ?
+                <div>
+                  <Blurb {...stats} />
+                  <CampaignTable users={stats.users} />
+                </div>
+              :
+              <p>There was an error retrieving stats for this campaign.</p>
+          }
           </div>
         </section>
       </div>

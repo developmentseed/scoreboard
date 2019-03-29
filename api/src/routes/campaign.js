@@ -51,10 +51,20 @@ module.exports = async (req, res) => {
 
   try {
     const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
-    response['stats'] = osmesaResponse
+    response['stats'] = Object.assign(
+      osmesaResponse,
+      { success: true })
     return res.send(response)
   } catch (err) {
     console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
+    if (err.statusCode && err.statusCode === 404) {
+      // There are no stats yet
+      response['stats'] = Object.assign(
+        { success: true })
+    } else {
+      response['stats'] = Object.assign(
+        { success: false })
+    }
     return res.send(response)
   }
 }
