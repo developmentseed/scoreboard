@@ -45,7 +45,7 @@ export default function CampaignTable (props) {
           }
         </tbody>
       </table>
-      <CSVLink className='link--large' style={{ display: 'inline-block', float: 'right', marginTop: '2rem' }} data={sortBy(prop('edits'), props.users).reverse()} filename={`${props.name}.csv`} headers={[
+      <CSVLink className='link--large' style={{ display: 'inline-block', float: 'right', marginTop: '2rem' }} data={sortBy(prop('edits'), props.users).reverse()} filename={`${props.name} - Top 10 Participants.csv`} headers={[
         { label: 'Name', key: 'name' },
         { label: 'Roads (Km)', key: 'km_roads_add' },
         { label: 'Buildings', key: 'buildings_add' },
