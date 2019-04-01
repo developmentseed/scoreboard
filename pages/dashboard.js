@@ -136,7 +136,7 @@ class Dashboard extends Component {
         <div className='row'>
           <DashboardBlurb {...osmesaData} />
           <CSVLink
-            className='link--large'
+            className='button button--secondary'
             style={{ float: 'right', marginBottom: '1rem' }}
             data={[
               {
