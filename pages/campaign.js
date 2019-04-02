@@ -12,9 +12,12 @@ import sumEdits from '../lib/utils/sum_edits'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import Blurb from '../components/campaign/CampaignBlurb'
 
-const CampaignMap = dynamic(() => import('../components/charts/LeafletCampaignMap'), {
-  ssr: false
-})
+const CampaignMap = dynamic(
+  () => import('../components/charts/LeafletCampaignMap'),
+  {
+    ssr: false
+  }
+)
 
 export class Campaign extends Component {
   componentDidMount () {
@@ -40,7 +43,7 @@ export class Campaign extends Component {
     const { authenticatedUser } = this.props
     const { favorites } = authenticatedUser.account
 
-    return favorites.find((item) => {
+    return favorites.find(item => {
       return item.campaign_id === id
     })
   }
@@ -56,22 +59,42 @@ export class Campaign extends Component {
     const campaignId = campaign.records.tmData.id
 
     if (!authenticatedUser || !authenticatedUser.loggedIn) {
-      return (<button className='button' onClick={() => this.addFavoriteCampaign()}>Log in to favorite</button>)
+      return (
+        <button className='button' onClick={() => this.addFavoriteCampaign()}>
+          Log in to favorite
+        </button>
+      )
     }
 
     const alreadyFavorited = !!this.getFavoriteByCampaignId(campaignId)
 
     if (alreadyFavorited) {
-      return (<button className='button' onClick={() => this.removeFavoriteCampaign()}>Remove favorite</button>)
+      return (
+        <button
+          className='button'
+          onClick={() => this.removeFavoriteCampaign()}
+        >
+          Remove favorite
+        </button>
+      )
     }
 
-    return (<button className='button' onClick={() => this.addFavoriteCampaign()}>Add favorite</button>)
+    return (
+      <button className='button' onClick={() => this.addFavoriteCampaign()}>
+        Add favorite
+      </button>
+    )
   }
 
   render () {
     if (!this.props.campaign) return <div />
 
-    const { records, lastUpdate, creationDate, refreshDate } = this.props.campaign
+    const {
+      records,
+      lastUpdate,
+      creationDate,
+      refreshDate
+    } = this.props.campaign
     const { tmData, users } = records
     if (!tmData || !users) return <div />
 
@@ -106,27 +129,38 @@ export class Campaign extends Component {
             </div>
             <div className='widget-33'>
               {this.renderFavoriteButton()}
-              <a className='button' href={tmData.url}>Contribute</a>
+              <a className='button' href={tmData.url}>
+                Contribute
+              </a>
             </div>
           </div>
         </header>
-        <ScoreboardPanel title='' facets={
-          [
+        <ScoreboardPanel
+          title=''
+          facets={[
             { label: 'Complete', value: `${parseInt(tmData.done, 10)}%` },
             { label: 'Validated', value: `${parseInt(tmData.validated, 10)}%` },
             { label: 'Participants', value: users.length },
-            { label: 'Total features mapped', value: formatDecimal(sumEdits(records)) }
-          ]
-        } />
+            {
+              label: 'Total features mapped',
+              value: formatDecimal(sumEdits(records))
+            }
+          ]}
+        />
 
         <section>
           <div className='row widget-container'>
             <div className='widget-50'>
-              <div className='text-body'><ReactMarkdown source={tmData.description} /></div>
+              <div className='text-body'>
+                <ReactMarkdown source={tmData.description} />
+              </div>
             </div>
             <div className='widget-50'>
               <div className='map-lg'>
-                <CampaignMap feature={JSON.parse(tmData.geometry)} interactive />
+                <CampaignMap
+                  feature={JSON.parse(tmData.geometry)}
+                  interactive
+                />
               </div>
             </div>
           </div>
@@ -134,7 +168,7 @@ export class Campaign extends Component {
         <section className='section--tertiary'>
           <div className='row'>
             <Blurb {...records} />
-            <CampaignTable users={users} />
+            <CampaignTable users={users} name={tmData.name} />
           </div>
         </section>
       </div>
@@ -142,7 +176,10 @@ export class Campaign extends Component {
   }
 }
 
-const Page = connect(['authenticatedUser', 'campaign'], actions)(Campaign)
+const Page = connect(
+  ['authenticatedUser', 'campaign'],
+  actions
+)(Campaign)
 
 Page.getInitialProps = async ({ req }) => {
   const { id } = req.params

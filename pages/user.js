@@ -13,13 +13,20 @@ import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import { pick } from 'ramda'
 import dynamic from 'next/dynamic'
+import { CSVLink } from 'react-csv'
 
-const UserExtentMap = dynamic(() => import('../components/charts/ProgressiveExtentMap'), {
-  ssr: false
-})
-const CalendarHeatmap = dynamic(() => import('../components/charts/CalendarHeatmap'), {
-  ssr: false
-})
+const UserExtentMap = dynamic(
+  () => import('../components/charts/ProgressiveExtentMap'),
+  {
+    ssr: false
+  }
+)
+const CalendarHeatmap = dynamic(
+  () => import('../components/charts/CalendarHeatmap'),
+  {
+    ssr: false
+  }
+)
 
 export class User extends Component {
   componentDidMount () {
@@ -28,7 +35,14 @@ export class User extends Component {
 
   render () {
     if (!this.props.user) return <div />
-    const { records, country, badges, teams, refreshDate, allCampaigns } = this.props.user
+    const {
+      records,
+      country,
+      badges,
+      teams,
+      refreshDate,
+      allCampaigns
+    } = this.props.user
     const { extent_uri, uid } = records
     if (!records) return <div />
     const editCount = getSumEdits(records)
@@ -36,14 +50,17 @@ export class User extends Component {
     const campaignCount = records.hashtags.length
     const { name, hashtags, edit_times } = records
 
-    const breakdownChartProps = pick([
-      'waterways_add',
-      'poi_add',
-      'roads_add',
-      'buildings_add',
-      'coastlines_add',
-      'coastlines_mod'
-    ], records)
+    const breakdownChartProps = pick(
+      [
+        'waterways_add',
+        'poi_add',
+        'roads_add',
+        'buildings_add',
+        'coastlines_add',
+        'coastlines_mod'
+      ],
+      records
+    )
 
     return (
       <div className='dashboard'>
@@ -63,10 +80,34 @@ export class User extends Component {
           ]}
         />
         <div className='row'>
-          <DashboardBlurb
-            {...records}
-            username={name}
-          />
+          <DashboardBlurb {...records} username={name} />
+          <CSVLink
+            className='link--large'
+            style={{ float: 'right', marginBottom: '1rem' }}
+            data={[
+              {
+                badgeCount,
+                editCount,
+                campaignCount,
+                records
+              }
+            ]}
+            headers={[
+              { label: 'Name', key: 'records.name' },
+              { label: 'Campaigns', key: 'campaignCount' },
+              { label: 'Badges', key: 'badgeCount' },
+              { label: 'Countries', key: 'records.country_list.length' },
+              { label: 'Roads (Km)', key: 'records.km_roads_add' },
+              { label: 'Buildings', key: 'records.buildings_add' },
+              { label: 'Points of Interest', key: 'records.poi_add' },
+              { label: 'Coastlines (Km)', key: 'records.km_coastlines_add' },
+              { label: 'Waterways (Km)', key: 'records.km_waterways_add' },
+              { label: 'Total Edits', key: 'editCount' }
+            ]}
+            filename={`${name}_ScoreboardData.csv`}
+          >
+            Export User Data (CSV)
+          </CSVLink>
         </div>
         <section>
           <div className='row'>
@@ -79,7 +120,11 @@ export class User extends Component {
           <div className='row'>
             <div className='widget-container'>
               <div className='widget-66'>
-                <CampaignsChart hashtags={hashtags} campaigns={allCampaigns} height='260px' />
+                <CampaignsChart
+                  hashtags={hashtags}
+                  campaigns={allCampaigns}
+                  height='260px'
+                />
               </div>
               <div className='widget-33'>
                 <EditBreakdownChart {...breakdownChartProps} height='260px' />
@@ -103,7 +148,10 @@ export class User extends Component {
   }
 }
 
-const connectedUser = connect(['user'], actions)(User)
+const connectedUser = connect(
+  ['user'],
+  actions
+)(User)
 connectedUser.getInitialProps = function ({ req }) {
   const { id } = req.params
   return {
