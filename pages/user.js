@@ -136,7 +136,7 @@ export class User extends Component {
           <div className='row widget-container'>
             <DashboardSidebar teams={teams} osmesaData={records} />
             <div className='widget-75'>
-              <DashboardBadges badges={badges} />
+              <DashboardBadges name={name} badges={badges} />
             </div>
           </div>
           <div className='row'>
