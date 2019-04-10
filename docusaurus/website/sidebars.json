@@ -8,7 +8,8 @@
       "users/profile",
       "users/user-statistics",
       "users/update-country",
-      "users/sharing-your-profile"
+      "users/sharing-your-profile",
+      "users/exporting-data"
     ],
     "Campaigns": [
       "users/campaigns",
