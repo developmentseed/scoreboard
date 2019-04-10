@@ -5,6 +5,10 @@ import { formatDecimal } from '../../lib/utils/format'
 import { CSVLink } from 'react-csv'
 
 export default function CampaignTable (props) {
+  if (props.users.length === 0) {
+    return <div />
+  }
+
   return (
     <div className='widget clearfix'>
       <table>

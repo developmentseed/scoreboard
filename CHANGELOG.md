@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add "Help" link to Scoreboard documentation 
 - Users are able to download a PDF certificate of all their earned badges from their dashboard
 
+## Fixed
+- Campaigns without stats will now display an "empty state", still displaying metadata from the tasking manager but without additional visualizations
+
 ## [v1.1.0] - 2019-03-19
 ### Added
 - Add OSMESA status as "Last Refreshed" to pages using OSMESA stats
