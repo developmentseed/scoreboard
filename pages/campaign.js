@@ -14,9 +14,12 @@ import sumEdits from '../lib/utils/sum_edits'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import Blurb from '../components/campaign/CampaignBlurb'
 
-const CampaignMap = dynamic(() => import('../components/charts/LeafletCampaignMap'), {
-  ssr: false
-})
+const CampaignMap = dynamic(
+  () => import('../components/charts/LeafletCampaignMap'),
+  {
+    ssr: false
+  }
+)
 
 export class Campaign extends Component {
   componentDidMount () {
@@ -42,7 +45,7 @@ export class Campaign extends Component {
     const { authenticatedUser } = this.props
     const { favorites } = authenticatedUser.account
 
-    return favorites.find((item) => {
+    return favorites.find(item => {
       return item.campaign_id === id
     })
   }
@@ -58,16 +61,31 @@ export class Campaign extends Component {
     const campaignId = campaign.meta.id
 
     if (!authenticatedUser || !authenticatedUser.loggedIn) {
-      return (<button className='button' onClick={() => this.addFavoriteCampaign()}>Log in to favorite</button>)
+      return (
+        <button className='button' onClick={() => this.addFavoriteCampaign()}>
+          Log in to favorite
+        </button>
+      )
     }
 
     const alreadyFavorited = !!this.getFavoriteByCampaignId(campaignId)
 
     if (alreadyFavorited) {
-      return (<button className='button' onClick={() => this.removeFavoriteCampaign()}>Remove favorite</button>)
+      return (
+        <button
+          className='button'
+          onClick={() => this.removeFavoriteCampaign()}
+        >
+          Remove favorite
+        </button>
+      )
     }
 
-    return (<button className='button' onClick={() => this.addFavoriteCampaign()}>Add favorite</button>)
+    return (
+      <button className='button' onClick={() => this.addFavoriteCampaign()}>
+        Add favorite
+      </button>
+    )
   }
 
   render () {
@@ -82,6 +100,7 @@ export class Campaign extends Component {
       km_coastlines_add: 0,
       km_coastlines_mod: 0
     }, this.props.campaign.stats)
+    console.log(this.props.campaign)
 
     return (
       <div className='Campaigns'>
@@ -157,7 +176,10 @@ export class Campaign extends Component {
   }
 }
 
-const Page = connect(['authenticatedUser', 'campaign'], actions)(Campaign)
+const Page = connect(
+  ['authenticatedUser', 'campaign'],
+  actions
+)(Campaign)
 
 Page.getInitialProps = async ({ req }) => {
   const { id } = req.params
