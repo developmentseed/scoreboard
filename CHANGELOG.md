@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add "Help" link to Scoreboard documentation 
 - Users are able to download a PDF certificate of all their earned badges from their dashboard
+- Admins can include extra parameters to filter the project search of a tasking manager
 
 ## Fixed
 - Campaigns without stats will now display an "empty state", still displaying metadata from the tasking manager but without additional visualizations
