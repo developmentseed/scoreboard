@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
   try {
     const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
     response['stats'] = Object.assign(
-      osmesaResponse,
+      JSON.parse(osmesaResponse),
       { success: true })
     return res.send(response)
   } catch (err) {

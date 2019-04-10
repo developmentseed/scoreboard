@@ -100,7 +100,6 @@ export class Campaign extends Component {
       km_coastlines_add: 0,
       km_coastlines_mod: 0
     }, this.props.campaign.stats)
-    console.log(this.props.campaign)
 
     return (
       <div className='Campaigns'>
