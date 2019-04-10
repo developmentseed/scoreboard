@@ -1,5 +1,4 @@
 const rp = require('request-promise-native')
-const { concat } = require('ramda')
 const limit = require('p-limit')(5)
 const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
 
