@@ -6,14 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Add "Help" link to Scoreboard documentation 
+- Users are able to download a PDF certificate of all their earned badges from their dashboard
+
+## [v1.1.0] - 2019-03-19
+### Added
+- Add OSMESA status as "Last Refreshed" to pages using OSMESA stats
 - On user page and dashboard, top campaigns will now show names of campaigns contributed to instead of hashtags contributed to
+- The current version number of Scoreboard is now displayed in the footer
+- On Campaigns Page, "top 10" user table has more detailed statistics
+- Add <title> for pages
 
 ### Changed
 - On the user dashboard, the "all campaigns" component will show all campaigns contributed to instead of assignments + favorites
+- Country page user tables read "Edits" while those on Campaign pages read "Changesets"
+- Docs site moved from being served from the API to statically hosted on https://developmentseed.org/scoreboard
 
 ### Fixed
 - Leave excluded users' edits in aggregate statistics
 - Updated table header styles to fix bug in Admin "Exclude Users" table, applies to whole app
+- Mask color for favicons
 
 ## [v1.0.3] - 2019-03-07
 
@@ -32,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Standardize how a user's last edit time is reported
 
 ### Fixed
-- Remove MVT artifacts produced by OSMesa in Leaflet fallback maps 
+- Remove MVT artifacts produced by OSMesa in Leaflet fallback maps
 
 ## [v1] - 2019-02-14
 ### Added
@@ -79,7 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Scoreboard backend
   - Move from Sqlite to Postgres
   - Migrated to [next.js](https://github.com/zeit/next.js/)
-    - Instead of deploying the api and frontend separately, the two codebases are 
+    - Instead of deploying the api and frontend separately, the two codebases are
       merged into one with server-rendering provided by next.js
     - For changes to development process see the [updated README.md](README.md)
   - Move badge calculations to the backend
@@ -101,7 +113,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - allow setting custom project names
-- unregister existing service workers 
+- unregister existing service workers
 
 ## [v0.2.2] - 2018-10-12
 
@@ -136,7 +148,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.1.0...HEAD
+[v1.1.0]: https://github.com/developmentseed/scoreboard/compare/v1.0.3...v1.1.0
 [v1.0.3]: https://github.com/developmentseed/scoreboard/compare/v1.0.2...v1.0.3
 [v1.0.2]: https://github.com/developmentseed/scoreboard/compare/v1.0.1...v1.0.2
 [v1.0.1]: https://github.com/developmentseed/scoreboard/compare/v1...v1.0.1

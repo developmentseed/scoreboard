@@ -5,6 +5,8 @@ import Head from 'next/head'
 import { withRouter } from 'next/router'
 import { Provider, connect } from 'unistore/react'
 import { Provider as AlertProvider, withAlert } from 'react-alert'
+import getConfig from 'next/config'
+
 import AlertTemplate from 'react-alert-template-basic'
 
 import { APP_URL_FINAL, APP_URL_PREFIX } from '../api/src/config'
@@ -42,6 +44,9 @@ const NavLink = withRouter(({ children, router, href }) => {
   return <Link href={href}><a className={activeClass}>{children}</a></Link>
 })
 
+const { publicRuntimeConfig } = getConfig()
+const VersionNumber = publicRuntimeConfig.versionNumber
+
 function Footer (props) {
   return (
     <div>
@@ -75,7 +80,7 @@ function Footer (props) {
         <div className='row'>
           <nav>
             <ul className='nav--footer'>
-              <li className='logo'><Link href='/'><a>ScoreBoard</a></Link></li>
+              <li className='logo'><Link href='/'><a>ScoreBoard</a></Link><span>v {VersionNumber}</span></li>
               <li><NavLink href='/campaigns'>Campaigns</NavLink></li>
               <li><NavLink href='/users'>Users</NavLink></li>
               <li><NavLink href='/teams'>Teams</NavLink></li>
@@ -85,7 +90,7 @@ function Footer (props) {
           </nav>
           <div>
             &copy; 2018 All Rights Reserved<br />
-            <a href='/terms' className='link--normal'>Terms</a>
+            <a href='https://developmentseed.org/scoreboard/' className='link--normal'>Scoreboard Documentation</a>
           </div>
         </div>
       </footer>
@@ -155,9 +160,10 @@ class Layout extends React.Component {
           <link rel='manifest' href={manifest} />
           <link rel='apple-touch-icon' href={appleIcon} />
           <link rel='shortcut icon' href={favicon} />
-          <link rel='mask-icon' href={safariIcon} color='#ff0000' />
+          <link rel='mask-icon' href={safariIcon} color='#4FCA9E' />
           <meta name='msapplication-config' content={msBrowserconfig} />
-
+          <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+          <title>Scoreboard | Tracking Map Edits Around the World</title>
         </Head>
         <header className='header-nav'>
           <div className='row'>
@@ -192,6 +198,7 @@ class Layout extends React.Component {
                                 <li><Link href={`/admin`}><a>Admin</a></Link></li>
                               )
                             }
+                            <li><a href='https://developmentseed.org/scoreboard/users/getting-started'>Help</a></li>
                             <li><Link href='/auth/logout'><a>Logout</a></Link></li>
                           </ul>
                         </div>

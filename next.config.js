@@ -7,8 +7,13 @@ const withCss = require('@zeit/next-css')
 const withSass = require('@zeit/next-sass')
 const withImages = require('next-images')
 const { APP_URL_FINAL } = require('./api/src/config')
+const PACKAGE = require('./package.json')
 
 module.exports = withImages(withSass(withCss({
+  publicRuntimeConfig: {
+    env: process.env.NODE_ENV || 'development',
+    versionNumber: PACKAGE.version
+  },
   sassLoaderOptions: { data: `$appUrlFinal: "${APP_URL_FINAL}";` },
   webpack: (config) => {
     config.plugins = config.plugins || []

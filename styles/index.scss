@@ -136,15 +136,14 @@ body {
 }
 
 .section-sub--right {
-  width: 35%;
-  float: right;
+  margin-left: auto;
   text-align: right;
+  align-self: flex-end;
   li {
     margin-left: 2.5em;
   }
   @include media(small-down) {
     width: 100%;
-    float: none;
     text-align: left;
     clear: both;
     li {
@@ -337,17 +336,11 @@ section {
       @include media(medium-up) {
         flex: 0 0 calc(25% - 1em);
       }
-      @include media(large-up) {
-        flex-basis: calc(25% - 2em);
-      }
     }
     &-33 {
       width: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(33.33% - 1em);
-      }
-      @include media(large-up) {
-        flex-basis: calc(33.33% - 2em);
       }
     }
     &-50 {
@@ -355,26 +348,17 @@ section {
       @include media(medium-up) {
         flex: 0 0 calc(50% - 1em);
       }
-      @include media(large-up) {
-        flex-basis: calc(50% - 2em);
-      }
     }
     &-66 {
       width: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(66.66% - 1em);
       }
-      @include media(large-up) {
-        flex-basis: calc(66.66% - 2em);
-      }
     }
     &-75 {
       width: 100%;
       @include media(medium-up) {
         flex: 0 0 calc(75% - 1em);
-      }
-      @include media(large-up) {
-        flex-basis: calc(75% - 2em);
       }
     }
     &-100 {
@@ -444,7 +428,11 @@ section {
   }
 }
 //Type //
-
+.refresh {
+  font-style: italic;
+  opacity: .85;
+  margin-bottom: 0.4rem;
+}
 mark {
   background-color: inherit;
   color: $base-color;
@@ -560,6 +548,49 @@ mark {
   }
 }
 
+.button--secondary {
+  cursor: pointer;
+  border: 1px solid $base-color;
+  font-size: $base-font-size;
+  background-color: white;
+  color: $base-color;
+  transition: color 300ms ease-in-out;
+
+  &:hover,
+  &:active {
+    background-color: inherit;
+    color: darken($base-color, 10%);
+  }
+}
+
+.button--destroy {
+  cursor: pointer;
+  border-color: #CA4F4F;
+  color: #CA4F4F;
+  background-color: white;
+
+  &:hover,
+  &:active {
+    background-color: #CA4F4F;
+    color: white;
+  }
+}
+
+.button--link {
+  background-color: transparent;
+  border: 0;
+  color: $light-text-color;
+  font-family: $tertiary-font-family;
+  padding: 0;
+  transition: color 300ms ease-in-out;
+
+  &:hover,
+  &:active {
+    background-color: inherit;
+    color: $med-text-color;
+  }
+}
+
 .header--internal {
   .button{
     margin-top: 2em;
@@ -568,13 +599,15 @@ mark {
 
 .header--page {
   .row {
-    .section-sub--left {
-      float: none;
-      margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    &:before,
+    &:after {
+      display: none;
+      content: "";
     }
-    .section-sub--right {
-      width: auto;
-      float: none;
+    @include media(small-down) {
+      flex-wrap: wrap;
     }
   }
   .button, .button:visited {

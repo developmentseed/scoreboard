@@ -140,7 +140,7 @@ To use scoreboard in production follow these steps:
 5. Setup an `.env` file with correct values -> [example](.env.sample).
   - make sure to set `NODE_ENV=production` in your `.env` file
 6. Run the migrations: `npm run migrate`
-7. Add initial data to the database `npm run seed`
+7. Add initial data to the database (skip if the database already has data) `npm run seed`
 8. [OPTIONAL] Preload list of users `npm run users`
 9. Populate stats: `npm run clocks`
 10. [OPTIONAL] Assign admin users by running `./api/bin/scoreboard create-admin-user --osm-id {your-id}`

@@ -21,6 +21,14 @@
   a {
     color: #FFFFFF;
   }
+  @include media(small-down) {
+    flex-wrap: wrap;
+  }
+  .section-sub--right {
+    @include media(small-down) {
+      margin-left: 6.6em;
+    }
+  }
 }
 .header--internal--dashboard {
   margin-top: -6em;
