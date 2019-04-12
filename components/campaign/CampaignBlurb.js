@@ -10,6 +10,12 @@ export default function Blurb ({
   km_coastlines_add,
   km_coastlines_mod
 }) {
+  if (users.length === 0) {
+    return <h2 className='header--small width--shortened list--block'>
+      <p>There are no stats available for this campaign.</p>
+    </h2>
+  }
+
   return <h2 className='header--small width--shortened list--block'>
     <mark>{users.length}</mark> mappers, mapping <mark>{formatKm(km_roads_add)}</mark> of roads, <mark>{formatDecimal(buildings_add)}</mark> buildings, <mark>{formatDecimal(poi_add)}</mark> Points of Interest, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add)}</mark> of waterways.
   </h2>

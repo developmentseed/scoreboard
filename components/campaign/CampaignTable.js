@@ -2,10 +2,15 @@ import React from 'react'
 import Link from '../Link'
 import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
+import { CSVLink } from 'react-csv'
 
 export default function CampaignTable (props) {
+  if (props.users.length === 0) {
+    return <div />
+  }
+
   return (
-    <div className='widget'>
+    <div className='widget clearfix'>
       <table>
         <thead>
           <tr>
@@ -44,6 +49,17 @@ export default function CampaignTable (props) {
           }
         </tbody>
       </table>
+      <CSVLink className='link--large' style={{ display: 'inline-block', float: 'right', marginTop: '2rem' }} data={sortBy(prop('edits'), props.users).reverse()} filename={`${props.name} - Top 10 Participants.csv`} headers={[
+        { label: 'Name', key: 'name' },
+        { label: 'Roads (Km)', key: 'km_roads_add' },
+        { label: 'Buildings', key: 'buildings_add' },
+        { label: 'Points of Interest', key: 'poi_add' },
+        { label: 'Coastlines (Km)', key: 'km_coastlines_add' },
+        { label: 'Waterways (Km)', key: 'km_waterways_add' },
+        { label: 'Changesets', key: 'edits' }
+      ]}>
+        Export Data (CSV)
+      </CSVLink>
     </div>
   )
 }

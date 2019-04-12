@@ -18,15 +18,22 @@ import DashboardBlurb from '../components/dashboard/DashboardBlurb'
 import CampaignsChart from '../components/charts/CampaignsChart'
 import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import { formatDecimal } from '../lib/utils/format'
+import { CSVLink } from 'react-csv'
 
 import dynamic from 'next/dynamic'
 
-const CalendarHeatmap = dynamic(() => import('../components/charts/CalendarHeatmap'), {
-  ssr: false
-})
-const UserExtentMap = dynamic(() => import('../components/charts/ProgressiveExtentMap'), {
-  ssr: false
-})
+const CalendarHeatmap = dynamic(
+  () => import('../components/charts/CalendarHeatmap'),
+  {
+    ssr: false
+  }
+)
+const UserExtentMap = dynamic(
+  () => import('../components/charts/ProgressiveExtentMap'),
+  {
+    ssr: false
+  }
+)
 
 class Dashboard extends Component {
   constructor () {
@@ -50,9 +57,7 @@ class Dashboard extends Component {
 
   render () {
     if (this.state.loading) {
-      return (
-        <div />
-      )
+      return <div />
     }
     const { authenticatedUser } = this.props
     const { loggedIn, account } = authenticatedUser
@@ -60,28 +65,32 @@ class Dashboard extends Component {
 
     const { badges, teams, refreshDate } = account
     const osmesaData = account.records
-    const {
-      hashtags,
-      edit_times,
-      extent_uri,
-      uid
-    } = osmesaData
-    const breakdownChartProps = pick([
-      'waterways_add',
-      'poi_add',
-      'roads_add',
-      'buildings_add',
-      'coastlines_add',
-      'coastlines_mod'
-    ], osmesaData)
+    const { hashtags, edit_times, extent_uri, uid } = osmesaData
+    const breakdownChartProps = pick(
+      [
+        'waterways_add',
+        'poi_add',
+        'roads_add',
+        'buildings_add',
+        'coastlines_add',
+        'coastlines_mod'
+      ],
+      osmesaData
+    )
 
     // Calculate counts for panel
-    const badgeCount = account.badges && badges.earnedBadges ? Object.keys(badges.earnedBadges).length : 0
-    const campaignCount = osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0
+    const badgeCount =
+      account.badges && badges.earnedBadges
+        ? Object.keys(badges.earnedBadges).length
+        : 0
+    const campaignCount =
+      osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0
     const editCount = osmesaData ? osmesaData.edit_count : 0
 
     if (!loggedIn || !account) {
-      return <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
+      return (
+        <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
+      )
     }
 
     // Dashboard header variables
@@ -90,10 +99,16 @@ class Dashboard extends Component {
     let accountId = null
     if (authenticatedUser) {
       const osmUser = authenticatedUser.osm._xml2json.user
-      if (osmUser && osmUser.img && osmUser.img['@'] && osmUser.img['@']['href']) {
+      if (
+        osmUser &&
+        osmUser.img &&
+        osmUser.img['@'] &&
+        osmUser.img['@']['href']
+      ) {
         profileImage = osmUser.img['@']['href']
       } else {
-        profileImage = 'https://www.gravatar.com/avatar/00000000000000000000000000000000'
+        profileImage =
+          'https://www.gravatar.com/avatar/00000000000000000000000000000000'
       }
       name = osmUser['@']['display_name']
       accountId = authenticatedUser.account.id
@@ -101,7 +116,15 @@ class Dashboard extends Component {
 
     return (
       <div className='dashboard'>
-        <DashboardHeader id={accountId} loggedIn name={name} profileImage={profileImage} edit_times={edit_times} country={country} refreshDate={refreshDate} />
+        <DashboardHeader
+          id={accountId}
+          loggedIn
+          name={name}
+          profileImage={profileImage}
+          edit_times={edit_times}
+          country={country}
+          refreshDate={refreshDate}
+        />
         <ScoreboardPanel
           title='Your mapping Scoreboard'
           facets={[
@@ -111,14 +134,62 @@ class Dashboard extends Component {
           ]}
         />
         <div className='row'>
-          <DashboardBlurb
-            {...osmesaData}
-          />
+          <DashboardBlurb {...osmesaData} />
+          <CSVLink
+            className='button button--secondary'
+            style={{ float: 'right', marginBottom: '1rem' }}
+            data={[
+              {
+                authenticatedUser,
+                badgeCount
+              }
+            ]}
+            headers={[
+              { label: 'Name', key: 'authenticatedUser.osm.displayName' },
+              {
+                label: 'Campaigns',
+                key: 'authenticatedUser.account.allCampaigns.length'
+              },
+              { label: 'Badges', key: 'badgeCount' },
+              {
+                label: 'Roads (Km)',
+                key: 'authenticatedUser.account.records.km_roads_add'
+              },
+              {
+                label: 'Buildings',
+                key: 'authenticatedUser.account.records.buildings_add'
+              },
+              {
+                label: 'Points of Interest',
+                key: 'authenticatedUser.account.records.poi_add'
+              },
+              {
+                label: 'Coastlines (Km)',
+                key: 'authenticatedUser.account.records.km_coastlines_add'
+              },
+              {
+                label: 'Waterways (Km)',
+                key: 'authenticatedUser.account.records.km_waterways_add'
+              },
+              {
+                label: 'Total Edits',
+                key: 'authenticatedUser.account.records.edit_count'
+              }
+            ]}
+            filename={`${name}_ScoreboardData.csv`}
+          >
+            Export Your Data (CSV)
+          </CSVLink>
         </div>
         <section className='section--dark'>
           <div className='row'>
             {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
-            <DashboardAssignments favorites={favorites} assignments={assignments} authenticatedUser={authenticatedUser} all={allCampaigns} />
+            <DashboardAssignments
+              favorites={favorites}
+              assignments={assignments}
+              authenticatedUser={authenticatedUser}
+              all={allCampaigns}
+            />
           </div>
         </section>
         <section>
@@ -132,7 +203,11 @@ class Dashboard extends Component {
           <div className='row'>
             <div className='widget-container'>
               <div className='widget-66'>
-                <CampaignsChart campaigns={allCampaigns} hashtags={hashtags} height='260px' />
+                <CampaignsChart
+                  campaigns={allCampaigns}
+                  hashtags={hashtags}
+                  height='260px'
+                />
               </div>
               <div className='widget-33'>
                 <EditBreakdownChart {...breakdownChartProps} height='260px' />
@@ -172,4 +247,7 @@ class Dashboard extends Component {
   }
 }
 
-export default connect(['authenticatedUser', 'error'], actions)(withAlert(Dashboard))
+export default connect(
+  ['authenticatedUser', 'error'],
+  actions
+)(withAlert(Dashboard))
