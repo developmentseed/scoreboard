@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Users are able to download a PDF certificate of all their earned badges from their dashboard
 
 ### Changed
-- "Not Logged In" error page takes an environment variable for the TM name (default is OSM)
+- "Not Logged In" error page takes an environment variable for the Editor name (default is OSM)
 
 ## [v1.1.0] - 2019-03-19
 ### Added

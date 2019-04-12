@@ -28,7 +28,7 @@ import '../styles/Badges.scss'
 import 'react-select/dist/react-select.css'
 import 'react-input-range/lib/css/index.css'
 
-const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
+const editorName = process.env.EDITOR_NAME || 'OSM'
 const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.svg')
 const menuIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/menu-icon.svg')
 const manifest = join(APP_URL_PREFIX, '/static/manifest.json')
@@ -58,7 +58,7 @@ function Footer (props) {
                 <div className='banner--content'>
                   <h2 className='header--xlarge'>Earn a spot on the board</h2>
                   <p>Join other mappers and track your progress. Earn badges for edits you’ve made and campaigns you've helped complete. Share your contributions to the global mapping ecosystem.</p>
-                  <a href={join(APP_URL_FINAL, '/auth/openstreetmap')} className='link--large'>Sign up with {projectName}</a>
+                  <a href={join(APP_URL_FINAL, '/auth/openstreetmap')} className='link--large'>Sign up with {editorName}</a>
                 </div>
               </div>
             </div>
