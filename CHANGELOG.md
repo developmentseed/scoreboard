@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - "Not Logged In" error page takes an environment variable for the Editor name (default is OSM)
 
+## Fixed
+- Campaigns without stats will now display an "empty state", still displaying metadata from the tasking manager but without additional visualizations
+
 ## [v1.1.0] - 2019-03-19
 ### Added
 - Add OSMESA status as "Last Refreshed" to pages using OSMESA stats
