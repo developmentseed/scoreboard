@@ -28,6 +28,7 @@ import '../styles/Badges.scss'
 import 'react-select/dist/react-select.css'
 import 'react-input-range/lib/css/index.css'
 
+const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 const editorName = process.env.EDITOR_NAME || 'OSM'
 const profileIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/profile-icon.svg')
 const menuIcon = join(APP_URL_PREFIX, '/static/dashboard-temp/menu-icon.svg')
