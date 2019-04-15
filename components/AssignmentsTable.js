@@ -1,14 +1,14 @@
 import React from 'react'
 import Link from './Link'
 
-export default ({ assignments }) => {
+export default ({ assignments, filter }) => {
   return (
     <div className='widget assignments-table'>
       <table>
         <thead>
           <tr>
             <th>Name</th>
-            <th>Assigned By</th>
+            <th>{(filter === 'teams') ? 'Assigned By' : 'Source'}</th>
             <th>Priority</th>
           </tr>
         </thead>

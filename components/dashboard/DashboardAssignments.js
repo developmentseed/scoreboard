@@ -20,7 +20,6 @@ class DashboardAssignments extends Component {
 
   render () {
     const { favorites, assignments, authenticatedUser, all } = this.props
-
     const assignmentFilters = [
       { name: 'Teams', id: 'teams' },
       { name: 'Favorites', id: 'favorites' },
@@ -35,13 +34,11 @@ class DashboardAssignments extends Component {
         campaign_hashtag: task.campaign_hashtag
       }
     })
-
     const allCampaigns = {
       favorites: sortBy(prop('priority'), favorites),
       teams: teamAssignments,
       all
     }
-
     const assignmentsTable = allCampaigns[this.state.assignmentsFilter].map((assignment) => {
       if (!assignment.assigned_by) {
         assignment.assigned_by = authenticatedUser.osm.displayName
@@ -62,7 +59,7 @@ class DashboardAssignments extends Component {
           active={this.state.assignmentsFilter}
           onClick={this.onAssignmentsFilterClick}
         />
-        <AssignmentsTable assignments={assignmentsTable} />
+        <AssignmentsTable assignments={assignmentsTable} filter={this.state.assignmentsFilter} />
       </div>
     )
   }
