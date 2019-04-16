@@ -31,7 +31,6 @@ The next section contains the campaign level statistics such as how much of the 
 
 ## User table
 
-This section consists of a table of the top 10 users by number of changesets, and a breakdown of their edits.
+This section consists of a table of the top 10 users by number of changesets, and a breakdown of their edits. To download an export of the contributions of the top 10 participants for any campaign, click the **Export Data (CSV)** link on the campaign user table.
 
 ![User Table](assets/img/campaign-table.png)
-
