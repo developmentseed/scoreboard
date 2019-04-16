@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import DashboardHeader from '../components/dashboard/DashboardHeader'
-import getSumEdits from '../lib/utils/sum_edits'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import CampaignsChart from '../components/charts/CampaignsChart'
@@ -45,7 +44,6 @@ export class User extends Component {
     } = this.props.user
     const { extent_uri, uid } = records
     if (!records) return <div />
-    const editCount = getSumEdits(records)
     const badgeCount = Object.keys(badges.earnedBadges).length
     const campaignCount = records.hashtags.length
     const { name, hashtags, edit_times } = records
@@ -76,7 +74,8 @@ export class User extends Component {
           facets={[
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
-            { label: 'Edits', value: formatDecimal(editCount) }
+            { label: 'Edits', value: formatDecimal(records.edit_sum) },
+            { label: 'Changesets', value: formatDecimal(records.edit_count) }
           ]}
         />
         <div className='row'>
@@ -87,7 +86,6 @@ export class User extends Component {
             data={[
               {
                 badgeCount,
-                editCount,
                 campaignCount,
                 records
               }
@@ -102,7 +100,7 @@ export class User extends Component {
               { label: 'Points of Interest', key: 'records.poi_add' },
               { label: 'Coastlines (Km)', key: 'records.km_coastlines_add' },
               { label: 'Waterways (Km)', key: 'records.km_waterways_add' },
-              { label: 'Total Edits', key: 'editCount' }
+              { label: 'Total Edits', key: 'records.edit_sum' }
             ]}
             filename={`${name}_ScoreboardData.csv`}
           >
