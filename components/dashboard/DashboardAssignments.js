@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import FilterBar from '../FilterBar'
 import AssignmentsTable from '../AssignmentsTable'
-import { sortBy, prop } from 'ramda'
+import { sortBy, prop, concat, reduce } from 'ramda'
 import Link from '../Link'
 
 class DashboardAssignments extends Component {
@@ -19,19 +19,19 @@ class DashboardAssignments extends Component {
   }
 
   render () {
-    const { favorites, assignments, authenticatedUser, all } = this.props
+    const { favorites, assignments, all } = this.props
     const assignmentFilters = [
       { name: 'Teams', id: 'teams' },
       { name: 'Favorites', id: 'favorites' },
-      { name: 'All', id: 'userContributions' }
+      { name: 'Contributions', id: 'userContributions' },
+      { name: 'All', id: 'all' }
     ]
     let teamAssignments = sortBy(prop('team_priority'), assignments).map(task => {
       return {
         priority: task.team_priority ? `team priority: ${task.team_priority}` : task.priority,
         name: task.name,
-        assigned_by: task.team_name,
         campaign_hashtag: task.campaign_hashtag,
-        source: 'ASSIGNMENT'
+        source: task.team_name
       }
     })
     let userFavorites = favorites.map(favorite => {
@@ -69,15 +69,10 @@ class DashboardAssignments extends Component {
     const allCampaigns = {
       favorites: sortBy(prop('priority'), userFavorites),
       teams: teamAssignments,
-      userContributions
+      userContributions,
+      all: reduce(concat, [], [userFavorites, teamAssignments, userContributions])
     }
-    console.log(userContributions)
-    const assignmentsTable = allCampaigns[this.state.assignmentsFilter].map((assignment) => {
-      if (!assignment.assigned_by) {
-        assignment.assigned_by = authenticatedUser.osm.displayName
-      }
-      return assignment
-    })
+    const assignmentsTable = allCampaigns[this.state.assignmentsFilter]
 
     return (
       <div>
