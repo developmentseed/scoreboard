@@ -9,37 +9,46 @@ import { pick, isNil, values, any } from 'ramda'
  */
 function chartify ({
   waterways_add,
+  waterways_mod,
+  waterways_del,
   poi_add,
+  poi_mod,
+  poi_del,
   roads_add,
+  roads_mod,
+  roads_del,
   buildings_add,
+  buildings_mod,
+  buildings_del,
   coastlines_mod,
+  coastlines_del,
   coastlines_add
 }) {
   return [
     {
       'id': 'waterways',
       'label': 'Waterways',
-      'value': waterways_add || 0
+      'value': waterways_add + waterways_mod + waterways_del || 0
     },
     {
       'id': 'buildings',
       'label': 'Buildings',
-      'value': buildings_add || 0
+      'value': buildings_add + buildings_mod + buildings_del || 0
     },
     {
       'id': 'roads',
       'label': 'Roads',
-      'value': roads_add || 0
+      'value': roads_add + roads_mod + roads_del || 0
     },
     {
       'id': 'poi',
       'label': 'POI',
-      'value': poi_add || 0
+      'value': poi_add + poi_mod + poi_del || 0
     },
     {
       'id': 'coastlines',
       'label': 'Coastlines',
-      'value': coastlines_add + coastlines_mod || 0
+      'value': coastlines_add + coastlines_mod + coastlines_del || 0
     }
   ]
 }
