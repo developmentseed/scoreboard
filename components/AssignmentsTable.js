@@ -26,7 +26,7 @@ export default ({ assignments, filter }) => {
                       </Link>
                     </td>
                     <td>
-                      {(filter === 'userContributions') ? assignment.source : assignment.assigned_by}
+                      {assignment.source}
                     </td>
                     <td>
                       {assignment.priority}
