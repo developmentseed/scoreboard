@@ -8,7 +8,7 @@ export default ({ assignments, filter }) => {
         <thead>
           <tr>
             <th>Name</th>
-            <th>{(filter === 'teams') ? 'Assigned By' : 'Source'}</th>
+            <th>{(filter === 'Teams') ? 'Assigned By' : 'Source'}</th>
             <th>Priority</th>
           </tr>
         </thead>
@@ -17,7 +17,7 @@ export default ({ assignments, filter }) => {
             assignments
               .map((assignment) => {
                 return (
-                  <tr key={`assignment-${assignment.id}`}>
+                  <tr key={`assignment-${assignment.source}-${assignment.name}`}>
                     <td>
                       <Link href={`/campaigns/${assignment.tasker_id}-${assignment.tm_id}`}>
                         <a className='link--normal' >
