@@ -8,7 +8,7 @@ class DashboardAssignments extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      assignmentsFilter: 'Contributions'
+      assignmentsFilter: 'All'
     }
 
     this.onAssignmentsFilterClick = this.onAssignmentsFilterClick.bind(this)
