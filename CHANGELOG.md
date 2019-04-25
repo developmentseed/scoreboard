@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - "Not Logged In" error page takes an environment variable for the Editor name (default is OSM)
+- Dashboard campaigns widget now shows a "Contributions" tab separate from the "All" tab which shows the list of contributions, favorites and team campaigns.
 
 ## Fixed
 - Campaigns without stats will now display an "empty state", still displaying metadata from the tasking manager but without additional visualizations
