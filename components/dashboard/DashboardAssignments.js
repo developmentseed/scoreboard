@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import FilterBar from '../FilterBar'
 import AssignmentsTable from '../AssignmentsTable'
-import { sortBy, prop, concat, reduce } from 'ramda'
+import { sortBy, prop, concat, reduce, map } from 'ramda'
 import Link from '../Link'
 
 class DashboardAssignments extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      assignmentsFilter: 'userContributions'
+      assignmentsFilter: 'Contributions'
     }
 
     this.onAssignmentsFilterClick = this.onAssignmentsFilterClick.bind(this)
@@ -20,21 +20,16 @@ class DashboardAssignments extends Component {
 
   render () {
     const { favorites, assignments, all } = this.props
-    const assignmentFilters = [
-      { name: 'Teams', id: 'teams' },
-      { name: 'Favorites', id: 'favorites' },
-      { name: 'Contributions', id: 'userContributions' },
-      { name: 'All', id: 'all' }
-    ]
-    let teamAssignments = sortBy(prop('team_priority'), assignments).map(task => {
+    let teamAssignments = map(task => {
       return {
         priority: task.team_priority ? `team priority: ${task.team_priority}` : task.priority,
         name: task.name,
         campaign_hashtag: task.campaign_hashtag,
         source: task.team_name
       }
-    })
-    let userFavorites = favorites.map(favorite => {
+    }, sortBy(prop('team_priority'), assignments))
+
+    let userFavorites = sortBy(prop('priority'), map(favorite => {
       return {
         campaign_hashtag: favorite.campaign_hashtag,
         campaign_id: favorite.campaign_id,
@@ -44,8 +39,9 @@ class DashboardAssignments extends Component {
         tm_id: favorite.tm_id,
         source: 'FAVORITES'
       }
-    })
-    let userContributions = all.map(campaign => {
+    }, favorites))
+
+    let userContributions = map(campaign => {
       return {
         author: campaign.author,
         campaign_hashtag: campaign.campaign_hashtag,
@@ -65,14 +61,28 @@ class DashboardAssignments extends Component {
         validated: campaign.validated,
         source: 'CONTRIBUTION'
       }
-    })
-    const allCampaigns = {
-      favorites: sortBy(prop('priority'), userFavorites),
-      teams: teamAssignments,
-      userContributions,
-      all: reduce(concat, [], [userFavorites, teamAssignments, userContributions])
+    }, all)
+
+    let assignmentsTable = reduce(concat, [], [userFavorites, teamAssignments, userContributions])
+
+    switch (this.state.assignmentsFilter) {
+      case 'Teams': {
+        assignmentsTable = teamAssignments
+        break
+      }
+      case 'Favorites': {
+        assignmentsTable = userFavorites
+        break
+      }
+      case 'Contributions': {
+        assignmentsTable = userContributions
+        break
+      }
+
+      case 'All': {
+        break
+      }
     }
-    const assignmentsTable = allCampaigns[this.state.assignmentsFilter]
 
     return (
       <div>
@@ -82,7 +92,13 @@ class DashboardAssignments extends Component {
           </Link>
         </h2>
         <FilterBar
-          filters={assignmentFilters}
+          filters={[
+            { name: 'Teams', id: 'Teams' },
+            { name: 'Favorites', id: 'Favorites' },
+            { name: 'Contributions', id: 'Contributions' },
+            { name: 'All', id: 'All' }
+          ]}
+
           active={this.state.assignmentsFilter}
           onClick={this.onAssignmentsFilterClick}
         />
