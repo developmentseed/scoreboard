@@ -59,7 +59,7 @@ class DashboardAssignments extends Component {
         tm_id: campaign.tm_id,
         updated_at: campaign.updated_at,
         validated: campaign.validated,
-        source: 'CONTRIBUTION'
+        source: 'CONTRIBUTIONS'
       }
     }, all)
 
