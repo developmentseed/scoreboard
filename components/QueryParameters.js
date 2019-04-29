@@ -38,7 +38,7 @@ class QueryParameters extends Component {
   editParam (key) {
     let params = Object.assign({}, this.props.params)
     let param = params[key]
-    this.setState(param)
+    this.setState({ key, value: param })
   }
 
   update (field) {
