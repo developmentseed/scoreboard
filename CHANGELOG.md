@@ -6,9 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Add "Help" link to Scoreboard documentation 
+- Add "Help" link to Scoreboard documentation
 - Users are able to download a PDF certificate of all their earned badges from their dashboard
 - Admins can include extra parameters to filter the project search of a tasking manager
+- On user profile and individual dashboard, clicking "Export Data" link will download a CSV of user data
+- On campaign pages, clicking "Export Data" link will download a CSV of the contributions of the top 10 campaign participants
+
+### Changed
+- "Not Logged In" error page takes an environment variable for the Editor name (default is OSM)
 
 ## Fixed
 - Campaigns without stats will now display an "empty state", still displaying metadata from the tasking manager but without additional visualizations
