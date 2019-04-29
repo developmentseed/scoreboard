@@ -8,7 +8,8 @@ export default ({ assignments, filter }) => {
         <thead>
           <tr>
             <th>Name</th>
-            <th>{(filter === 'Teams') ? 'Assigned By' : 'Source'}</th>
+            {(filter === 'Teams') ? <th>Assigned By</th> : ''}
+            {(filter === 'All') ? <th>Source</th> : ''}
             <th>Priority</th>
           </tr>
         </thead>
@@ -25,9 +26,9 @@ export default ({ assignments, filter }) => {
                         </a>
                       </Link>
                     </td>
-                    <td>
-                      {assignment.source}
-                    </td>
+                    {
+                      (filter === 'Teams' || filter === 'All') ? <td>{assignment.source}</td> : ''
+                    }
                     <td>
                       {assignment.priority}
                     </td>
