@@ -86,7 +86,6 @@ class Dashboard extends Component {
       ],
       osmesaData
     )
-    console.log(breakdownChartProps)
 
     // Calculate counts for panel
     const badgeCount =
