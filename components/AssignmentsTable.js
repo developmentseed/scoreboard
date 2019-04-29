@@ -1,14 +1,15 @@
 import React from 'react'
 import Link from './Link'
 
-export default ({ assignments }) => {
+export default ({ assignments, filter }) => {
   return (
     <div className='widget assignments-table'>
       <table>
         <thead>
           <tr>
             <th>Name</th>
-            <th>Assigned By</th>
+            {(filter === 'Teams') ? <th>Assigned By</th> : ''}
+            {(filter === 'All') ? <th>Source</th> : ''}
             <th>Priority</th>
           </tr>
         </thead>
@@ -17,7 +18,7 @@ export default ({ assignments }) => {
             assignments
               .map((assignment) => {
                 return (
-                  <tr key={`assignment-${assignment.id}`}>
+                  <tr key={`assignment-${assignment.source}-${assignment.name}`}>
                     <td>
                       <Link href={`/campaigns/${assignment.tasker_id}-${assignment.tm_id}`}>
                         <a className='link--normal' >
@@ -25,9 +26,9 @@ export default ({ assignments }) => {
                         </a>
                       </Link>
                     </td>
-                    <td>
-                      {assignment.assigned_by}
-                    </td>
+                    {
+                      (filter === 'Teams' || filter === 'All') ? <td>{assignment.source}</td> : ''
+                    }
                     <td>
                       {assignment.priority}
                     </td>
