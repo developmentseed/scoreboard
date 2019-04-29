@@ -55,7 +55,6 @@ class QueryParameters extends Component {
 
   render () {
     let params = Object.assign({}, this.props.params)
-    console.log(params)
 
     return (
       <div>
