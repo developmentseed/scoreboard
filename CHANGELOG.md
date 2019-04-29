@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 - Campaigns without stats will now display an "empty state", still displaying metadata from the tasking manager but without additional visualizations
+- Expand the stats used in breakdown of edits and sums of edits by including missing modified and deleted metrics
+
 
 ## [v1.1.0] - 2019-03-19
 ### Added

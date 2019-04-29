@@ -53,11 +53,20 @@ export class User extends Component {
     const breakdownChartProps = pick(
       [
         'waterways_add',
+        'waterways_mod',
+        'waterways_del',
         'poi_add',
+        'poi_mod',
+        'poi_del',
         'roads_add',
+        'roads_mod',
+        'roads_del',
         'buildings_add',
+        'buildings_mod',
+        'buildings_del',
         'coastlines_add',
-        'coastlines_mod'
+        'coastlines_mod',
+        'coastlines_del'
       ],
       records
     )
