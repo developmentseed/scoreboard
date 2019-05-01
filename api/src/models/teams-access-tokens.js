@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken')
  * @returns {Promise<string>} a response
  */
 function getToken (id) {
-   return db('teams_access_tokens').where('osm_id', id)
+  return db('teams_access_tokens').where('osm_id', id)
 }
 
 async function storeToken (tokenObject) {
@@ -20,7 +20,7 @@ async function storeToken (tokenObject) {
       access_token, refresh_token, expires_in
     })
   } else {
-    await db('teams_access_tokens').insert({ 
+    await db('teams_access_tokens').insert({
       'osm_id': sub,
       access_token,
       refresh_token,
