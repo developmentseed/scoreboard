@@ -1,6 +1,10 @@
 
 exports.up = async function (knex) {
   try {
+    await knex.schema.table('users', t => {
+      t.unique('osm_id')
+    })
+
     await knex.schema.createTable('teams_access_tokens', t => {
       t.increments('id').primary()
       t.integer('osm_id').references('users.osm_id')
@@ -11,7 +15,6 @@ exports.up = async function (knex) {
   } catch (e) {
     console.error(e)
   }
-  
 }
 
 exports.down = async function (knex) {
