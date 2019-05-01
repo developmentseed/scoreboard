@@ -14,7 +14,8 @@ const { difference } = require('ramda')
  */
 async function list (req, res) {
   try {
-    const data = await OSMTeams.getTeams()
+    let teams = new OSMTeams(req.user.id)
+    const data = await teams.getTeams()
     return res.send(data)
   } catch (err) {
     console.error(err)
@@ -39,7 +40,8 @@ async function post (req, res) {
   }
 
   try {
-    const team = await OSMTeams.createTeam(body)
+    let teams = new OSMTeams(req.user.id)
+    const team = await teams.createTeam(body)
     return res.send(team)
   } catch (err) {
     console.error(err)
@@ -57,8 +59,9 @@ async function post (req, res) {
  * @returns {Promise} a response
  */
 async function get (req, res) {
+  let teams = new OSMTeams(req.user.id)
   try {
-    const data = JSON.parse(await OSMTeams.getTeam(req.params.id))
+    const data = JSON.parse(await teams.getTeam(req.params.id))
     const campaigns = await db('campaigns').join(
       db('team_assignments').where('team_id', req.params.id).as('team_assignments'),
       'team_assignments.campaign_id',
@@ -99,9 +102,10 @@ async function put (req, res) {
   }
 
   try {
+    let teams = new OSMTeams(req.user.id)
     const { campaigns, bio, name, hashtag, oldusers, newusers } = body
     const team_id = req.params.id
-    const data = await OSMTeams.editTeam(team_id, { bio, name, hashtag })
+    const data = await teams.editTeam(team_id, { bio, name, hashtag })
 
     // Update members
     let add = difference(newusers, oldusers)
@@ -147,7 +151,8 @@ async function del (req, res) {
   }
 
   try {
-    const status = await OSMTeams.deleteTeam(req.params.id)
+    let teams = new OSMTeams(req.user.id)
+    const status = await teams.deleteTeam(req.params.id)
     return res.sendStatus(status)
   } catch (err) {
     console.error(err)
