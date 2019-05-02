@@ -5,7 +5,7 @@ import Link from '../Link'
  * Displays a list of actions that an administrator can do
  * organized into cards. Each card is a "section"
  */
-export default function AdminSectionList () {
+export default function AdminSectionList (props) {
   return (
     <ul className='widget-container admin-widget'>
       <li className='widget'>
@@ -29,18 +29,36 @@ export default function AdminSectionList () {
         <h3 className='header--medium'>
           Teams
         </h3>
-        <ul>
-          <li>
-            <Link href='/admin/teams'>
-              <a className='link--normal'>See all teams</a>
-            </Link>
-          </li>
-          <li>
-            <Link href='/admin/teams/add'>
-              <a className='link--normal'>Create new team</a>
-            </Link>
-          </li>
-        </ul>
+        {
+          (props.teamsActive)
+            ? <ul>
+              <li>
+                <Link href='/admin/teams'>
+                  <a className='link--normal'>See all teams</a>
+                </Link>
+              </li>
+              <li>
+                <Link href='/admin/teams/add'>
+                  <a className='link--normal'>Create new team</a>
+                </Link>
+              </li>
+            </ul>
+            :
+            <>
+              <ul>
+                <li>
+                  <a className='link--normal disabled'>See all teams</a>
+                </li>
+                <li>
+                  <a className='link--normal disabled'>Create new team</a>
+                </li>
+              </ul>
+              <p>
+                You need to connect with Teams to enable these features
+              </p>
+              <a href='/auth/teams' className='button button--secondary'>Connect your Teams</a>
+            </>
+        }
       </li>
       <li className='widget'>
         <h3 className='header--medium'>

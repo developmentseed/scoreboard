@@ -648,6 +648,7 @@ a, a:visited {
   }
 }
 
+
 .link--normal, .link--normal:visited {
   color: $blue-color;
   transition: all 0.2s ease 0s;
@@ -656,6 +657,11 @@ a, a:visited {
     border-bottom: 1px solid darken($blue-color, 25%);
     color: darken($blue-color, 25%);
   }
+}
+
+.link--normal.disabled, .link--normal:visited.disabled{
+  color: lighten($light-text-color, 40%);
+  pointer-events: none
 }
 
 .link--white, .link--white:visited {
