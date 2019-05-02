@@ -5,6 +5,7 @@ const {
 } = require('../config')
 const users = require('../models/users')
 const roles = require('../models/roles')
+const { hasToken } = require('../models/teams-access-tokens')
 const OSMTeams = require('../services/teams')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
@@ -43,6 +44,7 @@ async function get (req, res) {
 
   const uid = user.id
   const rolesList = user.roles ? await roles.getRoles(user.roles) : []
+  const activatedTeams = await hasToken(id)
 
   // handle the case where osm user doesn't exist on osmesa
   let osmesaData
@@ -112,7 +114,8 @@ async function get (req, res) {
   // Find all teams for this user
   let teams
   try {
-    teams = JSON.parse(await OSMTeams.getTeams(user.osm_id))
+    const t = new OSMTeams(user.osm_id)
+    teams = JSON.parse(await t.getTeams(user.osm_id))
   } catch (err) {
     console.error(err)
   }
@@ -161,6 +164,7 @@ async function get (req, res) {
     allCampaigns,
     records: osmesaData,
     roles: rolesList,
+    activatedTeams,
     countriesEdited,
     country: user.country
   })
