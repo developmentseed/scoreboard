@@ -194,7 +194,7 @@ const teamServiceCredentials = require('simple-oauth2').create({
 router.get('/teams', (req, res) => {
   let state = generateState(24)
   const authorizationUri = teamServiceCredentials.authorizationCode.authorizeURL({
-    redirect_uri: `http://localhost:8181/auth/teams/accept`,
+    redirect_uri: join(APP_URL_FINAL, '/auth/teams/accept'),
     scope: 'openid offline',
     state
   })
@@ -227,7 +227,7 @@ router.get('/teams/accept', async (req, res) => {
     // Create options for token exchange
     const options = {
       code,
-      redirect_uri: `http://localhost:8181/auth/teams/accept`
+      redirect_uri: join(APP_URL_FINAL, '/auth/teams/accept')
     }
 
     try {
