@@ -88,7 +88,7 @@ class CampaignSearch extends Component {
     const { selectedCampaigns } = this.props
     const { page } = this.props.campaigns
     const { records: { total, records } } = this.props.campaigns
-    if (!records) return <div />
+    if (!records || !selectedCampaigns) return <div />
 
     let assignments = selectedCampaigns.map(record =>
       <Assignment record={record}
