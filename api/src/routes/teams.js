@@ -111,7 +111,7 @@ async function put (req, res) {
     let add = difference(newusers, oldusers)
     let remove = difference(oldusers, newusers)
 
-    await OSMTeams.updateMembers(team_id, { add, remove })
+    await teams.updateMembers(team_id, { add, remove })
 
     // Insert assignments
     const assignments = campaigns.map(campaign => ({
