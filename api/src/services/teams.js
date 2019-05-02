@@ -22,7 +22,7 @@ class OSMTeams {
       throw new Error('No token for user')
     }
 
-    let accessToken = teamServiceCredentials.accessToken.create(token)
+    let accessToken = teamServiceCredentials.accessToken.create(token[0])
     if (accessToken.expired()) {
       try {
         accessToken = await accessToken.refresh()
@@ -40,10 +40,10 @@ class OSMTeams {
    * @param {Object} options Request parameters
    */
   async addAuthorization (options) {
-    const accessToken = this.getAccessToken()
+    const accessToken = await this.getAccessToken()
     return Object.assign({}, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        'Authorization': `Bearer ${accessToken.token.access_token}`
       }
     }, options)
   }
@@ -142,7 +142,7 @@ class FakeOSMTeams {
 }
 
 if (!OSM_TEAMS_SERVICE) {
-  module.exports = new FakeOSMTeams()
+  module.exports = FakeOSMTeams
 } else {
-  module.exports = new OSMTeams()
+  module.exports = OSMTeams
 }
