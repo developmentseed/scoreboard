@@ -198,7 +198,6 @@ router.get('/teams', (req, res) => {
     scope: 'openid offline',
     state
   })
-  console.log(authorizationUri)
   req.session.teams_login_csrf = state
 
   res.redirect(authorizationUri)
