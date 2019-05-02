@@ -29,7 +29,13 @@ async function storeToken (tokenObject) {
   }
 }
 
+async function hasToken (id) {
+  const tokens = await getToken(id)
+  return (tokens.length > 0)
+}
+
 module.exports = {
   getToken,
-  storeToken
+  storeToken,
+  hasToken
 }
