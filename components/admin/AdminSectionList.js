@@ -25,7 +25,7 @@ export default function AdminSectionList (props) {
           </li>
         </ul>
       </li>
-      <li className='widget'>
+      <li className={props.teamsActive ? 'widget' : 'widget widget--disabled'}>
         <h3 className='header--medium'>
           Teams
         </h3>
@@ -56,7 +56,7 @@ export default function AdminSectionList (props) {
               <p>
                 You need to connect with Teams to enable these features
               </p>
-              <a href='/auth/teams' className='button button--secondary'>Connect your Teams</a>
+              <a href='/auth/teams' className='button button--info'>Connect your Teams</a>
             </>
         }
       </li>

@@ -50,6 +50,16 @@
     line-height: 2em;
   }
 }
+.widget--disabled {
+  background-color: lighten($light-text-color, 25%);
+  border: 2px solid lighten($light-text-color, 15%);
+  h3 {
+    opacity: 0.7;
+  }
+  p {
+    color: #fff;
+  }
+}
 
 .admin-sidebar-links {
   li {
