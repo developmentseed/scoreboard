@@ -47,10 +47,10 @@ export default function AdminSectionList (props) {
             <>
               <ul>
                 <li>
-                  <a className='link--normal disabled'>See all teams</a>
+                  <a className='link--normal disabled' disabled>See all teams</a>
                 </li>
                 <li>
-                  <a className='link--normal disabled'>Create new team</a>
+                  <a className='link--normal disabled' disabled>Create new team</a>
                 </li>
               </ul>
               <p>
