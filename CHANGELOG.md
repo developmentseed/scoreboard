@@ -6,7 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v1.1.0] - 2019-04-19
+## [v1.2.0] - 2019-05-08
+### Added
+- Add "Help" link to Scoreboard documentation
+- Users are able to download a PDF certificate of all their earned badges from their dashboard
+- On user profile and individual dashboard, clicking "Export Data" link will download a CSV of user data
+- On campaign pages, clicking "Export Data" link will download a CSV of the contributions of the top 10 campaign participants
+
+### Changed
+- "Not Logged In" error page takes an environment variable for the Editor name (default is OSM)
+- Dashboard campaigns widget now shows a "Contributions" tab separate from the "All" tab which shows the list of contributions, favorites and team campaigns.
+
+## Fixed
+- Campaigns without stats will now display an "empty state", still displaying metadata from the tasking manager but without additional visualizations
+- Expand the stats used in breakdown of edits and sums of edits by including missing modified and deleted metrics
+
+
+## [v1.1.0] - 2019-03-19
 ### Added
 - Add OSMESA status as "Last Refreshed" to pages using OSMESA stats
 - On user page and dashboard, top campaigns will now show names of campaigns contributed to instead of hashtags contributed to
@@ -17,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - On the user dashboard, the "all campaigns" component will show all campaigns contributed to instead of assignments + favorites
 - Country page user tables read "Edits" while those on Campaign pages read "Changesets"
+- Docs site moved from being served from the API to statically hosted on https://developmentseed.org/scoreboard
 
 ### Fixed
 - Leave excluded users' edits in aggregate statistics
@@ -40,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Standardize how a user's last edit time is reported
 
 ### Fixed
-- Remove MVT artifacts produced by OSMesa in Leaflet fallback maps 
+- Remove MVT artifacts produced by OSMesa in Leaflet fallback maps
 
 ## [v1] - 2019-02-14
 ### Added
@@ -87,7 +104,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Scoreboard backend
   - Move from Sqlite to Postgres
   - Migrated to [next.js](https://github.com/zeit/next.js/)
-    - Instead of deploying the api and frontend separately, the two codebases are 
+    - Instead of deploying the api and frontend separately, the two codebases are
       merged into one with server-rendering provided by next.js
     - For changes to development process see the [updated README.md](README.md)
   - Move badge calculations to the backend
@@ -109,7 +126,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - allow setting custom project names
-- unregister existing service workers 
+- unregister existing service workers
 
 ## [v0.2.2] - 2018-10-12
 
@@ -144,7 +161,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.2.0...HEAD
+[v1.2.0]: https://github.com/developmentseed/scoreboard/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/developmentseed/scoreboard/compare/v1.0.3...v1.1.0
 [v1.0.3]: https://github.com/developmentseed/scoreboard/compare/v1.0.2...v1.0.3
 [v1.0.2]: https://github.com/developmentseed/scoreboard/compare/v1.0.1...v1.0.2

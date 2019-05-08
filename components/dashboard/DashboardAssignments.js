@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import FilterBar from '../FilterBar'
 import AssignmentsTable from '../AssignmentsTable'
-import { sortBy, prop } from 'ramda'
+import { sortBy, prop, concat, reduce, map } from 'ramda'
 import Link from '../Link'
 
 class DashboardAssignments extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      assignmentsFilter: 'all'
+      assignmentsFilter: 'All'
     }
 
     this.onAssignmentsFilterClick = this.onAssignmentsFilterClick.bind(this)
@@ -19,36 +19,70 @@ class DashboardAssignments extends Component {
   }
 
   render () {
-    const { favorites, assignments, authenticatedUser, all } = this.props
-
-    const assignmentFilters = [
-      { name: 'Teams', id: 'teams' },
-      { name: 'Favorites', id: 'favorites' },
-      { name: 'All', id: 'all' }
-    ]
-
-    let teamAssignments = sortBy(prop('team_priority'), assignments).map(task => {
+    const { favorites, assignments, all } = this.props
+    let teamAssignments = map(task => {
       return {
         priority: task.team_priority ? `team priority: ${task.team_priority}` : task.priority,
         name: task.name,
-        assigned_by: task.team_name,
-        campaign_hashtag: task.campaign_hashtag
+        campaign_hashtag: task.campaign_hashtag,
+        source: task.team_name
       }
-    })
+    }, sortBy(prop('team_priority'), assignments))
 
-    const allCampaigns = {
-      favorites: sortBy(prop('priority'), favorites),
-      teams: teamAssignments,
-      all
+    let userFavorites = sortBy(prop('priority'), map(favorite => {
+      return {
+        campaign_hashtag: favorite.campaign_hashtag,
+        campaign_id: favorite.campaign_id,
+        name: favorite.name,
+        priority: favorite.priority,
+        tasker_id: favorite.tasker_id,
+        tm_id: favorite.tm_id,
+        source: 'FAVORITES'
+      }
+    }, favorites))
+
+    let userContributions = map(campaign => {
+      return {
+        author: campaign.author,
+        campaign_hashtag: campaign.campaign_hashtag,
+        changeset_comment: campaign.changeset_comment,
+        created_at: campaign.created_at,
+        description: campaign.description,
+        done: campaign.done,
+        geometry: campaign.geometry,
+        id: campaign.id,
+        instructions: campaign.instructions,
+        name: campaign.name,
+        priority: campaign.priority,
+        status: campaign.status,
+        tasker_id: campaign.tasker_id,
+        tm_id: campaign.tm_id,
+        updated_at: campaign.updated_at,
+        validated: campaign.validated,
+        source: 'CONTRIBUTIONS'
+      }
+    }, all)
+
+    let assignmentsTable = reduce(concat, [], [userFavorites, teamAssignments, userContributions])
+
+    switch (this.state.assignmentsFilter) {
+      case 'Teams': {
+        assignmentsTable = teamAssignments
+        break
+      }
+      case 'Favorites': {
+        assignmentsTable = userFavorites
+        break
+      }
+      case 'Contributions': {
+        assignmentsTable = userContributions
+        break
+      }
+
+      case 'All': {
+        break
+      }
     }
-
-    const assignmentsTable = allCampaigns[this.state.assignmentsFilter].map((assignment) => {
-      if (!assignment.assigned_by) {
-        assignment.assigned_by = authenticatedUser.osm.displayName
-      }
-
-      return assignment
-    })
 
     return (
       <div>
@@ -58,11 +92,17 @@ class DashboardAssignments extends Component {
           </Link>
         </h2>
         <FilterBar
-          filters={assignmentFilters}
+          filters={[
+            { name: 'Teams', id: 'Teams' },
+            { name: 'Favorites', id: 'Favorites' },
+            { name: 'Contributions', id: 'Contributions' },
+            { name: 'All', id: 'All' }
+          ]}
+
           active={this.state.assignmentsFilter}
           onClick={this.onAssignmentsFilterClick}
         />
-        <AssignmentsTable assignments={assignmentsTable} />
+        <AssignmentsTable assignments={assignmentsTable} filter={this.state.assignmentsFilter} />
       </div>
     )
   }

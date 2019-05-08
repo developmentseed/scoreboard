@@ -20,9 +20,10 @@ module.exports = async (req, res) => {
     return res.boom.badRequest('Invalid id')
   }
 
+  let response = {}
+
   try {
     const [tmData] = await db('campaigns').where({ tasker_id, tm_id })
-    const osmesaResponse = await osmesa.getCampaign(tmData.campaign_hashtag)
 
     // Add tasking manager info
     const [tm] = await db('taskers').where('id', tmData.tasker_id)
@@ -30,21 +31,40 @@ module.exports = async (req, res) => {
     tmData.url = T.getUrlForProject(tmData.tm_id)
     tmData.tm_name = tm.name
     let lastUpdate = tmData.updated_at
+    const creationDate = tmData.created_at
+
     if (!lastUpdate) {
       lastUpdate = await T.getLastUpdated(tmData.tm_id)
     }
-    const creationDate = tmData.created_at
-
-    const records = Object.assign(
-      { tmData: tmData },
-      JSON.parse(osmesaResponse)
-    )
 
     const refreshDate = await refreshStatus('campaign')
 
-    return res.send({ records, id: `${tasker_id}-${tm_id}`, lastUpdate, creationDate, refreshDate })
+    response['id'] = `${tasker_id}-${tm_id}`
+    response['lastUpdate'] = lastUpdate
+    response['creationDate'] = creationDate
+    response['refreshDate'] = refreshDate
+    response['meta'] = tmData
   } catch (err) {
-    console.error(err.message)
-    return res.boom.notFound('Could not retrieve campaign stats')
+    console.error(`Campaign ${tasker_id}-${tm_id}, Failed to create response`, err.message)
+    res.boom.serverUnavailable('Error processing request')
+  }
+
+  try {
+    const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
+    response['stats'] = Object.assign(
+      JSON.parse(osmesaResponse),
+      { success: true })
+    return res.send(response)
+  } catch (err) {
+    console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
+    if (err.statusCode && err.statusCode === 404) {
+      // There are no stats yet
+      response['stats'] = Object.assign(
+        { success: true })
+    } else {
+      response['stats'] = Object.assign(
+        { success: false })
+    }
+    return res.send(response)
   }
 }

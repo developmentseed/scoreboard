@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-138.1 345 102.5 102.5"
+	 style="enable-background:new -138.1 345 102.5 102.5;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#526D41;}
+	.st1{fill:#3D5132;}
+	.st2{fill:#E2E2E2;stroke:#E2E2E2;stroke-miterlimit:10;}
+	.st3{fill:#186666;}
+	.st4{fill:#143D3C;}
+	.st5{fill:#EAEAEA;}
+	.st6{fill:#F7F7F7;}
+	.st7{fill:#ADADAD;}
+	.st8{fill:#F7F7F7;stroke:#ADADAD;stroke-miterlimit:10;}
+	.st9{fill:#F7F7F7;stroke:#ADADAD;stroke-width:0.5;stroke-miterlimit:10;}
+	.st10{fill:none;stroke:#8BC544;stroke-width:3;stroke-miterlimit:10;}
+	.st11{font-family:'Raleway-Bold';}
+	.st12{font-size:8.7043px;}
+</style>
+<title>Slice 1</title>
+<desc>Created with Sketch.</desc>
+<g>
+	<g>
+		<path class="st0" d="M-86.9,345.7c-28,0-50.7,22.6-50.7,50.6c0,14,5.7,26.6,14.9,35.8l71.6-71.6
+			C-60.3,351.3-72.9,345.7-86.9,345.7z"/>
+		<path class="st1" d="M-51.1,360.4l-71.6,71.6c9.2,9.1,21.8,14.8,35.8,14.8c28,0,50.7-22.6,50.7-50.6
+			C-36.2,382.3-41.9,369.6-51.1,360.4z"/>
+	</g>
+	<g>
+		<rect x="-104.4" y="423.8" class="st2" width="16" height="1.9"/>
+		<polygon class="st2" points="-120.4,423.8 -120.4,425.8 -115,425.8 -113.1,423.8 		"/>
+		<polygon class="st2" points="-113.1,423.8 -115,425.8 -104.4,425.8 -104.4,423.8 		"/>
+		<polygon class="st2" points="-72.3,423.8 -72.3,425.8 -56.2,425.8 -56.2,423.8 -67.7,423.8 		"/>
+		<rect x="-88.3" y="423.8" class="st2" width="16" height="1.9"/>
+		<polygon class="st3" points="-56.2,366.2 -55.7,366.2 -68.4,378.5 -120.9,378.5 -120.9,366.2 		"/>
+		<polygon class="st4" points="-68.4,378.5 -55.7,378.5 -55.7,366.2 		"/>
+		<polygon class="st5" points="-72.3,394.1 -72.3,383 -83.3,394.1 		"/>
+		<polygon class="st6" points="-88.3,379.2 -88.3,394.1 -83.3,394.1 -72.3,383 -72.3,379.2 		"/>
+		<rect x="-104.4" y="379.2" class="st6" width="16" height="14.9"/>
+		<polygon class="st5" points="-88.3,409 -88.3,399.1 -98.2,409 		"/>
+		<polygon class="st6" points="-88.3,399.1 -88.3,394.1 -104.4,394.1 -104.4,409 -98.2,409 		"/>
+		<rect x="-72.3" y="394.1" class="st5" width="16" height="14.9"/>
+		<polygon class="st6" points="-72.3,383 -68.4,379.2 -72.3,379.2 		"/>
+		<polygon class="st5" points="-72.3,383 -72.3,394.1 -56.2,394.1 -56.2,379.2 -68.4,379.2 		"/>
+		<polygon class="st6" points="-83.3,394.1 -88.3,394.1 -88.3,399.1 		"/>
+		<polygon class="st5" points="-88.3,399.1 -88.3,409 -72.3,409 -72.3,394.1 -83.3,394.1 		"/>
+		<rect x="-88.3" y="409" class="st5" width="16" height="4.5"/>
+		<rect x="-88.3" y="413.5" class="st5" width="16" height="10.3"/>
+		<polygon class="st5" points="-72.3,413.5 -56.6,413.5 -56.2,413.2 -56.2,409 -72.3,409 		"/>
+		<polygon class="st5" points="-67.7,423.8 -56.6,413.5 -72.3,413.5 -72.3,423.8 		"/>
+		<rect x="-120.4" y="394.1" class="st6" width="16" height="14.9"/>
+		<path class="st6" d="M-104.4,379.2h-16v14.9h16V379.2z"/>
+		<rect x="-120.4" y="409" class="st6" width="16" height="4.5"/>
+		<polygon class="st6" points="-104.4,415.1 -104.4,413.5 -120.4,413.5 -120.4,423.8 -113.1,423.8 		"/>
+		<polygon class="st5" points="-113.1,423.8 -104.4,423.8 -104.4,415.1 		"/>
+		<polygon class="st5" points="-102.7,413.5 -88.3,413.5 -88.3,409 -98.2,409 		"/>
+		<polygon class="st6" points="-98.2,409 -104.4,409 -104.4,413.5 -102.7,413.5 		"/>
+		<polygon class="st5" points="-102.7,413.5 -104.4,415.1 -104.4,423.8 -88.3,423.8 -88.3,413.5 		"/>
+		<polygon class="st6" points="-104.4,413.5 -104.4,415.1 -102.7,413.5 		"/>
+		<polygon class="st7" points="-56.2,413.5 -56.2,413.2 -56.6,413.5 		"/>
+		<polygon class="st7" points="-67.7,423.8 -56.2,423.8 -56.2,413.5 -56.6,413.5 		"/>
+	</g>
+	<line class="st8" x1="-120.4" y1="379.2" x2="-120.4" y2="423.8"/>
+	<line class="st9" x1="-104.4" y1="379.2" x2="-104.4" y2="423.8"/>
+	<line class="st8" x1="-55.7" y1="423.8" x2="-120.9" y2="423.8"/>
+	<line class="st9" x1="-55.7" y1="412.7" x2="-120.9" y2="412.7"/>
+	<line class="st9" x1="-55.7" y1="401.5" x2="-120.9" y2="401.5"/>
+	<line class="st9" x1="-55.7" y1="390.4" x2="-120.9" y2="390.4"/>
+	<line class="st9" x1="-88.3" y1="379.2" x2="-88.3" y2="423.8"/>
+	<line class="st9" x1="-72.3" y1="379.2" x2="-72.3" y2="423.8"/>
+	<line class="st8" x1="-56.2" y1="379.2" x2="-56.2" y2="423.8"/>
+	<line class="st10" x1="-117.6" y1="381.5" x2="-108.4" y2="390.9"/>
+	<line class="st10" x1="-117.7" y1="389" x2="-107.1" y2="381.6"/>
+	<g>
+		<text transform="matrix(1 2.735520e-03 -2.735520e-03 1 -116.6807 375.3246)" class="st6 st11 st12">M</text>
+		<text transform="matrix(1 2.735520e-03 -2.735520e-03 1 -100.5193 375.3689)" class="st6 st11 st12">W</text>
+		<text transform="matrix(1 2.735520e-03 -2.735520e-03 1 -81.8125 375.42)" class="st6 st11 st12">F</text>
+		<text transform="matrix(1 2.735520e-03 -2.735520e-03 1 -66.1738 375.4628)" class="st6 st11 st12">S</text>
+	</g>
+</g>
+</svg>
