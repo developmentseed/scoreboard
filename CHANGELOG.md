@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v1.2.0]
+## [v1.2.0] - 2019-05-08
 ### Added
 - Add "Help" link to Scoreboard documentation
 - Users are able to download a PDF certificate of all their earned badges from their dashboard
