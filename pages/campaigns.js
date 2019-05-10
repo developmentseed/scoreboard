@@ -44,7 +44,6 @@ export class Campaigns extends Component {
   }
 
   componentDidMount () {
-    console.log(this.props.campaignSearchResults)
     if (!this.props.campaignSearchResults || !Object.keys(this.props.campaignSearchResults.records).length) {
       this.props.handleCampaignsPageChange(this.props.page || 1)
     }
