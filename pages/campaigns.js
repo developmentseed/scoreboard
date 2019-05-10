@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
 import CampaignFilters from '../components/campaigns/CampaignFilters'
 import CampaignsListing from '../components/campaigns/CampaignsListing'
@@ -40,17 +39,14 @@ export class Campaigns extends Component {
   }
 
   handlePageChange (pageNumber) {
-    this.setState({ records: {} })
     window.scrollTo(0, 0)
     this.props.handleCampaignsPageChange(pageNumber || 1)
   }
 
   componentDidMount () {
-    if (this.props.location) {
-      let { page } = queryString.parse(this.props.location.search)
-      this.props.handleCampaignsPageChange(page || 1)
-    } else {
-      this.props.handleCampaignsPageChange(1)
+    console.log(this.props.campaignSearchResults)
+    if (!this.props.campaignSearchResults || !Object.keys(this.props.campaignSearchResults.records).length) {
+      this.props.handleCampaignsPageChange(this.props.page || 1)
     }
   }
 
@@ -58,11 +54,19 @@ export class Campaigns extends Component {
     const {
       page,
       searchText,
-      records: { total, records, allCount, tms, refreshDate },
-      apiStatus,
       selectedTM,
+      compl_min,
+      compl_max,
+      valid_min,
+      valid_max,
       sortOrder
     } = this.props.campaigns
+
+    const {
+      records: { total, records, allCount, tms, refreshDate },
+      apiStatus
+    } = this.props.campaignSearchResults
+
     if (!records) {
       return <div />
     }
@@ -92,6 +96,10 @@ export class Campaigns extends Component {
                 handleSortChange={this.handleCampaignsSortChange}
                 handleSelectTM={this.handleSelectTM}
                 tmList={tms}
+                complMin={compl_min}
+                complMax={compl_max}
+                validMin={valid_min}
+                validMax={valid_max}
                 selectedTM={selectedTM}
                 sortOrder={sortOrder}
                 handleSearch={this.handleSearch}
@@ -115,4 +123,4 @@ export class Campaigns extends Component {
   }
 };
 
-export default connect(['campaigns'], actions)(Campaigns)
+export default connect(['campaigns', 'campaignSearchResults'], actions)(Campaigns)
