@@ -6,38 +6,30 @@ import { APP_URL_PREFIX } from '../../api/src/config'
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
-export default class extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      compl_min: 0,
-      compl_max: 100,
-      valid_min: 0,
-      valid_max: 100
-    }
-  }
-
+export default class Filters extends React.Component {
   render () {
     const {
       handleSearch,
+      searchText,
       selectedTM,
       handleSelectTM,
       sortOrder,
       tmList,
       handleCompletenessChange,
       handleValidationChange,
-      handleSortChange
+      handleSortChange,
+      complMin,
+      complMax,
+      validMin,
+      validMax
     } = this.props
-
-    let { compl_min, compl_max, valid_min, valid_max } = this.state
 
     return (
       <form className='filters' onSubmit={e => e.preventDefault()}>
         <fieldset>
           <legend>Search</legend>
           <div className='search'>
-            <input className='input--text' onChange={handleSearch} />
+            <input className='input--text' value={searchText} onChange={handleSearch} />
             <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
           </div>
         </fieldset>
@@ -74,9 +66,8 @@ export default class extends React.Component {
           <InputRange
             maxValue={100}
             minValue={0}
-            value={{ min: compl_min, max: compl_max }}
-            onChange={({ min, max }) => this.setState({ compl_min: min, compl_max: max })}
-            onChangeComplete={handleCompletenessChange}
+            value={{ min: complMin, max: complMax }}
+            onChange={handleCompletenessChange}
           />
         </fieldset>
         <fieldset>
@@ -84,9 +75,8 @@ export default class extends React.Component {
           <InputRange
             maxValue={100}
             minValue={0}
-            value={{ min: valid_min, max: valid_max }}
-            onChange={({ min, max }) => this.setState({ valid_min: min, valid_max: max })}
-            onChangeComplete={handleValidationChange}
+            value={{ min: validMin, max: validMax }}
+            onChange={handleValidationChange}
           />
         </fieldset>
       </form>
