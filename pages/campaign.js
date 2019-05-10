@@ -191,4 +191,3 @@ Page.getInitialProps = ({ query }) => {
     return {}
   }
 }
-
