@@ -66,8 +66,10 @@ module.exports = async (req, res) => {
         break
       case 'Alphabetical A-Z':
         query = query.orderBy('name', db.raw('asc NULLS LAST'))
+        break
       case 'Alphabetical Z-A':
         query = query.orderBy('name', db.raw('desc NULLS LAST'))
+        break
     }
     const records = await query.clone().limit(10).offset((parseInt(page) - 1) * 10)
     const tms = await db('taskers').select('id', 'name')
