@@ -3,7 +3,7 @@ const request = require('supertest')
 const db = require('../../src/db/connection')
 let app = require('../../src/index')
 const path = require('path')
-const { prop, sort } = require('ramda')
+const { prop, sort, reverse } = require('ramda')
 const { isBefore, isAfter } = require('date-fns')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
@@ -124,4 +124,16 @@ test('Get campaigns sorted alphabetically A to Z', async t => {
 
   const sorted = sort(alphabeticalDiff, names)
   t.deepEqual(sorted, names)
+})
+
+test('Get campaigns sorted alphabetically Z to A', async t => {
+  const response = await request(app)
+    .get('/scoreboard/api/campaigns?sortType=Alphabetical Z-A')
+    .expect(200)
+
+  const records = response.body.records
+  const names = records.map(prop('name'))
+
+  const sorted = sort(alphabeticalDiff, names)
+  t.deepEqual(reverse(sorted), names)
 })
