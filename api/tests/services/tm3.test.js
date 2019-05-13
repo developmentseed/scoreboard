@@ -16,6 +16,10 @@ test.beforeEach.cb(t => {
   tm3proxy.listen(4848, t.end)
 })
 
+test.afterEach.cb(t => {
+  tm3proxy.close(t.end)
+})
+
 test.serial('Test TM3', async t => {
   const tm = new TM(1, 'tm3', 'http://localhost:4848')
   let projects = await tm.getProjects()
