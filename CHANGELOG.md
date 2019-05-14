@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added 
-- "Reset filters" button for campaigns
+- "Reset filters" button clears filter options on the Campaigns page
 
 ### Fixed
 - Campaign filters retains state when navigating away from the campaigns search
