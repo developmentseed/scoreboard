@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
 import CampaignFilters from '../components/campaigns/CampaignFilters'
 import CampaignsListing from '../components/campaigns/CampaignsListing'
@@ -17,6 +16,7 @@ export class Campaigns extends Component {
     this.handleSelectTM = this.handleSelectTM.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.handleCampaignsSortChange = this.handleCampaignsSortChange.bind(this)
+    this.handleReset = this.handleReset.bind(this)
   }
 
   handleSearch (event) {
@@ -40,17 +40,17 @@ export class Campaigns extends Component {
   }
 
   handlePageChange (pageNumber) {
-    this.setState({ records: {} })
     window.scrollTo(0, 0)
     this.props.handleCampaignsPageChange(pageNumber || 1)
   }
 
+  handleReset () {
+    this.props.handleCampaignsFiltersReset()
+  }
+
   componentDidMount () {
-    if (this.props.location) {
-      let { page } = queryString.parse(this.props.location.search)
-      this.props.handleCampaignsPageChange(page || 1)
-    } else {
-      this.props.handleCampaignsPageChange(1)
+    if (!this.props.campaignSearchResults || !Object.keys(this.props.campaignSearchResults.records).length) {
+      this.props.handleCampaignsPageChange(this.props.page || 1)
     }
   }
 
@@ -58,14 +58,18 @@ export class Campaigns extends Component {
     const {
       page,
       searchText,
-      records: { total, records, allCount, tms, refreshDate },
-      apiStatus,
       selectedTM,
+      compl_min,
+      compl_max,
+      valid_min,
+      valid_max,
       sortOrder
     } = this.props.campaigns
-    if (!records) {
-      return <div />
-    }
+
+    const {
+      records: { total, records, allCount, tms, refreshDate },
+      apiStatus
+    } = this.props.campaignSearchResults
 
     return (
       <div className='Campaigns'>
@@ -91,7 +95,12 @@ export class Campaigns extends Component {
                 handleValidationChange={this.handleValidationChange}
                 handleSortChange={this.handleCampaignsSortChange}
                 handleSelectTM={this.handleSelectTM}
-                tmList={tms}
+                handleReset={this.handleReset}
+                tmList={tms || []}
+                complMin={compl_min}
+                complMax={compl_max}
+                validMin={valid_min}
+                validMax={valid_max}
                 selectedTM={selectedTM}
                 sortOrder={sortOrder}
                 handleSearch={this.handleSearch}
@@ -99,14 +108,19 @@ export class Campaigns extends Component {
               />
             </div>
             <div className='widget-75'>
-              <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
-              <Pagination
-                activePage={page}
-                itemsCountPerPage={10}
-                totalItemsCount={total}
-                pageRangeDisplayed={5}
-                onChange={this.handlePageChange}
-              />
+              {
+                records &&
+                <>
+                  <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={10}
+                    totalItemsCount={total}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}
+                  />
+                </>
+              }
             </div>
           </div>
         </section>
@@ -115,4 +129,4 @@ export class Campaigns extends Component {
   }
 };
 
-export default connect(['campaigns'], actions)(Campaigns)
+export default connect(['campaigns', 'campaignSearchResults'], actions)(Campaigns)

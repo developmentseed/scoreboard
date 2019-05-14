@@ -4,8 +4,12 @@ import { APP_URL_PREFIX } from '../api/src/config'
 
 export default class NewLink extends Link {
   render () {
-    const { href } = this.props
+    const { href, as } = this.props
     const newHref = join(APP_URL_PREFIX, href)
-    return <Link {...this.props} href={newHref} />
+    let newAs
+    if (as) {
+      newAs = join(APP_URL_PREFIX, as)
+    }
+    return <Link {...this.props} href={newHref} as={newAs} />
   }
 }
