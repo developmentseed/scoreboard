@@ -16,6 +16,7 @@ export class Campaigns extends Component {
     this.handleSelectTM = this.handleSelectTM.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.handleCampaignsSortChange = this.handleCampaignsSortChange.bind(this)
+    this.handleReset = this.handleReset.bind(this)
   }
 
   handleSearch (event) {
@@ -43,6 +44,10 @@ export class Campaigns extends Component {
     this.props.handleCampaignsPageChange(pageNumber || 1)
   }
 
+  handleReset () {
+    this.props.handleCampaignsFiltersReset()
+  }
+
   componentDidMount () {
     if (!this.props.campaignSearchResults || !Object.keys(this.props.campaignSearchResults.records).length) {
       this.props.handleCampaignsPageChange(this.props.page || 1)
@@ -65,10 +70,6 @@ export class Campaigns extends Component {
       records: { total, records, allCount, tms, refreshDate },
       apiStatus
     } = this.props.campaignSearchResults
-
-    if (!records) {
-      return <div />
-    }
 
     return (
       <div className='Campaigns'>
@@ -94,7 +95,8 @@ export class Campaigns extends Component {
                 handleValidationChange={this.handleValidationChange}
                 handleSortChange={this.handleCampaignsSortChange}
                 handleSelectTM={this.handleSelectTM}
-                tmList={tms}
+                handleReset={this.handleReset}
+                tmList={tms || []}
                 complMin={compl_min}
                 complMax={compl_max}
                 validMin={valid_min}
@@ -106,14 +108,19 @@ export class Campaigns extends Component {
               />
             </div>
             <div className='widget-75'>
-              <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
-              <Pagination
-                activePage={page}
-                itemsCountPerPage={10}
-                totalItemsCount={total}
-                pageRangeDisplayed={5}
-                onChange={this.handlePageChange}
-              />
+              {
+                records &&
+                <>
+                  <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
+                  <Pagination
+                    activePage={page}
+                    itemsCountPerPage={10}
+                    totalItemsCount={total}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}
+                  />
+                </>
+              }
             </div>
           </div>
         </section>
