@@ -179,11 +179,15 @@ const Page = connect(
   actions
 )(Campaign)
 
-Page.getInitialProps = async ({ req }) => {
-  const { id } = req.params
-  return {
-    id
+export default Page
+
+Page.getInitialProps = ({ query }) => {
+  if (query) {
+    const { id } = query
+    return {
+      id
+    }
+  } else {
+    return {}
   }
 }
-
-export default Page
