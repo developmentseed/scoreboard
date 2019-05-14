@@ -3,6 +3,8 @@ import InputRange from 'react-input-range'
 import Select from 'react-select'
 import join from 'url-join'
 import { APP_URL_PREFIX } from '../../api/src/config'
+import { campaignFiltersInitialState } from '../../lib/store/actions/campaigns';
+import { equals } from 'ramda'
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
@@ -22,8 +24,20 @@ export default class Filters extends React.Component {
       complMax,
       validMin,
       validMax,
-      handleClick
+      handleReset
     } = this.props
+
+    const isReset = equals(
+      campaignFiltersInitialState, {
+        searchText,
+        compl_min: complMin,
+        compl_max: complMax,
+        valid_min: validMin,
+        valid_max: validMax,
+        selectedTM,
+        sortOrder,
+        page: 1
+      })
 
     return (
       <form className='filters' onSubmit={e => e.preventDefault()}>
@@ -80,9 +94,12 @@ export default class Filters extends React.Component {
             onChange={handleValidationChange}
           />
         </fieldset>
-        <div className='reset'>
-          <a href='#' className='link--normal' onClick={handleClick}><legend>&#10005; Reset Filters</legend></a>
-        </div>
+        {
+          !isReset &&
+          <div className='reset'>
+            <div className='link--normal' onClick={handleReset}><legend>&#10005; Reset Filters</legend></div>
+          </div>
+        }
       </form>
     )
   }
