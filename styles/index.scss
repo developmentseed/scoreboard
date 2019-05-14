@@ -871,14 +871,22 @@ form.filters {
   @include media(small-only) {
     flex-direction: row;
     margin-bottom: 1em;
+    flex-wrap: wrap;
   }
   fieldset {
     width: 100%;
+    @include media(small-only) {
+      flex: 1;
+    }
     &~fieldset {
       @include media(small-only) {
         margin-left: .7em;
       }
     }
+  }
+  .reset {
+    display: inline-block;
+    flex: 100%;
   }
 }
 //tables //

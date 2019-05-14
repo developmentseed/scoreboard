@@ -21,7 +21,8 @@ export default class Filters extends React.Component {
       complMin,
       complMax,
       validMin,
-      validMax
+      validMax,
+      handleClick
     } = this.props
 
     return (
@@ -79,6 +80,9 @@ export default class Filters extends React.Component {
             onChange={handleValidationChange}
           />
         </fieldset>
+        <div className='reset'>
+          <a href='#' className='link--normal' onClick={handleClick}><legend>&#10005; Reset Filters</legend></a>
+        </div>
       </form>
     )
   }
