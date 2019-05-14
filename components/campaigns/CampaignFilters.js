@@ -3,7 +3,7 @@ import InputRange from 'react-input-range'
 import Select from 'react-select'
 import join from 'url-join'
 import { APP_URL_PREFIX } from '../../api/src/config'
-import { campaignFiltersInitialState } from '../../lib/store/actions/campaigns';
+import { campaignFiltersInitialState } from '../../lib/store/actions/campaigns'
 import { equals } from 'ramda'
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
