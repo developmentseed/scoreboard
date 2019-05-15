@@ -46,7 +46,9 @@ const UsersFilter = ({
               { value: 'Most recent', label: 'Most recent edit' },
               { value: 'Least recent', label: 'Least recent edit' },
               { value: 'Most total', label: 'Most total edits' },
-              { value: 'Least total', label: 'Least total edits' }
+              { value: 'Least total', label: 'Least total edits' },
+              { value: 'Alphabetical A-Z', label: 'Alphabetical A-Z' },
+              { value: 'Alphabetical Z-A', label: 'Alphabetical Z-A' }
             ]
           }
         />
