@@ -11,7 +11,7 @@ const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 const UsersFilter = ({
   handleSearch, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
-  handleActiveSelect, selectedActive
+  handleActiveSelect, selectedActive, searchText
 }) => (
   <div className='widget-25'>
     <h3 className='header--medium'>Filter</h3>
@@ -19,7 +19,7 @@ const UsersFilter = ({
       <fieldset>
         <legend>Search</legend>
         <div className='search'>
-          <input className='input--text' onChange={handleSearch} />
+          <input className='input--text' value={searchText} onChange={handleSearch} />
           <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
         </div>
       </fieldset>
