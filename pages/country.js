@@ -71,11 +71,16 @@ export class Country extends Component {
 }
 
 const connectedCountry = connect(['country'], actions)(Country)
-connectedCountry.getInitialProps = function ({ req }) {
-  const { code } = req.params
-  return {
-    code
-  }
-}
 
 export default connectedCountry
+
+connectedCountry.getInitialProps = function ({ query }) {
+  if (query) {
+    const { code } = query
+    return {
+      code
+    }
+  } else {
+    return {}
+  }
+}
