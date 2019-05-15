@@ -49,6 +49,7 @@ export class Campaigns extends Component {
   }
 
   componentDidMount () {
+    this.props.resetCampaign()
     if (!this.props.campaignSearchResults || !Object.keys(this.props.campaignSearchResults.records).length) {
       this.props.handleCampaignsPageChange(1)
     }
@@ -129,4 +130,4 @@ export class Campaigns extends Component {
   }
 };
 
-export default connect(['campaigns', 'campaignSearchResults'], actions)(Campaigns)
+export default connect(['campaigns', 'campaignSearchResults', 'campaign'], actions)(Campaigns)
