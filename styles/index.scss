@@ -961,3 +961,55 @@ table {
   height: 100%;
   background: rgb(222,234,238);
  }
+
+ /*
+ * Accordion
+ */
+
+ /* Basic Accordion Styles */
+ .accordion {
+   /* Checkbox Inputs */
+   >input {
+     display: none;
+   }
+
+   /* Labels */
+   >label {
+     position: relative;
+     display: block;
+     transition: all .2s ease-in-out;
+
+     &:after {
+       content: '\25BC';
+       display: inline-block;
+       vertical-align: middle;
+       margin-left: 0.5rem;
+       margin-top: -0.2rem;
+       font-size: 1rem;
+       transform: scaleY(1.25) rotate(-90deg);
+       transition: transform .4s ease-in-out;
+     }
+     &:hover {
+       color: $base-color;
+     }
+   }
+
+   input:checked + label {
+     &:after {
+       transform: scaleX(1.25) rotate(0deg);
+     }
+   }
+
+   /* Panel Content */
+   .accordion__content {
+     margin-top: 1rem;
+     overflow: hidden;
+     max-height: 0em;
+     position: relative;
+     transition: all .4s cubic-bezier(0.865, 0.140, 0.095, 0.870);
+   }
+ }
+
+ input[name='accordion-panel']:checked ~ .accordion__content {
+   max-height: 50em;
+ }

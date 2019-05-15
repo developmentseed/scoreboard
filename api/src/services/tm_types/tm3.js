@@ -1,5 +1,4 @@
 const rp = require('request-promise-native')
-const { concat } = require('ramda')
 const limit = require('p-limit')(5)
 const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
 
@@ -7,10 +6,11 @@ const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
  * Methods to grab data from tasking manager version 3
  */
 class TM3API {
-  constructor (url, tasker_id, api_url) {
+  constructor (url, tasker_id, api_url, opts) {
     this.url = url
     this.api_url = api_url
     this.tasker_id = tasker_id
+    this.opts = opts || {}
   }
 
   getUrlForProject (id) {
@@ -30,26 +30,34 @@ class TM3API {
    * @returns {Promise} response
    */
   async getProjects () {
-    let records = []
+    let qs = {
+      page: 1
+    }
+    if (this.opts.search_params) {
+      qs = Object.assign(this.opts.search_params, qs)
+    }
+
     let firstResp = await rp({
       uri: `${this.api_url}/api/v1/project/search`,
+      qs,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
     let json = JSON.parse(firstResp)
 
-    concat(records, json.results)
+    let projects = json.results
 
     let numPages = json.pagination.pages
     let promises = []
-    for (let i = 2; i < numPages; i++) {
+    for (let i = 2; i <= numPages; i++) {
+      qs.page = i
       promises.push(limit(() => rp({
-        uri: `${this.api_url}/api/v1/project/search?page=${i}`,
+        uri: `${this.api_url}/api/v1/project/search`,
+        qs,
         headers: { 'Accept-Language': 'en-US,en;q=0.9' }
       })))
     }
-    return Promise.all(promises).then(responses => {
-      let projects = []
 
+    return Promise.all(promises).then(responses => {
       responses.forEach(response => {
         let results = JSON.parse(response).results
         results.forEach(project => {
