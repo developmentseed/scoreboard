@@ -91,9 +91,16 @@ $border-color: #ccc;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 1rem;
       .button {
         font-size: 0.8rem;
-        margin: 0 0.5rem;
+      }
+      .input-group {
+        display: flex;
+        flex-basis: 70%;
+        *~* {
+          margin-left: 0.5rem;
+        }
       }
     }
   }

@@ -61,8 +61,10 @@ class QueryParameters extends Component {
         {
           Object.keys(params).map(key => (
             <div key={key} className='form-flex'>
-              <input type='text' placeholder='Key' disabled value={key} />
-              <input type='text' placeholder='Value' disabled value={params[key]} />
+              <div className='input-group'>
+                <input type='text' placeholder='Key' disabled value={key} />
+                <input type='text' placeholder='Value' disabled value={params[key]} />
+              </div>
               <input className='button button--destroy' type='button' value={'remove'} onClick={() => this.removeParam(key)} />
               <input className='button button--secondary' type='button' value={'edit'} onClick={() => this.editParam(key)} />
             </div>
@@ -70,8 +72,10 @@ class QueryParameters extends Component {
         }
         <br />
         <div className='form-flex'>
-          <input type='text' placeholder='Key' value={this.state.key} onChange={this.update('key')} />
-          <input type='text' placeholder='Value' value={this.state.value} onChange={this.update('value')} />
+          <div className='input-group'>
+            <input type='text' placeholder='Key' value={this.state.key} onChange={this.update('key')} />
+            <input type='text' placeholder='Value' value={this.state.value} onChange={this.update('value')} />
+          </div>
           <input className='button' type='button' disabled={isNil(this.state.key) || this.state.key.length === 0} value={'save'} onClick={this.addParam} />
         </div>
         <br />
