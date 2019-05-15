@@ -19,7 +19,14 @@ exports.seed = async (knex) => {
         await knex('taskers').del()
 
         // Add tasking managers
-        await knex('taskers').insert({ type: 'tm3', url: 'http://localhost:4850', name: 'test tm3' })
+        await knex('taskers').insert({
+          type: 'tm3',
+          url: 'http://tasks.openstreetmap.us',
+          name: 'test tm3',
+          options: {
+            proxy: 'http://localhost:4850'
+          }
+        })
         await tmWorker()
 
         // Make all the hashtags predictable
