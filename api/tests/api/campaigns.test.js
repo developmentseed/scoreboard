@@ -3,13 +3,18 @@ const request = require('supertest')
 const db = require('../../src/db/connection')
 let app = require('../../src/index')
 const path = require('path')
-const { prop } = require('ramda')
+const { prop, sort, reverse } = require('ramda')
 const { isBefore, isAfter } = require('date-fns')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
+const alphabeticalDiff = function (a, b) {
+  if (a < b) { return -1 }
+  if (a > b) { return 1 }
+  return 0
+}
 test.before(async t => {
   app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
@@ -107,4 +112,28 @@ test('Get campaigns sorted by least recently updated', async t => {
     t.truthy(isBefore(toCompare, date))
     toCompare = date
   })
+})
+
+test('Get campaigns sorted alphabetically A to Z', async t => {
+  const response = await request(app)
+    .get('/scoreboard/api/campaigns?sortType=Alphabetical A-Z')
+    .expect(200)
+
+  const records = response.body.records
+  const names = records.map(prop('name'))
+
+  const sorted = sort(alphabeticalDiff, names)
+  t.deepEqual(sorted, names)
+})
+
+test('Get campaigns sorted alphabetically Z to A', async t => {
+  const response = await request(app)
+    .get('/scoreboard/api/campaigns?sortType=Alphabetical Z-A')
+    .expect(200)
+
+  const records = response.body.records
+  const names = records.map(prop('name'))
+
+  const sorted = sort(alphabeticalDiff, names)
+  t.deepEqual(reverse(sorted), names)
 })
