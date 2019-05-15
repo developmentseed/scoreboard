@@ -18,8 +18,10 @@ function mockAction () {
 it('Campaigns renders without crashing', () => {
   const div = document.createElement('div')
   const campaigns = InitialState.campaigns
+  const campaignSearchResults = InitialState.campaignSearchResults
   const mockProps = {
     campaigns,
+    campaignSearchResults,
     handleCampaignsSearch: mockAction,
     handleCampaignsFilterChange: mockAction,
     handleCampaignsPageChange: mockAction
