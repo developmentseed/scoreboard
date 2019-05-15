@@ -18,6 +18,7 @@ export class Countries extends Component {
   }
 
   componentDidMount () {
+    this.props.resetCountry()
     this.props.countriesPageChange(1)
   }
 
@@ -92,4 +93,4 @@ export class Countries extends Component {
 }
 
 // export default () => 'div />'
-export default connect(['countriesFilters', 'countriesSearchResults'], actions)(Countries)
+export default connect(['countriesFilters', 'countriesSearchResults', 'country'], actions)(Countries)

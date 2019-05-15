@@ -132,6 +132,7 @@ it('Countries renders without crashing', () => {
   const mockProps = {
     countriesFilters: InitialState.countriesFilters,
     countriesSearchResults: InitialState.countriesSearchResults,
+    resetCountry: mockAction,
     countriesSearch: mockAction,
     countriesPageChange: mockAction,
     countriesChangeSelectedSource: mockAction
