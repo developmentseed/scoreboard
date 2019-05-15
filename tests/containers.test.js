@@ -5,6 +5,8 @@ import { Provider } from 'unistore/react'
 // import { Home } from '../pages/index'
 import { Campaigns } from '../pages/campaigns'
 import { Campaign } from '../pages/campaign'
+import { Countries } from '../pages/countries'
+import { Country } from '../pages/country'
 import { User } from '../pages/user'
 import { Users } from '../pages/users'
 import About from '../pages/about'
@@ -53,6 +55,8 @@ it('Campaign renders without crashing', () => {
 
   ReactDOM.render(page, div)
 })
+
+
 
 // Home has nested components that are connected to the unistore
 // Because of that it throws `TypeError: Cannot read property 'action' of undefined`
@@ -116,6 +120,43 @@ it('Users renders without crashing', () => {
   const page = (
     <Provider store={store}>
       <Users {...mockProps} />
+    </Provider>
+  )
+
+  ReactDOM.render(page, div)
+})
+
+it('Countries renders without crashing', () => {
+  const div = document.createElement('div')
+
+  const mockProps = {
+    countriesFilters: InitialState.countriesFilters,
+    countriesSearchResults: InitialState.countriesSearchResults,
+    countriesSearch: mockAction,
+    countriesPageChange: mockAction,
+    countriesChangeSelectedSource: mockAction
+  }
+
+  const page = (
+    <Provider store={store}>
+      <Countries {...mockProps} />
+    </Provider>
+  )
+
+  ReactDOM.render(page, div)
+})
+
+it('Country renders without crashing', () => {
+  const div = document.createElement('div')
+
+  const mockProps = {
+    country: null,
+    getCountry: mockAction
+  }
+
+  const page = (
+    <Provider store={store}>
+      <Country {...mockProps} />
     </Provider>
   )
 
