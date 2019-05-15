@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
 import AllUsersTable from '../components/users/AllUsersTable'
 import { actions } from '../lib/store'
@@ -55,7 +54,7 @@ export class Users extends Component {
       selectedValue,
       selectedSortValue,
       selectedActive,
-      page,
+      page
     } = this.props.usersFilters
 
     const { stats, apiStatus } = this.props.usersSearchResults
@@ -94,7 +93,6 @@ export class Users extends Component {
               searchText={searchText}
               selectedValue={selectedValue}
               selectedSortValue={selectedSortValue}
-              searchText={searchText}
               selectedActive={selectedActive}
               handleActiveSelect={this.handleActiveSelect}
               countries={countries || []}
