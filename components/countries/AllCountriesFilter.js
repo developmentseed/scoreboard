@@ -7,8 +7,7 @@ import { APP_URL_PREFIX } from '../../api/src/config'
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 export default ({
-  searchText, handleSearch, countries, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
-  handleToggleActive, selectedActive
+  searchText, handleSearch, handleSortSelect, selectedSortValue
 }) => (
   <div className='widget-25'>
     <h3 className='header--medium'>Filter</h3>
