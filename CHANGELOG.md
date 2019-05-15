@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added 
+- "Reset filters" button clears filter options on the Campaigns page
+
+### Fixed
+- State retains page number and filters when navigating between the Campaigns page and individual campaign cards
 
 ## [v1.2.0] - 2019-05-08
 ### Added

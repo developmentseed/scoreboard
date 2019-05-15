@@ -20,7 +20,7 @@ export default ({ campaign }) => {
     team_priority
   } = campaign
   return (
-    <Link href={`/campaigns/${tasker_id}-${tm_id}`}>
+    <Link href={`/campaign?id=${tasker_id}-${tm_id}`} as={`/campaigns/${tasker_id}-${tm_id}`}>
       <a className='card--wrapper'>
         <div className='card'>
           <div className='map-campaign-sm'><CampaignMap feature={JSON.parse(geometry)} interactive={false} /></div>
