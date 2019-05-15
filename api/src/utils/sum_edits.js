@@ -3,12 +3,19 @@ const { map, props, sum } = require('ramda')
 const summable = [
   'buildings_add',
   'buildings_mod',
+  'buildings_del',
   'poi_add',
+  'poi_mod',
+  'poi_del',
   'roads_add',
   'roads_mod',
+  'roads_del',
   'coastlines_add',
   'coastlines_mod',
-  'waterways_add'
+  'coastlines_del',
+  'waterways_add',
+  'waterways_mod',
+  'waterways_del'
 ]
 
 /**
@@ -17,6 +24,12 @@ const summable = [
  * @param {Object} records
  */
 module.exports = records => {
-  const summableProperties = map(x => Number(x))(props(summable, records))
+  const summableProperties = map(x => {
+    let num = Number(x)
+    if (Number.isNaN(num)) { // control for NaNs in response
+      num = 0
+    }
+    return num
+  })(props(summable, records))
   return sum(summableProperties)
 }
