@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import join from 'url-join'
 
-import { APP_URL_PREFIX } from '../api/src/config'
+import { APP_URL_PREFIX } from '../../api/src/config'
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
@@ -16,7 +16,7 @@ export default ({
       <fieldset>
         <legend>Search</legend>
         <div className='search'>
-          <input className='input--text' onChange={handleSearch} />
+          <input className='input--text' value={searchText} onChange={handleSearch} />
           <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
         </div>
       </fieldset>
