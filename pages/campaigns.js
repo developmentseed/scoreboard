@@ -50,7 +50,7 @@ export class Campaigns extends Component {
 
   componentDidMount () {
     if (!this.props.campaignSearchResults || !Object.keys(this.props.campaignSearchResults.records).length) {
-      this.props.handleCampaignsPageChange(this.props.page || 1)
+      this.props.handleCampaignsPageChange(1)
     }
   }
 
