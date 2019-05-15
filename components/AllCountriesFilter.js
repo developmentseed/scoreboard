@@ -27,7 +27,12 @@ export default ({
           value={selectedSortValue}
           onChange={handleSortSelect}
           options={
-            [{ value: 'Most total', label: 'Most edits' }, { value: 'Least total', label: 'Least edits' }]
+            [
+              { value: 'Most total', label: 'Most edits' },
+              { value: 'Least total', label: 'Least edits' },
+              { value: 'Alphabetical A-Z', label: 'Alphabetical A-Z' },
+              { value: 'Alphabetical Z-A', label: 'Alphabetical Z-A' }
+            ]
           }
         />
       </fieldset>
