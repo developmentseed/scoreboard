@@ -56,8 +56,6 @@ it('Campaign renders without crashing', () => {
   ReactDOM.render(page, div)
 })
 
-
-
 // Home has nested components that are connected to the unistore
 // Because of that it throws `TypeError: Cannot read property 'action' of undefined`
 // TODO: fix this
