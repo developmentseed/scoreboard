@@ -71,7 +71,9 @@ export default class Filters extends React.Component {
                 { value: 'Most Recently Created', label: 'Most Recently Created' },
                 { value: 'Least Recently Created', label: 'Least Recently Created' },
                 { value: 'Most Recently Updated', label: 'Most Recently Updated' },
-                { value: 'Least Recently Updated', label: 'Least Recently Updated' }
+                { value: 'Least Recently Updated', label: 'Least Recently Updated' },
+                { value: 'Alphabetical A-Z', label: 'Alphabetical A-Z' },
+                { value: 'Alphabetical Z-A', label: 'Alphabetical Z-A' }
               ]
             }
           />
