@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
-import AllUsersTable from '../components/AllUsersTable'
+import AllUsersTable from '../components/users/AllUsersTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 
-const AllUsersFilter = dynamic(() => import('../components/AllUsersFilter'), { ssr: false })
+const AllUsersFilter = dynamic(() => import('../components/users/AllUsersFilter'), { ssr: false })
 
 export class Users extends Component {
   constructor (props) {

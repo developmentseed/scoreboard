@@ -1,9 +1,9 @@
 import React from 'react'
-import Link from './Link'
-import { formatDecimal, formatEditTimeDescription } from '../lib/utils/format'
+import Link from '../Link'
+import { formatDecimal, formatEditTimeDescription } from '../../lib/utils/format'
 import { parse } from 'date-fns'
 
-export default ({ apiStatus, users }) => {
+const UsersTable = ({ apiStatus, users }) => {
   let content = <div />
   switch (apiStatus) {
     case 'SUCCESS':
@@ -47,3 +47,4 @@ export default ({ apiStatus, users }) => {
   }
   return content
 }
+export default UsersTable

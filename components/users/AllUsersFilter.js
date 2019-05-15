@@ -3,13 +3,13 @@ import Select from 'react-select'
 import { sortBy, prop } from 'ramda'
 import join from 'url-join'
 
-import { APP_URL_PREFIX } from '../api/src/config'
-import countries from '../lib/utils/country-list.json'
+import { APP_URL_PREFIX } from '../../api/src/config'
+import countries from '../../lib/utils/country-list.json'
 
 const sortByLabel = sortBy(prop('label'))
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
-export default ({
+const UsersFilter = ({
   handleSearch, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
   handleActiveSelect, selectedActive
 }) => (
@@ -71,3 +71,4 @@ export default ({
     </form>
   </div>
 )
+export default UsersFilter
