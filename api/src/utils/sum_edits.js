@@ -24,12 +24,6 @@ const summable = [
  * @param {Object} records
  */
 module.exports = records => {
-  const summableProperties = map(x => {
-    let num = Number(x)
-    if (Number.isNaN(num)) { // control for NaNs in response
-      num = 0
-    }
-    return num
-  })(props(summable, records))
+  const summableProperties = map(x => ~~x)(props(summable, records))
   return sum(summableProperties)
 }
