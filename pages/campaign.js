@@ -10,7 +10,6 @@ import { actions } from '../lib/store'
 import CampaignTable from '../components/campaign/CampaignTable'
 import ReactMarkdown from 'react-markdown'
 import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
-import sumEdits from '../lib/utils/sum_edits'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import Blurb from '../components/campaign/CampaignBlurb'
 
@@ -89,7 +88,7 @@ export class Campaign extends Component {
   }
 
   render () {
-    const { meta, lastUpdate, creationDate, refreshDate } = this.props.campaign
+    const { meta, lastUpdate, creationDate, refreshDate, editSum } = this.props.campaign
 
     const stats = merge({
       users: [],
@@ -141,7 +140,7 @@ export class Campaign extends Component {
             { label: 'Complete', value: `${parseInt(meta.done, 10)}%` },
             { label: 'Validated', value: `${parseInt(meta.validated, 10)}%` },
             { label: 'Participants', value: stats.users.length },
-            { label: 'Total features mapped', value: formatDecimal(sumEdits(stats)) }
+            { label: 'Total features mapped', value: formatDecimal(editSum) }
           ]
         } />
 
