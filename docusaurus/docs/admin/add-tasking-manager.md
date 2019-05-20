@@ -25,6 +25,7 @@ To add a tasking manager:
 
 ### Advanced details
 - **Proxy URL**: If the tasking manager API is not at the same location as the URL, then set this URL for scoreboard to poll. This is typical in setups where the tasking manager is behind a firewall.
+- **Query parameters**: Extra parameters to add to the project search request. You can use this to filter which campaigns to get using the same parameters you would use in the tasking manager API. For example, a key of `mapperLevel` and a value of `BEGINNER` for v3 tasking manager will only return those campaigns that are tagged as `BEGINNER` campaigns.
 
 ![Adding a new Tasking Manager](assets/img/add-tasking-manager-details.png)
 

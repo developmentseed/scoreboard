@@ -443,7 +443,7 @@ export class AdminBadgesEdit extends Component {
             {this.renderRequirements(op, i)}
             {i > 0 && (
               <button
-                className='button button--link'
+                className='button button--destroy'
                 id='delete-badge-operation-button'
                 onClick={(e) => this.removeOperationFromBadge(e, i)}
                 type='button'
