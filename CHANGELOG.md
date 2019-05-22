@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Campaigns can be sorted by name in alphabetical order
 - "Reset filters" button clears filter options on the Campaigns page
+- Edits and Changesets available in activity widget
 
 ### Fixed
 - State retains page number and filters when navigating between the Campaigns page and individual campaign cards
