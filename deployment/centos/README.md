@@ -143,22 +143,18 @@ Here's what all the variables mean
 | DATABASE_URL | The location of the postgres database
 
 ### Setup NGINX and Services
-Make sure to put the correct version number in the url used by `wget`.
-
 ```
 cd ~
-wget https://github.com/developmentseed/scoreboard/blob/<put-version-number-here>/deployment/centos/bootstrap.sh
+wget https://github.com/developmentseed/scoreboard/blob/master/deployment/centos/bootstrap.sh
 ./bootstrap.sh
 ```
 
 
 ### Deploy the Repo 
-Make sure to put the correct version number in the url used by `wget`.
-
 ```
 sudo mkdir -p /var/www/
 cd ~
-wget https://github.com/developmentseed/scoreboard/blob/<put-version-number-here>/deployment/centos/deploy.sh
+wget https://github.com/developmentseed/scoreboard/blob/master/deployment/centos/deploy.sh
 ./deploy.sh
 ```
 
