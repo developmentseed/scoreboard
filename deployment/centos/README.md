@@ -119,13 +119,28 @@ Add a file with the following content to `/var/scoreboard-data/.env`
 ```
 NODE_ENV=production
 DATABASE_URL=postgres://scoreboard:test@localhost:5433/scoreboard
-TM_URL=xxxxx
-TM_VERSION=xxx
 USERS_URL=xxxx
-TM_HASHTAG=xxxx
 OSMESA_API=xxxxx
 APP_URL=xxxxx
+OSM_CONSUMER_KEY=xxxxx
+OSM_CONSUMER_SECRET=xxxxx
+OSM_TEAMS_SERVICE=xxxxxx
+SESSION_SECRET=xxxxx
 ```
+
+Here's what all the variables mean
+
+| name | description
+| ---  | -----
+| NODE_ENV | The configuration to use, "test", "development" or "production"
+| OSMESA_API | URL to the OSMESA http server that serves out statistics
+| APP_URL | URL where the site will be hosted
+| OSM_CONSUMER_KEY | An Oauth Key/Secret pair to authenticate with OSM
+| OSM_CONSUMER_SECRET | An Oauth Key/Secret pair to authenticate with OSM
+| OSM_DOMAIN | OSM endpoint (defaults to openstreetmap.com)
+| OSM_TEAMS_SERVICE | Location of the OSM teams API
+| SESSION_SECRET | A secret phrase to sign session tokens
+| DATABASE_URL | The location of the postgres database
 
 ### Setup NGINX and Services
 Make sure to put the correct version number in the url used by `wget`.
