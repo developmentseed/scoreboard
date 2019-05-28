@@ -43,8 +43,7 @@ export default function AdminSectionList (props) {
                 </Link>
               </li>
             </ul>
-            :
-            <>
+            : <>
               <ul>
                 <li>
                   <a className='link--normal disabled' disabled>See all teams</a>
