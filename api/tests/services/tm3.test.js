@@ -6,7 +6,7 @@ const test = require('ava')
 const path = require('path')
 const http = require('http')
 const yakbak = require('yakbak')
-const { has } = require('ramda')
+const { has, equals, all } = require('ramda')
 
 const tm3proxy = http.createServer(yakbak('https://tasks.openstreetmap.us', {
   dirname: path.join(__dirname, '..', 'tapes')
@@ -14,6 +14,10 @@ const tm3proxy = http.createServer(yakbak('https://tasks.openstreetmap.us', {
 
 test.beforeEach.cb(t => {
   tm3proxy.listen(4848, t.end)
+})
+
+test.afterEach.cb(t => {
+  tm3proxy.close(t.end)
 })
 
 test.serial('Test TM3', async t => {
@@ -59,7 +63,7 @@ test.serial('Test TM3 schema', async t => {
 })
 
 test.serial('Test URL forming', async t => {
-  const tm = new TM(1, 'tm3', 'http://tasks.openstreetmap.us', 'http://localhost:4848')
+  const tm = new TM(1, 'tm3', 'http://tasks.openstreetmap.us', { proxy: 'http://localhost:4848' })
   let projects = await tm.getProjects() // Should get from the proxy
 
   const project = projects.find(p => p.projectId === 77)
@@ -67,4 +71,17 @@ test.serial('Test URL forming', async t => {
 
   const url = tm.getUrlForProject(project.projectId)
   t.is(url, `http://tasks.openstreetmap.us/project/77`)
+})
+
+test.serial('Test extra params', async t => {
+  // Sort response with date
+  const tm = new TM(1, 'tm3', 'http://localhost:4848', {
+    search_params: {
+      'mapperLevel': 'BEGINNER'
+    }
+  })
+
+  let projects = await tm.getProjects()
+  let levels = projects.map(p => p.mapperLevel)
+  t.true(all(equals('BEGINNER'), levels))
 })

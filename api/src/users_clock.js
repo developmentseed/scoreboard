@@ -2,7 +2,7 @@ const { compareDesc, parse } = require('date-fns')
 const {
   merge, head
 } = require('ramda')
-const sumEdits = require('../../lib/utils/sum_edits')
+const sumEdits = require('./utils/sum_edits')
 const pLimit = require('p-limit')
 const OSMesa = require('./services/osmesa')
 const db = require('./db/connection')
@@ -68,7 +68,10 @@ async function usersWorker () {
           await updateCountries(obj.id, data.country_list)
         }
       } catch (e) {
-        console.error(`${obj.osm_id} not retrieved from OSMesa`, e.message)
+        if (e.statusCode !== 404) {
+          // Only log if there was a server error
+          console.error(`${obj.osm_id} not retrieved from OSMesa`, e.message)
+        }
       }
 
       return db('users')

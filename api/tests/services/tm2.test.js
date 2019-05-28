@@ -6,7 +6,8 @@ const test = require('ava')
 const path = require('path')
 const http = require('http')
 const yakbak = require('yakbak')
-const { has } = require('ramda')
+const { compareAsc } = require('date-fns')
+const { has, sort } = require('ramda')
 
 const tm2proxy = http.createServer(yakbak('https://tasks.openstreetmap.id', {
   dirname: path.join(__dirname, '..', 'tapes')
@@ -14,6 +15,10 @@ const tm2proxy = http.createServer(yakbak('https://tasks.openstreetmap.id', {
 
 test.beforeEach.cb(t => {
   tm2proxy.listen(4849, t.end)
+})
+
+test.afterEach.cb(t => {
+  tm2proxy.close(t.end)
 })
 
 test.serial('Test TM2 response', async t => {
@@ -46,7 +51,7 @@ test.serial('Test TM2 schema', async t => {
 })
 
 test.serial('Test URL forming', async t => {
-  const tm = new TM(1, 'tm2', 'http://tasks.openstreetmap.id', 'http://localhost:4849')
+  const tm = new TM(1, 'tm2', 'http://tasks.openstreetmap.id', { proxy: 'http://localhost:4849' })
   let projects = await tm.getProjects() // Should get from the proxy
 
   const project = projects.find(p => p.id === 361)
@@ -54,4 +59,17 @@ test.serial('Test URL forming', async t => {
 
   const url = tm.getUrlForProject(project.id)
   t.is(url, `http://tasks.openstreetmap.id/project/361`)
+})
+
+test.serial('Test extra params', async t => {
+  // Sort response with date
+  const tm = new TM(1, 'tm2', 'http://localhost:4849', {
+    search_params: {
+      'sort_by': 'created'
+    }
+  })
+
+  let projects = await tm.getProjects()
+  let dates = projects.map(p => p.properties.created)
+  t.deepEqual(dates, sort(compareAsc, dates), 'dates are sorted')
 })

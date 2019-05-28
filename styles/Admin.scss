@@ -100,6 +100,22 @@ $border-color: #ccc;
 
   &__input-unit {
     margin-bottom: 1rem;
+    .form-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      .button {
+        font-size: 0.8rem;
+      }
+      .input-group {
+        display: flex;
+        flex-basis: 70%;
+        *~* {
+          margin-left: 0.5rem;
+        }
+      }
+    }
   }
 
   &__input-unit--half {
@@ -133,7 +149,6 @@ $border-color: #ccc;
   &__image {
     padding-top: 20px;
   }
-
   fieldset {
     padding-inline-start: 0;
   }
@@ -168,6 +183,47 @@ $border-color: #ccc;
   &:active {
     background-color: darken($base-color, 10%);
     color: white;
+  }
+}
+
+.button--secondary,
+.admin .button--secondary {
+  background-color: white;
+  color: $base-color;
+  transition: color 300ms ease-in-out;
+
+  &:hover,
+  &:active {
+    background-color: inherit;
+    color: darken($base-color, 10%);
+  }
+}
+
+.button--destroy,
+.admin .button--destroy {
+  border-color: #CA4F4F;
+  color: #CA4F4F;
+  background-color: white;
+
+  &:hover,
+  &:active {
+    background-color: #CA4F4F;
+    color: white;
+  }
+}
+
+.button--link {
+  background-color: transparent;
+  border: 0;
+  color: $light-text-color;
+  font-family: $tertiary-font-family;
+  padding: 0;
+  transition: color 300ms ease-in-out;
+
+  &:hover,
+  &:active {
+    background-color: inherit;
+    color: $med-text-color;
   }
 }
 

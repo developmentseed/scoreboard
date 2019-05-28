@@ -6,8 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Campaigns can be sorted by name in alphabetical order
+- "Reset filters" button clears filter options on the Campaigns page
+- Number of edits and Number of changesets now available in summary stats widget at the top of the user and dashboard pages
+
+### Fixed
+- State retains page number and filters when navigating between the Campaigns page and individual campaign cards
+
+## [v1.2.0] - 2019-05-08
+### Added
 - Add "Help" link to Scoreboard documentation
 - Users are able to download a PDF certificate of all their earned badges from their dashboard
+- Admins can include extra parameters to filter the project search of a tasking manager
 - On user profile and individual dashboard, clicking "Export Data" link will download a CSV of user data
 - On campaign pages, clicking "Export Data" link will download a CSV of the contributions of the top 10 campaign participants
 
@@ -159,7 +169,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.2.0...HEAD
+[v1.2.0]: https://github.com/developmentseed/scoreboard/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/developmentseed/scoreboard/compare/v1.0.3...v1.1.0
 [v1.0.3]: https://github.com/developmentseed/scoreboard/compare/v1.0.2...v1.0.3
 [v1.0.2]: https://github.com/developmentseed/scoreboard/compare/v1.0.1...v1.0.2
