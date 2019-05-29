@@ -606,6 +606,20 @@ mark {
   }
 }
 
+.page-actions {
+  display: flex;
+  flex-flow: column wrap;
+  .button {
+    margin: 1rem 0 0;
+  }
+  @include media(medium-up) {
+    flex-flow: row nowrap;
+  }
+}
+.widget-33.page-actions {
+  flex: 1;
+}
+//HEADER INTERNAL//
 .header--internal {
   .button{
     margin-top: 2em;
@@ -632,7 +646,9 @@ mark {
     font-size: 14px;
     display: inline-block;
     &~.button {
-      margin-left: .5em;
+      @include media(medium-up) {
+        margin-left: .5em;
+      }
     }
     @include media(medium-only) {
       padding: .7em 1.2em .5em;
