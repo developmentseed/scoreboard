@@ -90,7 +90,7 @@ export class User extends Component {
         <div className='row'>
           <DashboardBlurb {...records} username={name} />
           <CSVLink
-            className='link--large'
+            className='button button--secondary'
             style={{ float: 'right', marginBottom: '1rem' }}
             data={[
               {
