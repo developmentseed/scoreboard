@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import queryString from 'query-string'
 import Pagination from 'react-js-pagination'
-import AllUsersTable from '../components/AllUsersTable'
+import AllUsersTable from '../components/users/AllUsersTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 
-const AllUsersFilter = dynamic(() => import('../components/AllUsersFilter'), { ssr: false })
+const AllUsersFilter = dynamic(() => import('../components/users/AllUsersFilter'), { ssr: false })
 
 export class Users extends Component {
   constructor (props) {
@@ -22,33 +21,31 @@ export class Users extends Component {
   }
 
   componentDidMount () {
-    if (this.props.location) {
-      let { page } = queryString.parse(this.props.location.search)
-      this.props.changePage(page || 1)
+    this.props.resetUser()
+    if (!this.props.usersSearchResults || !Object.keys(this.props.usersSearchResults.stats).length) {
+      this.props.usersPageChange(1)
     }
-    this.props.changePage(1)
   }
 
   handleSearch (event) {
-    this.props.changeSearchText(event.target.value)
+    this.props.usersSearch(event.target.value)
   }
 
   handleSelect (selectedOption) {
-    this.props.changeCountry(selectedOption || null)
+    this.props.usersChangeCountry(selectedOption || null)
   }
 
   handleSortSelect (selectedOption) {
-    this.props.changeSelectedSort(selectedOption || null)
+    this.props.usersChangeSelectedSort(selectedOption || null)
   }
 
   handlePageChange (pageNumber) {
-    this.setState({ records: {} })
     window.scrollTo(0, 0)
-    this.props.changePage(pageNumber || 1)
+    this.props.usersPageChange(pageNumber || 1)
   }
 
   handleActiveSelect (selectedOption) {
-    this.props.handleActiveSelect(selectedOption || null)
+    this.props.usersChangeActiveSelect(selectedOption || null)
   }
 
   render () {
@@ -57,13 +54,10 @@ export class Users extends Component {
       selectedValue,
       selectedSortValue,
       selectedActive,
-      page,
-      stats,
-      apiStatus
-    } = this.props.users
-    if (!this.props.users) {
-      return <div />
-    }
+      page
+    } = this.props.usersFilters
+
+    const { stats, apiStatus } = this.props.usersSearchResults
 
     const { total, records, subTotal, editTotal, countries, active, refreshDate } = stats
 
@@ -96,9 +90,9 @@ export class Users extends Component {
               handleSearch={this.handleSearch}
               handleSelect={this.handleSelect}
               handleSortSelect={this.handleSortSelect}
+              searchText={searchText}
               selectedValue={selectedValue}
               selectedSortValue={selectedSortValue}
-              searchText={searchText}
               selectedActive={selectedActive}
               handleActiveSelect={this.handleActiveSelect}
               countries={countries || []}
@@ -122,4 +116,4 @@ export class Users extends Component {
 }
 
 // export default () => 'div />'
-export default connect(['users'], actions)(Users)
+export default connect(['usersFilters', 'usersSearchResults', 'user'], actions)(Users)

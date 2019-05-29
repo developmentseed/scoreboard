@@ -7,6 +7,8 @@ const db = require('../../src/db/connection')
 let app = require('../../src/index')
 const userClocks = require('../../src/users_clock')
 const countryList = require('../../../lib/utils/country-list.json')
+const { prop, sort, reverse } = require('ramda')
+const { alphabeticalDiff } = require('../../../lib/utils/sort')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')
@@ -77,4 +79,24 @@ test('Test getting a country that doesnt exist', async (t) => {
     .expect(404)
 
   t.is(res.status, 404)
+})
+
+test('Sort countries Alphabetical A-Z', async t => {
+  const res = await request(app).get('/scoreboard/api/countries?q=sortType=Alphabetical A-Z')
+    .expect(200)
+
+  const records = res.body.records
+  const names = records.map(prop('name'))
+  const sorted = sort(alphabeticalDiff, names)
+  t.deepEqual(sorted, names)
+})
+
+test('Sort countries Alphabetical Z-A', async t => {
+  const res = await request(app).get('/scoreboard/api/countries?q=sortType=Alphabetical Z-A')
+    .expect(200)
+
+  const records = res.body.records
+  const names = records.map(prop('name'))
+  const sorted = sort(alphabeticalDiff, names)
+  t.deepEqual(reverse(sorted), names)
 })

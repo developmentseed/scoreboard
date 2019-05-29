@@ -125,7 +125,7 @@
     "promise-sequential": "^1.1.1",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
-    "ramda": "^0.25.0",
+    "ramda": "^0.26.1",
     "random-seed": "^0.3.0",
     "react": "^16.0.0",
     "react-alert": "^4.0.4",
