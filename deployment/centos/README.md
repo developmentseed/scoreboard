@@ -21,6 +21,9 @@ Scoreboard pulls data for stats from three different services. They need to be i
 - Tasking Manager for campaign management · [Install Guide](https://github.com/hotosm/tasking-manager#installation)
 - OSM Teams for team management · [Install Guide](https://github.com/developmentseed/osm-teams/#installation)
 
+### Pre-populate users
+In case it is available, Scoreboard can pull from a CSV to seed the database (instead of relying solely on login). The CSV is of the form `id,display_name,email,status,full_name,country`. The URL to the CSV can be added as part of the environment variables (see below).
+
 ## Provisioning
 
 These instructions will allow you to run the Scoreboard API and UI server on a CentOS single machine. We recommend separating the database on another machine or
