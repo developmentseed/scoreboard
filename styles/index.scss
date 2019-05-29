@@ -117,8 +117,24 @@ body {
     }
   }
   .list--two-column {
-    color: rgba(255, 255, 255, .8);
+    color: #FFFFFF;
     margin-bottom: .4em;
+    strong {
+      display: block;
+      font-size: 1.125rem;
+      line-height: 1;
+      margin-bottom: .25rem;
+      color: rgba(255, 255, 255, .85);
+      @include media(medium-up) {
+        font-size: 1.5rem;
+      }
+    }
+    span {
+      text-transform: uppercase;
+      font-size: .75rem;
+      line-height: 1rem;
+      display: block;
+    }
   }
   .link--large,
   .link--large:visited {
@@ -430,8 +446,6 @@ section {
 //Type //
 .refresh {
   font-style: italic;
-  opacity: .85;
-  margin-bottom: 0.4rem;
 }
 mark {
   background-color: inherit;
@@ -541,6 +555,7 @@ mark {
   font-family: $heading-font-family;
   display: inline-block;
   text-transform: uppercase;
+  text-align: center;
   cursor: pointer;
   &:hover {
     background-color: #fff;
@@ -728,20 +743,25 @@ dl {
 }
 
 .list-label {
-  margin-right: .5em;
-  font-family: $heading-font-bold;
+  margin: 0 0.5rem 0.25rem 0;
 }
 
 .list--two-column {
   width: 100%;
   color: $light-text-color;
-  font-size: .9em;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  @include media (medium-up) {
+    flex-flow: row wrap;
+  }
   li {
-    margin-bottom: .3em;
-    float: left;
-    margin-right: 2em;
-    @include media (small-down) {
-      float: none;
+    margin: 0 0 0.5rem;
+    @include media (medium-up) {
+      flex: 50%;
+    }
+    @include media (xlarge-up) {
+      flex: 1;
     }
   }
 }

@@ -109,27 +109,29 @@ export class Campaign extends Component {
               <ul className='list--two-column'>
                 <li>
                   <span className='list-label'>Tasking Manager:</span>
-                  <span>{meta.tm_name}</span>
+                  <strong>{meta.tm_name}</strong>
                 </li>
                 <li>
                   <span className='list-label'>Project Number:</span>
-                  <span>#{meta.tm_id}</span>
+                  <strong>#{meta.tm_id}</strong>
                 </li>
                 <li>
-                  <span className='list-label'>Last Update:</span>
-                  <span>{distanceInWordsToNow(lastUpdate)} ago</span>
+                  <span className='list-label'>Last Updated</span>
+                  <strong>{distanceInWordsToNow(lastUpdate)} ago</strong>
                 </li>
                 <li>
-                  <span className='list-label'>Created:</span>
-                  <span>{distanceInWordsToNow(creationDate)} ago</span>
+                  <span className='list-label'>Created</span>
+                  <strong>{distanceInWordsToNow(creationDate)} ago</strong>
                 </li>
+              </ul>
+              <ul>
                 <li className='list--inline refresh'>
-                  <span className='list-label'>Last refreshed: </span>
+                  <span className='list-label'>Last refreshed</span>
                   <span>{formatUpdateDescription(refreshDate)}</span>
                 </li>
               </ul>
             </div>
-            <div className='widget-33'>
+            <div className='widget-33 page-actions'>
               {this.renderFavoriteButton()}
               <a className='button' href={meta.url}>Contribute</a>
             </div>
