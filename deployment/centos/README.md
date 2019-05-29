@@ -1,7 +1,6 @@
 # Scoreboard on CentOS
 
-These instructions are only useful if you are trying to deploy and run the scoreboard frontend and api on the same Centos machine.
-
+* [Service Dependencies](#service-dependencies)
 * [Provisioning](#provisioning)
     * [General deps](#general-deps)
     * [Postgresql](#postgresql)
@@ -12,14 +11,23 @@ These instructions are only useful if you are trying to deploy and run the score
     * [Install Node Deps](#install-node-deps)
     * [Create build](#create-build)
     * [Create env file](#create-env-file)
-    * [Systemd](#systemd)
     * [Start Services](#start-services)
-* [NGINX](#nginx-1)
-    * [Write configuration](#write-configuration)
-    * [Restart nginx](#restart-nginx)
-* [Adding a new feature](#adding-a-new-feature)
+* [Deployment](#deployment)
+
+## Service Dependencies
+
+Scoreboard pulls data for stats from three different services. They need to be installed separately or have a publicly accessible URL:
+- OSMesa for changeset level analysis of OSM data · [Install Guide](https://github.com/azavea/osmesa-stat-server)
+- Tasking Manager for campaign management · [Install Guide](https://github.com/hotosm/tasking-manager#installation)
+- OSM Teams for team management · [Install Guide](https://github.com/developmentseed/osm-teams/#installation)
+
+### Pre-populate users
+In case it is available, Scoreboard can pull from a CSV to seed the database (instead of relying solely on login). The CSV is of the form `id,display_name,email,status,full_name,country`. The URL to the CSV can be added as part of the environment variables (see below).
 
 ## Provisioning
+
+These instructions will allow you to run the Scoreboard API and UI server on a CentOS single machine. We recommend separating the database on another machine or
+using a managed service. Scoreboard consumes the database through a connection string environment variable.
 
 ### General deps
 ```
@@ -119,31 +127,45 @@ Add a file with the following content to `/var/scoreboard-data/.env`
 ```
 NODE_ENV=production
 DATABASE_URL=postgres://scoreboard:test@localhost:5433/scoreboard
-TM_URL=xxxxx
-TM_VERSION=xxx
 USERS_URL=xxxx
-TM_HASHTAG=xxxx
 OSMESA_API=xxxxx
 APP_URL=xxxxx
+OSM_CONSUMER_KEY=xxxxx
+OSM_CONSUMER_SECRET=xxxxx
+OSM_TEAMS_SERVICE=xxxxxx
+SESSION_SECRET=xxxxx
 ```
+
+Here's what all the variables mean
+
+| name | description
+| ---  | -----
+| NODE_ENV | The configuration to use, "test", "development" or "production"
+| OSMESA_API | URL to the OSMESA http server that serves out statistics
+| USERS_URL | URL to CSV that will prefill user data (Optional)
+| APP_URL | URL where the site will be hosted
+| APP_URL_PREFIX | prefix appended to APP_URL if App is not at root (e.g `/scoreboard/`)
+| OSM_CONSUMER_KEY | An Oauth Key/Secret pair to authenticate with OSM
+| OSM_CONSUMER_SECRET | An Oauth Key/Secret pair to authenticate with OSM
+| OSM_DOMAIN | External OSM endpoint (defaults to openstreetmap.com)
+| OSM_DOMAIN_INTERNAL | Proxy to OSM API in case of firewall
+| OSM_TEAMS_SERVICE | Location of the OSM teams API
+| SESSION_SECRET | A secret phrase to sign session tokens
+| DATABASE_URL | The location of the postgres database
 
 ### Setup NGINX and Services
-Make sure to put the correct version number in the url used by `wget`.
-
 ```
 cd ~
-wget https://github.com/developmentseed/scoreboard/blob/<put-version-number-here>/deployment/centos/bootstrap.sh
+wget https://github.com/developmentseed/scoreboard/blob/master/deployment/centos/bootstrap.sh
 ./bootstrap.sh
 ```
 
 
 ### Deploy the Repo 
-Make sure to put the correct version number in the url used by `wget`.
-
 ```
 sudo mkdir -p /var/www/
 cd ~
-wget https://github.com/developmentseed/scoreboard/blob/<put-version-number-here>/deployment/centos/deploy.sh
+wget https://github.com/developmentseed/scoreboard/blob/master/deployment/centos/deploy.sh
 ./deploy.sh
 ```
 
