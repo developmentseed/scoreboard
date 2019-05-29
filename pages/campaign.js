@@ -156,6 +156,9 @@ export class Campaign extends Component {
                 <CampaignMap feature={JSON.parse(meta.geometry)} interactive />
               </div>
             </div>
+            <div className='widget-33 page-actions'>
+              <a className='button button--secondary' href={meta.url}>Contribute</a>
+            </div>
           </div>
         </section>
         <section className='section--tertiary'>
