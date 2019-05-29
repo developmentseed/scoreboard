@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - State retains page number and filters when navigating between the Campaigns page and individual campaign cards
 - Update deployment docs for centos
+- Top stats on the main page no longer count excluded users or their edits
 
 ## [v1.2.0] - 2019-05-08
 ### Added
