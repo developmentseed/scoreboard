@@ -996,6 +996,7 @@ table {
 .map-lg > .leaflet-container {
   height: 100%;
   background: rgb(222,234,238);
+  z-index: -2;
  }
 
  /*
