@@ -1,7 +1,6 @@
 # Scoreboard on CentOS
 
-These instructions are only useful if you are trying to deploy and run the scoreboard frontend and api on the same Centos machine.
-
+* [Service Dependencies](#service-dependencies)
 * [Provisioning](#provisioning)
     * [General deps](#general-deps)
     * [Postgresql](#postgresql)
@@ -12,14 +11,20 @@ These instructions are only useful if you are trying to deploy and run the score
     * [Install Node Deps](#install-node-deps)
     * [Create build](#create-build)
     * [Create env file](#create-env-file)
-    * [Systemd](#systemd)
     * [Start Services](#start-services)
-* [NGINX](#nginx-1)
-    * [Write configuration](#write-configuration)
-    * [Restart nginx](#restart-nginx)
-* [Adding a new feature](#adding-a-new-feature)
+* [Deployment](#deployment)
+
+## Service Dependencies
+
+Scoreboard pulls data for stats from three different services. They need to be installed separately or have a publicly accessible URL:
+- OSMesa for changeset level analysis of OSM data · [Install Guide](https://github.com/azavea/osmesa-stat-server)
+- Tasking Manager for campaign management · [Install Guide](https://github.com/hotosm/tasking-manager#installation)
+- OSM Teams for team management · [Install Guide](https://github.com/developmentseed/osm-teams/#installation)
 
 ## Provisioning
+
+These instructions will allow you to run the Scoreboard API and UI server on a CentOS single machine. We recommend separating the database on another machine or
+using a managed service. Scoreboard consumes the database through a connection string environment variable.
 
 ### General deps
 ```
@@ -134,10 +139,13 @@ Here's what all the variables mean
 | ---  | -----
 | NODE_ENV | The configuration to use, "test", "development" or "production"
 | OSMESA_API | URL to the OSMESA http server that serves out statistics
+| USERS_URL | URL to CSV that will prefill user data (Optional)
 | APP_URL | URL where the site will be hosted
+| APP_URL_PREFIX | prefix appended to APP_URL if App is not at root (e.g `/scoreboard/`)
 | OSM_CONSUMER_KEY | An Oauth Key/Secret pair to authenticate with OSM
 | OSM_CONSUMER_SECRET | An Oauth Key/Secret pair to authenticate with OSM
-| OSM_DOMAIN | OSM endpoint (defaults to openstreetmap.com)
+| OSM_DOMAIN | External OSM endpoint (defaults to openstreetmap.com)
+| OSM_DOMAIN_INTERNAL | Proxy to OSM API in case of firewall
 | OSM_TEAMS_SERVICE | Location of the OSM teams API
 | SESSION_SECRET | A secret phrase to sign session tokens
 | DATABASE_URL | The location of the postgres database
