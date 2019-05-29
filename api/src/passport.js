@@ -21,8 +21,8 @@ const {
   OSM_DOMAIN,
   OSM_DOMAIN_INTERNAL,
   APP_URL_FINAL,
-  OSM_TEAMS_CONSUMER_KEY,
-  OSM_TEAMS_SECRET,
+  OSM_TEAMS_CLIENT_ID,
+  OSM_TEAMS_CLIENT_SECRET,
   OSM_TEAMS_SERVICE_TOKEN_URL
 } = require('./config')
 
@@ -178,8 +178,8 @@ router.get('/logout', (req, res) => {
  */
 const teamServiceCredentials = require('simple-oauth2').create({
   client: {
-    id: OSM_TEAMS_CONSUMER_KEY,
-    secret: OSM_TEAMS_SECRET
+    id: OSM_TEAMS_CLIENT_ID,
+    secret: OSM_TEAMS_CLIENT_SECRET
   },
   auth: {
     tokenHost: OSM_TEAMS_SERVICE_TOKEN_URL,
