@@ -1013,3 +1013,53 @@ table {
  input[name='accordion-panel']:checked ~ .accordion__content {
    max-height: 50em;
  }
+
+/* ==========================================================================
+  Global: Loading
+  ========================================================================== */
+
+/**
+* "lsk-" prefix stands for "loading skeleton"
+*/
+
+.lsk__group {
+ margin-bottom: 2rem;
+
+ & > .lsk__item {
+   margin-bottom: 0.75rem;
+ }
+}
+
+.lsk__item {
+ display: block;
+ height: 1rem;
+ width: 100%;
+ background: linear-gradient(-90deg, #F0F0F0 0%, #F8F8F8 50%, #F0F0F0 100%);
+ background-size: 400% 400%;
+ animation: pulse 1.2s ease-in-out 0s infinite alternate;
+
+ &.lsk__item--light {
+   background: rgba(#fff, 0.48);
+ }
+}
+
+.lsk__item--large {
+ height: 2.25rem;
+}
+
+.lsk__item--heading {
+  background: linear-gradient(-90deg, #F0F0F0 0%, #F8F8F8 50%, #F0F0F0 100%);
+  background-size: 400% 400%;
+  animation: pulse 1.2s ease-in-out 0s infinite alternate;
+ &.lsk__item--light {
+   background: rgba(#fff, 0.80);
+ }
+}
+@keyframes pulse {
+ 0% {
+   background-position: 0% 0%;
+ }
+ 100% {
+   background-position: -135% 0%;
+ }
+}

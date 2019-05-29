@@ -3,6 +3,7 @@ import Pagination from 'react-js-pagination'
 import CampaignFilters from '../components/campaigns/CampaignFilters'
 import CampaignsListing from '../components/campaigns/CampaignsListing'
 import { formatUpdateDescription } from '../lib/utils/format'
+import { LoadingSkeleton, LoadingSkeletonGroup } from '../components/LoadingSkeleton'
 
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
@@ -86,6 +87,36 @@ export class Campaigns extends Component {
             </div>
           </div>
         </header>
+        <section>
+          <div className='row'>
+            <div className='clearfix cards-container widget-container'>
+              <div className='card'>
+                <LoadingSkeleton type='heading' width={3 / 3} size='large' style={{ marginBottom: '2rem' }} />
+                <div className='card-content'>
+                  <LoadingSkeletonGroup>
+                    <LoadingSkeleton width={1 / 6} />
+                    <LoadingSkeleton type='heading' width={1 / 3} size='large' style={{ marginBottom: '2rem' }} />
+                    <LoadingSkeleton width={2 / 4} />
+                    <LoadingSkeleton width={2 / 4} />
+                    <LoadingSkeleton width={2 / 4} />
+                  </LoadingSkeletonGroup>
+                </div>
+              </div>
+              <div className='card'>
+                <LoadingSkeleton type='heading' width={3 / 3} size='large' style={{ marginBottom: '2rem' }} />
+                <div className='card-content'>
+                  <LoadingSkeletonGroup>
+                    <LoadingSkeleton width={1 / 6} />
+                    <LoadingSkeleton type='heading' width={1 / 3} size='large' style={{ marginBottom: '2rem' }} />
+                    <LoadingSkeleton width={2 / 4} />
+                    <LoadingSkeleton width={2 / 4} />
+                    <LoadingSkeleton width={2 / 4} />
+                  </LoadingSkeletonGroup>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         <section>
           <div className='row widget-container'>
             <div className='widget-25'>

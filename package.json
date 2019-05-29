@@ -85,6 +85,7 @@
     "axios": "^0.17.0",
     "babel-preset-jest": "^23.2.0",
     "body-parser": "^1.18.3",
+    "classnames": "^2.2.6",
     "compression": "^1.7.1",
     "connect-session-knex": "^1.4.0",
     "css-loader": "^1.0.0",

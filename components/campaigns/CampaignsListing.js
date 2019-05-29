@@ -1,5 +1,6 @@
 import React from 'react'
 import CampaignCard from './CampaignCard'
+import { LoadingSkeleton, LoadingSkeletonGroup } from '../LoadingSkeleton'
 
 export default ({ records, apiStatus, total, allCount }) => {
   let content = <div />
@@ -16,7 +17,23 @@ export default ({ records, apiStatus, total, allCount }) => {
       )
       break
     case 'LOADING':
-      content = <div>Loading...</div>
+      content =
+        <div className='clearfix cards-container widget-container'>
+          <LoadingSkeletonGroup>
+            <LoadingSkeleton width={1 / 6} />
+            <LoadingSkeleton type='heading' width={1 / 3} size='large' style={{ marginBottom: '2rem' }} />
+            <LoadingSkeleton width={2 / 4} />
+            <LoadingSkeleton width={2 / 4} />
+            <LoadingSkeleton width={2 / 4} />
+          </LoadingSkeletonGroup>
+          <LoadingSkeletonGroup>
+            <LoadingSkeleton width={1 / 6} />
+            <LoadingSkeleton type='heading' width={1 / 3} size='large' style={{ marginBottom: '2rem' }} />
+            <LoadingSkeleton width={2 / 4} />
+            <LoadingSkeleton width={2 / 4} />
+            <LoadingSkeleton width={2 / 4} />
+          </LoadingSkeletonGroup>
+        </div>
       break
 
     case 'ERROR':
