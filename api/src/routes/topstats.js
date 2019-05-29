@@ -41,9 +41,9 @@ module.exports = async (req, res) => {
       .orderBy('edit_count', 'desc')
       .limit(10)
 
-    const [{ totalEdits }] = await db('users').sum('edit_count as totalEdits')
+    const [{ totalEdits }] = await db('users').whereNotIn('id', exclusion.list()).sum('edit_count as totalEdits')
 
-    const [{ numUsers }] = await db('users').count('id as numUsers')
+    const [{ numUsers }] = await db('users').whereNotIn('id', exclusion.list()).count('id as numUsers')
     const editsByCountry = await db('user_country_edits')
       .innerJoin(
         db('users').select('id').whereNotIn('id', exclusion.list()).as('users'), 'user_id', 'users.id'
