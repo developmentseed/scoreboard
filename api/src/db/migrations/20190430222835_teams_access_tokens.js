@@ -20,6 +20,10 @@ exports.up = async function (knex) {
 exports.down = async function (knex) {
   try {
     await knex.schema.dropTable('teams_access_tokens')
+    await knex.raw(`
+    ALTER TABLE users
+    DROP CONSTRAINT users_osm_id_unique CASCADE
+    `)
   } catch (e) {
     console.error(e)
   }
