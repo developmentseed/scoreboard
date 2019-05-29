@@ -4,8 +4,7 @@ cd ~
 rm -rf scoreboard
 git clone https://github.com/developmentseed/scoreboard.git
 cd scoreboard
-git fetch --tags --all
-git checkout -b v0.2
+git checkout master
 
 # installation
 npm install
