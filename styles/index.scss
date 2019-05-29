@@ -613,7 +613,7 @@ mark {
     margin: 1rem 0 0;
   }
   @include media(medium-up) {
-    flex-flow: row nowrap;
+    flex-flow: row;
   }
 }
 .widget-33.page-actions {

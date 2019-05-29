@@ -214,6 +214,18 @@
     }
   }
 }
+.dashboard .page-actions {
+  margin-bottom: 1rem;
+  flex: inherit;
+  .button {
+    flex: 1;
+    margin: 0;
+    @include media(medium-up) {
+      margin-left: auto;
+      flex: inherit;
+    }
+  }
+}
 
 .messages {
   margin-bottom: 6em;
