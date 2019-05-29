@@ -83,11 +83,9 @@ class CampaignSearch extends Component {
   }
 
   render () {
-    if (!this.props.campaigns) return <div />
-
     const { selectedCampaigns } = this.props
-    const { page } = this.props.campaigns
-    const { records: { total, records } } = this.props.campaigns
+    const { page } = this.props.campaignSearchResults
+    const { records: { total, records } } = this.props.campaignSearchResults
     if (!records || !selectedCampaigns) return <div />
 
     let assignments = selectedCampaigns.map(record =>
@@ -164,4 +162,4 @@ class CampaignSearch extends Component {
   }
 }
 
-export default connect(['campaigns'], actions)(CampaignSearch)
+export default connect(['campaigns', 'campaignSearchResults'], actions)(CampaignSearch)
