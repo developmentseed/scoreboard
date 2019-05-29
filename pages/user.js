@@ -159,11 +159,16 @@ const connectedUser = connect(
   ['user'],
   actions
 )(User)
-connectedUser.getInitialProps = function ({ req }) {
-  const { id } = req.params
-  return {
-    id
-  }
-}
 
 export default connectedUser
+
+connectedUser.getInitialProps = function ({ query }) {
+  if (query) {
+    const { id } = query
+    return {
+      id
+    }
+  } else {
+    return {}
+  }
+}

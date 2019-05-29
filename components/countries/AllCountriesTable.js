@@ -1,6 +1,6 @@
 import React from 'react'
-import Link from './Link'
-const { formatDecimal } = require('../lib/utils/format')
+import Link from '../Link'
+const { formatDecimal } = require('../../lib/utils/format')
 
 export default function CountriesTable ({ apiStatus, countries }) {
   let content = <div />
@@ -18,7 +18,7 @@ export default function CountriesTable ({ apiStatus, countries }) {
             {
               countries.map(country => (
                 <tr key={country.code}>
-                  <td><Link href={`/countries/${country.code}`}><a className='link--normal'>{country.name}</a></Link></td>
+                  <td><Link href={`/country?code=${country.code}`} as={`/countries/${country.code}`}><a className='link--normal'>{country.name}</a></Link></td>
                   <td>{formatDecimal(country.edit_count)}</td>
                 </tr>
               ))
