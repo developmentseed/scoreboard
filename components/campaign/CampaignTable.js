@@ -10,7 +10,7 @@ export default function CampaignTable (props) {
   }
 
   return (
-    <div className='widget clearfix'>
+    <div className='widget clearfix table-wrapper'>
       <table>
         <thead>
           <tr>
