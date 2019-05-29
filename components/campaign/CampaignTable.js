@@ -22,6 +22,7 @@ export default function CampaignTable (props) {
             <th>Coastlines (Km)</th>
             <th>Waterways (Km)</th>
             <th>Changesets</th>
+            <th>Edits</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +45,7 @@ export default function CampaignTable (props) {
                   <td>{formatDecimal(user.km_coastlines_add + user.km_coastlines_mod)}</td>
                   <td>{formatDecimal(user.km_waterways_add)}</td>
                   <td>{formatDecimal(user.edits)}</td>
+                  <td>{formatDecimal(user.editSum)}</td>
                 </tr>
               ))
           }
@@ -56,7 +58,8 @@ export default function CampaignTable (props) {
         { label: 'Points of Interest', key: 'poi_add' },
         { label: 'Coastlines (Km)', key: 'km_coastlines_add' },
         { label: 'Waterways (Km)', key: 'km_waterways_add' },
-        { label: 'Changesets', key: 'edits' }
+        { label: 'Changesets', key: 'edits' },
+        { label: 'Edits', key: 'editSum' }
       ]}>
         Export Data (CSV)
       </CSVLink>
