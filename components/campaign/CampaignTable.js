@@ -21,7 +21,7 @@ export default function CampaignTable (props) {
             <th>Points of Interest</th>
             <th>Coastlines (Km)</th>
             <th>Waterways (Km)</th>
-            <th>Edits</th>
+            <th>Changesets</th>
           </tr>
         </thead>
         <tbody>
