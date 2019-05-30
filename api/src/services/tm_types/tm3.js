@@ -124,7 +124,7 @@ class TM3API {
         // not found
         return db('campaigns').insert(obj)
       } else {
-        return db('campaigns').where('tm_id', obj.tm_id).update(obj)
+        return db('campaigns').where('id', rows[0].id).update(obj)
       }
     }))
     return Promise.all(promises)
