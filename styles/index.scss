@@ -1,9 +1,10 @@
 @import 'settings/variables.scss';
 @import 'settings/mixins.scss';
-
-//SASS Variable to randomly generate header background background-image on site build
+/* =
+SASS Variable to randomly generate header background background-image on site build
+=*/
 $nth: random(4);
-//
+
 
 body {
   -webkit-print-color-adjust: exact;
@@ -319,6 +320,11 @@ section {
 .margin-top-sm {
   margin-top: .3em;
 }
+
+/* ========================================================================
+   WIDGETS - flex containers for cards and general site use
+==========================================================================*/
+
 .widget-container {
   display: flex;
   flex-direction: column;
@@ -401,6 +407,9 @@ section {
   box-sizing: border-box;
 }
 
+/* =========================================================================
+   SITE BANNERS - In footer
+==========================================================================*/
 .banner {
   .row {
       padding-top: 8vw;
@@ -443,7 +452,9 @@ section {
     }
   }
 }
-//Type //
+/* ==========================================================================
+   CUSTOM TYPOGRAPHY
+========================================================================== */
 .refresh {
   font-style: italic;
   margin-top: 0.75rem;
@@ -661,6 +672,7 @@ mark {
   }
 }
 
+//Links
 a, a:visited {
   text-decoration: none;
   transition: .3s color;
@@ -927,7 +939,10 @@ form.filters {
     flex: 100%;
   }
 }
-//tables //
+/* ==========================================================================
+   TABLES
+==========================================================================*/
+
 table {
   width: 100%;
   text-align: left;
@@ -1000,9 +1015,9 @@ table {
   z-index: -2;
  }
 
- /*
- * Accordion
- */
+ /* ==========================================================================
+    ACCORDION
+ ==========================================================================*/
 
  /* Basic Accordion Styles */
  .accordion {
@@ -1079,6 +1094,9 @@ table {
  &.lsk__item--light {
    background: rgba(#fff, 0.48);
  }
+ &.lsk__item--base {
+  background: rgba($base-color, 0.48);
+ }
 }
 .lsk__item--medium {
  height: 1.5rem;
@@ -1101,9 +1119,12 @@ table {
   background: linear-gradient(-90deg, #F0F0F0 0%, #F8F8F8 50%, #F0F0F0 100%);
   background-size: 400% 400%;
   animation: pulse 1.2s ease-in-out 0s infinite alternate;
- &.lsk__item--light {
-   background: rgba(#fff, 0.80);
- }
+    &.lsk__item--light {
+     background: rgba(#fff, 0.80);
+    }
+    &.lsk__item--base {
+     background: rgba($base-color, 0.80);
+    }
 }
 
 
