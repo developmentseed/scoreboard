@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - State retains page number and filters when navigating between the Campaigns page and individual campaign cards
+- Campaign and dashboard page header style updated to better organize metadata hierarchy
 - State retains filters when navigating away and to the countries and users page searches
 - Update deployment docs for centos
 - Top stats on the main page no longer count excluded users or their edits

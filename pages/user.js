@@ -89,32 +89,34 @@ export class User extends Component {
         />
         <div className='row'>
           <DashboardBlurb {...records} username={name} />
-          <CSVLink
-            className='link--large'
-            style={{ float: 'right', marginBottom: '1rem' }}
-            data={[
-              {
-                badgeCount,
-                campaignCount,
-                records
-              }
-            ]}
-            headers={[
-              { label: 'Name', key: 'records.name' },
-              { label: 'Campaigns', key: 'campaignCount' },
-              { label: 'Badges', key: 'badgeCount' },
-              { label: 'Countries', key: 'records.country_list.length' },
-              { label: 'Roads (Km)', key: 'records.km_roads_add' },
-              { label: 'Buildings', key: 'records.buildings_add' },
-              { label: 'Points of Interest', key: 'records.poi_add' },
-              { label: 'Coastlines (Km)', key: 'records.km_coastlines_add' },
-              { label: 'Waterways (Km)', key: 'records.km_waterways_add' },
-              { label: 'Total Edits', key: 'records.edit_sum' }
-            ]}
-            filename={`${name}_ScoreboardData.csv`}
-          >
-            Export User Data (CSV)
-          </CSVLink>
+          <div className='widget-33 page-actions'>
+            <CSVLink
+              className='button button--secondary'
+              style={{ float: 'right', marginBottom: '1rem' }}
+              data={[
+                {
+                  badgeCount,
+                  campaignCount,
+                  records
+                }
+              ]}
+              headers={[
+                { label: 'Name', key: 'records.name' },
+                { label: 'Campaigns', key: 'campaignCount' },
+                { label: 'Badges', key: 'badgeCount' },
+                { label: 'Countries', key: 'records.country_list.length' },
+                { label: 'Roads (Km)', key: 'records.km_roads_add' },
+                { label: 'Buildings', key: 'records.buildings_add' },
+                { label: 'Points of Interest', key: 'records.poi_add' },
+                { label: 'Coastlines (Km)', key: 'records.km_coastlines_add' },
+                { label: 'Waterways (Km)', key: 'records.km_waterways_add' },
+                { label: 'Total Edits', key: 'records.edit_sum' }
+              ]}
+              filename={`${name}_ScoreboardData.csv`}
+            >
+              Export User Data (CSV)
+            </CSVLink>
+          </div>
         </div>
         <section>
           <div className='row'>

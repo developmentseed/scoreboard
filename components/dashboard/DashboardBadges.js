@@ -43,13 +43,13 @@ class DashboardBadges extends Component {
     return (
       <div>
         <h2 className='header--large header--with-description'>Badges</h2>
-        <div style={{ display: 'flex' }}>
+        <div className='page-actions'>
           <FilterBar
             filters={badgeFilters}
             active={this.state.badgesFilter}
             onClick={this.onBadgesFilterClick}
           />
-          <button style={{ marginLeft: 'auto' }} className='button button--secondary' onClick={() => generatePDF(name, earnedBadges)}>Download Earned Badges</button>
+          <button className='button button--secondary' onClick={() => generatePDF(name, earnedBadges)}>Download Earned Badges</button>
         </div>
         <ul className='widget-container Badge-Roll'>
           {
@@ -61,7 +61,7 @@ class DashboardBadges extends Component {
                   <BadgeInProgress badge={badge} badgeClass='progress' />
                   <div className='badge-Details'>
                     <h3 className='header--small sub-head header--with-description'>{badge.name}</h3>
-                    <p style={{ marginBottom: '.2em', lineHeight: 1.4 }}>
+                    <p>
                       {badgesFilter === 'unearnedBadges' ? badge.progress : badge.description}
                     </p>
                   </div>
