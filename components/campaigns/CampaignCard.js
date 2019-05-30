@@ -13,19 +13,19 @@ export default ({ campaign }) => {
   if (!campaign) {
     return (// empty state
       <div className='card--wrapper'>
-    <div className='card'>
-      <LoadingSkeleton type='card' width={3 / 3} style={{ marginBottom: '1rem' }} />
-      <div className='card-content'>
-        <LoadingSkeletonGroup>
-          <LoadingSkeleton type='heading' width={2 / 3} size='medium' style={{ marginBottom: '2rem' }} />
-          <LoadingSkeleton width={4 / 4} />
-          <LoadingSkeleton width={4 / 4} />
-          <LoadingSkeleton width={3 / 4} style={{ marginBottom: '2rem' }} />
-          <LoadingSkeleton width={1 / 3} />
-        </LoadingSkeletonGroup>
+        <div className='card'>
+          <LoadingSkeleton type='card' width={3 / 3} style={{ marginBottom: '1rem' }} />
+          <div className='card-content'>
+            <LoadingSkeletonGroup>
+              <LoadingSkeleton type='heading' width={2 / 3} size='medium' style={{ marginBottom: '2rem' }} />
+              <LoadingSkeleton width={4 / 4} />
+              <LoadingSkeleton width={4 / 4} />
+              <LoadingSkeleton width={3 / 4} style={{ marginBottom: '2rem' }} />
+              <LoadingSkeleton width={1 / 3} />
+            </LoadingSkeletonGroup>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
   )
   }
 
