@@ -1042,9 +1042,21 @@ table {
    background: rgba(#fff, 0.48);
  }
 }
-
+.lsk__item--medium {
+ height: 1.5rem;
+}
 .lsk__item--large {
  height: 2.25rem;
+}
+.lsk__item--card {
+  height: 6.875rem;
+  @include media(large-up) {
+    height: 8.75rem
+  }
+}
+.lsk__item--avatar {
+  height: 2.5rem;
+  border-radius: 100%;
 }
 
 .lsk__item--heading {
@@ -1055,6 +1067,8 @@ table {
    background: rgba(#fff, 0.80);
  }
 }
+
+
 @keyframes pulse {
  0% {
    background-position: 0% 0%;

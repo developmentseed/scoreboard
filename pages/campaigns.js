@@ -3,7 +3,6 @@ import Pagination from 'react-js-pagination'
 import CampaignFilters from '../components/campaigns/CampaignFilters'
 import CampaignsListing from '../components/campaigns/CampaignsListing'
 import { formatUpdateDescription } from '../lib/utils/format'
-import { LoadingSkeleton, LoadingSkeletonGroup } from '../components/LoadingSkeleton'
 
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
@@ -51,7 +50,7 @@ export class Campaigns extends Component {
 
   componentDidMount () {
     if (!this.props.campaignSearchResults || !Object.keys(this.props.campaignSearchResults.records).length) {
-      this.props.handleCampaignsPageChange(this.props.page || 1)
+      setTimeout(() => this.props.handleCampaignsPageChange(1), 800)
     }
   }
 
@@ -71,6 +70,7 @@ export class Campaigns extends Component {
       records: { total, records, allCount, tms, refreshDate },
       apiStatus
     } = this.props.campaignSearchResults
+    console.log(apiStatus)
 
     return (
       <div className='Campaigns'>
@@ -87,36 +87,6 @@ export class Campaigns extends Component {
             </div>
           </div>
         </header>
-        <section>
-          <div className='row'>
-            <div className='clearfix cards-container widget-container'>
-              <div className='card'>
-                <LoadingSkeleton type='heading' width={3 / 3} size='large' style={{ marginBottom: '2rem' }} />
-                <div className='card-content'>
-                  <LoadingSkeletonGroup>
-                    <LoadingSkeleton width={1 / 6} />
-                    <LoadingSkeleton type='heading' width={1 / 3} size='large' style={{ marginBottom: '2rem' }} />
-                    <LoadingSkeleton width={2 / 4} />
-                    <LoadingSkeleton width={2 / 4} />
-                    <LoadingSkeleton width={2 / 4} />
-                  </LoadingSkeletonGroup>
-                </div>
-              </div>
-              <div className='card'>
-                <LoadingSkeleton type='heading' width={3 / 3} size='large' style={{ marginBottom: '2rem' }} />
-                <div className='card-content'>
-                  <LoadingSkeletonGroup>
-                    <LoadingSkeleton width={1 / 6} />
-                    <LoadingSkeleton type='heading' width={1 / 3} size='large' style={{ marginBottom: '2rem' }} />
-                    <LoadingSkeleton width={2 / 4} />
-                    <LoadingSkeleton width={2 / 4} />
-                    <LoadingSkeleton width={2 / 4} />
-                  </LoadingSkeletonGroup>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
         <section>
           <div className='row widget-container'>
             <div className='widget-25'>
@@ -139,19 +109,14 @@ export class Campaigns extends Component {
               />
             </div>
             <div className='widget-75'>
-              {
-                records &&
-                <>
-                  <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
-                  <Pagination
-                    activePage={page}
-                    itemsCountPerPage={10}
-                    totalItemsCount={total}
-                    pageRangeDisplayed={5}
-                    onChange={this.handlePageChange}
-                  />
-                </>
-              }
+              <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
+              <Pagination
+                activePage={page}
+                itemsCountPerPage={10}
+                totalItemsCount={total}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange}
+              />
             </div>
           </div>
         </section>

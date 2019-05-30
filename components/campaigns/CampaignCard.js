@@ -2,12 +2,33 @@ import React from 'react'
 import Link from '../Link'
 import trimLength from '../../lib/utils/trim_length'
 import dynamic from 'next/dynamic'
+import { LoadingSkeleton, LoadingSkeletonGroup } from '../LoadingSkeleton'
 
 const CampaignMap = dynamic(() => import('../charts/LeafletCampaignMap'), {
   ssr: false
 })
 
 export default ({ campaign }) => {
+
+  if (!campaign) {
+    return (// empty state
+      <div className='card--wrapper'>
+    <div className='card'>
+      <LoadingSkeleton type='card' width={3 / 3} style={{ marginBottom: '1rem' }} />
+      <div className='card-content'>
+        <LoadingSkeletonGroup>
+          <LoadingSkeleton type='heading' width={2 / 3} size='medium' style={{ marginBottom: '2rem' }} />
+          <LoadingSkeleton width={4 / 4} />
+          <LoadingSkeleton width={4 / 4} />
+          <LoadingSkeleton width={3 / 4} style={{ marginBottom: '2rem' }} />
+          <LoadingSkeleton width={1 / 3} />
+        </LoadingSkeletonGroup>
+      </div>
+    </div>
+    </div>
+  )
+  }
+
   const {
     tm_id,
     name,
@@ -19,6 +40,7 @@ export default ({ campaign }) => {
     tm_name,
     team_priority
   } = campaign
+
   return (
     <Link href={`/campaign?id=${tasker_id}-${tm_id}`} as={`/campaigns/${tasker_id}-${tm_id}`}>
       <a className='card--wrapper'>
