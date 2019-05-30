@@ -16,8 +16,7 @@
     "migrate": "knex migrate:latest --cwd api/src/db/",
     "seed": "knex seed:run --cwd api/src/db",
     "rollback": "knex migrate:rollback --cwd api/src/db/",
-    "clocks": "nf start users_clock && nf start tm_clock",
-    "users": "nf start populate_users",
+    "clocks": "nf start update_users,tm_clock",
     "docs": "swagger-markdown -i api/docs/api.yml -o api/README.md",
     "lint": "devseed-standard",
     "lintfix": "devseed-standard --fix"
@@ -126,7 +125,7 @@
     "promise-sequential": "^1.1.1",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
-    "ramda": "^0.25.0",
+    "ramda": "^0.26.1",
     "random-seed": "^0.3.0",
     "react": "^16.0.0",
     "react-alert": "^4.0.4",
