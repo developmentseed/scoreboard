@@ -3,15 +3,15 @@ import Select from 'react-select'
 import { sortBy, prop } from 'ramda'
 import join from 'url-join'
 
-import { APP_URL_PREFIX } from '../api/src/config'
-import countries from '../lib/utils/country-list.json'
+import { APP_URL_PREFIX } from '../../api/src/config'
+import countries from '../../lib/utils/country-list.json'
 
 const sortByLabel = sortBy(prop('label'))
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
-export default ({
+const UsersFilter = ({
   handleSearch, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
-  handleActiveSelect, selectedActive
+  handleActiveSelect, selectedActive, searchText
 }) => (
   <div className='widget-25'>
     <h3 className='header--medium'>Filter</h3>
@@ -19,7 +19,7 @@ export default ({
       <fieldset>
         <legend>Search</legend>
         <div className='search'>
-          <input className='input--text' onChange={handleSearch} />
+          <input className='input--text' value={searchText} onChange={handleSearch} />
           <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
         </div>
       </fieldset>
@@ -46,7 +46,9 @@ export default ({
               { value: 'Most recent', label: 'Most recent edit' },
               { value: 'Least recent', label: 'Least recent edit' },
               { value: 'Most total', label: 'Most total edits' },
-              { value: 'Least total', label: 'Least total edits' }
+              { value: 'Least total', label: 'Least total edits' },
+              { value: 'Alphabetical A-Z', label: 'Alphabetical A-Z' },
+              { value: 'Alphabetical Z-A', label: 'Alphabetical Z-A' }
             ]
           }
         />
@@ -71,3 +73,4 @@ export default ({
     </form>
   </div>
 )
+export default UsersFilter

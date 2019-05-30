@@ -6,7 +6,7 @@ rm -rf scoreboard
 git clone https://github.com/developmentseed/scoreboard.git
 cd scoreboard
 git fetch --tags --all
-git checkout -b v0.2.1 tags/v0.2.1
+git checkout master
 echo 'Repo is cloned and ready'
 
 echo 'Create postgresql database and user'

@@ -50,6 +50,12 @@ async function stats (req, res) {
       case 'Least total':
         recordQuery = recordQuery.orderBy('edit_count', 'asc')
         break
+      case 'Alphabetical A-Z':
+        recordQuery = recordQuery.orderBy('country_name', 'asc')
+        break
+      case 'Alphabetical Z-A':
+        recordQuery = recordQuery.orderBy('country_name', 'desc')
+        break
       default: // Most total edits
         recordQuery = recordQuery.orderBy('edit_count', 'desc')
         break
