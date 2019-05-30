@@ -61,6 +61,7 @@ fieldset {
   margin-bottom: 2em;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   @include media(small-up) {
     width: 48%;
   }
@@ -230,4 +231,9 @@ fieldset {
   .input-range__label--min, .input-range__label--max {
     display: none
   }
+}
+// TABLES //
+
+.table-wrapper {
+  overflow: hidden;
 }

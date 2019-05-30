@@ -5,16 +5,12 @@ let app = require('../../src/index')
 const path = require('path')
 const { prop, sort, reverse } = require('ramda')
 const { isBefore, isAfter } = require('date-fns')
+const { alphabeticalDiff } = require('../../../lib/utils/sort')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
-const alphabeticalDiff = function (a, b) {
-  if (a < b) { return -1 }
-  if (a > b) { return 1 }
-  return 0
-}
 test.before(async t => {
   app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })

@@ -1,26 +1,16 @@
 import React, { Component } from 'react'
-import queryString from 'query-string'
-import AllCountriesTable from '../components/AllCountriesTable'
+import AllCountriesTable from '../components/countries/AllCountriesTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 
-const AllCountriesFilter = dynamic(() => import('../components/AllCountriesFilter'), { ssr: false })
+const AllCountriesFilter = dynamic(() => import('../components/countries/AllCountriesFilter'), { ssr: false })
 
 export class Countries extends Component {
   constructor (props) {
     super(props)
-
-    this.state = {
-      records: {},
-      apiStatus: 'LOADING',
-      searchText: '',
-      page: 1,
-      selectedValue: null,
-      selectedSortValue: null
-    }
 
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handleSortSelect = this.handleSortSelect.bind(this)
@@ -28,42 +18,38 @@ export class Countries extends Component {
   }
 
   componentDidMount () {
-    if (this.props.location) {
-      let { page } = queryString.parse(this.props.location.search)
-      this.props.changeCountryPage(page || 1)
-    }
-    this.props.changeCountryPage(1)
+    this.props.resetCountry()
+    this.props.countriesPageChange(1)
   }
 
   handleSearch (event) {
-    this.props.changeCountrySearchText(event.target.value)
+    this.props.countriesSearch(event.target.value)
   }
 
   handleSortSelect (selectedOption) {
-    this.props.changeCountrySelectedSort(selectedOption || null)
+    this.props.countriesChangeSelectedSort(selectedOption || null)
   }
 
   handlePageChange (pageNumber) {
-    this.setState({ records: {} })
     window.scrollTo(0, 0)
-    this.props.changeCountryPage(pageNumber || 1)
+    this.props.countriesPageChange(pageNumber || 1)
   }
 
   render () {
     const {
       searchText,
-      selectedSortValue,
-      stats,
-      apiStatus
-    } = this.props.countries
-    if (!this.props.countries) {
-      return <div />
-    }
+      selectedSortValue
+    } = this.props.countriesFilters
+
+    const { stats, apiStatus } = this.props.countriesSearchResults
 
     const { total, records, subTotal, editTotal, refreshDate } = stats
-    let label = `${subTotal} countries`
-    if (parseInt(subTotal) < parseInt(total)) {
-      label = `${subTotal} countries out of ${total}`
+    let label
+    if (subTotal && total) {
+      label = `${subTotal} countries`
+      if (parseInt(subTotal) < parseInt(total)) {
+        label = `${subTotal} countries out of ${total}`
+      }
     }
 
     return (
@@ -107,4 +93,4 @@ export class Countries extends Component {
 }
 
 // export default () => 'div />'
-export default connect(['countries'], actions)(Countries)
+export default connect(['countriesFilters', 'countriesSearchResults', 'country'], actions)(Countries)
