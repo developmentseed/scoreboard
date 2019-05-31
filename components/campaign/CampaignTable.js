@@ -13,7 +13,6 @@ export default function CampaignTable (props) {
       ...user,
       km_coastlines_all: user.km_coastlines_add + user.km_coastlines_mod
     }))
-  console.log(campaignTopStats)
   return (
     <div className='widget clearfix table-wrapper'>
       <table>
