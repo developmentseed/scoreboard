@@ -9,7 +9,6 @@ const CampaignMap = dynamic(() => import('../charts/LeafletCampaignMap'), {
 })
 
 export default ({ campaign }) => {
-
   if (!campaign) {
     return (// empty state
       <div className='card--wrapper'>
@@ -26,7 +25,7 @@ export default ({ campaign }) => {
           </div>
         </div>
       </div>
-  )
+    )
   }
 
   const {
