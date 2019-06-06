@@ -51,7 +51,7 @@ export class Campaigns extends Component {
   componentDidMount () {
     this.props.resetCampaign()
     if (!this.props.campaignSearchResults || !Object.keys(this.props.campaignSearchResults.records).length) {
-      this.props.handleCampaignsPageChange(1)
+      setTimeout(() => this.props.handleCampaignsPageChange(1), 800)
     }
   }
 
@@ -71,6 +71,7 @@ export class Campaigns extends Component {
       records: { total, records, allCount, tms, refreshDate },
       apiStatus
     } = this.props.campaignSearchResults
+    console.log(apiStatus)
 
     return (
       <div className='Campaigns'>
@@ -109,19 +110,14 @@ export class Campaigns extends Component {
               />
             </div>
             <div className='widget-75'>
-              {
-                records &&
-                <>
-                  <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
-                  <Pagination
-                    activePage={page}
-                    itemsCountPerPage={10}
-                    totalItemsCount={total}
-                    pageRangeDisplayed={5}
-                    onChange={this.handlePageChange}
-                  />
-                </>
-              }
+              <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
+              <Pagination
+                activePage={page}
+                itemsCountPerPage={10}
+                totalItemsCount={total}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange}
+              />
             </div>
           </div>
         </section>

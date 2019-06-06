@@ -104,6 +104,9 @@ fieldset {
     @include media(medium-down) {
       padding: 2em 1.5em 1.9em;
     }
+    p {
+      word-break: break-word;
+    }
   }
   .card-stats {
     margin-top: 2em;

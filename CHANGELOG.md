@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - "Reset filters" button clears filter options on the Campaigns page
 - Number of edits and Number of changesets now available in summary stats widget at the top of the user and dashboard pages
 - Campaign Table displays "Edits" in addition to "Changesets" (previously incorrectly labeled "Edits", see Fixed)
+- Campaigns page renders blank state campaign cards while loading in campaign card data
 
 ### Fixed
 - State retains page number and filters when navigating between the Campaigns page and individual campaign cards

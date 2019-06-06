@@ -254,19 +254,25 @@ nav {
 }
 
 .chart-bar--title {
-  width: 12%;
-  float: left;
+  display: inline-block;
+  width: 20%;
   margin-right: .5rem;
   font-family: $tertiary-font-family;
   font-size: .86rem;
+  @include media(small-up) {
+    width: 16%;
+  }
 }
 
 .chart-bar--wrapper {
   position: relative;
   display: inline-block;
   background-color: lighten($light-text-color, 50%);
-  width: 80%;
+  width: 64%;
   height: 8px;
+  @include media(small-up) {
+    width: 72%;
+  }
 }
 
 .chart-bar {
@@ -283,7 +289,7 @@ nav {
   color: lighten($green-color, 5%);
   font-size: .86rem;
   position: absolute;
-  right: -3rem;
+  right: -2rem;
   top: -.5rem;
 }
 
