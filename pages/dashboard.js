@@ -145,51 +145,52 @@ class Dashboard extends Component {
         />
         <div className='row'>
           <DashboardBlurb {...osmesaData} />
-          <CSVLink
-            className='button button--secondary'
-            style={{ float: 'right', marginBottom: '1rem' }}
-            data={[
-              {
-                authenticatedUser,
-                badgeCount
-              }
-            ]}
-            headers={[
-              { label: 'Name', key: 'authenticatedUser.osm.displayName' },
-              {
-                label: 'Campaigns',
-                key: 'authenticatedUser.account.allCampaigns.length'
-              },
-              { label: 'Badges', key: 'badgeCount' },
-              {
-                label: 'Roads (Km)',
-                key: 'authenticatedUser.account.records.km_roads_add'
-              },
-              {
-                label: 'Buildings',
-                key: 'authenticatedUser.account.records.buildings_add'
-              },
-              {
-                label: 'Points of Interest',
-                key: 'authenticatedUser.account.records.poi_add'
-              },
-              {
-                label: 'Coastlines (Km)',
-                key: 'authenticatedUser.account.records.km_coastlines_add'
-              },
-              {
-                label: 'Waterways (Km)',
-                key: 'authenticatedUser.account.records.km_waterways_add'
-              },
-              {
-                label: 'Total Edits',
-                key: 'authenticatedUser.account.records.edit_count'
-              }
-            ]}
-            filename={`${name}_ScoreboardData.csv`}
-          >
-            Export Your Data (CSV)
-          </CSVLink>
+          <div className='widget-33 page-actions'>
+            <CSVLink
+              className='button button--secondary'
+              data={[
+                {
+                  authenticatedUser,
+                  badgeCount
+                }
+              ]}
+              headers={[
+                { label: 'Name', key: 'authenticatedUser.osm.displayName' },
+                {
+                  label: 'Campaigns',
+                  key: 'authenticatedUser.account.allCampaigns.length'
+                },
+                { label: 'Badges', key: 'badgeCount' },
+                {
+                  label: 'Roads (Km)',
+                  key: 'authenticatedUser.account.records.km_roads_add'
+                },
+                {
+                  label: 'Buildings',
+                  key: 'authenticatedUser.account.records.buildings_add'
+                },
+                {
+                  label: 'Points of Interest',
+                  key: 'authenticatedUser.account.records.poi_add'
+                },
+                {
+                  label: 'Coastlines (Km)',
+                  key: 'authenticatedUser.account.records.km_coastlines_add'
+                },
+                {
+                  label: 'Waterways (Km)',
+                  key: 'authenticatedUser.account.records.km_waterways_add'
+                },
+                {
+                  label: 'Total Edits',
+                  key: 'authenticatedUser.account.records.edit_count'
+                }
+              ]}
+              filename={`${name}_ScoreboardData.csv`}
+            >
+              Export Your Data (CSV)
+            </CSVLink>
+          </div>
         </div>
         <section className='section--dark'>
           <div className='row'>

@@ -61,6 +61,7 @@ fieldset {
   margin-bottom: 2em;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   @include media(small-up) {
     width: 48%;
   }
@@ -102,6 +103,9 @@ fieldset {
     justify-content: space-between;
     @include media(medium-down) {
       padding: 2em 1.5em 1.9em;
+    }
+    p {
+      word-break: break-word;
     }
   }
   .card-stats {
@@ -230,4 +234,9 @@ fieldset {
   .input-range__label--min, .input-range__label--max {
     display: none
   }
+}
+// TABLES //
+
+.table-wrapper {
+  overflow: hidden;
 }

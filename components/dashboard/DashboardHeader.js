@@ -39,11 +39,11 @@ function DashboardHeader (props) {
             <ul className='list--two-column clearfix'>
               <li>
                 <span className='list-label'>Last Edit:</span>
-                <span>{getLastEdit(edit_times)}</span>
+                <strong>{getLastEdit(edit_times)}</strong>
               </li>
               <li>
                 <span className='list-label'>Country:</span>
-                <span>{country}</span>
+                <strong>{country}</strong>
               </li>
             </ul>
             {

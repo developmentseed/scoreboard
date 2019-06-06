@@ -13,13 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Campaign Table displays "Edits" in addition to "Changesets" (previously incorrectly labeled "Edits", see Fixed)
 - Updated osm-teams to have access tokens. Admins now need to sign in to osm-teams
 - UI additions to gray out teams if the user does not have an access token
+- Campaigns page renders blank state campaign cards while loading in campaign card data
 
 ### Fixed
 - State retains page number and filters when navigating between the Campaigns page and individual campaign cards
+- Add uniqueness constraint to campaigns to make sure that campaigns with the same id from the same tasking manager aren't added twice
+- Campaign and dashboard page header style updated to better organize metadata hierarchy
 - State retains filters when navigating away and to the countries and users page searches
 - Update deployment docs for centos
 - Top stats on the main page no longer count excluded users or their edits
 - Campaign Table column corrected to say "Changesets" in place of "Edits"
+- Campaign csv download includes both added and modified coastlines
 
 ## [v1.2.0] - 2019-05-08
 ### Added
