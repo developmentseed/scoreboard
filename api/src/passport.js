@@ -23,7 +23,9 @@ const {
   APP_URL_FINAL,
   OSM_TEAMS_CLIENT_ID,
   OSM_TEAMS_CLIENT_SECRET,
-  OSM_TEAMS_SERVICE_TOKEN_URL
+  OSM_TEAMS_SERVICE_TOKEN_HOST,
+  OSM_TEAMS_SERVICE_TOKEN_PATH,
+  OSM_TEAMS_SERVICE_AUTHZ_PATH
 } = require('./config')
 
 var generateState = function (length) {
@@ -182,9 +184,9 @@ const teamServiceCredentials = require('simple-oauth2').create({
     secret: OSM_TEAMS_CLIENT_SECRET
   },
   auth: {
-    tokenHost: OSM_TEAMS_SERVICE_TOKEN_URL,
-    tokenPath: '/oauth2/token',
-    authorizePath: '/oauth2/auth'
+    tokenHost: OSM_TEAMS_SERVICE_TOKEN_HOST,
+    tokenPath: OSM_TEAMS_SERVICE_TOKEN_PATH,
+    authorizePath: OSM_TEAMS_SERVICE_AUTHZ_PATH
   }
 })
 
