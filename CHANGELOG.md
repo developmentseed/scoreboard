@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update deployment docs for centos
 - Top stats on the main page no longer count excluded users or their edits
 - Campaign Table column corrected to say "Changesets" in place of "Edits"
+- Campaign csv download includes both added and modified coastlines
 
 ## [v1.2.0] - 2019-05-08
 ### Added
