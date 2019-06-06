@@ -2,6 +2,7 @@
  * Test the TM service code for different TM adapters
  */
 const { TM } = require('../../src/services/tm')
+const db = require('../../src/db/connection')
 const test = require('ava')
 const path = require('path')
 const http = require('http')
@@ -12,6 +13,19 @@ const { has, sort } = require('ramda')
 const tm2proxy = http.createServer(yakbak('https://tasks.openstreetmap.id', {
   dirname: path.join(__dirname, '..', 'tapes')
 }))
+
+const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
+const migrationsDirectory = path.join(dbDirectory, 'migrations')
+const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
+
+test.before(async t => {
+  await db.migrate.latest({ directory: migrationsDirectory })
+  await db.seed.run({ directory: seedsDirectory })
+})
+
+test.after.always(async t => {
+  await db.destroy()
+})
 
 test.beforeEach.cb(t => {
   tm2proxy.listen(4849, t.end)
@@ -72,4 +86,19 @@ test.serial('Test extra params', async t => {
   let projects = await tm.getProjects()
   let dates = projects.map(p => p.properties.created)
   t.deepEqual(dates, sort(compareAsc, dates), 'dates are sorted')
+})
+
+test.serial('Duplicate campaigns', async t => {
+  // count is from seed
+  const [first] = await db('campaigns').count()
+
+  // Try adding the tasks again
+  const [tm2] = await db('taskers').where('name', 'test tm2')
+  const tm = new TM(tm2.id, 'tm2', 'http://tasks.openstreetmap.id', { proxy: 'http://localhost:4849' })
+  let projects = await tm.getProjects() // Should get from the proxy
+  let dbObjects = await tm.toDBObjects(projects)
+  await tm.updateDB(db, dbObjects)
+
+  const [second] = await db('campaigns').count()
+  t.is(first.count, second.count)
 })

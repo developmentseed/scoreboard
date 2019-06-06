@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - State retains page number and filters when navigating between the Campaigns page and individual campaign cards
+- Add uniqueness constraint to campaigns to make sure that campaigns with the same id from the same tasking manager aren't added twice
 - Campaign and dashboard page header style updated to better organize metadata hierarchy
 - State retains filters when navigating away and to the countries and users page searches
 - Update deployment docs for centos
