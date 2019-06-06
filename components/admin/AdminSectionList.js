@@ -55,7 +55,7 @@ export default function AdminSectionList (props) {
               <p>
                 You need to connect with Teams to enable these features
               </p>
-              <a href='/auth/teams' className='button button--info'>Connect your Teams</a>
+              <Link href='/auth/teams'><a className='button button--info'>Connect your Teams</a></Link>
             </>
         }
       </li>
