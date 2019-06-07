@@ -238,7 +238,7 @@ router.get('/teams/accept', async (req, res) => {
 
       // Store access token and refresh token
       await storeToken(result)
-      return res.redirect('/')
+      return res.redirect(APP_URL_FINAL)
     } catch (error) {
       console.error(error)
       return res.status(500).json('Authentication failed')
