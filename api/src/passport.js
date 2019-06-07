@@ -8,6 +8,7 @@ const router = require('express-promise-router')()
 const OSMStrategy = require('passport-openstreetmap').Strategy
 const InternalOAuthError = require('passport-oauth').InternalOAuthError
 const MockStrategy = require('passport-mock-strategy')
+const { storeToken } = require('./models/teams-access-tokens')
 
 const users = require('./models/users')
 const roles = require('./models/roles')
@@ -19,8 +20,23 @@ const {
   OSM_CONSUMER_SECRET,
   OSM_DOMAIN,
   OSM_DOMAIN_INTERNAL,
-  APP_URL_FINAL
+  APP_URL_FINAL,
+  OSM_TEAMS_CLIENT_ID,
+  OSM_TEAMS_CLIENT_SECRET,
+  OSM_TEAMS_SERVICE_TOKEN_HOST,
+  OSM_TEAMS_SERVICE_TOKEN_PATH,
+  OSM_TEAMS_SERVICE_AUTHZ_HOST,
+  OSM_TEAMS_SERVICE_AUTHZ_PATH
 } = require('./config')
+
+var generateState = function (length) {
+  var text = ''
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  for (var i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
+  return text
+}
 
 /**
  * override the userProfile method of OSMStrategy to allow for custom osm endpoints
@@ -160,8 +176,79 @@ router.get('/logout', (req, res) => {
   res.redirect(APP_URL_FINAL)
 })
 
+/**
+ * OAuth credentials to exchange tokens with OSM Teams
+ */
+const teamServiceCredentials = require('simple-oauth2').create({
+  client: {
+    id: OSM_TEAMS_CLIENT_ID,
+    secret: OSM_TEAMS_CLIENT_SECRET
+  },
+  auth: {
+    tokenHost: OSM_TEAMS_SERVICE_TOKEN_HOST,
+    tokenPath: OSM_TEAMS_SERVICE_TOKEN_PATH,
+    authorizeHost: OSM_TEAMS_SERVICE_AUTHZ_HOST,
+    authorizePath: OSM_TEAMS_SERVICE_AUTHZ_PATH
+  }
+})
+
+/**
+ * Login to OSM Teams
+ */
+router.get('/teams', (req, res) => {
+  let state = generateState(24)
+  const authorizationUri = teamServiceCredentials.authorizationCode.authorizeURL({
+    redirect_uri: join(APP_URL_FINAL, '/auth/teams/accept'),
+    scope: 'openid offline',
+    state
+  })
+  req.session.teams_login_csrf = state
+
+  res.redirect(authorizationUri)
+})
+
+/**
+ * Callback from OSM Teams service after grant
+ */
+router.get('/teams/accept', async (req, res) => {
+  const { code, state } = req.query
+  /**
+   * Token exchange with CSRF handling
+   */
+  if (state !== req.session.teams_login_csrf) {
+    /**
+     * Handle this differently
+     */
+    // req.session.destroy(function (err) {
+    //   if (err) console.error(err)
+    //   return res.status(500).json('State does not match')
+    // })
+  } else {
+    // Flush csrf
+    req.session.teams_login_csrf = null
+
+    // Create options for token exchange
+    const options = {
+      code,
+      redirect_uri: join(APP_URL_FINAL, '/auth/teams/accept')
+    }
+
+    try {
+      const result = await teamServiceCredentials.authorizationCode.getToken(options)
+
+      // Store access token and refresh token
+      await storeToken(result)
+      return res.redirect(APP_URL_FINAL)
+    } catch (error) {
+      console.error(error)
+      return res.status(500).json('Authentication failed')
+    }
+  }
+})
+
 module.exports = {
-  passport: passport,
+  passport,
   authRouter: router,
-  canEditUser: canEditUser
+  canEditUser,
+  teamServiceCredentials
 }

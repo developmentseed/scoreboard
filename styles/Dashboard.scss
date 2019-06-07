@@ -523,7 +523,7 @@
   margin-bottom: 30px;
 }
 .header-link {
-  color: #292929;
+  color: $blue-color;
 
   &:hover {
     cursor: pointer;
@@ -532,11 +532,7 @@
   }
 }
 .dashboard .section--dark {
-  .header-link {
-    color: white;
-  }
   .filter-bar button {
-    color: $background-color-light;
     &:hover,
     &.active {
       color: $base-color

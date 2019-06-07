@@ -14,7 +14,7 @@ class UsersSearch extends Component {
   }
 
   handleSearch (event) {
-    this.props.changeSearchText(event.target.value)
+    this.props.usersSearch(event.target.value)
   }
 
   onSearchUsersClick (user) {
@@ -26,20 +26,19 @@ class UsersSearch extends Component {
   }
 
   handlePageChange (pageNumber) {
-    this.props.changePage(pageNumber || 1)
+    this.props.usersPageChange(pageNumber || 1)
   }
 
   componentDidMount () {
-    this.props.changePage(1)
+    this.props.usersPageChange(1)
   }
 
   render () {
-    if (!this.props.users) return <div />
-
     let { selectedUsers } = this.props
     selectedUsers = selectedUsers || []
 
-    const { stats: { total, records }, page } = this.props.users
+    const { page } = this.props.usersFilters
+    const { stats: { total, records } } = this.props.usersSearchResults
     if (!records) return <div />
 
     return (
@@ -117,4 +116,4 @@ class UsersSearch extends Component {
   }
 }
 
-export default connect(['users'], actions)(UsersSearch)
+export default connect(['usersFilters', 'usersSearchResults'], actions)(UsersSearch)

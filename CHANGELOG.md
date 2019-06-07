@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - "Reset filters" button clears filter options on the Campaigns page
 - Number of edits and Number of changesets now available in summary stats widget at the top of the user and dashboard pages
 - Campaign Table displays "Edits" in addition to "Changesets" (previously incorrectly labeled "Edits", see Fixed)
+- Updated osm-teams to have access tokens. Admins now need to sign in to osm-teams
+- UI additions to gray out teams if the user does not have an access token
 - Campaigns page renders blank state campaign cards while loading in campaign card data
 
 ### Fixed

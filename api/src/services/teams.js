@@ -1,11 +1,53 @@
 const rp = require('request-promise-native')
-const { OSM_TEAMS_SERVICE } = require('../config')
 const sampleTeams = require('../fixtures/teams.json')
+const { getToken } = require('../models/teams-access-tokens')
+const { teamServiceCredentials } = require('../passport')
+const { OSM_TEAMS_SERVICE } = require('../config')
 
 /**
  * Methods to grab data from OSM Teams
  */
 class OSMTeams {
+  constructor (osmid) {
+    this.osmid = osmid
+  }
+
+  /**
+   * Get the access token for this user to sign requests
+   * Should be called only after the integration for teams is set up
+   */
+  async getAccessToken () {
+    const token = await getToken(this.osmid)
+    if (token.length === 0) {
+      throw new Error('No token for user')
+    }
+
+    let accessToken = teamServiceCredentials.accessToken.create(token[0])
+    if (accessToken.expired()) {
+      try {
+        accessToken = await accessToken.refresh()
+      } catch (error) {
+        throw new Error(`Error refreshing access token: ${error.message}`)
+      }
+    }
+    return accessToken
+  }
+
+  /**
+   * Adds authorization headers to request parameters
+   * before forwarding to OSM teams service
+   *
+   * @param {Object} options Request parameters
+   */
+  async addAuthorization (options) {
+    const accessToken = await this.getAccessToken()
+    return Object.assign({}, {
+      headers: {
+        'Authorization': `Bearer ${accessToken.token.access_token}`
+      }
+    }, options)
+  }
+
   /* Get all teams from the OSM Teams API
    *
    * @returns {Promise} response
@@ -21,13 +63,13 @@ class OSMTeams {
     return rp(`${OSM_TEAMS_SERVICE}/api/teams?osmId=${id}`)
   }
 
-  createTeam (body) {
-    var options = {
+  async createTeam (body) {
+    var options = await this.addAuthorization({
       method: 'POST',
       uri: `${OSM_TEAMS_SERVICE}/api/teams`,
       body,
       json: true
-    }
+    })
     return rp(options)
   }
 
@@ -35,32 +77,32 @@ class OSMTeams {
     return rp(`${OSM_TEAMS_SERVICE}/api/teams/${id}`)
   }
 
-  editTeam (id, body) {
-    var options = {
+  async editTeam (id, body) {
+    var options = await this.addAuthorization({
       method: 'PUT',
       uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}`,
       body,
       json: true
-    }
+    })
     return rp(options)
   }
 
-  updateMembers (id, body) {
-    var options = {
+  async updateMembers (id, body) {
+    var options = await this.addAuthorization({
       method: 'PATCH',
       uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}/members`,
       body,
       json: true
-    }
+    })
     return rp(options)
   }
 
-  deleteTeam (id) {
-    var options = {
+  async deleteTeam (id) {
+    var options = await this.addAuthorization({
       method: 'DELETE',
       uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}`,
       json: true
-    }
+    })
     return rp(options)
   }
 }
@@ -100,7 +142,7 @@ class FakeOSMTeams {
 }
 
 if (!OSM_TEAMS_SERVICE) {
-  module.exports = new FakeOSMTeams()
+  module.exports = FakeOSMTeams
 } else {
-  module.exports = new OSMTeams()
+  module.exports = OSMTeams
 }

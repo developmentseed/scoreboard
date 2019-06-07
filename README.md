@@ -52,6 +52,12 @@ For development simply run: `cp .env.sample .env`. In development, the Osmesa se
 | OSM_CONSUMER_SECRET | An Oauth Key/Secret pair to authenticate with OSM
 | OSM_DOMAIN | OSM endpoint (defaults to openstreetmap.com)
 | OSM_TEAMS_SERVICE | Location of the OSM teams API
+| OSM_TEAMS_CLIENT_ID | Client id for OSM Teams authentication
+| OSM_TEAMS_CLIENT_SECRET | Client secret for OSM Teams authentication
+| OSM_TEAMS_TOKEN_HOST | Location of OSM Teams token endpoint (e.g http://osm-teams)
+| OSM_TEAMS_TOKEN_PATH | Location of OSM Teams token path (e.g /oauth2/token)
+| OSM_TEAMS_AUTHZ_HOST | Location of OSM Teams authorization endpoint (e.g http://osm-teams)
+| OSM_TEAMS_AUTHZ_PATH | Location of OSM Teams authorization path (e.g /oauth2/auth)
 | SESSION_SECRET | A secret phrase to sign session tokens
 | DATABASE_URL | The location of the postgres database
 

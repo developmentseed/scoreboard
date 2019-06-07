@@ -76,7 +76,7 @@ export class AdminTeamsAdd extends Component {
               <h2 className='header--large'>Teams</h2>
               <ul className='admin-sidebar-links'>
                 <li>
-                  <Link href='/admin/badges'>
+                  <Link href='/admin/teams'>
                     <a className='link--large'>
                       Teams List
                     </a>

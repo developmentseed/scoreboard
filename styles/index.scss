@@ -262,7 +262,7 @@ section {
 }
 
 .section--dark {
-  background-color: $background-color-dark;
+  border: 1rem solid $background-color-dark;
   padding-bottom: 5em;
 }
 
@@ -602,6 +602,17 @@ mark {
     color: white;
   }
 }
+.button--info,
+.admin .button.button--info {
+  border-color: $blue-color;
+  color: $blue-color;
+  background-color: white;
+  &:hover,
+  &:active {
+    background-color: $blue-color;
+    color: white;
+  }
+}
 
 .button--link {
   background-color: transparent;
@@ -676,6 +687,10 @@ mark {
 a, a:visited {
   text-decoration: none;
   transition: .3s color;
+  &.disabled {
+    color: lighten($light-text-color, 40%);
+    cursor: not-allowed;
+  }
 }
 
 .link--large, .link--large:visited {
@@ -690,6 +705,10 @@ a, a:visited {
     color: darken($blue-color, 10%);
     border-bottom: 1px solid darken($blue-color, 10%);
   }
+  &.disabled {
+    color: lighten($light-text-color, 40%);
+    cursor: not-allowed;
+  }
 }
 
 .link--normal, .link--normal:visited {
@@ -699,6 +718,10 @@ a, a:visited {
   &:hover {
     border-bottom: 1px solid darken($blue-color, 25%);
     color: darken($blue-color, 25%);
+  }
+  &.disabled {
+    color: lighten($light-text-color, 40%);
+    cursor: not-allowed;
   }
 }
 
@@ -828,11 +851,7 @@ dl {
       border-bottom: 1px solid $blue-color;
     }
   }
-  .disabled {
-    a, a:visited {
-      color: lighten($light-text-color, 40%);
-    }
-  }
+
 }
 
 
