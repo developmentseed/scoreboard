@@ -27,6 +27,7 @@ module.exports = {
   OSM_TEAMS_SERVICE: process.env.OSM_TEAMS_SERVICE || 'http://localhost:3000',
   OSM_TEAMS_SERVICE_TOKEN_HOST: process.env.OSM_TEAMS_SERVICE_TOKEN_HOST || 'http://localhost:4444',
   OSM_TEAMS_SERVICE_TOKEN_PATH: process.env.OSM_TEAMS_SERVICE_TOKEN_PATH || '/oauth2/token',
+  OSM_TEAMS_SERVICE_AUTHZ_HOST: process.env.OSM_TEAMS_SERVICE_TOKEN_HOST || 'http://localhost:4444',
   OSM_TEAMS_SERVICE_AUTHZ_PATH: process.env.OSM_TEAMS_SERVICE_AUTHZ_PATH || '/oauth2/auth',
   OSM_TEAMS_CLIENT_ID: process.env.OSM_TEAMS_CLIENT_ID,
   OSM_TEAMS_CLIENT_SECRET: process.env.OSM_TEAMS_CLIENT_SECRET,
