@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+## [v1.3.1] - 2019-06-11
+### Added
+- Updated osm-teams to have access tokens. Admins now need to sign in to osm-teams
+- UI additions to gray out teams if the user does not have an access token
+
 ## [v1.3.0] - 2019-06-07
 ### Added
 - Campaigns, countries and users pages can be sorted by name in alphabetical order
@@ -11,8 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - "Reset filters" button clears filter options on the Campaigns page
 - Number of edits and Number of changesets now available in summary stats widget at the top of the user and dashboard pages
 - Campaign Table displays "Edits" in addition to "Changesets" (previously incorrectly labeled "Edits", see Fixed)
-- Updated osm-teams to have access tokens. Admins now need to sign in to osm-teams
-- UI additions to gray out teams if the user does not have an access token
 - Campaigns page renders blank state campaign cards while loading in campaign card data
 
 ### Fixed
@@ -37,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - "Not Logged In" error page takes an environment variable for the Editor name (default is OSM)
 - Dashboard campaigns widget now shows a "Contributions" tab separate from the "All" tab which shows the list of contributions, favorites and team campaigns.
 
-## Fixed
+### Fixed
 - Campaigns without stats will now display an "empty state", still displaying metadata from the tasking manager but without additional visualizations
 - Expand the stats used in breakdown of edits and sums of edits by including missing modified and deleted metrics
 
@@ -181,7 +186,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.3.1...HEAD
+[v1.3.0]: https://github.com/developmentseed/scoreboard/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/developmentseed/scoreboard/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/developmentseed/scoreboard/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/developmentseed/scoreboard/compare/v1.0.3...v1.1.0
