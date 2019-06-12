@@ -66,6 +66,14 @@ class Dashboard extends Component {
     const { badges, teams, refreshDate } = account
     const osmesaData = account.records
     const { hashtags, edit_times, extent_uri, uid } = osmesaData
+    const authenticatedUserExport = {
+      ...authenticatedUser,
+      km_roads_add_mod: authenticatedUser.account.records.km_roads_add + authenticatedUser.account.records.km_roads_mod,
+      buildings_add_mod: authenticatedUser.account.records.buildings_add + authenticatedUser.account.records.buildings_mod,
+      poi_add_mod: authenticatedUser.account.records.poi_add + authenticatedUser.account.records.poi_mod,
+      km_coastlines_add_mod: authenticatedUser.account.records.km_coastlines_add + authenticatedUser.account.records.km_coastlines_mod,
+      km_waterways_add_mod: authenticatedUser.account.records.km_waterways_add + authenticatedUser.account.records.km_waterways_mod
+    }
     const breakdownChartProps = pick(
       [
         'waterways_add',
@@ -150,40 +158,41 @@ class Dashboard extends Component {
               className='button button--secondary'
               data={[
                 {
-                  authenticatedUser,
+                  authenticatedUserExport,
                   badgeCount
                 }
               ]}
               headers={[
-                { label: 'Name', key: 'authenticatedUser.osm.displayName' },
+                { label: 'Name', key: 'authenticatedUserExport.osm.displayName' },
                 {
                   label: 'Campaigns',
-                  key: 'authenticatedUser.account.allCampaigns.length'
+                  key: 'authenticatedUserExport.account.allCampaigns.length'
                 },
                 { label: 'Badges', key: 'badgeCount' },
+                { label: 'Countries', key: 'authenticatedUserExport.account.records.country_list.length' },
                 {
                   label: 'Roads (Km)',
-                  key: 'authenticatedUser.account.records.km_roads_add'
+                  key: 'authenticatedUserExport.km_roads_add_mod'
                 },
                 {
                   label: 'Buildings',
-                  key: 'authenticatedUser.account.records.buildings_add'
+                  key: 'authenticatedUserExport.buildings_add_mod'
                 },
                 {
                   label: 'Points of Interest',
-                  key: 'authenticatedUser.account.records.poi_add'
+                  key: 'authenticatedUserExport.poi_add_mod'
                 },
                 {
                   label: 'Coastlines (Km)',
-                  key: 'authenticatedUser.account.records.km_coastlines_add'
+                  key: 'authenticatedUserExport.km_coastlines_add_mod'
                 },
                 {
                   label: 'Waterways (Km)',
-                  key: 'authenticatedUser.account.records.km_waterways_add'
+                  key: 'authenticatedUserExport.km_waterways_add_mod'
                 },
                 {
                   label: 'Total Edits',
-                  key: 'authenticatedUser.account.records.edit_count'
+                  key: 'authenticatedUserExport.account.records.edit_count'
                 }
               ]}
               filename={`${name}_ScoreboardData.csv`}
