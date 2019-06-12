@@ -4,12 +4,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
+
+## [v1.3.1] - 2019-06-11
+### Added
+- Updated osm-teams to have access tokens. Admins now need to sign in to osm-teams
+- UI additions to gray out teams if the user does not have an access token
+
+## [v1.3.0] - 2019-06-07
+### Added
+- Campaigns, countries and users pages can be sorted by name in alphabetical order
+- Added new tests for alphabetical sorting
+- "Reset filters" button clears filter options on the Campaigns page
+- Number of edits and Number of changesets now available in summary stats widget at the top of the user and dashboard pages
+- Campaign Table displays "Edits" in addition to "Changesets" (previously incorrectly labeled "Edits", see Fixed)
+- Campaigns page renders blank state campaign cards while loading in campaign card data
+
+### Fixed
+- State retains page number and filters when navigating between the Campaigns page and individual campaign cards
+- Add uniqueness constraint to campaigns to make sure that campaigns with the same id from the same tasking manager aren't added twice
+- Campaign and dashboard page header style updated to better organize metadata hierarchy
+- State retains filters when navigating away and to the countries and users page searches
+- Update deployment docs for centos
+- Top stats on the main page no longer count excluded users or their edits
+- Campaign Table column corrected to say "Changesets" in place of "Edits"
+- Campaign csv download includes both added and modified coastlines
 
 ## [v1.2.0] - 2019-05-08
 ### Added
 - Add "Help" link to Scoreboard documentation
 - Users are able to download a PDF certificate of all their earned badges from their dashboard
+- Admins can include extra parameters to filter the project search of a tasking manager
 - On user profile and individual dashboard, clicking "Export Data" link will download a CSV of user data
 - On campaign pages, clicking "Export Data" link will download a CSV of the contributions of the top 10 campaign participants
 
@@ -17,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - "Not Logged In" error page takes an environment variable for the Editor name (default is OSM)
 - Dashboard campaigns widget now shows a "Contributions" tab separate from the "All" tab which shows the list of contributions, favorites and team campaigns.
 
-## Fixed
+### Fixed
 - Campaigns without stats will now display an "empty state", still displaying metadata from the tasking manager but without additional visualizations
 - Expand the stats used in breakdown of edits and sums of edits by including missing modified and deleted metrics
 
@@ -161,7 +186,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.3.1...HEAD
+[v1.3.0]: https://github.com/developmentseed/scoreboard/compare/v1.3.0...v1.3.1
+[v1.3.0]: https://github.com/developmentseed/scoreboard/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/developmentseed/scoreboard/compare/v1.1.0...v1.2.0
 [v1.1.0]: https://github.com/developmentseed/scoreboard/compare/v1.0.3...v1.1.0
 [v1.0.3]: https://github.com/developmentseed/scoreboard/compare/v1.0.2...v1.0.3

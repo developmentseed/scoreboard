@@ -82,7 +82,11 @@ async function populateUsers () {
     // SQL statements
     return Promise.all(promises)
   } catch (e) {
-    console.error(e)
+    if (e.message === 'Users URL not defined') {
+      console.log('No Users URL')
+    } else {
+      console.error(e)
+    }
     return Promise.resolve()
   }
 }
@@ -91,7 +95,9 @@ async function populateUsers () {
 if (require.main === module) {
   populateUsers()
     .then((resp) => {
-      console.log(`Updated ${resp.length} records.`)
+      if (resp) {
+        console.log(`Updated ${resp.length} records.`)
+      }
       process.exit(0)
     })
     .catch((e) => {

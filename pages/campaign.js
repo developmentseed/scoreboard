@@ -10,7 +10,6 @@ import { actions } from '../lib/store'
 import CampaignTable from '../components/campaign/CampaignTable'
 import ReactMarkdown from 'react-markdown'
 import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
-import sumEdits from '../lib/utils/sum_edits'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import Blurb from '../components/campaign/CampaignBlurb'
 
@@ -89,7 +88,7 @@ export class Campaign extends Component {
   }
 
   render () {
-    const { meta, lastUpdate, creationDate, refreshDate } = this.props.campaign
+    const { meta, lastUpdate, creationDate, refreshDate, editSum } = this.props.campaign
 
     const stats = merge({
       users: [],
@@ -110,27 +109,29 @@ export class Campaign extends Component {
               <ul className='list--two-column'>
                 <li>
                   <span className='list-label'>Tasking Manager:</span>
-                  <span>{meta.tm_name}</span>
+                  <strong>{meta.tm_name}</strong>
                 </li>
                 <li>
                   <span className='list-label'>Project Number:</span>
-                  <span>#{meta.tm_id}</span>
+                  <strong>#{meta.tm_id}</strong>
                 </li>
                 <li>
-                  <span className='list-label'>Last Update:</span>
-                  <span>{distanceInWordsToNow(lastUpdate)} ago</span>
+                  <span className='list-label'>Last Updated</span>
+                  <strong>{distanceInWordsToNow(lastUpdate)} ago</strong>
                 </li>
                 <li>
-                  <span className='list-label'>Created:</span>
-                  <span>{distanceInWordsToNow(creationDate)} ago</span>
+                  <span className='list-label'>Created</span>
+                  <strong>{distanceInWordsToNow(creationDate)} ago</strong>
                 </li>
+              </ul>
+              <ul>
                 <li className='list--inline refresh'>
-                  <span className='list-label'>Last refreshed: </span>
+                  <span className='list-label'>Last refreshed</span>
                   <span>{formatUpdateDescription(refreshDate)}</span>
                 </li>
               </ul>
             </div>
-            <div className='widget-33'>
+            <div className='widget-33 page-actions'>
               {this.renderFavoriteButton()}
               <a className='button' href={meta.url}>Contribute</a>
             </div>
@@ -141,7 +142,7 @@ export class Campaign extends Component {
             { label: 'Complete', value: `${parseInt(meta.done, 10)}%` },
             { label: 'Validated', value: `${parseInt(meta.validated, 10)}%` },
             { label: 'Participants', value: stats.users.length },
-            { label: 'Total features mapped', value: formatDecimal(sumEdits(stats)) }
+            { label: 'Total features mapped', value: formatDecimal(editSum) }
           ]
         } />
 
@@ -155,6 +156,9 @@ export class Campaign extends Component {
                 <CampaignMap feature={JSON.parse(meta.geometry)} interactive />
               </div>
             </div>
+            <div className='widget-33 page-actions'>
+              <a className='button button--secondary' href={meta.url}>Contribute</a>
+            </div>
           </div>
         </section>
         <section className='section--tertiary'>
@@ -163,7 +167,7 @@ export class Campaign extends Component {
               (stats.success)
                 ? <div>
                   <Blurb {...stats} />
-                  <CampaignTable users={stats.users} />
+                  <CampaignTable users={stats.users} name={meta.name} />
                 </div>
                 : <p>There was an error retrieving stats for this campaign.</p>
             }
@@ -179,11 +183,15 @@ const Page = connect(
   actions
 )(Campaign)
 
-Page.getInitialProps = async ({ req }) => {
-  const { id } = req.params
-  return {
-    id
+export default Page
+
+Page.getInitialProps = ({ query }) => {
+  if (query) {
+    const { id } = query
+    return {
+      id
+    }
+  } else {
+    return {}
   }
 }
-
-export default Page

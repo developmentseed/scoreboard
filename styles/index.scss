@@ -1,9 +1,10 @@
 @import 'settings/variables.scss';
 @import 'settings/mixins.scss';
-
-//SASS Variable to randomly generate header background background-image on site build
+/* =
+SASS Variable to randomly generate header background background-image on site build
+=*/
 $nth: random(4);
-//
+
 
 body {
   -webkit-print-color-adjust: exact;
@@ -117,8 +118,24 @@ body {
     }
   }
   .list--two-column {
-    color: rgba(255, 255, 255, .8);
+    color: #FFFFFF;
     margin-bottom: .4em;
+    strong {
+      display: block;
+      font-size: 1.125rem;
+      line-height: 1;
+      margin-bottom: .25rem;
+      color: rgba(255, 255, 255, .85);
+      @include media(medium-up) {
+        font-size: 1.5rem;
+      }
+    }
+    span {
+      text-transform: uppercase;
+      font-size: .75rem;
+      line-height: 1rem;
+      display: block;
+    }
   }
   .link--large,
   .link--large:visited {
@@ -245,7 +262,7 @@ section {
 }
 
 .section--dark {
-  background-color: $background-color-dark;
+  border: 1rem solid $background-color-dark;
   padding-bottom: 5em;
 }
 
@@ -303,6 +320,11 @@ section {
 .margin-top-sm {
   margin-top: .3em;
 }
+
+/* ========================================================================
+   WIDGETS - flex containers for cards and general site use
+==========================================================================*/
+
 .widget-container {
   display: flex;
   flex-direction: column;
@@ -385,6 +407,9 @@ section {
   box-sizing: border-box;
 }
 
+/* =========================================================================
+   SITE BANNERS - In footer
+==========================================================================*/
 .banner {
   .row {
       padding-top: 8vw;
@@ -427,11 +452,12 @@ section {
     }
   }
 }
-//Type //
+/* ==========================================================================
+   CUSTOM TYPOGRAPHY
+========================================================================== */
 .refresh {
   font-style: italic;
-  opacity: .85;
-  margin-bottom: 0.4rem;
+  margin-top: 0.75rem;
 }
 mark {
   background-color: inherit;
@@ -531,7 +557,7 @@ mark {
 
 //buttons
 
-.button, .button:visited {
+.button{
   padding: .7em 2em .5em;
   border: 2px solid rgba(255, 255, 255, .8);
   -webkit-border-radius: 4px;
@@ -541,6 +567,7 @@ mark {
   font-family: $heading-font-family;
   display: inline-block;
   text-transform: uppercase;
+  text-align: center;
   cursor: pointer;
   &:hover {
     background-color: #fff;
@@ -575,6 +602,17 @@ mark {
     color: white;
   }
 }
+.button--info,
+.admin .button.button--info {
+  border-color: $blue-color;
+  color: $blue-color;
+  background-color: white;
+  &:hover,
+  &:active {
+    background-color: $blue-color;
+    color: white;
+  }
+}
 
 .button--link {
   background-color: transparent;
@@ -591,6 +629,20 @@ mark {
   }
 }
 
+.page-actions {
+  display: flex;
+  flex-flow: column wrap;
+  .button {
+    margin: 1rem 0 0;
+  }
+  @include media(medium-up) {
+    flex-flow: row;
+  }
+}
+.widget-33.page-actions {
+  flex: 1;
+}
+//HEADER INTERNAL//
 .header--internal {
   .button{
     margin-top: 2em;
@@ -617,7 +669,9 @@ mark {
     font-size: 14px;
     display: inline-block;
     &~.button {
-      margin-left: .5em;
+      @include media(medium-up) {
+        margin-left: .5em;
+      }
     }
     @include media(medium-only) {
       padding: .7em 1.2em .5em;
@@ -629,9 +683,14 @@ mark {
   }
 }
 
+//Links
 a, a:visited {
   text-decoration: none;
   transition: .3s color;
+  &.disabled {
+    color: lighten($light-text-color, 40%);
+    cursor: not-allowed;
+  }
 }
 
 .link--large, .link--large:visited {
@@ -646,6 +705,10 @@ a, a:visited {
     color: darken($blue-color, 10%);
     border-bottom: 1px solid darken($blue-color, 10%);
   }
+  &.disabled {
+    color: lighten($light-text-color, 40%);
+    cursor: not-allowed;
+  }
 }
 
 .link--normal, .link--normal:visited {
@@ -655,6 +718,10 @@ a, a:visited {
   &:hover {
     border-bottom: 1px solid darken($blue-color, 25%);
     color: darken($blue-color, 25%);
+  }
+  &.disabled {
+    color: lighten($light-text-color, 40%);
+    cursor: not-allowed;
   }
 }
 
@@ -728,20 +795,25 @@ dl {
 }
 
 .list-label {
-  margin-right: .5em;
-  font-family: $heading-font-bold;
+  margin: 0 0.5rem 0.25rem 0;
 }
 
 .list--two-column {
   width: 100%;
   color: $light-text-color;
-  font-size: .9em;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  @include media (medium-up) {
+    flex-flow: row wrap;
+  }
   li {
-    margin-bottom: .3em;
-    float: left;
-    margin-right: 2em;
-    @include media (small-down) {
-      float: none;
+    margin: 0 0 0.5rem;
+    @include media (medium-up) {
+      flex: 50%;
+    }
+    @include media (xlarge-up) {
+      flex: 1;
     }
   }
 }
@@ -779,11 +851,7 @@ dl {
       border-bottom: 1px solid $blue-color;
     }
   }
-  .disabled {
-    a, a:visited {
-      color: lighten($light-text-color, 40%);
-    }
-  }
+
 }
 
 
@@ -871,17 +939,29 @@ form.filters {
   @include media(small-only) {
     flex-direction: row;
     margin-bottom: 1em;
+    flex-wrap: wrap;
   }
   fieldset {
     width: 100%;
+    @include media(small-only) {
+      flex: 1;
+    }
     &~fieldset {
       @include media(small-only) {
         margin-left: .7em;
       }
     }
   }
+  .reset {
+    display: inline-block;
+    cursor: pointer;
+    flex: 100%;
+  }
 }
-//tables //
+/* ==========================================================================
+   TABLES
+==========================================================================*/
+
 table {
   width: 100%;
   text-align: left;
@@ -951,4 +1031,127 @@ table {
 .map-lg > .leaflet-container {
   height: 100%;
   background: rgb(222,234,238);
+  z-index: -2;
  }
+
+ /* ==========================================================================
+    ACCORDION
+ ==========================================================================*/
+
+ /* Basic Accordion Styles */
+ .accordion {
+   /* Checkbox Inputs */
+   >input {
+     display: none;
+   }
+
+   /* Labels */
+   >label {
+     position: relative;
+     display: block;
+     transition: all .2s ease-in-out;
+
+     &:after {
+       content: '\25BC';
+       display: inline-block;
+       vertical-align: middle;
+       margin-left: 0.5rem;
+       margin-top: -0.2rem;
+       font-size: 1rem;
+       transform: scaleY(1.25) rotate(-90deg);
+       transition: transform .4s ease-in-out;
+     }
+     &:hover {
+       color: $base-color;
+     }
+   }
+
+   input:checked + label {
+     &:after {
+       transform: scaleX(1.25) rotate(0deg);
+     }
+   }
+
+   /* Panel Content */
+   .accordion__content {
+     margin-top: 1rem;
+     overflow: hidden;
+     max-height: 0em;
+     position: relative;
+     transition: all .4s cubic-bezier(0.865, 0.140, 0.095, 0.870);
+   }
+ }
+
+ input[name='accordion-panel']:checked ~ .accordion__content {
+   max-height: 50em;
+ }
+
+/* ==========================================================================
+  Global: Loading
+  ========================================================================== */
+
+/**
+* "lsk-" prefix stands for "loading skeleton"
+*/
+
+.lsk__group {
+ margin-bottom: 2rem;
+
+ & > .lsk__item {
+   margin-bottom: 0.75rem;
+ }
+}
+
+.lsk__item {
+ display: block;
+ height: 1rem;
+ width: 100%;
+ background: linear-gradient(-90deg, #F0F0F0 0%, #F8F8F8 50%, #F0F0F0 100%);
+ background-size: 400% 400%;
+ animation: pulse 1.2s ease-in-out 0s infinite alternate;
+
+ &.lsk__item--light {
+   background: rgba(#fff, 0.48);
+ }
+ &.lsk__item--base {
+  background: rgba($base-color, 0.48);
+ }
+}
+.lsk__item--medium {
+ height: 1.5rem;
+}
+.lsk__item--large {
+ height: 2.25rem;
+}
+.lsk__item--card {
+  height: 6.875rem;
+  @include media(large-up) {
+    height: 8.75rem
+  }
+}
+.lsk__item--avatar {
+  height: 2.5rem;
+  border-radius: 100%;
+}
+
+.lsk__item--heading {
+  background: linear-gradient(-90deg, #F0F0F0 0%, #F8F8F8 50%, #F0F0F0 100%);
+  background-size: 400% 400%;
+  animation: pulse 1.2s ease-in-out 0s infinite alternate;
+    &.lsk__item--light {
+     background: rgba(#fff, 0.80);
+    }
+    &.lsk__item--base {
+     background: rgba($base-color, 0.80);
+    }
+}
+
+
+@keyframes pulse {
+ 0% {
+   background-position: 0% 0%;
+ }
+ 100% {
+   background-position: -135% 0%;
+ }
+}

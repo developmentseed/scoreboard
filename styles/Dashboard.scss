@@ -18,6 +18,11 @@
   margin-right: auto;
   flex: 1;
   display: flex;
+  div:not(:first-child) {
+    @include media (medium-up){
+      flex: 1;
+    }
+  }
   a {
     color: #FFFFFF;
   }
@@ -26,7 +31,7 @@
   }
   .section-sub--right {
     @include media(small-down) {
-      margin-left: 6.6em;
+      margin-left: 6rem;
     }
   }
 }
@@ -206,6 +211,18 @@
       &:first-of-type {
         padding-bottom: 0;
       }
+    }
+  }
+}
+.dashboard .page-actions {
+  margin-bottom: 1rem;
+  flex: inherit;
+  .button {
+    flex: 1;
+    margin: 0;
+    @include media(medium-up) {
+      margin-left: auto;
+      flex: inherit;
     }
   }
 }
@@ -506,7 +523,7 @@
   margin-bottom: 30px;
 }
 .header-link {
-  color: #292929;
+  color: $blue-color;
 
   &:hover {
     cursor: pointer;
@@ -515,11 +532,7 @@
   }
 }
 .dashboard .section--dark {
-  .header-link {
-    color: white;
-  }
   .filter-bar button {
-    color: $background-color-light;
     &:hover,
     &.active {
       color: $base-color

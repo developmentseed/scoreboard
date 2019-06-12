@@ -5,12 +5,14 @@ const {
 } = require('../config')
 const users = require('../models/users')
 const roles = require('../models/roles')
+const { hasToken } = require('../models/teams-access-tokens')
 const OSMTeams = require('../services/teams')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const db = require('../db/connection')
 const getCountriesEdited = require('../utils/getCountriesEdited')
 const refreshStatus = require('../utils/osmesaStatus.js')
+const getSumEdits = require('../utils/sum_edits')
 const { prop } = require('ramda')
 
 /**
@@ -43,6 +45,7 @@ async function get (req, res) {
 
   const uid = user.id
   const rolesList = user.roles ? await roles.getRoles(user.roles) : []
+  const activatedTeams = await hasToken(id)
 
   // handle the case where osm user doesn't exist on osmesa
   let osmesaData
@@ -91,7 +94,7 @@ async function get (req, res) {
   if (osmesaData.extent_uri) {
     osmesaData.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', osmesaData.extent_uri)
   }
-
+  osmesaData['edit_sum'] = getSumEdits(osmesaData)
   const refreshDate = await refreshStatus('user')
 
   let countriesEdited = getCountriesEdited(osmesaData.country_list)
@@ -112,7 +115,8 @@ async function get (req, res) {
   // Find all teams for this user
   let teams
   try {
-    teams = JSON.parse(await OSMTeams.getTeams(user.osm_id))
+    const t = new OSMTeams(user.osm_id)
+    teams = JSON.parse(await t.getTeams(user.osm_id))
   } catch (err) {
     console.error(err)
   }
@@ -161,6 +165,7 @@ async function get (req, res) {
     allCampaigns,
     records: osmesaData,
     roles: rolesList,
+    activatedTeams,
     countriesEdited,
     country: user.country
   })

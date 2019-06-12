@@ -8,9 +8,13 @@ export default function CampaignTable (props) {
   if (props.users.length === 0) {
     return <div />
   }
-
+  const campaignTopStats = sortBy(prop('edits'), props.users).reverse()
+    .map(user => ({
+      ...user,
+      km_coastlines_all: user.km_coastlines_add + user.km_coastlines_mod
+    }))
   return (
-    <div className='widget clearfix'>
+    <div className='widget clearfix table-wrapper'>
       <table>
         <thead>
           <tr>
@@ -22,12 +26,12 @@ export default function CampaignTable (props) {
             <th>Coastlines (Km)</th>
             <th>Waterways (Km)</th>
             <th>Changesets</th>
+            <th>Edits</th>
           </tr>
         </thead>
         <tbody>
           {
-            sortBy(prop('edits'), props.users)
-              .reverse()
+            campaignTopStats
               .map((user, idx) => (
                 <tr key={user.uid}>
                   <td>{idx + 1}</td>
@@ -41,22 +45,24 @@ export default function CampaignTable (props) {
                   <td>{formatDecimal(user.km_roads_add)}</td>
                   <td>{formatDecimal(user.buildings_add)}</td>
                   <td>{formatDecimal(user.poi_add)}</td>
-                  <td>{formatDecimal(user.km_coastlines_add + user.km_coastlines_mod)}</td>
+                  <td>{formatDecimal(user.km_coastlines_all)}</td>
                   <td>{formatDecimal(user.km_waterways_add)}</td>
                   <td>{formatDecimal(user.edits)}</td>
+                  <td>{formatDecimal(user.editSum)}</td>
                 </tr>
               ))
           }
         </tbody>
       </table>
-      <CSVLink className='link--large' style={{ display: 'inline-block', float: 'right', marginTop: '2rem' }} data={sortBy(prop('edits'), props.users).reverse()} filename={`${props.name} - Top 10 Participants.csv`} headers={[
+      <CSVLink className='link--large' style={{ display: 'inline-block', float: 'right', marginTop: '2rem' }} data={campaignTopStats} filename={`${props.name} - Top 10 Participants.csv`} headers={[
         { label: 'Name', key: 'name' },
         { label: 'Roads (Km)', key: 'km_roads_add' },
         { label: 'Buildings', key: 'buildings_add' },
         { label: 'Points of Interest', key: 'poi_add' },
-        { label: 'Coastlines (Km)', key: 'km_coastlines_add' },
+        { label: 'Coastlines (Km)', key: 'km_coastlines_all' },
         { label: 'Waterways (Km)', key: 'km_waterways_add' },
-        { label: 'Changesets', key: 'edits' }
+        { label: 'Changesets', key: 'edits' },
+        { label: 'Edits', key: 'editSum' }
       ]}>
         Export Data (CSV)
       </CSVLink>

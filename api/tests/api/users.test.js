@@ -5,7 +5,7 @@ const test = require('ava')
 const request = require('supertest')
 const db = require('../../src/db/connection')
 let app = require('../../src/index')
-const { omit } = require('ramda')
+const { omit, prop, sort, reverse } = require('ramda')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')
@@ -104,6 +104,38 @@ test('Sort users by least edits', async (t) => {
   users.sort((a, b) => +a.edit_count - +b.edit_count)
   const resCopy = response.body.records.map(omit(['rank', 'last_edit']))
   t.deepEqual(resCopy, users)
+})
+
+test('Sort users alphabetically a-z', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Alphabetical A-Z&active=false')
+    .expect(200)
+  const users = await db('users')
+    .select('full_name')
+  const names = users.map(prop('full_name'))
+  sort(function (a, b) {
+    if (a < b) { return -1 }
+    if (a > b) { return 1 }
+    return 0
+  }, names)
+  const resCopy = response.body.records.map(prop('full_name'))
+  t.deepEqual(resCopy, names)
+})
+
+test('Sort users alphabetically z-a', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Alphabetical Z-A&active=false')
+    .expect(200)
+  const users = await db('users')
+    .select('full_name')
+  const names = users.map(prop('full_name'))
+  sort(function (a, b) {
+    if (a < b) { return -1 }
+    if (a > b) { return 1 }
+    return 0
+  }, names)
+  const resCopy = response.body.records.map(prop('full_name'))
+  t.deepEqual(resCopy, reverse(names))
 })
 
 test.serial('Update user country', async (t) => {

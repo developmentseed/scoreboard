@@ -2,6 +2,7 @@ const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { TM } = require('../services/tm')
 const refreshStatus = require('../utils/osmesaStatus.js')
+const getSumEdits = require('../utils/sum_edits')
 
 /**
  * Campaign Stats Route
@@ -51,10 +52,14 @@ module.exports = async (req, res) => {
 
   try {
     const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
-    response['stats'] = Object.assign(
+    const stats = Object.assign(
       JSON.parse(osmesaResponse),
       { success: true })
-    return res.send(response)
+    response['stats'] = stats
+    response['editSum'] = getSumEdits(stats)
+    stats['users'].forEach(function (element) {
+      element['editSum'] = getSumEdits(element)
+    })
   } catch (err) {
     console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
     if (err.statusCode && err.statusCode === 404) {
@@ -65,6 +70,6 @@ module.exports = async (req, res) => {
       response['stats'] = Object.assign(
         { success: false })
     }
-    return res.send(response)
   }
+  return res.send(response)
 }
