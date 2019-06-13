@@ -5,14 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Changed
+- Stats in the tables, exports and blurbs on Campaign, Dashboard, and User profile pages now combine the `added` and `modified` edits
 
 ## [v1.3.1] - 2019-06-11
 ### Added
 - Updated osm-teams to have access tokens. Admins now need to sign in to osm-teams
 - UI additions to gray out teams if the user does not have an access token
-
-### Changed
-- Stats in the tables, exports and blurbs on Campaign, Dashboard, and User profile pages now combine the `added` and `modified` edits
 
 ## [v1.3.0] - 2019-06-07
 ### Added
