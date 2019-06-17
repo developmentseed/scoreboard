@@ -57,13 +57,13 @@ function getParticipants (country_name, limitNum) {
   if (typeof limitNum === 'undefined') {
     return db('user_country_edits')
       .innerJoin(exclusionList.includedUsers().as('users'), 'user_id', 'users.id')
-      .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-      .where('country_name', 'ilike', country_name).orderBy('count', 'desc')
+      .select('users.osm_id', 'user_country_edits.edit_count as edits', 'user_country_edits.changeset_count as changesets', 'users.full_name')
+      .where('country_name', 'ilike', country_name).orderBy('edits', 'desc')
   } else {
     return db('user_country_edits')
       .innerJoin(exclusionList.includedUsers().as('users'), 'user_id', 'users.id')
-      .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-      .where('country_name', 'ilike', country_name).orderBy('count', 'desc').limit(limitNum)
+      .select('users.osm_id', 'user_country_edits.edit_count as edits', 'user_country_edits.changeset_count as changesets', 'users.full_name')
+      .where('country_name', 'ilike', country_name).orderBy('edits', 'desc').limit(limitNum)
   }
 }
 
