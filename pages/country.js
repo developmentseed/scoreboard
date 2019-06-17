@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 import Blurb from '../components/charts/CountryBlurb'
-import CountryUserTable from '../components/country/CountryUserTable';
+import CountryUserTable from '../components/country/CountryUserTable'
 
 const CountryMap = dynamic(() => import('../components/charts/LeafletCountryMap'), {
   ssr: false
@@ -20,10 +20,12 @@ export class Country extends Component {
     if (!this.props.country) return <div />
     const { name, edit_count, users, numParticipants, records, refreshDate } = this.props.country
     users.map((user) => {
-      user.uid = user.osm_id
-      user.edits = user.edits
-      user.changesets = user.changesets
-      user.name = user.full_name
+      return {
+        uid: user.osm_id,
+        edits: user.edits,
+        changesets: user.changesets,
+        name: user.full_name
+      }
     })
     records.numParticipants = numParticipants
     if (!name) return <div />
