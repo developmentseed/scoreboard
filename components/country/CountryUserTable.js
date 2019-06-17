@@ -1,9 +1,9 @@
 import React from 'react'
-import Link from './Link'
+import Link from '../Link'
 import { sortBy, prop } from 'ramda'
-import { formatDecimal } from '../lib/utils/format'
+import { formatDecimal } from '../../lib/utils/format'
 
-export default function UserTable (props) {
+export default function CountryUserTable (props) {
   return (
     <div className='widget'>
       <table>
@@ -11,7 +11,8 @@ export default function UserTable (props) {
           <tr>
             <th>Rank</th>
             <th>Name</th>
-            <th>{props.editType}</th>
+            <th>Edits</th>
+            <th>Changesets</th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +30,7 @@ export default function UserTable (props) {
                     </Link>
                   </td>
                   <td>{formatDecimal(user.edits)}</td>
+                  <td>{formatDecimal(user.changesets)}</td>
                 </tr>
               ))
           }
