@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add changeset counts for user table in country pages
 
+### Changed
+- Stats in the tables, exports and blurbs on Campaign, Dashboard, and User profile pages now combine the `added` and `modified` edits
+
 ## [v1.3.1] - 2019-06-11
 ### Added
 - Updated osm-teams to have access tokens. Admins now need to sign in to osm-teams

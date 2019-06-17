@@ -5,9 +5,13 @@ import { head } from 'ramda'
 
 export default function Blurb ({
   km_roads_add,
+  km_roads_mod,
   buildings_add,
+  buildings_mod,
   poi_add,
+  poi_mod,
   km_waterways_add,
+  km_waterways_mod,
   km_coastlines_add,
   km_coastlines_mod,
   country_list,
@@ -27,6 +31,6 @@ export default function Blurb ({
   }
 
   return <h2 className='header--small width--shortened list--block'>
-    Since <mark>{firstYearEdited}</mark>, {sentence} <mark>{formatKm(km_roads_add)}</mark> of roads, <mark>{formatDecimal(buildings_add)}</mark> buildings, <mark>{formatDecimal(poi_add)}</mark> Points of Interest, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add)}</mark> of waterways in <mark>{country_list.length}</mark> <mark>{countryWord}</mark>.
+    Since <mark>{firstYearEdited}</mark>, {sentence} <mark>{formatKm(km_roads_add + km_roads_mod)}</mark> of roads, <mark>{formatDecimal(buildings_add + buildings_mod)}</mark> buildings, <mark>{formatDecimal(poi_add + poi_mod)}</mark> Points of Interest, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add + km_waterways_mod)}</mark> of waterways in <mark>{country_list.length}</mark> <mark>{countryWord}</mark>.
   </h2>
 }
