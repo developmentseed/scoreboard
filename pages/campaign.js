@@ -89,17 +89,19 @@ export class Campaign extends Component {
 
   render () {
     const { meta, lastUpdate, creationDate, refreshDate, editSum } = this.props.campaign
-
     const stats = merge({
       users: [],
       km_roads_add: 0,
+      km_roads_mod: 0,
       buildings_add: 0,
+      buildings_mod: 0,
       poi_add: 0,
+      poi_mod: 0,
       km_waterways_add: 0,
+      km_waterways_mod: 0,
       km_coastlines_add: 0,
       km_coastlines_mod: 0
     }, this.props.campaign.stats)
-
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>

@@ -47,7 +47,14 @@ export class User extends Component {
     const badgeCount = Object.keys(badges.earnedBadges).length
     const campaignCount = records.hashtags.length
     const { name, hashtags, edit_times } = records
-
+    const recordsExport = {
+      ...records,
+      km_roads_add_mod: records.km_roads_add + records.km_roads_mod,
+      buildings_add_mod: records.buildings_add + records.buildings_mod,
+      poi_add_mod: records.poi_add + records.poi_mod,
+      km_coastlines_add_mod: records.km_coastlines_add + records.km_coastlines_mod,
+      km_waterways_add_mod: records.km_waterways_add + records.km_waterways_mod
+    }
     const breakdownChartProps = pick(
       [
         'waterways_add',
@@ -97,20 +104,20 @@ export class User extends Component {
                 {
                   badgeCount,
                   campaignCount,
-                  records
+                  recordsExport
                 }
               ]}
               headers={[
-                { label: 'Name', key: 'records.name' },
+                { label: 'Name', key: 'recordsExport.name' },
                 { label: 'Campaigns', key: 'campaignCount' },
                 { label: 'Badges', key: 'badgeCount' },
-                { label: 'Countries', key: 'records.country_list.length' },
-                { label: 'Roads (Km)', key: 'records.km_roads_add' },
-                { label: 'Buildings', key: 'records.buildings_add' },
-                { label: 'Points of Interest', key: 'records.poi_add' },
-                { label: 'Coastlines (Km)', key: 'records.km_coastlines_add' },
-                { label: 'Waterways (Km)', key: 'records.km_waterways_add' },
-                { label: 'Total Edits', key: 'records.edit_sum' }
+                { label: 'Countries', key: 'recordsExport.country_list.length' },
+                { label: 'Roads (Km)', key: 'recordsExport.km_roads_add_mod' },
+                { label: 'Buildings', key: 'recordsExport.buildings_add_mod' },
+                { label: 'Points of Interest', key: 'recordsExport.poi_add_mod' },
+                { label: 'Coastlines (Km)', key: 'recordsExport.km_coastlines_add_mod' },
+                { label: 'Waterways (Km)', key: 'recordsExport.km_waterways_add_mod' },
+                { label: 'Total Edits', key: 'recordsExport.edit_sum' }
               ]}
               filename={`${name}_ScoreboardData.csv`}
             >
