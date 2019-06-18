@@ -57,13 +57,13 @@ function getParticipants (country_name, limitNum) {
   if (typeof limitNum === 'undefined') {
     return db('user_country_edits')
       .innerJoin(exclusionList.includedUsers().as('users'), 'user_id', 'users.id')
-      .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-      .where('country_name', 'ilike', country_name).orderBy('count', 'desc')
+      .select('users.osm_id', 'user_country_edits.edit_count as edits', 'user_country_edits.changeset_count as changesets', 'users.full_name')
+      .where('country_name', 'ilike', country_name).orderBy('edits', 'desc')
   } else {
     return db('user_country_edits')
       .innerJoin(exclusionList.includedUsers().as('users'), 'user_id', 'users.id')
-      .select('users.osm_id', 'user_country_edits.edit_count as count', 'users.full_name')
-      .where('country_name', 'ilike', country_name).orderBy('count', 'desc').limit(limitNum)
+      .select('users.osm_id', 'user_country_edits.edit_count as edits', 'user_country_edits.changeset_count as changesets', 'users.full_name')
+      .where('country_name', 'ilike', country_name).orderBy('edits', 'desc').limit(limitNum)
   }
 }
 
@@ -71,15 +71,15 @@ function update (id, data) {
   return get(id).update(data).returning('*')
 }
 
-function updateUserCountryEdit (user_id, country_name, edit_count) {
+function updateUserCountryEdit (user_id, country_name, edit_count, changeset_count) {
   return db.transaction(async conn => {
     const records = await conn('user_country_edits').where({ user_id, country_name })
     if (records.length === 0) {
       await conn('user_country_edits').insert({
-        user_id, country_name, edit_count
+        user_id, country_name, edit_count, changeset_count
       })
     } else {
-      await conn('user_country_edits').where({ user_id, country_name }).update({ edit_count })
+      await conn('user_country_edits').where({ user_id, country_name }).update({ edit_count, changeset_count })
     }
   })
 }

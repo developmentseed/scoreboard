@@ -19,7 +19,8 @@ function getLastEdit (editTimes) {
 }
 
 async function updateCountries (userID, countryEditList) {
-  const countryTotal = {}
+  const countryEditTotal = {}
+  const countryChangesetTotal = {}
 
   // get total edits for a given user
   countryEditList.forEach((tuple) => {
@@ -27,19 +28,22 @@ async function updateCountries (userID, countryEditList) {
     if (isState(countryName)) {
       countryName = 'United States of America'
     }
-    if (!countryTotal[countryName]) {
-      countryTotal[countryName] = 0
+    if (!countryEditTotal[countryName]) {
+      countryEditTotal[countryName] = 0
+      countryChangesetTotal[countryName] = 0
     }
-    countryTotal[countryName] += tuple.count
+    countryEditTotal[countryName] += tuple.edit_count
+    countryChangesetTotal[countryName] += tuple.changeset_count
   })
 
   // edit countries for each user
   const promises = Object.keys(
-    countryTotal
+    countryEditTotal
   ).map((country) => updateUserCountryEdit(
     userID,
     country,
-    countryTotal[country]
+    countryEditTotal[country],
+    countryChangesetTotal[country]
   ))
   return Promise.all(promises)
 }

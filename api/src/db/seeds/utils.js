@@ -49,7 +49,8 @@ function generateOSMesaUser (id, name) {
   for (let i = 20; i < 120; i++) {
     editedHashtags.push({
       'tag': `project-${i}`,
-      'count': Math.floor(rand.random() * 1000)
+      'edit_count': Math.floor(rand.random() * 1000),
+      'changeset_count': Math.floor(rand.random() * 1000)
     })
   }
 
@@ -57,7 +58,8 @@ function generateOSMesaUser (id, name) {
     let index = Math.floor(rand.random() * (countries.length - 1))
     editedCountries.push({
       'name': countries[index].name,
-      'count': Math.floor(rand.random() * 100)
+      'edit_count': Math.floor(rand.random() * 100),
+      'changeset_count': Math.floor(rand.random() * 100)
     })
   }
 
