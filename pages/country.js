@@ -19,14 +19,6 @@ export class Country extends Component {
   render () {
     if (!this.props.country) return <div />
     const { name, edit_count, users, numParticipants, records, refreshDate } = this.props.country
-    users.map((user) => {
-      return {
-        uid: user.osm_id,
-        edits: user.edits,
-        changesets: user.changesets,
-        name: user.full_name
-      }
-    })
     records.numParticipants = numParticipants
     if (!name) return <div />
     return (

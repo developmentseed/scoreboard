@@ -20,12 +20,12 @@ export default function CountryUserTable (props) {
             sortBy(prop('edits'), props.users)
               .reverse()
               .map((user, idx) => (
-                <tr key={user.uid}>
+                <tr key={user.osm_id}>
                   <td>{idx + 1}</td>
                   <td>
-                    <Link href={`/users/${user.uid}`}>
+                    <Link href={`/users/${user.osm_id}`}>
                       <a className='link--normal' >
-                        {user.name}
+                        {user.full_name}
                       </a>
                     </Link>
                   </td>
