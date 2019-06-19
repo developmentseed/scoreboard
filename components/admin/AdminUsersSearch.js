@@ -37,7 +37,7 @@ class UsersSearch extends Component {
     let { selectedUsers } = this.props
     selectedUsers = selectedUsers || []
 
-    const { page } = this.props.usersFilters
+    const { page, searchText } = this.props.usersFilters
     const { stats: { total, records } } = this.props.usersSearchResults
     if (!records) return <div />
 
@@ -75,7 +75,7 @@ class UsersSearch extends Component {
             <fieldset>
               <legend>Search</legend>
               <div className='search'>
-                <input className='input--text' onChange={this.handleSearch} />
+                <input className='input--text' value={searchText} onChange={this.handleSearch} />
               </div>
             </fieldset>
           </div>
