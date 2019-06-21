@@ -14,7 +14,7 @@ class UsersSearch extends Component {
   }
 
   handleSearch (event) {
-    this.props.usersSearch(event.target.value)
+    this.props.adminTeamMemberSearch(event.target.value)
   }
 
   onSearchUsersClick (user) {
@@ -26,19 +26,19 @@ class UsersSearch extends Component {
   }
 
   handlePageChange (pageNumber) {
-    this.props.usersPageChange(pageNumber || 1)
+    this.props.adminTeamMemberPageChange(pageNumber || 1)
   }
 
   componentDidMount () {
-    this.props.usersPageChange(1)
+    this.props.adminTeamMemberPageChange(1)
   }
 
   render () {
     let { selectedUsers } = this.props
     selectedUsers = selectedUsers || []
 
-    const { page, searchText } = this.props.usersFilters
-    const { stats: { total, records } } = this.props.usersSearchResults
+    const { page, searchText } = this.props.adminTeamMemberFilters
+    const { stats: { total, records } } = this.props.adminTeamMemberSearchResults
     if (!records) return <div />
 
     return (
@@ -116,4 +116,4 @@ class UsersSearch extends Component {
   }
 }
 
-export default connect(['usersFilters', 'usersSearchResults'], actions)(UsersSearch)
+export default connect(['adminTeamMemberFilters', 'adminTeamMemberSearchResults'], actions)(UsersSearch)
