@@ -59,7 +59,7 @@ class CampaignSearch extends Component {
   }
 
   handleSearch (event) {
-    this.props.handleCampaignsSearch(event.target.value)
+    this.props.adminTeamCampaignsSearch(event.target.value)
   }
 
   onSearchCampaignClick (campaign) {
@@ -71,7 +71,7 @@ class CampaignSearch extends Component {
   }
 
   handlePageChange (pageNumber) {
-    this.props.handleCampaignsPageChange(pageNumber || 1)
+    this.props.adminTeamCampaignsPageChange(pageNumber || 1)
   }
 
   onTaskPriorityChange (campaign) {
@@ -79,13 +79,13 @@ class CampaignSearch extends Component {
   }
 
   componentDidMount () {
-    this.props.handleCampaignsPageChange(1)
+    this.props.adminTeamCampaignsPageChange(1)
   }
 
   render () {
     const { selectedCampaigns } = this.props
-    const { page } = this.props.campaignSearchResults
-    const { records: { total, records } } = this.props.campaignSearchResults
+    const { page, searchText } = this.props.adminTeamCampaignsFilters
+    const { records: { total, records } } = this.props.adminTeamCampaignsSearchResults
     if (!records || !selectedCampaigns) return <div />
 
     let assignments = selectedCampaigns.map(record =>
@@ -121,7 +121,7 @@ class CampaignSearch extends Component {
             <fieldset>
               <legend>Search</legend>
               <div className='search'>
-                <input className='input--text' onChange={this.handleSearch} />
+                <input className='input--text' onChange={this.handleSearch} value={searchText} />
               </div>
             </fieldset>
           </div>
@@ -162,4 +162,4 @@ class CampaignSearch extends Component {
   }
 }
 
-export default connect(['campaigns', 'campaignSearchResults'], actions)(CampaignSearch)
+export default connect(['adminTeamCampaignsSearchResults', 'adminTeamCampaignsFilters'], actions)(CampaignSearch)
