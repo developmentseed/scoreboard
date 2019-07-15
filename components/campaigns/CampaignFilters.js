@@ -79,7 +79,7 @@ export default class Filters extends React.Component {
           />
         </fieldset>
         <fieldset>
-          <legend>Completeness</legend>
+          <legend>% Mapped</legend>
           <InputRange
             maxValue={100}
             minValue={0}
@@ -88,7 +88,7 @@ export default class Filters extends React.Component {
           />
         </fieldset>
         <fieldset>
-          <legend>Validation</legend>
+          <legend>% Validated</legend>
           <InputRange
             maxValue={100}
             minValue={0}

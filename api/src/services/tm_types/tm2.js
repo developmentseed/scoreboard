@@ -95,6 +95,13 @@ class TM2API {
       const {
         created: created_at, last_update: updated_at // eslint-disable-line camelcase
       } = feature.properties
+
+      // In tm2, done is a state such that if a square is validated,
+      // it is no longer counted as 'mapped'. This makes 100% validated
+      // show 0% mapped. To fix this, we reset 'done' to be equal to done + validated
+      // such that 100% validation is 100% completion
+      properties.done = properties.done + properties.validated
+
       return merge(properties, {
         campaign_hashtag: mainHashtag,
         created_at,

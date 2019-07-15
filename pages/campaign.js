@@ -141,7 +141,7 @@ export class Campaign extends Component {
         </header>
         <ScoreboardPanel title='' facets={
           [
-            { label: 'Complete', value: `${parseInt(meta.done, 10)}%` },
+            { label: 'Mapped', value: `${parseInt(meta.done, 10)}%` },
             { label: 'Validated', value: `${parseInt(meta.validated, 10)}%` },
             { label: 'Participants', value: stats.users.length },
             { label: 'Total features mapped', value: formatDecimal(editSum) }
