@@ -52,7 +52,7 @@ export default ({ campaign }) => {
             <ul className='card-stats'>
               <li className='list--inline'>
                 <span className='num--large'>{parseInt(Math.min(100, done), 10)}%</span>
-                <span className='descriptor-chart'>Complete</span>
+                <span className='descriptor-chart'>Mapped</span>
               </li>
               <li className='list--inline'>
                 <span className='num--large'>{parseInt(Math.min(100, validated), 10)}%</span>
