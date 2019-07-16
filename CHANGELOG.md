@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed language related to mapping/completeness percentage between tasking managers 2 and 3
+- TM2 and TM3 statuses now match in the database
+- Draft campaigns are filtered at the API level
 
 ## [v1.3.3] - 2019-06-26
 ### Added
