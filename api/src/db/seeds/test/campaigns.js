@@ -1,6 +1,7 @@
 const yakbak = require('yakbak')
 const path = require('path')
 const http = require('http')
+const chance = require('chance').Chance()
 const tmWorker = require('../../../tm_clock')
 
 exports.seed = async (knex) => {
@@ -24,9 +25,29 @@ exports.seed = async (knex) => {
           await knex('taskers').del()
 
           // Add tasking managers
-          await knex('taskers').insert({ type: 'tm3', url: 'http://localhost:4850', name: 'test tm3' })
-          await knex('taskers').insert({ type: 'tm2', url: 'http://localhost:4851', name: 'test tm2' })
+          await knex('taskers').insert({
+            type: 'tm3',
+            url: 'http://localhost:4850',
+            options: {
+              proxy: 'http://localhost:4850'
+            },
+            name: 'test tm3'
+          })
+          await knex('taskers').insert({
+            type: 'tm2',
+            url: 'http://localhost:4851',
+            options: {
+              proxy: 'http://localhost:4851'
+            },
+            name: 'test tm2'
+          })
           await tmWorker()
+
+          // change some of the campaign statuses
+          const campaigns = await knex('campaigns').select()
+          await Promise.all(campaigns.map(c => knex('campaigns').where('id', c.id).update({
+            status: chance.pickone(['ARCHIVE', 'DRAFT', 'PUBLISHED'])
+          })))
           resolve()
         } catch (e) {
           reject(e)

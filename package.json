@@ -84,6 +84,7 @@
     "axios": "^0.19.0",
     "babel-preset-jest": "^23.2.0",
     "body-parser": "^1.18.3",
+    "chance": "^1.0.18",
     "classnames": "^2.2.6",
     "compression": "^1.7.1",
     "connect-session-knex": "^1.4.0",
@@ -155,7 +156,7 @@
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
-    "ava": "^1.0.0-rc.1",
+    "ava": "^1.4.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-plugin-transform-dynamic-import": "^2.1.0",
