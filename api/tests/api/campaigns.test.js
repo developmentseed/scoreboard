@@ -3,7 +3,7 @@ const request = require('supertest')
 const db = require('../../src/db/connection')
 let app = require('../../src/index')
 const path = require('path')
-const { prop, sort, reverse } = require('ramda')
+const { prop, sort, reverse, reject, propEq } = require('ramda')
 const { isBefore, isAfter } = require('date-fns')
 const { alphabeticalDiff } = require('../../../lib/utils/sort')
 
@@ -28,6 +28,17 @@ test('Get campaigns', async t => {
 
   t.truthy(response)
   t.truthy(response.body.records.length > 0)
+})
+
+test('Get campaigns does not return drafts', async t => {
+  const response = await request(app)
+    .get('/scoreboard/api/campaigns')
+    .expect(200)
+
+  t.truthy(response)
+  const campaigns = response.body.records
+  const filteredCampaigns = reject(propEq('status', 'DRAFT'), campaigns) // remove drafts
+  t.is(campaigns.length, filteredCampaigns.length) // should be same length since we never return drafts
 })
 
 test('Get campaigns with completeness parameters', async t => {

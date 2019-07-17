@@ -71,7 +71,6 @@ export class Campaigns extends Component {
       records: { total, records, allCount, tms, refreshDate },
       apiStatus
     } = this.props.campaignSearchResults
-    console.log(apiStatus)
 
     return (
       <div className='Campaigns'>

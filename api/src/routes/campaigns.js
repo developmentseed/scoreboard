@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
   const sortType = req.query.sortType || 'Most Recently Created'
 
   try {
-    let query = db('campaigns').whereNotNull('campaign_hashtag').join(
+    let query = db('campaigns').whereNotNull('campaign_hashtag').whereNot('status', 'DRAFT').join(
       db('taskers').select('name as tm_name', 'id as tasker_t_id', 'type').as('t'),
       'tasker_id', 't.tasker_t_id')
 
