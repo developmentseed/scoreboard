@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+## [v1.3.4] - 2019-07-17
+
+### Fixed
+- Fixed language related to mapping/completeness percentage between tasking managers 2 and 3
+- TM2 and TM3 statuses now match in the database
+- Draft campaigns are filtered at the API level
+
+## [v1.3.3] - 2019-06-26
+### Added
+- Add changeset counts for user table in country pages
+
+### Fixed
+- Fix search state persistence and admin team page
 
 ## [v1.3.2] - 2019-06-17
 ### Changed
@@ -190,7 +203,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.3.2...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.3.4...HEAD
+[v1.3.4]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.3.4
+[v1.3.3]: https://github.com/developmentseed/scoreboard/compare/v1.3.2...v1.3.3
 [v1.3.2]: https://github.com/developmentseed/scoreboard/compare/v1.3.1...v1.3.2
 [v1.3.1]: https://github.com/developmentseed/scoreboard/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/developmentseed/scoreboard/compare/v1.2.0...v1.3.0

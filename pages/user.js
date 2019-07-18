@@ -91,7 +91,7 @@ export class User extends Component {
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
             { label: 'Edits', value: formatDecimal(records.edit_sum) },
-            { label: 'Changesets', value: formatDecimal(records.edit_count) }
+            { label: 'Changesets', value: formatDecimal(records.changeset_count) }
           ]}
         />
         <div className='row'>

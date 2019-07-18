@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import UserTable from '../components/UserTable'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
 import Blurb from '../components/charts/CountryBlurb'
+import CountryUserTable from '../components/country/CountryUserTable'
 
 const CountryMap = dynamic(() => import('../components/charts/LeafletCountryMap'), {
   ssr: false
@@ -19,11 +19,6 @@ export class Country extends Component {
   render () {
     if (!this.props.country) return <div />
     const { name, edit_count, users, numParticipants, records, refreshDate } = this.props.country
-    users.map((user) => {
-      user.uid = user.osm_id
-      user.edits = user.count
-      user.name = user.full_name
-    })
     records.numParticipants = numParticipants
     if (!name) return <div />
     return (
@@ -56,7 +51,7 @@ export class Country extends Component {
           <div className='row widget-container'>
             <div className='widget-50'>
               <h3 className='header--medium'>Top 15 Participants</h3>
-              <UserTable users={users} editType={'Edits'} />
+              <CountryUserTable users={users} />
             </div>
             <div className='widget-50'>
               <div className='map-lg'>

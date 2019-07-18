@@ -102,7 +102,7 @@ class Dashboard extends Component {
         : 0
     const campaignCount =
       osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0
-    const editCount = osmesaData ? osmesaData.edit_count : 0
+    const changesetCount = osmesaData ? osmesaData.changeset_count : 0
 
     if (!loggedIn || !account) {
       return (
@@ -148,7 +148,7 @@ class Dashboard extends Component {
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
             { label: 'Edits', value: formatDecimal(osmesaData.edit_sum) },
-            { label: 'Changesets', value: formatDecimal(editCount) }
+            { label: 'Changesets', value: formatDecimal(changesetCount) }
           ]}
         />
         <div className='row'>

@@ -95,6 +95,7 @@ class TM3API {
         name: feature.name,
         description: feature.shortDescription,
         validated: feature.percentValidated,
+        status: feature.status,
         done: feature.percentMapped,
         tm_id: feature.projectId,
         tasker_id: this.tasker_id
