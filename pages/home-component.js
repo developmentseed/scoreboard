@@ -73,7 +73,7 @@ export class Home extends Component {
                           <p>{trimLength(record.description, 195)}</p>
                           <ul className='chart-bar--main'>
                             <li>
-                              <span className='chart-bar--title'>Complete</span>
+                              <span className='chart-bar--title'>Mapped</span>
                               <span className='chart-bar--wrapper'>
                                 <span className='chart-bar' style={{ 'width': `${parseInt(record.done, 10)}%` }} />
                                 <span className='chart-bar--percent'>{parseInt(record.done, 10)}%</span>
