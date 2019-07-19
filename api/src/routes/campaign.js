@@ -57,9 +57,6 @@ module.exports = async (req, res) => {
       { success: true })
     response['stats'] = stats
     response['editSum'] = getSumEdits(stats)
-    stats['users'].forEach(function (element) {
-      element['editSum'] = getSumEdits(element)
-    })
   } catch (err) {
     console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
     if (err.statusCode && err.statusCode === 404) {
