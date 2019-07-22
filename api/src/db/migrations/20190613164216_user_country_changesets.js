@@ -11,7 +11,7 @@ exports.up = async (knex) => {
 
 exports.down = async (knex) => {
   try {
-    await knex.schema.alterTable('user_coountry_edits', t => {
+    await knex.schema.alterTable('user_country_edits', t => {
       t.dropColumn('changeset_count')
     })
   } catch (e) {

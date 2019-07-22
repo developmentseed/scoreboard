@@ -21,7 +21,9 @@ module.exports = async (req, res) => {
 
     const priorityCampaigns = await db('campaigns')
       .whereNotNull('campaign_hashtag')
-      .orderBy('priority')
+      .where('status', 'PUBLISHED')
+      .where('done', '>', 0)
+      .orderBy('updated_at', 'desc')
       .limit(4)
 
     let feature = {

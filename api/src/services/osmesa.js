@@ -15,7 +15,7 @@ class OSMesaAPI {
    * @returns {Promise} response
    */
   getUser (id) {
-    return rp(`${OSMESA_API}/_users/${id}`)
+    return rp(`${OSMESA_API}/users/${id}`)
   }
 
   getCampaign (id) {
