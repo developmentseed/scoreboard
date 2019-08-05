@@ -36,7 +36,7 @@ export default class Filters extends React.Component {
         compl_max: complMax,
         valid_min: validMin,
         valid_max: validMax,
-        includeArchived: false,
+        includeArchived,
         selectedTM,
         sortOrder,
         page: 1
