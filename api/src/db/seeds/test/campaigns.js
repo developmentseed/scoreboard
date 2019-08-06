@@ -46,7 +46,7 @@ exports.seed = async (knex) => {
           // change some of the campaign statuses
           const campaigns = await knex('campaigns').select()
           await Promise.all(campaigns.map(c => knex('campaigns').where('id', c.id).update({
-            status: chance.pickone(['ARCHIVE', 'DRAFT', 'PUBLISHED'])
+            status: chance.pickone(['ARCHIVED', 'DRAFT', 'PUBLISHED'])
           })))
           resolve()
         } catch (e) {

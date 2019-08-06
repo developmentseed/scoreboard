@@ -144,3 +144,16 @@ test('Get campaigns sorted alphabetically Z to A', async t => {
   const sorted = sort(alphabeticalDiff, names)
   t.deepEqual(reverse(sorted), names)
 })
+
+test('Get campaigns with archived', async t => {
+  const first = await request(app)
+    .get('/scoreboard/api/campaigns?includeArchived=false')
+    .expect(200)
+
+  const second = await request(app)
+    .get('/scoreboard/api/campaigns?includeArchived=true')
+    .expect(200)
+
+  // the second response should have strictly more campaigns
+  t.true(second.body.total > first.body.total)
+})
