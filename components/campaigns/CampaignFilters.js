@@ -20,6 +20,8 @@ export default class Filters extends React.Component {
       handleCompletenessChange,
       handleValidationChange,
       handleSortChange,
+      handleArchivedToggle,
+      includeArchived,
       complMin,
       complMax,
       validMin,
@@ -34,6 +36,7 @@ export default class Filters extends React.Component {
         compl_max: complMax,
         valid_min: validMin,
         valid_max: validMax,
+        includeArchived,
         selectedTM,
         sortOrder,
         page: 1
@@ -59,6 +62,13 @@ export default class Filters extends React.Component {
               tmList.map(({ name, id }) => ({ value: id, label: name }))
             }
           />
+        </fieldset>
+        <fieldset>
+          <legend>Archived Campaigns</legend>
+          <div className='checkbox'>
+            <input type='checkbox' id='toggleArchivedCampaigns' name='archived' checked={includeArchived} onChange={handleArchivedToggle} />
+            <label htmlFor='toggleArchivedCampaigns'>Include archived campaigns</label>
+          </div>
         </fieldset>
         <fieldset>
           <legend>Sort by</legend>

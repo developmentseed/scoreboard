@@ -10,6 +10,7 @@ export class Campaigns extends Component {
   constructor () {
     super()
 
+    this.handleArchivedToggle = this.handleArchivedToggle.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handleCompletenessChange = this.handleCompletenessChange.bind(this)
     this.handleValidationChange = this.handleValidationChange.bind(this)
@@ -48,6 +49,11 @@ export class Campaigns extends Component {
     this.props.handleCampaignsFiltersReset()
   }
 
+  handleArchivedToggle (event) {
+    event.preventDefault()
+    this.props.handleArchivedToggle(event.target.checked)
+  }
+
   componentDidMount () {
     this.props.resetCampaign()
     if (!this.props.campaignSearchResults || !Object.keys(this.props.campaignSearchResults.records).length) {
@@ -64,7 +70,8 @@ export class Campaigns extends Component {
       compl_max,
       valid_min,
       valid_max,
-      sortOrder
+      sortOrder,
+      includeArchived
     } = this.props.campaigns
 
     const {
@@ -92,6 +99,8 @@ export class Campaigns extends Component {
             <div className='widget-25'>
               <h3 className='header--medium'>Filter</h3>
               <CampaignFilters
+                includeArchived={includeArchived}
+                handleArchivedToggle={this.handleArchivedToggle}
                 handleCompletenessChange={this.handleCompletenessChange}
                 handleValidationChange={this.handleValidationChange}
                 handleSortChange={this.handleCampaignsSortChange}
