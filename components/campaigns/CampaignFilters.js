@@ -67,7 +67,7 @@ export default class Filters extends React.Component {
           <legend>Archived Campaigns</legend>
           <div className='checkbox'>
             <input type='checkbox' id='toggleArchivedCampaigns' name='archived' checked={includeArchived} onChange={handleArchivedToggle} />
-            <label for='toggleArchivedCampaigns'>Include archived campaigns</label>
+            <label htmlFor='toggleArchivedCampaigns'>Include archived campaigns</label>
           </div>
         </fieldset>
         <fieldset>
