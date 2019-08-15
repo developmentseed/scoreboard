@@ -22,7 +22,10 @@ function chartify ({
   buildings_del,
   coastlines_mod,
   coastlines_del,
-  coastlines_add
+  coastlines_add,
+  railways_add,
+  railways_mod,
+  railways_del
 }) {
   return [
     {
@@ -49,6 +52,11 @@ function chartify ({
       'id': 'coastlines',
       'label': 'Coastlines',
       'value': coastlines_add + coastlines_mod + coastlines_del || 0
+    },
+    {
+      'id': 'railways',
+      'label': 'Railways',
+      'value': railways_add + railways_mod + railways_del || 0
     }
   ]
 }
@@ -61,7 +69,7 @@ const theme = {
     textColor: '#eee',
     fontSize: '14px'
   },
-  colors: ['#22BDC1', '#8BC544', '#334A42', '#5657C2', '#4FCA9C']
+  colors: ['#22BDC1', '#8BC544', '#334A42', '#5657C2', '#4FCA9C', '#301F11']
 }
 
 export default function EditBreakdownChart (props) {
@@ -70,7 +78,8 @@ export default function EditBreakdownChart (props) {
     'poi_add',
     'roads_add',
     'buildings_add',
-    'coastlines_mod'
+    'coastlines_mod',
+    'railways_add'
   ], props)
   if (any(isNil, values(dataToChart))) {
     return (
