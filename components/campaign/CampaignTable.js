@@ -14,6 +14,7 @@ export default function CampaignTable (props) {
       km_roads_add_mod: user.km_roads_add + user.km_roads_mod,
       buildings_add_mod: user.buildings_add + user.buildings_mod,
       poi_add_mod: user.poi_add + user.poi_mod,
+      km_railways_add_mod: user.km_railways_add + user.km_railways_mod,
       km_coastlines_add_mod: user.km_coastlines_add + user.km_coastlines_mod,
       km_waterways_add_mod: user.km_waterways_add + user.km_waterways_mod
     }))
@@ -27,6 +28,7 @@ export default function CampaignTable (props) {
             <th>Roads (Km)</th>
             <th>Buildings</th>
             <th>Points of Interest</th>
+            <th>Railways (Km)</th>
             <th>Coastlines (Km)</th>
             <th>Waterways (Km)</th>
             <th>Changesets</th>
@@ -49,6 +51,7 @@ export default function CampaignTable (props) {
                   <td>{formatDecimal(user.km_roads_add_mod)}</td>
                   <td>{formatDecimal(user.buildings_add_mod)}</td>
                   <td>{formatDecimal(user.poi_add_mod)}</td>
+                  <td>{formatDecimal(user.km_railways_add_mod)}</td>
                   <td>{formatDecimal(user.km_coastlines_add_mod)}</td>
                   <td>{formatDecimal(user.km_waterways_add_mod)}</td>
                   <td>{formatDecimal(user.changeset_count)}</td>
@@ -63,6 +66,7 @@ export default function CampaignTable (props) {
         { label: 'Roads (Km)', key: 'km_roads_add_mod' },
         { label: 'Buildings', key: 'buildings_add_mod' },
         { label: 'Points of Interest', key: 'poi_add_mod' },
+        { label: 'Railways (Km)', key: 'km_railways_add_mod' },
         { label: 'Coastlines (Km)', key: 'km_coastlines_add_mod' },
         { label: 'Waterways (Km)', key: 'km_waterways_add_mod' },
         { label: 'Changesets', key: 'changeset_count' },

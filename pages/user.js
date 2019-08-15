@@ -115,6 +115,7 @@ export class User extends Component {
                 { label: 'Roads (Km)', key: 'recordsExport.km_roads_add_mod' },
                 { label: 'Buildings', key: 'recordsExport.buildings_add_mod' },
                 { label: 'Points of Interest', key: 'recordsExport.poi_add_mod' },
+                { label: 'Railways (Km)', key: 'authenticatedUserExport.km_railways_add_mod' },
                 { label: 'Coastlines (Km)', key: 'recordsExport.km_coastlines_add_mod' },
                 { label: 'Waterways (Km)', key: 'recordsExport.km_waterways_add_mod' },
                 { label: 'Total Edits', key: 'recordsExport.edit_sum' }

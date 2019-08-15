@@ -10,6 +10,8 @@ export default function Blurb ({
   buildings_mod,
   poi_add,
   poi_mod,
+  km_railways_add,
+  km_railways_mod,
   km_waterways_add,
   km_waterways_mod,
   km_coastlines_add,
@@ -31,6 +33,6 @@ export default function Blurb ({
   }
 
   return <h2 className='header--small width--shortened list--block'>
-    Since <mark>{firstYearEdited}</mark>, {sentence} <mark>{formatKm(km_roads_add + km_roads_mod)}</mark> of roads, <mark>{formatDecimal(buildings_add + buildings_mod)}</mark> buildings, <mark>{formatDecimal(poi_add + poi_mod)}</mark> Points of Interest, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add + km_waterways_mod)}</mark> of waterways in <mark>{country_list.length}</mark> <mark>{countryWord}</mark>.
+    Since <mark>{firstYearEdited}</mark>, {sentence} <mark>{formatKm(km_roads_add + km_roads_mod)}</mark> of roads, <mark>{formatDecimal(buildings_add + buildings_mod)}</mark> buildings, <mark>{formatDecimal(poi_add + poi_mod)}</mark> Points of Interest, <mark>{formatKm(km_railways_add + km_railways_mod)}</mark> railways, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add + km_waterways_mod)}</mark> of waterways in <mark>{country_list.length}</mark> <mark>{countryWord}</mark>.
   </h2>
 }

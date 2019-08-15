@@ -72,7 +72,8 @@ class Dashboard extends Component {
       buildings_add_mod: authenticatedUser.account.records.buildings_add + authenticatedUser.account.records.buildings_mod,
       poi_add_mod: authenticatedUser.account.records.poi_add + authenticatedUser.account.records.poi_mod,
       km_coastlines_add_mod: authenticatedUser.account.records.km_coastlines_add + authenticatedUser.account.records.km_coastlines_mod,
-      km_waterways_add_mod: authenticatedUser.account.records.km_waterways_add + authenticatedUser.account.records.km_waterways_mod
+      km_waterways_add_mod: authenticatedUser.account.records.km_waterways_add + authenticatedUser.account.records.km_waterways_mod,
+      km_railways_add_mod: authenticatedUser.account.records.km_railways_add + authenticatedUser.account.records.km_railways_mod
     }
     const breakdownChartProps = pick(
       [
@@ -164,36 +165,16 @@ class Dashboard extends Component {
               ]}
               headers={[
                 { label: 'Name', key: 'authenticatedUserExport.osm.displayName' },
-                {
-                  label: 'Campaigns',
-                  key: 'authenticatedUserExport.account.allCampaigns.length'
-                },
+                { label: 'Campaigns', key: 'authenticatedUserExport.account.allCampaigns.length' },
                 { label: 'Badges', key: 'badgeCount' },
                 { label: 'Countries', key: 'authenticatedUserExport.account.records.country_list.length' },
-                {
-                  label: 'Roads (Km)',
-                  key: 'authenticatedUserExport.km_roads_add_mod'
-                },
-                {
-                  label: 'Buildings',
-                  key: 'authenticatedUserExport.buildings_add_mod'
-                },
-                {
-                  label: 'Points of Interest',
-                  key: 'authenticatedUserExport.poi_add_mod'
-                },
-                {
-                  label: 'Coastlines (Km)',
-                  key: 'authenticatedUserExport.km_coastlines_add_mod'
-                },
-                {
-                  label: 'Waterways (Km)',
-                  key: 'authenticatedUserExport.km_waterways_add_mod'
-                },
-                {
-                  label: 'Total Edits',
-                  key: 'authenticatedUserExport.account.records.edit_count'
-                }
+                { label: 'Roads (Km)', key: 'authenticatedUserExport.km_roads_add_mod' },
+                { label: 'Buildings', key: 'authenticatedUserExport.buildings_add_mod' },
+                { label: 'Points of Interest', key: 'authenticatedUserExport.poi_add_mod' },
+                { label: 'Railways (Km)', key: 'authenticatedUserExport.km_railways_add_mod' },
+                { label: 'Coastlines (Km)', key: 'authenticatedUserExport.km_coastlines_add_mod' },
+                { label: 'Waterways (Km)', key: 'authenticatedUserExport.km_waterways_add_mod' },
+                { label: 'Total Edits', key: 'authenticatedUserExport.account.records.edit_count' }
               ]}
               filename={`${name}_ScoreboardData.csv`}
             >
