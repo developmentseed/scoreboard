@@ -71,7 +71,10 @@ export class User extends Component {
         'buildings_del',
         'coastlines_add',
         'coastlines_mod',
-        'coastlines_del'
+        'coastlines_del',
+        'railways_add',
+        'railways_mod',
+        'railways_del'
       ],
       records
     )
