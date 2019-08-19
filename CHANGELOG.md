@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Campaigns can be filtered to include or exclude archived campaigns
+- Railway features and lengths added, modified and deleted are included in campaigns, user profiles, dashboards and downloads
 
 ## [v1.3.5] - 2019-07-19
 ### Changed
