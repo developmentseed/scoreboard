@@ -97,6 +97,8 @@ export class Campaign extends Component {
       buildings_mod: 0,
       poi_add: 0,
       poi_mod: 0,
+      km_railways_add: 0,
+      km_railways_mod: 0,
       km_waterways_add: 0,
       km_waterways_mod: 0,
       km_coastlines_add: 0,

@@ -5,8 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+## [v1.4.0] - 2019-08-19
 ### Added
 - Campaigns can be filtered to include or exclude archived campaigns
+- Railway features and lengths added, modified and deleted are included in campaigns, user profiles, dashboards and downloads
 
 ## [v1.3.5] - 2019-07-19
 ### Changed
@@ -213,7 +215,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.3.4...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.4.0...HEAD
+[v1.4.0]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.4.0
 [v1.3.4]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.3.4
 [v1.3.3]: https://github.com/developmentseed/scoreboard/compare/v1.3.2...v1.3.3
 [v1.3.2]: https://github.com/developmentseed/scoreboard/compare/v1.3.1...v1.3.2
