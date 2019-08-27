@@ -1,88 +1,79 @@
 {
-  "country_id": 89,
-  "name": "Colombia",
-  "km_roads_add": 2.44381335262716,
-  "km_roads_mod": 1.0176232048626849E-5,
-  "km_waterways_add": 32.1572045873569,
-  "km_waterways_mod": 1.1886189521604379E-4,
-  "km_coastlines_add": 3.763615338623854,
-  "km_coastlines_mod": 1.5871402700965355E-5,
-  "roads_add": 828,
-  "roads_mod": 268,
-  "waterways_add": 103,
-  "waterways_mod": 229,
-  "coastlines_add": 541,
-  "coastlines_mod": 73,
-  "buildings_add": 15,
-  "buildings_mod": 17,
-  "poi_add": 114,
-  "poi_mod": 3,
-  "last_edit": 1548381499000,
-  "updated_at": 1548381499000,
-  "changeset_count": 10,
-  "edit_count": 5000,
-  "user_edits": [
-    {
-      "user": 55,
-      "count": 2084
+    "changeset_count": 1938,
+    "code": "COL",
+    "country_id": 89,
+    "counts": {
+        "buildings_added": 1268,
+        "buildings_modified": 188,
+        "coastlines_added": 8,
+        "coastlines_deleted": 3,
+        "coastlines_modified": 218,
+        "other_added": 615,
+        "other_deleted": 1160,
+        "other_modified": 3982,
+        "pois_added": 53,
+        "pois_modified": 22,
+        "raillines_added": 2,
+        "raillines_modified": 5,
+        "roads_added": 1728,
+        "roads_deleted": 72,
+        "roads_modified": 1416,
+        "waterways_added": 902,
+        "waterways_deleted": 13,
+        "waterways_modified": 602
     },
-    {
-      "user": 36,
-      "count": 1061
+    "edit_count": 10930,
+    "hashtag_changesets": {
+        "project1": 1,
+        "project2": 43,
+        "project3": 18,
+        "project4": 472,
+        "project5": 565
     },
-    {
-      "user": 63,
-      "count": 312
+    "hashtag_edits": {
+        "project1": 127,
+        "project2": 345,
+        "project3": 169,
+        "project4": 734,
+        "project5": 1287
     },
-    {
-      "user": 35,
-      "count": 173
+    "last_edit": "2019-08-08T16:10:59Z",
+    "measurements": {
+        "coastline_km_added": 2.7395002382973717,
+        "coastline_km_deleted": 8.087373912042874,
+        "coastline_km_modified": 864.0168579638488,
+        "railline_km_added": 2.782082015079345,
+        "railline_km_modified": 100.69672990525059,
+        "road_km_added": 907.0512125452548,
+        "road_km_modified": 1788.7896279290824,
+        "waterway_km_added": 2019.9731225072092,
+        "waterway_km_deleted": 2.376240992941413,
+        "waterway_km_modified": 2922.7162046729936
     },
-    {
-      "user": 132,
-      "count": 65
+    "name": "Colombia",
+    "updated_at": "2019-08-22T21:52:04.952960Z",
+    "user_changesets": {
+        "1": 37,
+        "2": 1371,
+        "3": 37,
+        "4": 92,
+        "5": 215,
+        "6": 90,
+        "7": 4,
+        "8": 11,
+        "9": 31,
+        "10": 5
     },
-    {
-      "user": 70,
-      "count": 45
-    },
-    {
-      "user": 8,
-      "count": 16
-    },
-    {
-      "user": 5,
-      "count": 13
-    },
-    {
-      "user": 40,
-      "count": 1
-    },
-    {
-      "user": 53,
-      "count": 1
+    "user_edits": {
+        "1": 1073,
+        "2": 2155,
+        "3": 173,
+        "4": 107,
+        "5": 1582,
+        "6": 1919,
+        "7": 1705,
+        "8": 1519,
+        "9": 343,
+        "10": 168
     }
-  ],
-  "hashtag_edits": [
-    {
-      "hashtag": "project-26",
-      "count": 3976
-    },
-    {
-      "hashtag": "project-16",
-      "count": 775
-    },
-    {
-      "hashtag": "project-10",
-      "count": 685
-    },
-    {
-      "hashtag": "project-29",
-      "count": 222
-    },
-    {
-      "hashtag": "project-7",
-      "count": 80
-    }
-  ]
 }

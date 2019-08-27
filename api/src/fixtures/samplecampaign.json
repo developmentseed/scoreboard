@@ -1,27 +1,39 @@
 {
+  "changeset_count": 1,
+  "counts": {
+    "buildings_added": 3809,
+    "buildings_modified": 74887,
+    "roads_added": 1413,
+    "roads_modified": 97915,
+    "waterways_added": 97,
+    "waterways_modified": 288,
+    "coastlines_added": 97,
+    "coastlines_modified": 288,
+    "raillines_added": 288,
+    "raillines_modified": 288,
+    "raillines_deleted": 288,
+    "pois_added": 29,
+    "pois_modified": 423
+  },
+  "edit_count": 0,
+  "last_edit": "2019-07-31T20:13:54Z",
+  "measurements": {
+    "coastline_km_added": 95.22816263038682,
+    "coastline_km_modified": 127.86867039987462,
+    "railline_km_added": 127.86867039987462,
+    "railline_km_modified": 127.86867039987462,
+    "railline_km_deleted": 127.86867039987462,
+    "road_km_modified": 2736.231451055715,
+    "road_km_added": 445.7984955172985,
+    "waterway_km_modified": 127.86867039987462,
+    "waterway_km_added": 95.22816263038682
+  },
   "tag": "project",
-  "extent_uri": "hashtag/project/{z}/{x}/{y}.mvt",
-  "buildings_add": 3809,
-  "buildings_mod": 74887,
-  "roads_add": 1413,
-  "km_roads_add": 445.7984955172985,
-  "roads_mod": 97915,
-  "km_roads_mod": 2736.231451055715,
-  "waterways_add": 97,
-  "km_waterways_add": 95.22816263038682,
-  "waterways_mod": 288,
-  "km_waterways_mod": 127.86867039987462,
-  "coastlines_add": 97,
-  "km_coastlines_add": 95.22816263038682,
-  "coastlines_mod": 288,
-  "km_coastlines_mod": 127.86867039987462,
-  "railways_add": 288,
-  "railways_mod": 288,
-  "railways_del": 288,
-  "km_railways_add": 127.86867039987462,
-  "km_railways_mod": 127.86867039987462,
-  "km_railways_del": 127.86867039987462,
-  "poi_add": 29,
-  "poi_mod": 423,
-  "users": []
+  "updated_at": "2019-08-22T21:02:30.864111Z",
+  "user_changesets": {
+      "1": 1
+  },
+  "user_edits": {
+      "1": 4
+  }
 }

@@ -122,6 +122,124 @@ function generateOSMesaUser (id, name) {
   }
 }
 
+// example of new user schema
+
+/*
+{
+    "changeset_count": 112,
+    "country_changesets": {
+        "BFA": 11,
+        "CHN": 15,
+        "CUB": 410,
+        "ERI": 206,
+        "IRN": 1,
+        "IRQ": 62,
+        "JAM": 8,
+        "JPN": 39,
+        "KEN": 26,
+        "MEX": 9,
+        "NER": 1,
+        "NPL": 2,
+        "SAU": 8,
+        "SDS": 40,
+        "SOL": 7,
+        "SOM": 1,
+        "VEN": 1,
+        "VGB": 8,
+        "YEM": 2
+    },
+    "country_edits": {
+        "BFA": 93,
+        "CHN": 166,
+        "CUB": 6415,
+        "ERI": 3325,
+        "IRN": 2,
+        "IRQ": 754,
+        "JAM": 192,
+        "JPN": 536,
+        "KEN": 60,
+        "MEX": 48,
+        "NER": 115,
+        "NPL": 2,
+        "SAU": 12,
+        "SDS": 935,
+        "SOL": 44,
+        "SOM": 9,
+        "VEN": 3,
+        "VGB": 248,
+        "YEM": 5
+    },
+    "counts": {
+        "buildings_added": 9078,
+        "buildings_modified": 1004,
+        "coastlines_added": 2,
+        "coastlines_modified": 19,
+        "other_added": 501,
+        "other_modified": 269,
+        "pois_added": 55,
+        "pois_modified": 24,
+        "raillines_added": 1,
+        "raillines_modified": 16,
+        "roads_added": 1310,
+        "roads_modified": 1289,
+        "waterways_added": 26,
+        "waterways_modified": 13
+    },
+    "day_changesets": {
+        "2016-03-31": 4,
+        "2016-04-04": 30,
+        "2016-04-05": 20,
+        "2016-04-06": 30,
+        "2016-04-07": 28
+    },
+    "edit_count": 13607,
+    "editor_changesets": {
+        "JOSM/1.5 (11846 SVN en)": 122,
+        "Osmosis 0.45-52-gd4e52fd-SNAPSHOT": 16,
+        "iD 1.8.5": 281,
+        "iD 1.9.7": 2,
+        "iD 2.1.3": 16,
+        "iD 2.2.2": 3
+    },
+    "editor_edits": {
+        "JOSM/1.5 (11846 SVN en)": 1249,
+        "Osmosis 0.45-52-gd4e52fd-SNAPSHOT": 426,
+        "iD 1.8.5": 264,
+        "iD 1.9.7": 2,
+        "iD 2.1.3": 67,
+        "iD 2.2.2": 7
+    },
+    "hashtag_changesets": {
+      "project1": 6,
+      "project2": 334,
+      "project3": 26,
+      "project4": 23,
+      "project5": 41
+    },
+    "hashtag_edits": {
+      "project1": 29,
+      "project2": 4701,
+      "project3": 386,
+      "project4": 209,
+      "project5": 922
+    },
+    "last_edit": "2017-10-05T16:57:00Z",
+    "measurements": {
+      "coastline_km_added": 1.400289389349854,
+      "coastline_km_modified": 86.26676638074764,
+      "railline_km_added": 0.12335684241334144,
+      "railline_km_modified": 7.0846382622749084,
+      "road_km_added": 386.319668455548,
+      "road_km_modified": 1217.1720400033741,
+      "waterway_km_added": 20.79930559655762,
+      "waterway_km_modified": 44.66342334900786
+    },
+    "name": "test",
+    "uid": 1,
+    "updated_at": "2019-08-22T17:22:07.325945Z"
+}
+*/
+
 module.exports = {
   generateUsers,
   generateOSMesaUser,
