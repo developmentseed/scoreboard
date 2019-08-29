@@ -10,7 +10,6 @@ import DashboardBlurb from '../components/dashboard/DashboardBlurb'
 import { formatDecimal } from '../lib/utils/format'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
-import { pick } from 'ramda'
 import dynamic from 'next/dynamic'
 import { CSVLink } from 'react-csv'
 
@@ -34,6 +33,7 @@ export class User extends Component {
 
   render () {
     if (!this.props.user) return <div />
+
     const {
       records,
       country,
@@ -42,58 +42,58 @@ export class User extends Component {
       refreshDate,
       allCampaigns
     } = this.props.user
-    const { extent_uri, uid } = records
+
     if (!records) return <div />
+
+    const { extent_uri, uid, hashtag_edits, day_edits, name, counts, measurements, country_edits } = records
+
+    const {
+      buildings_added,
+      buildings_modified,
+      pois_added,
+      pois_modified
+    } = counts
+
+    const {
+      road_km_added,
+      road_km_modified,
+      coastline_km_added,
+      coastline_km_modified,
+      waterway_km_added,
+      waterway_km_modified,
+      railline_km_added,
+      railline_km_modified
+    } = measurements
+
     const badgeCount = Object.keys(badges.earnedBadges).length
-    const campaignCount = records.hashtags.length
-    const { name, hashtags, edit_times } = records
+    const campaignCount = Object.keys(hashtag_edits).length
+
     const recordsExport = {
       ...records,
-      km_roads_add_mod: records.km_roads_add + records.km_roads_mod,
-      buildings_add_mod: records.buildings_add + records.buildings_mod,
-      poi_add_mod: records.poi_add + records.poi_mod,
-      km_coastlines_add_mod: records.km_coastlines_add + records.km_coastlines_mod,
-      km_waterways_add_mod: records.km_waterways_add + records.km_waterways_mod
+      road_km_total: road_km_added + road_km_modified,
+      buildings_total: buildings_added + buildings_modified,
+      pois_total: pois_added + pois_modified,
+      coastline_km_total: coastline_km_added + coastline_km_modified,
+      waterway_km_total: waterway_km_added + waterway_km_modified,
+      railline_km_total: railline_km_added + railline_km_modified,
+      country_count: Object.keys(country_edits).length
     }
-    const breakdownChartProps = pick(
-      [
-        'waterways_add',
-        'waterways_mod',
-        'waterways_del',
-        'poi_add',
-        'poi_mod',
-        'poi_del',
-        'roads_add',
-        'roads_mod',
-        'roads_del',
-        'buildings_add',
-        'buildings_mod',
-        'buildings_del',
-        'coastlines_add',
-        'coastlines_mod',
-        'coastlines_del',
-        'railways_add',
-        'railways_mod',
-        'railways_del'
-      ],
-      records
-    )
 
     return (
       <div className='dashboard'>
         <DashboardHeader
           id={this.props.id}
           name={name}
-          edit_times={edit_times}
+          day_edits={day_edits}
           country={country}
           refreshDate={refreshDate}
         />
         <ScoreboardPanel
-          title={`${records.name}'s Scoreboard`}
+          title={`${name}'s Scoreboard`}
           facets={[
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
-            { label: 'Edits', value: formatDecimal(records.edit_sum) },
+            { label: 'Edits', value: formatDecimal(records.edit_count) },
             { label: 'Changesets', value: formatDecimal(records.changeset_count) }
           ]}
         />
@@ -114,14 +114,14 @@ export class User extends Component {
                 { label: 'Name', key: 'recordsExport.name' },
                 { label: 'Campaigns', key: 'campaignCount' },
                 { label: 'Badges', key: 'badgeCount' },
-                { label: 'Countries', key: 'recordsExport.country_list.length' },
-                { label: 'Roads (Km)', key: 'recordsExport.km_roads_add_mod' },
-                { label: 'Buildings', key: 'recordsExport.buildings_add_mod' },
-                { label: 'Points of Interest', key: 'recordsExport.poi_add_mod' },
-                { label: 'Railways (Km)', key: 'authenticatedUserExport.km_railways_add_mod' },
-                { label: 'Coastlines (Km)', key: 'recordsExport.km_coastlines_add_mod' },
-                { label: 'Waterways (Km)', key: 'recordsExport.km_waterways_add_mod' },
-                { label: 'Total Edits', key: 'recordsExport.edit_sum' }
+                { label: 'Countries', key: 'recordsExport.country_count' },
+                { label: 'Roads (Km)', key: 'recordsExport.road_km_total' },
+                { label: 'Buildings', key: 'recordsExport.buildings_total' },
+                { label: 'Points of Interest', key: 'recordsExport.pois_total' },
+                { label: 'Railways (Km)', key: 'authenticatedUserExport.railline_km_total' },
+                { label: 'Coastlines (Km)', key: 'recordsExport.coastline_km_total' },
+                { label: 'Waterways (Km)', key: 'recordsExport.waterway_km_total' },
+                { label: 'Total Edits', key: 'recordsExport.edit_count' }
               ]}
               filename={`${name}_ScoreboardData.csv`}
             >
@@ -141,13 +141,13 @@ export class User extends Component {
             <div className='widget-container'>
               <div className='widget-66'>
                 <CampaignsChart
-                  hashtags={hashtags}
+                  hashtag_edits={hashtag_edits}
                   campaigns={allCampaigns}
                   height='260px'
                 />
               </div>
               <div className='widget-33'>
-                <EditBreakdownChart {...breakdownChartProps} height='260px' />
+                <EditBreakdownChart {...counts} height='260px' />
               </div>
             </div>
           </div>
@@ -160,7 +160,7 @@ export class User extends Component {
             </div>
           </div>
           <div className='row'>
-            <CalendarHeatmap times={edit_times} />
+            <CalendarHeatmap times={day_edits} />
           </div>
         </section>
       </div>

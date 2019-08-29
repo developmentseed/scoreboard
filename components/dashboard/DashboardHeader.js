@@ -8,20 +8,21 @@ import { head } from 'ramda'
  * Given the edit times for a user return the difference between now()
  * and the last edit of that user in words (e.g 3 days ago.);
  *
- * @param {Array[Date]} edit_times
+ * @param {Array[Date]} day_edits
  */
-function getLastEdit (edit_times) {
-  if (edit_times.length === 0) {
+function getLastEdit (day_edits) {
+  const days = Object.keys(day_edits).map(time => parse(time.day))
+
+  if (!days.length) {
     return `N/A`
   }
 
-  const days = edit_times.map(time => parse(time.day))
   const lastEdit = head(days.sort(compareDesc))
   return formatEditTimeDescription(lastEdit)
 }
 
 function DashboardHeader (props) {
-  const { loggedIn, id, edit_times, country, name, profileImage, refreshDate } = props
+  const { loggedIn, id, day_edits, country, name, profileImage, refreshDate } = props
 
   return (
     <header className='header--internal--green header--page'>
@@ -39,7 +40,7 @@ function DashboardHeader (props) {
             <ul className='list--two-column clearfix'>
               <li>
                 <span className='list-label'>Last Edit:</span>
-                <strong>{getLastEdit(edit_times)}</strong>
+                <strong>{getLastEdit(day_edits)}</strong>
               </li>
               <li>
                 <span className='list-label'>Country:</span>

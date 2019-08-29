@@ -1,24 +1,24 @@
 const { map, props, sum } = require('ramda')
 
 const summable = [
-  'buildings_add',
-  'buildings_mod',
-  'buildings_del',
-  'poi_add',
-  'poi_mod',
-  'poi_del',
-  'roads_add',
-  'roads_mod',
-  'roads_del',
-  'railways_add',
-  'railways_mod',
-  'railways_del',
-  'coastlines_add',
-  'coastlines_mod',
-  'coastlines_del',
-  'waterways_add',
-  'waterways_mod',
-  'waterways_del'
+  'buildings_added',
+  'buildings_modified',
+  'buildings_deleted',
+  'pois_added',
+  'pois_modified',
+  'pois_deleted',
+  'roads_added',
+  'roads_modified',
+  'roads_deleted',
+  'raillines_added',
+  'raillines_modified',
+  'raillines_deleted',
+  'coastlines_added',
+  'coastlines_modified',
+  'coastlines_deleted',
+  'waterways_added',
+  'waterways_modified',
+  'waterways_deleted'
 ]
 
 /**

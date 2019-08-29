@@ -155,5 +155,6 @@ test('Get campaigns with archived', async t => {
     .expect(200)
 
   // the second response should have strictly more campaigns
+  console.log('second.body.total > first.body.total', second.body.total, first.body.total, second.body.total > first.body.total, typeof second.body.total, typeof first.body.total)
   t.true(second.body.total > first.body.total)
 })

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ResponsivePie } from '@nivo/pie'
-import { pick, isNil, values, any } from 'ramda'
+import { isNil, values, any } from 'ramda'
 
 /**
  * chartify
@@ -8,55 +8,55 @@ import { pick, isNil, values, any } from 'ramda'
  * @param {*} props
  */
 function chartify ({
-  waterways_add,
-  waterways_mod,
-  waterways_del,
-  poi_add,
-  poi_mod,
-  poi_del,
-  roads_add,
-  roads_mod,
-  roads_del,
-  buildings_add,
-  buildings_mod,
-  buildings_del,
-  coastlines_mod,
-  coastlines_del,
-  coastlines_add,
-  railways_add,
-  railways_mod,
-  railways_del
+  waterways_added,
+  waterways_modified,
+  waterways_deleted,
+  pois_added,
+  pois_modified,
+  pois_deleted,
+  roads_added,
+  roads_modified,
+  roads_deleted,
+  buildings_added,
+  buildings_modified,
+  buildings_deleted,
+  coastlines_modified,
+  coastlines_deleted,
+  coastlines_added,
+  raillines_added,
+  raillines_modified,
+  raillines_deleted
 }) {
   return [
     {
       'id': 'waterways',
       'label': 'Waterways',
-      'value': waterways_add + waterways_mod + waterways_del || 0
+      'value': waterways_added + waterways_modified + waterways_deleted || 0
     },
     {
       'id': 'buildings',
       'label': 'Buildings',
-      'value': buildings_add + buildings_mod + buildings_del || 0
+      'value': buildings_added + buildings_modified + buildings_deleted || 0
     },
     {
       'id': 'roads',
       'label': 'Roads',
-      'value': roads_add + roads_mod + roads_del || 0
+      'value': roads_added + roads_modified + roads_deleted || 0
     },
     {
       'id': 'poi',
       'label': 'POI',
-      'value': poi_add + poi_mod + poi_del || 0
+      'value': pois_added + pois_modified + pois_deleted || 0
     },
     {
       'id': 'coastlines',
       'label': 'Coastlines',
-      'value': coastlines_add + coastlines_mod + coastlines_del || 0
+      'value': coastlines_added + coastlines_modified + coastlines_deleted || 0
     },
     {
       'id': 'railways',
       'label': 'Railways',
-      'value': railways_add + railways_mod + railways_del || 0
+      'value': raillines_added + raillines_modified + raillines_deleted || 0
     }
   ]
 }
@@ -73,14 +73,24 @@ const theme = {
 }
 
 export default function EditBreakdownChart (props) {
-  const dataToChart = pick([
-    'waterways_add',
-    'poi_add',
-    'roads_add',
-    'buildings_add',
-    'coastlines_mod',
-    'railways_add'
-  ], props)
+  const {
+    waterways_added,
+    pois_added,
+    roads_added,
+    buildings_added,
+    coastlines_modified,
+    height
+  } = props
+
+  const dataToChart = {
+    waterways_added,
+    pois_added,
+    roads_added,
+    buildings_added,
+    coastlines_modified,
+    raillines_added
+  }
+
   if (any(isNil, values(dataToChart))) {
     return (
       <div className='chart chart-pie widget' style={{ height: props.height }}>
@@ -91,7 +101,7 @@ export default function EditBreakdownChart (props) {
   }
 
   return (
-    <div className='chart chart-pie widget' style={{ height: props.height }}>
+    <div className='chart chart-pie widget' style={{ height: height }}>
       <h4 className='header--small'>Type Of Edits</h4>
       <ResponsivePie
         data={chartify(props)}

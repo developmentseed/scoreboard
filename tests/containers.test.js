@@ -81,8 +81,8 @@ it('User renders without crashing', () => {
   const mockProps = {
     actions,
     records: {
-      hashtags: [],
-      edit_times: []
+      hashtag_edits: {},
+      day_edits: {}
     },
     country: 'AF',
     badges: {

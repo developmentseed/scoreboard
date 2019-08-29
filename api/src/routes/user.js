@@ -12,8 +12,6 @@ const { canEditUser } = require('../passport')
 const db = require('../db/connection')
 const getCountriesEdited = require('../utils/getCountriesEdited')
 const refreshStatus = require('../utils/osmesaStatus.js')
-const getSumEdits = require('../utils/sum_edits')
-const { prop } = require('ramda')
 
 /**
  * User Stats Route
@@ -56,54 +54,67 @@ async function get (req, res) {
     console.error(err.message)
 
     osmesaData = {
-      uid: parseInt(id, 10),
-      name: user.full_name,
-      edit_count: 0,
-      buildings_add: 0,
-      buildings_mod: 0,
-      buildings_del: 0,
-      roads_add: 0,
-      km_roads_add: 0,
-      roads_mod: 0,
-      km_roads_mod: 0,
-      roads_del: 0,
-      km_roads_del: 0,
-      railways_add: 0,
-      km_railways_add: 0,
-      railways_mod: 0,
-      km_railways_mod: 0,
-      railways_del: 0,
-      km_railways_del: 0,
-      waterways_add: 0,
-      km_waterways_add: 0,
-      waterways_mod: 0,
-      km_waterways_mod: 0,
-      waterways_del: 0,
-      km_waterways_del: 0,
-      coastlines_add: 0,
-      coastlines_mod: 0,
-      coastlines_del: 0,
-      km_coastlines_add: 0,
-      km_coastlines_mod: 0,
-      km_coastlines_del: 0,
-      poi_add: 0,
-      poi_mod: 0,
-      poi_del: 0,
       changeset_count: 0,
-      editors: [],
-      edit_times: [],
-      country_list: [],
-      hashtags: []
+      country_changesets: {},
+      country_edits: {},
+      counts: {
+        buildings_added: 0,
+        buildings_deleted: 0,
+        buildings_modified: 0,
+        coastlines_added: 0,
+        coastlines_deleted: 0,
+        coastlines_modified: 0,
+        other_added: 0,
+        other_deleted: 0,
+        other_modified: 0,
+        pois_added: 0,
+        pois_deleted: 0,
+        pois_modified: 0,
+        raillines_added: 0,
+        raillines_deleted: 0,
+        raillines_modified: 0,
+        roads_added: 0,
+        roads_deleted: 0,
+        roads_modified: 0,
+        waterways_added: 0,
+        waterways_deleted: 0,
+        waterways_modified: 0
+      },
+      day_edits: {},
+      day_changesets: {},
+      edit_count: 0,
+      editor_changesets: {},
+      editor_edits: {},
+      hashtag_changesets: {},
+      hashtag_edits: {},
+      last_edit: null,
+      measurements: {
+        coastline_km_added: 0,
+        coastline_km_deleted: 0,
+        coastline_km_modified: 0,
+        railline_km_added: 0,
+        railline_km_deleted: 0,
+        railline_km_modified: 0,
+        road_km_added: 0,
+        road_km_deleted: 0,
+        road_km_modified: 0,
+        waterway_km_added: 0,
+        waterway_km_deleted: 0,
+        waterway_km_modified: 0
+      },
+      name: user.full_name,
+      uid: parseInt(id, 10),
+      updated_at: null
     }
   }
 
   if (osmesaData.extent_uri) {
     osmesaData.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', osmesaData.extent_uri)
   }
-  osmesaData['edit_sum'] = getSumEdits(osmesaData)
+
   const refreshDate = await refreshStatus('user')
 
-  let countriesEdited = getCountriesEdited(osmesaData.country_list)
+  let countriesEdited = getCountriesEdited(osmesaData.country_edits)
 
   let badges
   try {
@@ -158,7 +169,7 @@ async function get (req, res) {
     console.error(err)
   }
 
-  let allCampaigns = await db('campaigns').whereIn('campaign_hashtag', osmesaData.hashtags.map(prop('tag')))
+  let allCampaigns = await db('campaigns').whereIn('campaign_hashtag', Object.keys(osmesaData.hashtag_edits))
 
   return res.send({
     id,

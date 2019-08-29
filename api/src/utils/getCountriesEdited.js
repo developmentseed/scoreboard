@@ -9,24 +9,26 @@ const { isState } = require('../models/userCountryEdits')
  * has a property "editCount" that contains the number of edits in
  * that country
  */
-function getCountriesEdited (countryList) {
+function getCountriesEdited (countryEdits) {
+  const countries = Object.keys(countryEdits)
+
   let fc = {
     'type': 'FeatureCollection',
     'features': []
   }
-  countryList.forEach(item => {
+
+  countries.forEach(countryName => {
     let country = countriesGeoJSON.features.find((countryArr) => {
-      let name = item.name
-      if (isState(name)) {
-        name = 'United States of America'
+      if (isState(countryName)) {
+        countryName = 'United States of America'
       }
-      return countryArr.properties.NAME_LONG === item.name || countryArr.properties.NAME === item.name
+      return countryArr.properties.NAME_LONG === countryName || countryArr.properties.NAME === countryName
     })
     if (country) {
-      country.properties.editCount = item.count
+      country.properties.editCount = countryEdits[countryName]
       fc.features.push(country)
     } else {
-      console.log('Could not find item', item)
+      console.log('Could not find country', countryName)
     }
   })
   return fc

@@ -7,13 +7,14 @@ import findCountryByName from '../../lib/utils/findCountryByName'
 function formatCountryList (userCountries) {
   if (!userCountries) return
   return userCountries.map((country) => {
-    return findCountryByName(country.name)
+    return findCountryByName(country)
   }).filter((country) => !!country)
 }
 
 function DashboardSidebar (props) {
   const { teams, osmesaData } = props
-  const countries = osmesaData ? formatCountryList(osmesaData.country_list) : []
+  const countryNames = Object.keys(osmesaData.country_edits)
+  const countries = osmesaData ? formatCountryList(countryNames) : []
   return (
     <div className='sidebar-right widget-25'>
       <h2 className='header--large' style={{ marginBottom: 5 }}>

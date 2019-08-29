@@ -54,6 +54,7 @@ function getTotalEdits (country_name) {
  * @returns {Promise} a response
  */
 function getParticipants (country_name, limitNum) {
+  console.log('getParticipants', country_name)
   if (typeof limitNum === 'undefined') {
     return db('user_country_edits')
       .innerJoin(exclusionList.includedUsers().as('users'), 'user_id', 'users.id')

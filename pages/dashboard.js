@@ -5,7 +5,6 @@ import { withAlert } from 'react-alert'
 
 import { actions } from '../lib/store'
 import { isAdmin } from '../lib/utils/roles'
-import { pick } from 'ramda'
 
 import NotLoggedIn from '../components/NotLoggedIn'
 import AdminSectionList from '../components/admin/AdminSectionList'
@@ -65,47 +64,45 @@ class Dashboard extends Component {
 
     const { badges, teams, refreshDate } = account
     const osmesaData = account.records
-    const { hashtags, edit_times, extent_uri, uid } = osmesaData
+    const { hashtag_edits, day_edits, extent_uri, uid } = osmesaData
+
+    const { counts, measurements, country_edits } = authenticatedUser.account.records
+
+    const {
+      buildings_added,
+      buildings_modified,
+      pois_added,
+      pois_modified
+    } = counts
+
+    const {
+      road_km_added,
+      road_km_modified,
+      coastline_km_added,
+      coastline_km_modified,
+      waterway_km_added,
+      waterway_km_modified,
+      railline_km_added,
+      railline_km_modified
+    } = measurements
+
     const authenticatedUserExport = {
       ...authenticatedUser,
-      km_roads_add_mod: authenticatedUser.account.records.km_roads_add + authenticatedUser.account.records.km_roads_mod,
-      buildings_add_mod: authenticatedUser.account.records.buildings_add + authenticatedUser.account.records.buildings_mod,
-      poi_add_mod: authenticatedUser.account.records.poi_add + authenticatedUser.account.records.poi_mod,
-      km_coastlines_add_mod: authenticatedUser.account.records.km_coastlines_add + authenticatedUser.account.records.km_coastlines_mod,
-      km_waterways_add_mod: authenticatedUser.account.records.km_waterways_add + authenticatedUser.account.records.km_waterways_mod,
-      km_railways_add_mod: authenticatedUser.account.records.km_railways_add + authenticatedUser.account.records.km_railways_mod
+      road_km_total: road_km_added + road_km_modified,
+      buildings_total: buildings_added + buildings_modified,
+      pois_total: pois_added + pois_modified,
+      coastline_km_total: coastline_km_added + coastline_km_modified,
+      waterway_km_total: waterway_km_added + waterway_km_modified,
+      railline_km_total: railline_km_added + railline_km_modified,
+      country_count: Object.keys(country_edits).length
     }
-    const breakdownChartProps = pick(
-      [
-        'waterways_add',
-        'waterways_mod',
-        'waterways_del',
-        'poi_add',
-        'poi_mod',
-        'poi_del',
-        'roads_add',
-        'roads_mod',
-        'roads_del',
-        'buildings_add',
-        'buildings_mod',
-        'buildings_del',
-        'coastlines_add',
-        'coastlines_mod',
-        'coastlines_del',
-        'railways_add',
-        'railways_mod',
-        'railways_del'
-      ],
-      osmesaData
-    )
 
     // Calculate counts for panel
     const badgeCount =
       account.badges && badges.earnedBadges
         ? Object.keys(badges.earnedBadges).length
         : 0
-    const campaignCount =
-      osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0
+    const campaignCount = osmesaData && osmesaData.hashtag_edits ? Object.keys(osmesaData.hashtag_edits).length : 0
     const changesetCount = osmesaData ? osmesaData.changeset_count : 0
 
     if (!loggedIn || !account) {
@@ -142,7 +139,7 @@ class Dashboard extends Component {
           loggedIn
           name={name}
           profileImage={profileImage}
-          edit_times={edit_times}
+          day_edits={day_edits}
           country={country}
           refreshDate={refreshDate}
         />
@@ -151,7 +148,7 @@ class Dashboard extends Component {
           facets={[
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
-            { label: 'Edits', value: formatDecimal(osmesaData.edit_sum) },
+            { label: 'Edits', value: formatDecimal(osmesaData.edit_count) },
             { label: 'Changesets', value: formatDecimal(changesetCount) }
           ]}
         />
@@ -170,13 +167,13 @@ class Dashboard extends Component {
                 { label: 'Name', key: 'authenticatedUserExport.osm.displayName' },
                 { label: 'Campaigns', key: 'authenticatedUserExport.account.allCampaigns.length' },
                 { label: 'Badges', key: 'badgeCount' },
-                { label: 'Countries', key: 'authenticatedUserExport.account.records.country_list.length' },
-                { label: 'Roads (Km)', key: 'authenticatedUserExport.km_roads_add_mod' },
-                { label: 'Buildings', key: 'authenticatedUserExport.buildings_add_mod' },
-                { label: 'Points of Interest', key: 'authenticatedUserExport.poi_add_mod' },
-                { label: 'Railways (Km)', key: 'authenticatedUserExport.km_railways_add_mod' },
-                { label: 'Coastlines (Km)', key: 'authenticatedUserExport.km_coastlines_add_mod' },
-                { label: 'Waterways (Km)', key: 'authenticatedUserExport.km_waterways_add_mod' },
+                { label: 'Countries', key: 'authenticatedUserExport.country_count' },
+                { label: 'Roads (Km)', key: 'authenticatedUserExport.road_km_total' },
+                { label: 'Buildings', key: 'authenticatedUserExport.buildings_total' },
+                { label: 'Points of Interest', key: 'authenticatedUserExport.pois_total' },
+                { label: 'Railways (Km)', key: 'authenticatedUserExport.railline_km_total' },
+                { label: 'Coastlines (Km)', key: 'authenticatedUserExport.coastline_km_total' },
+                { label: 'Waterways (Km)', key: 'authenticatedUserExport.waterway_km_total' },
                 { label: 'Total Edits', key: 'authenticatedUserExport.account.records.edit_count' }
               ]}
               filename={`${name}_ScoreboardData.csv`}
@@ -209,12 +206,12 @@ class Dashboard extends Component {
               <div className='widget-66'>
                 <CampaignsChart
                   campaigns={allCampaigns}
-                  hashtags={hashtags}
+                  hashtag_edits={hashtag_edits}
                   height='260px'
                 />
               </div>
               <div className='widget-33'>
-                <EditBreakdownChart {...breakdownChartProps} height='260px' />
+                <EditBreakdownChart {...counts} height='260px' />
               </div>
             </div>
           </div>
@@ -227,7 +224,7 @@ class Dashboard extends Component {
             </div>
           </div>
           <div className='row'>
-            <CalendarHeatmap times={edit_times} />
+            <CalendarHeatmap times={day_edits} />
           </div>
         </section>
       </div>

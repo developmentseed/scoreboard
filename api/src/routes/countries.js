@@ -66,7 +66,7 @@ async function stats (req, res) {
     // add codes to each country
     records = records.map((c) => {
       const countryPair = countryList.find((country_pair) => {
-        return country_pair.name === c.name
+        return country_pair.code === c.name
       })
       c.code = countryPair.code
       return c

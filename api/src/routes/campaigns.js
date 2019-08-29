@@ -84,7 +84,7 @@ module.exports = async (req, res) => {
 
     const refreshDate = await refreshStatus('campaigns')
 
-    return res.send({ records, total, allCount, tms, refreshDate })
+    return res.send({ records, total: parseInt(total), allCount, tms, refreshDate })
   } catch (err) {
     console.error(err)
     return res.boom.notFound('Could not retrieve records')

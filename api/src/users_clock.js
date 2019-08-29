@@ -11,40 +11,40 @@ const { updateUserCountryEdit, isState } = require('./models/userCountryEdits')
 /*
  * Given the edit times for a user get the last edit
  *
- * @param {Array[Date]} editTimes
+ * @param {Array[Date]} dayEdits
  */
-function getLastEdit (editTimes) {
-  const days = editTimes.map((time) => parse(time.day))
+function getLastEdit (dayEdits) {
+  const days = Object.keys(dayEdits).map((day) => parse(day))
   return head(days.sort(compareDesc))
 }
 
-async function updateCountries (userID, countryEditList) {
+async function updateCountries (userID, countryEdits, countryChangesets) {
   const countryEditTotal = {}
   const countryChangesetTotal = {}
+  const countries = Object.keys(countryEdits)
 
   // get total edits for a given user
-  countryEditList.forEach((tuple) => {
-    let countryName = tuple.name
-    if (isState(countryName)) {
-      countryName = 'United States of America'
+  const promises = countries.map((country) => {
+    if (isState(country)) {
+      country = 'United States of America'
     }
-    if (!countryEditTotal[countryName]) {
-      countryEditTotal[countryName] = 0
-      countryChangesetTotal[countryName] = 0
+
+    if (!countryEditTotal[country]) {
+      countryEditTotal[country] = 0
+      countryChangesetTotal[country] = 0
     }
-    countryEditTotal[countryName] += tuple.edit_count
-    countryChangesetTotal[countryName] += tuple.changeset_count
+
+    if (countryEdits[country]) countryEditTotal[country] += countryEdits[country]
+    if (countryChangesets[country]) countryChangesetTotal[country] += countryChangesets[country]
+
+    return updateUserCountryEdit(
+      userID,
+      country,
+      countryEditTotal[country],
+      countryChangesetTotal[country]
+    )
   })
 
-  // edit countries for each user
-  const promises = Object.keys(
-    countryEditTotal
-  ).map((country) => updateUserCountryEdit(
-    userID,
-    country,
-    countryEditTotal[country],
-    countryChangesetTotal[country]
-  ))
   return Promise.all(promises)
 }
 
@@ -68,8 +68,8 @@ async function usersWorker () {
         if (resp.length) {
           const data = JSON.parse(resp)
           obj.edit_count = sumEdits(data) || 0
-          obj.last_edit = getLastEdit(data.edit_times)
-          await updateCountries(obj.id, data.country_list)
+          obj.last_edit = getLastEdit(data.day_edits)
+          await updateCountries(obj.id, data.country_edits, data.country_changesets)
         }
       } catch (e) {
         if (e.statusCode !== 404) {

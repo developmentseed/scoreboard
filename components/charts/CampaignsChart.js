@@ -8,27 +8,28 @@ import getTspanGroups from '../../lib/utils/getTspanGroups'
  * Takes props and turns them into chart data
  * @param {*} props
  */
-function chartify ({ campaigns, hashtags }) {
+function chartify ({ campaigns, hashtag_edits }) {
   // merge campaigns and hashtags
   let contributed = []
+  const hashtags = Object.keys(hashtag_edits)
   for (let i = 0; i < campaigns.length; i++) {
     let tag = campaigns[i].campaign_hashtag
     let hashtag = hashtags.find(h => {
-      return h.tag === tag
+      return h === tag
     })
     if (hashtag) {
       contributed.push({
         id: campaigns[i].name,
-        edits: hashtag.edit_count
+        edits: hashtag_edits[hashtag]
       })
     }
   }
 
   return compose(
     slice(0, 4),
-    map(({ tag, edit_count }) => { return { id: tag, edits: edit_count } }),
-    reverse,
-    sortBy(prop('edit_count'))
+    sortBy(prop('edits')),
+    map((hashtag) => { return { id: hashtag, edits: hashtag_edits[hashtag] } }),
+    reverse
   )(hashtags)
 }
 

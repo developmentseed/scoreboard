@@ -89,21 +89,48 @@ export class Campaign extends Component {
 
   render () {
     const { meta, lastUpdate, creationDate, refreshDate, editSum } = this.props.campaign
+
     const stats = merge({
-      users: [],
-      km_roads_add: 0,
-      km_roads_mod: 0,
-      buildings_add: 0,
-      buildings_mod: 0,
-      poi_add: 0,
-      poi_mod: 0,
-      km_railways_add: 0,
-      km_railways_mod: 0,
-      km_waterways_add: 0,
-      km_waterways_mod: 0,
-      km_coastlines_add: 0,
-      km_coastlines_mod: 0
+      user_edits: {},
+      counts: {
+        buildings_added: 0,
+        buildings_deleted: 0,
+        buildings_modified: 0,
+        coastlines_added: 0,
+        coastlines_deleted: 0,
+        coastlines_modified: 0,
+        other_added: 0,
+        other_deleted: 0,
+        other_modified: 0,
+        pois_added: 0,
+        pois_deleted: 0,
+        pois_modified: 0,
+        raillines_added: 0,
+        raillines_deleted: 0,
+        raillines_modified: 0,
+        roads_added: 0,
+        roads_deleted: 0,
+        roads_modified: 0,
+        waterways_added: 0,
+        waterways_deleted: 0,
+        waterways_modified: 0
+      },
+      measurements: {
+        coastline_km_added: 0,
+        coastline_km_deleted: 0,
+        coastline_km_modified: 0,
+        railline_km_added: 0,
+        railline_km_deleted: 0,
+        railline_km_modified: 0,
+        road_km_added: 0,
+        road_km_deleted: 0,
+        road_km_modified: 0,
+        waterway_km_added: 0,
+        waterway_km_deleted: 0,
+        waterway_km_modified: 0
+      }
     }, this.props.campaign.stats)
+
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
@@ -145,7 +172,8 @@ export class Campaign extends Component {
           [
             { label: 'Mapped', value: `${parseInt(meta.done, 10)}%` },
             { label: 'Validated', value: `${parseInt(meta.validated, 10)}%` },
-            { label: 'Participants', value: stats.users.length },
+            // TODO: recreate stats.users array
+            // { label: 'Participants', value: stats.users.length },
             { label: 'Total features mapped', value: formatDecimal(editSum) }
           ]
         } />

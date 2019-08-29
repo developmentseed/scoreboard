@@ -4,28 +4,29 @@ import { compareAsc, getYear } from 'date-fns'
 import { head } from 'ramda'
 
 export default function Blurb ({
-  km_roads_add,
-  km_roads_mod,
-  buildings_add,
-  buildings_mod,
-  poi_add,
-  poi_mod,
-  km_railways_add,
-  km_railways_mod,
-  km_waterways_add,
-  km_waterways_mod,
-  km_coastlines_add,
-  km_coastlines_mod,
-  country_list,
-  edit_times,
+  road_km_added,
+  road_km_modified,
+  buildings_added,
+  buildings_modified,
+  pois_added,
+  pois_modified,
+  waterway_km_added,
+  waterway_km_modified,
+  coastline_km_added,
+  coastline_km_modified,
+  railline_km_added,
+  railline_km_modified,
+  country_edits,
+  day_edits,
   username
 }) {
   let sentence = 'you have mapped'
   if (username) {
     sentence = `${username} has mapped`
   }
-  const firstYearEdited = getYear(head(edit_times.map(t => t.day).sort(compareAsc)))
+  const firstYearEdited = getYear(head(Object.keys(day_edits).sort(compareAsc)))
 
+  const country_list = Object.keys(country_edits)
   let countryWord = 'countries'
   const countryLength = country_list.length
   if (countryLength === 1) {
@@ -33,6 +34,6 @@ export default function Blurb ({
   }
 
   return <h2 className='header--small width--shortened list--block'>
-    Since <mark>{firstYearEdited}</mark>, {sentence} <mark>{formatKm(km_roads_add + km_roads_mod)}</mark> of roads, <mark>{formatDecimal(buildings_add + buildings_mod)}</mark> buildings, <mark>{formatDecimal(poi_add + poi_mod)}</mark> Points of Interest, <mark>{formatKm(km_railways_add + km_railways_mod)}</mark> of railways, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add + km_waterways_mod)}</mark> of waterways in <mark>{country_list.length}</mark> <mark>{countryWord}</mark>.
+    Since <mark>{firstYearEdited}</mark>, {sentence} <mark>{formatKm(road_km_added + road_km_modified)}</mark> of roads, <mark>{formatDecimal(buildings_added + buildings_modified)}</mark> buildings, <mark>{formatDecimal(pois_added + pois_modified)}</mark> Points of Interest, <mark>{formatKm(railline_km_added + railline_km_modified)}</mark> of railways, <mark>{formatKm(coastline_km_added + coastline_km_modified)}</mark> of coastlines, and <mark>{formatKm(waterway_km_added + waterway_km_modified)}</mark> of waterways in <mark>{country_list.length}</mark> <mark>{countryWord}</mark>.
   </h2>
 }

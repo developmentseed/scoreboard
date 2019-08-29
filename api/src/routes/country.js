@@ -36,13 +36,13 @@ async function get (req, res) {
   try {
     const osmesaResponse = await osmesa.getCountry(countryCode)
     const osmesaData = JSON.parse(osmesaResponse)
-    let userData = await userCountryEdits.getParticipants(countryName, req.query.participantLimit)
+    let userData = await userCountryEdits.getParticipants(countryCode, req.query.participantLimit)
     if (userData === null) {
       return res.boom.notFound('Could not retrieve user stats')
     }
     const refreshDate = await refreshStatus('country')
-    const [ { count } ] = await userCountryEdits.getNumberOfParticipants(countryName)
-    const [ { editCount } ] = await userCountryEdits.getTotalEdits(countryName)
+    const [ { count } ] = await userCountryEdits.getNumberOfParticipants(countryCode)
+    const [ { editCount } ] = await userCountryEdits.getTotalEdits(countryCode)
 
     return res.send({
       code,

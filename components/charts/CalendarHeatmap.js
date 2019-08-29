@@ -31,8 +31,8 @@ class CalendarHeatmap extends React.Component {
 
   setChartOptions () {
     const { times } = this.props
-
-    const years = times.map(time => getISOYear(time.day))
+    const days = Object.keys(times)
+    const years = days.map(time => getISOYear(time))
     const totalYears = [...new Set(years)].length
     const earliestYear = years.sort()[0]
 
@@ -46,7 +46,7 @@ class CalendarHeatmap extends React.Component {
       height = 400
     }
 
-    const values = times.map(time => ({ day: time.day, value: time.count }))
+    const values = days.map(day => ({ day: day, value: times[day] }))
     this.setState({ height, values, earliestYear })
   }
 

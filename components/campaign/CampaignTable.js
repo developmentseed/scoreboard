@@ -8,16 +8,38 @@ export default function CampaignTable (props) {
   if (props.users.length === 0) {
     return <div />
   }
-  const campaignTopStats = sortBy(prop('edits'), props.users).reverse()
-    .map(user => ({
+  const campaignTopStats = sortBy(prop('edits'), props.users).reverse().map((user) => {
+    const { counts, measurements } = user
+
+    const {
+      buildings_added,
+      buildings_modified,
+      pois_added,
+      pois_modified
+    } = counts
+
+    const {
+      road_km_added,
+      road_km_modified,
+      coastline_km_added,
+      coastline_km_modified,
+      waterway_km_added,
+      waterway_km_modified,
+      railline_km_added,
+      railline_km_modified
+    } = measurements
+
+    return {
       ...user,
-      km_roads_add_mod: user.km_roads_add + user.km_roads_mod,
-      buildings_add_mod: user.buildings_add + user.buildings_mod,
-      poi_add_mod: user.poi_add + user.poi_mod,
-      km_railways_add_mod: user.km_railways_add + user.km_railways_mod,
-      km_coastlines_add_mod: user.km_coastlines_add + user.km_coastlines_mod,
-      km_waterways_add_mod: user.km_waterways_add + user.km_waterways_mod
-    }))
+      road_km_total: road_km_added + road_km_modified,
+      buildings_total: buildings_added + buildings_modified,
+      pois_total: pois_added + pois_modified,
+      railline_km_total: railline_km_added + railline_km_modified,
+      coastline_km_total: coastline_km_added + coastline_km_modified,
+      waterway_km_total: waterway_km_added + waterway_km_modified
+    }
+  })
+
   return (
     <div className='widget clearfix table-wrapper'>
       <table>
@@ -48,12 +70,12 @@ export default function CampaignTable (props) {
                       </a>
                     </Link>
                   </td>
-                  <td>{formatDecimal(user.km_roads_add_mod)}</td>
-                  <td>{formatDecimal(user.buildings_add_mod)}</td>
-                  <td>{formatDecimal(user.poi_add_mod)}</td>
-                  <td>{formatDecimal(user.km_railways_add_mod)}</td>
-                  <td>{formatDecimal(user.km_coastlines_add_mod)}</td>
-                  <td>{formatDecimal(user.km_waterways_add_mod)}</td>
+                  <td>{formatDecimal(user.road_km_total)}</td>
+                  <td>{formatDecimal(user.buildings_total)}</td>
+                  <td>{formatDecimal(user.pois_total)}</td>
+                  <td>{formatDecimal(user.railline_km_total)}</td>
+                  <td>{formatDecimal(user.coastline_km_total)}</td>
+                  <td>{formatDecimal(user.waterway_km_total)}</td>
                   <td>{formatDecimal(user.changeset_count)}</td>
                   <td>{formatDecimal(user.edit_count)}</td>
                 </tr>
@@ -63,12 +85,12 @@ export default function CampaignTable (props) {
       </table>
       <CSVLink className='link--large' style={{ display: 'inline-block', float: 'right', marginTop: '2rem' }} data={campaignTopStats} filename={`${props.name} - Top 10 Participants.csv`} headers={[
         { label: 'Name', key: 'name' },
-        { label: 'Roads (Km)', key: 'km_roads_add_mod' },
-        { label: 'Buildings', key: 'buildings_add_mod' },
-        { label: 'Points of Interest', key: 'poi_add_mod' },
-        { label: 'Railways (Km)', key: 'km_railways_add_mod' },
-        { label: 'Coastlines (Km)', key: 'km_coastlines_add_mod' },
-        { label: 'Waterways (Km)', key: 'km_waterways_add_mod' },
+        { label: 'Roads (Km)', key: 'road_km_total' },
+        { label: 'Buildings', key: 'buildings_total' },
+        { label: 'Points of Interest', key: 'pois_total' },
+        { label: 'Railways (Km)', key: 'railline_km_total' },
+        { label: 'Coastlines (Km)', key: 'coastline_km_total' },
+        { label: 'Waterways (Km)', key: 'waterway_km_total' },
         { label: 'Changesets', key: 'changeset_count' },
         { label: 'Edits', key: 'edit_count' }
       ]}>
