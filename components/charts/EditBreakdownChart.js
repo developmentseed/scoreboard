@@ -76,6 +76,7 @@ export default function EditBreakdownChart (props) {
   const {
     waterways_added,
     pois_added,
+    raillines_added,
     roads_added,
     buildings_added,
     coastlines_modified,
