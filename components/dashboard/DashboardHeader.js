@@ -11,7 +11,7 @@ import { head } from 'ramda'
  * @param {Array[Date]} day_edits
  */
 function getLastEdit (day_edits) {
-  const days = Object.keys(day_edits).map(time => parse(time.day))
+  const days = Object.keys(day_edits).map(day => parse(day))
 
   if (!days.length) {
     return `N/A`
