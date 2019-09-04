@@ -1,6 +1,6 @@
 import React from 'react'
 import { ResponsivePie } from '@nivo/pie'
-import { isNil, values, any } from 'ramda'
+import { pick, isNil, values, any } from 'ramda'
 
 /**
  * chartify
@@ -69,7 +69,7 @@ const theme = {
     textColor: '#eee',
     fontSize: '14px'
   },
-  colors: ['#22BDC1', '#8BC544', '#334A42', '#5657C2', '#4FCA9C', '#301F11']
+  colors: ['#22BDC1', '#8BC544', '#334A42', '#5657C2', '#4FCA9C', '#004F81']
 }
 
 export default function EditBreakdownChart (props) {
@@ -83,14 +83,14 @@ export default function EditBreakdownChart (props) {
     height
   } = props
 
-  const dataToChart = {
+  const dataToChart = pick([
     waterways_added,
     pois_added,
     roads_added,
     buildings_added,
     coastlines_modified,
     raillines_added
-  }
+  ], props)
 
   if (any(isNil, values(dataToChart))) {
     return (
