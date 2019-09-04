@@ -4,22 +4,25 @@ import { compareAsc, getYear } from 'date-fns'
 import { head } from 'ramda'
 
 export default function Blurb ({
-  road_km_added,
-  road_km_modified,
-  buildings_added,
-  buildings_modified,
-  pois_added,
-  pois_modified,
-  waterway_km_added,
-  waterway_km_modified,
-  coastline_km_added,
-  coastline_km_modified,
-  railline_km_added,
-  railline_km_modified,
+  measurements,
   country_edits,
   day_edits,
   username
 }) {
+  const {
+    road_km_added,
+    road_km_modified,
+    buildings_added,
+    buildings_modified,
+    pois_added,
+    pois_modified,
+    waterway_km_added,
+    waterway_km_modified,
+    coastline_km_added,
+    coastline_km_modified,
+    railline_km_added,
+    railline_km_modified
+  } = measurements
   let sentence = 'you have mapped'
   if (username) {
     sentence = `${username} has mapped`
