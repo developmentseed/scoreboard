@@ -47,7 +47,7 @@ export default function CampaignCharts (props) {
     <div className={`chart widget`} style={{ height: props.height }}>
       <h4 className='header--small'>Top Hashtags</h4>
       {
-        props.hashtags
+        props.hashtag_edits
           ? <ResponsiveBar
             data={chartify(props)}
             keys={['edits']}
