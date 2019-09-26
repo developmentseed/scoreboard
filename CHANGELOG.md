@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Fixed
+- Updated references to hashtag count to fix the hashtag chart
+
 ## [v1.4.0] - 2019-08-19
 ### Added
 - Campaigns can be filtered to include or exclude archived campaigns
