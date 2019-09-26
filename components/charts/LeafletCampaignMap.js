@@ -4,8 +4,8 @@ import centerOfMass from '@turf/center-of-mass'
 
 class CampaignMap extends Component {
   render () {
-    if (!this.props.feature.id) {
-      return <span>loading map ...</span>
+    if (!this.props.feature) {
+      return <div />
     }
     const center = centerOfMass(this.props.feature)
 
