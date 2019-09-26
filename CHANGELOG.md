@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- Edit times that occured within the last 24 hours show 'Last Edit: In the last 24 Hours' rather than 'today'
+
 ## [v1.4.0] - 2019-08-19
 ### Added
 - Campaigns can be filtered to include or exclude archived campaigns
