@@ -1,0 +1,101 @@
+@import 'settings/variables.scss';
+@import 'settings/mixins.scss';
+
+/* ==========================================================================
+   Loading
+   ========================================================================== */
+
+   .loading-pane {
+    @extend .antialiased;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9997;
+    cursor: not-allowed;
+  
+    .spinner {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  
+  
+  /* Spinner
+     ========================================================================== */
+  
+  .spinner {
+    font-size: 0;
+    border-radius: $full-border-radius;
+    background: rgba($base-color, 0.8);
+    padding: $global-spacing / 2;
+  }
+  
+  .spinner__bounce {
+    width: 1rem;
+    height: 1rem;
+    background: #fff;
+    border-radius: $full-border-radius;
+    display: inline-block;
+    margin: 0 ($global-spacing / 4);
+    animation: spinner-bouncedelay 1.4s infinite ease-in-out both;
+  
+    &:first-child {
+      margin-left: 0;
+    }
+  
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  
+  .spinner__bounce:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+  
+  .spinner__bounce:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+  
+  @keyframes spinner-bouncedelay {
+    0%,
+    80%,
+    100% { 
+      transform: scale(0);
+    }
+  
+    40% { 
+      transform: scale(1.0);
+    }
+  }
+  
+  
+  /* Loading pane react animation
+     ========================================================================== */
+  
+  .loading-pane-enter {
+    transform: translate3d(0, 0, 0);
+    transition: opacity 0.32s ease 0s, visibility 0.32s linear 0s;
+    opacity: 0;
+    visibility: hidden;
+  
+    &.loading-pane-enter-active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  .loading-pane-exit {
+    transition: opacity 0.32s ease 0s, visibility 0.32s linear 0s;
+    opacity: 1;
+    visibility: visible;
+  
+    &.loading-pane-exit-active {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
