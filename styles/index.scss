@@ -642,6 +642,7 @@ mark {
 }
 .widget-33.page-actions {
   flex: 1;
+  flex-basis: 100%;
 }
 //HEADER INTERNAL//
 .header--internal {
@@ -1079,7 +1080,6 @@ table {
 .map-lg > .leaflet-container {
   height: 100%;
   background: rgb(222,234,238);
-  z-index: -2;
  }
 
  /* ==========================================================================

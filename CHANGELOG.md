@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated references to hashtag count to fix the hashtag chart
 - Country blurb values have a fallback value of '0' if value is not supplied
 - Campaign maps are guaranteed to display AOI due to addition conditional that check for an ID before rendering
+- Campaign map zoom controls are re-enabled
 
 ## [v1.4.0] - 2019-08-19
 ### Added
