@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [v1.5.0] - 2019-09-27
 ### Changed
 - CSV exports from Campaigns and Users now split out the "Added" and "Modified" stats for all features
 
@@ -227,7 +228,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.5.0...HEAD
+[v1.5.0]: https://github.com/developmentseed/scoreboard/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.4.0
 [v1.3.4]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.3.4
 [v1.3.3]: https://github.com/developmentseed/scoreboard/compare/v1.3.2...v1.3.3
