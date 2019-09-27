@@ -18,7 +18,6 @@ import DashboardBlurb from '../components/dashboard/DashboardBlurb'
 import CampaignsChart from '../components/charts/CampaignsChart'
 import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import { formatDecimal } from '../lib/utils/format'
-import { CSVLink } from 'react-csv'
 import CSVExport from '../components/CSVExport'
 
 import dynamic from 'next/dynamic'
