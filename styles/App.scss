@@ -104,7 +104,7 @@ nav {
     li a.active {
       border-bottom: 2px solid rgba(255,255,255,0.7);
       @include media(small-up) {
-        padding-bottom: 0.5rem;
+        padding-bottom: 0.6rem;
       }
     }
     .logo {
