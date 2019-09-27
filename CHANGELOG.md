@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## Unreleased
+
+### Changed
+- CSV exports from Campaigns and Users now split out the "Added" and "Modified" stats for all features
+
 ### Fixed
 - Country blurb values have a fallback value of '0' if value is not supplied
 - Campaign maps are guaranteed to display AOI due to addition conditional that check for an ID before rendering

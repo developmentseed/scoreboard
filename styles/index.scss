@@ -1011,24 +1011,27 @@ table {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
+  overflow-x: scroll;
+  @include media(small-down) {
+    font-size: .86em;
+  }
   th {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
     color: $base-header-color;
     padding-top: .8em;
     padding-bottom: .8em;
-    &:first-child {
-      padding-left: .8em;
-    }
-    &:last-child {
-      padding-right: .8em;
+    @include media(small-up) {
+      &:first-child {
+        padding-left: .8em;
+      }
+      &:last-child {
+        padding-right: .8em;
+      }
     }
   }
   tbody {
     font-family: $heading-font-family;
-    @include media(small-down) {
-      font-size: .86em;
-    }
     tr {
       // the borders for the rows were previously set on each cell
       border-bottom: 1px solid lighten($light-text-color, 40%);
