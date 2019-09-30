@@ -8,6 +8,7 @@ class CampaignMap extends Component {
     if (!this.props.feature.id && this.props.feature.type === 'Feature') {
       return <LoadingState />
     }
+
     const center = centerOfMass(this.props.feature)
 
     return (

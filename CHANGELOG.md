@@ -4,7 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
 ## Unreleased
+
+## [v1.5.0] - 2019-09-27
+### Changed
+- CSV exports from Campaigns and Users now split out the "Added" and "Modified" stats for all features
+
+### Fixed
+- Updated references to hashtag count to fix the hashtag chart
+- Country blurb values have a fallback value of '0' if value is not supplied
+- Campaign maps are guaranteed to display AOI due to addition conditional that check for an ID before rendering
+- Campaign map zoom controls are re-enabled
+
 ## [v1.4.0] - 2019-08-19
 ### Added
 - Campaigns can be filtered to include or exclude archived campaigns
@@ -17,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix campaign language on homepage
 - Fix changeset count property from OSMesa in CampaignTable component
+
 
 ## [v1.3.4] - 2019-07-17
 ### Fixed
@@ -215,7 +228,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.5.0...HEAD
+[v1.5.0]: https://github.com/developmentseed/scoreboard/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.4.0
 [v1.3.4]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.3.4
 [v1.3.3]: https://github.com/developmentseed/scoreboard/compare/v1.3.2...v1.3.3

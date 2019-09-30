@@ -2,7 +2,7 @@ import React from 'react'
 import Link from '../Link'
 import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
-import { CSVLink } from 'react-csv'
+import CSVExport from '../../components/CSVExport'
 
 export default function CampaignTable (props) {
   if (props.users.length === 0) {
@@ -61,19 +61,7 @@ export default function CampaignTable (props) {
           }
         </tbody>
       </table>
-      <CSVLink className='link--large' style={{ display: 'inline-block', float: 'right', marginTop: '2rem' }} data={campaignTopStats} filename={`${props.name} - Top 10 Participants.csv`} headers={[
-        { label: 'Name', key: 'name' },
-        { label: 'Roads (Km)', key: 'km_roads_add_mod' },
-        { label: 'Buildings', key: 'buildings_add_mod' },
-        { label: 'Points of Interest', key: 'poi_add_mod' },
-        { label: 'Railways (Km)', key: 'km_railways_add_mod' },
-        { label: 'Coastlines (Km)', key: 'km_coastlines_add_mod' },
-        { label: 'Waterways (Km)', key: 'km_waterways_add_mod' },
-        { label: 'Changesets', key: 'changeset_count' },
-        { label: 'Edits', key: 'edit_count' }
-      ]}>
-        Export Data (CSV)
-      </CSVLink>
+      <CSVExport filename={props.name} data={campaignTopStats} />
     </div>
   )
 }

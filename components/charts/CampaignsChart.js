@@ -19,16 +19,16 @@ function chartify ({ campaigns, hashtags }) {
     if (hashtag) {
       contributed.push({
         id: campaigns[i].name,
-        edits: hashtag.edit_count
+        edits: hashtag.count
       })
     }
   }
 
   return compose(
     slice(0, 4),
-    map(({ tag, edit_count }) => { return { id: tag, edits: edit_count } }),
+    map(({ tag, count }) => { return { id: tag, edits: count } }),
     reverse,
-    sortBy(prop('edit_count'))
+    sortBy(prop('count'))
   )(hashtags)
 }
 
