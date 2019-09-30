@@ -1,11 +1,8 @@
 import React from 'react'
-import { createPortal } from 'react-dom'
-import { CSSTransition } from 'react-transition-group'
 
-export class GlobalLoading extends React.Component {
-
+export class LoadingState extends React.Component {
   render () {
-    return createPortal((
+    return (
       <div className='loading-container'>
         <div className='loading-pane'>
           <div className='spinner'>
@@ -15,6 +12,6 @@ export class GlobalLoading extends React.Component {
           </div>
         </div>
       </div>
-    ), document.body)
+    )
   }
 }
