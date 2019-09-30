@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from '../Link'
-const { formatDecimal } = require('../../lib/utils/format')
 import { LoadingState } from '../common/LoadingState'
+const { formatDecimal } = require('../../lib/utils/format')
 
 export default function CountriesTable ({ apiStatus, countries }) {
   let content = <div />
