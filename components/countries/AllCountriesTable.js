@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from '../Link'
 const { formatDecimal } = require('../../lib/utils/format')
+import { LoadingState } from '../common/LoadingState'
 
 export default function CountriesTable ({ apiStatus, countries }) {
   let content = <div />
@@ -30,7 +31,7 @@ export default function CountriesTable ({ apiStatus, countries }) {
       )
       break
     case 'LOADING':
-      content = <div>Loading...</div>
+      content = <LoadingState />
       break
 
     case 'ERROR':
