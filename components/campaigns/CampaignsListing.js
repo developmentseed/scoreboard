@@ -1,5 +1,6 @@
 import React from 'react'
 import CampaignCard from './CampaignCard'
+import { LoadingState } from '../common/LoadingState'
 import { range } from 'ramda'
 
 export default ({ records, apiStatus, total, allCount }) => {
@@ -19,7 +20,7 @@ export default ({ records, apiStatus, total, allCount }) => {
     case 'LOADING':
       content = (
         <div>
-          <h3 className='header--medium'>Loading...</h3>
+          <LoadingState />
           <div className='clearfix cards-container widget-container'>
             {range(0, 4).map(idx => <CampaignCard key={`campaign-${idx}`} />)}
           </div>
