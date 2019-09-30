@@ -4,9 +4,13 @@
 /* ==========================================================================
    Loading
    ========================================================================== */
-
+  .loading-container {
+    position: relative;
+  }
+   
    .loading-pane {
-    @extend .antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     position: fixed;
     top: 0;
     left: 0;
@@ -30,18 +34,18 @@
   
   .spinner {
     font-size: 0;
-    border-radius: $full-border-radius;
+    border-radius: 100vh;
     background: rgba($base-color, 0.8);
-    padding: $global-spacing / 2;
+    padding: 1.5rem 1rem 1rem 1rem;
   }
   
   .spinner__bounce {
     width: 1rem;
     height: 1rem;
     background: #fff;
-    border-radius: $full-border-radius;
+    border-radius: 100vh;
     display: inline-block;
-    margin: 0 ($global-spacing / 4);
+    margin: 0 (1rem / 4);
     animation: spinner-bouncedelay 1.4s infinite ease-in-out both;
   
     &:first-child {
