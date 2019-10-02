@@ -18,7 +18,7 @@ import DashboardBlurb from '../components/dashboard/DashboardBlurb'
 import CampaignsChart from '../components/charts/CampaignsChart'
 import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import { formatDecimal } from '../lib/utils/format'
-import { CSVLink } from 'react-csv'
+import CSVExport from '../components/CSVExport'
 
 import dynamic from 'next/dynamic'
 
@@ -66,15 +66,6 @@ class Dashboard extends Component {
     const { badges, teams, refreshDate } = account
     const osmesaData = account.records
     const { hashtags, edit_times, extent_uri, uid } = osmesaData
-    const authenticatedUserExport = {
-      ...authenticatedUser,
-      km_roads_add_mod: authenticatedUser.account.records.km_roads_add + authenticatedUser.account.records.km_roads_mod,
-      buildings_add_mod: authenticatedUser.account.records.buildings_add + authenticatedUser.account.records.buildings_mod,
-      poi_add_mod: authenticatedUser.account.records.poi_add + authenticatedUser.account.records.poi_mod,
-      km_coastlines_add_mod: authenticatedUser.account.records.km_coastlines_add + authenticatedUser.account.records.km_coastlines_mod,
-      km_waterways_add_mod: authenticatedUser.account.records.km_waterways_add + authenticatedUser.account.records.km_waterways_mod,
-      km_railways_add_mod: authenticatedUser.account.records.km_railways_add + authenticatedUser.account.records.km_railways_mod
-    }
     const breakdownChartProps = pick(
       [
         'waterways_add',
@@ -134,7 +125,7 @@ class Dashboard extends Component {
       name = osmUser['@']['display_name']
       accountId = authenticatedUser.account.id
     }
-
+    const recordsExport = [{ ...account.records, badgeCount, campaignCount, name }]
     return (
       <div className='dashboard'>
         <DashboardHeader
@@ -158,31 +149,7 @@ class Dashboard extends Component {
         <div className='row'>
           <DashboardBlurb {...osmesaData} />
           <div className='widget-33 page-actions'>
-            <CSVLink
-              className='button button--secondary'
-              data={[
-                {
-                  authenticatedUserExport,
-                  badgeCount
-                }
-              ]}
-              headers={[
-                { label: 'Name', key: 'authenticatedUserExport.osm.displayName' },
-                { label: 'Campaigns', key: 'authenticatedUserExport.account.allCampaigns.length' },
-                { label: 'Badges', key: 'badgeCount' },
-                { label: 'Countries', key: 'authenticatedUserExport.account.records.country_list.length' },
-                { label: 'Roads (Km)', key: 'authenticatedUserExport.km_roads_add_mod' },
-                { label: 'Buildings', key: 'authenticatedUserExport.buildings_add_mod' },
-                { label: 'Points of Interest', key: 'authenticatedUserExport.poi_add_mod' },
-                { label: 'Railways (Km)', key: 'authenticatedUserExport.km_railways_add_mod' },
-                { label: 'Coastlines (Km)', key: 'authenticatedUserExport.km_coastlines_add_mod' },
-                { label: 'Waterways (Km)', key: 'authenticatedUserExport.km_waterways_add_mod' },
-                { label: 'Total Edits', key: 'authenticatedUserExport.account.records.edit_count' }
-              ]}
-              filename={`${name}_ScoreboardData.csv`}
-            >
-              Export Your Data (CSV)
-            </CSVLink>
+            <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
           </div>
         </div>
         <section className='section--dark'>
