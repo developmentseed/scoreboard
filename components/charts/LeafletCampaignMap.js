@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { Map, TileLayer, GeoJSON } from 'react-leaflet'
+import { LoadingState } from '../common/LoadingState'
 import centerOfMass from '@turf/center-of-mass'
 
 class CampaignMap extends Component {
   render () {
     if (!this.props.feature.id && this.props.feature.type === 'Feature') {
-      return <span>loading map ...</span>
+      return <LoadingState />
     }
 
     const center = centerOfMass(this.props.feature)
