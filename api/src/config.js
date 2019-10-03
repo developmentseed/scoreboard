@@ -18,6 +18,7 @@ module.exports = {
   PORT: process.env.PORT || 8181,
   NODE_ENV: process.env.NODE_ENV || 'development',
   OSMESA_API: process.env.OSMESA_API || null,
+  OSMESA_DB: process.env.OSMESA_DB || null,
   APP_URL: appUrl,
   APP_URL_PREFIX: prefix,
   APP_URL_FINAL: final,

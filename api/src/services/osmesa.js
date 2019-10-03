@@ -6,7 +6,9 @@ const knex = require('knex')
 const { OSMESA_API, OSMESA_DB } = require('../config')
 const { generateOSMesaUser, generateOSMesaStatus } = require('../db/seeds/utils')
 
-export const osmesaUserObj = {
+console.log('OSMESA_DB', OSMESA_DB)
+
+const osmesaUserObj = {
   uid: -1,
   name: '',
   edit_count: 0,
@@ -53,11 +55,57 @@ class OSMesaDBWrapper {
       client: 'pg',
       connection: OSMESA_DB
     })
+    
+    this.editTypes = [
+      ['added', 'add'],
+      ['modified', 'mod'],
+      ['deleted', 'del']
+    ]
+    
+    this.countConversions = [
+      ['roads', 'roads'],
+      ['waterways', 'waterways'],
+      ['coastlines', 'coastlines'],
+      ['buildings', 'buildings'],
+      ['pois', 'poi']
+    ]
+    
+    this.measurementConversions = [
+      ['road', 'roads'],
+      ['waterway', 'waterways'],
+      ['coastline', 'coastlines'],
+      ['railline', 'railway']
+    ]
+  }
+
+  // turns the new schema into the old schema for objects like user_edits
+  expandCountObj (type, obj) {
+    return Object.keys(obj).map((key) => {
+      return {
+        [type]: Number(key),
+        count: obj[key]
+      }
+    })
+  }
+
+  convertCountProperties (target, source) {
+    this.countConversions.forEach(count => {
+      this.editTypes.forEach(type => {
+        target[`km_${count[1]}_${type[1]}`] = source.count[`${count[0]}_km_${type[0]}`]
+      })
+    })
+  }
+
+  convertMeasurementProperties (target, source) {
+    this.measurementConversions.forEach(meas => {
+      this.editTypes.forEach(type => {
+        target[`km_${meas[1]}_${type[1]}`] = source.measurements[`${meas[0]}_km_${type[0]}`]
+      })
+    })
   }
 
   async getUser (id) {
-    let conn = await this.db()
-    let data = await conn('user_statistics').where({ id })
+    let data = await this.db('user_statistics').where({ id })
 
     // change shape of response
     const { edit_count, changeset_count, name, last_edit,
@@ -66,27 +114,6 @@ class OSMesaDBWrapper {
       hashtag_edits: hashtags,
       country_edits: country_list
     } = data
-
-    const measurementConversions = [
-      ['road', 'roads'],
-      ['waterway', 'waterways'],
-      ['coastline', 'coastlines'],
-      ['railline', 'railway']
-    ]
-
-    const countConversions = [
-      ['roads', 'roads'],
-      ['waterways', 'waterways'],
-      ['coastlines', 'coastlines'],
-      ['buildings', 'buildings'],
-      ['pois', 'poi']
-    ]
-
-    const editTypes = [
-      ['added', 'add'],
-      ['modified', 'mod'],
-      ['deleted', 'del']
-    ]
 
     let userObj = {
       uid: data.id,
@@ -100,17 +127,8 @@ class OSMesaDBWrapper {
       country_list
     }
 
-    measurementConversions.forEach(meas => {
-      editTypes.forEach(type => {
-        userObj[`km_${meas[1]}_${type[1]}`] = data.measurements[`${meas[0]}_km_${type[0]}`]
-      })
-    })
-
-    countConversions.forEach(count => {
-      editTypes.forEach(type => {
-        userObj[`km_${count[1]}_${type[1]}`] = data.count[`${count[0]}_km_${type[0]}`]
-      })
-    })
+    this.convertCountProperties(userObj, data)
+    this.convertMeasurementProperties(userObj, data)
     return userObj
   }
 
@@ -118,8 +136,34 @@ class OSMesaDBWrapper {
     return rp(`${OSMESA_API}/campaigns/${id}`)
   }
 
-  getCountry (code) {
-    return rp(`${OSMESA_API}/country-stats/${code}`)
+  async getCountry (country_code) {
+    const data = await this.db('user_statistics').where({ country_code })
+
+    const {
+      country_id,
+      country_name,
+      edit_count,
+      changeset_count,
+      last_edit,
+      updated_at,
+      hashtag_edits,
+      user_edits
+    } = data
+
+    const countryObj = {
+      country_id,
+      name: country_name,
+      last_edit,
+      updated_at,
+      changeset_count,
+      edit_count,
+      user_edits: this.expandCountObj(user_edits),
+      hashtag_edits: this.expandCountObj(hashtag_edits)
+    }
+
+    this.convertCountProperties(countryObj, data)
+    this.convertMeasurementProperties(countryObj, data)
+    return countryObj
   }
 
   getUpdates () {
