@@ -6,8 +6,6 @@ const knex = require('knex')
 const { OSMESA_API, OSMESA_DB } = require('../config')
 const { generateOSMesaUser, generateOSMesaStatus } = require('../db/seeds/utils')
 
-console.log('OSMESA_DB', OSMESA_DB)
-
 const osmesaUserObj = {
   uid: -1,
   name: '',
@@ -49,19 +47,21 @@ const osmesaUserObj = {
   hashtags: []
 }
 
+module.exports.osmesaUserObj = osmesaUserObj
+
 class OSMesaDBWrapper {
   constructor () {
     this.db = knex({
       client: 'pg',
       connection: OSMESA_DB
     })
-    
+
     this.editTypes = [
       ['added', 'add'],
       ['modified', 'mod'],
       ['deleted', 'del']
     ]
-    
+
     this.countConversions = [
       ['roads', 'roads'],
       ['waterways', 'waterways'],
@@ -69,7 +69,7 @@ class OSMesaDBWrapper {
       ['buildings', 'buildings'],
       ['pois', 'poi']
     ]
-    
+
     this.measurementConversions = [
       ['road', 'roads'],
       ['waterway', 'waterways'],
@@ -108,14 +108,18 @@ class OSMesaDBWrapper {
     let data = await this.db('user_statistics').where({ id })
 
     // change shape of response
-    const { edit_count, changeset_count, name, last_edit,
+    const {
+      edit_count,
+      changeset_count,
+      name,
+      last_edit,
       editor_edits: editors,
       day_edits: edit_times,
       hashtag_edits: hashtags,
       country_edits: country_list
     } = data
 
-    let userObj = {
+    const userObj = {
       uid: data.id,
       name,
       edit_count,
@@ -132,8 +136,20 @@ class OSMesaDBWrapper {
     return userObj
   }
 
-  getCampaign (id) {
-    return rp(`${OSMESA_API}/campaigns/${id}`)
+  async getCampaign (hashtag_id) {
+    const data = await this.db('hashtag_statistics').where({ hashtag_id })
+    const { tag } = data
+
+    const campaignObj = {
+      tag,
+      extent_uri: 'hashtag/project/{z}/{x}/{y}.mvt',
+      // TODO: is users suppused to be the full user statistics for each user?
+      users: []
+    }
+
+    this.convertCountProperties(campaignObj, data)
+    this.convertMeasurementProperties(campaignObj, data)
+    return campaignObj
   }
 
   async getCountry (country_code) {
@@ -166,8 +182,31 @@ class OSMesaDBWrapper {
     return countryObj
   }
 
-  getUpdates () {
-    return rp(`${OSMESA_API}/status`)
+  async getUpdates () {
+    const data = await this.db('refreshments').select()
+
+    return data.reduce((obj, { mat_view, updated_at }) => {
+      switch (mat_view) {
+        case 'country_statistics': {
+          obj.country_stats_refresh = updated_at
+          break
+        }
+        case 'hashtag_statistics': {
+          obj.hashtag_stats_refresh = updated_at
+          break
+        }
+        case 'hashtag_user_statistics': {
+          obj.hashtag_user_stats_refresh = updated_at
+          break
+        }
+        case 'user_statistics': {
+          obj.stats_user_refresh = updated_at
+          break
+        }
+      }
+
+      return obj
+    })
   }
 }
 
