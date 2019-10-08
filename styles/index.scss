@@ -1217,24 +1217,23 @@ table {
 .tooltip-info {
   visibility: hidden;
   position: absolute;
-  right: 0;
+  left: 50%;
   bottom: 100%;
+  text-align: center;
+  width: 100%;
 }
 
 .tooltip:hover .tooltip-info {
   visibility: visible;
   background-color: white;
-  padding: 0.3rem 0.5rem;
+  padding: 0.2rem;
+  margin: 0.4rem;
   border: 1px solid $base-color;
+  margin-left: -7.5rem;
+  width: 18rem;
 }
 
 .tooltip-container {
   position: relative;
   display: flex;
-  .form__control {
-    display: flex;
-  }
-  .form__select {
-    flex-grow: 1;
-  }
 }
