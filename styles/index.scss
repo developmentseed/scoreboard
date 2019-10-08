@@ -1202,3 +1202,39 @@ table {
    background-position: -135% 0%;
  }
 }
+
+/* ==========================================================================
+  Tooltip
+  ========================================================================== */
+
+.tooltip-button {
+  padding: 0.2rem 0.8rem;
+  margin: 0.2rem;
+  background-image: url($appUrlFinal + "static/circle-information.svg");
+  background-repeat:no-repeat;
+}
+
+.tooltip-info {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+}
+
+.tooltip:hover .tooltip-info {
+  visibility: visible;
+  background-color: white;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid $base-color;
+}
+
+.tooltip-container {
+  position: relative;
+  display: flex;
+  .form__control {
+    display: flex;
+  }
+  .form__select {
+    flex-grow: 1;
+  }
+}
