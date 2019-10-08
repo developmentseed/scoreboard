@@ -1207,11 +1207,8 @@ table {
   Tooltip
   ========================================================================== */
 
-.tooltip-button {
-  padding: 0.2rem 0.8rem;
-  margin: 0.2rem;
-  background-image: url($appUrlFinal + "static/circle-information.svg");
-  background-repeat:no-repeat;
+.tooltip {
+  margin: 0 0.2rem;
 }
 
 .tooltip-info {
