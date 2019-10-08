@@ -82,7 +82,7 @@ class OSMesaDBWrapper {
   expandCountObj (type, obj) {
     return Object.keys(obj).map((key) => {
       return {
-        [type]: Number(key),
+        [type]: type === 'user' ? Number(key) : key,
         count: obj[key]
       }
     })
@@ -91,7 +91,14 @@ class OSMesaDBWrapper {
   convertCountProperties (target, source) {
     this.countConversions.forEach(count => {
       this.editTypes.forEach(type => {
-        target[`km_${count[1]}_${type[1]}`] = source.count[`${count[0]}_km_${type[0]}`]
+        if (
+          target &&
+          source &&
+          source.count &&
+          source.count[`${count[0]}_km_${type[0]}`]
+        ) {
+          target[`km_${count[1]}_${type[1]}`] = source.count[`${count[0]}_km_${type[0]}`]
+        }
       })
     })
   }
@@ -99,13 +106,20 @@ class OSMesaDBWrapper {
   convertMeasurementProperties (target, source) {
     this.measurementConversions.forEach(meas => {
       this.editTypes.forEach(type => {
-        target[`km_${meas[1]}_${type[1]}`] = source.measurements[`${meas[0]}_km_${type[0]}`]
+        if (
+          target &&
+          source &&
+          source.measurements &&
+          source.measurements[`${meas[0]}_km_${type[0]}`]
+        ) {
+          target[`km_${meas[1]}_${type[1]}`] = source.measurements[`${meas[0]}_km_${type[0]}`]
+        }
       })
     })
   }
 
   async getUser (id) {
-    let data = await this.db('user_statistics').where({ id })
+    let [data] = await this.db('user_statistics').where({ id })
 
     // change shape of response
     const {
@@ -137,12 +151,12 @@ class OSMesaDBWrapper {
   }
 
   async getCampaign (hashtag_id) {
-    const data = await this.db('hashtag_statistics').where({ hashtag_id })
+    const [data] = await this.db('hashtag_statistics').where({ hashtag_id })
     const { tag } = data
 
     const campaignObj = {
       tag,
-      extent_uri: 'hashtag/project/{z}/{x}/{y}.mvt',
+      extent_uri: `hashtag/${tag}/{z}/{x}/{y}.mvt`,
       // TODO: is users suppused to be the full user statistics for each user?
       users: []
     }
@@ -153,7 +167,7 @@ class OSMesaDBWrapper {
   }
 
   async getCountry (country_code) {
-    const data = await this.db('user_statistics').where({ country_code })
+    const [data] = await this.db('country_statistics').where({ country_code })
 
     const {
       country_id,
@@ -173,8 +187,8 @@ class OSMesaDBWrapper {
       updated_at,
       changeset_count,
       edit_count,
-      user_edits: this.expandCountObj(user_edits),
-      hashtag_edits: this.expandCountObj(hashtag_edits)
+      user_edits: this.expandCountObj('user', user_edits),
+      hashtag_edits: this.expandCountObj('hashtag', hashtag_edits)
     }
 
     this.convertCountProperties(countryObj, data)
