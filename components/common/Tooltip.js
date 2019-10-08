@@ -1,6 +1,4 @@
-import React from 'react'
-
-const Tooltip = props => {
+export const Tooltip = props => {
   return (
     <>
       <div className='tooltip-container'>
@@ -14,4 +12,9 @@ const Tooltip = props => {
   )
 }
 
-export default Tooltip
+export const TooltipDescriptions = {
+  ROADS: 'kilometers of roads added or modified',
+  RAILWAYS: 'kilometers of railways added or modified',
+  COASTLINES: 'kilometers of coastlin added or modified',
+  WATERWAYS: 'kilometers of waterways added or modified',
+}
