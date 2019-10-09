@@ -2,12 +2,12 @@
     {
         "name_en":"Rank", 
         "description":"Order of contributors by number of edits.",
-        "categories": ["campaign"]
+        "categories": ["campaign", "country-user"]
     },
     {
         "name_en":"Name", 
         "description":"Username",
-        "categories": ["campaign"]
+        "categories": ["campaign", "country-user"]
     },
     {
         "name_en":"Roads (Km)", 
@@ -42,11 +42,11 @@
     {
         "name_en":"Changesets", 
         "description":"Number of submissions for changes.",
-        "categories": ["campaign"]
+        "categories": ["campaign", "country-user"]
     },
     {
         "name_en":"Edits", 
         "description":"Number of individual amendments requested.",
-        "categories": ["campaign"]
+        "categories": ["campaign", "country-user"]
     }
 ]
