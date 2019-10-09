@@ -3,9 +3,9 @@ import Link from '../Link'
 import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
 import CSVExport from '../../components/CSVExport'
-import { Tooltip, TooltipDescriptions } from '../common/Tooltip'
+import { Tooltip } from '../common/Tooltip'
 
-const tableHeaders = require('../../lib/page-text/table-headers/campaign-table.json')
+const tableHeaders = require('../../lib/page-text/table-headers.json')
 
 export default function CampaignTable (props) {
   if (props.users.length === 0) {
@@ -26,12 +26,14 @@ export default function CampaignTable (props) {
       <table>
         <thead>
           <tr>
-            {tableHeaders.map(header => (
-              <th>
-                {header.name_en}
-                <Tooltip dataTip={header.description} />
-              </th>
-            ))}
+            {tableHeaders
+              .filter(table => table.categories.includes('campaign'))
+              .map(header => (
+                <th>
+                  {header.name_en}
+                  <Tooltip dataTip={header.description} />
+                </th>
+              ))}
           </tr>
         </thead>
         <tbody>

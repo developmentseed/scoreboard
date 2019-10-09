@@ -1,0 +1,52 @@
+[
+    {
+        "name_en":"Rank", 
+        "description":"Order of contributors by number of edits.",
+        "categories": ["campaign"]
+    },
+    {
+        "name_en":"Name", 
+        "description":"Username",
+        "categories": ["campaign"]
+    },
+    {
+        "name_en":"Roads (Km)", 
+        "description":"Kilometers of road added or modified.",
+        "categories": ["campaign"]
+    },
+    {
+        "name_en":"Buildings", 
+        "description":"Number of unique buildings added.",
+        "categories": ["campaign"]
+    },
+    {
+        "name_en":"Points of Interest", 
+        "description":"Health centers, schools, town halls, or places of worship.",
+        "categories": ["campaign"]
+    },
+    {
+        "name_en":"Railways (Km)", 
+        "description":"Kilometers of road added or modified.",
+        "categories": ["campaign"]
+    },
+    {
+        "name_en":"Coastlines (Km)", 
+        "description":"Kilometers of road added or modified.",
+        "categories": ["campaign", "user"]
+    },
+    {
+        "name_en":"Waterways (Km)", 
+        "description":"Kilometers of road added or modified.",
+        "categories": ["campaign"]
+    },
+    {
+        "name_en":"Changesets", 
+        "description":"Number of submissions for changes.",
+        "categories": ["campaign"]
+    },
+    {
+        "name_en":"Edits", 
+        "description":"Number of individual amendments requested.",
+        "categories": ["campaign"]
+    }
+]
