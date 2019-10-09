@@ -9,7 +9,14 @@
         "id":"name",
         "name_en":"Name", 
         "description_en":"Username",
-        "categories": ["campaign", "country-user", "user", "team", "admin-user"]
+        "categories": [
+            "campaign",
+            "country-user",
+            "user",
+            "team",
+            "admin-user",
+            "tasking-manager"
+        ]
     },
     {
         "id":"user_id",
@@ -76,5 +83,11 @@
         "name_en":"Edits", 
         "description_en":"Number of individual amendments requested.",
         "categories": ["campaign", "country-user"]
+    },
+    {
+        "id":"last-run-time",
+        "name_en":"Last run time", 
+        "description_en":"Most recent use of tasking manager.",
+        "categories": ["campaign", "country-user", "tasking-manager"]
     }
 ]

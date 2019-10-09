@@ -8,6 +8,9 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 import { distanceInWordsToNow, parse } from 'date-fns'
+import { Tooltip } from '../../components/common/Tooltip'
+
+const tableHeaders = require('../../lib/page-text/table-headers.json')
 
 export class AdminTaskers extends Component {
   constructor () {
@@ -45,8 +48,14 @@ export class AdminTaskers extends Component {
           <table className='admin-table'>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Last run time</th>
+                {tableHeaders
+                  .filter(table => table.categories.includes('tasking-manager'))
+                  .map(header => (
+                    <th>
+                      {header.name_en}
+                      <Tooltip dataTip={header.description_en} />
+                    </th>
+                  ))}
               </tr>
             </thead>
             <tbody>
