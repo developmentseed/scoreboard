@@ -12,10 +12,3 @@ export const Tooltip = props => {
     </>
   )
 }
-
-export const TooltipDescriptions = {
-  ROADS: 'kilometers of road added or modified',
-  RAILWAYS: 'kilometers of railway added or modified',
-  COASTLINES: 'kilometers of coastline added or modified',
-  WATERWAYS: 'kilometers of waterways added or modified'
-}
