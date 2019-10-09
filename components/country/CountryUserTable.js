@@ -17,7 +17,7 @@ export default function CountryUserTable (props) {
               .map(header => (
                 <th>
                   {header.name_en}
-                  <Tooltip dataTip={header.description} />
+                  <Tooltip dataTip={header.description_en} />
                 </th>
               ))}
           </tr>

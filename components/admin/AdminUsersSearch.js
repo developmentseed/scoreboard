@@ -2,6 +2,9 @@ import Pagination from 'react-js-pagination'
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../../lib/store'
+import { Tooltip } from '../common/Tooltip'
+
+const tableHeaders = require('../../lib/page-text/table-headers.json')
 
 class UsersSearch extends Component {
   constructor (props) {
@@ -39,6 +42,14 @@ class UsersSearch extends Component {
 
     const { page, searchText } = this.props.adminTeamMemberFilters
     const { stats: { total, records } } = this.props.adminTeamMemberSearchResults
+    const headers = tableHeaders
+      .filter(table => table.categories.includes('user'))
+      .map(header => (
+        <th>
+          {header.name_en}
+          <Tooltip dataTip={header.description_en} />
+        </th>
+      ))
     if (!records) return <div />
 
     return (
@@ -51,8 +62,7 @@ class UsersSearch extends Component {
                 <table className='admin-table'>
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>User ID</th>
+                      {headers}
                     </tr>
                   </thead>
                   <tbody>
@@ -83,8 +93,7 @@ class UsersSearch extends Component {
             <table className='admin-table'>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>User ID</th>
+                  {headers}
                 </tr>
               </thead>
               <tbody>

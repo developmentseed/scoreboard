@@ -31,7 +31,7 @@ export default function CampaignTable (props) {
               .map(header => (
                 <th>
                   {header.name_en}
-                  <Tooltip dataTip={header.description} />
+                  <Tooltip dataTip={header.description_en} />
                 </th>
               ))}
           </tr>
