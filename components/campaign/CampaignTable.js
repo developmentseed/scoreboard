@@ -27,9 +27,8 @@ export default function CampaignTable (props) {
             <th>Rank</th>
             <th>Name</th>
             <th>
-              <Tooltip description={TooltipDescriptions.ROADS}>
-                <span>Roads (Km)</span>
-              </Tooltip>
+                Roads (Km)
+              <Tooltip dataTip={TooltipDescriptions.ROADS} />
             </th>
             <th>Buildings</th>
             <th>Points of Interest</th>
