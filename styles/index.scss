@@ -1207,30 +1207,6 @@ table {
   Tooltip
   ========================================================================== */
 
-.tooltip {
+.icon-tooltip {
   margin: 0 0.2rem;
-}
-
-.tooltip-info {
-  visibility: hidden;
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  text-align: center;
-  width: 100%;
-}
-
-.tooltip:hover .tooltip-info {
-  visibility: visible;
-  background-color: white;
-  padding: 0.2rem;
-  margin: 0.4rem;
-  border: 1px solid $base-color;
-  margin-left: -7.5rem;
-  width: 18rem;
-}
-
-.tooltip-container {
-  position: relative;
-  display: flex;
 }
