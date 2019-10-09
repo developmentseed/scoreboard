@@ -1,52 +1,68 @@
 [
     {
+        "id":"rank",
         "name_en":"Rank", 
-        "description":"Order of contributors by number of edits.",
+        "description_en":"Order of contributors by number of edits.",
         "categories": ["campaign", "country-user"]
     },
     {
+        "id":"name",
         "name_en":"Name", 
-        "description":"Username",
-        "categories": ["campaign", "country-user"]
+        "description_en":"Username",
+        "categories": ["campaign", "country-user", "user"]
     },
     {
+        "id":"user_id",
+        "name_en":"User ID", 
+        "description_en":"Unique user id",
+        "categories": ["country-user", "user"]
+    },
+    {
+        "id":"roads",
         "name_en":"Roads (Km)", 
-        "description":"Kilometers of road added or modified.",
+        "description_en":"Kilometers of road added or modified.",
         "categories": ["campaign"]
     },
     {
+        "id":"buildings",
         "name_en":"Buildings", 
-        "description":"Number of unique buildings added.",
+        "description_en":"Number of unique buildings added.",
         "categories": ["campaign"]
     },
     {
+        "id":"poi",
         "name_en":"Points of Interest", 
-        "description":"Health centers, schools, town halls, or places of worship.",
+        "description_en":"Health centers, schools, town halls, or places of worship.",
         "categories": ["campaign"]
     },
     {
+        "id":"railways",
         "name_en":"Railways (Km)", 
-        "description":"Kilometers of road added or modified.",
+        "description_en":"Kilometers of road added or modified.",
         "categories": ["campaign"]
     },
     {
+        "id":"coastlines",
         "name_en":"Coastlines (Km)", 
-        "description":"Kilometers of road added or modified.",
-        "categories": ["campaign", "user"]
-    },
-    {
-        "name_en":"Waterways (Km)", 
-        "description":"Kilometers of road added or modified.",
+        "description_en":"Kilometers of road added or modified.",
         "categories": ["campaign"]
     },
     {
+        "id":"waterways",
+        "name_en":"Waterways (Km)", 
+        "description_en":"Kilometers of road added or modified.",
+        "categories": ["campaign"]
+    },
+    {
+        "id":"changesets",
         "name_en":"Changesets", 
-        "description":"Number of submissions for changes.",
+        "description_en":"Number of submissions for changes.",
         "categories": ["campaign", "country-user"]
     },
     {
+        "id":"edits",
         "name_en":"Edits", 
-        "description":"Number of individual amendments requested.",
+        "description_en":"Number of individual amendments requested.",
         "categories": ["campaign", "country-user"]
     }
 ]
