@@ -9,13 +9,19 @@
         "id":"name",
         "name_en":"Name", 
         "description_en":"Username",
-        "categories": ["campaign", "country-user", "user", "team"]
+        "categories": ["campaign", "country-user", "user", "team", "admin-user"]
     },
     {
         "id":"user_id",
         "name_en":"User ID", 
         "description_en":"Unique user id",
-        "categories": ["country-user", "user"]
+        "categories": ["country-user", "user", "admin-user"]
+    },
+    {
+        "id":"role",
+        "name_en":"Role", 
+        "description_en":"Assigned role",
+        "categories": ["country-user", "user", "admin-user"]
     },
     {
         "id":"hashtages",
