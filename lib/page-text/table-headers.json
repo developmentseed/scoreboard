@@ -9,13 +9,19 @@
         "id":"name",
         "name_en":"Name", 
         "description_en":"Username",
-        "categories": ["campaign", "country-user", "user"]
+        "categories": ["campaign", "country-user", "user", "team"]
     },
     {
         "id":"user_id",
         "name_en":"User ID", 
         "description_en":"Unique user id",
         "categories": ["country-user", "user"]
+    },
+    {
+        "id":"hashtages",
+        "name_en":"Hashtags", 
+        "description_en":"Leading hashtags",
+        "categories": ["country-user", "user", "team"]
     },
     {
         "id":"roads",

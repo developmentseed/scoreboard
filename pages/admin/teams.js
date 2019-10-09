@@ -7,6 +7,9 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
+import { Tooltip } from '../components/common/Tooltip'
+
+const tableHeaders = require('../lib/page-text/table-headers.json')
 
 export class AdminTeams extends Component {
   constructor () {
@@ -43,10 +46,14 @@ export class AdminTeams extends Component {
         <div className='widget'>
           <table className='admin-table'>
             <thead>
-              <tr>
-                <th>Name</th>
-                <th>Hashtag</th>
-              </tr>
+              {tableHeaders
+                .filter(table => table.categories.includes('team'))
+                .map(header => (
+                  <th>
+                    {header.name_en}
+                    <Tooltip dataTip={header.description_en} />
+                  </th>
+                ))}
             </thead>
             <tbody>
               {
