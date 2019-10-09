@@ -7,6 +7,9 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
+import { Tooltip } from '../../components/common/Tooltip'
+
+const tableHeaders = require('../../lib/page-text/table-headers.json')
 
 export class AdminBadges extends Component {
   constructor () {
@@ -34,6 +37,7 @@ export class AdminBadges extends Component {
 
   renderList () {
     const { badges } = this.props
+    const header = tableHeaders.find(table => table.id === 'name')
 
     if (!badges || !badges.length) return
 
@@ -44,7 +48,10 @@ export class AdminBadges extends Component {
           <table className='admin-table'>
             <thead>
               <tr>
-                <th>Name</th>
+                <th>
+                  {header.name_en}
+                  <Tooltip dataTip={header.description_en} />
+                </th>
               </tr>
             </thead>
             <tbody>
