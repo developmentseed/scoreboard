@@ -3,7 +3,7 @@
         "id":"rank",
         "name_en":"Rank", 
         "description_en":"Order of contributors by number of edits.",
-        "categories": ["campaign", "country-user"]
+        "categories": ["campaign", "country-user", "all-users"]
     },
     {
         "id":"name",
@@ -15,7 +15,9 @@
             "user",
             "team",
             "admin-user",
-            "tasking-manager"
+            "tasking-manager",
+            "all-users",
+            "all-countries"
         ]
     },
     {
@@ -31,7 +33,13 @@
         "categories": ["country-user", "user", "admin-user"]
     },
     {
-        "id":"hashtages",
+        "id":"country",
+        "name_en":"Country", 
+        "description_en":"Home country of user",
+        "categories": ["campaign", "country-user", "all-users"]
+    },
+    {
+        "id":"hashtags",
         "name_en":"Hashtags", 
         "description_en":"Leading hashtags",
         "categories": ["country-user", "user", "team"]
@@ -83,6 +91,18 @@
         "name_en":"Edits", 
         "description_en":"Number of individual amendments requested.",
         "categories": ["campaign", "country-user"]
+    },
+    {
+        "id":"total-edit",
+        "name_en":"Total Edits", 
+        "description_en":"Most recent tally of user edits.",
+        "categories": ["all-users", "all-countries"]
+    },
+    {
+        "id":"last-edit",
+        "name_en":"Last Edit", 
+        "description_en":"Most recent edit",
+        "categories": ["all-users"]
     },
     {
         "id":"last-run-time",

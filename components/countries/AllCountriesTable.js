@@ -1,5 +1,8 @@
 import React from 'react'
 import Link from '../Link'
+import { Tooltip } from '../common/Tooltip'
+
+const tableHeaders = require('../../lib/page-text/table-headers.json')
 const { formatDecimal } = require('../../lib/utils/format')
 
 export default function CountriesTable ({ apiStatus, countries }) {
@@ -10,8 +13,14 @@ export default function CountriesTable ({ apiStatus, countries }) {
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Total Edits</th>
+              {tableHeaders
+                .filter(table => table.categories.includes('all-countries'))
+                .map(header => (
+                  <th>
+                    {header.name_en}
+                    <Tooltip dataTip={header.description_en} />
+                  </th>
+                ))}
             </tr>
           </thead>
           <tbody>

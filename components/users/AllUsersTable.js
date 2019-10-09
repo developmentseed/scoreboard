@@ -2,6 +2,9 @@ import React from 'react'
 import Link from '../Link'
 import { formatDecimal, formatEditTimeDescription } from '../../lib/utils/format'
 import { parse } from 'date-fns'
+import { Tooltip } from '../common/Tooltip'
+
+const tableHeaders = require('../../lib/page-text/table-headers.json')
 
 const UsersTable = ({ apiStatus, users }) => {
   let content = <div />
@@ -11,11 +14,14 @@ const UsersTable = ({ apiStatus, users }) => {
         <table>
           <thead>
             <tr>
-              <th>Rank</th>
-              <th>Name</th>
-              <th>Country</th>
-              <th>Total Edits</th>
-              <th>Last Edit</th>
+              {tableHeaders
+                .filter(table => table.categories.includes('all-users'))
+                .map(header => (
+                  <th>
+                    {header.name_en}
+                    <Tooltip dataTip={header.description_en} />
+                  </th>
+                ))}
             </tr>
           </thead>
           <tbody>
