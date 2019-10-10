@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../../lib/store'
 import Select from 'react-select'
+import { Tooltip } from '../common/Tooltip'
+
+const tableHeaders = require('../../lib/page-text/table-headers.json')
 
 class Assignment extends Component {
   constructor (props) {
@@ -104,8 +107,14 @@ class CampaignSearch extends Component {
               <table className='admin-table'>
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Team Priority</th>
+                    {tableHeaders
+                      .filter(table => table.categories.includes('admin-campaign-contributions'))
+                      .map(header => (
+                        <th>
+                          {header.name_en}
+                          <Tooltip dataTip={header.description_en} />
+                        </th>
+                      ))}
                   </tr>
                 </thead>
                 <tbody>
