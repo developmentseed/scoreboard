@@ -2,7 +2,7 @@
     {
         "id":"rank",
         "name_en":"Rank", 
-        "description_en":"Order of contributors by number of edits.",
+        "description_en":"Order of contributors by number of edits",
         "categories": ["campaign", "country-user", "all-users"]
     },
     {
@@ -17,7 +17,11 @@
             "admin-user",
             "tasking-manager",
             "all-users",
-            "all-countries"
+            "all-countries",
+            "admin-campaign-teams",
+            "admin-campaign-favorites",
+            "admin-campaign-contributions",
+            "admin-campaign-all"
         ]
     },
     {
@@ -36,7 +40,7 @@
         "id":"country",
         "name_en":"Country", 
         "description_en":"Home country of user",
-        "categories": ["campaign", "country-user", "all-users"]
+        "categories": ["all-users"]
     },
     {
         "id":"hashtags",
@@ -47,55 +51,55 @@
     {
         "id":"roads",
         "name_en":"Roads (Km)", 
-        "description_en":"Kilometers of road added or modified.",
+        "description_en":"Kilometers of road added or modified",
         "categories": ["campaign"]
     },
     {
         "id":"buildings",
         "name_en":"Buildings", 
-        "description_en":"Number of unique buildings added.",
+        "description_en":"Number of unique buildings added",
         "categories": ["campaign"]
     },
     {
         "id":"poi",
         "name_en":"Points of Interest", 
-        "description_en":"Health centers, schools, town halls, or places of worship.",
+        "description_en":"Health centers, schools, town halls, or places of worship",
         "categories": ["campaign"]
     },
     {
         "id":"railways",
         "name_en":"Railways (Km)", 
-        "description_en":"Kilometers of road added or modified.",
+        "description_en":"Kilometers of road added or modified",
         "categories": ["campaign"]
     },
     {
         "id":"coastlines",
         "name_en":"Coastlines (Km)", 
-        "description_en":"Kilometers of road added or modified.",
+        "description_en":"Kilometers of road added or modified",
         "categories": ["campaign"]
     },
     {
         "id":"waterways",
         "name_en":"Waterways (Km)", 
-        "description_en":"Kilometers of road added or modified.",
+        "description_en":"Kilometers of road added or modified",
         "categories": ["campaign"]
     },
     {
         "id":"changesets",
         "name_en":"Changesets", 
-        "description_en":"Number of submissions for changes.",
+        "description_en":"Number of submissions for changes",
         "categories": ["campaign", "country-user"]
     },
     {
         "id":"edits",
         "name_en":"Edits", 
-        "description_en":"Number of individual amendments requested.",
+        "description_en":"Number of individual amendments requested",
         "categories": ["campaign", "country-user"]
     },
     {
         "id":"total-edit",
         "name_en":"Total Edits", 
-        "description_en":"Most recent tally of user edits.",
+        "description_en":"Most recent tally of user edits",
         "categories": ["all-users", "all-countries"]
     },
     {
@@ -107,7 +111,34 @@
     {
         "id":"last-run-time",
         "name_en":"Last run time", 
-        "description_en":"Most recent use of tasking manager.",
-        "categories": ["campaign", "country-user", "tasking-manager"]
+        "description_en":"Most recent use of tasking manager",
+        "categories": ["country-user", "tasking-manager"]
+    },
+    {
+        "id":"source",
+        "name_en":"Source", 
+        "description_en":"Origin of campaign",
+        "categories": [           
+            "admin-campaign-all"
+        ]
+    },
+    {
+        "id":"assigned-by",
+        "name_en":"Assigned By", 
+        "description_en":"Coordinating team member",
+        "categories": [           
+            "admin-campaign-teams"
+        ]
+    },
+    {
+        "id":"priority",
+        "name_en":"Priority", 
+        "description_en":"Assigned urgency level",
+        "categories": [           
+            "admin-campaign-teams",
+            "admin-campaign-favorites",
+            "admin-campaign-contributions",
+            "admin-campaign-all"
+        ]
     }
 ]
