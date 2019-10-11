@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## Unreleased
+### Added
+- Edit times that occured within the last 24 hours show 'Last Edit: In the last 24 Hours' rather than 'today'
 
 ## [v1.5.0] - 2019-09-27
 ### Changed
