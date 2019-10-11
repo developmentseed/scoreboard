@@ -7,6 +7,7 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import QueryParameters from '../../components/QueryParameters'
+import { LoadingState } from '../../components/common/LoadingState'
 import Select from 'react-select'
 import Link from '../../components/Link'
 
@@ -83,7 +84,10 @@ export class AdminTaskersEdit extends Component {
 
     if (this.state.loading) {
       return (
-        <div><AdminHeader /></div>
+        <div>
+          <AdminHeader />
+          <LoadingState />
+        </div>
       )
     }
 

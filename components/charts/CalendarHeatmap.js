@@ -1,6 +1,7 @@
 import React from 'react'
 import { ResponsiveCalendar } from '@nivo/calendar'
 import getISOYear from 'date-fns/get_iso_year'
+import { LoadingState } from '../common/LoadingState'
 
 class CalendarHeatmap extends React.Component {
   constructor (props) {
@@ -56,6 +57,7 @@ class CalendarHeatmap extends React.Component {
     return (
       <div className='widget' style={{ position: 'relative', height: `${height}px` }} >
         <h4 className='header--small header--with-description-lg'>Edits Over Time</h4>
+        {this.state.loading ? <LoadingState /> : null}
         {
           earliestYear
             ? <ResponsiveCalendar
