@@ -15,6 +15,7 @@ import DashboardAssignments from '../components/dashboard/DashboardAssignments'
 import DashboardHeader from '../components/dashboard/DashboardHeader'
 import DashboardSidebar from '../components/dashboard/DashboardSidebar'
 import DashboardBlurb from '../components/dashboard/DashboardBlurb'
+import { LoadingState } from '../components/common/LoadingState'
 import CampaignsChart from '../components/charts/CampaignsChart'
 import EditBreakdownChart from '../components/charts/EditBreakdownChart'
 import { formatDecimal } from '../lib/utils/format'
@@ -57,7 +58,7 @@ class Dashboard extends Component {
 
   render () {
     if (this.state.loading) {
-      return <div />
+      return <LoadingState />
     }
     const { authenticatedUser } = this.props
     const { loggedIn, account } = authenticatedUser

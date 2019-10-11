@@ -23,6 +23,7 @@ import '../styles/Dashboard.scss'
 import '../styles/Campaigns.scss'
 import '../styles/Users.scss'
 import '../styles/Badges.scss'
+import '../styles/LoadingState.scss'
 
 /* CSS */
 import 'react-select/dist/react-select.css'

@@ -7,6 +7,7 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
+import { LoadingState } from '../../components/common/LoadingState'
 import { Tooltip } from '../components/common/Tooltip'
 
 const tableHeaders = require('../lib/page-text/table-headers.json')
@@ -77,7 +78,10 @@ export class AdminTeams extends Component {
 
     if (this.state.loading) {
       return (
-        <div><AdminHeader /></div>
+        <div>
+          <AdminHeader />
+          <LoadingState />
+        </div>
       )
     }
 

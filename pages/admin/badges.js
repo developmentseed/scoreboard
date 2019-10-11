@@ -6,6 +6,7 @@ import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
+import { LoadingState } from '../../components/common/LoadingState'
 import Link from '../../components/Link'
 import { Tooltip } from '../../components/common/Tooltip'
 
@@ -75,7 +76,10 @@ export class AdminBadges extends Component {
 
     if (this.state.loading) {
       return (
-        <div><AdminHeader /></div>
+        <div>
+          <AdminHeader />
+          <LoadingState />
+        </div>
       )
     }
 

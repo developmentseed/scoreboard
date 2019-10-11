@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Moved all table header labels to common json file with descriptions.
 
+### Added
+- Edit times that occured within the last 24 hours show 'Last Edit: In the last 24 Hours' rather than 'today'
+
 ## [v1.5.0] - 2019-09-27
 ### Changed
 - CSV exports from Campaigns and Users now split out the "Added" and "Modified" stats for all features
