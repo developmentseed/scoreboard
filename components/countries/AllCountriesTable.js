@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from '../Link'
-import { LoadingState } from '../common/LoadingState'
 import { Tooltip } from '../common/Tooltip'
+import { LoadingState } from '../common/LoadingState'
 
 const tableHeaders = require('../../lib/page-text/table-headers.json')
 const { formatDecimal } = require('../../lib/utils/format')

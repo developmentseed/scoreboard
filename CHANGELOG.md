@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Changed
 - Moved all table header labels to common json file with descriptions.
+
 ### Added
 - Tooltip feature for providing definitions or instructions to user
 - Edit times that occured within the last 24 hours show 'Last Edit: In the last 24 Hours' rather than 'today'
