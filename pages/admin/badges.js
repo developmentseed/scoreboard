@@ -50,8 +50,7 @@ export class AdminBadges extends Component {
             <thead>
               <tr>
                 <th>
-                  {header.name_en}
-                  <Tooltip dataTip={header.description_en} />
+                  <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
                 </th>
               </tr>
             </thead>

@@ -52,8 +52,7 @@ export class AdminTaskers extends Component {
                   .filter(table => table.categories.includes('tasking-manager'))
                   .map(header => (
                     <th>
-                      {header.name_en}
-                      <Tooltip dataTip={header.description_en} />
+                      <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
                     </th>
                   ))}
               </tr>

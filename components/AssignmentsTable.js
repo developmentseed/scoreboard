@@ -14,8 +14,7 @@ export default ({ assignments, filter }) => {
               .filter(table => table.categories.includes(`admin-campaign-${filter.toLowerCase()}`))
               .map(header => (
                 <th>
-                  {header.name_en}
-                  <Tooltip dataTip={header.description_en} />
+                  <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
                 </th>
               ))}
           </tr>

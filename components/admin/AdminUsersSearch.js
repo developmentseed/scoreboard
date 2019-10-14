@@ -46,8 +46,7 @@ class UsersSearch extends Component {
       .filter(table => table.categories.includes('user'))
       .map(header => (
         <th>
-          {header.name_en}
-          <Tooltip dataTip={header.description_en} />
+          <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>/>
         </th>
       ))
     if (!records) return <div />

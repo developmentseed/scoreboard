@@ -18,8 +18,7 @@ export default function CountriesTable ({ apiStatus, countries }) {
                 .filter(table => table.categories.includes('all-countries'))
                 .map(header => (
                   <th>
-                    {header.name_en}
-                    <Tooltip dataTip={header.description_en} />
+                    <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
                   </th>
                 ))}
             </tr>

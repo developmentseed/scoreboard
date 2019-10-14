@@ -50,8 +50,7 @@ export class AdminUsers extends Component {
       .sort((a, b) => (a.id === 'user_id' ? -1 : null))
       .map(header => (
         <th>
-          {header.name_en}
-          <Tooltip dataTip={header.description_en} />
+          <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
         </th>
       ))
 
