@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from '../Link'
+import { LoadingState } from '../common/LoadingState'
 import { Tooltip } from '../common/Tooltip'
 
 const tableHeaders = require('../../lib/page-text/table-headers.json')
@@ -39,7 +40,7 @@ export default function CountriesTable ({ apiStatus, countries }) {
       )
       break
     case 'LOADING':
-      content = <div>Loading...</div>
+      content = <LoadingState />
       break
 
     case 'ERROR':
