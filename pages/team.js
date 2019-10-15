@@ -6,7 +6,7 @@ import CampaignCard from '../components/campaigns/CampaignCard'
 import { sortBy, prop } from 'ramda'
 import { Tooltip } from '../components/common/Tooltip'
 
-const tableHeaders = require('../lib/page-text/table-headers.json')
+const { selectHeaders } = require('../lib/utils/tableHeaderSelector')
 
 export class Team extends Component {
   componentDidMount () {
@@ -43,8 +43,7 @@ export class Team extends Component {
                 <table className=''>
                   <thead>
                     <tr>
-                      {tableHeaders
-                        .filter(table => table.categories.includes('user'))
+                      {selectHeaders('user')
                         .map(header => (
                           <th>
                             <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>

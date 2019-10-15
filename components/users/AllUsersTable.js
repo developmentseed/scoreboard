@@ -5,7 +5,7 @@ import { LoadingState } from '../common/LoadingState'
 import { parse } from 'date-fns'
 import { Tooltip } from '../common/Tooltip'
 
-const tableHeaders = require('../../lib/page-text/table-headers.json')
+const { selectHeaders } = require('../../lib/utils/tableHeaderSelector')
 
 const UsersTable = ({ apiStatus, users }) => {
   let content = <div />
@@ -15,8 +15,7 @@ const UsersTable = ({ apiStatus, users }) => {
         <table>
           <thead>
             <tr>
-              {tableHeaders
-                .filter(table => table.categories.includes('all-users'))
+              {selectHeaders('all-users')
                 .map(header => (
                   <th>
                     <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
