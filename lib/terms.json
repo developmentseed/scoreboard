@@ -70,7 +70,7 @@
         "description_en":"Number of individual amendments requested"
     },
     {
-        "id":"total-edit",
+        "id":"total-edits",
         "name_en":"Total Edits", 
         "description_en":"Most recent tally of user edits"
     },
