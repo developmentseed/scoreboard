@@ -10,7 +10,7 @@
         "description_en":"Username"
     },
     {
-        "id":"user_id",
+        "id":"user-id",
         "name_en":"User ID", 
         "description_en":"Unique user id"
     },
