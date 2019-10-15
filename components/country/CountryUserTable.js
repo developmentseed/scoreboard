@@ -34,8 +34,8 @@ export default function CountryUserTable (props) {
                       </a>
                     </Link>
                   </td>
-                  <td>{formatDecimal(user.changesets)}</td>
                   <td>{formatDecimal(user.edits)}</td>
+                  <td>{formatDecimal(user.changesets)}</td>
                 </tr>
               ))
           }
