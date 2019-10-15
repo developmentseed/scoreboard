@@ -4,7 +4,7 @@ import { connect } from 'unistore/react'
 import { actions } from '../../lib/store'
 import { Tooltip } from '../common/Tooltip'
 
-const tableHeaders = require('../../lib/page-text/table-headers.json')
+const { selectHeaders } = require('../../lib/utils/tableHeaderSelector')
 
 class UsersSearch extends Component {
   constructor (props) {
@@ -42,8 +42,7 @@ class UsersSearch extends Component {
 
     const { page, searchText } = this.props.adminTeamMemberFilters
     const { stats: { total, records } } = this.props.adminTeamMemberSearchResults
-    const headers = tableHeaders
-      .filter(table => table.categories.includes('user'))
+    const headers = selectHeaders('user')
       .map(header => (
         <th>
           <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>/>

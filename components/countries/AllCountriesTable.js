@@ -3,8 +3,8 @@ import Link from '../Link'
 import { Tooltip } from '../common/Tooltip'
 import { LoadingState } from '../common/LoadingState'
 
-const tableHeaders = require('../../lib/page-text/table-headers.json')
 const { formatDecimal } = require('../../lib/utils/format')
+const { selectHeaders } = require('../../lib/utils/tableHeaderSelector')
 
 export default function CountriesTable ({ apiStatus, countries }) {
   let content = <div />
@@ -14,8 +14,7 @@ export default function CountriesTable ({ apiStatus, countries }) {
         <table>
           <thead>
             <tr>
-              {tableHeaders
-                .filter(table => table.categories.includes('all-countries'))
+              {selectHeaders('all-countries')
                 .map(header => (
                   <th>
                     <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>

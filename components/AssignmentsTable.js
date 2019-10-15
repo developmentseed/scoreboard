@@ -2,8 +2,7 @@ import React from 'react'
 import Link from './Link'
 import { Tooltip } from './common/Tooltip'
 
-const tableHeaders = require('../lib/page-text/table-headers.json')
-const terms = require('../lib/terms.json')
+const { selectHeaders } = require('../lib/utils/tableHeaderSelector')
 
 export default ({ assignments, filter }) => {
   return (
@@ -11,8 +10,7 @@ export default ({ assignments, filter }) => {
       <table>
         <thead>
           <tr>
-            {terms
-              .filter(term => term.id === tableHeaders[`admin-campaign-${filter.toLowerCase()}`].headers)
+            {selectHeaders(`admin-campaign-${filter.toLowerCase()}`)
               .map(header => (
                 <th>
                   <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>

@@ -5,7 +5,7 @@ import { formatDecimal } from '../../lib/utils/format'
 import CSVExport from '../../components/CSVExport'
 import { Tooltip } from '../common/Tooltip'
 
-const tableHeaders = require('../../lib/page-text/table-headers.json')
+const { selectHeaders } = require('../../lib/utils/tableHeaderSelector')
 
 export default function CampaignTable (props) {
   if (props.users.length === 0) {
@@ -26,8 +26,7 @@ export default function CampaignTable (props) {
       <table>
         <thead>
           <tr>
-            {tableHeaders
-              .filter(table => table.categories.includes('campaign'))
+            {selectHeaders('campaign')
               .map(header => (
                 <th>
                   <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
