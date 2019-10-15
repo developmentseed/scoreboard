@@ -11,8 +11,9 @@ export default ({ assignments, filter }) => {
       <table>
         <thead>
           <tr>
-            {tableHeaders
-              .filter(table => table.categories.includes(`admin-campaign-${filter.toLowerCase()}`))
+            {terms
+              // .filter(table => table.categories.includes(`admin-campaign-${filter.toLowerCase()}`))
+              .filter(term => term.id === tableHeaders[`admin-campaign-${filter.toLowerCase()}`].headers)
               .map(header => (
                 <th>
                   <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
