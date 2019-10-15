@@ -4,7 +4,7 @@ import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
 import { Tooltip } from '../common/Tooltip'
 
-const tableHeaders = require('../../lib/page-text/table-headers.json')
+const { selectHeaders } = require('../../lib/utils/tableHeaderSelector')
 
 export default function CountryUserTable (props) {
   return (
@@ -12,8 +12,7 @@ export default function CountryUserTable (props) {
       <table>
         <thead>
           <tr>
-            {tableHeaders
-              .filter(table => table.categories.includes('country-user'))
+            {selectHeaders('country-user')
               .map(header => (
                 <th>
                   <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
