@@ -3,6 +3,7 @@ import Link from './Link'
 import { Tooltip } from './common/Tooltip'
 
 const tableHeaders = require('../lib/page-text/table-headers.json')
+const terms = require('../lib/terms.json')
 
 export default ({ assignments, filter }) => {
   return (
