@@ -19,12 +19,8 @@
         "headers": [
             "rank",
             "name",
-            "user-id",
-            "role",
-            "hashtags",
-            "changesets",
             "edits",
-            "last-run-time"
+            "changesets"
         ]
     },
     {
