@@ -10,7 +10,7 @@ import AdminHeader from '../../components/admin/AdminHeader'
 import { LoadingState } from '../../components/common/LoadingState'
 import { Tooltip } from '../../components/common/Tooltip'
 
-const tableHeaders = require('../../lib/page-text/table-headers.json')
+const { selectHeaders } = require('../../lib/utils/tableHeaderSelector')
 
 export class AdminUsers extends Component {
   constructor () {
@@ -45,9 +45,7 @@ export class AdminUsers extends Component {
     if (!admin || !admin.users) return
 
     // Reorders headers to show UserId first
-    const headers = tableHeaders
-      .filter(table => table.categories.includes('admin-user'))
-      // .sort((a, b) => (a.id === 'user-id' ? -1 : null))
+    const headers = selectHeaders('admin-user')
       .map(header => (
         <th>
           <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>

@@ -59,8 +59,8 @@
     {
         "id": "admin-user",
         "headers": [
-            "name",
             "user-id",
+            "name",
             "role"
         ]
     },
