@@ -12,7 +12,6 @@ export default ({ assignments, filter }) => {
         <thead>
           <tr>
             {terms
-              // .filter(table => table.categories.includes(`admin-campaign-${filter.toLowerCase()}`))
               .filter(term => term.id === tableHeaders[`admin-campaign-${filter.toLowerCase()}`].headers)
               .map(header => (
                 <th>
