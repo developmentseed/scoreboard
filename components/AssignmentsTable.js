@@ -12,9 +12,13 @@ export default ({ assignments, filter }) => {
           <tr>
             {selectHeaders(`admin-campaign-${filter.toLowerCase()}`)
               .map(header => (
-                <th>
-                  <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                </th>
+                header.displayTooltip ? (
+                  <th key={header.id}>
+                    <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
+                  </th>
+                ) : (
+                  <th key={header.id}>{header.name_en}</th>
+                )
               ))}
           </tr>
         </thead>

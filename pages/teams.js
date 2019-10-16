@@ -7,7 +7,7 @@ import { Tooltip } from '../components/common/Tooltip'
 
 import { APP_URL_PREFIX } from '../api/src/config'
 
-const { selectHeaders } = require('../lib/utils/tableHeaderSelector')
+const { selectHeaders, tableHeaderNames } = require('../lib/utils/tableHeaderSelector')
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
@@ -77,11 +77,15 @@ class Teams extends Component {
         <table className='admin-table'>
           <thead>
             <tr>
-              {selectHeaders('team')
+              {selectHeaders(tableHeaderNames.TEAM)
                 .map(header => (
-                  <th>
-                    <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                  </th>
+                  header.displayTooltip ? (
+                    <th key={header.id}>
+                      <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
+                    </th>
+                  ) : (
+                    <th key={header.id}>{header.name_en}</th>
+                  )
                 ))}
             </tr>
           </thead>

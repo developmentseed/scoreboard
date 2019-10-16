@@ -4,7 +4,7 @@ import { Tooltip } from '../common/Tooltip'
 import { LoadingState } from '../common/LoadingState'
 
 const { formatDecimal } = require('../../lib/utils/format')
-const { selectHeaders } = require('../../lib/utils/tableHeaderSelector')
+const { selectHeaders, tableHeaderNames } = require('../../lib/utils/tableHeaderSelector')
 
 export default function CountriesTable ({ apiStatus, countries }) {
   let content = <div />
@@ -14,11 +14,15 @@ export default function CountriesTable ({ apiStatus, countries }) {
         <table>
           <thead>
             <tr>
-              {selectHeaders('all-countries')
+              {selectHeaders(tableHeaderNames.ALL_COUNTRIES)
                 .map(header => (
-                  <th>
-                    <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                  </th>
+                  header.displayTooltip ? (
+                    <th key={header.id}>
+                      <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
+                    </th>
+                  ) : (
+                    <th key={header.id}>{header.name_en}</th>
+                  )
                 ))}
             </tr>
           </thead>

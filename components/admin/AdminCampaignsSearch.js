@@ -6,7 +6,7 @@ import { actions } from '../../lib/store'
 import Select from 'react-select'
 import { Tooltip } from '../common/Tooltip'
 
-const { selectHeaders } = require('../lib/utils/tableHeaderSelector')
+const { selectHeaders, tableHeaderNames } = require('../lib/utils/tableHeaderSelector')
 
 class Assignment extends Component {
   constructor (props) {
@@ -108,11 +108,15 @@ class CampaignSearch extends Component {
               <table className='admin-table'>
                 <thead>
                   <tr>
-                    {selectHeaders('admin-campaign-contributions')
+                    {selectHeaders(tableHeaderNames.ADMIN_CAMPAIGN_CONTRIBUTIONS)
                       .map(header => (
-                        <th>
-                          <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                        </th>
+                        header.displayTooltip ? (
+                          <th key={header.id}>
+                            <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
+                          </th>
+                        ) : (
+                          <th key={header.id}>{header.name_en}</th>
+                        )
                       ))}
                   </tr>
                 </thead>
