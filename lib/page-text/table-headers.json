@@ -14,6 +14,12 @@
             "edits"
         ],
         "displaysToolip": [
+            "rank",
+            "name",
+            "roads",
+            "buildings",
+            "poi",
+            "railways",
             "coastlines",
             "waterways",
             "changesets",
@@ -27,6 +33,11 @@
             "name",
             "edits",
             "changesets"
+        ],
+        "displaysToolip": [
+            "rank",
+            "edits",
+            "changesets"
         ]
     },
     {
@@ -37,12 +48,20 @@
             "country",
             "total-edits",
             "last-edit"
+        ],
+        "displaysToolip": [
+            "rank",
+            "total-edits",
+            "last-edit"
         ]
     },
     {
         "id": "all-countries",
         "headers": [
             "name",
+            "total-edits"
+        ],
+        "displaysToolip": [
             "total-edits"
         ]
     },
@@ -53,12 +72,20 @@
             "user-id",
             "role",
             "hashtags"
+        ],
+        "displaysToolip": [
+            "user-id",
+            "role",
+            "hashtags"
         ]
     },
     {
         "id": "team",
         "headers": [
             "name",
+            "hashtags"
+        ],
+        "displaysToolip": [
             "hashtags"
         ]
     },
@@ -68,12 +95,19 @@
             "user-id",
             "name",
             "role"
+        ],
+        "displaysToolip": [
+            "role"
         ]
     },
     {
         "id": "admin-campaign-teams",
         "headers": [
             "name",
+            "assigned-by",
+            "priority"
+        ],
+        "displaysToolip": [
             "assigned-by",
             "priority"
         ]
@@ -83,12 +117,18 @@
         "headers": [
             "name",
             "priority"
+        ],
+        "displaysToolip": [
+            "priority"
         ]
     },
     {
         "id": "admin-campaign-contributions",
         "headers": [
             "name",
+            "priority"
+        ],
+        "displaysToolip": [
             "priority"
         ]
     },
@@ -98,12 +138,19 @@
             "name",
             "source",
             "priority"
+        ],
+        "displaysToolip": [
+            "source",
+            "priority"
         ]
     },
     {
         "id": "tasking-manager",
         "headers": [
             "name",
+            "last-run-time"
+        ],
+        "displaysToolip": [
             "last-run-time"
         ]
     }
