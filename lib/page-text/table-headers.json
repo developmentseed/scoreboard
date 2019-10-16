@@ -12,6 +12,12 @@
             "waterways",
             "changesets",
             "edits"
+        ],
+        "displaysToolip": [
+            "coastlines",
+            "waterways",
+            "changesets",
+            "edits"
         ]
     },
     {
