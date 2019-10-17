@@ -56,6 +56,7 @@ async function usersWorker () {
         const data = await OSMesa.getUser(obj.osm_id)
         obj.edit_count = data.edit_count || 0
         obj.last_edit = data.last_edit
+        await updateCountries(obj.id, data.country_list)
       } catch (e) {
         if (e.statusCode !== 404) {
           // Only log if there was a server error

@@ -64,6 +64,7 @@ async function stats (req, res) {
     let records = await recordQuery.clone()
 
     // add codes to each country
+    console.log(records)
     records = records.map((c) => {
       const countryPair = countryList.find((country_pair) => {
         return country_pair.name === c.name

@@ -2,6 +2,7 @@ const rp = require('request-promise-native')
 const fs = require('fs')
 const path = require('path')
 const knex = require('knex')
+const { find, propEq } = require('ramda')
 
 const { OSMESA_API, OSMESA_DB } = require('../config')
 const { generateOSMesaUser, generateOSMesaStatus } = require('../db/seeds/utils')
@@ -120,6 +121,7 @@ class OSMesaDBWrapper {
 
   async getUser (id) {
     let [data] = await this.db('user_statistics').where({ id })
+    let countries = await this.db('countries').select()
 
     // change shape of response
     const {
@@ -130,8 +132,19 @@ class OSMesaDBWrapper {
       editor_edits: editors,
       day_edits: edit_times,
       hashtag_edits: hashtags,
-      country_edits: country_list
+      country_edits,
+      country_changesets
     } = data
+
+    let country_list = []
+    Object.keys(country_edits).forEach(code => {
+      const countryName = find(propEq('code', code))(countries).name
+      country_list.push({
+        name: countryName,
+        edit_count: country_edits[code],
+        changeset_count: country_changesets[code]
+      })
+    })
 
     const userObj = {
       uid: data.id,
@@ -150,8 +163,8 @@ class OSMesaDBWrapper {
     return userObj
   }
 
-  async getCampaign (hashtag_id) {
-    const [data] = await this.db('hashtag_statistics').where({ hashtag_id })
+  async getCampaign (hashtag) {
+    const [data] = await this.db('hashtag_statistics').where({ tag: hashtag })
     const { tag } = data
 
     const campaignObj = {
