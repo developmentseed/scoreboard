@@ -6,7 +6,7 @@ const knex = require('knex')
 const { OSMESA_API, OSMESA_DB } = require('../config')
 const { generateOSMesaUser, generateOSMesaStatus } = require('../db/seeds/utils')
 
-export const osmesaUserObj = {
+const osmesaUserObj = {
   uid: -1,
   name: '',
   edit_count: 0,
@@ -47,34 +47,22 @@ export const osmesaUserObj = {
   hashtags: []
 }
 
+module.exports.osmesaUserObj = osmesaUserObj
+
 class OSMesaDBWrapper {
   constructor () {
     this.db = knex({
       client: 'pg',
       connection: OSMESA_DB
     })
-  }
 
-  async getUser (id) {
-    let conn = await this.db()
-    let data = await conn('user_statistics').where({ id })
-
-    // change shape of response
-    const { edit_count, changeset_count, name, last_edit,
-      editor_edits: editors,
-      day_edits: edit_times,
-      hashtag_edits: hashtags,
-      country_edits: country_list
-    } = data
-
-    const measurementConversions = [
-      ['road', 'roads'],
-      ['waterway', 'waterways'],
-      ['coastline', 'coastlines'],
-      ['railline', 'railway']
+    this.editTypes = [
+      ['added', 'add'],
+      ['modified', 'mod'],
+      ['deleted', 'del']
     ]
 
-    const countConversions = [
+    this.countConversions = [
       ['roads', 'roads'],
       ['waterways', 'waterways'],
       ['coastlines', 'coastlines'],
@@ -82,13 +70,70 @@ class OSMesaDBWrapper {
       ['pois', 'poi']
     ]
 
-    const editTypes = [
-      ['added', 'add'],
-      ['modified', 'mod'],
-      ['deleted', 'del']
+    this.measurementConversions = [
+      ['road', 'roads'],
+      ['waterway', 'waterways'],
+      ['coastline', 'coastlines'],
+      ['railline', 'railway']
     ]
+  }
 
-    let userObj = {
+  // turns the new schema into the old schema for objects like user_edits
+  expandCountObj (type, obj) {
+    return Object.keys(obj).map((key) => {
+      return {
+        [type]: type === 'user' ? Number(key) : key,
+        count: obj[key]
+      }
+    })
+  }
+
+  convertCountProperties (target, source) {
+    this.countConversions.forEach(count => {
+      this.editTypes.forEach(type => {
+        if (
+          target &&
+          source &&
+          source.count &&
+          source.count[`${count[0]}_km_${type[0]}`]
+        ) {
+          target[`km_${count[1]}_${type[1]}`] = source.count[`${count[0]}_km_${type[0]}`]
+        }
+      })
+    })
+  }
+
+  convertMeasurementProperties (target, source) {
+    this.measurementConversions.forEach(meas => {
+      this.editTypes.forEach(type => {
+        if (
+          target &&
+          source &&
+          source.measurements &&
+          source.measurements[`${meas[0]}_km_${type[0]}`]
+        ) {
+          target[`km_${meas[1]}_${type[1]}`] = source.measurements[`${meas[0]}_km_${type[0]}`]
+        }
+      })
+    })
+  }
+
+  async getUser (id) {
+    let [data] = await this.db('user_statistics').where({ id })
+
+    // change shape of response
+    const {
+      edit_count,
+      changeset_count,
+      name,
+      last_edit,
+      editor_edits: editors,
+      day_edits: edit_times,
+      hashtag_edits: hashtags,
+      country_edits: country_list
+    } = data
+
+    const userObj = {
       uid: data.id,
       name,
       edit_count,
@@ -100,30 +145,82 @@ class OSMesaDBWrapper {
       country_list
     }
 
-    measurementConversions.forEach(meas => {
-      editTypes.forEach(type => {
-        userObj[`km_${meas[1]}_${type[1]}`] = data.measurements[`${meas[0]}_km_${type[0]}`]
-      })
-    })
-
-    countConversions.forEach(count => {
-      editTypes.forEach(type => {
-        userObj[`km_${count[1]}_${type[1]}`] = data.count[`${count[0]}_km_${type[0]}`]
-      })
-    })
+    this.convertCountProperties(userObj, data)
+    this.convertMeasurementProperties(userObj, data)
     return userObj
   }
 
-  getCampaign (id) {
-    return rp(`${OSMESA_API}/campaigns/${id}`)
+  async getCampaign (hashtag_id) {
+    const [data] = await this.db('hashtag_statistics').where({ hashtag_id })
+    const { tag } = data
+
+    const campaignObj = {
+      tag,
+      extent_uri: `hashtag/${tag}/{z}/{x}/{y}.mvt`,
+      // TODO: is users suppused to be the full user statistics for each user?
+      users: []
+    }
+
+    this.convertCountProperties(campaignObj, data)
+    this.convertMeasurementProperties(campaignObj, data)
+    return campaignObj
   }
 
-  getCountry (code) {
-    return rp(`${OSMESA_API}/country-stats/${code}`)
+  async getCountry (country_code) {
+    const [data] = await this.db('country_statistics').where({ country_code })
+
+    const {
+      country_id,
+      country_name,
+      edit_count,
+      changeset_count,
+      last_edit,
+      updated_at,
+      hashtag_edits,
+      user_edits
+    } = data
+
+    const countryObj = {
+      country_id,
+      name: country_name,
+      last_edit,
+      updated_at,
+      changeset_count,
+      edit_count,
+      user_edits: this.expandCountObj('user', user_edits),
+      hashtag_edits: this.expandCountObj('hashtag', hashtag_edits)
+    }
+
+    this.convertCountProperties(countryObj, data)
+    this.convertMeasurementProperties(countryObj, data)
+    return countryObj
   }
 
-  getUpdates () {
-    return rp(`${OSMESA_API}/status`)
+  async getUpdates () {
+    const data = await this.db('refreshments').select()
+
+    return data.reduce((obj, { mat_view, updated_at }) => {
+      switch (mat_view) {
+        case 'country_statistics': {
+          obj.country_stats_refresh = updated_at
+          break
+        }
+        case 'hashtag_statistics': {
+          obj.hashtag_stats_refresh = updated_at
+          break
+        }
+        case 'hashtag_user_statistics': {
+          obj.hashtag_user_stats_refresh = updated_at
+          break
+        }
+        case 'user_statistics': {
+          obj.stats_user_refresh = updated_at
+          break
+        }
+      }
+
+      return obj
+    })
   }
 }
 
