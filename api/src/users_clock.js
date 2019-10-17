@@ -8,16 +8,6 @@ const OSMesa = require('./services/osmesa')
 const db = require('./db/connection')
 const { updateUserCountryEdit, isState } = require('./models/userCountryEdits')
 
-/*
- * Given the edit times for a user get the last edit
- *
- * @param {Array[Date]} editTimes
- */
-function getLastEdit (editTimes) {
-  const days = editTimes.map((time) => parse(time.day))
-  return head(days.sort(compareDesc))
-}
-
 async function updateCountries (userID, countryEditList) {
   const countryEditTotal = {}
   const countryChangesetTotal = {}
@@ -63,14 +53,9 @@ async function usersWorker () {
     const promises = users.map((obj) => limit(async () => {
       // Get edit count from OSMesa
       try {
-        const resp = await OSMesa.getUser(obj.osm_id)
-
-        if (resp.length) {
-          const data = JSON.parse(resp)
-          obj.edit_count = sumEdits(data) || 0
-          obj.last_edit = getLastEdit(data.edit_times)
-          await updateCountries(obj.id, data.country_list)
-        }
+        const data = await OSMesa.getUser(obj.osm_id)
+        obj.edit_count = data.edit_count || 0
+        obj.last_edit = data.last_edit
       } catch (e) {
         if (e.statusCode !== 404) {
           // Only log if there was a server error
