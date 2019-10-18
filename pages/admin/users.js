@@ -8,7 +8,7 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import { LoadingState } from '../../components/common/LoadingState'
-import TableHeaders from '../../common/TableHeaders'
+import TableHeaders from '../../components/common/TableHeaders'
 import { tableHeaderNames } from '../../lib/enums'
 
 export class AdminUsers extends Component {
