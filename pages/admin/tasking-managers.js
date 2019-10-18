@@ -8,9 +8,8 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 import { distanceInWordsToNow, parse } from 'date-fns'
-import { Tooltip } from '../../components/common/Tooltip'
-
-const { selectHeaders, tableHeaderNames } = require('../../lib/utils/tableHeaderSelector')
+import TableHeaders from '../../common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 export class AdminTaskers extends Component {
   constructor () {
@@ -48,16 +47,7 @@ export class AdminTaskers extends Component {
           <table className='admin-table'>
             <thead>
               <tr>
-                {selectHeaders(tableHeaderNames.TASKING_MANAGER)
-                  .map(header => (
-                    header.displayTooltip ? (
-                      <th key={header.id}>
-                        <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                      </th>
-                    ) : (
-                      <th key={header.id}>{header.name_en}</th>
-                    )
-                  ))}
+                <TableHeaders tableName={tableHeaderNames.TASKING_MANAGER} />
               </tr>
             </thead>
             <tbody>

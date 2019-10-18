@@ -3,11 +3,10 @@ import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import Link from '../components/Link'
 import join from 'url-join'
-import { Tooltip } from '../components/common/Tooltip'
+import TableHeaders from '../common/TableHeaders'
+import { tableHeaderNames } from '../lib/enums'
 
 import { APP_URL_PREFIX } from '../api/src/config'
-
-const { selectHeaders, tableHeaderNames } = require('../lib/utils/tableHeaderSelector')
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
@@ -77,16 +76,7 @@ class Teams extends Component {
         <table className='admin-table'>
           <thead>
             <tr>
-              {selectHeaders(tableHeaderNames.TEAM)
-                .map(header => (
-                  header.displayTooltip ? (
-                    <th key={header.id}>
-                      <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                    </th>
-                  ) : (
-                    <th key={header.id}>{header.name_en}</th>
-                  )
-                ))}
+              <TableHeaders tableName={tableHeaderNames.TEAM} />
             </tr>
           </thead>
           <tbody>

@@ -8,9 +8,8 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 import { LoadingState } from '../../components/common/LoadingState'
-import { Tooltip } from '../components/common/Tooltip'
-
-const { selectHeaders, tableHeaderNames } = require('../lib/utils/tableHeaderSelector')
+import TableHeaders from '../common/TableHeaders'
+import { tableHeaderNames } from '../lib/enums'
 
 export class AdminTeams extends Component {
   constructor () {
@@ -47,16 +46,7 @@ export class AdminTeams extends Component {
         <div className='widget'>
           <table className='admin-table'>
             <thead>
-              {selectHeaders(tableHeaderNames.TEAM)
-                .map(header => (
-                  header.displayTooltip ? (
-                    <th key={header.id}>
-                      <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                    </th>
-                  ) : (
-                    <th key={header.id}>{header.name_en}</th>
-                  )
-                ))}
+              <TableHeaders tableName={tableHeaderNames.TEAM} />
             </thead>
             <tbody>
               {

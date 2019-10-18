@@ -8,9 +8,8 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import { LoadingState } from '../../components/common/LoadingState'
-import { Tooltip } from '../../components/common/Tooltip'
-
-const { selectHeaders, tableHeaderNames } = require('../../lib/utils/tableHeaderSelector')
+import TableHeaders from '../../common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 export class AdminUsers extends Component {
   constructor () {
@@ -45,16 +44,7 @@ export class AdminUsers extends Component {
     if (!admin || !admin.users) return
 
     // Reorders headers to show UserId first
-    const headers = selectHeaders(tableHeaderNames.ADMIN_USER)
-      .map(header => (
-        header.displayTooltip ? (
-          <th key={header.id}>
-            <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-          </th>
-        ) : (
-          <th key={header.id}>{header.name_en}</th>
-        )
-      ))
+    const headers = <TableHeaders tableName={tableHeaderNames.TEADMIN_USERAM} />
 
     return (
       <div className='admin'>

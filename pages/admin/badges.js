@@ -10,7 +10,7 @@ import { LoadingState } from '../../components/common/LoadingState'
 import Link from '../../components/Link'
 import { Tooltip } from '../../components/common/Tooltip'
 
-const glossary = require('../../lib/glossary.json')
+const glossary = require('../../lib/i18n/glossary_en.json')
 
 export class AdminBadges extends Component {
   constructor () {
@@ -50,7 +50,7 @@ export class AdminBadges extends Component {
             <thead>
               <tr>
                 <th>
-                  <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
+                  <Tooltip dataTip={header.description}>{header.name}</Tooltip>
                 </th>
               </tr>
             </thead>

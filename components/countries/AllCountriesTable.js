@@ -1,10 +1,10 @@
 import React from 'react'
 import Link from '../Link'
-import { Tooltip } from '../common/Tooltip'
+import TableHeaders from '../common/TableHeaders'
 import { LoadingState } from '../common/LoadingState'
+import { tableHeaderNames } from '../../lib/enums'
 
 const { formatDecimal } = require('../../lib/utils/format')
-const { selectHeaders, tableHeaderNames } = require('../../lib/utils/tableHeaderSelector')
 
 export default function CountriesTable ({ apiStatus, countries }) {
   let content = <div />
@@ -14,16 +14,7 @@ export default function CountriesTable ({ apiStatus, countries }) {
         <table>
           <thead>
             <tr>
-              {selectHeaders(tableHeaderNames.ALL_COUNTRIES)
-                .map(header => (
-                  header.displayTooltip ? (
-                    <th key={header.id}>
-                      <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                    </th>
-                  ) : (
-                    <th key={header.id}>{header.name_en}</th>
-                  )
-                ))}
+              <TableHeaders tableName={tableHeaderNames.ALL_COUNTRIES} />
             </tr>
           </thead>
           <tbody>

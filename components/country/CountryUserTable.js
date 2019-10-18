@@ -2,9 +2,8 @@ import React from 'react'
 import Link from '../Link'
 import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
-import { Tooltip } from '../common/Tooltip'
-
-const { selectHeaders, tableHeaderNames } = require('../../lib/utils/tableHeaderSelector')
+import TableHeaders from '../common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 export default function CountryUserTable (props) {
   return (
@@ -12,16 +11,7 @@ export default function CountryUserTable (props) {
       <table>
         <thead>
           <tr>
-            {selectHeaders(tableHeaderNames.COUNTRY_USER)
-              .map(header => (
-                header.displayTooltip ? (
-                  <th key={header.id}>
-                    <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                  </th>
-                ) : (
-                  <th key={header.id}>{header.name_en}</th>
-                )
-              ))}
+            <TableHeaders tableName={tableHeaderNames.COUNTRY_USER} />
           </tr>
         </thead>
         <tbody>

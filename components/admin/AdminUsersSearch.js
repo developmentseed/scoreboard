@@ -2,9 +2,8 @@ import Pagination from 'react-js-pagination'
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../../lib/store'
-import { Tooltip } from '../common/Tooltip'
-
-const { selectHeaders, tableHeaderNames } = require('../../lib/utils/tableHeaderSelector')
+import TableHeaders from '../common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 class UsersSearch extends Component {
   constructor (props) {
@@ -42,16 +41,7 @@ class UsersSearch extends Component {
 
     const { page, searchText } = this.props.adminTeamMemberFilters
     const { stats: { total, records } } = this.props.adminTeamMemberSearchResults
-    const headers = selectHeaders(tableHeaderNames.USER)
-      .map(header => (
-        header.displayTooltip ? (
-          <th key={header.id}>
-            <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-          </th>
-        ) : (
-          <th key={header.id}>{header.name_en}</th>
-        )
-      ))
+    const headers = <TableHeaders tableName={tableHeaderNames.USER} />
     if (!records) return <div />
 
     return (
