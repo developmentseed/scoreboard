@@ -16,7 +16,7 @@ async function getOsmesaStatus (category) {
     if (typeof category === 'undefined') {
       return refreshStats
     } else {
-      let status = JSON.parse(refreshStats)[categories[category]]
+      let status = refreshStats[categories[category]]
       // The individual User page pulls data straight from OSMESA, so that status is comprehensive
       // The following pages rely on both OSMESA and the Scoreboard database clocks:
       // Country, Users, and Campaign(s)

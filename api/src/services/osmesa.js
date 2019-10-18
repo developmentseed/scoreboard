@@ -95,13 +95,15 @@ class OSMesaDBWrapper {
         if (
           target &&
           source &&
-          source.count &&
-          source.count[`${count[0]}_km_${type[0]}`]
+          source.counts &&
+          source.counts[`${count[0]}_${type[0]}`]
         ) {
-          target[`km_${count[1]}_${type[1]}`] = source.count[`${count[0]}_km_${type[0]}`]
+          target[`${count[1]}_${type[1]}`] = source.counts[`${count[0]}_${type[0]}`]
         }
       })
     })
+
+    return target
   }
 
   convertMeasurementProperties (target, source) {
@@ -117,6 +119,7 @@ class OSMesaDBWrapper {
         }
       })
     })
+    return target
   }
 
   async getUser (id) {
@@ -129,9 +132,10 @@ class OSMesaDBWrapper {
       changeset_count,
       name,
       last_edit,
-      editor_edits: editors,
-      day_edits: edit_times,
-      hashtag_edits: hashtags,
+      editor_edits,
+      day_edits,
+      hashtag_edits,
+      hashtag_changesets,
       country_edits,
       country_changesets
     } = data
@@ -145,6 +149,17 @@ class OSMesaDBWrapper {
         changeset_count: country_changesets[code]
       })
     })
+
+    let hashtags = Object.keys(hashtag_edits).map(hashtag => {
+      return {
+        tag: hashtag,
+        edit_count: hashtag_edits[hashtag],
+        changeset_count: hashtag_changesets[hashtag]
+      }
+    })
+
+    let editors = this.expandCountObj('editor', editor_edits)
+    let edit_times = this.expandCountObj('day', day_edits)
 
     const userObj = {
       uid: data.id,
@@ -160,18 +175,33 @@ class OSMesaDBWrapper {
 
     this.convertCountProperties(userObj, data)
     this.convertMeasurementProperties(userObj, data)
+
     return userObj
   }
 
   async getCampaign (hashtag) {
     const [data] = await this.db('hashtag_statistics').where({ tag: hashtag })
+    const userData = await this.db('hashtag_user_statistics').where({ hashtag })
+
+    let users = userData.map(user => {
+      const userObj = {
+        uid: user.user_id,
+        name: user.name,
+        edit_count: user.edit_count,
+        changeset_count: user.changeset_count,
+        last_edit: user.last_edit
+      }
+      this.convertCountProperties(userObj, user)
+      this.convertMeasurementProperties(userObj, user)
+      return userObj
+    })
+
     const { tag } = data
 
     const campaignObj = {
       tag,
       extent_uri: `hashtag/${tag}/{z}/{x}/{y}.mvt`,
-      // TODO: is users suppused to be the full user statistics for each user?
-      users: []
+      users
     }
 
     this.convertCountProperties(campaignObj, data)
@@ -211,6 +241,14 @@ class OSMesaDBWrapper {
 
   async getUpdates () {
     const data = await this.db('refreshments').select()
+    if (data.length === 0) {
+      return {
+        country_stats_refresh: Date.now(),
+        hashtag_hashtag_stats_refresh: Date.now(),
+        hashtag_user_stats_refresh: Date.now(),
+        stats_user_refresh: Date.now()
+      }
+    }
 
     return data.reduce((obj, { mat_view, updated_at }) => {
       switch (mat_view) {
