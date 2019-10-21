@@ -6,6 +6,12 @@ jobs:
         environment:
             DATABASE_URL: postgresql://root@localhost/circle_test
       - image: circleci/postgres:9.6.5-alpine-ram
+      - image: developmentseed/fabricator:latest
+        environment:
+          PGPORT: 5434
+          OSMESA_DB: postgres://postgres@localhost:5434/postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
     working_directory: ~/project
     steps:
       - checkout
