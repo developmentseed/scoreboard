@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## Unreleased
+### Changed
+- Move OSMESA service to use the OSMESA database directly instead of the osmesa-stat-server API
 
 ## [v1.5.0] - 2019-09-27
 ### Changed
