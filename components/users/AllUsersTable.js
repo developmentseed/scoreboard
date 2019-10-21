@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from '../Link'
 import { formatDecimal, formatEditTimeDescription } from '../../lib/utils/format'
+import { LoadingState } from '../common/LoadingState'
 import { parse } from 'date-fns'
 
 const UsersTable = ({ apiStatus, users }) => {
@@ -36,7 +37,7 @@ const UsersTable = ({ apiStatus, users }) => {
       )
       break
     case 'LOADING':
-      content = <div>Loading...</div>
+      content = <LoadingState />
       break
 
     case 'ERROR':
