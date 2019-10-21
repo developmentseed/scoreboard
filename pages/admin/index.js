@@ -7,6 +7,7 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import AdminSectionList from '../../components/admin/AdminSectionList'
+import { LoadingState } from '../../components/common/LoadingState'
 
 export class Admin extends Component {
   constructor () {
@@ -32,7 +33,10 @@ export class Admin extends Component {
 
     if (this.state.loading) {
       return (
-        <div><AdminHeader /></div>
+        <div>
+          <AdminHeader />
+          <LoadingState />
+        </div>
       )
     }
 
