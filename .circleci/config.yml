@@ -10,8 +10,6 @@ jobs:
         environment:
           PGPORT: 5434
           OSMESA_DB: postgres://postgres@localhost:5434/postgres
-          POSTGRES_USER: postgres
-          POSTGRES_DB: postgres
     working_directory: ~/project
     steps:
       - checkout
