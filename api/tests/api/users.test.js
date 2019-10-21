@@ -5,7 +5,8 @@ const test = require('ava')
 const request = require('supertest')
 const db = require('../../src/db/connection')
 let app = require('../../src/index')
-const { omit, prop, sort, reverse } = require('ramda')
+const userClocks = require('../../src/users_clock')
+const { omit, prop, contains } = require('ramda')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')
@@ -15,24 +16,14 @@ test.before(async () => {
   app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
+
+  // run users clock
+  await userClocks()
 })
 
 test.after.always(async () => {
   await db.destroy()
 })
-
-// test('Test of OSMESA api call', async (t) => {
-//   const res = await request(app)
-//     .get('/scoreboard/api/users/100000000')
-//     .expect(200)
-//   // name should always be included
-//   t.true('name' in res.body.records)
-//   // country list should be a list of objects
-//   t.true(typeof res.body.records.country_list[0] === 'object' &&
-//     res.body.records.country_list[0] !== null)
-//   // edit_count should always be a number
-//   t.false(Number.isNaN(res.body.records.edit_count))
-// })
 
 test('Pull all users with stats', async (t) => {
   const response = await request(app)
@@ -52,10 +43,11 @@ test('Sort users by most recently active', async (t) => {
     .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Most%20recent&active=false')
     .expect(200)
   const users = await db('users')
-    .select('country', 'edit_count', 'full_name', 'osm_id', 'last_edit')
-  users.sort((a, b) => b.last_edit - a.last_edit)
-  const resCopy = response.body.records.map(omit(['rank', 'last_edit']))
-  const usersCopy = users.map(omit(['last_edit']))
+    .select('full_name', 'last_edit')
+    .orderByRaw('last_edit desc, full_name')
+    .limit(25)
+  const resCopy = response.body.records.map(prop('full_name'))
+  const usersCopy = users.map(prop('full_name'))
   t.deepEqual(resCopy, usersCopy)
 })
 
@@ -78,7 +70,8 @@ test('Sort users by least recently active', async (t) => {
     .expect(200)
   const users = await db('users')
     .select('country', 'edit_count', 'full_name', 'osm_id', 'last_edit')
-  users.sort((a, b) => a.last_edit - b.last_edit)
+    .orderByRaw('last_edit asc, full_name')
+    .limit(25)
   const resCopy = response.body.records.map(omit(['rank', 'last_edit']))
   const usersCopy = users.map(omit(['last_edit']))
   t.deepEqual(resCopy, usersCopy)
@@ -89,21 +82,29 @@ test('Sort users by most edits', async (t) => {
     .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Most%20total&active=false')
     .expect(200)
   const users = await db('users')
-    .select('country', 'edit_count', 'full_name', 'osm_id')
-  users.sort((a, b) => +b.edit_count - +a.edit_count)
-  const resCopy = response.body.records.map(omit(['rank', 'last_edit']))
-  t.deepEqual(resCopy, users)
+    .orderByRaw('edit_count desc, full_name NULLS LAST')
+    .limit(25)
+  const resCopy = response.body.records.map(prop('full_name'))
+  t.deepEqual(resCopy, users.map(prop('full_name')))
 })
 
 test('Sort users by least edits', async (t) => {
   const response = await request(app)
     .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Least%20total&active=false')
     .expect(200)
-  const users = await db('users')
-    .select('country', 'edit_count', 'full_name', 'osm_id')
-  users.sort((a, b) => +a.edit_count - +b.edit_count)
-  const resCopy = response.body.records.map(omit(['rank', 'last_edit']))
-  t.deepEqual(resCopy, users)
+
+  const users = (await db('users')
+    .select('full_name')
+    .orderByRaw('edit_count asc, full_name NULLS LAST')
+    .limit(25)
+  ).map(prop('full_name'))
+
+  const respUsers = response.body.records.map(prop('full_name'))
+
+  // check that it's the same user list
+  respUsers.forEach(name => {
+    t.true(contains(name, users))
+  })
 })
 
 test('Sort users alphabetically a-z', async (t) => {
@@ -112,12 +113,9 @@ test('Sort users alphabetically a-z', async (t) => {
     .expect(200)
   const users = await db('users')
     .select('full_name')
+    .orderBy('full_name', 'asc')
+    .limit(25)
   const names = users.map(prop('full_name'))
-  sort(function (a, b) {
-    if (a < b) { return -1 }
-    if (a > b) { return 1 }
-    return 0
-  }, names)
   const resCopy = response.body.records.map(prop('full_name'))
   t.deepEqual(resCopy, names)
 })
@@ -126,16 +124,15 @@ test('Sort users alphabetically z-a', async (t) => {
   const response = await request(app)
     .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Alphabetical Z-A&active=false')
     .expect(200)
+
   const users = await db('users')
     .select('full_name')
+    .orderBy('full_name', 'desc')
+    .limit(25)
   const names = users.map(prop('full_name'))
-  sort(function (a, b) {
-    if (a < b) { return -1 }
-    if (a > b) { return 1 }
-    return 0
-  }, names)
   const resCopy = response.body.records.map(prop('full_name'))
-  t.deepEqual(resCopy, reverse(names))
+  t.is(resCopy.length, names.length)
+  t.deepEqual(resCopy, names)
 })
 
 test.serial('Update user country', async (t) => {

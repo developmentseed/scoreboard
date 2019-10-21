@@ -70,38 +70,41 @@ test.serial('update exclusion list', async t => {
 
 test.serial('add / remove / list using osm ids', async t => {
   t.plan(6)
-  await addOSMId(100000000)
-  await addOSMId(100000001)
+  const users = await db('users').select('osm_id').limit(2)
+  await addOSMId(users[0].osm_id)
+  await addOSMId(users[1].osm_id)
   let result = await listOSMIds()
   t.true(result.length === 2)
 
   let resultSet = new Set(result.map(prop('osm_id')))
-  t.true(resultSet.has(100000000))
-  t.true(resultSet.has(100000001))
+  t.true(resultSet.has(users[0].osm_id))
+  t.true(resultSet.has(users[1].osm_id))
 
-  await removeOSMId(100000001)
+  await removeOSMId(users[0].osm_id)
   result = await listOSMIds()
   t.true(result.length === 1)
   resultSet = new Set(result.map(prop('osm_id')))
-  t.true(resultSet.has(100000000))
-  t.true(!resultSet.has(100000001))
+  t.true(resultSet.has(users[1].osm_id))
+  t.true(!resultSet.has(users[0].osm_id))
 })
 
 test.serial('update exclusion list using osm ids', async t => {
-  await addOSMId(100000000)
-  await addOSMId(100000001)
-  await updateOSMIds([100000001, 100000002, 100000003])
+  const users = await db('users').select('osm_id').limit(4)
+  await addOSMId(users[0].osm_id)
+  await addOSMId(users[1].osm_id)
+  await updateOSMIds([users[1].osm_id, users[2].osm_id, users[3].osm_id])
   let result = await listOSMIds()
   let resultSet = new Set(result.map(prop('osm_id')))
   t.true(result.length === 3)
-  t.true(!resultSet.has(100000000))
-  t.true(resultSet.has(100000001))
-  t.true(resultSet.has(100000002))
-  t.true(resultSet.has(100000003))
+  t.true(!resultSet.has(users[0].osm_id))
+  t.true(resultSet.has(users[1].osm_id))
+  t.true(resultSet.has(users[2].osm_id))
+  t.true(resultSet.has(users[3].osm_id))
 })
 
 test.serial('get list via api', async t => {
-  await updateOSMIds([100000001, 100000002, 100000003])
+  const users = await db('users').select('osm_id').limit(4)
+  await updateOSMIds([users[0].osm_id, users[1].osm_id, users[2].osm_id])
 
   const { body } = await new Promise((resolve, reject) => {
     adminUser
@@ -118,7 +121,8 @@ test.serial('get list via api', async t => {
 
 test.serial('get list via api - not admin', async t => {
   t.plan(0)
-  await updateOSMIds([100000001, 100000002, 100000003])
+  const users = await db('users').select('osm_id').limit(4)
+  await updateOSMIds([users[0].osm_id, users[1].osm_id, users[2].osm_id])
 
   await new Promise((resolve, reject) => {
     authenticatedUser
@@ -142,10 +146,11 @@ test.serial('get list via api - not admin', async t => {
 })
 
 test.serial('update list via api', async t => {
+  const users = await db('users').select('osm_id').limit(4)
   await new Promise((resolve, reject) => {
     adminUser
       .put('/scoreboard/api/exclusion')
-      .send({ 'list': [100000001, 100000002, 100000003] })
+      .send({ 'list': [users[0].osm_id, users[1].osm_id, users[2].osm_id] })
       .expect(200)
       .end((err, res) => {
         if (err) return reject(err)
@@ -156,17 +161,18 @@ test.serial('update list via api', async t => {
   const result = await listOSMIds()
   t.true(result.length === 3)
   let resultSet = new Set(result.map(prop('osm_id')))
-  t.true(resultSet.has(100000001))
-  t.true(resultSet.has(100000002))
-  t.true(resultSet.has(100000003))
+  t.true(resultSet.has(users[0].osm_id))
+  t.true(resultSet.has(users[1].osm_id))
+  t.true(resultSet.has(users[2].osm_id))
 })
 
 test.serial('update list via api - not admin', async t => {
+  const users = await db('users').select('osm_id').limit(4)
   t.plan(0)
   await new Promise((resolve, reject) => {
     authenticatedUser
       .put('/scoreboard/api/exclusion')
-      .send({ 'list': [100000001, 100000002, 100000003] })
+      .send({ 'list': [users[0].osm_id, users[1].osm_id, users[2].osm_id] })
       .expect(401)
       .end((err, res) => {
         if (err) return reject(err)
@@ -177,7 +183,7 @@ test.serial('update list via api - not admin', async t => {
   await new Promise((resolve, reject) => {
     anonymousUser
       .put('/scoreboard/api/exclusion')
-      .send({ 'list': [100000001, 100000002, 100000003] })
+      .send({ 'list': [users[0].osm_id, users[1].osm_id, users[2].osm_id] })
       .expect(401)
       .end((err, res) => {
         if (err) return reject(err)

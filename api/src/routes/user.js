@@ -50,8 +50,7 @@ async function get (req, res) {
   // handle the case where osm user doesn't exist on osmesa
   let osmesaData
   try {
-    const osmesaResponse = await osmesa.getUser(id)
-    osmesaData = JSON.parse(osmesaResponse)
+    osmesaData = await osmesa.getUser(id)
   } catch (err) {
     console.error(err.message)
 
