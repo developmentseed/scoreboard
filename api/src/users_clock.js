@@ -1,8 +1,6 @@
-const { compareDesc, parse } = require('date-fns')
 const {
-  merge, head
+  merge
 } = require('ramda')
-const sumEdits = require('./utils/sum_edits')
 const pLimit = require('p-limit')
 const OSMesa = require('./services/osmesa')
 const db = require('./db/connection')

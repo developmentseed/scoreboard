@@ -1,6 +1,5 @@
 const yakbak = require('yakbak')
 const path = require('path')
-const chance = require('chance').Chance()
 const http = require('http')
 const tmWorker = require('../../../tm_clock')
 
@@ -29,17 +28,6 @@ exports.seed = async (knex) => {
           }
         })
         await tmWorker()
-
-        /*
-          // Make all the hashtags predictable
-        const campaigns = await knex('campaigns').select()
-        const fixedCampaigns = campaigns.map(c => knex('campaigns').where('id', c.id).update({
-          campaign_hashtag: `project-${c.tasker_id}-${c.tm_id}`,
-          status: chance.pickone(['ARCHIVED', 'DRAFT', 'PUBLISHED'])
-        }))
-
-        await Promise.all(fixedCampaigns)
-        */
 
         resolve()
       } catch (e) {
