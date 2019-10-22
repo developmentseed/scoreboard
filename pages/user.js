@@ -40,7 +40,6 @@ export class User extends Component {
       badges,
       teams,
       refreshDate,
-      allCampaigns
     } = this.props.user
     const { extent_uri, uid } = records
     if (!records) return <div />
@@ -108,7 +107,6 @@ export class User extends Component {
               <div className='widget-66'>
                 <CampaignsChart
                   hashtags={hashtags}
-                  campaigns={allCampaigns}
                   height='260px'
                 />
               </div>
