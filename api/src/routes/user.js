@@ -10,7 +10,6 @@ const OSMTeams = require('../services/teams')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const db = require('../db/connection')
-const getCountriesEdited = require('../utils/getCountriesEdited')
 const refreshStatus = require('../utils/osmesaStatus.js')
 const getSumEdits = require('../utils/sum_edits')
 const { prop } = require('ramda')
@@ -102,8 +101,6 @@ async function get (req, res) {
   osmesaData['edit_sum'] = getSumEdits(osmesaData)
   const refreshDate = await refreshStatus('user')
 
-  let countriesEdited = getCountriesEdited(osmesaData.country_list)
-
   let badges
   try {
     const badgesFromDB = await db('badges').select() // array of all badges
@@ -171,7 +168,6 @@ async function get (req, res) {
     records: osmesaData,
     roles: rolesList,
     activatedTeams,
-    countriesEdited,
     country: user.country
   })
 }
