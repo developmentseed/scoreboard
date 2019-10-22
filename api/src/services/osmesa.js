@@ -75,7 +75,7 @@ class OSMesaDBWrapper {
       ['road', 'roads'],
       ['waterway', 'waterways'],
       ['coastline', 'coastlines'],
-      ['railline', 'railway']
+      ['railline', 'railways']
     ]
   }
 
