@@ -2,7 +2,7 @@ const rp = require('request-promise-native')
 const fs = require('fs')
 const path = require('path')
 const knex = require('knex')
-const { find, propEq } = require('ramda')
+const { find, propEq, reduce, assoc } = require('ramda')
 
 const { OSMESA_API, OSMESA_DB } = require('../config')
 const { generateOSMesaUser, generateOSMesaStatus } = require('../db/seeds/utils')
@@ -243,35 +243,14 @@ class OSMesaDBWrapper {
     const data = await this.db('refreshments').select()
     if (data.length === 0) {
       return {
-        country_stats_refresh: Date.now(),
-        hashtag_hashtag_stats_refresh: Date.now(),
-        hashtag_user_stats_refresh: Date.now(),
-        stats_user_refresh: Date.now()
+        country_statistics: Date.now(),
+        hashtag_user_statistics: Date.now(),
+        hashtag_statistics: Date.now(),
+        user_statistics: Date.now()
       }
     }
 
-    return data.reduce((obj, { mat_view, updated_at }) => {
-      switch (mat_view) {
-        case 'country_statistics': {
-          obj.country_stats_refresh = updated_at
-          break
-        }
-        case 'hashtag_statistics': {
-          obj.hashtag_stats_refresh = updated_at
-          break
-        }
-        case 'hashtag_user_statistics': {
-          obj.hashtag_user_stats_refresh = updated_at
-          break
-        }
-        case 'user_statistics': {
-          obj.stats_user_refresh = updated_at
-          break
-        }
-      }
-
-      return obj
-    })
+    return reduce((acc, curr) => assoc(curr.mat_view, curr.updated_at, acc), {}, data)
   }
 }
 

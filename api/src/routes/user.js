@@ -10,7 +10,6 @@ const OSMTeams = require('../services/teams')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const db = require('../db/connection')
-const getCountriesEdited = require('../utils/getCountriesEdited')
 const refreshStatus = require('../utils/osmesaStatus.js')
 const getSumEdits = require('../utils/sum_edits')
 const { prop } = require('ramda')
@@ -96,13 +95,9 @@ async function get (req, res) {
     }
   }
 
-  if (osmesaData.extent_uri) {
-    osmesaData.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', osmesaData.extent_uri)
-  }
+  osmesaData.extent_uri = join(APP_URL_FINAL, `/scoreboard/api/extents/user/${id}/{z}/{x}/{y}.mvt`)
   osmesaData['edit_sum'] = getSumEdits(osmesaData)
   const refreshDate = await refreshStatus('user')
-
-  let countriesEdited = getCountriesEdited(osmesaData.country_list)
 
   let badges
   try {
@@ -167,11 +162,10 @@ async function get (req, res) {
     assignments,
     favorites,
     refreshDate,
-    allCampaigns,
     records: osmesaData,
     roles: rolesList,
     activatedTeams,
-    countriesEdited,
+    allCampaigns,
     country: user.country
   })
 }
