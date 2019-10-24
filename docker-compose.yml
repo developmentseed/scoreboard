@@ -12,3 +12,7 @@ services:
     volumes:
       - './.tmp/pg:/var/lib/postgresql/data'
       - ./scripts/create-test-db.sh:/docker-entrypoint-initdb.d/create-test-db.sh
+  osmesa:
+    image: developmentseed/fabricator:latest
+    ports:
+      - 5434:5432 

@@ -28,6 +28,7 @@ module.exports = (userData, badges) => {
     editors,
     edit_times
   } = userData
+
   const allDays = collapseOnKey(edit_times, 'day')
   const daysInRow = dateSequentialCheck(allDays)
   const daysTotal = dateTotalCheck(allDays)
