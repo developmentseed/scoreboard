@@ -21,6 +21,10 @@ body {
 *::after {
   box-sizing: border-box;
 }
+
+code {
+  white-space: normal;
+}
 //sections //
 .clearfix {
   &:before,
