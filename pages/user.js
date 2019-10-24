@@ -39,7 +39,7 @@ export class User extends Component {
       country,
       badges,
       teams,
-      refreshDate,
+      refreshDate
     } = this.props.user
     const { extent_uri, uid } = records
     if (!records) return <div />
