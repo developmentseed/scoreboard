@@ -2,10 +2,11 @@ import Pagination from 'react-js-pagination'
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../../lib/store'
-import Select from 'react-select'
-import { Tooltip } from '../common/Tooltip'
 
-const tableHeaders = require('../../lib/page-text/table-headers.json')
+import Select from 'react-select'
+import TableHeaders from '../common/TableHeaders'
+
+import { tableHeaderNames } from '../../lib/enums'
 
 class Assignment extends Component {
   constructor (props) {
@@ -107,13 +108,7 @@ class CampaignSearch extends Component {
               <table className='admin-table'>
                 <thead>
                   <tr>
-                    {tableHeaders
-                      .filter(table => table.categories.includes('admin-campaign-contributions'))
-                      .map(header => (
-                        <th>
-                          <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                        </th>
-                      ))}
+                    <TableHeaders tableName={tableHeaderNames.ADMIN_CAMPAIGN_CONTRIBUTIONS} />
                   </tr>
                 </thead>
                 <tbody>

@@ -3,11 +3,11 @@ import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import Link from '../components/Link'
 import join from 'url-join'
-import { Tooltip } from '../components/common/Tooltip'
+import TableHeaders from '../common/TableHeaders'
+import { tableHeaderNames } from '../lib/enums'
 
 import { APP_URL_PREFIX } from '../api/src/config'
 
-const tableHeaders = require('../lib/page-text/table-headers.json')
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 const Sidebar = ({ handleSearch }) => (
@@ -76,13 +76,7 @@ class Teams extends Component {
         <table className='admin-table'>
           <thead>
             <tr>
-              {tableHeaders
-                .filter(table => table.categories.includes('team'))
-                .map(header => (
-                  <th>
-                    <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                  </th>
-                ))}
+              <TableHeaders tableName={tableHeaderNames.TEAM} />
             </tr>
           </thead>
           <tbody>

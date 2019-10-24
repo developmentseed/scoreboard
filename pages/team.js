@@ -4,9 +4,8 @@ import { actions } from '../lib/store'
 import Link from '../components/Link'
 import CampaignCard from '../components/campaigns/CampaignCard'
 import { sortBy, prop } from 'ramda'
-import { Tooltip } from '../components/common/Tooltip'
-
-const tableHeaders = require('../lib/page-text/table-headers.json')
+import TableHeaders from '../common/TableHeaders'
+import { tableHeaderNames } from '../lib/enums'
 
 export class Team extends Component {
   componentDidMount () {
@@ -43,13 +42,7 @@ export class Team extends Component {
                 <table className=''>
                   <thead>
                     <tr>
-                      {tableHeaders
-                        .filter(table => table.categories.includes('user'))
-                        .map(header => (
-                          <th>
-                            <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
-                          </th>
-                        ))}
+                      <TableHeaders tablname={tableHeaderNames.USER} />
                     </tr>
                   </thead>
                   <tbody>

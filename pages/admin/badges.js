@@ -10,7 +10,7 @@ import { LoadingState } from '../../components/common/LoadingState'
 import Link from '../../components/Link'
 import { Tooltip } from '../../components/common/Tooltip'
 
-const tableHeaders = require('../../lib/page-text/table-headers.json')
+const glossary = require('../../lib/i18n/glossary_en.json')
 
 export class AdminBadges extends Component {
   constructor () {
@@ -38,7 +38,7 @@ export class AdminBadges extends Component {
 
   renderList () {
     const { badges } = this.props
-    const header = tableHeaders.find(table => table.id === 'name')
+    const header = glossary.find(term => term.id === 'name')
 
     if (!badges || !badges.length) return
 
@@ -50,7 +50,7 @@ export class AdminBadges extends Component {
             <thead>
               <tr>
                 <th>
-                  <Tooltip dataTip={header.description_en}>{header.name_en}</Tooltip>
+                  <Tooltip dataTip={header.description}>{header.name}</Tooltip>
                 </th>
               </tr>
             </thead>
