@@ -94,9 +94,7 @@ async function get (req, res) {
     }
   }
 
-  if (osmesaData.extent_uri) {
-    osmesaData.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', osmesaData.extent_uri)
-  }
+  osmesaData.extent_uri = join(APP_URL_FINAL, `/scoreboard/api/extents/user/${id}/{z}/{x}/{y}.mvt`)
   osmesaData['edit_sum'] = getSumEdits(osmesaData)
   const refreshDate = await refreshStatus('user')
 
