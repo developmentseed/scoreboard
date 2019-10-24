@@ -2,6 +2,8 @@ import React from 'react'
 import Link from '../Link'
 import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
+import TableHeaders from '../common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 export default function CountryUserTable (props) {
   return (
@@ -9,10 +11,7 @@ export default function CountryUserTable (props) {
       <table>
         <thead>
           <tr>
-            <th>Rank</th>
-            <th>Name</th>
-            <th>Edits</th>
-            <th>Changesets</th>
+            <TableHeaders tableName={tableHeaderNames.COUNTRY_USER} />
           </tr>
         </thead>
         <tbody>

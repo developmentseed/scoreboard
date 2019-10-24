@@ -1,6 +1,9 @@
 import React from 'react'
 import Link from '../Link'
+import TableHeaders from '../common/TableHeaders'
 import { LoadingState } from '../common/LoadingState'
+import { tableHeaderNames } from '../../lib/enums'
+
 const { formatDecimal } = require('../../lib/utils/format')
 
 export default function CountriesTable ({ apiStatus, countries }) {
@@ -11,8 +14,7 @@ export default function CountriesTable ({ apiStatus, countries }) {
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Total Edits</th>
+              <TableHeaders tableName={tableHeaderNames.ALL_COUNTRIES} />
             </tr>
           </thead>
           <tbody>

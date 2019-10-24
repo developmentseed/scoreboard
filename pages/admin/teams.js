@@ -8,6 +8,8 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 import { LoadingState } from '../../components/common/LoadingState'
+import TableHeaders from '../../components/common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 export class AdminTeams extends Component {
   constructor () {
@@ -44,10 +46,7 @@ export class AdminTeams extends Component {
         <div className='widget'>
           <table className='admin-table'>
             <thead>
-              <tr>
-                <th>Name</th>
-                <th>Hashtag</th>
-              </tr>
+              <TableHeaders tableName={tableHeaderNames.TEAM} />
             </thead>
             <tbody>
               {

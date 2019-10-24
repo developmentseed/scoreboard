@@ -8,6 +8,9 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import { LoadingState } from '../../components/common/LoadingState'
 import Link from '../../components/Link'
+import Tooltip from '../../components/common/Tooltip'
+
+const glossary = require('../../lib/i18n/glossary_en.json')
 
 export class AdminBadges extends Component {
   constructor () {
@@ -35,6 +38,7 @@ export class AdminBadges extends Component {
 
   renderList () {
     const { badges } = this.props
+    const header = glossary.find(term => term.id === 'name')
 
     if (!badges || !badges.length) return
 
@@ -45,7 +49,9 @@ export class AdminBadges extends Component {
           <table className='admin-table'>
             <thead>
               <tr>
-                <th>Name</th>
+                <th>
+                  <Tooltip dataTip={header.description}>{header.name}</Tooltip>
+                </th>
               </tr>
             </thead>
             <tbody>

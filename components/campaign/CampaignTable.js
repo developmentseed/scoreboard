@@ -3,7 +3,8 @@ import Link from '../Link'
 import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
 import CSVExport from '../../components/CSVExport'
-import { Tooltip, TooltipDescriptions } from '../common/Tooltip'
+import TableHeaders from '../common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 export default function CampaignTable (props) {
   if (props.users.length === 0) {
@@ -24,18 +25,7 @@ export default function CampaignTable (props) {
       <table>
         <thead>
           <tr>
-            <th>Rank</th>
-            <th>Name</th>
-            <th>
-              <Tooltip dataTip={TooltipDescriptions.ROADS}>Roads (Km)</Tooltip>
-            </th>
-            <th>Buildings</th>
-            <th>Points of Interest</th>
-            <th>Railways (Km)</th>
-            <th>Coastlines (Km)</th>
-            <th>Waterways (Km)</th>
-            <th>Changesets</th>
-            <th>Edits</th>
+            <TableHeaders tableName={tableHeaderNames.CAMPAIGN} />
           </tr>
         </thead>
         <tbody>

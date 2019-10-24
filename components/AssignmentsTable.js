@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from './Link'
+import TableHeaders from './common/TableHeaders'
 
 export default ({ assignments, filter }) => {
   return (
@@ -7,10 +8,7 @@ export default ({ assignments, filter }) => {
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            {(filter === 'Teams') ? <th>Assigned By</th> : ''}
-            {(filter === 'All') ? <th>Source</th> : ''}
-            <th>Priority</th>
+            <TableHeaders tableName={`admin-campaign-${filter.toLowerCase()}`} />
           </tr>
         </thead>
         <tbody>

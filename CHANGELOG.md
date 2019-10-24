@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Changed
+- Move all table header labels to common json file with descriptions.
 - Move OSMESA service to use the OSMESA database directly instead of the osmesa-stat-server API
 ### Added
 - Tooltip feature for providing definitions or instructions to user

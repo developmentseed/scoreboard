@@ -2,6 +2,8 @@ import Pagination from 'react-js-pagination'
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../../lib/store'
+import TableHeaders from '../common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 class UsersSearch extends Component {
   constructor (props) {
@@ -39,6 +41,7 @@ class UsersSearch extends Component {
 
     const { page, searchText } = this.props.adminTeamMemberFilters
     const { stats: { total, records } } = this.props.adminTeamMemberSearchResults
+    const headers = <TableHeaders tableName={tableHeaderNames.USER} />
     if (!records) return <div />
 
     return (
@@ -51,8 +54,7 @@ class UsersSearch extends Component {
                 <table className='admin-table'>
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>User ID</th>
+                      {headers}
                     </tr>
                   </thead>
                   <tbody>
@@ -83,8 +85,7 @@ class UsersSearch extends Component {
             <table className='admin-table'>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>User ID</th>
+                  {headers}
                 </tr>
               </thead>
               <tbody>
