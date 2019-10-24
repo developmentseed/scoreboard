@@ -8,7 +8,7 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import { LoadingState } from '../../components/common/LoadingState'
 import Link from '../../components/Link'
-import { Tooltip } from '../../components/common/Tooltip'
+import Tooltip from '../../components/common/Tooltip'
 
 const glossary = require('../../lib/i18n/glossary_en.json')
 

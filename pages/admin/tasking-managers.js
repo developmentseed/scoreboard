@@ -8,7 +8,7 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 import { distanceInWordsToNow, parse } from 'date-fns'
-import TableHeaders from '../../common/TableHeaders'
+import TableHeaders from '../../components/common/TableHeaders'
 import { tableHeaderNames } from '../../lib/enums'
 
 export class AdminTaskers extends Component {

@@ -44,7 +44,7 @@ export class AdminUsers extends Component {
     if (!admin || !admin.users) return
 
     // Reorders headers to show UserId first
-    const headers = <TableHeaders tableName={tableHeaderNames.TEADMIN_USERAM} />
+    const headers = <TableHeaders tableName={tableHeaderNames.ADMIN_USER} />
 
     return (
       <div className='admin'>

@@ -3,7 +3,7 @@ import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import Link from '../components/Link'
 import join from 'url-join'
-import TableHeaders from '../common/TableHeaders'
+import TableHeaders from '../components/common/TableHeaders'
 import { tableHeaderNames } from '../lib/enums'
 
 import { APP_URL_PREFIX } from '../api/src/config'

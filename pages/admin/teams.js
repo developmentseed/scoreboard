@@ -8,8 +8,8 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 import { LoadingState } from '../../components/common/LoadingState'
-import TableHeaders from '../common/TableHeaders'
-import { tableHeaderNames } from '../lib/enums'
+import TableHeaders from '../../components/common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 export class AdminTeams extends Component {
   constructor () {
