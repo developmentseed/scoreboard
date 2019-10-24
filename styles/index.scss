@@ -1025,6 +1025,7 @@ table {
     color: $base-header-color;
     padding-top: .8em;
     padding-bottom: .8em;
+    vertical-align: middle;
     @include media(small-up) {
       &:first-child {
         padding-left: .8em;
@@ -1205,4 +1206,27 @@ table {
  100% {
    background-position: -135% 0%;
  }
+}
+
+/* ==========================================================================
+  Tooltip
+  ========================================================================== */
+
+.icon-tooltip {
+  margin: 0 0.2rem;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+}
+
+span[data-tip] {
+  position: relative;
+  padding-right: 1rem;
+  width: 100%;
+}
+
+.__react_component_tooltip {
+  font-weight: initial;
+  font-family: $heading-font-regular;
+  text-transform: none;
 }

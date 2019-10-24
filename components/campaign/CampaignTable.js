@@ -3,6 +3,7 @@ import Link from '../Link'
 import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
 import CSVExport from '../../components/CSVExport'
+import { Tooltip, TooltipDescriptions } from '../common/Tooltip'
 
 export default function CampaignTable (props) {
   if (props.users.length === 0) {
@@ -25,7 +26,9 @@ export default function CampaignTable (props) {
           <tr>
             <th>Rank</th>
             <th>Name</th>
-            <th>Roads (Km)</th>
+            <th>
+              <Tooltip dataTip={TooltipDescriptions.ROADS}>Roads (Km)</Tooltip>
+            </th>
             <th>Buildings</th>
             <th>Points of Interest</th>
             <th>Railways (Km)</th>
