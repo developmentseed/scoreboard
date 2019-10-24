@@ -2,7 +2,7 @@ const rp = require('request-promise-native')
 const fs = require('fs')
 const path = require('path')
 const knex = require('knex')
-const { find, propEq, reduce assoc} = require('ramda')
+const { find, propEq, reduce, assoc } = require('ramda')
 
 const { OSMESA_API, OSMESA_DB } = require('../config')
 const { generateOSMesaUser, generateOSMesaStatus } = require('../db/seeds/utils')
