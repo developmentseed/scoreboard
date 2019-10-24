@@ -13,3 +13,5 @@ const Tooltip = props => {
     </>
   )
 }
+
+export default Tooltip
