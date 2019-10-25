@@ -4,7 +4,7 @@ import { actions } from '../lib/store'
 import Link from '../components/Link'
 import CampaignCard from '../components/campaigns/CampaignCard'
 import { sortBy, prop } from 'ramda'
-import TableHeaders from '../common/TableHeaders'
+import TableHeaders from '../components/common/TableHeaders'
 import { tableHeaderNames } from '../lib/enums'
 
 export class Team extends Component {
