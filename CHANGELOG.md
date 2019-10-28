@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## Unreleased
+
+## [v1.6.0] - 2019-10-28
 ### Changed
 - Move all table header labels to common json file with descriptions.
 - Move OSMESA service to use the OSMESA database directly instead of the osmesa-stat-server API
@@ -234,7 +236,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.6.0...HEAD
+[v1.6.0]: https://github.com/developmentseed/scoreboard/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/developmentseed/scoreboard/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.4.0
 [v1.3.4]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.3.4
