@@ -8,6 +8,8 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 import { distanceInWordsToNow, parse } from 'date-fns'
+import TableHeaders from '../../components/common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 export class AdminTaskers extends Component {
   constructor () {
@@ -45,8 +47,7 @@ export class AdminTaskers extends Component {
           <table className='admin-table'>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Last run time</th>
+                <TableHeaders tableName={tableHeaderNames.TASKING_MANAGER} />
               </tr>
             </thead>
             <tbody>

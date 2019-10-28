@@ -9,6 +9,7 @@ import AdminHeader from '../../components/admin/AdminHeader'
 import AdminCampaignsSearch from '../../components/admin/AdminCampaignsSearch'
 import AdminUsersSearch from '../../components/admin/AdminUsersSearch'
 import Link from '../../components/Link'
+import { LoadingState } from '../../components/common/LoadingState'
 
 export class AdminTeamsEdit extends Component {
   constructor () {
@@ -148,7 +149,10 @@ export class AdminTeamsEdit extends Component {
 
     if (this.state.loading) {
       return (
-        <div><AdminHeader /></div>
+        <div>
+          <AdminHeader />
+          <LoadingState />
+        </div>
       )
     }
 

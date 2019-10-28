@@ -61,7 +61,6 @@ fieldset {
   margin-bottom: 2em;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   @include media(small-up) {
     width: 48%;
   }
@@ -238,5 +237,5 @@ fieldset {
 // TABLES //
 
 .table-wrapper {
-  overflow: hidden;
+  overflow: scroll;
 }

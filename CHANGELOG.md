@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## Unreleased
+
+## [v1.6.0] - 2019-10-28
+### Changed
+- Move all table header labels to common json file with descriptions.
+- Move OSMESA service to use the OSMESA database directly instead of the osmesa-stat-server API
+### Added
+- Tooltip feature for providing definitions or instructions to user
+- Edit times that occured within the last 24 hours show 'Last Edit: In the last 24 Hours' rather than 'today'
+
+## [v1.5.0] - 2019-09-27
+### Changed
+- CSV exports from Campaigns and Users now split out the "Added" and "Modified" stats for all features
+
+### Fixed
+- Updated references to hashtag count to fix the hashtag chart
+- Country blurb values have a fallback value of '0' if value is not supplied
+- Campaign maps are guaranteed to display AOI due to addition conditional that check for an ID before rendering
+- Campaign map zoom controls are re-enabled
+
+## [v1.4.0] - 2019-08-19
+### Added
+- Campaigns can be filtered to include or exclude archived campaigns
+- Railway features and lengths added, modified and deleted are included in campaigns, user profiles, dashboards and downloads
+
 ## [v1.3.5] - 2019-07-19
 ### Changed
 - Switch campaign logic for homepage to using recency instead of priority
@@ -11,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix campaign language on homepage
 - Fix changeset count property from OSMesa in CampaignTable component
+
 
 ## [v1.3.4] - 2019-07-17
 ### Fixed
@@ -209,7 +236,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.3.4...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.6.0...HEAD
+[v1.6.0]: https://github.com/developmentseed/scoreboard/compare/v1.5.0...v1.6.0
+[v1.5.0]: https://github.com/developmentseed/scoreboard/compare/v1.4.0...v1.5.0
+[v1.4.0]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.4.0
 [v1.3.4]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.3.4
 [v1.3.3]: https://github.com/developmentseed/scoreboard/compare/v1.3.2...v1.3.3
 [v1.3.2]: https://github.com/developmentseed/scoreboard/compare/v1.3.1...v1.3.2

@@ -3,8 +3,11 @@ import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import Link from '../components/Link'
 import join from 'url-join'
+import TableHeaders from '../components/common/TableHeaders'
+import { tableHeaderNames } from '../lib/enums'
 
 import { APP_URL_PREFIX } from '../api/src/config'
+
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 const Sidebar = ({ handleSearch }) => (
@@ -73,8 +76,7 @@ class Teams extends Component {
         <table className='admin-table'>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Hashtag</th>
+              <TableHeaders tableName={tableHeaderNames.TEAM} />
             </tr>
           </thead>
           <tbody>

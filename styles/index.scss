@@ -21,6 +21,10 @@ body {
 *::after {
   box-sizing: border-box;
 }
+
+code {
+  white-space: normal;
+}
 //sections //
 .clearfix {
   &:before,
@@ -536,6 +540,7 @@ mark {
 
 .header--with-description {
   margin-bottom: .2em;
+  word-break: break-word;
 }
 
 .header--with-description-lg {
@@ -1010,24 +1015,28 @@ table {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
+  overflow-x: scroll;
+  @include media(small-down) {
+    font-size: .86em;
+  }
   th {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
     color: $base-header-color;
     padding-top: .8em;
     padding-bottom: .8em;
-    &:first-child {
-      padding-left: .8em;
-    }
-    &:last-child {
-      padding-right: .8em;
+    vertical-align: middle;
+    @include media(small-up) {
+      &:first-child {
+        padding-left: .8em;
+      }
+      &:last-child {
+        padding-right: .8em;
+      }
     }
   }
   tbody {
     font-family: $heading-font-family;
-    @include media(small-down) {
-      font-size: .86em;
-    }
     tr {
       // the borders for the rows were previously set on each cell
       border-bottom: 1px solid lighten($light-text-color, 40%);
@@ -1075,7 +1084,6 @@ table {
 .map-lg > .leaflet-container {
   height: 100%;
   background: rgb(222,234,238);
-  z-index: -2;
  }
 
  /* ==========================================================================
@@ -1198,4 +1206,27 @@ table {
  100% {
    background-position: -135% 0%;
  }
+}
+
+/* ==========================================================================
+  Tooltip
+  ========================================================================== */
+
+.icon-tooltip {
+  margin: 0 0.2rem;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+}
+
+span[data-tip] {
+  position: relative;
+  padding-right: 1rem;
+  width: 100%;
+}
+
+.__react_component_tooltip {
+  font-weight: initial;
+  font-family: $heading-font-regular;
+  text-transform: none;
 }

@@ -34,8 +34,7 @@ async function get (req, res) {
   let countryCode = countryPair.code
 
   try {
-    const osmesaResponse = await osmesa.getCountry(countryCode)
-    const osmesaData = JSON.parse(osmesaResponse)
+    const osmesaData = await osmesa.getCountry(countryCode)
     let userData = await userCountryEdits.getParticipants(countryName, req.query.participantLimit)
     if (userData === null) {
       return res.boom.notFound('Could not retrieve user stats')

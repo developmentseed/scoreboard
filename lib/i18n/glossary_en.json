@@ -1,0 +1,102 @@
+[
+    {
+        "id":"rank",
+        "name":"Rank", 
+        "description":"Order of contributors by number of edits"
+    },
+    {
+        "id":"name",
+        "name":"Name", 
+        "description":"Username"
+    },
+    {
+        "id":"user-id",
+        "name":"User ID", 
+        "description":"Unique user id"
+    },
+    {
+        "id":"role",
+        "name":"Role", 
+        "description":"Assigned role"
+    },
+    {
+        "id":"country",
+        "name":"Country", 
+        "description":"Home country of user"
+    },
+    {
+        "id":"hashtags",
+        "name":"Hashtags", 
+        "description":"Leading hashtags"
+    },
+    {
+        "id":"roads",
+        "name":"Roads (Km)", 
+        "description":"Kilometers of road added or modified"
+    },
+    {
+        "id":"buildings",
+        "name":"Buildings", 
+        "description":"Number of unique buildings added"
+    },
+    {
+        "id":"poi",
+        "name":"Points of Interest", 
+        "description":"Health centers, schools, town halls, or places of worship"
+    },
+    {
+        "id":"railways",
+        "name":"Railways (Km)", 
+        "description":"Kilometers of railways added or modified"
+    },
+    {
+        "id":"coastlines",
+        "name":"Coastlines (Km)", 
+        "description":"Kilometers of coastlines added or modified"
+    },
+    {
+        "id":"waterways",
+        "name":"Waterways (Km)", 
+        "description":"Kilometers of waterways added or modified"
+    },
+    {
+        "id":"changesets",
+        "name":"Changesets", 
+        "description":"Number of submissions for changes"
+    },
+    {
+        "id":"edits",
+        "name":"Edits", 
+        "description":"Number of individual amendments requested"
+    },
+    {
+        "id":"total-edits",
+        "name":"Total Edits", 
+        "description":"Most recent tally of user edits"
+    },
+    {
+        "id":"last-edit",
+        "name":"Last Edit", 
+        "description":"Most recent edit"
+    },
+    {
+        "id":"last-run-time",
+        "name":"Last run time", 
+        "description":"Most recent use of tasking manager"
+    },
+    {
+        "id":"source",
+        "name":"Source", 
+        "description":"Origin of campaign"
+    },
+    {
+        "id":"assigned-by",
+        "name":"Assigned By", 
+        "description":"Coordinating team member"
+    },
+    {
+        "id":"priority",
+        "name":"Priority", 
+        "description":"Assigned urgency level"
+    }
+]

@@ -1,7 +1,10 @@
 import React from 'react'
 import Link from '../Link'
 import { formatDecimal, formatEditTimeDescription } from '../../lib/utils/format'
+import { LoadingState } from '../common/LoadingState'
 import { parse } from 'date-fns'
+import TableHeaders from '../common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 const UsersTable = ({ apiStatus, users }) => {
   let content = <div />
@@ -11,11 +14,7 @@ const UsersTable = ({ apiStatus, users }) => {
         <table>
           <thead>
             <tr>
-              <th>Rank</th>
-              <th>Name</th>
-              <th>Country</th>
-              <th>Total Edits</th>
-              <th>Last Edit</th>
+              <TableHeaders tableName={tableHeaderNames.ALL_USERS} />
             </tr>
           </thead>
           <tbody>
@@ -36,7 +35,7 @@ const UsersTable = ({ apiStatus, users }) => {
       )
       break
     case 'LOADING':
-      content = <div>Loading...</div>
+      content = <LoadingState />
       break
 
     case 'ERROR':

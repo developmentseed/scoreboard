@@ -15,6 +15,12 @@
   "km_coastlines_add": 95.22816263038682,
   "coastlines_mod": 288,
   "km_coastlines_mod": 127.86867039987462,
+  "railways_add": 288,
+  "railways_mod": 288,
+  "railways_del": 288,
+  "km_railways_add": 127.86867039987462,
+  "km_railways_mod": 127.86867039987462,
+  "km_railways_del": 127.86867039987462,
   "poi_add": 29,
   "poi_mod": 423,
   "users": []

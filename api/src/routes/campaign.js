@@ -52,8 +52,7 @@ module.exports = async (req, res) => {
 
   try {
     const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
-    const stats = Object.assign(
-      JSON.parse(osmesaResponse),
+    const stats = Object.assign(osmesaResponse,
       { success: true })
     response['stats'] = stats
     response['editSum'] = getSumEdits(stats)

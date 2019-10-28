@@ -85,13 +85,13 @@ async function stats (req, res) {
     let recordQuery = applyFilters(allUsers.clone(), req)
     switch (sortType) {
       case 'Most recent':
-        recordQuery = recordQuery.orderBy('last_edit', 'desc')
+        recordQuery = recordQuery.orderByRaw('last_edit desc, full_name')
         break
       case 'Least recent':
-        recordQuery = recordQuery.orderBy('last_edit', 'asc')
+        recordQuery = recordQuery.orderByRaw('last_edit asc, full_name')
         break
       case 'Least total':
-        recordQuery = recordQuery.orderBy('rank', 'desc')
+        recordQuery = recordQuery.orderByRaw('edit_count asc, full_name')
         break
       case 'Alphabetical A-Z':
         recordQuery = recordQuery.orderBy('full_name', 'asc')
@@ -100,7 +100,7 @@ async function stats (req, res) {
         recordQuery = recordQuery.orderBy('full_name', 'desc')
         break
       default: // Most total edits
-        recordQuery = recordQuery.orderByRaw('edit_count DESC NULLS LAST')
+        recordQuery = recordQuery.orderByRaw('edit_count desc, full_name  NULLS LAST')
         break
     }
 

@@ -4,6 +4,8 @@ import { actions } from '../lib/store'
 import Link from '../components/Link'
 import CampaignCard from '../components/campaigns/CampaignCard'
 import { sortBy, prop } from 'ramda'
+import TableHeaders from '../components/common/TableHeaders'
+import { tableHeaderNames } from '../lib/enums'
 
 export class Team extends Component {
   componentDidMount () {
@@ -40,8 +42,7 @@ export class Team extends Component {
                 <table className=''>
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>User ID</th>
+                      <TableHeaders tablname={tableHeaderNames.USER} />
                     </tr>
                   </thead>
                   <tbody>

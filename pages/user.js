@@ -12,7 +12,7 @@ import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
 import { pick } from 'ramda'
 import dynamic from 'next/dynamic'
-import { CSVLink } from 'react-csv'
+import CSVExport from '../components/CSVExport'
 
 const UserExtentMap = dynamic(
   () => import('../components/charts/ProgressiveExtentMap'),
@@ -39,22 +39,13 @@ export class User extends Component {
       country,
       badges,
       teams,
-      refreshDate,
-      allCampaigns
+      refreshDate
     } = this.props.user
     const { extent_uri, uid } = records
     if (!records) return <div />
     const badgeCount = Object.keys(badges.earnedBadges).length
     const campaignCount = records.hashtags.length
     const { name, hashtags, edit_times } = records
-    const recordsExport = {
-      ...records,
-      km_roads_add_mod: records.km_roads_add + records.km_roads_mod,
-      buildings_add_mod: records.buildings_add + records.buildings_mod,
-      poi_add_mod: records.poi_add + records.poi_mod,
-      km_coastlines_add_mod: records.km_coastlines_add + records.km_coastlines_mod,
-      km_waterways_add_mod: records.km_waterways_add + records.km_waterways_mod
-    }
     const breakdownChartProps = pick(
       [
         'waterways_add',
@@ -71,11 +62,14 @@ export class User extends Component {
         'buildings_del',
         'coastlines_add',
         'coastlines_mod',
-        'coastlines_del'
+        'coastlines_del',
+        'railways_add',
+        'railways_mod',
+        'railways_del'
       ],
       records
     )
-
+    const recordsExport = [{ ...records, badgeCount, campaignCount }]
     return (
       <div className='dashboard'>
         <DashboardHeader
@@ -97,32 +91,7 @@ export class User extends Component {
         <div className='row'>
           <DashboardBlurb {...records} username={name} />
           <div className='widget-33 page-actions'>
-            <CSVLink
-              className='button button--secondary'
-              style={{ float: 'right', marginBottom: '1rem' }}
-              data={[
-                {
-                  badgeCount,
-                  campaignCount,
-                  recordsExport
-                }
-              ]}
-              headers={[
-                { label: 'Name', key: 'recordsExport.name' },
-                { label: 'Campaigns', key: 'campaignCount' },
-                { label: 'Badges', key: 'badgeCount' },
-                { label: 'Countries', key: 'recordsExport.country_list.length' },
-                { label: 'Roads (Km)', key: 'recordsExport.km_roads_add_mod' },
-                { label: 'Buildings', key: 'recordsExport.buildings_add_mod' },
-                { label: 'Points of Interest', key: 'recordsExport.poi_add_mod' },
-                { label: 'Coastlines (Km)', key: 'recordsExport.km_coastlines_add_mod' },
-                { label: 'Waterways (Km)', key: 'recordsExport.km_waterways_add_mod' },
-                { label: 'Total Edits', key: 'recordsExport.edit_sum' }
-              ]}
-              filename={`${name}_ScoreboardData.csv`}
-            >
-              Export User Data (CSV)
-            </CSVLink>
+            <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
           </div>
         </div>
         <section>
@@ -138,7 +107,6 @@ export class User extends Component {
               <div className='widget-66'>
                 <CampaignsChart
                   hashtags={hashtags}
-                  campaigns={allCampaigns}
                   height='260px'
                 />
               </div>

@@ -7,6 +7,9 @@ import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
+import { LoadingState } from '../../components/common/LoadingState'
+import TableHeaders from '../../components/common/TableHeaders'
+import { tableHeaderNames } from '../../lib/enums'
 
 export class AdminUsers extends Component {
   constructor () {
@@ -40,6 +43,9 @@ export class AdminUsers extends Component {
     const { admin } = this.props
     if (!admin || !admin.users) return
 
+    // Reorders headers to show UserId first
+    const headers = <TableHeaders tableName={tableHeaderNames.ADMIN_USER} />
+
     return (
       <div className='admin'>
         <h1>All Users</h1>
@@ -47,9 +53,7 @@ export class AdminUsers extends Component {
           <table className='admin-table'>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Roles</th>
+                {headers}
               </tr>
             </thead>
             <tbody>
@@ -75,7 +79,10 @@ export class AdminUsers extends Component {
 
     if (this.state.loading) {
       return (
-        <div><AdminHeader /></div>
+        <div>
+          <AdminHeader />
+          <LoadingState />
+        </div>
       )
     }
 

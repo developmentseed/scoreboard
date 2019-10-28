@@ -2,7 +2,11 @@ import Pagination from 'react-js-pagination'
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../../lib/store'
+
 import Select from 'react-select'
+import TableHeaders from '../common/TableHeaders'
+
+import { tableHeaderNames } from '../../lib/enums'
 
 class Assignment extends Component {
   constructor (props) {
@@ -104,8 +108,7 @@ class CampaignSearch extends Component {
               <table className='admin-table'>
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Team Priority</th>
+                    <TableHeaders tableName={tableHeaderNames.ADMIN_CAMPAIGN_CONTRIBUTIONS} />
                   </tr>
                 </thead>
                 <tbody>

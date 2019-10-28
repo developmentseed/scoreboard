@@ -10,7 +10,6 @@ const OSMTeams = require('../services/teams')
 const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const db = require('../db/connection')
-const getCountriesEdited = require('../utils/getCountriesEdited')
 const refreshStatus = require('../utils/osmesaStatus.js')
 const getSumEdits = require('../utils/sum_edits')
 const { prop } = require('ramda')
@@ -50,8 +49,7 @@ async function get (req, res) {
   // handle the case where osm user doesn't exist on osmesa
   let osmesaData
   try {
-    const osmesaResponse = await osmesa.getUser(id)
-    osmesaData = JSON.parse(osmesaResponse)
+    osmesaData = await osmesa.getUser(id)
   } catch (err) {
     console.error(err.message)
 
@@ -68,6 +66,12 @@ async function get (req, res) {
       km_roads_mod: 0,
       roads_del: 0,
       km_roads_del: 0,
+      railways_add: 0,
+      km_railways_add: 0,
+      railways_mod: 0,
+      km_railways_mod: 0,
+      railways_del: 0,
+      km_railways_del: 0,
       waterways_add: 0,
       km_waterways_add: 0,
       waterways_mod: 0,
@@ -91,13 +95,9 @@ async function get (req, res) {
     }
   }
 
-  if (osmesaData.extent_uri) {
-    osmesaData.extent_uri = join(APP_URL_FINAL, '/scoreboard/api/extents/', osmesaData.extent_uri)
-  }
+  osmesaData.extent_uri = join(APP_URL_FINAL, `/scoreboard/api/extents/user/${id}/{z}/{x}/{y}.mvt`)
   osmesaData['edit_sum'] = getSumEdits(osmesaData)
   const refreshDate = await refreshStatus('user')
-
-  let countriesEdited = getCountriesEdited(osmesaData.country_list)
 
   let badges
   try {
@@ -162,11 +162,10 @@ async function get (req, res) {
     assignments,
     favorites,
     refreshDate,
-    allCampaigns,
     records: osmesaData,
     roles: rolesList,
     activatedTeams,
-    countriesEdited,
+    allCampaigns,
     country: user.country
   })
 }

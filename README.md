@@ -46,7 +46,8 @@ For development simply run: `cp .env.sample .env`. In development, the Osmesa se
 | name | description
 | ---  | -----
 | NODE_ENV | The configuration to use, "test", "development" or "production"
-| OSMESA_API | URL to the OSMESA http server that serves out statistics
+| OSMESA_API | URL to the OSMESA http server that serves out tiles
+| OSMESA_DB | URL to the OSMESA DB that serves out statistics 
 | APP_URL | URL where the site will be hosted
 | OSM_CONSUMER_KEY | An Oauth Key/Secret pair to authenticate with OSM
 | OSM_CONSUMER_SECRET | An Oauth Key/Secret pair to authenticate with OSM
