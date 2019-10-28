@@ -47,17 +47,17 @@
     {
         "id":"railways",
         "name":"Railways (Km)", 
-        "description":"Kilometers of road added or modified"
+        "description":"Kilometers of railways added or modified"
     },
     {
         "id":"coastlines",
         "name":"Coastlines (Km)", 
-        "description":"Kilometers of road added or modified"
+        "description":"Kilometers of coastlines added or modified"
     },
     {
         "id":"waterways",
         "name":"Waterways (Km)", 
-        "description":"Kilometers of road added or modified"
+        "description":"Kilometers of waterways added or modified"
     },
     {
         "id":"changesets",
