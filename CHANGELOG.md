@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## Unreleased
+### Fixed
+- Replace `edit_sum` on User pages with the updated `edit_count` from OSMesa
 
 ## [v1.6.0] - 2019-10-28
 ### Changed
