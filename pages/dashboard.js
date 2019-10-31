@@ -66,6 +66,7 @@ class Dashboard extends Component {
 
     const { badges, teams, refreshDate } = account
     const osmesaData = account.records
+    console.log(osmesaData)
     const { hashtags, edit_times, extent_uri, uid } = osmesaData
     const breakdownChartProps = pick(
       [
@@ -143,7 +144,7 @@ class Dashboard extends Component {
           facets={[
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
-            { label: 'Edits', value: formatDecimal(osmesaData.edit_sum) },
+            { label: 'Edits', value: formatDecimal(osmesaData.edit_count) },
             { label: 'Changesets', value: formatDecimal(changesetCount) }
           ]}
         />

@@ -41,6 +41,7 @@ export class User extends Component {
       teams,
       refreshDate
     } = this.props.user
+    console.log(records)
     const { extent_uri, uid } = records
     if (!records) return <div />
     const badgeCount = Object.keys(badges.earnedBadges).length
@@ -84,7 +85,7 @@ export class User extends Component {
           facets={[
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
-            { label: 'Edits', value: formatDecimal(records.edit_sum) },
+            { label: 'Edits', value: formatDecimal(records.edit_count) },
             { label: 'Changesets', value: formatDecimal(records.changeset_count) }
           ]}
         />
