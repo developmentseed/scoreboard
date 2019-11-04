@@ -41,7 +41,6 @@ export class User extends Component {
       teams,
       refreshDate
     } = this.props.user
-    console.log(records)
     const { extent_uri, uid } = records
     if (!records) return <div />
     const badgeCount = Object.keys(badges.earnedBadges).length
