@@ -66,7 +66,6 @@ class Dashboard extends Component {
 
     const { badges, teams, refreshDate } = account
     const osmesaData = account.records
-    console.log(osmesaData)
     const { hashtags, edit_times, extent_uri, uid } = osmesaData
     const breakdownChartProps = pick(
       [
