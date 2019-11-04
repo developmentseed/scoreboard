@@ -4,7 +4,7 @@
 
 - Fork the repository
 - Create a branch for your changes
-- Make the changes you'd like to contribute. See the "types of contributions" list above to learn more about what we're looking for
+- Make the changes you'd like to contribute.
 - Submit a pull request
 
 Before changes can be merged into master, they _must_ be accompanied by an update to the [CHANGELOG.md](https://github.com/developmentseed/scoreboard/blob/develop/CHANGELOG.md). Please file all new changes under the "Unreleased" heading in CHANGELOG.md, under the appropriate subheading of "Added," "Changed" or "Fixed."
