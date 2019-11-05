@@ -189,7 +189,7 @@ class Dashboard extends Component {
         </section>
         <section>
           <div className='row widget-container'>
-            <DashboardSidebar teams={teams} osmesaData={osmesaData} />
+            <DashboardSidebar teams={teams} osmesaData={osmesaData} loggedIn={loggedIn} />
             <div className='widget-75'>
               <DashboardBadges badges={badges} name={name} />
             </div>

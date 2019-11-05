@@ -12,7 +12,8 @@ function formatCountryList (userCountries) {
 }
 
 function DashboardSidebar (props) {
-  const { teams, osmesaData } = props
+  const { teams, osmesaData, loggedIn } = props
+  console.log(props)
   const countries = osmesaData ? formatCountryList(osmesaData.country_list) : []
   return (
     <div className='sidebar-right widget-25'>
@@ -35,7 +36,9 @@ function DashboardSidebar (props) {
             />
           )
           : (
-            <DataNotAvailable message={'You haven\'t joined any teams yet'} callToAction='Explore teams' callToActionUrl='/teams' />
+            loggedIn
+              ? <DataNotAvailable message={'You haven\'t joined any teams yet'} callToAction='Explore teams' callToActionUrl='/teams' />
+              : <DataNotAvailable message={`${osmesaData.name} hasn't joined any teams yet`} />
           )
       }
 
@@ -58,7 +61,9 @@ function DashboardSidebar (props) {
             />
           )
           : (
-            <DataNotAvailable message='We have not found any stats for your profile' callToAction='Explore countries' callToActionUrl='/countries' />
+            loggedIn
+              ? <DataNotAvailable message='We have not found any stats for your profile' callToAction='Explore countries' callToActionUrl='/countries' />
+              : <DataNotAvailable message={`${osmesaData.name} has not yet mapped in any country`} />
           )
       }
     </div>
