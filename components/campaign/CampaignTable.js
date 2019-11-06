@@ -1,15 +1,19 @@
 import React from 'react'
 import Link from '../Link'
+import { useTable, useSortBy } from 'react-table'
 import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
 import CSVExport from '../../components/CSVExport'
-import TableHeaders from '../common/TableHeaders'
+import { prepareAllHeaders } from '../common/TableHeaders'
 import { tableHeaderNames } from '../../lib/enums'
 
 export default function CampaignTable (props) {
   if (props.users.length === 0) {
     return <div />
   }
+
+  let idMap = Object.assign(...props.users.map(({ uid, name }) => ({ [name]: uid })))
+
   const campaignTopStats = sortBy(prop('edits'), props.users).reverse()
     .map(user => ({
       ...user,
@@ -20,37 +24,103 @@ export default function CampaignTable (props) {
       km_coastlines_add_mod: user.km_coastlines_add + user.km_coastlines_mod,
       km_waterways_add_mod: user.km_waterways_add + user.km_waterways_mod
     }))
+
+  const headerDivs = prepareAllHeaders(tableHeaderNames.CAMPAIGN)
+  const formattedNum = ({ cell: { value } }) => formatDecimal(value)
+  const { headers, rows, prepareRow } = useTable({
+    columns: [
+      {
+        Header: headerDivs['name'],
+        accessor: 'name',
+        Cell: ({ cell: { value } }) => (
+          <Link href={`/users/${idMap[value]}`}>
+            <a className='link--normal' >
+              { value }
+            </a>
+          </Link>
+        )
+      },
+      {
+        Header: headerDivs['roads'],
+        accessor: 'km_roads_add_mod',
+        Cell: formattedNum
+      },
+      {
+        Header: headerDivs['buildings'],
+        accessor: 'buildings_add_mod',
+        Cell: formattedNum
+      },
+      {
+        Header: headerDivs['poi'],
+        accessor: 'poi_add_mod',
+        Cell: formattedNum
+      },
+      {
+        Header: headerDivs['railways'],
+        accessor: 'km_coastlines_add_mod',
+        Cell: formattedNum
+      },
+      {
+        Header: headerDivs['coastlines'],
+        accessor: 'km_coastlines_add_mod',
+        Cell: formattedNum
+      },
+      {
+        Header: headerDivs['waterways'],
+        accessor: 'km_waterways_add_mod',
+        Cell: formattedNum
+      },
+      {
+        Header: headerDivs['changeset'],
+        accessor: 'changeset_count',
+        Cell: formattedNum
+      },
+      {
+        Header: headerDivs['edits'],
+        accessor: 'edit_count',
+        Cell: formattedNum
+      }
+    ],
+    data: campaignTopStats
+  },
+  useSortBy
+  )
+
   return (
     <div className='widget clearfix table-wrapper'>
       <table>
         <thead>
           <tr>
-            <TableHeaders tableName={tableHeaderNames.CAMPAIGN} />
+            {
+              headers.map(column =>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.Header}
+                  <span>
+                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                  </span>
+                </th>
+              )
+            }
           </tr>
         </thead>
         <tbody>
           {
-            campaignTopStats
-              .map((user, idx) => (
-                <tr key={user.uid}>
-                  <td>{idx + 1}</td>
-                  <td>
-                    <Link href={`/users/${user.uid}`}>
-                      <a className='link--normal' >
-                        {user.name}
-                      </a>
-                    </Link>
-                  </td>
-                  <td>{formatDecimal(user.km_roads_add_mod)}</td>
-                  <td>{formatDecimal(user.buildings_add_mod)}</td>
-                  <td>{formatDecimal(user.poi_add_mod)}</td>
-                  <td>{formatDecimal(user.km_railways_add_mod)}</td>
-                  <td>{formatDecimal(user.km_coastlines_add_mod)}</td>
-                  <td>{formatDecimal(user.km_waterways_add_mod)}</td>
-                  <td>{formatDecimal(user.changeset_count)}</td>
-                  <td>{formatDecimal(user.edit_count)}</td>
-                </tr>
-              ))
+            rows.map(
+              (row) => {
+                prepareRow(row)
+                return (
+                  <tr {...row.getRowProps()}>
+                    {
+                      row.cells.map(cell => {
+                        return <td {...cell.getCellProps()}>
+                          {cell.render('Cell')}
+                        </td>
+                      })
+                    }
+                  </tr>
+                )
+              }
+            )
           }
         </tbody>
       </table>
