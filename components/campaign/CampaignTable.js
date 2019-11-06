@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from '../Link'
-import { useTable } from 'react-table'
+import { useTable, useSortBy } from 'react-table'
 import { sortBy, prop } from 'ramda'
 import { formatDecimal } from '../../lib/utils/format'
 import CSVExport from '../../components/CSVExport'
@@ -82,17 +82,23 @@ export default function CampaignTable (props) {
       }
     ],
     data: campaignTopStats
-  })
+  },
+  useSortBy
+  )
 
   return (
-
     <div className='widget clearfix table-wrapper'>
       <table>
         <thead>
           <tr>
             {
               headers.map(column =>
-                <th {...column.getHeaderProps()}>{column.Header}</th>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.Header}
+                  <span>
+                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                  </span>
+                </th>
               )
             }
           </tr>
@@ -106,7 +112,9 @@ export default function CampaignTable (props) {
                   <tr {...row.getRowProps()}>
                     {
                       row.cells.map(cell => {
-                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                        return <td {...cell.getCellProps()}>
+                          {cell.render('Cell')}
+                        </td>
                       })
                     }
                   </tr>

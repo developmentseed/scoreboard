@@ -1,6 +1,6 @@
 import React from 'react'
 import Tooltip from './Tooltip'
-const { keys, values } = require('ramda')
+const { values } = require('ramda')
 const tableHeaders = require('../../lib/i18n/table-headers.json')
 const glossary = require('../../lib/i18n/glossary_en.json')
 
