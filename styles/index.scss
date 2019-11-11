@@ -1071,9 +1071,14 @@ table {
   }
 }
 
-.home-map > .leaflet-container {
-  height: 100%;
-  background: rgb(222,234,238);
+.home-map {
+  width: 100%;
+  height: 375px;
+  margin-bottom: 40px;
+  .leaflet-container {
+    height: 100%;
+    background: rgb(222,234,238);
+  }
  }
 
 .map-campaign-sm > .leaflet-container {
