@@ -9,7 +9,7 @@ import Router from '../lib/router'
 import { actions } from '../lib/store'
 import CampaignTable from '../components/campaign/CampaignTable'
 import ReactMarkdown from 'react-markdown'
-import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
+import { formatUpdateDescription } from '../lib/utils/format'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import Blurb from '../components/campaign/CampaignBlurb'
 
