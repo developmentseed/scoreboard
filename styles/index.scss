@@ -1015,7 +1015,7 @@ table {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
-  overflow-x: scroll;
+  overflow-x: auto;
   @include media(small-down) {
     font-size: .86em;
   }
