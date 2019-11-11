@@ -1,11 +1,43 @@
 import React from 'react'
-import Link from '../Link'
-import { useTable, useSortBy } from 'react-table'
 import { sortBy, prop } from 'ramda'
-import { formatDecimal } from '../../lib/utils/format'
 import CSVExport from '../../components/CSVExport'
-import { prepareAllHeaders } from '../common/TableHeaders'
-import { tableHeaderNames } from '../../lib/enums'
+import Table from '../common/Table'
+
+const tableSchema = {
+  'headers': {
+    'name': { type: 'namelink', accessor: 'name' },
+    'roads': { type: 'number', accessor: 'km_roads_add_mod' },
+    'buildings': { type: 'number', accessor: 'buildings_add_mod' },
+    'poi': { type: 'number', accessor: 'poi_add_mod' },
+    'railways': { type: 'number', accessor: 'km_railways_add_mod' },
+    'coastlines': { type: 'number', accessor: 'km_coastlines_add_mod' },
+    'waterways': { type: 'number', accessor: 'km_waterways_add_mod' },
+    'changesets': { type: 'number', accessor: 'changeset_count' },
+    'edits': { type: 'number', accessor: 'edit_count' }
+  },
+  'columnOrder': [
+    'name',
+    'roads',
+    'buildings',
+    'poi',
+    'railways',
+    'coastlines',
+    'waterways',
+    'changesets',
+    'edits'
+  ],
+  'displaysTooltip': [
+    'name',
+    'roads',
+    'buildings',
+    'poi',
+    'railways',
+    'coastlines',
+    'waterways',
+    'changesets',
+    'edits'
+  ]
+}
 
 export default function CampaignTable (props) {
   if (props.users.length === 0) {
@@ -25,105 +57,9 @@ export default function CampaignTable (props) {
       km_waterways_add_mod: user.km_waterways_add + user.km_waterways_mod
     }))
 
-  const headerDivs = prepareAllHeaders(tableHeaderNames.CAMPAIGN)
-  const formattedNum = ({ cell: { value } }) => formatDecimal(value)
-  const { headers, rows, prepareRow } = useTable({
-    columns: [
-      {
-        Header: headerDivs['name'],
-        accessor: 'name',
-        Cell: ({ cell: { value } }) => (
-          <Link href={`/users/${idMap[value]}`}>
-            <a className='link--normal' >
-              { value }
-            </a>
-          </Link>
-        )
-      },
-      {
-        Header: headerDivs['roads'],
-        accessor: 'km_roads_add_mod',
-        Cell: formattedNum
-      },
-      {
-        Header: headerDivs['buildings'],
-        accessor: 'buildings_add_mod',
-        Cell: formattedNum
-      },
-      {
-        Header: headerDivs['poi'],
-        accessor: 'poi_add_mod',
-        Cell: formattedNum
-      },
-      {
-        Header: headerDivs['railways'],
-        accessor: 'km_coastlines_add_mod',
-        Cell: formattedNum
-      },
-      {
-        Header: headerDivs['coastlines'],
-        accessor: 'km_coastlines_add_mod',
-        Cell: formattedNum
-      },
-      {
-        Header: headerDivs['waterways'],
-        accessor: 'km_waterways_add_mod',
-        Cell: formattedNum
-      },
-      {
-        Header: headerDivs['changeset'],
-        accessor: 'changeset_count',
-        Cell: formattedNum
-      },
-      {
-        Header: headerDivs['edits'],
-        accessor: 'edit_count',
-        Cell: formattedNum
-      }
-    ],
-    data: campaignTopStats
-  },
-  useSortBy
-  )
-
   return (
     <div className='widget clearfix table-wrapper'>
-      <table>
-        <thead>
-          <tr>
-            {
-              headers.map(column =>
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.Header}
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
-                  </span>
-                </th>
-              )
-            }
-          </tr>
-        </thead>
-        <tbody>
-          {
-            rows.map(
-              (row) => {
-                prepareRow(row)
-                return (
-                  <tr {...row.getRowProps()}>
-                    {
-                      row.cells.map(cell => {
-                        return <td {...cell.getCellProps()}>
-                          {cell.render('Cell')}
-                        </td>
-                      })
-                    }
-                  </tr>
-                )
-              }
-            )
-          }
-        </tbody>
-      </table>
+      <Table idMap={idMap} tableSchema={tableSchema} data={campaignTopStats} />
       <CSVExport filename={props.name} data={campaignTopStats} />
     </div>
   )
