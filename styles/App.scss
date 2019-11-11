@@ -23,6 +23,16 @@
   }
 }
 
+.App {
+  display: flex;
+  min-height: 100vh;
+  flex-flow: column nowrap;
+
+  header + div {
+    flex: 1;
+  }
+}
+
 nav {
   display: flex;
   justify-content: space-between;
