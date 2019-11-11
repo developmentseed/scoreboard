@@ -54,7 +54,7 @@ export class Home extends Component {
               </div>
             </div>
           </header>
-        <LoadingState />
+          <LoadingState />
         </div>
       )
     }

@@ -60,7 +60,7 @@ class Dashboard extends Component {
     if (this.state.loading) {
       return (
         <div>
-          <header className='header--internal--green header--page' style={{paddingBottom: '8rem'}}/>
+          <header className='header--internal--green header--page' style={{ paddingBottom: '8rem' }} />
           <LoadingState />
         </div>
       )
