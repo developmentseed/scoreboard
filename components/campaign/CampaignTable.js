@@ -59,7 +59,7 @@ export default function CampaignTable (props) {
 
   return (
     <div className='widget clearfix table-wrapper'>
-      <Table idMap={idMap} tableSchema={tableSchema} data={campaignTopStats} />
+      <Table idMap={idMap} tableSchema={tableSchema} data={campaignTopStats} initialSortColumn='edit_count' />
       <CSVExport filename={props.name} data={campaignTopStats} />
     </div>
   )

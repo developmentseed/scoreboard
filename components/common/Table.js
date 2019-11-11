@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Tooltip from './Tooltip'
 import Link from '../Link'
 import { useTable, useSortBy } from 'react-table'
@@ -39,11 +39,9 @@ function prepareAllHeaders (table) {
 
   headers.forEach(header => (
     headerObjects[header.id] = header.displayTooltip ? (
-      <th key={header.id}>
-        <Tooltip dataTip={header.description}>{header.name}</Tooltip>
-      </th>
+      <Tooltip dataTip={header.description}>{header.name}</Tooltip>
     ) : (
-      <th key={header.id}>{header.name}</th>
+      header.name
     )
   ))
 
@@ -66,10 +64,14 @@ function prepareColumns (props) {
 }
 
 export default function Table (props) {
-  const { headers, rows, prepareRow } = useTable({
+  const { headers, rows, prepareRow, toggleSortBy } = useTable({
     columns: prepareColumns(props),
     data: props.data
   }, useSortBy)
+
+  if (props.initialSortColumn) {
+    useEffect(() => toggleSortBy(props.initialSortColumn, 'descending'), [])
+  }
 
   return (
     <table>
@@ -77,7 +79,7 @@ export default function Table (props) {
         <tr>
           {
             headers.map(column =>
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+              <th key={column.id} {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {column.Header}
                 <span>
                   {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
