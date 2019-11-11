@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## Unreleased
+### Fixed
+- Removed source environment URL join from Edit Profile link in menu
 
 ## [v1.6.0] - 2019-10-28
 ### Changed
