@@ -48,7 +48,12 @@ export class User extends Component {
 
   render () {
     if (this.state.loading) {
-      return <LoadingState />
+      return (
+        <div>
+          <header className='header--internal--green header--page' style={{paddingBottom: '8rem'}}/>
+          <LoadingState />
+        </div>
+      )
     }
     const {
       records,

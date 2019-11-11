@@ -10,6 +10,7 @@ import { formatDecimal } from '../lib/utils/format'
 import TopEditorsChart from '../components/charts/TopEditorsChart'
 import EditsByCountry from '../components/charts/EditsByCountryChart'
 import ScoreboardPanel from '../components/ScoreboardPanel'
+import { LoadingState } from '../components/common/LoadingState'
 
 const Map = dynamic(() => import('../components/charts/LeafletHomeMap'), {
   ssr: false
@@ -17,14 +18,46 @@ const Map = dynamic(() => import('../components/charts/LeafletHomeMap'), {
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 export class Home extends Component {
+  constructor () {
+    super()
+    this.state = {
+      loading: true
+    }
+  }
+
   componentDidMount () {
     this.props.getTopStats()
+  }
+
+  componentDidUpdate () {
+    if (this.state.loading && (this.props.topStats)) {
+      this.setState({ loading: false })
+    }
   }
 
   render () {
     const { topStats } = this.props
 
-    if (!topStats) return <div />
+    if (this.state.loading) {
+      return (
+        <div className='home'>
+          <header className='header--homepage header--page'>
+            <div className='row'>
+              <div className='width--shortened'>
+                <div className='section-sub--left'>
+                  <h1 className='header--xxlarge header--with-description'>Tracking Map Edits Around the World</h1>
+                  <p className='description--header'>{'See what’s happening throughout the ' + projectName + ' ecosystem. From which campaigns are the most active, to detailed information about the contributing mappers.'}</p>
+                  <Link href='/about'>
+                    <a className='link--large'>Learn More</a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </header>
+        <LoadingState />
+        </div>
+      )
+    }
 
     const { numCampaigns, priorityCampaigns, numUsers, features, topEdits, editsByCountry, totalEdits, numCountries } = topStats
 
