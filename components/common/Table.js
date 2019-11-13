@@ -3,14 +3,29 @@ import Tooltip from './Tooltip'
 import Link from '../Link'
 import { useTable, useSortBy } from 'react-table'
 import { toPairs } from 'ramda'
-import { formatDecimal } from '../../lib/utils/format'
+import { parse } from 'date-fns'
+import { formatDecimal, formatEditTimeDescription } from '../../lib/utils/format'
 const glossary = require('../../lib/i18n/glossary_en.json')
 const formattedNum = ({ cell: { value } }) => formatDecimal(value)
 
+const formattedDate = function ({ cell: { value } }) {
+  if (!value) return 'N/A'
+  return formatEditTimeDescription(parse(value))
+}
+
+const identity = function ({ cell: { value } }) {
+  if (!value) return 'N/A'
+  return value
+}
+
 function chooseRenderer (datatype, idMap) {
   switch (datatype) {
+    case 'string':
+      return identity
     case 'number':
       return formattedNum
+    case 'date':
+      return formattedDate
     case 'namelink':
       return ({ cell: { value } }) => (
         <Link href={`/users/${idMap[value]}`}>

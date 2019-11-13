@@ -1,36 +1,37 @@
 import React from 'react'
-import Link from '../Link'
-import { formatDecimal, formatEditTimeDescription } from '../../lib/utils/format'
 import { LoadingState } from '../common/LoadingState'
-import { parse } from 'date-fns'
-import TableHeaders from '../common/TableHeaders'
-import { tableHeaderNames } from '../../lib/enums'
+import Table from '../common/Table'
+
+const tableSchema = {
+  'headers': {
+    'rank': { type: 'string', accessor: 'rank' },
+    'name': { type: 'namelink', accessor: 'full_name' },
+    'country': { type: 'string', accessor: 'country' },
+    'total-edits': { type: 'number', accessor: 'edit_count' },
+    'last-edit': { type: 'date', accessor: 'last_edit' }
+  },
+  'columnOrder': [
+    'rank',
+    'name',
+    'country',
+    'total-edits',
+    'last-edit'
+  ],
+  'displaysTooltip': [
+    'rank',
+    'total-edits',
+    'last-edit'
+  ]
+}
 
 const UsersTable = ({ apiStatus, users }) => {
   let content = <div />
   switch (apiStatus) {
     case 'SUCCESS':
+      console.log(users)
+      let idMap = Object.assign(users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
       content = (<div className='widget'>
-        <table>
-          <thead>
-            <tr>
-              <TableHeaders tableName={tableHeaderNames.ALL_USERS} />
-            </tr>
-          </thead>
-          <tbody>
-            {
-              users.map(user => (
-                <tr key={user.osm_id}>
-                  <td>{((user.edit_count > 0) ? user.rank : 'N/A')}</td>
-                  <td><Link href={`/user?id=${user.osm_id}`} as={`/users/${user.osm_id}`}><a className='link--normal'>{user.full_name}</a></Link></td>
-                  <td>{user.country}</td>
-                  <td>{formatDecimal(user.edit_count)}</td>
-                  <td>{user.edit_count > 0 ? formatEditTimeDescription(parse(user.last_edit)) : 'N/A'}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <Table idMap={idMap} tableSchema={tableSchema} data={users} initalSortColumn='edit_count' />
       </div>
       )
       break
