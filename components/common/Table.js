@@ -18,7 +18,7 @@ const identity = function ({ cell: { value } }) {
   return value
 }
 
-function chooseRenderer (datatype, idMap, countryMap, campaignMap) {
+function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
   switch (datatype) {
     case 'string':
       return identity
@@ -101,7 +101,7 @@ function prepareColumns (props) {
     return {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
-      Cell: chooseRenderer(columnSchema.type, props.idMap, props.countryMap, props.campaignMap)
+      Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap)
     }
   })
   return columns
