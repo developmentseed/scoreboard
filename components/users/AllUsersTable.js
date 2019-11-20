@@ -28,8 +28,7 @@ const UsersTable = ({ apiStatus, users }) => {
   let content = <div />
   switch (apiStatus) {
     case 'SUCCESS':
-      console.log(users)
-      let idMap = Object.assign(users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
+      let idMap = Object.assign(...users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
       content = (<div className='widget'>
         <Table idMap={idMap} tableSchema={tableSchema} data={users} initalSortColumn='edit_count' />
       </div>

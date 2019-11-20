@@ -1,33 +1,23 @@
 import React from 'react'
-import Link from '../Link'
-import TableHeaders from '../common/TableHeaders'
 import { LoadingState } from '../common/LoadingState'
-import { tableHeaderNames } from '../../lib/enums'
+import Table from '../common/Table'
 
-const { formatDecimal } = require('../../lib/utils/format')
+const tableSchema = {
+  'headers': {
+    'name': { type: 'countrylink', accessor: 'name' },
+    'total-edits': { type: 'number', accessor: 'edit_count' }
+  },
+  'columnOrder': [ 'name', 'total-edits' ],
+  'displaysTooltip': [ 'total-edits' ]
+}
 
 export default function CountriesTable ({ apiStatus, countries }) {
   let content = <div />
   switch (apiStatus) {
     case 'SUCCESS':
+      const countryMap = Object.assign(...countries.map(({ code, name }) => ({ [name]: code })))
       content = (<div className='widget'>
-        <table>
-          <thead>
-            <tr>
-              <TableHeaders tableName={tableHeaderNames.ALL_COUNTRIES} />
-            </tr>
-          </thead>
-          <tbody>
-            {
-              countries.map(country => (
-                <tr key={country.code}>
-                  <td><Link href={`/country?code=${country.code}`} as={`/countries/${country.code}`}><a className='link--normal'>{country.name}</a></Link></td>
-                  <td>{formatDecimal(country.edit_count)}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <Table countryMap={countryMap} tableSchema={tableSchema} data={countries} initialSortColumn='edit_count' />
       </div>
 
       )

@@ -18,26 +18,55 @@ const identity = function ({ cell: { value } }) {
   return value
 }
 
-function chooseRenderer (datatype, idMap) {
+function chooseRenderer (datatype, idMap, countryMap, campaignMap) {
   switch (datatype) {
     case 'string':
       return identity
+    case 'button':
+      return identity
     case 'number':
       return formattedNum
+    case 'id':
+      return identity
     case 'date':
       return formattedDate
+    case 'countrylink':
+      return ({ cell: { value } }) => {
+        const code = countryMap[value]
+        return (
+          <Link href={`/country?code=${code}`} as={`/countries/${code}`}>
+            <a className='link--normal'>
+              {value}
+            </a>
+          </Link>
+        )
+      }
+    case 'campaignlink':
+      return ({ cell: { value } }) => {
+        const code = campaignMap[value]
+        return (
+          <Link href={`/campaigns/${code}`}>
+            <a className='link--normal' >
+              {value}
+            </a>
+          </Link>
+        )
+      }
     case 'namelink':
-      return ({ cell: { value } }) => (
-        <Link href={`/users/${idMap[value]}`}>
-          <a className='link--normal' >
-            { value }
-          </a>
-        </Link>
-      )
+      return ({ cell: { value } }) => {
+        return (
+          <Link href={`/users/${idMap[value]}`}>
+            <a className='link--normal' >
+              { value }
+            </a>
+          </Link>
+        )
+      }
     default:
       return formattedNum
   }
 }
+
 function prepareAllHeaders (table) {
   const headers = glossary.filter(term => Object.keys(table.headers).includes(term.id))
   // appends a boolean property to headers to indicate whether the tooltip is showing
@@ -72,7 +101,7 @@ function prepareColumns (props) {
     return {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
-      Cell: chooseRenderer(columnSchema.type, props.idMap)
+      Cell: chooseRenderer(columnSchema.type, props.idMap, props.countryMap, props.campaignMap)
     }
   })
   return columns
