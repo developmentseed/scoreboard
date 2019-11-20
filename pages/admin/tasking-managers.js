@@ -8,8 +8,7 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 import { distanceInWordsToNow, parse } from 'date-fns'
-import TableHeaders from '../../components/common/TableHeaders'
-import { tableHeaderNames } from '../../lib/enums'
+import Table from '../../components/common/Table'
 
 export class AdminTaskers extends Component {
   constructor () {
@@ -40,28 +39,29 @@ export class AdminTaskers extends Component {
 
     if (!taskers || !taskers.length) return
 
+    let allTaskers = taskers.map(tasker => {
+      return Object.assign(tasker, {
+        last_update: tasker.last_update ? `${distanceInWordsToNow(parse(tasker.last_update))} ago` : 'Will run in the next 10 minutes',
+        button: <button className='button' onClick={() => this.onTMClick(tasker)} >Edit</button>
+      })
+    })
+
     return (
       <div>
         <h1>List</h1>
         <div className='widget'>
-          <table className='admin-table'>
-            <thead>
-              <tr>
-                <TableHeaders tableName={tableHeaderNames.TASKING_MANAGER} />
-              </tr>
-            </thead>
-            <tbody>
-              {
-                taskers
-                  .map((tasker) => (
-                    <tr key={`tasker-${tasker.id}`} onClick={() => this.onTMClick(tasker)} className='admin-table-row'>
-                      <td>{tasker.name}</td>
-                      <td>{ tasker.last_update ? `${distanceInWordsToNow(parse(tasker.last_update))} ago` : 'Will run in the next 10 minutes' }</td>
-                    </tr>
-                  ))
-              }
-            </tbody>
-          </table>
+          <Table tableSchema={
+            {
+              'headers': {
+                'name': { type: 'string', accessor: 'name' },
+                'last-run-time': { type: 'string', accessor: 'last_update' },
+                'button': { type: 'button', accessor: 'button' }
+              },
+              displaysTooltip: ['last-run-time'],
+              columnOrder: ['name', 'last-run-time', 'button']
+            }
+          } data={allTaskers}
+          />
         </div>
       </div>
     )
@@ -95,7 +95,7 @@ export class AdminTaskers extends Component {
                 <li>
                   <Link href='/admin/tasking-managers/add'>
                     <a className='link--large'>
-                    Add new tasking manager
+                      Add new tasking manager
                     </a>
                   </Link>
                 </li>
