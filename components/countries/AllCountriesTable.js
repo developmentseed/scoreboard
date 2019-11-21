@@ -17,7 +17,7 @@ export default function CountriesTable ({ apiStatus, countries }) {
     case 'SUCCESS':
       const countryMap = Object.assign(...countries.map(({ code, name }) => ({ [name]: code })))
       content = (<div className='widget'>
-        <Table countryMap={countryMap} tableSchema={tableSchema} data={countries} initialSortColumn='edit_count' />
+        <Table countryMap={countryMap} tableSchema={tableSchema} data={countries} initialSortColumn='edit_count' notSortable />
       </div>
 
       )

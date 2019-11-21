@@ -108,12 +108,13 @@ function prepareColumns (props) {
 }
 
 export default function Table (props) {
+  const sortable = !props.notSortable
   const { headers, rows, prepareRow, toggleSortBy } = useTable({
     columns: prepareColumns(props),
     data: props.data
   }, useSortBy)
 
-  if (props.initialSortColumn) {
+  if (sortable && props.initialSortColumn) {
     useEffect(() => toggleSortBy(props.initialSortColumn, 'descending'), [])
   }
 
@@ -124,9 +125,12 @@ export default function Table (props) {
           {
             headers.map(column =>
               <th key={column.id} {...column.getHeaderProps(column.getSortByToggleProps())}>
-                <a className={column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none'}>
-                  {column.Header}
-                </a>
+                {
+                  sortable
+                    ? <a className={column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none'}>
+                      {column.Header}
+                    </a> : <div>{column.Header}</div>
+                }
               </th>
             )
           }
