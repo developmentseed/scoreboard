@@ -16,7 +16,11 @@ const tableSchema = {
 }
 
 export default ({ assignments, filter }) => {
-  const campaignMap = Object.assign(...assignments.map(({ name, tm_id, tasker_id }) => ({ [name]: `${tasker_id}-${tm_id}` })))
+  let campaignMap = {}
+
+  if (assignments.length) {
+    campaignMap = Object.assign(...assignments.map(({ name, tm_id, tasker_id }) => ({ [name]: `${tasker_id}-${tm_id}` })))
+  }
 
   let assignmentsWithSource = assignments.map(assignment => Object.assign(assignment, { 'source': (filter === 'Teams' || filter === 'All') ? assignment.source : '' })
   )
