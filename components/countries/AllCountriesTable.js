@@ -15,7 +15,10 @@ export default function CountriesTable ({ apiStatus, countries }) {
   let content = <div />
   switch (apiStatus) {
     case 'SUCCESS':
-      const countryMap = Object.assign(...countries.map(({ code, name }) => ({ [name]: code })))
+      let countryMap = {}
+      if (countries.length) {
+        countryMap = Object.assign(...countries.map(({ code, name }) => ({ [name]: code })))
+      }
       content = (<div className='widget'>
         <Table countryMap={countryMap} tableSchema={tableSchema} data={countries} initialSortColumn='edit_count' notSortable />
       </div>

@@ -28,7 +28,10 @@ export class Team extends Component {
     const { team } = this.props
     if (!team) return <div />
 
-    let idMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
+    let idMap = {}
+    if (team.users.length) {
+      idMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
+    }
 
     return (
       <div className='Campaigns'>
