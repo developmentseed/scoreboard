@@ -99,6 +99,8 @@ class OSMesaDBWrapper {
           source.counts[`${count[0]}_${type[0]}`]
         ) {
           target[`${count[1]}_${type[1]}`] = source.counts[`${count[0]}_${type[0]}`]
+        } else {
+          target[`${count[1]}_${type[1]}`] = 0
         }
       })
     })
@@ -116,6 +118,8 @@ class OSMesaDBWrapper {
           source.measurements[`${meas[0]}_km_${type[0]}`]
         ) {
           target[`km_${meas[1]}_${type[1]}`] = source.measurements[`${meas[0]}_km_${type[0]}`]
+        } else {
+          target[`km_${meas[1]}_${type[1]}`] = 0
         }
       })
     })
