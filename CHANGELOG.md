@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## Unreleased
+### Changed
+- Refactor tables and tableheaders to use a common component configured using a tableSchema
+- Make all tables sortable
 
 ## [v1.6.0] - 2019-10-28
 ### Changed
