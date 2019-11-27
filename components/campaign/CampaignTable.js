@@ -28,12 +28,8 @@ const tableSchema = {
   ],
   'displaysTooltip': [
     'name',
-    'roads',
     'buildings',
     'poi',
-    'railways',
-    'coastlines',
-    'waterways',
     'changesets',
     'edits'
   ]
@@ -60,7 +56,10 @@ export default function CampaignTable (props) {
   return (
     <div className='widget clearfix table-wrapper'>
       <Table idMap={idMap} tableSchema={tableSchema} data={campaignTopStats} initialSortColumn='edit_count' />
-      <CSVExport filename={props.name} data={campaignTopStats} />
+      <div>
+        <p><em>* All roads, railways, coastlines and waterways represent Km added and modified</em></p>
+        <CSVExport filename={props.name} data={campaignTopStats} />
+      </div>
     </div>
   )
 }
