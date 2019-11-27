@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
-import Link from '../components/Link'
 import join from 'url-join'
-import TableHeaders from '../components/common/TableHeaders'
-import { tableHeaderNames } from '../lib/enums'
+import Table from '../components/common/Table'
 
 import { APP_URL_PREFIX } from '../api/src/config'
+
+const tableSchema = {
+  'headers': {
+    'name': { type: 'namelink', accessor: 'name' },
+    'hashtags': { type: 'string', accessor: 'hashtag' }
+  },
+  columnOrder: [ 'name', 'hashtags' ],
+  'displaysTooltip': [
+    'hashtags'
+  ]
+}
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
@@ -71,30 +80,10 @@ class Teams extends Component {
 
     if (!teams || !teams.length) return
 
+    let idMap = Object.assign(...teams.map(({ id, name }) => ({ [name]: id })))
     return (
       <div>
-        <table className='admin-table'>
-          <thead>
-            <tr>
-              <TableHeaders tableName={tableHeaderNames.TEAM} />
-            </tr>
-          </thead>
-          <tbody>
-            {
-              teams
-                .map((team) => (
-                  <tr key={`team-${team.name}`}>
-                    <td>
-                      <Link href={`/teams/${team.id}`}>
-                        <a className='link--normal'>{team.name}</a >
-                      </Link>
-                    </td>
-                    <td>{team.hashtag}</td>
-                  </tr>
-                ))
-            }
-          </tbody>
-        </table>
+        <Table tableSchema={tableSchema} data={teams} idMap={idMap} />
       </div>
     )
   }

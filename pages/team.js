@@ -1,11 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
-import Link from '../components/Link'
 import CampaignCard from '../components/campaigns/CampaignCard'
 import { sortBy, prop } from 'ramda'
-import TableHeaders from '../components/common/TableHeaders'
-import { tableHeaderNames } from '../lib/enums'
+import Table from '../components/common/Table'
+
+const tableSchema = {
+  'headers': {
+    'name': { type: 'namelink', accessor: 'full_name' },
+    'user-id': { type: 'string', accessor: 'osm_id' }
+  },
+  columnOrder: [
+    'name',
+    'user-id'
+  ],
+  displaysTooltip: [
+    'user-id'
+  ]
+}
 
 export class Team extends Component {
   componentDidMount () {
@@ -15,6 +27,11 @@ export class Team extends Component {
   render () {
     const { team } = this.props
     if (!team) return <div />
+
+    let idMap = {}
+    if (team.users.length) {
+      idMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
+    }
 
     return (
       <div className='Campaigns'>
@@ -39,21 +56,7 @@ export class Team extends Component {
               </div>
               <section>
                 <h2>Team Members</h2>
-                <table className=''>
-                  <thead>
-                    <tr>
-                      <TableHeaders tablname={tableHeaderNames.USER} />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {team.users.map(record => (
-                      <tr key={`users-${record.osm_id}`} className=''>
-                        <td><Link href={`/users/${record.osm_id}`}><a className='link--normal'>{`${record.full_name}`}</a></Link></td>
-                        <td>{record.osm_id}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <Table idMap={idMap} data={team.users} tableSchema={tableSchema} />
               </section>
             </div>
           </div>

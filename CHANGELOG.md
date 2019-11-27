@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## Unreleased
+### Changed
+- Refactor tables and tableheaders to use a common component configured using a tableSchema
+- Make all tables sortable
+
 ### Fixed
 - Removed source environment URL join from Edit Profile link in menu
 - Replace `edit_sum` on User pages with the updated `edit_count` from OSMesa

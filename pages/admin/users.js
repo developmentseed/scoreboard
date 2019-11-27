@@ -8,8 +8,7 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import { LoadingState } from '../../components/common/LoadingState'
-import TableHeaders from '../../components/common/TableHeaders'
-import { tableHeaderNames } from '../../lib/enums'
+import Table from '../../components/common/Table'
 
 export class AdminUsers extends Component {
   constructor () {
@@ -43,32 +42,30 @@ export class AdminUsers extends Component {
     const { admin } = this.props
     if (!admin || !admin.users) return
 
-    // Reorders headers to show UserId first
-    const headers = <TableHeaders tableName={tableHeaderNames.ADMIN_USER} />
+    const allUsers = admin.users.map(user => {
+      return Object.assign(user, {
+        role: this.renderUserRoles(user.roles),
+        button: <button className='button' onClick={() => this.onUserClick(user)}>Edit</button>
+      })
+    })
 
     return (
       <div className='admin'>
         <h1>All Users</h1>
         <div className='widget'>
-          <table className='admin-table'>
-            <thead>
-              <tr>
-                {headers}
-              </tr>
-            </thead>
-            <tbody>
-              {
-                admin.users
-                  .map((user) => (
-                    <tr key={`user-${user.osm_id}`} onClick={() => this.onUserClick(user)} className='admin-table-row'>
-                      <td>{user.osm_id}</td>
-                      <td>{user.full_name}</td>
-                      <td>{this.renderUserRoles(user.roles)}</td>
-                    </tr>
-                  ))
-              }
-            </tbody>
-          </table>
+          <Table tableSchema={
+            {
+              'headers': {
+                'user-id': { type: 'id', accessor: 'osm_id' },
+                'name': { type: 'string', accessor: 'full_name' },
+                'role': { type: 'string', accessor: 'role' },
+                'button': { type: 'button', accessor: 'button' }
+              },
+              'columnOrder': ['user-id', 'name', 'role'],
+              'displaysTooltip': ['role']
+            }
+          } data={allUsers}
+          />
         </div>
       </div>
     )
