@@ -2,7 +2,7 @@ const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { TM } = require('../services/tm')
 const refreshStatus = require('../utils/osmesaStatus.js')
-const getSumEdits = require('../utils/sum_edits')
+const totalUsersEdits = require('../utils/sum_editCounts.js')
 
 /**
  * Campaign Stats Route
@@ -55,7 +55,7 @@ module.exports = async (req, res) => {
     const stats = Object.assign(osmesaResponse,
       { success: true })
     response['stats'] = stats
-    response['editSum'] = getSumEdits(stats)
+    response['editCounts'] = totalUsersEdits(stats)
   } catch (err) {
     console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
     if (err.statusCode && err.statusCode === 404) {

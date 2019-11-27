@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactor tables and tableheaders to use a common component configured using a tableSchema
 - Make all tables sortable
 
+### Fixed
+- Removed source environment URL join from Edit Profile link in menu
+- Replace `edit_sum` on User pages with the updated `edit_count` from OSMesa
+- Fixes bug in tables when defaults for statistics are not provided by the API
+
 ## [v1.6.0] - 2019-10-28
 ### Changed
 - Move all table header labels to common json file with descriptions.
