@@ -1,6 +1,7 @@
 const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { TM } = require('../services/tm')
+const { find, propEq } = require('ramda')
 const refreshStatus = require('../utils/osmesaStatus.js')
 const totalUsersEdits = require('../utils/sum_editCounts.js')
 
@@ -52,8 +53,16 @@ module.exports = async (req, res) => {
 
   try {
     const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
-    const stats = Object.assign(osmesaResponse,
+    let stats = Object.assign(osmesaResponse,
       { success: true })
+    const userIds = stats.users.map(user => user.uid)
+    const userCountries = await db('users').select(['osm_id', 'country']).whereIn('osm_id', userIds)
+
+    stats.users = stats.users.map(user => {
+      const country = find(propEq('osm_id', user.uid))(userCountries).country
+      return Object.assign({ country }, user)
+    })
+
     response['stats'] = stats
     response['editCounts'] = totalUsersEdits(stats)
   } catch (err) {

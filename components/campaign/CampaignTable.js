@@ -6,6 +6,7 @@ import Table from '../common/Table'
 const tableSchema = {
   'headers': {
     'name': { type: 'namelink', accessor: 'name' },
+    'country': { type: 'string', accessor: 'country' },
     'roads': { type: 'number', accessor: 'km_roads_add_mod' },
     'buildings': { type: 'number', accessor: 'buildings_add_mod' },
     'poi': { type: 'number', accessor: 'poi_add_mod' },
@@ -17,6 +18,7 @@ const tableSchema = {
   },
   'columnOrder': [
     'name',
+    'country',
     'roads',
     'buildings',
     'poi',
