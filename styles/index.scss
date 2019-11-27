@@ -1026,12 +1026,43 @@ table {
     padding-top: .8em;
     padding-bottom: .8em;
     vertical-align: middle;
+    position: relative;
     @include media(small-up) {
       &:first-child {
         padding-left: .8em;
       }
       &:last-child {
         padding-right: .8em;
+      }
+    }
+    a[class^='sort'] {
+      &:after {
+        content: url($appUrlFinal + '../static/sort-none.svg');
+        vertical-align: middle;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-left: -0.3rem;
+        margin-top: 0.2rem;
+      }
+    }
+    a.sort-asc {
+      &:after {
+        content: url($appUrlFinal + '../static/sort-asc.svg');
+      }
+    }
+    a.sort-desc {
+      &:after {
+        content: url($appUrlFinal + '../static/sort-desc.svg');
+      }
+    }
+    .table-tooltip {
+      &:after {
+        content: url($appUrlFinal + '../static/circle-information.svg');
+        vertical-align: middle;
+        position: absolute;
+        margin-top: -.5rem;
+        opacity: 0.5;
       }
     }
   }

@@ -2,8 +2,17 @@ import Pagination from 'react-js-pagination'
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../../lib/store'
-import TableHeaders from '../common/TableHeaders'
-import { tableHeaderNames } from '../../lib/enums'
+import Table from '../common/Table'
+
+const tableSchema = {
+  'headers': {
+    'name': { type: 'string', accessor: 'full_name' },
+    'user-id': { type: 'string', accessor: 'osm_id' },
+    'button': { type: 'string', accessor: 'button' }
+  },
+  columnOrder: ['name', 'user-id', 'button'],
+  displaysTooltip: ['user-id']
+}
 
 class UsersSearch extends Component {
   constructor (props) {
@@ -37,12 +46,25 @@ class UsersSearch extends Component {
 
   render () {
     let { selectedUsers } = this.props
-    selectedUsers = selectedUsers || []
+    selectedUsers = (selectedUsers || []).map(user => {
+      return Object.assign(user, {
+        button: <button style={{ 'padding': '5px' }} className='button button--destroy' onClick={() => this.onSelectedUsersClick(user)} >Remove</button>
+      })
+    })
 
     const { page, searchText } = this.props.adminTeamMemberFilters
     const { stats: { total, records } } = this.props.adminTeamMemberSearchResults
-    const headers = <TableHeaders tableName={tableHeaderNames.USER} />
     if (!records) return <div />
+
+    let searchUsers = records.map(record => {
+      let isAssigned = false
+      selectedUsers.forEach(user => {
+        if (record.osm_id.toString() === user.osm_id.toString()) isAssigned = true
+      })
+      return Object.assign(record, {
+        button: (isAssigned ? <div /> : <button style={{ 'padding': '5px' }} className='button' onClick={() => this.onSearchUsersClick(record)} >Add</button>)
+      })
+    })
 
     return (
       <div>
@@ -51,22 +73,7 @@ class UsersSearch extends Component {
             ? (<section className='section-sub'>
               <h1>Selected</h1>
               <div className='widget'>
-                <table className='admin-table'>
-                  <thead>
-                    <tr>
-                      {headers}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {selectedUsers.map(record => (
-                      <tr key={`user-${record.osm_id}`} className='admin-table-row'>
-                        <td>{`${record.full_name}`}</td>
-                        <td>{`${record.osm_id}`}</td>
-                        <td><button style={{ 'padding': '5px' }} className='button button--destroy' onClick={() => this.onSelectedUsersClick(record)} >Remove</button></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <Table tableSchema={tableSchema} data={selectedUsers} />
               </div>
             </section>)
             : <div />
@@ -82,27 +89,7 @@ class UsersSearch extends Component {
             </fieldset>
           </div>
           <div className='widget'>
-            <table className='admin-table'>
-              <thead>
-                <tr>
-                  {headers}
-                </tr>
-              </thead>
-              <tbody>
-                {records.map(record => {
-                  let isAssigned = false
-                  selectedUsers.forEach(user => {
-                    if (record.osm_id.toString() === user.osm_id.toString()) isAssigned = true
-                  })
-
-                  return <tr key={`user-${record.osm_id}`} onClick={isAssigned ? null : () => this.onSearchUsersClick(record)} className={isAssigned ? 'admin-table-row-alt' : 'admin-table-row'} >
-                    <td>{`${record.full_name}`}</td>
-                    <td>{`${record.osm_id}`}</td>
-                  </tr>
-                })
-                }
-              </tbody>
-            </table>
+            <Table tableSchema={tableSchema} data={searchUsers} />
             <Pagination
               activePage={page}
               itemsCountPerPage={10}

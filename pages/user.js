@@ -105,7 +105,7 @@ export class User extends Component {
           facets={[
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
-            { label: 'Edits', value: formatDecimal(records.edit_sum) },
+            { label: 'Edits', value: formatDecimal(records.edit_count) },
             { label: 'Changesets', value: formatDecimal(records.changeset_count) }
           ]}
         />

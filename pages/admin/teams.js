@@ -8,8 +8,7 @@ import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import Link from '../../components/Link'
 import { LoadingState } from '../../components/common/LoadingState'
-import TableHeaders from '../../components/common/TableHeaders'
-import { tableHeaderNames } from '../../lib/enums'
+import Table from '../../components/common/Table'
 
 export class AdminTeams extends Component {
   constructor () {
@@ -26,7 +25,6 @@ export class AdminTeams extends Component {
       await this.props.getAllTeams()
       this.setState({ loading: false })
     } catch (err) {
-      console.log(err)
       this.setState({ loading: false })
     }
   }
@@ -40,26 +38,27 @@ export class AdminTeams extends Component {
 
     if (!teams.records || !teams.records.length) return
 
+    let allTeams = teams.records.map(team => {
+      return Object.assign(team, {
+        button: <button className='button' onClick={() => this.onTeamClick(team)}>Edit</button>
+      })
+    })
+
     return (
       <div>
         <h1>All Teams</h1>
         <div className='widget'>
-          <table className='admin-table'>
-            <thead>
-              <TableHeaders tableName={tableHeaderNames.TEAM} />
-            </thead>
-            <tbody>
-              {
-                teams.records
-                  .map((team) => (
-                    <tr key={`team-${team.name}`} onClick={() => this.onTeamClick(team)} className='admin-table-row'>
-                      <td>{team.name}</td>
-                      <td>{team.hashtag}</td>
-                    </tr>
-                  ))
-              }
-            </tbody>
-          </table>
+          <Table tableSchema={
+            {
+              'headers': {
+                'name': { type: 'string', accessor: 'name' },
+                'hashtag': { type: 'string', accessor: 'hashtag' },
+                'button': { type: 'button', accessor: 'button' }
+              },
+              columnOrder: ['name', 'hashtag', 'button'],
+              displaysTooltip: ['hashtag']
+            }
+          } data={allTeams} />
         </div>
       </div>
     )
