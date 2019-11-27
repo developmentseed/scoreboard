@@ -143,7 +143,7 @@ class Dashboard extends Component {
           facets={[
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
-            { label: 'Edits', value: formatDecimal(osmesaData.edit_sum) },
+            { label: 'Edits', value: formatDecimal(osmesaData.edit_count) },
             { label: 'Changesets', value: formatDecimal(changesetCount) }
           ]}
         />
