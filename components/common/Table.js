@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Tooltip from './Tooltip'
 import Link from '../Link'
 import { useTable, useSortBy } from 'react-table'
-import { toPairs } from 'ramda'
+import { toPairs, sum } from 'ramda'
 import { parse } from 'date-fns'
 import { formatDecimal, formatEditTimeDescription } from '../../lib/utils/format'
 const glossary = require('../../lib/i18n/glossary_en.json')
@@ -102,6 +102,9 @@ function prepareColumns (props) {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
       Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap)
+      // aggregate: ['sum', 'count'],
+      // Aggregated: ({ cell: { value } }) => `${value}`,
+      // Footer: ({ cell: { Cell.reduce((sum, current) => sum + current, 0)} })
     }
   })
   return columns
@@ -113,11 +116,9 @@ export default function Table (props) {
     columns: prepareColumns(props),
     data: props.data
   }, useSortBy)
-
   if (sortable && props.initialSortColumn) {
     useEffect(() => toggleSortBy(props.initialSortColumn, 'descending'), [])
   }
-
   return (
     <table>
       <thead>
