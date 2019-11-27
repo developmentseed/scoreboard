@@ -6,6 +6,7 @@ import CampaignsChart from '../components/charts/CampaignsChart'
 import DashboardBadges from '../components/dashboard/DashboardBadges'
 import DashboardSidebar from '../components/dashboard/DashboardSidebar'
 import DashboardBlurb from '../components/dashboard/DashboardBlurb'
+import { LoadingState } from '../components/common/LoadingState'
 
 import { formatDecimal } from '../lib/utils/format'
 import { actions } from '../lib/store'
@@ -28,12 +29,32 @@ const CalendarHeatmap = dynamic(
 )
 
 export class User extends Component {
+  constructor () {
+    super()
+    this.state = {
+      loading: true
+    }
+  }
+
   componentDidMount () {
     this.props.getUser(this.props.id)
   }
 
+  componentDidUpdate () {
+    if (this.state.loading && (this.props.user)) {
+      this.setState({ loading: false })
+    }
+  }
+
   render () {
-    if (!this.props.user) return <div />
+    if (this.state.loading) {
+      return (
+        <div>
+          <header className='header--internal--green header--page' style={{ paddingBottom: '8rem' }} />
+          <LoadingState />
+        </div>
+      )
+    }
     const {
       records,
       country,

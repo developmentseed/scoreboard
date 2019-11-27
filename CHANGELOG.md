@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Make all tables sortable
 
 ### Fixed
+- Removed "You" from public profile sidebars
+- Design fixes: ensured full-height application, aligned country maps, included full height headers and loading states
 - Removed source environment URL join from Edit Profile link in menu
 - Replace `edit_sum` on User pages with the updated `edit_count` from OSMesa
 - Fixes bug in tables when defaults for statistics are not provided by the API

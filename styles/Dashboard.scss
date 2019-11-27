@@ -216,7 +216,7 @@
 }
 .dashboard .page-actions {
   margin-bottom: 1rem;
-  flex: inherit;
+  flex-flow: column nowrap;
   .button {
     flex: 1;
     margin: 0;

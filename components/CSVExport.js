@@ -29,7 +29,6 @@ export default function CSVExport ({ filename, data }) {
   return (
     <CSVLink
       className='button button--secondary'
-      style={{ display: 'inline-block', float: 'right', marginTop: '1rem' }}
       data={data}
       filename={filename}
       headers={headers}

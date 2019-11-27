@@ -237,5 +237,11 @@ fieldset {
 // TABLES //
 
 .table-wrapper {
-  overflow: scroll;
+  overflow: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
+  > *:last-child {
+    margin-top: 2rem;
+  }
 }
