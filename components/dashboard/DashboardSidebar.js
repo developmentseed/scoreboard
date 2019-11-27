@@ -13,7 +13,6 @@ function formatCountryList (userCountries) {
 
 function DashboardSidebar (props) {
   const { teams, osmesaData, loggedIn } = props
-  console.log(props)
   const countries = osmesaData ? formatCountryList(osmesaData.country_list) : []
   return (
     <div className='sidebar-right widget-25'>
