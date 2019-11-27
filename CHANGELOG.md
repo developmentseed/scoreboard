@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## Unreleased
+### Fixed
+- Removed "You" from public profile sidebars
+- Design fixes: ensured full-height application, aligned country maps, included full height headers and loading states
 
 ## [v1.6.0] - 2019-10-28
 ### Changed
