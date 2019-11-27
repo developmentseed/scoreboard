@@ -43,7 +43,7 @@ export default function CampaignTable (props) {
   if (props.users.length === 0) {
     return <div />
   }
-
+  props.users.push({ name: 'Total' })
   let idMap = Object.assign(...props.users.map(({ uid, name }) => ({ [name]: uid })))
 
   const campaignTopStats = sortBy(prop('edits'), props.users).reverse()
