@@ -152,7 +152,7 @@ export default function Table (props) {
                 <tr {...row.getRowProps()}>
                   {
                     row.cells.map(cell => {
-                      return <td {...cell.getCellProps()}>
+                      return <td {...cell.getCellProps()} style={{ textAlign: cell.datatype === 'number' ? 'right' : '' }}>
                         {cell.render('Cell')}
                       </td>
                     })
