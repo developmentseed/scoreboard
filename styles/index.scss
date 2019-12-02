@@ -1037,7 +1037,7 @@ table {
     }
     a[class^='sort'] {
       &:after {
-        content: url($appUrlFinal + '../static/sort-none.svg');
+        content: url($appUrlFinal + 'static/sort-none.svg');
         vertical-align: middle;
         position: absolute;
         top: 50%;
@@ -1048,17 +1048,17 @@ table {
     }
     a.sort-asc {
       &:after {
-        content: url($appUrlFinal + '../static/sort-asc.svg');
+        content: url($appUrlFinal + 'static/sort-asc.svg');
       }
     }
     a.sort-desc {
       &:after {
-        content: url($appUrlFinal + '../static/sort-desc.svg');
+        content: url($appUrlFinal + 'static/sort-desc.svg');
       }
     }
     .table-tooltip {
       &:after {
-        content: url($appUrlFinal + '../static/circle-information.svg');
+        content: url($appUrlFinal + 'static/circle-information.svg');
         vertical-align: middle;
         position: absolute;
         margin-top: -.5rem;
