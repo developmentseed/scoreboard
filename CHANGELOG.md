@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [v1.7.1] - 2019-12-02
 ### Fixed
 - Fix pagination bug for users table
 
@@ -253,7 +253,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.7.1...HEAD
+[v1.7.1]: https://github.com/developmentseed/scoreboard/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/developmentseed/scoreboard/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/developmentseed/scoreboard/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/developmentseed/scoreboard/compare/v1.4.0...v1.5.0
