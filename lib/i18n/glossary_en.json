@@ -42,7 +42,7 @@
     {
         "id":"poi",
         "name":"POI",
-        "description":"Points of Interest: Health centers, schools, town halls, places of worship, etc."
+        "description":"Points of Interest: Health centers, schools, town halls, places of worship, amenities, shops, craft, offices, leisure, aeroways, etc."
     },
     {
         "id":"railways",
