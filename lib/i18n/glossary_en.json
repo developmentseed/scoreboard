@@ -41,8 +41,8 @@
     },
     {
         "id":"poi",
-        "name":"Points of Interest",
-        "description":"Health centers, schools, town halls, places of worship, etc."
+        "name":"POI",
+        "description":"Points of Interest: Health centers, schools, town halls, places of worship, etc."
     },
     {
         "id":"railways",
