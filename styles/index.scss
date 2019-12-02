@@ -1023,10 +1023,11 @@ table {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
     color: $base-header-color;
-    padding: 0.8rem 0;
+    padding: 0.8rem 0.15rem;
     vertical-align: middle;
     position: relative;
     line-height: 1.25;
+    white-space: nowrap;
     @include media(small-up) {
       &:first-child {
         padding-left: .8em;
@@ -1108,14 +1109,8 @@ table {
     }
   }
   td {
-    padding: .9em 4em .8em 0;
+    padding: 0.8rem 0.15rem;
     margin: 0;
-    @include media(xlarge-up) {
-      padding-right: 4em;
-    }
-    @include media(medium-down) {
-      padding-right: 1em;
-    }
   }
 }
 
@@ -1289,4 +1284,7 @@ span[data-tip] {
   font-weight: initial;
   font-family: $heading-font-regular;
   text-transform: none;
+  max-width: 18rem;
+  line-height: 1.4;
+  white-space: normal;
 }
