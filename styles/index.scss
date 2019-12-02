@@ -1023,7 +1023,7 @@ table {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
     color: $base-header-color;
-    padding: 0.8rem 0.2rem;
+    padding: 0.8rem 0;
     vertical-align: middle;
     position: relative;
     @include media(small-up) {
@@ -1042,6 +1042,9 @@ table {
       &:after {
         content: url($appUrlFinal + 'static/sort-none.svg');
         margin-top: 0.25rem;
+      }
+      &:hover {
+        color: $base-color;
       }
     }
     a.sort-asc {
