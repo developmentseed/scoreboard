@@ -5,6 +5,6 @@
  */
 module.exports = records => {
   var usersEdits = records.users.reduce(
-    (i, users) => i + parseInt(users.edit_count), 0)
+    (i, users) => i + parseInt(users.edit_count || 0), 0)
   return usersEdits
 }
