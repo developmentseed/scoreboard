@@ -1026,6 +1026,7 @@ table {
     padding: 0.8rem 0;
     vertical-align: middle;
     position: relative;
+    line-height: 1.25;
     @include media(small-up) {
       &:first-child {
         padding-left: .8em;
@@ -1040,28 +1041,52 @@ table {
       justify-content: flex-start;
       align-items: center;
       &:after {
-        content: url($appUrlFinal + 'static/sort-none.svg');
-        margin-top: 0.25rem;
+        mask: url($appUrlFinal + 'static/sort-none.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-none.svg');
+        mask-size: cover;
+        -webkit-mask-size: cover;
+        background: $base-font-color;
+        display: inline-block;
+        content: '';
+        height: 16px;
+        width: 16px;
+        transition: .3s all;
       }
-      &:hover {
+      &:hover,
+      &:focus {
         color: $base-color;
+        &:after,
+        .table-tooltip:after {
+          background: $base-color;
+        }
       }
     }
     a.sort-asc {
       &:after {
-        content: url($appUrlFinal + 'static/sort-asc.svg');
+        mask: url($appUrlFinal + 'static/sort-asc.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-asc.svg');
       }
     }
     a.sort-desc {
       &:after {
-        content: url($appUrlFinal + 'static/sort-desc.svg');
+        mask: url($appUrlFinal + 'static/sort-desc.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-desc.svg');
       }
     }
     .table-tooltip {
       &:after {
-        content: url($appUrlFinal + 'static/circle-information.svg');
+        mask: url($appUrlFinal + 'static/circle-information.svg');
+        -webkit-mask: url($appUrlFinal + 'static/circle-information.svg');
+        mask-size: cover;
+        -webkit-mask-size: cover;
         margin-top: -.5rem;
         opacity: 0.5;
+        background: $base-font-color;
+        display: inline-block;
+        content: '';
+        height: 12px;
+        width: 12px;
+        transition: .3s all;
       }
     }
   }
