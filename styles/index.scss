@@ -1023,8 +1023,7 @@ table {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
     color: $base-header-color;
-    padding-top: .8em;
-    padding-bottom: .8em;
+    padding: 0.8rem 0.2rem;
     vertical-align: middle;
     position: relative;
     @include media(small-up) {
@@ -1036,14 +1035,13 @@ table {
       }
     }
     a[class^='sort'] {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
       &:after {
         content: url($appUrlFinal + 'static/sort-none.svg');
-        vertical-align: middle;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        margin-left: -0.3rem;
-        margin-top: 0.2rem;
+        margin-top: 0.25rem;
       }
     }
     a.sort-asc {
@@ -1059,8 +1057,6 @@ table {
     .table-tooltip {
       &:after {
         content: url($appUrlFinal + 'static/circle-information.svg');
-        vertical-align: middle;
-        position: absolute;
         margin-top: -.5rem;
         opacity: 0.5;
       }
@@ -1256,9 +1252,9 @@ table {
 }
 
 span[data-tip] {
-  position: relative;
-  padding-right: 1rem;
-  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .__react_component_tooltip {
