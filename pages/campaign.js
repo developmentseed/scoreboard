@@ -88,8 +88,8 @@ export class Campaign extends Component {
   }
 
   render () {
-    const { meta, lastUpdate, creationDate, refreshDate, editCounts } = this.props.campaign
-    const stats = merge({ users: [] }, this.props.campaign.stats)
+    const { meta, lastUpdate, creationDate, refreshDate } = this.props.campaign
+    const stats = merge({ users: [], editCounts: 0 }, this.props.campaign.stats)
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
@@ -132,7 +132,7 @@ export class Campaign extends Component {
             { label: 'Mapped', value: `${parseInt(meta.done, 10)}%` },
             { label: 'Validated', value: `${parseInt(meta.validated, 10)}%` },
             { label: 'Participants', value: stats.users.length },
-            { label: 'Total Edits', value: editCounts }
+            { label: 'Total Edits', value: stats.editCounts }
           ]
         } />
 
