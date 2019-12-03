@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed path issue for rendering table icons
+- Guard for null user edit counts
 
 
 ## [v1.7.1] - 2019-12-02
