@@ -125,7 +125,11 @@ export default function Table (props) {
           {
             headers.map(column =>
               sortable ? (
-                <th key={column.id} {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <th
+                  key={column.id}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  title={column.Header.props ? `Sort by ${column.Header.props.children}` : `Sort by ${column.Header}`}
+                >
                   <a className={column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none'}>
                     {column.Header}
                   </a>
