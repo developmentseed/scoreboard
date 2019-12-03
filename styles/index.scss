@@ -1023,10 +1023,11 @@ table {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
     color: $base-header-color;
-    padding-top: .8em;
-    padding-bottom: .8em;
+    padding: 0.8rem 0.15rem;
     vertical-align: middle;
     position: relative;
+    line-height: 1.25;
+    white-space: nowrap;
     @include media(small-up) {
       &:first-child {
         padding-left: .8em;
@@ -1036,33 +1037,57 @@ table {
       }
     }
     a[class^='sort'] {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
       &:after {
-        content: url($appUrlFinal + '../static/sort-none.svg');
-        vertical-align: middle;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        margin-left: -0.3rem;
-        margin-top: 0.2rem;
+        mask: url($appUrlFinal + 'static/sort-none.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-none.svg');
+        mask-size: cover;
+        -webkit-mask-size: cover;
+        background: $base-font-color;
+        display: inline-block;
+        content: '';
+        height: 16px;
+        width: 16px;
+        transition: .3s all;
+      }
+      &:hover,
+      &:focus {
+        color: $base-color;
+        &:after,
+        .table-tooltip:after {
+          background: $base-color;
+        }
       }
     }
     a.sort-asc {
       &:after {
-        content: url($appUrlFinal + '../static/sort-asc.svg');
+        mask: url($appUrlFinal + 'static/sort-asc.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-asc.svg');
       }
     }
     a.sort-desc {
       &:after {
-        content: url($appUrlFinal + '../static/sort-desc.svg');
+        mask: url($appUrlFinal + 'static/sort-desc.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-desc.svg');
       }
     }
     .table-tooltip {
       &:after {
-        content: url($appUrlFinal + '../static/circle-information.svg');
-        vertical-align: middle;
-        position: absolute;
+        mask: url($appUrlFinal + 'static/circle-information.svg');
+        -webkit-mask: url($appUrlFinal + 'static/circle-information.svg');
+        mask-size: cover;
+        -webkit-mask-size: cover;
         margin-top: -.5rem;
         opacity: 0.5;
+        background: $base-font-color;
+        display: inline-block;
+        content: '';
+        height: 12px;
+        width: 12px;
+        transition: .3s all;
       }
     }
   }
@@ -1084,14 +1109,8 @@ table {
     }
   }
   td {
-    padding: .9em 4em .8em 0;
+    padding: 0.8rem 0.15rem;
     margin: 0;
-    @include media(xlarge-up) {
-      padding-right: 4em;
-    }
-    @include media(medium-down) {
-      padding-right: 1em;
-    }
   }
 }
 
@@ -1256,13 +1275,16 @@ table {
 }
 
 span[data-tip] {
-  position: relative;
-  padding-right: 1rem;
-  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .__react_component_tooltip {
   font-weight: initial;
   font-family: $heading-font-regular;
   text-transform: none;
+  max-width: 18rem;
+  line-height: 1.4;
+  white-space: normal;
 }

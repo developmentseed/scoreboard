@@ -251,5 +251,9 @@ fieldset {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
+    .button {
+      flex-shrink: 0;
+    }
   }
 }
