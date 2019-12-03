@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+## [v1.7.2] - 2019-12-03
 ### Changed
 - Table header link hover color; allows user to more easily distinguish hovered column
 - Shortened "POI" description to save space
@@ -263,7 +264,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.7.1...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...HEAD
+[v1.7.2]: https://github.com/developmentseed/scoreboard/compare/v1.7.1...v1.7.2
 [v1.7.1]: https://github.com/developmentseed/scoreboard/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/developmentseed/scoreboard/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/developmentseed/scoreboard/compare/v1.5.0...v1.6.0
