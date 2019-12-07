@@ -13,6 +13,7 @@ const teams = require('./teams')
 const countries = require('./countries')
 const country = require('./country')
 const taskers = require('./taskers')
+const settings = require('./settings')
 
 /**
  * Route registration
@@ -62,5 +63,9 @@ router.delete('/taskers/:id', taskers.del)
 // exclusion list routes
 router.get('/exclusion', exclusion.list)
 router.put('/exclusion', exclusion.put)
+
+// settings routes
+router.get('/settings', settings.get)
+router.put('/settings', settings.put)
 
 module.exports = router

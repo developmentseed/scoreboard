@@ -98,5 +98,10 @@
         "id":"priority",
         "name":"Priority",
         "description":"Assigned urgency level"
+    },
+    {
+      "id": "button",
+      "name": "",
+      "description": ""
     }
 ]

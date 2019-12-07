@@ -133,6 +133,7 @@
     "react-alert-template-basic": "^1.0.0",
     "react-csv": "^1.1.1",
     "react-dom": "^16.0.0",
+    "react-hook-form": "^3.28.11",
     "react-input-range": "^1.2.2",
     "react-js-pagination": "^3.0.0",
     "react-leaflet": "^2.2.0",

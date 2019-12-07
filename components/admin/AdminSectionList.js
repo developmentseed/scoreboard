@@ -10,6 +10,18 @@ export default function AdminSectionList (props) {
     <ul className='widget-container admin-widget'>
       <li className='widget'>
         <h3 className='header--medium'>
+          Settings
+        </h3>
+        <ul>
+          <li>
+            <Link href='/admin/settings'>
+              <a className='link--normal'>Edit App Settings</a>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li className='widget'>
+        <h3 className='header--medium'>
           Badges
         </h3>
         <ul>
