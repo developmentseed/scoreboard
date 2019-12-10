@@ -6,10 +6,24 @@ const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
  * Methods to grab data from tasking manager version 3
  */
 class TM3API {
-  constructor (url, tasker_id, api_url, opts) {
+  /**
+   * Creates an instance of TM3API.
+   * @param {*} { url, taskerId, apiUrl, opts }
+   * @memberof TM3API
+   */
+  constructor ({ url, taskerId, apiUrl, opts }) {
+    if (!url) {
+      throw new Error('TM3API needs url')
+    }
+    if (!apiUrl) {
+      throw new Error('TM3API needs api url')
+    }
+    if (!taskerId) {
+      throw new Error('TM3API needs tasker id')
+    }
     this.url = url
-    this.api_url = api_url
-    this.tasker_id = tasker_id
+    this.api_url = apiUrl
+    this.tasker_id = taskerId
     this.opts = opts || {}
   }
 

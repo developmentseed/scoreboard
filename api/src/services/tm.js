@@ -1,34 +1,32 @@
-const { TM2API, TM3API, FakeTMAPI } = require('./tm_types')
+const TM_TYPES = require('./tm_types')
 
-class TM {
-  constructor (id, type, url, opts) {
-    if (!type) {
-      throw new Error('TM needs type')
+/**
+ * TaskingManagerFactory returns a new instance of a Tasking Manager identified
+ * by a configuration type.
+ */
+class TaskingManagerFactory {
+  /**
+   * Create TaskingManager instance.
+   * @static
+   * @param {*} { id, type, url, opts }
+   * @returns
+   * @memberof TaskingManagerFactory
+   */
+  static createInstance ({ id, type, url, opts }) {
+    const TaskingManagerCreator = TM_TYPES[type]
+    if (!TaskingManagerCreator) {
+      throw new Error('Tasking Manager type is not implemented')
     }
-
-    if (!url) {
-      throw new Error('TM needs URL')
-    }
-
-    this.id = id
-    this.url = url.replace(/\/+$/, '') // Ensure no trailing slashes in URL
-    this.api_url = (opts && opts.proxy) || this.url
-    this.api_url = this.api_url.replace(/\/+$/, '')
-
-    this.type = type
-
-    switch (type) {
-      case 'tm2': {
-        return new TM2API(this.url, this.id, this.api_url, opts)
-      }
-      case 'tm3': {
-        return new TM3API(this.url, this.id, this.api_url, opts)
-      }
-      case 'test': {
-        return new FakeTMAPI()
-      }
-    }
+    let cleanedUrl = url.replace(/\/+$/, '')
+    let apiUrl = (opts && opts.proxy) || cleanedUrl
+    apiUrl = apiUrl.replace(/\/+$/, '')
+    return new TaskingManagerCreator({
+      taskerId: id,
+      url: cleanedUrl,
+      apiUrl,
+      opts
+    })
   }
 }
 
-module.exports.TM = TM
+module.exports.TaskingManagerFactory = TaskingManagerFactory
