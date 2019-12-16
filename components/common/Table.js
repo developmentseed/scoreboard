@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Tooltip from './Tooltip'
 import Link from '../Link'
 import { useTable, useSortBy } from 'react-table'
-import { toPairs, sum } from 'ramda'
+import { toPairs } from 'ramda'
 import { parse } from 'date-fns'
 import { formatDecimal, formatEditTimeDescription } from '../../lib/utils/format'
 const glossary = require('../../lib/i18n/glossary_en.json')
