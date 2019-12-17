@@ -92,16 +92,30 @@ function prepareAllHeaders (table) {
   return headerObjects
 }
 
+function calcFooterTotals (props) {
+  const tableSchema = props.tableSchema
+  const columnSchemas = toPairs(tableSchema.headers)
+
+  let footerTotal = 0
+  for (let i = 0; i < props.data.length; i++) {
+    console.log(props.data[i]['edit_count'])
+  }
+  props.data.forEach(obj => Object.values(obj).reduce((a, b) => a + b))
+
+  return footerTotal
+}
+
 function prepareColumns (props) {
   const tableSchema = props.tableSchema
   const headerDivs = prepareAllHeaders(tableSchema)
-
   const columnSchemas = toPairs(tableSchema.headers)
+  const footerTotals = calcFooterTotals(props)
   const columns = columnSchemas.map(([key, columnSchema]) => {
     return {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
-      Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap)
+      Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap),
+      Footer: footerTotals
     }
   })
   return columns
@@ -151,7 +165,7 @@ export default function Table (props) {
                 <tr {...row.getRowProps()}>
                   {
                     row.cells.map(cell => {
-                      return <td {...cell.getCellProps()}>
+                      return <td {...cell.getCellProps()} style={{ textAlign: cell.datatype === 'number' ? 'right' : '' }}>
                         {cell.render('Cell')}
                       </td>
                     })
@@ -162,6 +176,15 @@ export default function Table (props) {
           )
         }
       </tbody>
+      <tfoot>
+        <tr>
+          {
+            headers.map(column => (
+              <td {...column.getHeaderProps()}>{column.render('Footer')}</td>
+            ))
+          }
+        </tr>
+      </tfoot>
     </table>
   )
 }
