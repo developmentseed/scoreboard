@@ -41,7 +41,6 @@ export default function CampaignTable (props) {
   if (props.users.length === 0) {
     return <div />
   }
-
   let idMap = Object.assign(...props.users.map(({ uid, name }) => ({ [name]: uid })))
 
   const campaignTopStats = sortBy(prop('edits'), props.users).reverse()
@@ -54,6 +53,18 @@ export default function CampaignTable (props) {
       km_coastlines_add_mod: user.km_coastlines_add + user.km_coastlines_mod,
       km_waterways_add_mod: user.km_waterways_add + user.km_waterways_mod
     }))
+
+  campaignTopStats[ (Object.keys(campaignTopStats).length) ] = {
+    name: 'Total',
+    km_roads_add_mod: campaignTopStats.map(user => user.km_roads_add_mod).reduce((previous, current) => previous + current),
+    buildings_add_mod: campaignTopStats.map(user => user.buildings_add_mod).reduce((previous, current) => previous + current),
+    poi_add_mod: campaignTopStats.map(user => user.poi_add_mod).reduce((previous, current) => previous + current),
+    km_railways_add_mod: campaignTopStats.map(user => user.km_railways_add_mod).reduce((previous, current) => previous + current),
+    km_coastlines_add_mod: campaignTopStats.map(user => user.km_coastlines_add_mod).reduce((previous, current) => previous + current),
+    km_waterways_add_mod: campaignTopStats.map(user => user.km_waterways_add_mod).reduce((previous, current) => previous + current),
+    changeset_count: campaignTopStats.map(user => parseFloat(parseInt(user.changeset_count))).reduce((previous, current) => previous + current),
+    edit_count: campaignTopStats.map(user => parseInt(user.edit_count)).reduce((previous, current) => previous + current)
+  }
 
   return (
     <div className='widget clearfix table-wrapper'>
