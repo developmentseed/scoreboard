@@ -42,3 +42,11 @@
     line-height: 2em;
   }
 }
+
+.admin {
+  .widget-75 {
+    @include media(medium-up) {
+      max-width: 876px;
+    }
+  }
+}
