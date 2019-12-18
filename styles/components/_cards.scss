@@ -2,6 +2,13 @@
    WIDGETS - flex containers for cards and general site use
 ==========================================================================*/
 
+.widget {
+  background: #FFFFFF;
+  box-shadow: 0 2px 14px 0 rgba(132,132,132,0.13);
+  padding: 2em 1.5em;
+  margin: 1em 0;
+}
+
 .widget-container {
   display: flex;
   flex-direction: column;
@@ -73,13 +80,6 @@
   @include media(small-down){
     margin-top: 2em;
   }
-}
-
-.widget {
-  background: #FFFFFF;
-  box-shadow: 0 2px 14px 0 rgba(132,132,132,0.13);
-  padding: 2em 1em;
-  margin: 1em 0;
 }
 
 .home .widget {
@@ -157,7 +157,7 @@
     font-size: 1.25em;
   }
   .card-content {
-    padding: 2em 2.2em 1.9em;
+    padding: 2em 1.5em;
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;

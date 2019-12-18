@@ -54,12 +54,16 @@
 .dashboard .page-actions {
   margin-bottom: 1rem;
   flex-flow: column nowrap;
+  @media all and (min-width: 800px) {
+   flex-flow: row;
+   align-items: baseline;
+  }
   .button {
     flex: 1;
     margin: 0;
     @include media(medium-up) {
       margin-left: auto;
-      flex: inherit;
+      flex: initial;
     }
   }
 }
