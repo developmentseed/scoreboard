@@ -22,3 +22,12 @@
   }
   @return nth($range, 2);
 }
+
+/* Generate Random Nuber
+   ========================================================================== */
+
+/**
+* SASS Variable to randomly generate number between 1 and 4 (used to pick header image)
+*/
+
+$nth: random(4);

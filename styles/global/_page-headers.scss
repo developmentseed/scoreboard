@@ -1,0 +1,167 @@
+/* ==========================================================================
+   PAGE HEADER
+========================================================================== */
+
+.header--internal {
+  padding-top: 8.5em;
+  padding-bottom: .5em;
+  h1 {
+    margin-bottom: 0;
+  }
+  .section-sub--right {
+    @include media(small-down) {
+      padding-top: 2em;
+      margin-top: 2em;
+      border-top: 1px solid rgba(255,255,255, .4);
+    }
+  }
+  .button{
+    margin-top: 2em;
+  }
+}
+
+.header--internal--green {
+  background: linear-gradient(to bottom, rgba(#2CAF80, .8), rgba(#56D483, .9)), url($appUrlFinal + "static/backgrounds/homepage-background-#{$nth}.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: top;
+  color: white;
+  border-bottom: 1px solid darken($base-color, 5%);
+  padding-bottom: 1em;
+  padding-top: 9em;
+  position: relative;
+  .heading, h1, h2, h3, h4, h5, h6 {
+    color: white;
+  }
+  h1 {
+    margin-bottom: 0;
+  }
+  .section-sub--left {
+    bottom: .1em;
+  }
+  .descriptor-chart {
+    color: rgba(255, 255, 255, .85);
+  }
+  .list-definition--floating {
+    color: rgba(255, 255, 255, .85);
+    dt {
+      &:nth-of-type(4) {
+        margin-left: .5em;
+      }
+    }
+  }
+  .list--two-column {
+    color: #FFFFFF;
+    margin-bottom: .4em;
+    strong {
+      display: block;
+      font-size: 1.125rem;
+      line-height: 1;
+      margin-bottom: .25rem;
+      color: rgba(255, 255, 255, .85);
+      @include media(medium-up) {
+        font-size: 1.5rem;
+      }
+    }
+    span {
+      text-transform: uppercase;
+      font-size: .75rem;
+      line-height: 1rem;
+      display: block;
+    }
+    li {
+      font-family: $heading-font-regular;
+    }
+  }
+  .link--large,
+  .link--large:visited {
+    color: #FFFFFF;
+  }
+}
+
+.header--page {
+  border-bottom: 3px solid darken($background-color-light, 5%);
+}
+
+.header--homepage {
+  margin-top: -2em;
+  margin-bottom: 1em;
+  background: linear-gradient(to bottom, rgba(#2CAF80, 1), rgba(#56E483, .7)), url($appUrlFinal + "static/backgrounds/homepage-background-#{$nth}.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: top;
+  color: #fff;
+  padding: 10em 0 3em;
+  @include media(medium-up) {
+    padding: 12em 0 6em;
+    margin-top: -6em;
+  }
+  h1 {
+    color: #fff;
+  }
+  p {
+    color: rgba(255, 255, 255, .8);
+    font-size: 1.3em;
+  }
+  .link--large, .link--large:visited{
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    display: inline-block;
+    margin-top: .5em;
+    &:hover {
+      color: darken(#fff, 7%);
+      border-bottom: 1px solid darken(#fff, 7%);
+    }
+  }
+}
+
+.header--page {
+  .row {
+    display: flex;
+    justify-content: space-between;
+    &:before,
+    &:after {
+      display: none;
+      content: "";
+    }
+    @include media(small-down) {
+      flex-wrap: wrap;
+    }
+  }
+  .button, .button:visited {
+    border-color: #fff;
+    background-color: transparent;
+    color: #fff;
+    font-size: 14px;
+    display: inline-block;
+    &~.button {
+      @include media(medium-up) {
+        margin-left: .5em;
+      }
+    }
+    @include media(medium-only) {
+      padding: .7em 1.2em .5em;
+    }
+    &:hover {
+      color: $base-color;
+      background-color: #fff;
+    }
+  }
+}
+
+.header-link {
+  color: $blue-color;
+  &:hover {
+    cursor: pointer;
+    color: #000;
+    text-decoration: underline;
+  }
+}

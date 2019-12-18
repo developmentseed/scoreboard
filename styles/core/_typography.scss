@@ -1,0 +1,201 @@
+/* ==========================================================================
+   TYPOGRAPHY
+========================================================================== */
+
+.refresh {
+  font-style: italic;
+  margin-top: 0.75rem;
+}
+mark {
+  background-color: inherit;
+  color: $base-color;
+}
+.heading, h1, h2, h3, h4, h5, h6 {
+  font-family: $heading-font-bold;
+  font-weight: inherit;
+  margin-top: 0;
+  color: $base-header-color;
+  font-weight: inherit;
+  margin-bottom: 1.25rem;
+}
+
+.header--xxlarge {
+  font-size: 4.2em;
+  line-height: 1.1em;
+  max-width: 100%;
+  @include media(medium-down) {
+    font-size: 2.8em;
+  }
+  @include media(medium-down) {
+    font-size: 2.7em;
+  }
+}
+
+.header--xlarge {
+  font-size: 2.857em;
+  line-height: 1.4em;
+  margin-bottom: 1.75rem;
+  @include media(medium-down) {
+    font-size: 2.4em;
+  }
+  @include media(small-down) {
+    font-size: 2.2em;
+  }
+}
+
+.header--large {
+  font-size: 1.857em;
+  line-height: 1.3em;
+  text-transform: uppercase;
+  @include media(medium-down) {
+    font-size: 2em;
+  }
+  @include media(small-down) {
+    font-size: 1.8em;
+  }
+}
+
+.header--medium {
+  font-size: 1.429em;
+  line-height: 1.4em;
+  @include media(medium-down) {
+    font-size: 1.8em;
+  }
+  @include media(small-down) {
+    font-size: 1.5em;
+  }
+}
+
+.header--small {
+  font-size: 1.214em;
+  line-height: 1.5em;
+  @include media(medium-down) {
+    font-size: 1.2em;
+  }
+}
+
+.header--xsmall {
+  font-size: 1em;
+}
+
+.description--header {
+  font-size: 1.15em;
+  line-height: 1.5em;
+}
+
+.header--with-description {
+  margin-bottom: .2em;
+  word-break: break-word;
+}
+
+.header--with-description-lg {
+  margin-bottom: .5em;
+}
+
+.header--with-description-xlg {
+  margin-bottom: .8em;
+}
+
+.header--underlined, .header--underlined:visited {
+  border-bottom: 1px solid lighten($light-text-color, 40%);
+  color: $dark-text-color;
+  transition: all 0.2s ease 0s;
+  &:hover {
+    color: $blue-color;
+  }
+}
+
+.text-body {
+  p {
+    font-size: 1.08em;
+    width: 80%;
+  }
+  .text-body--large {
+    font-size: 1.85em;
+    line-height: 1.3em;
+    width: 64%;
+    @include media(small-down) {
+      width: 100%;
+      margin: 0;
+    }
+  }
+  .text-body--med {
+    font-size: 1.3em;
+  }
+  // Remove below style after re-styling about page
+  .width--sm {
+    width: 30%;
+    @include media(small-down) {
+      width: 100%;
+    }
+  }
+}
+
+// Remove this and restyle
+.margin-top-sm {
+  margin-top: .3em;
+}
+
+//Links
+a, a:visited {
+  text-decoration: none;
+  transition: .3s color;
+  &.disabled {
+    color: lighten($light-text-color, 40%);
+    cursor: not-allowed;
+  }
+}
+
+.link--large, .link--large:visited {
+  text-transform: uppercase;
+  border-bottom: 1px solid $blue-color;
+  font-size: 1.2em;
+  font-family: $tertiary-font-family;
+  color: $blue-color;
+  transition: all 0.2s ease 0s;
+  padding-bottom: 4px;
+  &:hover {
+    color: darken($blue-color, 10%);
+    border-bottom: 1px solid darken($blue-color, 10%);
+  }
+  &.disabled {
+    color: lighten($light-text-color, 40%);
+    cursor: not-allowed;
+  }
+}
+
+.link--normal, .link--normal:visited {
+  color: $blue-color;
+  transition: all 0.2s ease 0s;
+  padding-bottom: 1px;
+  &:hover {
+    border-bottom: 1px solid darken($blue-color, 25%);
+    color: darken($blue-color, 25%);
+  }
+  &.disabled {
+    color: lighten($light-text-color, 40%);
+    cursor: not-allowed;
+  }
+}
+
+.link--white, .link--white:visited {
+  color: #fff;
+}
+
+p {
+  margin: 0 0 1.5em;
+  line-height: 1.7em;
+  color: $med-text-color;
+}
+
+.num--large {
+  font-size: 3.2em;
+  font-family: $heading-font-regular;
+  display: block;
+  line-height: 38px;
+  margin-top: .2em;
+  @include media(small-down) {
+    font-size: 2.2em;
+    line-height: 32px;
+  }
+}

@@ -1,17 +1,25 @@
+/* ==========================================================================
+   VARIABLES
+   ========================================================================== */
+
 /* Colors
    ========================================================================== */
 
-$base-color: #4FCA9E;                                   //
-$blue-color: #22BDC1;                                //
+$base-color: #4FCA9E;
+$blue-color: #22BDC1;
 $green-color: #8BC544;
 $blue-purple-color: #5657C2;
-                            //
+
 $dark-text-color: #292929;
 $med-text-color: #595757;
 $light-text-color: #6F6F6F;
 
 $background-color-light: #F5F5F5;
 $background-color-dark: #334A42;
+
+$darkgrey: #606161;
+$lightgrey: #dbdbda;
+$badgeyellow: #fef387;
 
 
 /* Typography
@@ -74,6 +82,8 @@ $tertiary-font-family: 'Abel', "Helvetica Neue", Helvetica, Arial, sans-serif;
 $row-min-width: 320px;
 $row-max-width: 1280px;
 
+$border-radius: 4px;
+$border-color: #ccc;
 
 /* Media queries */
 $xsmall-range: (0, 543px);

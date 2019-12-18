@@ -1,0 +1,167 @@
+/* ==========================================================================
+   LOADING
+========================================================================== */
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ .loading-pane {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: not-allowed;
+  padding: 3rem;
+
+  .spinner {
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
+/* Spinner
+   ========================================================================== */
+
+.spinner {
+  font-size: 0;
+  border-radius: 50px;
+  background: rgba($base-color, 0.8);
+  padding: 1.5rem 1rem 1rem 1rem;
+}
+
+.spinner__bounce {
+  width: 1rem;
+  height: 1rem;
+  background: #fff;
+  border-radius: 50px;
+  display: inline-block;
+  margin: 0 (1rem / 4);
+  animation: spinner-bouncedelay 1.4s infinite ease-in-out both;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.spinner__bounce:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.spinner__bounce:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes spinner-bouncedelay {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+
+  40% {
+    transform: scale(1.0);
+  }
+}
+
+
+/* Loading pane react animation
+   ========================================================================== */
+
+.loading-pane-enter {
+  transform: translate3d(0, 0, 0);
+  transition: opacity 0.32s ease 0s, visibility 0.32s linear 0s;
+  opacity: 0;
+  visibility: hidden;
+
+  &.loading-pane-enter-active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.loading-pane-exit {
+  transition: opacity 0.32s ease 0s, visibility 0.32s linear 0s;
+  opacity: 1;
+  visibility: visible;
+
+  &.loading-pane-exit-active {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/*
+  Loading Skeleton - gray "shimmer" effect implemented with LoadingSkeleton.js
+  ========================================================================== */
+
+/**
+* "lsk-" prefix stands for "loading skeleton"
+*/
+
+.lsk__group {
+ margin-bottom: 2rem;
+
+ & > .lsk__item {
+   margin-bottom: 0.75rem;
+ }
+}
+
+.lsk__item {
+ display: block;
+ height: 1rem;
+ width: 100%;
+ background: linear-gradient(-90deg, #F0F0F0 0%, #F8F8F8 50%, #F0F0F0 100%);
+ background-size: 400% 400%;
+ animation: pulse 1.2s ease-in-out 0s infinite alternate;
+
+ &.lsk__item--light {
+   background: rgba(#fff, 0.48);
+ }
+ &.lsk__item--base {
+  background: rgba($base-color, 0.48);
+ }
+}
+.lsk__item--medium {
+ height: 1.5rem;
+}
+.lsk__item--large {
+ height: 2.25rem;
+}
+.lsk__item--card {
+  height: 6.875rem;
+  @include media(large-up) {
+    height: 8.75rem
+  }
+}
+.lsk__item--avatar {
+  height: 2.5rem;
+  border-radius: 100%;
+}
+
+.lsk__item--heading {
+  background: linear-gradient(-90deg, #F0F0F0 0%, #F8F8F8 50%, #F0F0F0 100%);
+  background-size: 400% 400%;
+  animation: pulse 1.2s ease-in-out 0s infinite alternate;
+    &.lsk__item--light {
+     background: rgba(#fff, 0.80);
+    }
+    &.lsk__item--base {
+     background: rgba($base-color, 0.80);
+    }
+}
+
+
+@keyframes pulse {
+ 0% {
+   background-position: 0% 0%;
+ }
+ 100% {
+   background-position: -135% 0%;
+ }
+}
