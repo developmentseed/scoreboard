@@ -188,6 +188,7 @@ legend {
     right: 2%;
   }
 }
+
 form.filters {
   display: flex;
   flex-direction: column;
@@ -206,10 +207,21 @@ form.filters {
         margin-left: .7em;
       }
     }
+    &#archived-fieldset {
+      .checkbox {
+        margin-right: -1em;
+      }
+      @include media(small-only) {
+        order: 1;
+        flex-basis: 100%;
+        margin-left: 0;
+      }
+    }
   }
   .reset {
     display: inline-block;
     cursor: pointer;
     flex: 100%;
+    order: 2;
   }
 }
