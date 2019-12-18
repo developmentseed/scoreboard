@@ -1,134 +1,134 @@
-@import 'settings/variables.scss';
-@import 'settings/mixins.scss';
+// @import 'settings/variables.scss';
+// @import 'settings/mixins.scss';
 
-.chart {
-  font-family: $tertiary-font-family;
-  .header--small {
-    margin: 0;
-  }
-}
+// .chart {
+//   font-family: $tertiary-font-family;
+//   .header--small {
+//     margin: 0;
+//   }
+// }
+//
+// .chart-pie--legend {
+//   padding: 1em 0 0;
+// }
+//
+// .legend-buildings, .legend-roads, .legend-pois, .legend-waterways {
+//   &:before {
+//     content: " ";
+//     width: 10px;
+//     height: 10px;
+//     display: inline-block;
+//     background-color: rgb(31, 120, 180);
+//     margin-right: .5em;
+//   }
+//   margin-bottom: .3em;
+// }
+//
+// .legend-roads {
+//   &:before {
+//     background-color: rgb(178, 223, 138);
+//   }
+// }
+//
+// .legend-pois {
+//   &:before {
+//     background-color: rgb(51, 160, 44);
+//   }
+// }
+//
+// .legend-waterways {
+//   &:before {
+//     background-color: rgb(166, 206, 227);
+//   }
+// }
 
-.chart-pie--legend {
-  padding: 1em 0 0;
-}
+// .panel-container {
+//   text-align: center;
+//   padding: 1.5em 0;
+//   h2 {
+//     max-width: none;
+//   }
+// }
+//
+// .stats-user {
+//   display: inline-block;
+//   margin: 0 auto 2em;
+//   ul {
+//     margin: 0 auto;
+//     display: flex;
+//     justify-content: center;
+//     flex-direction: column;
+//     @include media(small-up) {
+//       flex-direction: row;
+//     }
+//     @include media (medium-up) {
+//       flex-wrap: nowrap;
+//     }
+//     li {
+//       padding: 2em 4vw;
+//       border-left: 0;
+//       border-bottom: 1px solid $background-color-light;
+//       text-align: center;
+//       @include media(small-up) {
+//         padding: 2em 6vw;
+//         border-bottom: 0;
+//       }
+//       @include media(medium-up) {
+//         padding: 0 2em;
+//       }
+//       ~li {
+//         @include media(small-up) {
+//           border-left: 1px solid $background-color-light;
+//         }
+//       }
+//       &:last-of-type {
+//         border-bottom: 0;
+//       }
+//     }
+//   }
+//   .descriptor-chart {
+//     text-transform: uppercase;
+//   }
+//   .num--large {
+//     font-family: $heading-font-bold;
+//     color: $base-color;
+//     margin-bottom: 0.2em;
+//   }
+// }
 
-.legend-buildings, .legend-roads, .legend-pois, .legend-waterways {
-  &:before {
-    content: " ";
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-    background-color: rgb(31, 120, 180);
-    margin-right: .5em;
-  }
-  margin-bottom: .3em;
-}
+// .graphs--user {
+//   .section-width-thirty {
+//     margin-left: 5%;
+//     @include media(medium-down) {
+//       margin: 0;
+//     }
+//   }
+// }
 
-.legend-roads {
-  &:before {
-    background-color: rgb(178, 223, 138);
-  }
-}
-
-.legend-pois {
-  &:before {
-    background-color: rgb(51, 160, 44);
-  }
-}
-
-.legend-waterways {
-  &:before {
-    background-color: rgb(166, 206, 227);
-  }
-}
-
-.panel-container {
-  text-align: center;
-  padding: 1.5em 0;
-  h2 {
-    max-width: none;
-  }
-}
-
-.stats-user {
-  display: inline-block;
-  margin: 0 auto 2em;
-  ul {
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    @include media(small-up) {
-      flex-direction: row;
-    }
-    @include media (medium-up) {
-      flex-wrap: nowrap;
-    }
-    li {
-      padding: 2em 4vw;
-      border-left: 0;
-      border-bottom: 1px solid $background-color-light;
-      text-align: center;
-      @include media(small-up) {
-        padding: 2em 6vw;
-        border-bottom: 0;
-      }
-      @include media(medium-up) {
-        padding: 0 2em;
-      }
-      ~li {
-        @include media(small-up) {
-          border-left: 1px solid $background-color-light;
-        }
-      }
-      &:last-of-type {
-        border-bottom: 0;
-      }
-    }
-  }
-  .descriptor-chart {
-    text-transform: uppercase;
-  }
-  .num--large {
-    font-family: $heading-font-bold;
-    color: $base-color;
-    margin-bottom: 0.2em;
-  }
-}
-
-.graphs--user {
-  .section-width-thirty {
-    margin-left: 5%;
-    @include media(medium-down) {
-      margin: 0;
-    }
-  }
-}
-
-.user-glance-graphs {
-  margin-bottom: 2em;
-  @include media(medium-down) {
-    margin-bottom: .5em;
-  }
-  .Badge-Border {
-    width: 140px;
-    height: 140px;
-    background-size: 140px;
-  }
-  .Badge-Completed {
-    width: 125px;
-    height: 125px;
-    background-size: 125px;
-  }
-  .Badge.progress {
-    width: 130px;
-    height: 130px;
-  }
-  .Badge-Interior {
-    background-size: 130px;
-  }
-  .Badge-Interior.progress {
-    width: 115px;
-    height: 115px;
-  }
-}
+// .user-glance-graphs {
+//   margin-bottom: 2em;
+//   @include media(medium-down) {
+//     margin-bottom: .5em;
+//   }
+//   .Badge-Border {
+//     width: 140px;
+//     height: 140px;
+//     background-size: 140px;
+//   }
+//   .Badge-Completed {
+//     width: 125px;
+//     height: 125px;
+//     background-size: 125px;
+//   }
+//   .Badge.progress {
+//     width: 130px;
+//     height: 130px;
+//   }
+//   .Badge-Interior {
+//     background-size: 130px;
+//   }
+//   .Badge-Interior.progress {
+//     width: 115px;
+//     height: 115px;
+//   }
+// }
