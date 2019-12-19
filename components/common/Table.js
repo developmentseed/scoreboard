@@ -80,10 +80,9 @@ function prepareAllHeaders (table) {
   headers.sort((a, b) => (table.columnOrder.indexOf(a.id) - table.columnOrder.indexOf(b.id)))
 
   let headerObjects = {}
-
   headers.forEach(header => (
     headerObjects[header.id] = header.displayTooltip ? (
-      <Tooltip dataTip={header.description}>{header.name}</Tooltip>
+      <Tooltip dataTip={header.description} className={table.headers[header.id].type === 'number' ? 'table-align-right' : ''} style={{ justifyContent: table.headers[header.id].type === 'number' ? 'flex-end' : '' }}>{header.name}</Tooltip>
     ) : (
       header.name
     )
@@ -130,13 +129,15 @@ export default function Table (props) {
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   title={column.Header.props ? `Sort by ${column.Header.props.children}` : `Sort by ${column.Header}`}
                 >
-                  <a className={column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none'}>
+                  <a
+                    className={(column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none') + ' ' + (column.Cell.name === 'formattedNum' ? 'table-align-right' : '')}
+                  >
                     {column.Header}
                   </a>
                 </th>)
                 : (
                   <th key={column.id} {...column.getHeaderProps()}>
-                    <div>{column.Header}</div>
+                    <div className={column.header === 'number' ? 'table-align-right' : ''}>{column.Header}</div>
                   </th>)
             )
           }
@@ -151,7 +152,7 @@ export default function Table (props) {
                 <tr {...row.getRowProps()}>
                   {
                     row.cells.map(cell => {
-                      return <td {...cell.getCellProps()}>
+                      return <td {...cell.getCellProps()} className={!isNaN(cell.value) && parseInt(cell.value) > 0 ? 'table-align-right' : ''}>
                         {cell.render('Cell')}
                       </td>
                     })
