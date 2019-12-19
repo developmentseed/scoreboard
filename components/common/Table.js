@@ -95,13 +95,26 @@ function prepareAllHeaders (table) {
 function calcFooterTotals (props) {
   const tableSchema = props.tableSchema
   const columnSchemas = toPairs(tableSchema.headers)
+  let footerTotal
 
-  let footerTotal = 0
-  for (let i = 0; i < props.data.length; i++) {
-    console.log(props.data[i]['edit_count'])
-  }
-  props.data.forEach(obj => Object.values(obj).reduce((a, b) => a + b))
+  columnSchemas.map((column) => {
+    let columnAccessor = column[1].accessor
+    let columnType = column[1].type
+    let total = 0
+    if (columnType === 'number') {
+      props.data.map((entry) => {
+        total += parseInt([entry[columnAccessor]])
+        footerTotal += entry[columnAccessor]
+      })
+    }
+    footerTotal = total
+  })
 
+  // create a loop
+  // loop through each props.data array item, and get value of accessor key:value pair
+  // add value to previous to get sum
+
+  // props.data.forEach(obj => Object.values(obj).reduce((a, b) => a + b))
   return footerTotal
 }
 
@@ -165,7 +178,7 @@ export default function Table (props) {
                 <tr {...row.getRowProps()}>
                   {
                     row.cells.map(cell => {
-                      return <td {...cell.getCellProps()} style={{ textAlign: cell.datatype === 'number' ? 'right' : '' }}>
+                      return <td {...cell.getCellProps()}>
                         {cell.render('Cell')}
                       </td>
                     })
