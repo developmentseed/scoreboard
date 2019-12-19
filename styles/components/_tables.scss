@@ -153,10 +153,11 @@ table {
   }
 }
 
-.table-align-right:not(first-of-type) {
+tr td:not(:first-child).table-align-right {
   text-align: right;
 }
 
+th a[class^='sort'].table-align-right,
 span[data-tip].table-align-right:not(first-of-type) {
   justify-content: flex-end;
 }
