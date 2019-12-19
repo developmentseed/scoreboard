@@ -20,62 +20,6 @@
   }
 }
 
-.button--secondary {
-  cursor: pointer;
-  border: 1px solid $base-color;
-  font-size: $base-font-size;
-  background-color: white;
-  color: $base-color;
-  transition: color 300ms ease-in-out;
-
-  &:hover,
-  &:active {
-    background-color: inherit;
-    color: darken($base-color, 10%);
-  }
-}
-
-.button--destroy
-.admin .button--destroy {
-  cursor: pointer;
-  border-color: #CA4F4F;
-  color: #CA4F4F;
-  background-color: white;
-
-  &:hover,
-  &:active {
-    background-color: #CA4F4F;
-    color: white;
-  }
-}
-
-.button--info,
-.admin .button.button--info {
-  border-color: $blue-color;
-  color: $blue-color;
-  background-color: white;
-  &:hover,
-  &:active {
-    background-color: $blue-color;
-    color: white;
-  }
-}
-
-.button--link {
-  background-color: transparent;
-  border: 0;
-  color: $light-text-color;
-  font-family: $tertiary-font-family;
-  padding: 0;
-  transition: color 300ms ease-in-out;
-
-  &:hover,
-  &:active {
-    background-color: inherit;
-    color: $med-text-color;
-  }
-}
-
 .admin .button {
   background-color: $base-color;
   border: 1px solid $base-color;
@@ -96,11 +40,24 @@
   background-color: white;
   color: $base-color;
   transition: color 300ms ease-in-out;
-
+  cursor: pointer;
+  border: 1px solid $base-color;
   &:hover,
   &:active {
     background-color: inherit;
     color: darken($base-color, 10%);
+  }
+}
+
+.button--info,
+.admin .button.button--info {
+  border-color: $blue-color;
+  color: $blue-color;
+  background-color: white;
+  &:hover,
+  &:active {
+    background-color: $blue-color;
+    color: white;
   }
 }
 
@@ -109,25 +66,10 @@
   border-color: #CA4F4F;
   color: #CA4F4F;
   background-color: white;
-
+  cursor: pointer;
   &:hover,
   &:active {
     background-color: #CA4F4F;
     color: white;
-  }
-}
-
-.button--link {
-  background-color: transparent;
-  border: 0;
-  color: $light-text-color;
-  font-family: $tertiary-font-family;
-  padding: 0;
-  transition: color 300ms ease-in-out;
-
-  &:hover,
-  &:active {
-    background-color: inherit;
-    color: $med-text-color;
   }
 }
