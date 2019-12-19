@@ -44,7 +44,7 @@ export class AdminBadges extends Component {
 
     return (
       <div>
-        <h1 className='header--medium'>All Badges</h1>
+        <h1 className='header--xlarge'>All Badges</h1>
         <div className='widget'>
           <table className='admin-table'>
             <thead>
