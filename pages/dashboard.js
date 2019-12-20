@@ -130,7 +130,16 @@ class Dashboard extends Component {
       name = osmUser['@']['display_name']
       accountId = authenticatedUser.account.id
     }
+    const imgBlankState = {
+      position: 'relative',
+      maxWidth: '40%',
+      marginTop: '-12%',
+      marginLeft: '30%',
+      zIndex: '-24',
+      opacity: '.5'
+    }
     const recordsExport = [{ ...account.records, badgeCount, campaignCount, name }]
+    const userHasCampaigns = (favorites.length > 0 || assignments.length > 0 || campaignCount > 0)
     return (
       <div className='dashboard'>
         <DashboardHeader
@@ -161,21 +170,25 @@ class Dashboard extends Component {
             }
           </div>
         </div>
-        <section id='admin&assignments' className='section--dark'>
-          <div className='row'>
-            {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
-            {
-              (favorites || assignments || campaignCount > 0)
-              ? <DashboardAssignments
-                favorites={favorites}
-                assignments={assignments}
-                authenticatedUser={authenticatedUser}
-                all={allCampaigns}
-              />
-              : <></>
-            }
-          </div>
-        </section>
+        {
+          (userHasCampaigns || isAdmin(authenticatedUser.account.roles))
+          ? <section id='admin&assignments' className='section--dark'>
+            <div className='row'>
+              {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
+              {
+                (favorites.length > 0 || assignments.length > 0 || campaignCount > 1)
+                ? <DashboardAssignments
+                  favorites={favorites}
+                  assignments={assignments}
+                  authenticatedUser={authenticatedUser}
+                  all={allCampaigns}
+                />
+                : <></>
+              }
+            </div>
+          </section>
+          : <></>
+        }
         {
           edit_times > 0
           ?
@@ -216,7 +229,9 @@ class Dashboard extends Component {
           </section>
         </>
         :
-        <></>
+        <section className='row'>
+          <img className='img--blank-state' style={imgBlankState} src='static/dashboard-temp/open_maps.svg' />
+        </section>
       }
       </div>
     )

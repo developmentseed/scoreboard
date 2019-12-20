@@ -206,6 +206,9 @@
   .block--campaign p {
     min-height: 20px;
   }
+  .width--shortened {
+    text-align: center;
+  }
   @include media(small-down) {
     section {
       &:first-of-type {
