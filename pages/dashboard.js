@@ -95,7 +95,6 @@ class Dashboard extends Component {
       ],
       osmesaData
     )
-
     // Calculate counts for panel
     const badgeCount =
       account.badges && badges.earnedBadges
@@ -173,40 +172,48 @@ class Dashboard extends Component {
             />
           </div>
         </section>
-        <section>
-          <div className='row'>
-            <div className='map-lg'>
-              <UserExtentMap uid={uid} extent={extent_uri} />
-            </div>
-          </div>
-        </section>
-        <section>
-          <div className='row'>
-            <div className='widget-container'>
-              <div className='widget-66'>
-                <CampaignsChart
-                  campaigns={allCampaigns}
-                  hashtags={hashtags}
-                  height='260px'
-                />
-              </div>
-              <div className='widget-33'>
-                <EditBreakdownChart {...breakdownChartProps} height='260px' />
+        {
+          edit_times > 0
+          ?
+        <>
+          <section id='map'>
+            <div className='row'>
+              <div className='map-lg'>
+                <UserExtentMap uid={uid} extent={extent_uri} />
               </div>
             </div>
-          </div>
-        </section>
-        <section>
-          <div className='row widget-container'>
-            <DashboardSidebar teams={teams} osmesaData={osmesaData} loggedIn={loggedIn} />
-            <div className='widget-75'>
-              <DashboardBadges badges={badges} name={name} />
+          </section>
+          <section id='charts'>
+            <div className='row'>
+              <div className='widget-container'>
+                <div className='widget-66'>
+                  <CampaignsChart
+                    campaigns={allCampaigns}
+                    hashtags={hashtags}
+                    height='260px'
+                  />
+                </div>
+                <div className='widget-33'>
+                  <EditBreakdownChart {...breakdownChartProps} height='260px' />
+                </div>
+              </div>
             </div>
-          </div>
-          <div className='row'>
-            <CalendarHeatmap times={edit_times} />
-          </div>
-        </section>
+          </section>
+          <section id='sidebar-badges-heatmap'>
+            <div className='row widget-container'>
+              <DashboardSidebar teams={teams} osmesaData={osmesaData} loggedIn={loggedIn} />
+              <div className='widget-75'>
+                <DashboardBadges badges={badges} name={name} />
+              </div>
+            </div>
+            <div className='row'>
+              <CalendarHeatmap times={edit_times} />
+            </div>
+          </section>
+        </>
+        :
+        <></>
+      }
       </div>
     )
   }
