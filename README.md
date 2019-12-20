@@ -103,10 +103,10 @@ To be able to develop admin pages you'll need to have an admin user.
 Make your user an admin by running:
 
 ```
-./api/bin/scoreboard create-admin-user --username {your osm username}
+./api/bin/scoreboard create-admin-user --osm-id {your osm id} --username {your osm username}
 ```
 
-If you were already logged in, log out and log back in, then you'll see an "admin" link in the menu in the top right.
+If you were already logged in, log out and log back in, then you'll see an "admin" link in the menu in the top right. Find your OSM ID at the [OSM User Name database](http://whosthat.osmz.ru/).
 
 ## Serve
 
