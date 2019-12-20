@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Fixed
-- Refactor stylesheets for modular scss best practices
+- Refactor stylesheets for modular scss best practices, added stylelint
 
 ## [v1.7.2] - 2019-12-03
 ### Changed
