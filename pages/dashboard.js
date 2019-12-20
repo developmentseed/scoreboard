@@ -65,7 +65,7 @@ class Dashboard extends Component {
         </div>
       )
     }
-    const { authenticatedUser } = this.props
+    const { authenticatedUser, project } = this.props
     const { loggedIn, account } = authenticatedUser
     const { assignments, favorites, country, allCampaigns } = account
 
@@ -152,13 +152,17 @@ class Dashboard extends Component {
             { label: 'Changesets', value: formatDecimal(changesetCount) }
           ]}
         />
-        <div className='row'>
-          <DashboardBlurb {...osmesaData} />
+        <div id='blurb' className='row'>
+          <DashboardBlurb {...osmesaData} project={project} />
           <div className='widget-33 page-actions'>
-            <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
+            {
+              edit_times > 0
+              ? <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
+              : <></>
+            }
           </div>
         </div>
-        <section className='section--dark'>
+        <section id='admin&assignments' className='section--dark'>
           <div className='row'>
             {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
             <DashboardAssignments
