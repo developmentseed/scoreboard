@@ -133,9 +133,6 @@
   @include media(small-up) {
     width: 48%;
   }
-  &:hover .card .header--small {
-    color: $blue-color;
-  }
 }
 
 .card {
@@ -211,4 +208,8 @@
       opacity: 1;
     }
   }
+}
+
+.card--wrapper:hover .card .header--small {
+  color: $blue-color;
 }

@@ -13,11 +13,6 @@
   -moz-osx-font-smoothing: grayscale;
   cursor: not-allowed;
   padding: 3rem;
-
-  .spinner {
-    justify-content: center;
-    align-items: center;
-  }
 }
 
 
@@ -29,6 +24,11 @@
   border-radius: 50px;
   background: rgba($base-color, 0.8);
   padding: 1.5rem 1rem 1rem 1rem;
+}
+
+.loading-container .spinner {
+  justify-content: center;
+  align-items: center;
 }
 
 .spinner__bounce {

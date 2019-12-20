@@ -42,8 +42,8 @@
   transition: color 300ms ease-in-out;
   cursor: pointer;
   border: 1px solid $base-color;
-  &:hover,
-  &:active {
+  &:active,
+  &:hover {
     background-color: inherit;
     color: darken($base-color, 10%);
   }
@@ -54,8 +54,8 @@
   border-color: $blue-color;
   color: $blue-color;
   background-color: white;
-  &:hover,
-  &:active {
+  &:active,
+  &:hover {
     background-color: $blue-color;
     color: white;
   }
@@ -67,8 +67,8 @@
   color: #CA4F4F;
   background-color: white;
   cursor: pointer;
-  &:hover,
-  &:active {
+  &:active,
+  &:hover {
     background-color: #CA4F4F;
     color: white;
   }
