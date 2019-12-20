@@ -164,12 +164,16 @@ class Dashboard extends Component {
         <section id='admin&assignments' className='section--dark'>
           <div className='row'>
             {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
-            <DashboardAssignments
-              favorites={favorites}
-              assignments={assignments}
-              authenticatedUser={authenticatedUser}
-              all={allCampaigns}
-            />
+            {
+              (favorites || assignments || campaignCount > 0)
+              ? <DashboardAssignments
+                favorites={favorites}
+                assignments={assignments}
+                authenticatedUser={authenticatedUser}
+                all={allCampaigns}
+              />
+              : <></>
+            }
           </div>
         </section>
         {
