@@ -1,8 +1,9 @@
 const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { TM } = require('../services/tm')
+const { find, propEq } = require('ramda')
 const refreshStatus = require('../utils/osmesaStatus.js')
-const getSumEdits = require('../utils/sum_edits')
+const totalUsersEdits = require('../utils/sum_editCounts.js')
 
 /**
  * Campaign Stats Route
@@ -52,10 +53,19 @@ module.exports = async (req, res) => {
 
   try {
     const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
-    const stats = Object.assign(osmesaResponse,
+    let stats = Object.assign(osmesaResponse,
       { success: true })
+    const userIds = stats.users.map(user => user.uid)
+    const userCountries = await db('users').select(['osm_id', 'country']).whereIn('osm_id', userIds)
+
+    stats.users = stats.users.map(user => {
+      const country = find(propEq('osm_id', user.uid))(userCountries).country
+      return Object.assign({ country }, user)
+    })
+
+    stats.editCounts = totalUsersEdits(stats) || 0
+
     response['stats'] = stats
-    response['editSum'] = getSumEdits(stats)
   } catch (err) {
     console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
     if (err.statusCode && err.statusCode === 404) {

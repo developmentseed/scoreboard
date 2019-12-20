@@ -1,102 +1,102 @@
 [
     {
         "id":"rank",
-        "name":"Rank", 
+        "name":"Rank",
         "description":"Order of contributors by number of edits"
     },
     {
         "id":"name",
-        "name":"Name", 
+        "name":"Name",
         "description":"Username"
     },
     {
         "id":"user-id",
-        "name":"User ID", 
+        "name":"User ID",
         "description":"Unique user id"
     },
     {
         "id":"role",
-        "name":"Role", 
+        "name":"Role",
         "description":"Assigned role"
     },
     {
         "id":"country",
-        "name":"Country", 
+        "name":"Country",
         "description":"Home country of user"
     },
     {
         "id":"hashtags",
-        "name":"Hashtags", 
+        "name":"Hashtags",
         "description":"Leading hashtags"
     },
     {
         "id":"roads",
-        "name":"Roads (Km)", 
+        "name":"Roads (Km)",
         "description":"Kilometers of road added or modified"
     },
     {
         "id":"buildings",
-        "name":"Buildings", 
+        "name":"Buildings",
         "description":"Number of unique buildings added"
     },
     {
         "id":"poi",
-        "name":"Points of Interest", 
-        "description":"Health centers, schools, town halls, or places of worship"
+        "name":"POI",
+        "description":"Points of Interest: Health centers, schools, town halls, places of worship, amenities, shops, craft, offices, leisure, aeroways, etc."
     },
     {
         "id":"railways",
-        "name":"Railways (Km)", 
+        "name":"Railways (Km)",
         "description":"Kilometers of railways added or modified"
     },
     {
         "id":"coastlines",
-        "name":"Coastlines (Km)", 
+        "name":"Coastlines (Km)",
         "description":"Kilometers of coastlines added or modified"
     },
     {
         "id":"waterways",
-        "name":"Waterways (Km)", 
+        "name":"Waterways (Km)",
         "description":"Kilometers of waterways added or modified"
     },
     {
         "id":"changesets",
-        "name":"Changesets", 
+        "name":"Changesets",
         "description":"Number of submissions for changes"
     },
     {
         "id":"edits",
-        "name":"Edits", 
+        "name":"Edits",
         "description":"Number of individual amendments requested"
     },
     {
         "id":"total-edits",
-        "name":"Total Edits", 
+        "name":"Total Edits",
         "description":"Most recent tally of user edits"
     },
     {
         "id":"last-edit",
-        "name":"Last Edit", 
+        "name":"Last Edit",
         "description":"Most recent edit"
     },
     {
         "id":"last-run-time",
-        "name":"Last run time", 
+        "name":"Last run time",
         "description":"Most recent use of tasking manager"
     },
     {
         "id":"source",
-        "name":"Source", 
+        "name":"Source",
         "description":"Origin of campaign"
     },
     {
         "id":"assigned-by",
-        "name":"Assigned By", 
+        "name":"Assigned By",
         "description":"Coordinating team member"
     },
     {
         "id":"priority",
-        "name":"Priority", 
+        "name":"Priority",
         "description":"Assigned urgency level"
     }
 ]

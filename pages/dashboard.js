@@ -58,7 +58,12 @@ class Dashboard extends Component {
 
   render () {
     if (this.state.loading) {
-      return <LoadingState />
+      return (
+        <div>
+          <header className='header--internal--green header--page' style={{ paddingBottom: '8rem' }} />
+          <LoadingState />
+        </div>
+      )
     }
     const { authenticatedUser } = this.props
     const { loggedIn, account } = authenticatedUser
@@ -143,7 +148,7 @@ class Dashboard extends Component {
           facets={[
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
-            { label: 'Edits', value: formatDecimal(osmesaData.edit_sum) },
+            { label: 'Edits', value: formatDecimal(osmesaData.edit_count) },
             { label: 'Changesets', value: formatDecimal(changesetCount) }
           ]}
         />
@@ -189,7 +194,7 @@ class Dashboard extends Component {
         </section>
         <section>
           <div className='row widget-container'>
-            <DashboardSidebar teams={teams} osmesaData={osmesaData} />
+            <DashboardSidebar teams={teams} osmesaData={osmesaData} loggedIn={loggedIn} />
             <div className='widget-75'>
               <DashboardBadges badges={badges} name={name} />
             </div>

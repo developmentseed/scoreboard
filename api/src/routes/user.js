@@ -11,7 +11,6 @@ const osmesa = require('../services/osmesa')
 const { canEditUser } = require('../passport')
 const db = require('../db/connection')
 const refreshStatus = require('../utils/osmesaStatus.js')
-const getSumEdits = require('../utils/sum_edits')
 const { prop } = require('ramda')
 
 /**
@@ -96,7 +95,6 @@ async function get (req, res) {
   }
 
   osmesaData.extent_uri = join(APP_URL_FINAL, `/scoreboard/api/extents/user/${id}/{z}/{x}/{y}.mvt`)
-  osmesaData['edit_sum'] = getSumEdits(osmesaData)
   const refreshDate = await refreshStatus('user')
 
   let badges

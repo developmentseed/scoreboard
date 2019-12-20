@@ -1015,7 +1015,7 @@ table {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
-  overflow-x: scroll;
+  overflow-x: auto;
   @include media(small-down) {
     font-size: .86em;
   }
@@ -1023,15 +1023,71 @@ table {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
     color: $base-header-color;
-    padding-top: .8em;
-    padding-bottom: .8em;
+    padding: 0.8rem 0.15rem;
     vertical-align: middle;
+    position: relative;
+    line-height: 1.25;
+    white-space: nowrap;
     @include media(small-up) {
       &:first-child {
         padding-left: .8em;
       }
       &:last-child {
         padding-right: .8em;
+      }
+    }
+    a[class^='sort'] {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      &:after {
+        mask: url($appUrlFinal + 'static/sort-none.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-none.svg');
+        mask-size: cover;
+        -webkit-mask-size: cover;
+        background: $base-font-color;
+        display: inline-block;
+        content: '';
+        height: 16px;
+        width: 16px;
+        transition: .3s all;
+      }
+      &:hover,
+      &:focus {
+        color: $base-color;
+        &:after,
+        .table-tooltip:after {
+          background: $base-color;
+        }
+      }
+    }
+    a.sort-asc {
+      &:after {
+        mask: url($appUrlFinal + 'static/sort-asc.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-asc.svg');
+      }
+    }
+    a.sort-desc {
+      &:after {
+        mask: url($appUrlFinal + 'static/sort-desc.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-desc.svg');
+      }
+    }
+    .table-tooltip {
+      &:after {
+        mask: url($appUrlFinal + 'static/circle-information.svg');
+        -webkit-mask: url($appUrlFinal + 'static/circle-information.svg');
+        mask-size: cover;
+        -webkit-mask-size: cover;
+        margin-top: -.5rem;
+        opacity: 0.5;
+        background: $base-font-color;
+        display: inline-block;
+        content: '';
+        height: 12px;
+        width: 12px;
+        transition: .3s all;
       }
     }
   }
@@ -1053,14 +1109,8 @@ table {
     }
   }
   td {
-    padding: .9em 4em .8em 0;
+    padding: 0.8rem 0.15rem;
     margin: 0;
-    @include media(xlarge-up) {
-      padding-right: 4em;
-    }
-    @include media(medium-down) {
-      padding-right: 1em;
-    }
   }
 }
 
@@ -1071,9 +1121,14 @@ table {
   }
 }
 
-.home-map > .leaflet-container {
-  height: 100%;
-  background: rgb(222,234,238);
+.home-map {
+  width: 100%;
+  height: 375px;
+  margin-bottom: 40px;
+  .leaflet-container {
+    height: 100%;
+    background: rgb(222,234,238);
+  }
  }
 
 .map-campaign-sm > .leaflet-container {
@@ -1220,13 +1275,16 @@ table {
 }
 
 span[data-tip] {
-  position: relative;
-  padding-right: 1rem;
-  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .__react_component_tooltip {
   font-weight: initial;
   font-family: $heading-font-regular;
   text-transform: none;
+  max-width: 18rem;
+  line-height: 1.4;
+  white-space: normal;
 }

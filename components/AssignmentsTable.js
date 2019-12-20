@@ -1,41 +1,32 @@
 import React from 'react'
-import Link from './Link'
-import TableHeaders from './common/TableHeaders'
+import Table from './common/Table'
+
+const tableSchema = {
+  'headers': {
+    'name': { type: 'campaignlink', accessor: 'name' },
+    'assigned-by': { type: 'string', accessor: 'source' },
+    'priority': { type: 'string', accessor: 'priority' }
+  },
+  'columnOrder': ['name', 'assigned-by', 'priority'],
+  'displaysTooltip': [
+    'assigned-by',
+    'priority'
+  ]
+
+}
 
 export default ({ assignments, filter }) => {
+  let campaignMap = {}
+
+  if (assignments.length) {
+    campaignMap = Object.assign(...assignments.map(({ name, tm_id, tasker_id }) => ({ [name]: `${tasker_id}-${tm_id}` })))
+  }
+
+  let assignmentsWithSource = assignments.map(assignment => Object.assign(assignment, { 'source': (filter === 'Teams' || filter === 'All') ? assignment.source : '' })
+  )
   return (
     <div className='widget assignments-table'>
-      <table>
-        <thead>
-          <tr>
-            <TableHeaders tableName={`admin-campaign-${filter.toLowerCase()}`} />
-          </tr>
-        </thead>
-        <tbody>
-          {
-            assignments
-              .map((assignment) => {
-                return (
-                  <tr key={`assignment-${assignment.source}-${assignment.name}`}>
-                    <td>
-                      <Link href={`/campaigns/${assignment.tasker_id}-${assignment.tm_id}`}>
-                        <a className='link--normal' >
-                          {assignment.name}
-                        </a>
-                      </Link>
-                    </td>
-                    {
-                      (filter === 'Teams' || filter === 'All') ? <td>{assignment.source}</td> : ''
-                    }
-                    <td>
-                      {assignment.priority}
-                    </td>
-                  </tr>
-                )
-              })
-          }
-        </tbody>
-      </table>
+      <Table tableSchema={tableSchema} campaignMap={campaignMap} data={assignmentsWithSource} />
     </div>
   )
 }

@@ -103,7 +103,7 @@ export class Users extends Component {
               <Pagination
                 activePage={page}
                 itemsCountPerPage={25}
-                totalItemsCount={total}
+                totalItemsCount={subTotal}
                 pageRangeDisplayed={5}
                 onChange={this.handlePageChange}
               />

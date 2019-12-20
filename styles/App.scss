@@ -23,6 +23,16 @@
   }
 }
 
+.App {
+  display: flex;
+  min-height: 100vh;
+  flex-flow: column nowrap;
+
+  header + div {
+    flex: 1;
+  }
+}
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -217,6 +227,10 @@ nav {
   height: 400px;
 }
 
+.Country .map-lg {
+  margin-top: 3rem;
+}
+
 .section-sub--right--home {
   width: 22%;
   margin-left: 12%;
@@ -362,11 +376,11 @@ nav {
 
 .link--login:hover {
   border-bottom: 2px solid rgba(255,255,255,.8);
-  padding-bottom: .8rem;
+  padding-bottom: .6rem;
 }
 
 .active .link--login {
-  padding-bottom: .8rem;
+  padding-bottom: .6rem;
   border-bottom: 2px solid rgba(255,255,255,.4);
 }
 
