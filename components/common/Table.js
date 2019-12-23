@@ -88,7 +88,6 @@ function prepareAllHeaders (table) {
       header.name
     )
   ))
-
   return headerObjects
 }
 
@@ -103,7 +102,7 @@ function calcFooterTotals (props) {
     let total = 0
     if (columnType === 'number') {
       props.data.map((entry) => {
-        total += parseInt([entry[columnAccessor]])
+        total += parseFloat([entry[columnAccessor]])
         footerTotal += entry[columnAccessor]
       })
     }
@@ -122,13 +121,13 @@ function prepareColumns (props) {
   const tableSchema = props.tableSchema
   const headerDivs = prepareAllHeaders(tableSchema)
   const columnSchemas = toPairs(tableSchema.headers)
-  const footerTotals = calcFooterTotals(props)
+  const footerTotals = (props.totals) ? props.totals : ''
   const columns = columnSchemas.map(([key, columnSchema]) => {
     return {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
       Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap),
-      Footer: footerTotals
+      Footer: footerTotals[columnSchema.accessor]
     }
   })
   return columns
@@ -193,7 +192,7 @@ export default function Table (props) {
         <tr>
           {
             headers.map(column => (
-              <td {...column.getHeaderProps()}>{column.render('Footer')}</td>
+              <td key={column.id}>{column.Footer}</td>
             ))
           }
         </tr>
