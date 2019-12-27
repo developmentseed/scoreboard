@@ -1,4 +1,5 @@
 const join = require('url-join')
+const cache = require('memory-cache')
 let DATABASE_URL
 
 if (process.env.NODE_ENV === 'test') {
@@ -15,9 +16,9 @@ let final = join(appUrl, prefix)
 if (final[final.length - 1] !== '/') final += '/'
 
 module.exports = {
+  cache,
   PORT: process.env.PORT || 8181,
   NODE_ENV: process.env.NODE_ENV || 'development',
-  OSMESA_API: process.env.OSMESA_API || null,
   OSMESA_DB: process.env.OSMESA_DB || 'postgres://postgres@localhost:5434/postgres',
   APP_URL: appUrl,
   APP_URL_PREFIX: prefix,

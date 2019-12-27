@@ -1,4 +1,5 @@
 const db = require('../db/connection')
+const { cache } = require('../config')
 const { validateRole } = require('../utils/roles')
 
 /**
@@ -13,14 +14,22 @@ async function get (req, res) {
       return res.boom.unauthorized('Not authorized')
     }
 
-    const settings = await db('settings').select() || []
-
+    // Get data from the cache first
     let settingsMap = {}
-    if (settings.length) {
-      settingsMap = Object.assign(
-        ...settings.map(({ setting, value }) => ({ [setting]: value }))
-      )
+    let data = JSON.parse(cache.exportJson())
+    if (Object.keys(data).length === 0) {
+      const settings = await db('settings').select() || []
+      if (settings.length) {
+        settingsMap = Object.assign(
+          ...settings.map(({ setting, value }) => ({ [setting]: value }))
+        )
+      }
+    } else {
+      Object.keys(data).map(key => {
+        settingsMap[key] = data[key].value
+      })
     }
+
     return res.send(settingsMap)
   } catch (e) {
     console.error(e)
@@ -34,7 +43,6 @@ async function get (req, res) {
 async function put (req, res) {
   try {
     const { user, body } = req
-    console.log(user, body)
 
     // only admins are allowed to view settings
     if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
@@ -42,6 +50,7 @@ async function put (req, res) {
     }
 
     const promises = Object.keys(body).map(async key => {
+      cache.put(key, body[key])
       let keys = await db('settings').where('setting', key)
       if (keys.length) {
         return db('settings').where('setting', key).update({ value: body[key] }).debug()
@@ -63,4 +72,3 @@ module.exports = {
   get,
   put
 }
-

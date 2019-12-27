@@ -1,8 +1,9 @@
 const usersClock = require('../../../users_clock')
-const { OSMESA_DB } = require('../../../config')
+
+const { cache } = require('../../../config')
 const osmesaDB = require('knex')({
   client: 'pg',
-  connection: OSMESA_DB
+  connection: cache.get('osmesa-db')
 })
 
 exports.seed = (knex) => knex('users').del() // delete entries

@@ -10,7 +10,7 @@ import { LoadingState } from '../../components/common/LoadingState'
 import useForm from 'react-hook-form'
 
 function OSMesaSettings (props) {
-  const { register, handleSubmit, watch, errors } = useForm()
+  const { register, handleSubmit } = useForm()
   const onSubmit = props.handleSubmit
 
   return (
