@@ -19,7 +19,6 @@ module.exports = {
   cache,
   PORT: process.env.PORT || 8181,
   NODE_ENV: process.env.NODE_ENV || 'development',
-  OSMESA_DB: process.env.OSMESA_DB || 'postgres://postgres@localhost:5434/postgres',
   APP_URL: appUrl,
   APP_URL_PREFIX: prefix,
   APP_URL_FINAL: final,
