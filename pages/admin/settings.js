@@ -20,6 +20,10 @@ function OSMesaSettings (props) {
         <input type='text' name='osmesa-db' defaultValue={props.settings['osmesa-db']} ref={register} />
       </div>
       <div className='form__input-unit'>
+        <label className='form__label' htmlFor='setting-osmesa-s3-prefix'>OSMesa Tile S3 Prefix</label>
+        <input type='text' name='osmesa-s3-prefix' defaultValue={props.settings['osmesa-s3-prefix']} ref={register} />
+      </div>
+      <div className='form__input-unit'>
         <label className='form__label' htmlFor='setting-osmesa-api-key'>OSMesa S3 AWS API key</label>
         <input type='text' name='osmesa-api-key' defaultValue={props.settings['osmesa-api-key']} ref={register} />
       </div>
@@ -41,6 +45,7 @@ export class AdminSettings extends Component {
       loading: true,
       settings: {
         'osmesa-db': '',
+        'osmesa-s3-prefix': '',
         'osmesa-api-key': '',
         'osmesa-api-secret': ''
       }
