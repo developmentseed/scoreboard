@@ -11,7 +11,6 @@ const YAML = require('yamljs')
 const swaggerUi = require('swagger-ui-express')
 const path = require('path')
 const pify = require('pify')
-const request = require('request')
 const { userExtent } = require('./routes/extents')
 
 const pckg = require('../../package.json')
