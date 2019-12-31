@@ -1,4 +1,6 @@
 const knex = require('knex')
+const AWS = require('aws-sdk')
+
 const { find, propEq, reduce, assoc } = require('ramda')
 
 const { cache } = require('../config')
@@ -48,8 +50,13 @@ module.exports.osmesaUserObj = osmesaUserObj
 
 class OSMesaDBWrapper {
   constructor () {
+    // connection the odmesa db
     this.dbUrl = null
     this.dbConn = knex({ client: 'pg', connection: this.dbUrl })
+
+    // connection to s3
+    this.s3bucket = null
+    this.s3client = null
 
     this.editTypes = [
       ['added', 'add'],
@@ -83,6 +90,25 @@ class OSMesaDBWrapper {
       })
     }
     return this.dbConn(tableName)
+  }
+
+  tiles (prefix, z, x, y) {
+    const s3bucket = cache.get('osmesa-s3-prefix')
+    if (this.s3bucket !== s3bucket) {
+      const accessKeyId = cache.get('osmesa-api-key')
+      const secretAccessKey = cache.get('osmesa-api-secret')
+      this.s3bucket = s3bucket
+      this.s3client = new AWS.S3({
+        accessKeyId,
+        secretAccessKey,
+        params: {
+          Bucket: s3bucket
+        }
+      })
+    }
+    return this.s3client.getObject({
+      Key: `${prefix}/${z}/${x}/${y}.mvt`
+    }).createReadStream()
   }
 
   // turns the new schema into the old schema for objects like user_edits
