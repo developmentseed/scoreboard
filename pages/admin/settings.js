@@ -112,10 +112,10 @@ export class AdminSettings extends Component {
               <h2 className='header--large'>Settings</h2>
             </div>
             <div className='widget-75'>
-              <div className='row'>
+              <div>
                 <h1>OSMesa Settings</h1>
               </div>
-              <div className='row'>
+              <div>
                 <OSMesaSettings handleSubmit={this.handleSubmit} settings={this.state.settings} />
               </div>
             </div>
