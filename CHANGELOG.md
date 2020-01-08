@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added "Total" row for campaign tables, calculating all campaign stat totals
 
+### Fixed
+- Catch undefined headers for sort column title
+
 ## [v1.7.2] - 2019-12-03
 ### Changed
 - Table header link hover color; allows user to more easily distinguish hovered column
