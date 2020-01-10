@@ -1,0 +1,51 @@
+/* ==========================================================================
+   ADMIN PAGES
+   ========================================================================== */
+
+.header--admin {
+  a {
+    color: white;
+  }
+
+  a:hover {
+    color: rgba(255, 255, 255, 0.8)
+  }
+}
+.admin-sidebar-links {
+  li {
+    line-height: 2.5;
+  }
+}
+
+.admin-table {
+  border-spacing: 0px;
+}
+
+.admin-table-row {
+  cursor: pointer;
+}
+
+.admin-table-row-alt {
+  background-color: #f0f0f0;
+}
+
+.admin-table-row:hover {
+  background-color: #fafafc;
+}
+
+.admin-widget {
+  line-height: 2em;
+  a {
+    font-family: $tertiary-font-family;
+    text-transform: uppercase;
+    line-height: 2em;
+  }
+}
+
+.admin {
+  .widget-75 {
+    @include media(medium-up) {
+      max-width: 876px;
+    }
+  }
+}

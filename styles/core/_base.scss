@@ -1,0 +1,175 @@
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+.App {
+  display: flex;
+  min-height: 100vh;
+  flex-flow: column nowrap;
+
+  header + div {
+    flex: 1;
+  }
+}
+
+body {
+  -webkit-print-color-adjust: exact;
+  background: $background-color-light;
+  color: $base-font-color;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: $base-font-regular;
+  font-style: $base-font-style;
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.clearfix {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+    width: 100%;
+    order: 2;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+code {
+  white-space: normal;
+}
+
+.mobile-only {
+  @include media(small-up) {
+    display: none;
+  }
+}
+.mobile-hidden {
+  @include media(xsmall-only) {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   LAYOUT
+========================================================================== */
+
+.row {
+  @extend .clearfix;
+  max-width: $row-max-width;
+  padding: 0 64px;
+  display: block;
+  width: auto;
+  margin: 0 auto;
+  @include media(medium-down) {
+    padding: 0 40px;
+  }
+  @include media(small-down) {
+    padding: 0 20px;
+  }
+}
+
+.width--shortened {
+  width: 80%;
+  margin: 0 auto;
+  @include media(medium-down) {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   LISTS
+========================================================================== */
+
+ul, ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+dl {
+  font-family: $tertiary-font-family;
+  margin-top: 0;
+  dt, dd {
+    display: inline-block;
+    margin-bottom: .2em;
+    float: left;
+  }
+  dd {
+    margin-left: 1em;
+  }
+}
+
+.list-label {
+  margin: 0 0.5rem 0.25rem 0;
+}
+
+.list--two-column {
+  width: 100%;
+  color: $light-text-color;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  @include media (medium-up) {
+    flex-flow: row wrap;
+  }
+  li {
+    margin: 0 0 0.5rem;
+    @include media (medium-up) {
+      flex: 50%;
+    }
+    @include media (xlarge-up) {
+      flex: 1;
+    }
+  }
+}
+
+.list--horizontal {
+  li {
+    margin-right: 2.5em;
+  }
+}
+
+.list--block {
+  margin-bottom: 2.5em;
+}
+
+.list--block--sm {
+  margin-bottom: 1.2em;
+}
+
+// restyle all the below with variables and rename
+
+.list--inline {
+  display: inline-block;
+}
+
+.inline-list {
+  font-family: $tertiary-font-family;
+  margin-bottom: 30px;
+
+  li {
+    display: inline-block;
+    line-height: 2;
+  }
+
+  a {
+    background-color: #E4E4E4;
+    padding: 3px 5px;
+    border-radius: 3px;
+    color: #333;
+    margin-right: 3px;
+
+    &:hover {
+      background-color: #888;
+      color: #fcfcfc;
+    }
+  }
+}

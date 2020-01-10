@@ -1,0 +1,69 @@
+/* ==========================================================================
+   GLOBAL FOOTER
+========================================================================== */
+
+footer {
+  background-color: darken($med-text-color, 15%);
+  color: $background-color-light;
+  font-family: $tertiary-font-family;
+  text-transform: uppercase;
+  line-height: 2;
+  padding: 2rem 0;
+  .row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1280px;
+    @include media(small-up) {
+      flex-direction: row;
+      align-items: center;
+    }
+    &:before,
+    &:after {
+      content: none;
+    }
+    div:last-of-type {
+      @include media(small-up) {
+        text-align: right;
+        line-height: 3;
+      }
+    }
+  }
+  .footer__logo{
+    max-height: 5rem;
+    mix-blend-mode: luminosity;
+  }
+}
+.nav--footer {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  margin-bottom: 1rem;
+  .logo {
+    font-size: 1.5rem;
+    margin-bottom: .5rem;
+    border-bottom: 1px solid #fff;
+    a:hover {
+      border-bottom: none;
+    }
+    span {
+      font-size: 1rem;
+      letter-spacing: 0;
+      color: $base-color;
+      border-bottom: none;
+      padding-left: 0.5rem;
+    }
+  }
+  li {
+    padding: 0;
+    margin: 0;
+  }
+  a, a:visited {
+    color: $background-color-light;
+  }
+  a:hover {
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff;
+  }
+}

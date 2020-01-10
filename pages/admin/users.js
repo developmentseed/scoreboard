@@ -51,7 +51,7 @@ export class AdminUsers extends Component {
 
     return (
       <div className='admin'>
-        <h1>All Users</h1>
+        <h1 className='header--xlarge'>All Users</h1>
         <div className='widget'>
           <Table tableSchema={
             {
