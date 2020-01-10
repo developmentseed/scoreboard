@@ -41,7 +41,6 @@ export default function CampaignTable (props) {
   if (props.users.length === 0) {
     return <div />
   }
-
   let idMap = Object.assign(...props.users.map(({ uid, name }) => ({ [name]: uid })))
 
   const campaignTopStats = sortBy(prop('edits'), props.users).reverse()
@@ -55,9 +54,21 @@ export default function CampaignTable (props) {
       km_waterways_add_mod: user.km_waterways_add + user.km_waterways_mod
     }))
 
+  const campaignTotals = {
+    name: 'Total',
+    km_roads_add_mod: campaignTopStats.map(user => user.km_roads_add_mod).reduce((prev, cur) => prev + cur),
+    buildings_add_mod: campaignTopStats.map(user => user.buildings_add_mod).reduce((prev, cur) => prev + cur),
+    poi_add_mod: campaignTopStats.map(user => user.poi_add_mod).reduce((prev, cur) => prev + cur),
+    km_railways_add_mod: campaignTopStats.map(user => user.km_railways_add_mod).reduce((prev, cur) => prev + cur),
+    km_coastlines_add_mod: campaignTopStats.map(user => user.km_coastlines_add_mod).reduce((prev, cur) => prev + cur),
+    km_waterways_add_mod: campaignTopStats.map(user => user.km_waterways_add_mod).reduce((prev, cur) => prev + cur),
+    changeset_count: campaignTopStats.map(user => parseInt(user.changeset_count)).reduce((prev, cur) => prev + cur),
+    edit_count: campaignTopStats.map(user => parseInt(user.edit_count)).reduce((prev, cur) => prev + cur)
+  }
+
   return (
     <div className='widget clearfix table-wrapper'>
-      <Table idMap={idMap} tableSchema={tableSchema} data={campaignTopStats} initialSortColumn='edit_count' />
+      <Table idMap={idMap} tableSchema={tableSchema} data={campaignTopStats} totals={campaignTotals} initialSortColumn='edit_count' />
       <div>
         <p><em>* All roads, railways, coastlines and waterways represent Km added and modified</em></p>
         <CSVExport filename={props.name} data={campaignTopStats} />

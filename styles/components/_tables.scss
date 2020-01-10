@@ -10,7 +10,8 @@ table {
   @include media(small-down) {
     font-size: .86em;
   }
-  th {
+  th,
+  tfoot td {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
     color: $base-header-color;
