@@ -1,0 +1,33 @@
+/* ==========================================================================
+   ALERTS
+==========================================================================*/
+
+.alert {
+  border-radius: $border-radius;
+  box-sizing: border-box;
+  font-family: $base-font-family;
+  margin-bottom: 2rem;
+  padding: 0.5em;
+
+  &.alert--info {
+    background-color: lighten($blue-color, 50%);
+    border: 1px solid $blue-color;
+    color: $blue-color;
+  }
+
+  &.alert--error {
+    background-color: lighten(red, 50%);
+    border: 1px solid red;
+    color: red;
+  }
+
+  &.alert--success {
+    background-color: lighten($green-color, 50%);
+    border: 1px solid $green-color;
+    color: $green-color;
+  }
+
+  .admin & {
+    max-width: 800px;
+  }
+}

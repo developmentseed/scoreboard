@@ -1,0 +1,30 @@
+/* ==========================================================================
+   FILTERS
+==========================================================================*/
+
+.filters {
+  .input-range {
+    width: 92%;
+    margin-left: .5em;
+    margin-top: 1em;
+  }
+
+  .input-range__slider {
+    background: $green-color;
+    border: 1px solid $green-color;
+    width: .7em;
+    height: .7em;
+    top: 70%;
+    margin-top: -0.5rem;
+  }
+  .input-range__track--active {
+    background: $green-color;
+  }
+  .input-range__label--value {
+    color: $green-color;
+  }
+
+  .input-range__label--min, .input-range__label--max {
+    display: none
+  }
+}

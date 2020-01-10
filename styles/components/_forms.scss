@@ -1,0 +1,227 @@
+/* ==========================================================================
+   FORMS
+==========================================================================*/
+
+.form {
+  max-width: 800px;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &__input-unit {
+    margin-bottom: 1rem;
+    .form-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      .button {
+        font-size: 0.8rem;
+      }
+      .input-group {
+        display: flex;
+        flex-basis: 70%;
+        *~* {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+
+  &__input-unit--half {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+
+    &:first-child {
+      padding-right: 1rem;
+    }
+
+    &:last-child {
+      padding-left: 1rem;
+    }
+  }
+
+  &__label {
+    display: block;
+    font-family: $heading-font-bold;
+    margin-bottom: 0.5em;
+  }
+
+  &__footer button {
+    margin-right: 1rem;
+  }
+
+  &__section {
+    margin-bottom: 2rem;
+  }
+
+  &__image {
+    padding-top: 20px;
+  }
+  fieldset {
+    padding-inline-start: 0;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  textarea {
+    border-radius: $border-radius;
+    border: 1px solid $border-color;
+    font-family: $base-font-family;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0.5em;
+    width: 100%;
+    background: #fff;
+  }
+
+  textarea {
+    resize: none;
+  }
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 2em;
+  label {
+    display: block;
+    margin-bottom: .5em;
+  }
+  @include media(xsmall-only) {
+    float: left;
+    width: 45%;
+    &:first-of-type {
+      margin-right: 5%;
+    }
+  }
+}
+
+legend {
+  margin-bottom: .5em;
+  padding: 0;
+  font-family: $heading-font-bold;
+}
+
+.input--text {
+  padding: .675em;
+  width: 100%;
+  background: #fff;
+  line-height: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  &:hover {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  }
+  &:focus,
+  &:active {
+    outline: rgba(59, 153, 252, 0.25) auto 4px;
+  }
+}
+
+.checkbox {
+  margin-right: 0.7rem;
+}
+.checkbox input[type="checkbox"] {
+    opacity: 0;
+}
+
+.checkbox label {
+    position: relative;
+    display: inline-block;
+    padding-left: 1rem;
+}
+
+.checkbox label::before,
+.checkbox label::after {
+    position: absolute;
+    content: "";
+    display: inline-block;
+}
+
+.checkbox label::before{
+    height: 16px;
+    width: 16px;
+    border: 1px solid $base-font-color;
+    left: -12px;
+    top: 2px;
+}
+
+.checkbox label::after {
+  background-color: $green-color;
+  height: 10px;
+  width: 10px;
+  left: -9px;
+  top: 5px;
+}
+
+.checkbox input[type="checkbox"] + label::after {
+    content: none;
+}
+
+.checkbox input[type="checkbox"]:checked + label::after {
+    content: "";
+}
+
+.checkbox input[type="checkbox"]:focus + label::before {
+    outline: rgba(59, 153, 252, 0.25) auto 4px;
+}
+
+.search {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  background-image: url($appUrlFinal + "static/magnifier-left.svg");
+  opacity: 50%;
+  content: " ";
+  width: 15px;
+  height: 15px;
+  background-size: 15px 15px;
+  top: .75em;
+  right: 5%;
+  @include media(xsmall-only) {
+    right: 2%;
+  }
+}
+
+form.filters {
+  display: flex;
+  flex-direction: column;
+  @include media(small-only) {
+    flex-direction: row;
+    margin-bottom: 1em;
+    flex-wrap: wrap;
+  }
+  fieldset {
+    width: 100%;
+    @include media(small-only) {
+      flex: 1;
+    }
+    &~fieldset {
+      @include media(small-only) {
+        margin-left: .7em;
+      }
+    }
+    &#archived-fieldset {
+      .checkbox {
+        margin-right: -1em;
+      }
+      @include media(small-only) {
+        order: 1;
+        flex-basis: 100%;
+        margin-left: 0;
+      }
+    }
+  }
+  .reset {
+    display: inline-block;
+    cursor: pointer;
+    flex: 100%;
+    order: 2;
+  }
+}
