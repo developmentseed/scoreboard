@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Main
+   ========================================================================== */
+
+/**
+ * Following Necolas' Principles of writing consistent, idiomatic CSS:
+ * https://github.com/necolas/idiomatic-css
+ */
+
+/* Charset */
+
+@charset "UTF-8";
+
+/**
+ * Normalize.css, a modern, HTML5-ready alternative to CSS resets:
+ * http://necolas.github.io/normalize.css/
+ */
+
+@import "vendor/normalize.scss";
+
+/* Libraries
+   ========================================================================== */
+
+/* Vendor
+   ========================================================================== */
+
+@import "vendor/reset.scss";
+@import "vendor/Carousel.css";
+
+/* Settings
+   ========================================================================== */
+@import "settings/functions.scss";
+@import "settings/mixins.scss";
+@import "settings/variables.scss";
+
+/* Core
+   ========================================================================== */
+
+@import "core/base.scss";
+@import "core/typography.scss";
+@import "core/layout.scss";
+
+/* Global
+   ========================================================================== */
+@import "global/global-header.scss";
+@import "global/global-footer.scss";
+@import "global/page-headers.scss";
+@import "global/footer-banner.scss";
+
+/* Components
+   ========================================================================== */
+@import "components/accordian.scss";
+@import "components/cards.scss";
+@import "components/badges.scss";
+@import "components/forms.scss";
+@import "components/filters.scss";
+@import "components/maps.scss";
+@import "components/charts.scss";
+@import "components/tables.scss";
+@import "components/buttons.scss";
+@import "components/tooltips.scss";
+@import "components/alerts.scss";
+@import "components/stats-panel.scss";
+@import "components/loading.scss";
+
+/* Pages
+   ========================================================================== */
+@import "pages/home.scss";
+@import "pages/about.scss";
+@import "pages/countries.scss";
+@import "pages/admin.scss";
+@import "pages/campaigns.scss";
+@import "pages/dashboard.scss";

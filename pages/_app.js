@@ -16,14 +16,7 @@ import { actions } from '../lib/store'
 import { isAdmin } from '../lib/utils/roles'
 
 /* SCSS */
-import '../styles/index.scss'
-import '../styles/App.scss'
-import '../styles/Admin.scss'
-import '../styles/Dashboard.scss'
-import '../styles/Campaigns.scss'
-import '../styles/Users.scss'
-import '../styles/Badges.scss'
-import '../styles/LoadingState.scss'
+import '../styles/main.scss'
 
 /* CSS */
 import 'react-select/dist/react-select.css'
