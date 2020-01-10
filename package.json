@@ -19,7 +19,8 @@
     "clocks": "nf start update_users,tm_clock",
     "docs": "swagger-markdown -i api/docs/api.yml -o api/README.md",
     "lint": "devseed-standard",
-    "lintfix": "devseed-standard --fix"
+    "lintfix": "devseed-standard --fix",
+    "lint:css": "stylelint 'styles/**/**' 'scripts/**/*.js'"
   },
   "devseed-standard": {
     "ignore": [
@@ -150,6 +151,7 @@
     "request-promise-native": "^1.0.5",
     "simple-oauth2": "^2.2.1",
     "style-loader": "^0.23.1",
+    "stylelint": "^12.0.0",
     "swagger-ui-express": "^3.0.10",
     "unistore": "^3.1.0",
     "url-join": "^4.0.0",
@@ -168,6 +170,7 @@
     "devseed-standard": "^1.1.0",
     "docusaurus": "^1.11.1",
     "jest": "^23.6.0",
+    "stylelint-config-recommended": "^3.0.0",
     "supertest": "^3.1.0",
     "swagger-markdown": "^1.1.5"
   }

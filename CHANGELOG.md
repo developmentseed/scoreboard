@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - User extent tiles now provided by s3 and tileserver proxy
 - Osmesa service now reads settings from cache
 
+### Fixed
+- Refactor stylesheets for modular scss best practices, added stylelint
+- Catch undefined headers for sort column title
+
 ## [v1.7.2] - 2019-12-03
 ### Changed
 - Table header link hover color; allows user to more easily distinguish hovered column

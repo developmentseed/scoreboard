@@ -1,0 +1,26 @@
+/* ==========================================================================
+   ABOUT PAGE
+   ========================================================================== */
+
+.about--block {
+  margin-bottom: 4em;
+  p {
+    margin-top: 3em;
+  }
+}
+.img-about1 {
+  max-width: 750px;
+  width: 65%;
+  @include media(small-down) {
+    width: 100%;
+  }
+}
+
+.img-about2 {
+  max-width: 700px;
+  margin-right: 5rem;
+  width: 60%;
+  @include media(small-down) {
+    width: 100%;
+  }
+}

@@ -1,0 +1,25 @@
+/* ==========================================================================
+  TOOLTIPS
+========================================================================== */
+
+.icon-tooltip {
+  margin: 0 0.2rem;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+}
+
+span[data-tip] {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.__react_component_tooltip {
+  font-weight: initial;
+  font-family: $heading-font-regular;
+  text-transform: none;
+  max-width: 18rem;
+  line-height: 1.4;
+  white-space: normal;
+}

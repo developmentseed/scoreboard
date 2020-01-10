@@ -11,7 +11,7 @@ import { LoadingState } from '../../components/common/LoadingState'
 import Link from '../../components/Link'
 import imageList from '../../lib/utils/loadImages'
 import { Carousel } from 'react-responsive-carousel'
-import '../../styles/Carousel.css'
+import '../../styles/vendor/Carousel.css'
 
 import { badgeMetrics, badgeOperationTypes, badgeDateOperationTypes, badgeOperationIndex } from '../../lib/badge-utils'
 

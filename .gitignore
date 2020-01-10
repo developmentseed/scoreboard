@@ -1,5 +1,4 @@
 .DS_Store
-yarn.lock
 package-lock.json
 *.lerna_backup
 .tmp

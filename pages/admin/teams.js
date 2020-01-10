@@ -46,7 +46,7 @@ export class AdminTeams extends Component {
 
     return (
       <div>
-        <h1>All Teams</h1>
+        <h1 className='header--xlarge'>All Teams</h1>
         <div className='widget'>
           <Table tableSchema={
             {
