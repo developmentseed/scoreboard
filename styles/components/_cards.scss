@@ -115,6 +115,8 @@
     color: $light-text-color;
   }
 }
+/* CARDS
+   ===========================================================================*/
 
 .cards-container {
   @include media(small-up) {
@@ -130,9 +132,6 @@
   flex-direction: column;
   @include media(small-up) {
     width: 48%;
-  }
-  &:hover .card .header--small {
-    color: $blue-color;
   }
 }
 
@@ -168,6 +167,11 @@
     p {
       word-break: break-word;
     }
+  }
+  &__description-project {
+    color: $light-text-color;
+    margin-bottom: .7em;
+    display: block;
   }
   .card-stats {
     margin-top: 2em;
@@ -206,8 +210,6 @@
   }
 }
 
-.description--project {
-  color: $light-text-color;
-  margin-bottom: .7em;
-  display: block;
+.card--wrapper:hover .card .header--small {
+  color: $blue-color;
 }

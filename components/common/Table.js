@@ -127,7 +127,7 @@ export default function Table (props) {
                 <th
                   key={column.id}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  title={column.Header.props ? `Sort by ${column.Header.props.children}` : `Sort by ${column.Header}`}
+                  title={!column.Header ? 'Sort column' : (column.Header.props ? `Sort by ${column.Header.props.children}` : `Sort by ${column.Header}`)}
                 >
                   <a
                     className={(column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none') + ' ' + (column.Cell.name === 'formattedNum' ? 'table-align-right' : '')}

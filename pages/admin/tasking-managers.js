@@ -48,7 +48,7 @@ export class AdminTaskers extends Component {
 
     return (
       <div>
-        <h1>List</h1>
+        <h1 className='header--xlarge'>List</h1>
         <div className='widget'>
           <Table tableSchema={
             {

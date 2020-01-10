@@ -83,10 +83,6 @@
   }
 }
 
-.header--page {
-  border-bottom: 3px solid darken($background-color-light, 5%);
-}
-
 .header--homepage {
   margin-top: -2em;
   margin-bottom: 1em;
@@ -124,6 +120,7 @@
 }
 
 .header--page {
+  border-bottom: 3px solid darken($background-color-light, 5%);
   .row {
     display: flex;
     justify-content: space-between;
