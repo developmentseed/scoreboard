@@ -87,20 +87,20 @@ function prepareAllHeaders (table) {
       header.name
     )
   ))
-
   return headerObjects
 }
 
 function prepareColumns (props) {
   const tableSchema = props.tableSchema
   const headerDivs = prepareAllHeaders(tableSchema)
-
   const columnSchemas = toPairs(tableSchema.headers)
+  const footerTotals = (props.totals) ? props.totals : ''
   const columns = columnSchemas.map(([key, columnSchema]) => {
     return {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
-      Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap)
+      Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap),
+      Footer: footerTotals[columnSchema.accessor]
     }
   })
   return columns
@@ -163,6 +163,15 @@ export default function Table (props) {
           )
         }
       </tbody>
+      <tfoot>
+        <tr>
+          {
+            headers.map(column => (
+              <td key={column.id}>{column.Footer}</td>
+            ))
+          }
+        </tr>
+      </tfoot>
     </table>
   )
 }

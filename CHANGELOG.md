@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Right-align table headers and cells with numeric data, excepting first "Rank" column
 
+### Added
+- Added "Total" row for campaign tables, calculating all campaign stat totals
+
 ### Fixed
 - Refactor stylesheets for modular scss best practices, added stylelint
 - Catch undefined headers for sort column title
