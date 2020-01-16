@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Added blank state illustration for users with no edits
+- Added "Total" row for campaign tables, calculating all campaign stat totals
 
 ### Fixed
 - Refactor stylesheets for modular scss best practices, added stylelint
