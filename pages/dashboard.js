@@ -65,7 +65,7 @@ class Dashboard extends Component {
         </div>
       )
     }
-    const { authenticatedUser } = this.props
+    const { authenticatedUser, project } = this.props
     const { loggedIn, account } = authenticatedUser
     const { assignments, favorites, country, allCampaigns } = account
 
@@ -95,7 +95,6 @@ class Dashboard extends Component {
       ],
       osmesaData
     )
-
     // Calculate counts for panel
     const badgeCount =
       account.badges && badges.earnedBadges
@@ -132,6 +131,7 @@ class Dashboard extends Component {
       accountId = authenticatedUser.account.id
     }
     const recordsExport = [{ ...account.records, badgeCount, campaignCount, name }]
+    const userHasCampaigns = (favorites.length > 0 || assignments.length > 0 || campaignCount > 0)
     return (
       <div className='dashboard'>
         <DashboardHeader
@@ -152,57 +152,77 @@ class Dashboard extends Component {
             { label: 'Changesets', value: formatDecimal(changesetCount) }
           ]}
         />
-        <div className='row'>
-          <DashboardBlurb {...osmesaData} />
+        <div id='blurb' className='row'>
+          <DashboardBlurb {...osmesaData} project={project} />
           <div className='widget-33 page-actions'>
-            <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
+            {
+              edit_times > 0
+                ? <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
+                : <></>
+            }
           </div>
         </div>
-        <section className='section--dark'>
-          <div className='row'>
-            {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
-            <DashboardAssignments
-              favorites={favorites}
-              assignments={assignments}
-              authenticatedUser={authenticatedUser}
-              all={allCampaigns}
-            />
-          </div>
-        </section>
-        <section>
-          <div className='row'>
-            <div className='map-lg'>
-              <UserExtentMap uid={uid} extent={extent_uri} />
-            </div>
-          </div>
-        </section>
-        <section>
-          <div className='row'>
-            <div className='widget-container'>
-              <div className='widget-66'>
-                <CampaignsChart
-                  campaigns={allCampaigns}
-                  hashtags={hashtags}
-                  height='260px'
-                />
+        {
+          (userHasCampaigns || isAdmin(authenticatedUser.account.roles))
+            ? <section id='admin&assignments' className='section--dark'>
+              <div className='row'>
+                {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
+                {
+                  (favorites.length > 0 || assignments.length > 0 || campaignCount > 1)
+                    ? <DashboardAssignments
+                      favorites={favorites}
+                      assignments={assignments}
+                      authenticatedUser={authenticatedUser}
+                      all={allCampaigns}
+                    />
+                    : <></>
+                }
               </div>
-              <div className='widget-33'>
-                <EditBreakdownChart {...breakdownChartProps} height='260px' />
-              </div>
-            </div>
-          </div>
-        </section>
-        <section>
-          <div className='row widget-container'>
-            <DashboardSidebar teams={teams} osmesaData={osmesaData} loggedIn={loggedIn} />
-            <div className='widget-75'>
-              <DashboardBadges badges={badges} name={name} />
-            </div>
-          </div>
-          <div className='row'>
-            <CalendarHeatmap times={edit_times} />
-          </div>
-        </section>
+            </section>
+            : <></>
+        }
+        {
+          edit_times > 0
+            ? <>
+              <section id='map'>
+                <div className='row'>
+                  <div className='map-lg'>
+                    <UserExtentMap uid={uid} extent={extent_uri} />
+                  </div>
+                </div>
+              </section>
+              <section id='charts'>
+                <div className='row'>
+                  <div className='widget-container'>
+                    <div className='widget-66'>
+                      <CampaignsChart
+                        campaigns={allCampaigns}
+                        hashtags={hashtags}
+                        height='260px'
+                      />
+                    </div>
+                    <div className='widget-33'>
+                      <EditBreakdownChart {...breakdownChartProps} height='260px' />
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section id='sidebar-badges-heatmap'>
+                <div className='row widget-container'>
+                  <DashboardSidebar teams={teams} osmesaData={osmesaData} loggedIn={loggedIn} />
+                  <div className='widget-75'>
+                    <DashboardBadges badges={badges} name={name} />
+                  </div>
+                </div>
+                <div className='row'>
+                  <CalendarHeatmap times={edit_times} />
+                </div>
+              </section>
+        </>
+            : <section className='row'>
+              <img className='img--blank-state' src='static/dashboard-temp/open_maps.svg' />
+            </section>
+        }
       </div>
     )
   }
