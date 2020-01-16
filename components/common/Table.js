@@ -99,6 +99,7 @@ function prepareColumns (props) {
     return {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
+      disableSortBy: (key === 'button'),
       Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap),
       Footer: footerTotals[columnSchema.accessor]
     }
@@ -123,11 +124,11 @@ export default function Table (props) {
         <tr>
           {
             headers.map(column =>
-              sortable ? (
+              column.canSort ? (
                 <th
                   key={column.id}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  title={!column.Header ? 'Sort column' : (column.Header.props ? `Sort by ${column.Header.props.children}` : `Sort by ${column.Header}`)}
+                  title={column.Header.props ? `Sort by ${column.Header.props.children}` : `Sort by ${column.Header}`}
                 >
                   <a
                     className={(column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none') + ' ' + (column.Cell.name === 'formattedNum' ? 'table-align-right' : '')}
