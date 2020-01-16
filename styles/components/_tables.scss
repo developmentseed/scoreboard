@@ -15,7 +15,7 @@ table {
     font-family: $tertiary-font-family;
     text-transform: uppercase;
     color: $base-header-color;
-    padding: 0.8rem 0.15rem;
+    padding: 0.8rem 0.5rem;
     vertical-align: middle;
     position: relative;
     line-height: 1.25;
@@ -101,7 +101,7 @@ table {
     }
   }
   td {
-    padding: 0.8rem 0.15rem;
+    padding: 0.8rem 0.5rem;
     margin: 0;
   }
 }
@@ -152,4 +152,13 @@ table {
       border-bottom: 1px solid $blue-color;
     }
   }
+}
+
+tr td:not(:first-child).table-align-right {
+  text-align: right;
+}
+
+th a[class^='sort'].table-align-right,
+span[data-tip].table-align-right:not(first-of-type) {
+  justify-content: flex-end;
 }
