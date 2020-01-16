@@ -130,14 +130,6 @@ class Dashboard extends Component {
       name = osmUser['@']['display_name']
       accountId = authenticatedUser.account.id
     }
-    const imgBlankState = {
-      position: 'relative',
-      maxWidth: '40%',
-      marginTop: '-12%',
-      marginLeft: '30%',
-      zIndex: '-24',
-      opacity: '.5'
-    }
     const recordsExport = [{ ...account.records, badgeCount, campaignCount, name }]
     const userHasCampaigns = (favorites.length > 0 || assignments.length > 0 || campaignCount > 0)
     return (
@@ -228,7 +220,7 @@ class Dashboard extends Component {
               </section>
         </>
             : <section className='row'>
-              <img className='img--blank-state' style={imgBlankState} src='static/dashboard-temp/open_maps.svg' />
+              <img className='img--blank-state' src='static/dashboard-temp/open_maps.svg' />
             </section>
         }
       </div>

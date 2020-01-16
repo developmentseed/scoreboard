@@ -120,3 +120,12 @@
     }
   }
 }
+
+.img--blank-state {
+  position: relative;
+  max-width: 40%;
+  margin-top: -12%;
+  margin-left: 30%;
+  z-index: -24;
+  opacity: .5;
+}
