@@ -12,9 +12,9 @@ const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async t => {
-  app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
+  app = await app()
 })
 
 test.after.always(async t => {

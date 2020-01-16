@@ -6,14 +6,12 @@ const path = require('path')
 
 const osmesa = require('../../src/services/osmesa')
 const db = require('../../src/db/connection')
-let app = require('../../src/index')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async t => {
-  app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
 })
