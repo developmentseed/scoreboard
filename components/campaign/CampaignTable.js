@@ -2,6 +2,7 @@ import React from 'react'
 import { sortBy, prop } from 'ramda'
 import CSVExport from '../../components/CSVExport'
 import Table from '../common/Table'
+import { formatDecimal } from '../../lib/utils/format'
 
 const tableSchema = {
   'headers': {
@@ -54,17 +55,30 @@ export default function CampaignTable (props) {
       km_waterways_add_mod: user.km_waterways_add + user.km_waterways_mod
     }))
 
-  const campaignTotals = {
-    name: 'Total',
-    km_roads_add_mod: campaignTopStats.map(user => user.km_roads_add_mod).reduce((prev, cur) => prev + cur),
-    buildings_add_mod: campaignTopStats.map(user => user.buildings_add_mod).reduce((prev, cur) => prev + cur),
-    poi_add_mod: campaignTopStats.map(user => user.poi_add_mod).reduce((prev, cur) => prev + cur),
-    km_railways_add_mod: campaignTopStats.map(user => user.km_railways_add_mod).reduce((prev, cur) => prev + cur),
-    km_coastlines_add_mod: campaignTopStats.map(user => user.km_coastlines_add_mod).reduce((prev, cur) => prev + cur),
-    km_waterways_add_mod: campaignTopStats.map(user => user.km_waterways_add_mod).reduce((prev, cur) => prev + cur),
-    changeset_count: campaignTopStats.map(user => parseInt(user.changeset_count)).reduce((prev, cur) => prev + cur),
-    edit_count: campaignTopStats.map(user => parseInt(user.edit_count)).reduce((prev, cur) => prev + cur)
-  }
+  // Construct footer for the campaign table
+  let campaignTotals = {}
+
+  let keys = [
+    'km_roads_add_mod',
+    'buildings_add_mod',
+    'poi_add_mod',
+    'km_railways_add_mod',
+    'km_coastlines_add_mod',
+    'km_waterways_add_mod',
+    'changeset_count',
+    'edit_count'
+  ]
+
+  keys.forEach(k => {
+    campaignTotals[k] = formatDecimal(
+      campaignTopStats
+        .map(row => Number(row[k]))
+        .reduce((prev, cur) => prev + cur)
+    )
+  })
+
+  // Add name column
+  campaignTotals['name'] = 'Total'
 
   return (
     <div className='widget clearfix table-wrapper'>
