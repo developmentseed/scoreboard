@@ -64,8 +64,8 @@ section {
 }
 
 .section--dark {
-  border: 1rem solid $background-color-dark;
-  padding-bottom: 5em;
+  background: rgba($background-color-dark, 0.125);
+  padding-bottom: 2em;
 }
 
 .sidebar {

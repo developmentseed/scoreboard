@@ -42,6 +42,9 @@
   .block--campaign p {
     min-height: 20px;
   }
+  .width--shortened {
+    text-align: center;
+  }
   @include media(small-down) {
     section {
       &:first-of-type {
@@ -116,4 +119,13 @@
       color: $base-color
     }
   }
+}
+
+.img--blank-state {
+  position: relative;
+  max-width: 40%;
+  margin-top: -12%;
+  margin-left: 30%;
+  z-index: -24;
+  opacity: .5;
 }

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Right-align table headers and cells with numeric data, excepting first "Rank" column
 
 ### Added
+- Added blank state illustration for users with no edits
 - Added "Total" row for campaign tables, calculating all campaign stat totals
 
 ### Fixed
