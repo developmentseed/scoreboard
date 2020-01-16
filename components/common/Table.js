@@ -167,7 +167,7 @@ export default function Table (props) {
         <tr>
           {
             headers.map(column => (
-              <td key={column.id}>{column.Footer}</td>
+              <td key={column.id} className={'table-align-right'}>{column.Footer}</td>
             ))
           }
         </tr>
