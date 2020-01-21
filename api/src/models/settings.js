@@ -6,14 +6,14 @@ let encrypt = cryptr.encrypt.bind(cryptr)
 let decrypt = cryptr.decrypt.bind(cryptr)
 
 // When testing, do not encrypt or decrypt settings
+//
 if (process.env.NODE_ENV === 'test') {
   encrypt = decrypt = identity
 }
 
 async function get (key) {
-  return db('settings').where('setting', key).then(
-    ({ value }) => decrypt(value)
-  )
+  let [{ value }] = await db('settings').where('setting', key).select()
+  return decrypt(value)
 }
 
 async function put (key, value) {
