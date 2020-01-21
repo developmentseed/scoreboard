@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Changed
+- Update node version to 12.14LTS
 - Right-align table headers and cells with numeric data, excepting first "Rank" column
 
 ### Added
