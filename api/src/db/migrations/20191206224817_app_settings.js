@@ -3,7 +3,7 @@ exports.up = async function (knex) {
   try {
     await knex.schema.createTable('settings', t => {
       t.string('setting').primary()
-      t.string('value')
+      t.text('value')
     })
   } catch (e) {
     console.error(e)

@@ -1,5 +1,5 @@
-const db = require('../db/connection')
 const { cache } = require('../config')
+const dbSettings = require('../models/settings')
 const { validateRole } = require('../utils/roles')
 
 /**
@@ -16,17 +16,17 @@ async function get (req, res) {
 
     // Get data from the cache first
     let settingsMap = {}
-    let data = JSON.parse(cache.exportJson())
-    if (Object.keys(data).length === 0) {
-      const settings = await db('settings').select() || []
+    const keys = cache.keys()
+    if (keys.length === 0) {
+      const settings = await dbSettings.list()
       if (settings.length) {
         settingsMap = Object.assign(
           ...settings.map(({ setting, value }) => ({ [setting]: value }))
         )
       }
     } else {
-      Object.keys(data).map(key => {
-        settingsMap[key] = data[key].value
+      keys.map(key => {
+        settingsMap[key] = cache.get(key)
       })
     }
 
@@ -51,12 +51,7 @@ async function put (req, res) {
 
     const promises = Object.keys(body).map(async key => {
       cache.put(key, body[key])
-      let keys = await db('settings').where('setting', key)
-      if (keys.length) {
-        return db('settings').where('setting', key).update({ value: body[key] }).debug()
-      } else {
-        return db('settings').insert({ setting: key, value: body[key] })
-      }
+      dbSettings.put(key, body[key])
     })
 
     await Promise.all(promises)

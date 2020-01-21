@@ -65,7 +65,6 @@ export class AdminSettings extends Component {
   }
 
   async handleSubmit (data) {
-    console.log(data)
     try {
       await this.props.updateSettings(data)
     } catch (e) {

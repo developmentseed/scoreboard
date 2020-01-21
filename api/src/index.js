@@ -18,6 +18,7 @@ const router = require('./routes')
 
 const app = express()
 const db = require('./db/connection')
+const dbSettings = require('./models/settings')
 
 const { SESSION_SECRET, NODE_ENV, cache } = require('./config')
 const { passport, authRouter } = require('./passport')
@@ -78,7 +79,7 @@ app.get('/favicon.ico', (req, res) => res.status(200).sendFile('favicon.ico', { 
 
 module.exports = async function () {
   // load the cache
-  const settings = await db('settings').select() || []
+  const settings = await dbSettings.list()
   settings.forEach(({ setting, value }) => {
     cache.put(setting, value)
   })
