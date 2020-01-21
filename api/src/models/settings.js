@@ -1,15 +1,8 @@
 const db = require('../db/connection')
 const { cryptr } = require('../config')
-const { identity } = require('ramda')
 
 let encrypt = cryptr.encrypt.bind(cryptr)
 let decrypt = cryptr.decrypt.bind(cryptr)
-
-// When testing, do not encrypt or decrypt settings
-//
-if (process.env.NODE_ENV === 'test') {
-  encrypt = decrypt = identity
-}
 
 async function get (key) {
   let [{ value }] = await db('settings').where('setting', key).select()
