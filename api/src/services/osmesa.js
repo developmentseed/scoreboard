@@ -93,10 +93,11 @@ class OSMesaDBWrapper {
   }
 
   tiles (prefix, z, x, y) {
-    const s3bucket = cache.get('osmesa-s3-prefix')
+    const s3bucket = cache.get('osmesa-s3-bucket')
+    const s3prefix = cache.get('osmesa-s3-prefix')
     if (this.s3bucket !== s3bucket) {
-      const accessKeyId = cache.get('osmesa-api-key')
-      const secretAccessKey = cache.get('osmesa-api-secret')
+      const accessKeyId = cache.get('osmesa-s3-key')
+      const secretAccessKey = cache.get('osmesa-s3-secret')
       this.s3bucket = s3bucket
       this.s3client = new AWS.S3({
         accessKeyId,
@@ -107,7 +108,7 @@ class OSMesaDBWrapper {
       })
     }
     return this.s3client.getObject({
-      Key: `${prefix}/${z}/${x}/${y}.mvt`
+      Key: `${s3prefix}/${prefix}/${z}/${x}/${y}.mvt`
     }).createReadStream()
   }
 

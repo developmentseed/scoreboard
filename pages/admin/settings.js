@@ -20,16 +20,20 @@ function OSMesaSettings (props) {
         <input type='text' name='osmesa-db' defaultValue={props.settings['osmesa-db']} ref={register} />
       </div>
       <div className='form__input-unit'>
+        <label className='form__label' htmlFor='setting-osmesa-s3-bucket'>OSMesa Tile S3 Bucket</label>
+        <input type='text' name='osmesa-s3-bucket' defaultValue={props.settings['osmesa-s3-bucket']} ref={register} />
+      </div>
+      <div className='form__input-unit'>
         <label className='form__label' htmlFor='setting-osmesa-s3-prefix'>OSMesa Tile S3 Prefix</label>
         <input type='text' name='osmesa-s3-prefix' defaultValue={props.settings['osmesa-s3-prefix']} ref={register} />
       </div>
       <div className='form__input-unit'>
-        <label className='form__label' htmlFor='setting-osmesa-api-key'>OSMesa S3 AWS API key</label>
-        <input type='text' name='osmesa-api-key' defaultValue={props.settings['osmesa-api-key']} ref={register} />
+        <label className='form__label' htmlFor='setting-osmesa-s3-key'>OSMesa S3 AWS key</label>
+        <input type='text' name='osmesa-s3-key' defaultValue={props.settings['osmesa-s3-key']} ref={register} />
       </div>
       <div className='form__input-unit'>
-        <label className='form__label' htmlFor='setting-osmesa-db'>OSMesa S3 AWS API secret</label>
-        <input type='text' name='osmesa-api-secret' defaultValue={props.settings['osmesa-api-secret']} ref={register} />
+        <label className='form__label' htmlFor='setting-osmesa-s3-secret'>OSMesa S3 AWS secret</label>
+        <input type='text' name='osmesa-s3-secret' defaultValue={props.settings['osmesa-s3-secret']} ref={register} />
       </div>
 
       <input type='submit' className='button' value='submit' />
@@ -46,8 +50,8 @@ export class AdminSettings extends Component {
       settings: {
         'osmesa-db': '',
         'osmesa-s3-prefix': '',
-        'osmesa-api-key': '',
-        'osmesa-api-secret': ''
+        'osmesa-s3-key': '',
+        'osmesa-s3-secret': ''
       }
     }
     this.handleSubmit = this.handleSubmit.bind(this)
