@@ -116,7 +116,8 @@ export class AdminSettings extends Component {
             </div>
             <div className='widget-75'>
               <div>
-                <h1>OSMesa Settings</h1>
+                <h1 className='header--xlarge'>OSMesa Settings</h1>
+                <p>Scoreboard statistics are powered by <a href='https://github.com/azavea/osmesa'>OSMesa</a>. Only change these settings if you are operating Scoreboard with a custom instance of OSMesa.</p>
               </div>
               <div>
                 <OSMesaSettings handleSubmit={this.handleSubmit} settings={this.state.settings} />
