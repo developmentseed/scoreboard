@@ -19,7 +19,7 @@ Engaging and encouraging mappers of OpenStreetMap by rewarding contributions, pr
 # 🔨 Development
 
 ## Dependencies
-- Node 8.4
+- Node 12.14.x
 - Postgres 9.5+
 - Yarn
 - Docker (for development work)
