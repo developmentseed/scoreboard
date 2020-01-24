@@ -2,7 +2,9 @@ const db = require('./db/connection')
 const { TM } = require('./services/tm')
 const bbox = require('@turf/bbox').default
 const bboxPolygon = require('@turf/bbox-polygon').default
+const dbSettings = require('./models/settings')
 const { featureCollection } = require('@turf/helpers')
+const { cache } = require('./config')
 
 /**
  * Worker runs in a clock process and updates the cache
@@ -50,7 +52,13 @@ async function tmWorker (isCmd) {
 
 // Run
 if (require.main === module) {
-  tmWorker(true)
+  dbSettings.list().then(settings =>
+    // load the cache
+    settings.forEach(({ setting, value }) => {
+      cache.put(setting, value)
+    })
+  )
+    .then(() => tmWorker(true))
     .then(() => {
       console.log(`Updated task records.`)
       process.exit(0)
