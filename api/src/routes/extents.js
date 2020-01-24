@@ -9,7 +9,7 @@ async function userExtent (req, res) {
   const p = req.params
   res.set('Content-Type', 'application/vnd.mapbox-vector-tile')
   res.set('Content-Encoding', 'gzip')
-  osmesa.tiles(`user/${req.user}`, p.z, p.x, p.y)
+  osmesa.tiles(`user/${p.user}`, p.z, p.x, p.y)
     .on('error', (err) => {
       if (err.code === 'NoSuchKey') {
         res.boom.notFound()
