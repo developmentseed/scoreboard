@@ -5,13 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
 ### Changed
 - Update node version to 12.14LTS
 - Right-align table headers and cells with numeric data, excepting first "Rank" column
 
 ### Added
+- Settings Admin Page
+- Memory cache for settings
 - Added blank state illustration for users with no edits
 - Added "Total" row for campaign tables, calculating all campaign stat totals
+
+### Changed 
+- User extent tiles now provided by s3 and tileserver proxy
+- Osmesa service now reads settings from cache
+- Right-align table headers and cells with numeric data, excepting first "Rank" column
 
 ### Fixed
 - Refactor stylesheets for modular scss best practices, added stylelint

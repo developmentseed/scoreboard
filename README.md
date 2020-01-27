@@ -41,13 +41,9 @@ Scoreboard depends on three external services/APIs for statistics and functional
 
 There should be an env file in the root project directory with the following environment variables.
 
-For development simply run: `cp .env.sample .env`. In development, the Osmesa service is mocked, so the environment variables `OSMESA_API` is not required.
-
 | name | description
 | ---  | -----
 | NODE_ENV | The configuration to use, "test", "development" or "production"
-| OSMESA_API | URL to the OSMESA http server that serves out tiles
-| OSMESA_DB | URL to the OSMESA DB that serves out statistics 
 | APP_URL | URL where the site will be hosted
 | OSM_CONSUMER_KEY | An Oauth Key/Secret pair to authenticate with OSM
 | OSM_CONSUMER_SECRET | An Oauth Key/Secret pair to authenticate with OSM

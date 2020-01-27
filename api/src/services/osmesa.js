@@ -1,11 +1,9 @@
-const rp = require('request-promise-native')
-const fs = require('fs')
-const path = require('path')
 const knex = require('knex')
+const AWS = require('aws-sdk')
+
 const { find, propEq, reduce, assoc } = require('ramda')
 
-const { OSMESA_API, OSMESA_DB } = require('../config')
-const { generateOSMesaUser, generateOSMesaStatus } = require('../db/seeds/utils')
+const { cache } = require('../config')
 
 const osmesaUserObj = {
   uid: -1,
@@ -52,10 +50,13 @@ module.exports.osmesaUserObj = osmesaUserObj
 
 class OSMesaDBWrapper {
   constructor () {
-    this.db = knex({
-      client: 'pg',
-      connection: OSMESA_DB
-    })
+    // connection the odmesa db
+    this.dbUrl = null
+    this.dbConn = knex({ client: 'pg', connection: this.dbUrl })
+
+    // connection to s3
+    this.s3bucket = null
+    this.s3client = null
 
     this.editTypes = [
       ['added', 'add'],
@@ -77,6 +78,38 @@ class OSMesaDBWrapper {
       ['coastline', 'coastlines'],
       ['railline', 'railways']
     ]
+  }
+
+  db (tableName) {
+    const dbUrl = cache.get('osmesa-db')
+    if (dbUrl !== this.dbUrl) {
+      this.dbUrl = dbUrl
+      this.dbConn = knex({
+        client: 'pg',
+        connection: this.dbUrl
+      })
+    }
+    return this.dbConn(tableName)
+  }
+
+  tiles (prefix, z, x, y) {
+    const s3bucket = cache.get('osmesa-s3-bucket')
+    const s3prefix = cache.get('osmesa-s3-prefix')
+    if (this.s3bucket !== s3bucket) {
+      const accessKeyId = cache.get('osmesa-s3-key')
+      const secretAccessKey = cache.get('osmesa-s3-secret')
+      this.s3bucket = s3bucket
+      this.s3client = new AWS.S3({
+        accessKeyId,
+        secretAccessKey,
+        params: {
+          Bucket: s3bucket
+        }
+      })
+    }
+    return this.s3client.getObject({
+      Key: `${s3prefix}/${prefix}/${z}/${x}/${y}.mvt`
+    }).createReadStream()
   }
 
   // turns the new schema into the old schema for objects like user_edits
@@ -258,73 +291,4 @@ class OSMesaDBWrapper {
   }
 }
 
-/**
- * Methods to grab data from OSMesa stat server
- */
-class OSMesaAPI {
-  /* Get a user by id from the OSMesa API
-   *
-   * @param {string} id - User ID
-   * @returns {Promise} response
-   */
-  getUser (id) {
-    return rp(`${OSMESA_API}/users/${id}`)
-  }
-
-  getCampaign (id) {
-    return rp(`${OSMESA_API}/campaigns/${id}`)
-  }
-
-  getCountry (code) {
-    return rp(`${OSMESA_API}/country-stats/${code}`)
-  }
-
-  getUpdates () {
-    return rp(`${OSMESA_API}/status`)
-  }
-}
-
-class FakeOSMesaAPI {
-  getUser (id) {
-    const sampleuser = generateOSMesaUser(id, `test${(id - 100000000)}`)
-    return Promise.resolve(JSON.stringify(sampleuser))
-  }
-
-  getCampaign (id) {
-    // to check the notfound page we fake a 404 response
-    if (id === 'notfound') {
-      return Promise.reject(new Error('not found'))
-    }
-    const samplecampaign = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecampaign.json'), 'utf-8'))
-    for (let i = 0; i < 10; i++) {
-      let user = generateOSMesaUser(100000000 + i, `test${i}`)
-      user['edits'] = user['changeset_count']
-      samplecampaign.users.push(user)
-    }
-    samplecampaign.tag = `project-${id}`
-    return Promise.resolve(JSON.stringify(samplecampaign))
-  }
-
-  getCountry (code) {
-    // to check the notfound page we fake a 404 response
-    if (code === 'notfound') {
-      return Promise.reject(new Error('not found'))
-    }
-    const samplecountry = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'samplecountry.json'), 'utf-8'))
-    samplecountry.tag = `${code}`
-    return Promise.resolve(JSON.stringify(samplecountry))
-  }
-
-  getUpdates () {
-    const status = generateOSMesaStatus()
-    return Promise.resolve(JSON.stringify(status))
-  }
-}
-
-if (OSMESA_DB) {
-  module.exports = new OSMesaDBWrapper()
-} else if (!OSMESA_API) {
-  module.exports = new FakeOSMesaAPI()
-} else {
-  module.exports = new OSMesaAPI()
-}
+module.exports = new OSMesaDBWrapper()
