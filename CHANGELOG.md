@@ -6,10 +6,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Changed
-- Update node version to 12.14LTS
-- Right-align table headers and cells with numeric data, excepting first "Rank" column
-
 ### Added
 - Settings Admin Page
 - Memory cache for settings
@@ -20,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - User extent tiles now provided by s3 and tileserver proxy
 - Osmesa service now reads settings from cache
 - Right-align table headers and cells with numeric data, excepting first "Rank" column
+- Update node version to 12.14LTS
 
 ### Fixed
 - Refactor stylesheets for modular scss best practices, added stylelint
