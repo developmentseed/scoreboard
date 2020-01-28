@@ -85,7 +85,7 @@ export default function CampaignTable (props) {
       <Table idMap={idMap} tableSchema={tableSchema} data={campaignTopStats} totals={campaignTotals} initialSortColumn='edit_count' />
       <div>
         <p><em>* All roads, railways, coastlines and waterways represent Km added and modified</em></p>
-        <CSVExport filename={props.name} data={campaignTopStats} />
+        <CSVExport filename={`${props.name}.csv`} data={campaignTopStats} />
       </div>
     </div>
   )
