@@ -104,6 +104,18 @@ Make your user an admin by running:
 
 If you were already logged in, log out and log back in, then you'll see an "admin" link in the menu in the top right.
 
+### Add some edits to your user
+
+It could be useful to give some edits to your user in development.
+
+You can run:
+
+```
+./api/bin/scoreboard create-edits --osm-id {your osm id}
+```
+
+This will select some random changesets from the OSMesa edits and assign them to your osm id
+
 ## Serve
 
 This command will start both the frontend and the api together
