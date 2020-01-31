@@ -43,7 +43,7 @@ async function command (args, flags) {
 
     const insertPromises = newChangesets.map(c =>
       osmesaDB('changesets').where('id', c.id).update(c).returning('id'))
-    const ids = await Promise.all(insertPromises)
+    await Promise.all(insertPromises)
     await osmesaDB.destroy()
     process.exit()
   } catch (e) {
