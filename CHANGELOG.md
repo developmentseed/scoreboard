@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [v1.7.1] - 2020-02-03
+
 ### Added
 - Settings Admin Page
 - Memory cache for settings
@@ -282,7 +284,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.8.0...HEAD
+[v1.8.0]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...1.8.0
 [v1.7.2]: https://github.com/developmentseed/scoreboard/compare/v1.7.1...v1.7.2
 [v1.7.1]: https://github.com/developmentseed/scoreboard/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/developmentseed/scoreboard/compare/v1.6.0...v1.7.0
