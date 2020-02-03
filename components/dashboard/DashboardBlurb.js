@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from '../../components/Link'
 import { formatDecimal, formatKm } from '../../lib/utils/format'
 import { compareAsc, getYear } from 'date-fns'
 import { head } from 'ramda'
@@ -33,7 +34,7 @@ export default function Blurb ({
     countryWord = 'country'
   }
   if (isNaN(firstYearEdited)) {
-    return <h2 className='header--small width--shortened list--block'>{(username) ? `${username} has` : 'You have'} not made any mapping edits in {project} yet. Explore <a href='/campaigns'>active campaigns</a> to get started!</h2>
+    return <h2 className='header--small width--shortened list--block'>{(username) ? `${username} has` : 'You have'} not made any mapping edits in {project} yet. Explore <Link href='/campaigns'>active campaigns</Link> to get started!</h2>
   } else {
     return <h2 className='header--small width--shortened list--block'>
       Since <mark>{firstYearEdited}</mark>, {sentence} <mark>{formatKm(km_roads_add + km_roads_mod)}</mark> of roads, <mark>{formatDecimal(buildings_add + buildings_mod)}</mark> buildings, <mark>{formatDecimal(poi_add + poi_mod)}</mark> Points of Interest, <mark>{formatKm(km_railways_add + km_railways_mod)}</mark> of railways, <mark>{formatKm(km_coastlines_add + km_coastlines_mod)}</mark> of coastlines, and <mark>{formatKm(km_waterways_add + km_waterways_mod)}</mark> of waterways in <mark>{country_list.length}</mark> <mark>{countryWord}</mark>.
