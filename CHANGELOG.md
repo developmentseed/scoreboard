@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Settings Admin Page
 - Memory cache for settings
 - Added blank state illustration for users with no edits
-- Added "Total" row for campaign tables, calculating all campaign stat totals
 - Add CLI tool to allow user to assign random edits to their user for development
+- Added "Total" row for campaign tables and campaign CSV export which calculates all stat totals 
 
 ### Changed 
 - User extent tiles now provided by s3 and tileserver proxy
