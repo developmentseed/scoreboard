@@ -130,7 +130,7 @@ class Dashboard extends Component {
       accountId = authenticatedUser.account.id
     }
     const recordsExport = [{ ...account.records, badgeCount, campaignCount, name }]
-    const userHasEdits = edit_times > 0
+    const userHasEdits = edit_times.length > 0
     const userHasCampaigns = (favorites.length > 0 || assignments.length > 0 || campaignCount > 0)
     return (
       <div className='dashboard'>
