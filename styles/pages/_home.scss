@@ -1,0 +1,73 @@
+/* ==========================================================================
+   HOME PAGE
+   ========================================================================== */
+
+.home>section:last-of-type .link--large {
+  display: inline-block;
+  margin-top: 2.5em;
+}
+
+.header--homepage {
+  .num--large {
+    font-size: 4.25rem;
+    line-height: 54px;
+    font-family: $heading-font-bold;
+    @include media(small-down) {
+      font-size: 3.5rem;
+      line-height: 48px;
+    }
+  }
+  .list--block {
+    margin-top: 1rem;
+  }
+}
+
+.home .card--wrapper {
+  width: 100%;
+  @include media(medium-up) {
+    width: 48%;
+  }
+}
+
+.users--country {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  @include media(medium-up) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .list--block--sm {
+    flex: 1;
+    &:first-of-type {
+      a {
+        color: darken($blue-purple-color, 25%);
+      }
+    }
+    &:nth-of-type(2) {
+      a {
+        color: darken($blue-purple-color, 15%);
+      }
+    }
+    &:nth-of-type(3) {
+      a {
+        color: $blue-purple-color;
+      }
+    }
+    &:nth-of-type(4) {
+      a {
+        color: lighten($blue-purple-color, 10%);
+      }
+    }
+    &:nth-of-type(5) {
+      a {
+        color: lighten($blue-purple-color, 18%);
+      }
+    }
+  }
+  .num--large {
+    @include media(small-down) {
+      font-size: 4vw;
+    }
+  }
+}

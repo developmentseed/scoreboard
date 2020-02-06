@@ -16,14 +16,7 @@ import { actions } from '../lib/store'
 import { isAdmin } from '../lib/utils/roles'
 
 /* SCSS */
-import '../styles/index.scss'
-import '../styles/App.scss'
-import '../styles/Admin.scss'
-import '../styles/Dashboard.scss'
-import '../styles/Campaigns.scss'
-import '../styles/Users.scss'
-import '../styles/Badges.scss'
-import '../styles/LoadingState.scss'
+import '../styles/main.scss'
 
 /* CSS */
 import 'react-select/dist/react-select.css'
@@ -194,7 +187,7 @@ class Layout extends React.Component {
                           <ul>
                             <li><Link href='/dashboard'><a>Dashboard</a></Link></li>
                             <li><Link href={`/users/${osm.id}`}><a>Public Profile</a></Link></li>
-                            <li><Link href={`/edit-user?id=${osm.id}`} as={join(APP_URL_PREFIX, `/users/${osm.id}/edit`)}><a>Edit Profile</a></Link></li>
+                            <li><Link href={`/edit-user?id=${osm.id}`} as={`/users/${osm.id}/edit`}><a>Edit Profile</a></Link></li>
                             {
                               account.roles && isAdmin(account.roles) && (
                                 <li><Link href={`/admin`}><a>Admin</a></Link></li>

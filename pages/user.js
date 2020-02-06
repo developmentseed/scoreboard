@@ -6,6 +6,7 @@ import CampaignsChart from '../components/charts/CampaignsChart'
 import DashboardBadges from '../components/dashboard/DashboardBadges'
 import DashboardSidebar from '../components/dashboard/DashboardSidebar'
 import DashboardBlurb from '../components/dashboard/DashboardBlurb'
+import { LoadingState } from '../components/common/LoadingState'
 
 import { formatDecimal } from '../lib/utils/format'
 import { actions } from '../lib/store'
@@ -28,12 +29,32 @@ const CalendarHeatmap = dynamic(
 )
 
 export class User extends Component {
+  constructor () {
+    super()
+    this.state = {
+      loading: true
+    }
+  }
+
   componentDidMount () {
     this.props.getUser(this.props.id)
   }
 
+  componentDidUpdate () {
+    if (this.state.loading && (this.props.user)) {
+      this.setState({ loading: false })
+    }
+  }
+
   render () {
-    if (!this.props.user) return <div />
+    if (this.state.loading) {
+      return (
+        <div>
+          <header className='header--internal--green header--page' style={{ paddingBottom: '8rem' }} />
+          <LoadingState />
+        </div>
+      )
+    }
     const {
       records,
       country,
@@ -69,6 +90,7 @@ export class User extends Component {
       ],
       records
     )
+    const userHasEdits = records.edit_count > 0
     const recordsExport = [{ ...records, badgeCount, campaignCount }]
     return (
       <div className='dashboard'>
@@ -84,50 +106,66 @@ export class User extends Component {
           facets={[
             { label: 'Campaigns', value: formatDecimal(campaignCount) },
             { label: 'Badges', value: formatDecimal(badgeCount) },
-            { label: 'Edits', value: formatDecimal(records.edit_sum) },
+            { label: 'Edits', value: formatDecimal(records.edit_count) },
             { label: 'Changesets', value: formatDecimal(records.changeset_count) }
           ]}
         />
         <div className='row'>
           <DashboardBlurb {...records} username={name} />
           <div className='widget-33 page-actions'>
-            <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
+            {userHasEdits &&
+              <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
+            }
           </div>
         </div>
-        <section>
-          <div className='row'>
-            <div className='map-lg'>
-              <UserExtentMap uid={uid} extent={extent_uri} />
-            </div>
-          </div>
-        </section>
-        <section>
-          <div className='row'>
-            <div className='widget-container'>
-              <div className='widget-66'>
-                <CampaignsChart
-                  hashtags={hashtags}
-                  height='260px'
-                />
-              </div>
-              <div className='widget-33'>
-                <EditBreakdownChart {...breakdownChartProps} height='260px' />
-              </div>
-            </div>
-          </div>
-        </section>
-        <section>
-          <div className='row widget-container'>
-            <DashboardSidebar teams={teams} osmesaData={records} />
-            <div className='widget-75'>
-              <DashboardBadges name={name} badges={badges} />
-            </div>
-          </div>
-          <div className='row'>
-            <CalendarHeatmap times={edit_times} />
-          </div>
-        </section>
+        {
+          userHasEdits
+            ? <>
+              <section id='user_map'>
+                <div className='row'>
+                  <div className='map-lg'>
+                    <UserExtentMap uid={uid} extent={extent_uri} />
+                  </div>
+                </div>
+              </section>
+              <section id='user_charts'>
+                <div className='row'>
+                  <div className='widget-container'>
+                    <div className='widget-66'>
+                      <CampaignsChart
+                        hashtags={hashtags}
+                        height='260px'
+                      />
+                    </div>
+                    <div className='widget-33'>
+                      <EditBreakdownChart {...breakdownChartProps} height='260px' />
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section id='user_sidebar-badges-heatmap'>
+                <div className='row widget-container'>
+                  <DashboardSidebar teams={teams} osmesaData={records} />
+                  <div className='widget-75'>
+                    <DashboardBadges name={name} badges={badges} />
+                  </div>
+                </div>
+                <div className='row'>
+                  <CalendarHeatmap times={edit_times} />
+                </div>
+              </section>
+              </>
+            : this.renderBlankState()
+        }
       </div>
+    )
+  }
+
+  renderBlankState () {
+    return (
+      <section className='row'>
+        <img className='img--blank-state' src='../static/dashboard-temp/open_maps.svg' />
+      </section>
     )
   }
 }

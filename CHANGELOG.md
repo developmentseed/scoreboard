@@ -4,8 +4,54 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-
 ## Unreleased
+
+### Added
+- Settings Admin Page
+- Memory cache for settings
+- Added blank state illustration for users with no edits
+- Add CLI tool to allow user to assign random edits to their user for development
+- Added "Total" row for campaign tables and campaign CSV export which calculates all stat totals 
+
+### Changed 
+- User extent tiles now provided by s3 and tileserver proxy
+- Osmesa service now reads settings from cache
+- Right-align table headers and cells with numeric data, excepting first "Rank" column
+- Update node version to 12.14LTS
+
+### Fixed
+- Refactor stylesheets for modular scss best practices, added stylelint
+- Catch undefined headers for sort column title
+
+## [v1.7.2] - 2019-12-03
+### Changed
+- Table header link hover color; allows user to more easily distinguish hovered column
+- Shortened "POI" description to save space
+
+### Fixed
+- Fixed path issue for rendering table icons
+- Guard for null user edit counts
+
+
+## [v1.7.1] - 2019-12-02
+### Fixed
+- Fix pagination bug for users table
+
+## [v1.7.0] - 2019-11-28
+### Added
+- Add country of origin column to campaign tables
+
+### Changed
+- Refactor tables and tableheaders to use a common component configured using a tableSchema
+- Make all tables sortable
+
+### Fixed
+- Removed "You" from public profile sidebars
+- Design fixes: ensured full-height application, aligned country maps, included full height headers and loading states
+- Removed source environment URL join from Edit Profile link in menu
+- Replace `edit_sum` on User pages with the updated `edit_count` from OSMesa
+- Fixes bug in tables when defaults for statistics are not provided by the API
+- Remove redundant tooltips from campaign tables
 
 ## [v1.6.0] - 2019-10-28
 ### Changed
@@ -236,7 +282,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...HEAD
+[v1.7.2]: https://github.com/developmentseed/scoreboard/compare/v1.7.1...v1.7.2
+[v1.7.1]: https://github.com/developmentseed/scoreboard/compare/v1.7.0...v1.7.1
+[v1.7.0]: https://github.com/developmentseed/scoreboard/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/developmentseed/scoreboard/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/developmentseed/scoreboard/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/developmentseed/scoreboard/compare/v1.3.3...v1.4.0

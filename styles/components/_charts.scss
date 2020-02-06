@@ -1,0 +1,99 @@
+/* ==========================================================================
+   CHARTS
+========================================================================== */
+
+.chart {
+  font-family: $tertiary-font-family;
+  .header--small {
+    margin: 0;
+  }
+}
+
+.descriptor-chart {
+  font-family: $tertiary-font-family;
+}
+
+/* Bar Charts
+   ========================================================================== */
+.chart-bar--main {
+  margin-top: auto;
+  li {
+    margin-bottom: .2rem;
+  }
+}
+
+.chart-bar--title {
+  display: inline-block;
+  width: 20%;
+  margin-right: .5rem;
+  font-family: $tertiary-font-family;
+  font-size: .86rem;
+  @include media(small-up) {
+    width: 16%;
+  }
+}
+
+.chart-bar--wrapper {
+  position: relative;
+  display: inline-block;
+  background-color: lighten($light-text-color, 50%);
+  width: 64%;
+  height: 8px;
+  @include media(small-up) {
+    width: 72%;
+  }
+}
+
+.chart-bar {
+  display: inline-block;
+  position: absolute;
+  background-color: $green-color;
+  height: 8px;
+  margin-right: .5rem;
+  max-width: 100%;
+}
+
+.chart-bar--percent {
+  font-family: $tertiary-font-family;
+  color: lighten($green-color, 5%);
+  font-size: .86rem;
+  position: absolute;
+  right: -2rem;
+  top: -.5rem;
+}
+
+/* Pie Charts
+   ========================================================================== */
+.chart-pie--legend {
+  padding: 1em 0 0;
+}
+
+.legend-buildings, .legend-roads, .legend-pois, .legend-waterways {
+  margin-bottom: .3em;
+  &:before {
+    content: " ";
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: rgb(31, 120, 180);
+    margin-right: .5em;
+  }
+}
+
+.legend-roads {
+  &:before {
+    background-color: rgb(178, 223, 138);
+  }
+}
+
+.legend-pois {
+  &:before {
+    background-color: rgb(51, 160, 44);
+  }
+}
+
+.legend-waterways {
+  &:before {
+    background-color: rgb(166, 206, 227);
+  }
+}

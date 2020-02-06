@@ -1,0 +1,131 @@
+/* ==========================================================================
+   DASHBOARD PAGES
+   ========================================================================== */
+
+.header--content--wrapper {
+  margin-right: auto;
+  flex: 1;
+  display: flex;
+  div:not(:first-child) {
+    @include media (medium-up){
+      flex: 1;
+    }
+  }
+  a {
+    color: #FFFFFF;
+  }
+  @include media(small-down) {
+    flex-wrap: wrap;
+  }
+  .section-sub--right {
+    @include media(small-down) {
+      margin-left: 6rem;
+    }
+  }
+}
+
+.profile--thumb {
+  width: 90px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  margin-right: 1em;
+  margin-bottom: .2em;
+  @include media(small-down) {
+    width: 80px;
+  }
+}
+
+.dashboard {
+  .chart-bar--main {
+    margin-bottom: 2em;
+  }
+  .block--campaign p {
+    min-height: 20px;
+  }
+  .width--shortened {
+    text-align: center;
+  }
+  @include media(small-down) {
+    section {
+      &:first-of-type {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+.dashboard .page-actions {
+  margin-bottom: 1rem;
+  flex-flow: column nowrap;
+  @media all and (min-width: 800px) {
+   flex-flow: row;
+   align-items: baseline;
+  }
+  .button {
+    flex: 1;
+    margin: 0;
+    @include media(medium-up) {
+      margin-left: auto;
+      flex: initial;
+    }
+  }
+}
+
+/// Dashboard Tables ///
+.filter-bar {
+  margin-bottom: 20px;
+
+  li {
+    display: inline-block;
+  }
+
+  button {
+    border: none;
+    background-color: transparent;
+    text-transform: uppercase;
+    padding: 0;
+    margin-right: 10px;
+    color: #777;
+    font-size: 14px;
+    font-family: $tertiary-font-family;
+
+    &:hover {
+      cursor: pointer;
+      color: #222;
+      text-decoration: underline;
+    }
+
+    &.active {
+      color: #222;
+      text-decoration: underline;
+    }
+  }
+}
+.assignments-table {
+  max-height: 28rem;
+  overflow-y: scroll;
+}
+.data-not-available {
+  font-family: $heading-font-family;
+  background-color: #efefea;
+  padding: 10px;
+  margin-bottom: 30px;
+}
+
+.dashboard .section--dark {
+  .filter-bar button {
+    &:hover,
+    &.active {
+      color: $base-color
+    }
+  }
+}
+
+.img--blank-state {
+  position: relative;
+  max-width: 40%;
+  margin-top: -12%;
+  margin-left: 30%;
+  z-index: -24;
+  opacity: .5;
+}

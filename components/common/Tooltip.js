@@ -1,13 +1,11 @@
 import React from 'react'
-import InfoIcon from '../../static/circle-information'
 import ReactTooltip from 'react-tooltip'
 
 const Tooltip = props => {
   return (
     <>
-      <span data-tip={props.dataTip}>
+      <span data-tip={props.dataTip} className={'table-tooltip' + ' ' + props.className}>
         {props.children}
-        <InfoIcon className='tooltip' />
       </span>
       <ReactTooltip />
     </>

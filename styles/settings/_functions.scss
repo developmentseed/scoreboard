@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Functions
+   ========================================================================== */
+
+/* Range function
+   ========================================================================== */
+
+/**
+ * Define ranges for various things, like media queries.
+ */
+
+@function lower-bound($range){
+  @if length($range) <= 0 {
+    @return 0;
+  }
+  @return nth($range,1);
+}
+
+@function upper-bound($range) {
+  @if length($range) < 2 {
+    @return 999999999999;
+  }
+  @return nth($range, 2);
+}
+
+/* Generate Random Nuber
+   ========================================================================== */
+
+/**
+* SASS Variable to randomly generate number between 1 and 4 (used to pick header image)
+*/
+
+$nth: random(4);

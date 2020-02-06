@@ -1,8 +1,24 @@
 /**
- * Test the TM service code for different TM adapters
+ * Test the OSMESA service code
  */
-const osmesa = require('../../src/services/osmesa')
 const test = require('ava')
+const path = require('path')
+
+const osmesa = require('../../src/services/osmesa')
+const db = require('../../src/db/connection')
+
+const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
+const migrationsDirectory = path.join(dbDirectory, 'migrations')
+const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
+
+test.before(async t => {
+  await db.migrate.latest({ directory: migrationsDirectory })
+  await db.seed.run({ directory: seedsDirectory })
+})
+
+test.after.always(async t => {
+  await db.destroy()
+})
 
 test.serial('get country', async t => {
   const country = await osmesa.getCountry('AGO')

@@ -1,0 +1,164 @@
+/* ==========================================================================
+   TABLES
+==========================================================================*/
+
+table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  overflow-x: auto;
+  @include media(small-down) {
+    font-size: .86em;
+  }
+  th,
+  tfoot td {
+    font-family: $tertiary-font-family;
+    text-transform: uppercase;
+    color: $base-header-color;
+    padding: 0.8rem 0.5rem;
+    vertical-align: middle;
+    position: relative;
+    line-height: 1.25;
+    white-space: nowrap;
+    @include media(small-up) {
+      &:first-child {
+        padding-left: .8em;
+      }
+      &:last-child {
+        padding-right: .8em;
+      }
+    }
+    a[class^='sort'] {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      &:after {
+        mask: url($appUrlFinal + 'static/sort-none.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-none.svg');
+        mask-size: cover;
+        -webkit-mask-size: cover;
+        background: $base-font-color;
+        display: inline-block;
+        content: '';
+        height: 16px;
+        width: 16px;
+        transition: .3s all;
+      }
+      &:hover,
+      &:focus {
+        color: $base-color;
+        &:after,
+        .table-tooltip:after {
+          background: $base-color;
+        }
+      }
+    }
+    a.sort-asc {
+      &:after {
+        mask: url($appUrlFinal + 'static/sort-asc.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-asc.svg');
+      }
+    }
+    a.sort-desc {
+      &:after {
+        mask: url($appUrlFinal + 'static/sort-desc.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-desc.svg');
+      }
+    }
+    .table-tooltip {
+      &:after {
+        mask: url($appUrlFinal + 'static/circle-information.svg');
+        -webkit-mask: url($appUrlFinal + 'static/circle-information.svg');
+        mask-size: cover;
+        -webkit-mask-size: cover;
+        margin-top: -.5rem;
+        opacity: 0.5;
+        background: $base-font-color;
+        display: inline-block;
+        content: '';
+        height: 12px;
+        width: 12px;
+        transition: .3s all;
+      }
+    }
+  }
+  tbody {
+    font-family: $heading-font-family;
+    tr {
+      // the borders for the rows were previously set on each cell
+      border-bottom: 1px solid lighten($light-text-color, 40%);
+      &:first-of-type {
+        border-top: 1px solid #555456;
+      }
+      td:first-child {
+        font-family: $heading-font-bold;
+        padding-left: .8em;
+      }
+      td:last-child {
+        padding-right: .8em;
+      }
+    }
+  }
+  td {
+    padding: 0.8rem 0.5rem;
+    margin: 0;
+  }
+}
+
+.table-wrapper {
+  overflow: auto;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+
+  .table {
+    flex: 1;
+  }
+
+  > *:last-child {
+    margin-top: 2rem;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    .button {
+      flex-shrink: 0;
+    }
+  }
+}
+
+.pagination {
+  clear: both;
+  margin-top: 1.5em;
+  text-align: center;
+  padding-right: 8%;
+  font-family: $heading-font-regular;
+  li {
+    display: inline-block;
+    margin: 0 .4em;
+  }
+  a, a:visited {
+    padding: 0 .2em;
+    color: $med-text-color;
+    font-size: 1em;
+    &:hover {
+      color: $blue-color;
+    }
+  }
+  .active{
+    a, a:visited {
+      color: $blue-color;
+      border-bottom: 1px solid $blue-color;
+    }
+  }
+}
+
+tr td:not(:first-child).table-align-right {
+  text-align: right;
+}
+
+th a[class^='sort'].table-align-right,
+span[data-tip].table-align-right:not(first-of-type) {
+  justify-content: flex-end;
+}

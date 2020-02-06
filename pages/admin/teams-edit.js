@@ -6,7 +6,6 @@ import { actions } from '../../lib/store'
 import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
-import AdminCampaignsSearch from '../../components/admin/AdminCampaignsSearch'
 import AdminUsersSearch from '../../components/admin/AdminUsersSearch'
 import Link from '../../components/Link'
 import { LoadingState } from '../../components/common/LoadingState'
@@ -103,11 +102,14 @@ export class AdminTeamsEdit extends Component {
         <h2 className='header--medium'>
           Team campaigns
         </h2>
+        { /*
         <AdminCampaignsSearch
           selectedCampaigns={this.state.teamCampaigns}
           addCampaign={this.addCampaignToTeam}
           removeCampaign={this.removeCampaignFromTeam}
         />
+        */
+        }
         <AdminUsersSearch
           selectedUsers={this.state.teamUsers}
           addUser={this.addUserToTeam}

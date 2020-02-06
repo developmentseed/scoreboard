@@ -1,6 +1,6 @@
 {
   "name": "scoreboard",
-  "version": "1.6.0",
+  "version": "1.8.0",
   "description": "OSM Scoreboard",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,8 @@
     "clocks": "nf start update_users,tm_clock",
     "docs": "swagger-markdown -i api/docs/api.yml -o api/README.md",
     "lint": "devseed-standard",
-    "lintfix": "devseed-standard --fix"
+    "lintfix": "devseed-standard --fix",
+    "lint:css": "stylelint 'styles/**/**' 'scripts/**/*.js'"
   },
   "devseed-standard": {
     "ignore": [
@@ -81,6 +82,7 @@
     "@turf/helpers": "^6.1.4",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
+    "aws-sdk": "^2.596.0",
     "axios": "^0.19.0",
     "babel-preset-jest": "^23.2.0",
     "body-parser": "^1.18.3",
@@ -110,6 +112,7 @@
     "lodash-es": "^4.17.5",
     "lodash.debounce": "^4.0.8",
     "mapbox-gl": "^0.53.0",
+    "memory-cache": "^0.2.0",
     "next": "^7.0.2",
     "next-images": "^1.0.1",
     "node-sass": "^4.9.4",
@@ -133,6 +136,7 @@
     "react-alert-template-basic": "^1.0.0",
     "react-csv": "^1.1.1",
     "react-dom": "^16.0.0",
+    "react-hook-form": "^3.28.11",
     "react-input-range": "^1.2.2",
     "react-js-pagination": "^3.0.0",
     "react-leaflet": "^2.2.0",
@@ -140,12 +144,14 @@
     "react-markdown": "^3.1.1",
     "react-responsive-carousel": "^3.1.43",
     "react-select": "^1.2.1",
+    "react-table": "^7.0.0-beta.11",
     "react-tooltip": "^3.11.1",
     "react-transition-group": "^2.5.0",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5",
     "simple-oauth2": "^2.2.1",
     "style-loader": "^0.23.1",
+    "stylelint": "^12.0.0",
     "swagger-ui-express": "^3.0.10",
     "unistore": "^3.1.0",
     "url-join": "^4.0.0",
@@ -164,6 +170,7 @@
     "devseed-standard": "^1.1.0",
     "docusaurus": "^1.11.1",
     "jest": "^23.6.0",
+    "stylelint-config-recommended": "^3.0.0",
     "supertest": "^3.1.0",
     "swagger-markdown": "^1.1.5"
   }
