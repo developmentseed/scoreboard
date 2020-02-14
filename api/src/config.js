@@ -32,7 +32,7 @@ module.exports = {
   OSM_CONSUMER_KEY: process.env.OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET: process.env.OSM_CONSUMER_SECRET,
   OSM_DOMAIN: process.env.OSM_DOMAIN || 'https://www.openstreetmap.org',
-  OSM_TEAMS_SERVICE: process.env.OSM_TEAMS_SERVICE || 'http://localhost:3000',
+  OSM_TEAMS_SERVICE: process.env.OSM_TEAMS_SERVICE || 'http://localhost:8989',
   OSM_TEAMS_SERVICE_TOKEN_HOST: process.env.OSM_TEAMS_SERVICE_TOKEN_HOST || 'http://localhost:4444',
   OSM_TEAMS_SERVICE_TOKEN_PATH: process.env.OSM_TEAMS_SERVICE_TOKEN_PATH || '/oauth2/token',
   OSM_TEAMS_SERVICE_AUTHZ_HOST: process.env.OSM_TEAMS_SERVICE_AUTHZ_HOST || 'http://localhost:4444',
