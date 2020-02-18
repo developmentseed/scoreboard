@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
-import Link from '../components/Link'
 import join from 'url-join'
 import Table from '../components/common/Table'
+import TeamsConnectBanner from '../components/TeamConnectBanner'
 
 import { APP_URL_PREFIX } from '../api/src/config'
 
@@ -105,14 +105,7 @@ class Teams extends Component {
             user &&
             user.loggedIn &&
             !user.account.activatedTeams)
-            ? <section>
-              <div className='row widget-container'>
-                <p>
-                  You need to connect with Teams to enable these features
-                </p>
-                <Link href='/auth/teams'><a className='button button--info'>Connect your Teams</a></Link>
-              </div>
-            </section>
+            ? <TeamsConnectBanner />
             : <div />
         }
         <section>
