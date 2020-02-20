@@ -60,7 +60,7 @@ export class Admin extends Component {
         <section>
           <div className='row'>
             <div className='content'>
-              <AdminSectionList teamsActive={authenticatedUser.account.activatedTeams} />
+              <AdminSectionList />
             </div>
           </div>
         </section>

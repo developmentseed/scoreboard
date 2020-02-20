@@ -14,7 +14,8 @@ const { difference } = require('ramda')
  */
 async function list (req, res) {
   try {
-    let teams = new OSMTeams(req.user.id)
+    let osmid = req.user ? req.user.id : null
+    let teams = new OSMTeams(osmid)
     const data = await teams.getTeams()
     return res.send(data)
   } catch (err) {

@@ -17,6 +17,10 @@ class OSMTeams {
    * Should be called only after the integration for teams is set up
    */
   async getAccessToken () {
+    if (!this.osmid) {
+      throw new Error('User is not logged in')
+    }
+
     const token = await getToken(this.osmid)
     if (token.length === 0) {
       throw new Error('No token for user')

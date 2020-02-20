@@ -221,7 +221,7 @@ class Dashboard extends Component {
             <a className='header-link'>Admin</a>
           </Link>
         </h2>
-        <AdminSectionList teamsActive={this.props.authenticatedUser.account.activatedTeams} />
+        <AdminSectionList />
         <hr />
         <br />
         <br />

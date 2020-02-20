@@ -3,6 +3,7 @@ import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import join from 'url-join'
 import Table from '../components/common/Table'
+import TeamsConnectBanner from '../components/TeamConnectBanner'
 
 import { APP_URL_PREFIX } from '../api/src/config'
 
@@ -43,7 +44,6 @@ class Teams extends Component {
     super()
 
     this.state = {
-      loading: true,
       teams: []
     }
 
@@ -51,14 +51,16 @@ class Teams extends Component {
   }
 
   async componentDidMount () {
+    await this.props.getAuthenticatedUser()
     await this.props.getAllTeams()
   }
 
-  componentDidUpdate () {
-    const { teams } = this.props
-    if (teams && this.state.loading) {
+  componentDidUpdate (prevProps) {
+    const { teams: prevTeams } = prevProps
+    const { teams, authenticatedUser } = this.props
+    if (prevTeams.records.length !== teams.records.length) {
       this.setState({
-        loading: false,
+        user: authenticatedUser,
         teams: teams.records
       })
     }
@@ -89,7 +91,7 @@ class Teams extends Component {
   }
 
   render () {
-    const teams = this.state.teams
+    const { teams, user } = this.state
 
     return (
       <div className='Users'>
@@ -98,6 +100,14 @@ class Teams extends Component {
             <h1 className='section-sub--left header--xlarge margin-top-sm'>Teams</h1>
           </div>
         </header>
+        {
+          (
+            user &&
+            user.loggedIn &&
+            !user.account.activatedTeams)
+            ? <TeamsConnectBanner />
+            : <div />
+        }
         <section>
           <div className='row widget-container'>
             <Sidebar handleSearch={this.handleSearch} />
@@ -112,5 +122,5 @@ class Teams extends Component {
   }
 }
 
-const Page = connect(['teams'], actions)(Teams)
+const Page = connect(['teams', 'authenticatedUser'], actions)(Teams)
 export default Page
