@@ -29,4 +29,3 @@ export default function TeamDetailsForm ({ onSubmit, details }) {
     </form>
   )
 }
-
