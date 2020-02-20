@@ -1,38 +1,19 @@
 import React from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import dynamic from 'next/dynamic'
+import { connect } from 'unistore/react'
+import { actions } from '../lib/store'
+import TeamDetailsForm from '../components/teams/TeamDetailsForm'
+import Router from '../lib/router'
 
-const LocationInput = dynamic(() => import('../components/teams/LocationInput'), { ssr: false })
+function CreateTeam (props) {
+  const handleSubmit = async (data) => {
+    try {
+      await props.createTeam(data)
+      Router.push('/teams')
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
-function TeamDetailsForm ({ onSubmit, details }) {
-  const { register, handleSubmit, errors, control } = useForm()
-  console.log(errors)
-
-  return (
-    <form className='form' onSubmit={handleSubmit(onSubmit)}>
-      <div className='form__input-unit'>
-        <label className='form__label' htmlFor='name'>Name *</label>
-        <input type='text' name='name' defaultValue={details['name']} ref={register({ required: true })} />
-        { errors['name'] && 'Name is required' }
-      </div>
-      <div className='form__input-unit'>
-        <label className='form__label' htmlFor='hashtag'>Hashtag</label>
-        <input type='text' name='hashtag' defaultValue={details['hashtag']} ref={register} />
-      </div>
-      <div className='form__input-unit'>
-        <label className='form__label' htmlFor='description'>Description</label>
-        <textarea name='description' defaultValue={details['description']} ref={register} />
-      </div>
-      <div className='form__input-unit'>
-        <label className='form__label' htmlFor='location'>Location</label>
-        <Controller as={LocationInput} control={control} name='location' defaultValue={[0, 0]} />
-      </div>
-      <input type='submit' className='button' value='submit' />
-    </form>
-  )
-}
-
-export default function CreateTeam (props) {
   return (
     <div className='admin'>
       <section>
@@ -44,17 +25,27 @@ export default function CreateTeam (props) {
             <div>
               <h1 className='header--xlarge'>Details</h1>
             </div>
-            <TeamDetailsForm details={
-              {
-                name: '',
-                hashtag: '',
-                description: '',
-                location: [0, 0]
+            <TeamDetailsForm
+              details={
+                {
+                  name: '',
+                  hashtag: '',
+                  bio: '',
+                  location: `{
+                    "type": "Point",
+                    "coordinates": [0, 0]
+                  }`
+                }
               }
-            } onSubmit={(data) => { console.log(data) }} />
+              onSubmit={handleSubmit}
+            />
           </div>
         </div>
       </section>
     </div>
   )
 }
+
+const Page = connect(['authenticatedUser', 'teams'], actions)(CreateTeam)
+
+export default Page

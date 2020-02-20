@@ -36,7 +36,7 @@ async function list (req, res) {
 async function post (req, res) {
   const { user, body } = req
 
-  if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
+  if (!user) {
     return res.boom.unauthorized('Not authorized')
   }
 
