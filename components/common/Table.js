@@ -62,6 +62,16 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
           </Link>
         )
       }
+    case 'teamlink':
+      return ({ cell: { value } }) => {
+        return (
+          <Link href={`/teams/${idMap[value]}`}>
+            <a className='link--normal' >
+              { value }
+            </a>
+          </Link>
+        )
+      }
     default:
       return formattedNum
   }
