@@ -41,7 +41,8 @@ async function post (req, res) {
   }
 
   try {
-    let teams = new OSMTeams(req.user.id)
+    let osmid = req.user ? req.user.id : null
+    let teams = new OSMTeams(osmid)
     const team = await teams.createTeam(body)
     return res.send(team)
   } catch (err) {
@@ -60,9 +61,11 @@ async function post (req, res) {
  * @returns {Promise} a response
  */
 async function get (req, res) {
-  let teams = new OSMTeams(req.user.id)
+  let osmid = req.user ? req.user.id : null
+  let teams = new OSMTeams(osmid)
   try {
     const data = JSON.parse(await teams.getTeam(req.params.id))
+    console.log(data)
     const campaigns = await db('campaigns').join(
       db('team_assignments').where('team_id', req.params.id).as('team_assignments'),
       'team_assignments.campaign_id',
@@ -70,12 +73,13 @@ async function get (req, res) {
       'campaigns.id'
     ).join(db('taskers').select('name as tm_name', 'id as taskers_t_id').as('t'),
       'campaigns.tasker_id', '=', 't.taskers_t_id')
-    const users = await db('users').whereIn('osm_id', data.members)
+    const users = await db('users').whereIn('osm_id', data.members.map(m => m.id))
     const team = {
       id: data.id,
       bio: data.bio,
       hashtag: data.hashtag,
       name: data.name,
+      location: data.location,
       campaigns,
       users
     }
