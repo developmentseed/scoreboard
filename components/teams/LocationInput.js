@@ -4,7 +4,7 @@ import { reverse } from 'ramda'
 
 export default function LocationInput ({ value, onChange }) {
   const [ zoom, setZoom ] = useState(1)
-  let newCenter = reverse(JSON.parse(value).coordinates)
+  const newCenter = reverse(JSON.parse(value).coordinates)
 
   return (
     <Map style={{ height: '300px' }}
@@ -12,7 +12,7 @@ export default function LocationInput ({ value, onChange }) {
       zoom={zoom}
       onViewportChanged={({ center, zoom }) => {
         setZoom(zoom)
-        let toGeojson = `{
+        const toGeojson = `{
           "type": "Point",
           "coordinates": [${center[1]},${center[0]}]
         }`
