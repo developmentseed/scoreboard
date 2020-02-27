@@ -164,6 +164,7 @@
     "@babel/preset-env": "^7.1.0",
     "ava": "^1.4.1",
     "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
     "babel-jest": "^23.6.0",
     "babel-plugin-transform-dynamic-import": "^2.1.0",
     "chance": "^1.0.18",
