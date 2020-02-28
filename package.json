@@ -136,7 +136,7 @@
     "react-alert-template-basic": "^1.0.0",
     "react-csv": "^1.1.1",
     "react-dom": "^16.0.0",
-    "react-hook-form": "^3.28.11",
+    "react-hook-form": "^4",
     "react-input-range": "^1.2.2",
     "react-js-pagination": "^3.0.0",
     "react-leaflet": "^2.2.0",
@@ -171,6 +171,7 @@
     "devseed-standard": "^1.1.0",
     "docusaurus": "^1.11.1",
     "jest": "^23.6.0",
+    "mutationobserver-shim": "^0.3.3",
     "stylelint-config-recommended": "^3.0.0",
     "supertest": "^3.1.0",
     "swagger-markdown": "^1.1.5"

@@ -7,7 +7,7 @@ import { isAdmin } from '../../lib/utils/roles'
 import NotLoggedIn from '../../components/NotLoggedIn'
 import AdminHeader from '../../components/admin/AdminHeader'
 import { LoadingState } from '../../components/common/LoadingState'
-import useForm from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 function OSMesaSettings (props) {
   const { register, handleSubmit } = useForm()

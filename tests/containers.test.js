@@ -9,9 +9,16 @@ import { Countries } from '../pages/countries'
 import { Country } from '../pages/country'
 import { User } from '../pages/user'
 import { Users } from '../pages/users'
+import { CreateTeam } from '../pages/create-team'
 import About from '../pages/about'
 
 import store, { actions, InitialState } from '../lib/store'
+
+/**
+ * Required for react hooks form
+ * includes MutationObserver
+ */
+require('mutationobserver-shim')
 
 function mockAction () {
   return Promise.resolve()
@@ -121,6 +128,18 @@ it('Users renders without crashing', () => {
     </Provider>
   )
 
+  ReactDOM.render(page, div)
+})
+
+it('Create Team renders without crashing', () => {
+  const div = document.createElement('div')
+
+  const mockProps = {}
+  const page = (
+    <Provider store={store} >
+      <CreateTeam {...mockProps} />
+    </Provider>
+  )
   ReactDOM.render(page, div)
 })
 
