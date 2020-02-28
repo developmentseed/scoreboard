@@ -170,6 +170,7 @@
     "devseed-standard": "^1.1.0",
     "docusaurus": "^1.11.1",
     "jest": "^23.6.0",
+    "mutationobserver-shim": "^0.3.3",
     "stylelint-config-recommended": "^3.0.0",
     "supertest": "^3.1.0",
     "swagger-markdown": "^1.1.5"

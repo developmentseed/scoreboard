@@ -4,14 +4,10 @@ import { actions } from '../lib/store'
 import TeamDetailsForm from '../components/teams/TeamDetailsForm'
 import Router from '../lib/router'
 
-function CreateTeam (props) {
+export function CreateTeam (props) {
   const handleSubmit = async (data) => {
-    try {
-      await props.createTeam(data)
-      Router.push('/teams')
-    } catch (e) {
-      console.error(e)
-    }
+    await props.createTeam(data)
+    Router.push('/teams')
   }
 
   return (

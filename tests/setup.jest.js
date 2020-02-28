@@ -8,3 +8,12 @@ jest.mock('mapbox-gl/dist/mapbox-gl', () => ({
 }))
 
 jest.mock('next/router')
+
+/**
+ * Mock Map component
+ */
+jest.mock('react-leaflet', () => ({
+  Map: () => 'map',
+  TileLayer: () => 'tileLayer',
+  CircleMarker: () => 'circleMarker'
+}))
