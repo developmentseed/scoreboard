@@ -24,8 +24,7 @@ test.serial('create favorite', async (t) => {
     user_id: users[1],
     campaign_id: campaign.id
   })
-
-  t.truthy('result', result.id)
+  t.truthy(result.id)
 })
 
 test.serial('list favorites', async (t) => {
