@@ -76,7 +76,7 @@ async function get (req, res) {
       'campaigns.tasker_id', '=', 't.taskers_t_id')
     const teamMemberOsmIds = teamData.members.map(m => m.id)
     const users = await db('users').whereIn('osm_id', teamMemberOsmIds)
-    const teamStats = OSMesa.getTeamStats(teamMemberOsmIds)
+    const osmesaStats = await OSMesa.getTeamStats(teamMemberOsmIds)
     const team = {
       id: teamData.id,
       bio: teamData.bio,
@@ -84,7 +84,7 @@ async function get (req, res) {
       name: teamData.name,
       campaigns,
       users,
-      stats: teamStats
+      osmesaStats
     }
     return res.send(team)
   } catch (err) {
