@@ -135,6 +135,34 @@ test('Sort users alphabetically z-a', async (t) => {
   t.deepEqual(resCopy, names)
 })
 
+test('Sort users by country alphabetically a-z', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Countries A-Z&active=false')
+    .expect(200)
+  const users = await db('users')
+    .select('country')
+    .orderBy('country', 'asc')
+    .limit(25)
+  const countries = users.map(prop('country'))
+  const resCopy = response.body.records.map(prop('country'))
+  t.deepEqual(resCopy, countries)
+})
+
+test('Sort users by country alphabetically z-a', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Countries Z-A&active=false')
+    .expect(200)
+
+  const users = await db('users')
+    .select('country')
+    .orderBy('country', 'desc')
+    .limit(25)
+  const countries = users.map(prop('country'))
+  const resCopy = response.body.records.map(prop('country'))
+  t.is(resCopy.length, countries.length)
+  t.deepEqual(resCopy, countries)
+})
+
 test.serial('Update user country', async (t) => {
   const updateResponse = await request(app)
     .put('/scoreboard/api/users/100000000').send({ country: 'TZ' })
