@@ -100,10 +100,10 @@ async function stats (req, res) {
         recordQuery = recordQuery.orderBy('full_name', 'desc')
         break
       case 'Countries A-Z':
-        recordQuery = recordQuery.orderBy('country', 'asc')
+        recordQuery = recordQuery.orderByRaw('country asc NULLS LAST')
         break
       case 'Countries Z-A':
-        recordQuery = recordQuery.orderBy('country', 'desc')
+        recordQuery = recordQuery.orderByRaw('country desc NULLS LAST')
         break
       default: // Most total edits
         recordQuery = recordQuery.orderByRaw('edit_count desc, full_name  NULLS LAST')
