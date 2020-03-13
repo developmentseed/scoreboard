@@ -13,9 +13,9 @@ cd scoreboard
 git checkout ${GIT_TAG}
 
 # installation
-npm install
-npm run migrate
-npm run build
+yarn install
+yarn run migrate
+yarn run build
 
 # move to nginx folder
 cd ../..
