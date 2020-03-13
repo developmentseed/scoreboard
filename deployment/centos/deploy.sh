@@ -1,7 +1,15 @@
 #!/bin/bash -e
 
-# change this to the current semver tag, e.g. v1.8.0
-GIT_TAG=master
+# deploy scoreboard to a centos environment
+
+# usage: 
+#   deploy.sh {tag or branch}
+#
+# example:
+#   deploy.sh v1.8.0
+#
+
+GIT_TAG=${1:-master}
 
 echo "using git tag or branch: ${GIT_TAG}"
 echo
