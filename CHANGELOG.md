@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Added
 
 - Added new sections to readme about osm-teams and administration settings.
+- Added an osmesaStats data structure to the response in route /teams:id.
 
 Changed
 
