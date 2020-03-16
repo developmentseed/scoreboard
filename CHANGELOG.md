@@ -12,13 +12,13 @@ Added
 
 Changed
 
+- CentOS deployment script: deployment/centos/deploy.sh corrected and updated.
 - Cleaned up and improved comments in `.env.sample`.
 - Removed environment variables from README. Instead use `.env.sample` as a reference.
 
 Fixed
 
 - n/a
-
 
 ## [v1.8.0] - 2020-02-03
 
