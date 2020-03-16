@@ -38,7 +38,7 @@ fi
 sudo mv -v scoreboard ${NGINX_PATH}
 
 # restart services
-sudo systemctl restart scoreboard-api
-sudo systemctl restart scoreboard-timer
+sudo systemctl restart scoreboard-api.service
+sudo systemctl restart scoreboard-timer.service
 sudo systemctl restart scoreboard-timer.timer
-sudo systemctl restart nginx
+sudo systemctl restart nginx.service
