@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+Added
+
+- Added new sections to readme about osm-teams and administration settings.
+
+Changed
+
+- CentOS deployment script: deployment/centos/deploy.sh corrected and updated.
+- Cleaned up and improved comments in `.env.sample`.
+- Removed environment variables from README. Instead use `.env.sample` as a reference.
+
+Fixed
+
+- n/a
+
 ## [v1.8.0] - 2020-02-03
 
 ### Added
