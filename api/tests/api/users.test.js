@@ -141,7 +141,7 @@ test('Sort users by country alphabetically a-z', async (t) => {
     .expect(200)
   const users = await db('users')
     .select('country')
-    .orderBy('country', 'asc')
+    .orderByRaw('country asc NULLS LAST')
     .limit(25)
   const countries = users.map(prop('country'))
   const resCopy = response.body.records.map(prop('country'))
@@ -155,7 +155,7 @@ test('Sort users by country alphabetically z-a', async (t) => {
 
   const users = await db('users')
     .select('country')
-    .orderBy('country', 'desc')
+    .orderByRaw('country desc NULLS LAST')
     .limit(25)
   const countries = users.map(prop('country'))
   const resCopy = response.body.records.map(prop('country'))
