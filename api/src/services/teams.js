@@ -1,6 +1,6 @@
 const rp = require('request-promise-native')
 const sampleTeams = require('../fixtures/teams.json')
-const { getToken } = require('../models/teams-access-tokens')
+const { getToken, storeToken } = require('../models/teams-access-tokens')
 const { teamServiceCredentials } = require('../passport')
 const { OSM_TEAMS_SERVICE } = require('../config')
 
@@ -30,7 +30,9 @@ class OSMTeams {
     if (accessToken.expired()) {
       try {
         accessToken = await accessToken.refresh()
+        await storeToken(accessToken.token)
       } catch (error) {
+        console.error(error)
         throw new Error(`Error refreshing access token: ${error.message}`)
       }
     }
