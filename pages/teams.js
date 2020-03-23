@@ -9,7 +9,7 @@ import { APP_URL_PREFIX } from '../api/src/config'
 
 const tableSchema = {
   'headers': {
-    'name': { type: 'namelink', accessor: 'name' },
+    'name': { type: 'teamlink', accessor: 'name' },
     'hashtags': { type: 'string', accessor: 'hashtag' }
   },
   columnOrder: [ 'name', 'hashtags' ],
