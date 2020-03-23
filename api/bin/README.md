@@ -32,6 +32,12 @@ scoreboard users
 scoreboard users destroy --id {user id}
 ```
 
+### Mock up OSM edits for a user
+
+```shell script
+scoreboard create-edits --osm-id
+```
+
 ### Create a new admin user
 
 To create an admin user that has not yet logged in to the site, include both their osm id and username:
