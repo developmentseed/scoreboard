@@ -7,7 +7,7 @@ import CampaignCard from '../components/campaigns/CampaignCard'
 import { sortBy, prop } from 'ramda'
 import Table from '../components/common/Table'
 
-const tableSchema = {
+const usersTableSchema = {
   'headers': {
     'name': { type: 'namelink', accessor: 'full_name' },
     'user-id': { type: 'string', accessor: 'osm_id' }
@@ -27,13 +27,10 @@ export class Team extends Component {
   }
 
   render () {
-    // const { team } = this.props
-    // if (!team) return <div />
-
-    // let idMap = {}
-    // if (team.users.length) {
-    //   idMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
-    // }
+    const { team } = this.props
+    console.log(team)
+    if (!team) return <div />
+    const userIdMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
 
     return (
       <div className='Campaigns'>
@@ -75,13 +72,12 @@ export class Team extends Component {
           <div className='row'>
             <div className='section-sub--left section-width-fifty-plus'>
               <div className='text-body'>
-                Team Bio
+                { team.bio }
               </div>
               <section>
                 <h2 className='header--large header--with-description'>Team Stats</h2>
                 {
-                  /* Commenting out the below teams table for now, but this data pathway is correct
-                  <Table idMap={idMap} data={team.users} tableSchema={tableSchema} /> */
+                  <Table idMap={userIdMap} data={team.users} tableSchema={usersTableSchema} />
                 }
               </section>
               <section className='section--tertiary'>
