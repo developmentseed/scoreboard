@@ -99,7 +99,7 @@ function prepareColumns (props) {
     return {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
-      disableSortBy: (key === 'button'),
+      disableSortBy: (props.notSortable) ? true : (key === 'button'),
       Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap),
       Footer: footerTotals[columnSchema.accessor]
     }
