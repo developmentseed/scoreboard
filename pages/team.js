@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
-import { actions } from '../lib/store'
+import { sortBy, prop, pathOr } from 'ramda'
 import { distanceInWordsToNow, format as dateFormat } from 'date-fns'
+
+import { actions } from '../lib/store'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import CampaignCard from '../components/campaigns/CampaignCard'
-import { sortBy, prop } from 'ramda'
 import Table from '../components/common/Table'
-import { formatDecimal } from '../lib/utils/format'
-import { pathOr } from 'ramda'
+import { formatDecimal, normalizeHashtag } from '../lib/utils/format'
 
 const usersTableSchema = {
   'headers': {
@@ -34,7 +34,7 @@ export class Team extends Component {
     console.log(team)
 
     const userIdMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
-    const { hashtag, created_at: teamCreated, refreshDate} = team
+    const { hashtag, created_at: teamCreated, refreshDate } = team
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
@@ -44,7 +44,7 @@ export class Team extends Component {
               <ul className='list--two-column clearfix'>
                 <li>
                   <span className='list-label'>hashtag</span>
-                  <strong>{ hashtag }</strong>
+                  <strong>{ normalizeHashtag(hashtag) }</strong>
                 </li>
                 <li>
                   <span className='list-label'>created</span>
@@ -52,7 +52,7 @@ export class Team extends Component {
                 </li>
                 <li>
                   <span className='list-label'>last refreshed</span>
-                  <strong>{ refreshDate }</strong>
+                  <strong>{ distanceInWordsToNow(refreshDate) }</strong>
                 </li>
               </ul>
             </div>
