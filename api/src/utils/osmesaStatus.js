@@ -2,12 +2,14 @@ const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { getTime } = require('date-fns')
 
-const categories = {
-  country: `country_statistics`,
-  campaign: `hashtag_user_statistics`,
-  campaigns: `hashtag_statistics`,
-  user: `user_statistics`,
-  users: `user_statistics`
+const categoryToOsmStats = {
+  country: 'country_statistics',
+  campaign: 'hashtag_user_statistics',
+  campaigns: 'hashtag_statistics',
+  user: 'user_statistics',
+  users: 'user_statistics',
+  team: 'user_statistics',
+  teams: 'user_statistics'
 }
 
 async function getOsmesaStatus (category) {
@@ -16,7 +18,7 @@ async function getOsmesaStatus (category) {
     if (typeof category === 'undefined') {
       return refreshStats
     } else {
-      let status = refreshStats[categories[category]]
+      let status = refreshStats[categoryToOsmStats[category]]
       // The individual User page pulls data straight from OSMESA, so that status is comprehensive
       // The following pages rely on both OSMESA and the Scoreboard database clocks:
       // Country, Users, and Campaign(s)
