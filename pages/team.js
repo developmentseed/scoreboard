@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
-import { distanceInWordsToNow } from 'date-fns'
+import { distanceInWordsToNow, format as dateFormat } from 'date-fns'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import CampaignCard from '../components/campaigns/CampaignCard'
 import { sortBy, prop } from 'ramda'
 import Table from '../components/common/Table'
+import { formatDecimal } from '../lib/utils/format'
+import { pathOr } from 'ramda'
 
 const usersTableSchema = {
   'headers': {
@@ -28,30 +30,29 @@ export class Team extends Component {
 
   render () {
     const { team } = this.props
-    console.log(team)
     if (!team) return <div />
-    const userIdMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
+    console.log(team)
 
+    const userIdMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
+    const { hashtag, created_at: teamCreated, refreshDate} = team
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
           <div className='row widget-container'>
             <div className='section-sub--left'>
-              <h1 className='header--xlarge margin-top-sm'>Team Name</h1>
+              <h1 className='header--xlarge margin-top-sm'>{ team.name }</h1>
               <ul className='list--two-column clearfix'>
                 <li>
-                  <span className='list-label'>Hashtag:</span>
-                  <strong>Hashtag from props</strong>
+                  <span className='list-label'>hashtag</span>
+                  <strong>{ hashtag }</strong>
                 </li>
                 <li>
-                  <span className='list-label'>Created:</span>
-                  <strong>Creation Date</strong>
-                  {/* <strong>{distanceInWordsToNow(creationDate)} ago</strong> */}
+                  <span className='list-label'>created</span>
+                  <strong>{ dateFormat(teamCreated, 'M/D/YY') }</strong>
                 </li>
                 <li>
-                  <span className='list-label'>Last updated:</span>
-                  <strong>Last update data</strong>
-                  {/* <strong>{distanceInWordsToNow(lastUpdate)} ago</strong> */}
+                  <span className='list-label'>last refreshed</span>
+                  <strong>{ refreshDate }</strong>
                 </li>
               </ul>
             </div>
@@ -59,13 +60,18 @@ export class Team extends Component {
         </header>
         <ScoreboardPanel title='' facets={
           [
-            { label: 'Campaigns', value: '#' },
-            { label: 'Members', value: '#' },
-            { label: 'Edits', value: '#' }
-            // { label: 'Mapped', value: `${parseInt(meta.done, 10)}%` },
-            // { label: 'Validated', value: `${parseInt(meta.validated, 10)}%` },
-            // { label: 'Participants', value: stats.users.length },
-            // { label: 'Total Edits', value: stats.editCounts }
+            {
+              label: 'Campaigns',
+              value: formatDecimal(pathOr([], ['campaigns'], team).length)
+            },
+            {
+              label: 'Members',
+              value: formatDecimal(pathOr([], ['members'], team).length)
+            },
+            {
+              label: 'Total Edits',
+              value: formatDecimal(pathOr(0, ['osmesaStats', 'teamStats', 'edit_count'], team))
+            }
           ]
         } />
         <section>

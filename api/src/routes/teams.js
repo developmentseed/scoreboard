@@ -3,6 +3,7 @@ const OSMTeams = require('../services/teams')
 const OSMesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { difference } = require('ramda')
+const refreshStatus = require('../utils/osmesaStatus.js')
 
 /**
  * Teams list route
@@ -77,15 +78,16 @@ async function get (req, res) {
     const teamMemberOsmIds = teamData.members.map(m => m.id)
     const users = await db('users').whereIn('osm_id', teamMemberOsmIds)
     const osmesaStats = await OSMesa.getTeamStats(teamMemberOsmIds)
+    const refreshDate = await refreshStatus('teams')
+    console.log({ refreshDate })
     const team = {
-      id: teamData.id,
-      bio: teamData.bio,
-      hashtag: teamData.hashtag,
-      name: teamData.name,
+      ...teamData,
       campaigns,
-      users,
-      osmesaStats
+      osmesaStats,
+      refreshDate,
+      users
     }
+    console.log(team)
     return res.send(team)
   } catch (err) {
     console.error(err)
