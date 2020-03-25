@@ -8,6 +8,7 @@ import ScoreboardPanel from '../components/ScoreboardPanel'
 import CampaignCard from '../components/campaigns/CampaignCard'
 import Table from '../components/common/Table'
 import { formatDecimal, normalizeHashtag } from '../lib/utils/format'
+import Blurb from '../components/teams/TeamBlurb'
 
 const usersTableSchema = {
   'headers': {
@@ -31,10 +32,10 @@ export class Team extends Component {
   render () {
     const { team } = this.props
     if (!team) return <div />
-    console.log(team)
 
     const userIdMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
-    const { hashtag, created_at: teamCreated, refreshDate } = team
+    const { hashtag, created_at: teamCreated, lastRefreshed } = team
+    console.log(team.osmesaStats)
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
@@ -52,7 +53,7 @@ export class Team extends Component {
                 </li>
                 <li>
                   <span className='list-label'>last refreshed</span>
-                  <strong>{ distanceInWordsToNow(refreshDate) }</strong>
+                  <strong>{ lastRefreshed ? distanceInWordsToNow(lastRefreshed) : null }</strong>
                 </li>
               </ul>
             </div>
@@ -74,6 +75,14 @@ export class Team extends Component {
             }
           ]
         } />
+        <section>
+          <div className='row'>
+            <div className='section-sub'>
+              <Blurb teamName={'merica'} roadsKmMapped={123113} waterwaysKmMapped={23423}
+                     poiCountMappedCount={945} firstYearEdited={2018} buildingsMappedCount={12312} edit />
+            </div>
+          </div>
+        </section>
         <section>
           <div className='row'>
             <div className='section-sub--left section-width-fifty-plus'>
