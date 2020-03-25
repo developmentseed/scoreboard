@@ -48,7 +48,9 @@ const UsersFilter = ({
               { value: 'Most total', label: 'Most total edits' },
               { value: 'Least total', label: 'Least total edits' },
               { value: 'Alphabetical A-Z', label: 'Alphabetical A-Z' },
-              { value: 'Alphabetical Z-A', label: 'Alphabetical Z-A' }
+              { value: 'Alphabetical Z-A', label: 'Alphabetical Z-A' },
+              { value: 'Countries A-Z', label: 'Countries A-Z' },
+              { value: 'Countries Z-A', label: 'Countries Z-A' }
             ]
           }
         />
