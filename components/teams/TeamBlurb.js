@@ -2,6 +2,24 @@ import React from 'react'
 import Link from '../../components/Link'
 import { formatDecimal, formatKm } from '../../lib/utils/format'
 
+/**
+ * Display a blurb about team statistics. Only displays non-zero metrics,
+ * so it can form various sentences like:
+ *
+ * "Since 2015, Team America has mapped 13,218 km of roads."
+ * "Since 2018, merica has mapped 2000.0 km of roads, 12,312 buildings, 945
+ * points of interest, and 23423.0 km of waterways."
+ *
+ * @param buildingsMappedCount
+ * @param editTimes
+ * @param firstYearEdited
+ * @param poiCountMappedCount
+ * @param roadsKmMapped
+ * @param teamName
+ * @param waterwaysKmMapped
+ * @returns {React.PureComponent}
+ * @constructor
+ */
 export default function Blurb ({
   buildingsMappedCount,
   editTimes,
@@ -9,8 +27,15 @@ export default function Blurb ({
   poiCountMappedCount,
   roadsKmMapped,
   teamName,
-  waterwaysKmMapped
+  waterwaysKmMapped,
+  coastlinesKmMapped
 }) {
+  if (!firstYearEdited) {
+    return <h2 className='header--small width--shortened list--block'>
+      { teamName } has not made any mapping edits yet. Explore{' '}
+      <Link href='/campaigns'>active campaigns</Link> to get started!
+    </h2>
+  }
   const fragmentList = []
   if (roadsKmMapped) {
     fragmentList.push(
@@ -32,11 +57,10 @@ export default function Blurb ({
         <><mark>{ formatKm(waterwaysKmMapped) }</mark> of waterways</>
     )
   }
-  if (!firstYearEdited) {
-    return <h2 className='header--small width--shortened list--block'>
-      { teamName } has not made any mapping edits yet. Explore{' '}
-      <Link href='/campaigns'>active campaigns</Link> to get started!
-    </h2>
+  if (coastlinesKmMapped) {
+    fragmentList.push(
+        <><mark>{ formatKm(coastlinesKmMapped) }</mark> of coastlines</>
+    )
   }
   return <h2 className='header--small width--shortened list--block'>
     Since <mark>{firstYearEdited}</mark>,{' '}

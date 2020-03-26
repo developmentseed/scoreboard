@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
-import { sortBy, prop, pathOr } from 'ramda'
-import { distanceInWordsToNow, format as dateFormat } from 'date-fns'
+import {sortBy, prop, pathOr, head, flatten} from 'ramda'
+import {compareAsc, distanceInWordsToNow, format as dateFormat, getYear} from 'date-fns'
 
 import { actions } from '../lib/store'
 import ScoreboardPanel from '../components/ScoreboardPanel'
@@ -9,6 +9,8 @@ import CampaignCard from '../components/campaigns/CampaignCard'
 import Table from '../components/common/Table'
 import { formatDecimal, normalizeHashtag } from '../lib/utils/format'
 import Blurb from '../components/teams/TeamBlurb'
+import DashboardBlurb from "../components/dashboard/DashboardBlurb";
+import CSVExport from "../components/CSVExport";
 
 const usersTableSchema = {
   'headers': {
@@ -24,6 +26,27 @@ const usersTableSchema = {
   ]
 }
 
+function calculateBlurbStats ({
+  km_roads_add,
+  km_roads_mod,
+  km_waterways_add,
+  km_waterways_mod,
+  poi_add,
+  poi_mod,
+  km_coastlines_add,
+  km_coastlines_mod,
+  buildings_add,
+  buildings_mod
+}) {
+  return {
+    poiCountMappedCount: poi_add + poi_mod,
+    roadsKmMapped: km_roads_add + km_roads_mod,
+    waterwaysKmMapped: km_waterways_add + km_waterways_mod,
+    coastlinesKmMapped: km_coastlines_add + km_coastlines_mod,
+    buildingsMappedCount: buildings_add + buildings_mod
+  }
+}
+
 export class Team extends Component {
   componentDidMount () {
     this.props.getTeam(this.props.id)
@@ -34,10 +57,17 @@ export class Team extends Component {
     if (!team) return <div />
 
     const userIdMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
-    const { hashtag, created_at: teamCreated, lastRefreshed } = team
-    console.log(team.osmesaStats)
+    const { name: teamName, hashtag, created_at: teamCreated, lastRefreshed, osmesaStats } = team
+    console.log(osmesaStats)
+
+    const { buildingsMappedCount, poiCountMappedCount, roadsKmMapped,
+      waterWaysKmMapped, coastlinesKmMapped } = calculateBlurbStats(osmesaStats.teamStats)
+
+    const allMemberEditTimes = flatten(osmesaStats.memberStats.map(({ edit_times }) => edit_times))
+    const firstYearEdited = getYear(head(allMemberEditTimes.map(t => t.day).sort(compareAsc)))
+
     return (
-      <div className='Campaigns'>
+      <div className='Campaigns'>{ /* FIXME: campaigns class should not be used here, but should it be? */ }
         <header className='header--internal--green header--page'>
           <div className='row widget-container'>
             <div className='section-sub--left'>
@@ -59,7 +89,7 @@ export class Team extends Component {
             </div>
           </div>
         </header>
-        <ScoreboardPanel title='' facets={
+        <ScoreboardPanel title={`${teamName}'s Scoreboard`} facets={
           [
             {
               label: 'Campaigns',
@@ -75,49 +105,50 @@ export class Team extends Component {
             }
           ]
         } />
+
         <section>
-          <div className='row'>
-            <div className='section-sub'>
-              <Blurb teamName={'merica'} roadsKmMapped={123113} waterwaysKmMapped={23423}
-                     poiCountMappedCount={945} firstYearEdited={2018} buildingsMappedCount={12312} edit />
-            </div>
-          </div>
+          <Blurb teamName={teamName}
+                 firstYearEdited={firstYearEdited}
+                 buildingsMappedCount={buildingsMappedCount}
+                 poiCountMappedCount={poiCountMappedCount}
+                 roadsKmMapped={roadsKmMapped}
+                 waterwaysKmMapped={waterWaysKmMapped}
+                 coastlinesKmMapped={coastlinesKmMapped}
+          />
         </section>
-        <section>
+
+        <div className='row'>
+          <div className='text-body'>
+            <p>{ team.bio }</p>
+          </div>
+        </div>
+
           <div className='row'>
-            <div className='section-sub--left section-width-fifty-plus'>
-              <div className='text-body'>
-                { team.bio }
-              </div>
-              <section>
-                <h2 className='header--large header--with-description'>Team Stats</h2>
+            <section>
+              <h2 className='header--large header--with-description'>Team Stats</h2>
+              {
+                <Table idMap={userIdMap} data={team.users} tableSchema={usersTableSchema} />
+              }
+            </section>
+            <section className='section--tertiary'>
+              <div className='row'>
                 {
-                  <Table idMap={userIdMap} data={team.users} tableSchema={usersTableSchema} />
-                }
-              </section>
-              <section className='section--tertiary'>
-                <div className='row'>
-                  {
-                    /* The team stats table should follow the same pattern as the campaign table; as such, it may not be necessary to create a new Teams table component.
-                    (stats.success)
-                      ? <div>
-                        <Blurb {...stats} />
-                        <CampaignTable users={stats.users} name={meta.name} />
-                      </div>
-                      : <p>There was an error retrieving stats for this campaign.</p>
-                  */}
-                </div>
-              </section>
-            </div>
-          </div>
-        </section>
+                  /* The team stats table should follow the same pattern as the campaign table; as such, it may not be necessary to create a new Teams table component.
+                  (stats.success)
+                    ? <div>
+                      <Blurb {...stats} />
+                      <CampaignTable users={stats.users} name={meta.name} />
+                    </div>
+                    : <p>There was an error retrieving stats for this campaign.</p>
+                */}
+              </div>
+
         <section className='section--tertiary'>
           <div className='row'>
             <h2 className='header--large header--with-description'>Team Campaigns</h2>
             {/* {sortBy(prop('team_priority'), team.campaigns).map(record => <CampaignCard key={record.id} campaign={record} />)} */}
           </div>
         </section>
-      </div>
     )
   }
 }
