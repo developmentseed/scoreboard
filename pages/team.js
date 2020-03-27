@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'unistore/react'
-import {sortBy, prop, pathOr, head, flatten} from 'ramda'
-import {compareAsc, distanceInWordsToNow, format as dateFormat, getYear} from 'date-fns'
+import { sortBy, prop, pathOr, head, flatten } from 'ramda'
+import { compareAsc, distanceInWordsToNow, format as dateFormat, getYear } from 'date-fns'
 
-import { actions } from '../lib/store'
 import ScoreboardPanel from '../components/ScoreboardPanel'
-import CampaignCard from '../components/campaigns/CampaignCard'
+import CampaignTable from '../components/campaign/CampaignTable'
 import Table from '../components/common/Table'
-import { formatDecimal, normalizeHashtag } from '../lib/utils/format'
 import Blurb from '../components/teams/TeamBlurb'
-import DashboardBlurb from "../components/dashboard/DashboardBlurb";
-import CSVExport from "../components/CSVExport";
+import { formatDecimal, normalizeHashtag } from '../lib/utils/format'
+import { actions } from '../lib/store'
 
 const usersTableSchema = {
   'headers': {
@@ -58,8 +56,7 @@ export class Team extends Component {
 
     const userIdMap = Object.assign(...team.users.map(({ osm_id, full_name }) => ({ [full_name]: osm_id })))
     const { name: teamName, hashtag, created_at: teamCreated, lastRefreshed, osmesaStats } = team
-    console.log(osmesaStats)
-
+    console.log( osmesaStats )
     const { buildingsMappedCount, poiCountMappedCount, roadsKmMapped,
       waterWaysKmMapped, coastlinesKmMapped } = calculateBlurbStats(osmesaStats.teamStats)
 
@@ -107,48 +104,37 @@ export class Team extends Component {
         } />
 
         <section>
-          <Blurb teamName={teamName}
-                 firstYearEdited={firstYearEdited}
-                 buildingsMappedCount={buildingsMappedCount}
-                 poiCountMappedCount={poiCountMappedCount}
-                 roadsKmMapped={roadsKmMapped}
-                 waterwaysKmMapped={waterWaysKmMapped}
-                 coastlinesKmMapped={coastlinesKmMapped}
+          <Blurb
+            teamName={teamName}
+            firstYearEdited={firstYearEdited}
+            buildingsMappedCount={buildingsMappedCount}
+            poiCountMappedCount={poiCountMappedCount}
+            roadsKmMapped={roadsKmMapped}
+            waterwaysKmMapped={waterWaysKmMapped}
+            coastlinesKmMapped={coastlinesKmMapped}
           />
         </section>
 
-        <div className='row'>
-          <div className='text-body'>
-            <p>{ team.bio }</p>
-          </div>
-        </div>
-
+        <section>
           <div className='row'>
-            <section>
-              <h2 className='header--large header--with-description'>Team Stats</h2>
-              {
-                <Table idMap={userIdMap} data={team.users} tableSchema={usersTableSchema} />
-              }
-            </section>
-            <section className='section--tertiary'>
-              <div className='row'>
-                {
-                  /* The team stats table should follow the same pattern as the campaign table; as such, it may not be necessary to create a new Teams table component.
-                  (stats.success)
-                    ? <div>
-                      <Blurb {...stats} />
-                      <CampaignTable users={stats.users} name={meta.name} />
-                    </div>
-                    : <p>There was an error retrieving stats for this campaign.</p>
-                */}
+            <div className='section-sub--left section-width-fifty-plus'>
+              <div className='text-body'>
+                { team.bio }
               </div>
-
-        <section className='section--tertiary'>
-          <div className='row'>
-            <h2 className='header--large header--with-description'>Team Campaigns</h2>
-            {/* {sortBy(prop('team_priority'), team.campaigns).map(record => <CampaignCard key={record.id} campaign={record} />)} */}
+              <section>
+                <h2 className='header--large header--with-description'>Team Stats</h2>
+                <Table idMap={userIdMap} data={team.users} tableSchema={usersTableSchema} />
+              </section>
+              <section>
+                <div className='row'>
+                  { /* The team stats table should follow the same pattern as the campaign table; as such, it may not be necessary to create a new Teams table component. */ }
+                  <CampaignTable users={osmesaStats.memberStats} name="xxxxxxx" />
+                </div>
+              </section>
+            </div>
           </div>
         </section>
+      </div>
     )
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Link from '../../components/Link'
 import { formatDecimal, formatKm } from '../../lib/utils/format'
 
@@ -10,19 +10,18 @@ import { formatDecimal, formatKm } from '../../lib/utils/format'
  * "Since 2018, merica has mapped 2000.0 km of roads, 12,312 buildings, 945
  * points of interest, and 23423.0 km of waterways."
  *
- * @param buildingsMappedCount
- * @param editTimes
- * @param firstYearEdited
- * @param poiCountMappedCount
- * @param roadsKmMapped
- * @param teamName
- * @param waterwaysKmMapped
+ * @param {number} buildingsMappedCount
+ * @param {number} firstYearEdited
+ * @param {number} poiCountMappedCount
+ * @param {number} roadsKmMapped
+ * @param {string} teamName
+ * @param {number} waterwaysKmMapped
+ * @param {number} coastlinesKmMapped
  * @returns {React.PureComponent}
  * @constructor
  */
 export default function Blurb ({
   buildingsMappedCount,
-  editTimes,
   firstYearEdited,
   poiCountMappedCount,
   roadsKmMapped,
@@ -67,8 +66,8 @@ export default function Blurb ({
     { teamName } has mapped{' '}
     { fragmentList.map((fragment, i) => {
       return i === fragmentList.length - 1
-        ? <> { fragmentList.length > 1 ? 'and' : null } { fragment }.</>
-        : <>{ fragment },{' '}</>
+        ? <Fragment key={i}>{ fragmentList.length > 1 ? 'and' : null } { fragment }.</Fragment>
+        : <Fragment key={i}>{ fragment },{' '}</Fragment>
     }) }
   </h2>
 }

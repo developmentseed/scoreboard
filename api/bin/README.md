@@ -35,7 +35,7 @@ scoreboard users destroy --id {user id}
 ### Mock up OSM edits for a user
 
 ```shell script
-scoreboard create-edits --osm-id
+scoreboard create-edits --osm-id {osm id}
 ```
 
 ### Create a new admin user
