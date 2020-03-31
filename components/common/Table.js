@@ -73,7 +73,7 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
         )
       }
     default:
-      return formattedNum
+      throw new Error(`unknown datatype ${datatype}`)
   }
 }
 

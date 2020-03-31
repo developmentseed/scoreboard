@@ -103,5 +103,20 @@
       "id": "button",
       "name": "Action",
       "description": "Action"
+    },
+    {
+        "id": "campaign-name",
+        "name": "Campaign",
+        "description": "Campaign name"
+    },
+    {
+        "id": "campaign-assigned",
+        "name": "Assigned",
+        "description": "Date when team was assigned to campaign"
+    },
+    {
+        "id": "campaign-priority",
+        "name": "Priority",
+        "description": "Priority of campaign for mappers on team (High/Medium/Low)"
     }
 ]
