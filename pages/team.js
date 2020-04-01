@@ -18,8 +18,6 @@ export class Team extends Component {
   }
 
   render () {
-    console.log(this.props)
-
     const { team } = this.props
     if (!team) return <div />
 
@@ -172,7 +170,7 @@ const priorityDescription = Object.freeze({
  * @param {number} km_roads_add
  * @param {number} km_roads_mod
  * @param {number} km_waterways_add
- * @param {number}  km_waterways_mod
+ * @param {number} km_waterways_mod
  * @param {number} poi_add
  * @param {number} poi_mod
  * @param {number} km_coastlines_add
