@@ -44,12 +44,12 @@ export class Team extends Component {
       priority: priorityDescription[pri]
     }))
     return (
-      <div className='Campaigns'>{ /* FIXME: why use Campaigns classname? */ }
+      <div className='Campaigns'>
         <header className='header--internal--green header--page'>
           <div className='row widget-container'>
-            <div className='section-sub--left'>
+            <div className='widget-66' style={{ 'pointerEvents': 'none' }}>
               <h1 className='header--xlarge margin-top-sm'>{ team.name }</h1>
-              <ul className='list--two-column clearfix'>
+              <ul className='list--two-column'>
                 <li>
                   <span className='list-label'>hashtag</span>
                   <strong>{ normalizeHashtag(hashtag) }</strong>
@@ -63,6 +63,9 @@ export class Team extends Component {
                   <strong>{ lastRefreshed ? distanceInWordsToNow(lastRefreshed) : null }</strong>
                 </li>
               </ul>
+            </div>
+            <div className='widget-33 page-actions'>
+              {/* <a className='button' href='#'>Join</a> */}
             </div>
           </div>
         </header>
@@ -83,35 +86,38 @@ export class Team extends Component {
             }
           ]
         } />
-
         <section>
-          <Blurb
-            teamName={teamName}
-            firstYearEdited={firstYearEdited}
-            buildingsMappedCount={buildingsMappedCount}
-            poiCountMappedCount={poiCountMappedCount}
-            roadsKmMapped={roadsKmMapped}
-            waterwaysKmMapped={waterWaysKmMapped}
-            coastlinesKmMapped={coastlinesKmMapped}
-          />
-        </section>
-
-        <section>
-          <div className='text-body'>
-            { team.bio }
+          <div className='row'>
+            <Blurb
+              teamName={teamName}
+              firstYearEdited={firstYearEdited}
+              buildingsMappedCount={buildingsMappedCount}
+              poiCountMappedCount={poiCountMappedCount}
+              roadsKmMapped={roadsKmMapped}
+              waterwaysKmMapped={waterWaysKmMapped}
+              coastlinesKmMapped={coastlinesKmMapped}
+            />
           </div>
         </section>
 
         <section>
-          <h2 className='header--large header--with-description'>Team Stats</h2>
           <div className='row'>
+            <div className='text-body'>
+              { team.bio }
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className='row'>
+            <h2 className='header--large header--with-description'>Team Stats</h2>
             <TeamStatsTable users={osmesaStats.memberStats} name={exportDataFilename} />
           </div>
         </section>
 
         <section>
-          <h2 className='header--large header--with-description'>Team Campaigns</h2>
           <div className='row'>
+            <h2 className='header--large header--with-description'>Team Campaigns</h2>
             <Table tableSchema={teamCampaignsTableSchema} notSortable data={campaignData} campaignMap={campaignMap} />
           </div>
         </section>
