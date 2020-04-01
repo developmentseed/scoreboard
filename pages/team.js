@@ -34,9 +34,8 @@ export class Team extends Component {
     const allMemberEditTimes = flatten(osmesaStats.memberStats.map(({ edit_times }) => edit_times))
     const firstYearEdited = getYear(head(allMemberEditTimes.map(t => t.day).sort(compareAsc)))
     const exportDataFilename = this.slugger.slug(teamName || 'team export', false)
-    const campaignMap = fromPairs(campaigns.map(({ name, tasker_id: tid, campaign_id: cid }) => {
-      const campaignRoute = `${tid}-${cid}`
-      return [name, campaignRoute]
+    const campaignMap = fromPairs(campaigns.map(({ name, tasker_id: taskerId, tm_id: taskingManagerId }) => {
+      return [name, { taskerId, taskingManagerId }]
     }))
     const campaignData = campaigns.map(({ name, created_at: assigned, team_priority: pri }) => ({
       name,
