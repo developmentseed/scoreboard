@@ -37,7 +37,7 @@ export class Team extends Component {
     const campaignMap = fromPairs(campaigns.map(({ name, tasker_id: taskerId, tm_id: taskingManagerId }) => {
       return [name, { taskerId, taskingManagerId }]
     }))
-    const campaignData = campaigns.map(({ name, created_at: assigned, team_priority: pri }) => ({
+    const campaignData = campaigns.map(({ name, updated_at: assigned, team_priority: pri }) => ({
       name,
       assigned,
       priority: priorityDescription[pri]
