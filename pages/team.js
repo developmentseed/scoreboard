@@ -118,7 +118,9 @@ export class Team extends Component {
         <section>
           <div className='row'>
             <h2 className='header--large header--with-description'>Team Campaigns</h2>
-            <Table tableSchema={teamCampaignsTableSchema} notSortable data={campaignData} campaignMap={campaignMap} />
+            <div className='widget'>
+              <Table tableSchema={teamCampaignsTableSchema} notSortable data={campaignData} campaignMap={campaignMap} />
+            </div>
           </div>
         </section>
       </div>
