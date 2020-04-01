@@ -41,14 +41,14 @@ async function command (args, flags) {
     const osmesaDB = await knex({ client: 'pg', connection: osmesaDBURL })
 
     // Check if this user already has edits in osmesa
-    // const [osmesaUser] = await osmesaDB('users').where('id', osmId)
-    // if (osmesaUser) {
-    //   console.error(`This user already has statistics in the OSMesa database`)
-    //   return process.exit(1)
-    // }
+    const [osmesaUser] = await osmesaDB('users').where('id', osmId)
+    if (osmesaUser) {
+      console.error(`This user already has statistics in the OSMesa database`)
+      return process.exit(1)
+    }
 
     // Clone the changesets and assign them all to the new user
-    const changesets = await osmesaDB('changesets').select().orderByRaw('random()').limit(100)
+    const changesets = await osmesaDB('changesets').select().orderByRaw('random()').limit(10)
     const newChangesets = []
     changesets.forEach(c => {
       const newChangeset = Object.assign({}, c)
