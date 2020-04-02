@@ -62,7 +62,6 @@ export default function Blurb ({
     )
   }
   return <h2 className='header--small width--shortened list--block'>
- 
     { teamName } has mapped{' '}
     { fragmentList.map((fragment, i) => {
       return i === fragmentList.length - 1
