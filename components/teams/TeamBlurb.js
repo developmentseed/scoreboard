@@ -62,7 +62,7 @@ export default function Blurb ({
     )
   }
   return <h2 className='header--small width--shortened list--block'>
-    Since <mark>{firstYearEdited}</mark>,{' '}
+ 
     { teamName } has mapped{' '}
     { fragmentList.map((fragment, i) => {
       return i === fragmentList.length - 1
