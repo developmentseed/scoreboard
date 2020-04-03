@@ -40,13 +40,9 @@ const Sidebar = ({ handleSearch }) => (
  * that exist on the platform
  */
 class Teams extends Component {
-  constructor () {
-    super()
-
-    this.state = {
-      teams: []
-    }
-
+  constructor (props) {
+    super(props)
+    this.state = { teams: [...props.teams.records] }
     this.handleSearch = this.handleSearch.bind(this)
   }
 
