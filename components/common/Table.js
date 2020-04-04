@@ -43,9 +43,11 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
       }
     case 'campaignlink':
       return ({ cell: { value } }) => {
-        const code = campaignMap[value]
+        const { taskerId, taskingManagerId } = campaignMap[value]
         return (
-          <Link href={`/campaigns/${code}`}>
+          <Link
+            href={`/campaign?id=${taskerId}-${taskingManagerId}`}
+            as={`/campaigns/${taskerId}-${taskingManagerId}`}>
             <a className='link--normal' >
               {value}
             </a>
@@ -62,8 +64,18 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
           </Link>
         )
       }
+    case 'teamlink':
+      return ({ cell: { value } }) => {
+        return (
+          <Link href={`/teams/${idMap[value]}`}>
+            <a className='link--normal' >
+              { value }
+            </a>
+          </Link>
+        )
+      }
     default:
-      return formattedNum
+      throw new Error(`unknown datatype ${datatype}`)
   }
 }
 
