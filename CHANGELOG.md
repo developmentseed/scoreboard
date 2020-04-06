@@ -10,12 +10,15 @@ Added
 
 - Added new sections to readme about osm-teams and administration settings.
 - Added an osmesaStats data structure to the response in route /teams:id.
+- Added new Team stats page to compile team editing + list of assigned campaigns
+- Added "Sort by Country" to Users page
 
 Changed
 
 - CentOS deployment script: deployment/centos/deploy.sh corrected and updated.
 - Cleaned up and improved comments in `.env.sample`.
 - Removed environment variables from README. Instead use `.env.sample` as a reference.
+- Removed in-page table sorting from Users and Country tables
 
 Fixed
 
