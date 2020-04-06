@@ -10,7 +10,7 @@ Added
 
 - Added new sections to readme about osm-teams and administration settings.
 - Added an osmesaStats data structure to the response in route /teams:id.
-- Added new Team stats page to compile team editing + campaign stats
+- Added new Team stats page to compile team editing + list of assigned campaigns
 - Added "Sort by Country" to Users page
 
 Changed
