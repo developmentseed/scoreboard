@@ -42,6 +42,14 @@ export class Team extends Component {
       assigned,
       priority: priorityDescription[pri]
     }))
+    const osmesaMemberStatsMap = fromPairs(osmesaStats.memberStats.map(stats => {
+      return [stats.uid, stats]
+    }))
+    const teamStatsData = team.members.map(({ id: osmId, name }) => {
+      const osmesaMemberStats = osmesaMemberStatsMap[osmId]
+      return osmesaMemberStats || emptyMemberStats(osmId, name)
+    })
+
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
@@ -110,7 +118,7 @@ export class Team extends Component {
         <section>
           <div className='row'>
             <h2 className='header--large header--with-description'>Team Stats</h2>
-            <TeamStatsTable users={osmesaStats.memberStats} name={exportDataFilename} />
+            <TeamStatsTable users={teamStatsData} name={exportDataFilename} />
           </div>
         </section>
 
@@ -204,6 +212,59 @@ function calculateBlurbStats ({
     waterwaysKmMapped: km_waterways_add + km_waterways_mod,
     coastlinesKmMapped: km_coastlines_add + km_coastlines_mod,
     buildingsMappedCount: buildings_add + buildings_mod
+  }
+}
+
+/**
+ * Create an empty data structure representing a team member with no edits. This
+ * is the same shape as the osmesa user_statistics table. osmesa only returns
+ * records for mappers with edits.
+ *
+ * @param osmId
+ * @param name
+ * @returns {{km_waterways_mod: number, km_coastlines_del: number, edit_times: [], hashtags: [], coastlines_mod: number, km_roads_add: number, roads_add: number, buildings_add: number, km_waterways_del: number, poi_del: number, uid: *, waterways_mod: number, changeset_count: number, poi_mod: number, km_railways_del: number, km_coastlines_mod: number, railways_mod: number, km_roads_del: number, editors: [], coastlines_del: number, km_railways_mod: number, roads_del: number, coastlines_add: number, buildings_del: number, km_waterways_add: number, km_roads_mod: number, railways_del: number, roads_mod: number, waterways_del: number, buildings_mod: number, last_edit: null, country_list: [], waterways_add: number, poi_add: number, name: *, km_coastlines_add: number, edit_count: number, km_railways_add: number, railways_add: number}}
+ */
+function emptyMemberStats (osmId, name) {
+  return {
+    uid: osmId,
+    name,
+    edit_count: 0,
+    changeset_count: 0,
+    last_edit: null,
+    editors: [],
+    edit_times: [],
+    hashtags: [],
+    country_list: [],
+    roads_add: 0,
+    roads_mod: 0,
+    roads_del: 0,
+    waterways_add: 0,
+    waterways_mod: 0,
+    waterways_del: 0,
+    coastlines_add: 0,
+    coastlines_mod: 0,
+    coastlines_del: 0,
+    buildings_add: 0,
+    buildings_mod: 0,
+    buildings_del: 0,
+    poi_add: 0,
+    poi_mod: 0,
+    poi_del: 0,
+    railways_add: 0,
+    railways_mod: 0,
+    railways_del: 0,
+    km_roads_add: 0,
+    km_roads_mod: 0,
+    km_roads_del: 0,
+    km_waterways_add: 0,
+    km_waterways_mod: 0,
+    km_waterways_del: 0,
+    km_coastlines_add: 0,
+    km_coastlines_mod: 0,
+    km_coastlines_del: 0,
+    km_railways_add: 0,
+    km_railways_mod: 0,
+    km_railways_del: 0
   }
 }
 
