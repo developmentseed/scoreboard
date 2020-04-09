@@ -27,8 +27,10 @@ export class Team extends Component {
       created_at: teamCreated,
       lastRefreshed,
       osmesaStats,
-      campaigns
+      campaigns,
+      canEdit
     } = team
+    console.log({ canEdit })
     const { buildingsMappedCount, poiCountMappedCount, roadsKmMapped,
       waterWaysKmMapped, coastlinesKmMapped } = calculateBlurbStats(osmesaStats.teamStats)
     const allMemberEditTimes = flatten(osmesaStats.memberStats.map(({ edit_times }) => edit_times))

@@ -8,8 +8,13 @@ const { OSM_TEAMS_SERVICE } = require('../config')
  * Methods to grab data from OSM Teams
  */
 class OSMTeams {
+  /**
+   * Constructor
+   *
+   * @param osmid {number} openstreetmap user id
+   */
   constructor (osmid) {
-    this.osmid = osmid
+    this.osmid = Number(osmid)
   }
 
   /**
@@ -83,6 +88,45 @@ class OSMTeams {
     return rp(`${OSM_TEAMS_SERVICE}/api/teams/${id}`)
   }
 
+  /**
+   * Check if user has permission to edit a team. The user needs to be either an
+   * owner of the organization, or a moderator of the team. Note: this should be
+   * the same as osm-teams's own team:edit permission.
+   *
+   * @param id {number} The osm-teams team id
+   * @returns {Promise<boolean>}
+   * @async
+   */
+  async canEditTeam (id) {
+    try {
+      const [orgOpts, teamOpts] = await Promise.all([
+        this.addAuthorization({
+          method: 'GET',
+          uri: `${OSM_TEAMS_SERVICE}/api/organizations/${id}`,
+          json: true
+        }),
+        this.addAuthorization({
+          method: 'GET',
+          uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}`,
+          json: true
+        })
+      ])
+      const [org, team] = await Promise.all([ rp(orgOpts), rp(teamOpts) ])
+      const { owners } = org
+      const { moderators } = team
+      const getId = ({ osm_id }) => osm_id
+      const allowedEditorIds = new Set(owners.map(getId).concat(moderators.map(getId)))
+      if (allowedEditorIds.has(this.osmid)) {
+        return true
+      }
+      return false
+    } catch (ex) {
+      // this would occur when user is not logged in and getAccessToken throws.
+      console.error(ex)
+      return false
+    }
+  }
+
   async editTeam (id, body) {
     var options = await this.addAuthorization({
       method: 'PUT',
@@ -136,6 +180,10 @@ class FakeOSMTeams {
     const team = sampleTeams[0]
     team.id = id
     return Promise.resolve(team, body)
+  }
+
+  canEditTeam (id) {
+    return Promise.resolve(false)
   }
 
   updateMembers (id, body) {
