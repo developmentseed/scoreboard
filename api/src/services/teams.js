@@ -65,10 +65,6 @@ class OSMTeams {
     return rp(`${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/teams`)
   }
 
-  getTeamsByOsmId (id) {
-    return rp(`${OSM_TEAMS_SERVICE}/api/teams?osmId=${id}&organizationId=${OSM_TEAMS_ORG_ID}`)
-  }
-
   async createTeam (body) {
     var options = await this.addAuthorization({
       method: 'POST',
