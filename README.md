@@ -143,6 +143,10 @@ callback URL would be `http://localhost:8181/auth/teams/accept` .
 
 The client id and client secret should be saved to your Scoreboard `.env` file.
 
+Scoreboard will work with a single organization at the moment. In osm-teams, record your organization's
+ID from the API and use the environment variable `OSM_TEAMS_ORG_ID` to have scoreboard read and write
+to the organization's teams.
+
 # Administrator Settings
 
 The Administrator Settings are found in the Admin user's dashboard, or
