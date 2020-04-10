@@ -1,7 +1,9 @@
 const { validateRole } = require('../utils/roles')
 const OSMTeams = require('../services/teams')
+const OSMesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { difference } = require('ramda')
+const getOsmesaLastRefreshed = require('../utils/osmesaStatus.js')
 
 /**
  * Teams list route
@@ -14,8 +16,8 @@ const { difference } = require('ramda')
  */
 async function list (req, res) {
   try {
-    let osmid = req.user ? req.user.id : null
-    let teams = new OSMTeams(osmid)
+    const { user: { id: osmId = null } = {} } = req
+    const teams = new OSMTeams(osmId)
     const data = await teams.getTeams()
     return res.send(data)
   } catch (err) {
@@ -41,8 +43,8 @@ async function post (req, res) {
   }
 
   try {
-    let osmid = req.user ? req.user.id : null
-    let teams = new OSMTeams(osmid)
+    const { id: osmId } = user
+    const teams = new OSMTeams(osmId)
     const team = await teams.createTeam(body)
     return res.send(team)
   } catch (err) {
@@ -61,26 +63,27 @@ async function post (req, res) {
  * @returns {Promise} a response
  */
 async function get (req, res) {
-  let osmid = req.user ? req.user.id : null
-  let teams = new OSMTeams(osmid)
   try {
-    const data = JSON.parse(await teams.getTeam(req.params.id))
-    console.log(data)
+    const { id: teamId } = req.params
+    const { user: { id: osmId = null } = {} } = req
+    const teams = new OSMTeams(osmId)
+    const teamData = JSON.parse(await teams.getTeam(teamId))
     const campaigns = await db('campaigns').join(
-      db('team_assignments').where('team_id', req.params.id).as('team_assignments'),
+      db('team_assignments').where('team_id', teamId).as('team_assignments'),
       'team_assignments.campaign_id',
       '=',
       'campaigns.id'
     ).join(db('taskers').select('name as tm_name', 'id as taskers_t_id').as('t'),
       'campaigns.tasker_id', '=', 't.taskers_t_id')
-    const users = await db('users').whereIn('osm_id', data.members.map(m => m.id))
+    const teamMemberOsmIds = teamData.members.map(m => m.id)
+    const users = await db('users').whereIn('osm_id', teamMemberOsmIds)
+    const osmesaStats = await OSMesa.getTeamStats(teamMemberOsmIds)
+    const lastRefreshed = await getOsmesaLastRefreshed('team')
     const team = {
-      id: data.id,
-      bio: data.bio,
-      hashtag: data.hashtag,
-      name: data.name,
-      location: data.location,
+      ...teamData,
       campaigns,
+      osmesaStats,
+      lastRefreshed,
       users
     }
     return res.send(team)
@@ -101,36 +104,36 @@ async function get (req, res) {
  */
 async function put (req, res) {
   const { user, body } = req
-
-  if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
-    return res.boom.unauthorized('Not authorized')
-  }
-
   try {
-    let teams = new OSMTeams(req.user.id)
-    const { campaigns, bio, name, hashtag, oldusers, newusers } = body
-    const team_id = req.params.id
-    const data = await teams.editTeam(team_id, { bio, name, hashtag })
+    const { id: osmId } = user
+    const { id: teamId } = req.params
+    const teams = new OSMTeams(osmId)
+    const { campaigns, bio, name, hashtag, location, oldusers, newusers } = body
+    const data = await teams.editTeam(teamId, { bio, name, hashtag, location })
+    /*
 
     // Update members
-    let add = difference(newusers, oldusers)
-    let remove = difference(oldusers, newusers)
+    const add = difference(newusers, oldusers)
+    const remove = difference(oldusers, newusers)
 
-    await teams.updateMembers(team_id, { add, remove })
+    await teams.updateMembers(teamId, { add, remove })
 
     // Insert assignments
     const assignments = campaigns.map(campaign => ({
-      team_id,
+      team_id: teamId,
       campaign_id: campaign.id,
       team_priority: campaign.team_priority,
       created_at: db.fn.now(),
       updated_at: db.fn.now()
     }))
+    */
+    /*
 
     await db.transaction(async t => {
-      await t('team_assignments').where('team_id', team_id).del() // delete existing assingnments
+      await t('team_assignments').where('team_id', teamId).del() // delete existing assingnments
       await t.batchInsert('team_assignments', assignments) // insert new assignments
     })
+    */
 
     return res.send(data)
   } catch (err) {
@@ -156,8 +159,10 @@ async function del (req, res) {
   }
 
   try {
-    let teams = new OSMTeams(req.user.id)
-    const status = await teams.deleteTeam(req.params.id)
+    const { id: osmId } = user
+    const { id: teamId } = req.params
+    const teams = new OSMTeams(osmId)
+    const status = await teams.deleteTeam(teamId)
     return res.sendStatus(status)
   } catch (err) {
     console.error(err)

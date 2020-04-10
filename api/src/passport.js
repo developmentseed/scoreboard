@@ -237,7 +237,7 @@ router.get('/teams/accept', async (req, res) => {
       const result = await teamServiceCredentials.authorizationCode.getToken(options)
 
       // Store access token and refresh token
-      await storeToken(result)
+      await storeToken(teamServiceCredentials.accessToken.create(result).token)
       return res.redirect(APP_URL_FINAL)
     } catch (error) {
       console.error(error)

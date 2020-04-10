@@ -43,9 +43,11 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
       }
     case 'campaignlink':
       return ({ cell: { value } }) => {
-        const code = campaignMap[value]
+        const { taskerId, taskingManagerId } = campaignMap[value]
         return (
-          <Link href={`/campaigns/${code}`}>
+          <Link
+            href={`/campaign?id=${taskerId}-${taskingManagerId}`}
+            as={`/campaigns/${taskerId}-${taskingManagerId}`}>
             <a className='link--normal' >
               {value}
             </a>
@@ -73,7 +75,7 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
         )
       }
     default:
-      return formattedNum
+      throw new Error(`unknown datatype ${datatype}`)
   }
 }
 
@@ -109,7 +111,7 @@ function prepareColumns (props) {
     return {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
-      disableSortBy: (key === 'button'),
+      disableSortBy: (props.notSortable) ? true : (key === 'button'),
       Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap),
       Footer: footerTotals[columnSchema.accessor]
     }

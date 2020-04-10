@@ -11,7 +11,7 @@ let final = join(appUrl, prefix)
 // add a trailing slash if it is missing
 if (final[final.length - 1] !== '/') final += '/'
 
-const APP_SECRET = process.env.APP_SECRET || '38ubHTGCBDzWDZvFFBVVKopafwRvVfCC'
+const APP_SECRET = process.env.APP_SECRET || 'changeme!........(32 characters)'
 const cryptr = new Cryptr(APP_SECRET)
 
 if (process.env.NODE_ENV === 'test') {
@@ -28,7 +28,7 @@ module.exports = {
   APP_URL: appUrl,
   APP_URL_PREFIX: prefix,
   APP_URL_FINAL: final,
-  APP_SECRET: process.env.APP_SECRET || 'super-secret-secret',
+  APP_SECRET,
   OSM_CONSUMER_KEY: process.env.OSM_CONSUMER_KEY,
   OSM_CONSUMER_SECRET: process.env.OSM_CONSUMER_SECRET,
   OSM_DOMAIN: process.env.OSM_DOMAIN || 'https://www.openstreetmap.org',
@@ -37,11 +37,12 @@ module.exports = {
   OSM_TEAMS_SERVICE_TOKEN_PATH: process.env.OSM_TEAMS_SERVICE_TOKEN_PATH || '/oauth2/token',
   OSM_TEAMS_SERVICE_AUTHZ_HOST: process.env.OSM_TEAMS_SERVICE_AUTHZ_HOST || 'http://localhost:4444',
   OSM_TEAMS_SERVICE_AUTHZ_PATH: process.env.OSM_TEAMS_SERVICE_AUTHZ_PATH || '/oauth2/auth',
+  OSM_TEAMS_ORG_ID: process.env.OSM_TEAMS_ORG_ID,
   OSM_TEAMS_CLIENT_ID: process.env.OSM_TEAMS_CLIENT_ID,
   OSM_TEAMS_CLIENT_SECRET: process.env.OSM_TEAMS_CLIENT_SECRET,
   PROJECT_NAME: process.env.PROJECT_NAME || 'OpenStreetMap',
   // to handle cases where the OSM deployment is behind a firewall
   OSM_DOMAIN_INTERNAL: process.env.OSM_DOMAIN_INTERNAL || process.env.OSM_DOMAIN || 'https://www.openstreetmap.org',
-  SESSION_SECRET: process.env.SESSION_SECRET || 'SUPER SECRET',
+  SESSION_SECRET: process.env.SESSION_SECRET || 'changeme!',
   DATABASE_URL
 }
