@@ -8,6 +8,7 @@ import ScoreboardPanel from '../components/ScoreboardPanel'
 import TeamStatsTable from '../components/campaign/CampaignTable'
 import Table from '../components/common/Table'
 import Blurb from '../components/teams/TeamBlurb'
+import Link from '../components/Link'
 import { formatDecimal, normalizeHashtag } from '../lib/utils/format'
 import { actions } from '../lib/store'
 
@@ -23,6 +24,7 @@ export class Team extends Component {
 
     const {
       name: teamName,
+      id: teamId,
       hashtag,
       created_at: teamCreated,
       lastRefreshed,
@@ -30,7 +32,6 @@ export class Team extends Component {
       campaigns,
       canEdit
     } = team
-    console.log({ canEdit })
     const { buildingsMappedCount, poiCountMappedCount, roadsKmMapped,
       waterWaysKmMapped, coastlinesKmMapped } = calculateBlurbStats(osmesaStats.teamStats)
     const allMemberEditTimes = flatten(osmesaStats.memberStats.map(({ edit_times }) => edit_times))
@@ -75,6 +76,12 @@ export class Team extends Component {
             </div>
             <div className='widget-33 page-actions'>
               {/* <a className='button' href='#'>Join</a> */}
+              { canEdit
+                ? <Link className='button' href={`/teams/${teamId}/edit-details`}>
+                  <a className='button'>Edit Team</a>
+                </Link>
+                : null
+              }
             </div>
           </div>
         </header>
