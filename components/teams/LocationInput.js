@@ -4,7 +4,10 @@ import { reverse } from 'ramda'
 
 export default function LocationInput ({ value, onChange }) {
   const [ zoom, setZoom ] = useState(1)
-  const newCenter = reverse(JSON.parse(value).coordinates)
+  let newCenter = [0, 0]
+  if (value) {
+    newCenter = reverse(JSON.parse(value).coordinates)
+  }
 
   return (
     <Map style={{ height: '300px' }}

@@ -6,7 +6,6 @@ import TeamDetailsForm from '../components/teams/TeamDetailsForm'
 import Router from '../lib/router'
 
 function EditTeam (props) {
-  console.log(props)
   const handleSubmit = async (data) => {
     await props.updateTeam(props.id, data)
     Router.push(`/teams/${props.id}`)
