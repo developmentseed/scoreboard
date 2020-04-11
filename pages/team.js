@@ -74,7 +74,7 @@ export class Team extends Component {
     } else {
       return <h2 className='header--small width--shortened list--block'>
         {teamName} has not made any mapping edits yet. Explore{' '}
-        <Link href={'/campaigns'}>active campaigns</Link> to get started!
+        <Link href={'/campaigns'}><a>active campaigns</a></Link> to get started!
       </h2>
     }
   }
@@ -128,7 +128,7 @@ export class Team extends Component {
             <div className='widget-33 page-actions'>
               {/* <a className='button' href='#'>Join</a> */}
               { canEdit
-                ? <Link className='button' href={`/teams/${teamId}/edit-details`}>
+                ? <Link href={`/teams/${teamId}/edit-details`}>
                   <a className='button'>Edit Team</a>
                 </Link>
                 : null
