@@ -26,7 +26,18 @@ const theme = {
   }
 }
 
+/**
+ * Generate some integers for react's element keys.
+ *
+ * @returns {function(): number}
+ */
+function keyGeneratorFactory () {
+  let i = 0
+  return () => i++
+}
+
 export default function CampaignCharts (props) {
+  const keyGenerator = keyGeneratorFactory()
   return (
     <div className={`chart widget`} style={{ height: props.height }}>
       <h4 className='header--small'>Top Hashtags</h4>
@@ -59,6 +70,7 @@ export default function CampaignCharts (props) {
               }) => {
                 return (
                   <g
+                    key={keyGenerator()}
                     transform={`translate(${x},${y})`}
                     style={{ opacity }}
                   >
