@@ -2,7 +2,7 @@ const rp = require('request-promise-native')
 const sampleTeams = require('../fixtures/teams.json')
 const { getToken, storeToken } = require('../models/teams-access-tokens')
 const { teamServiceCredentials } = require('../passport')
-const { OSM_TEAMS_SERVICE } = require('../config')
+const { OSM_TEAMS_SERVICE, OSM_TEAMS_ORG_ID } = require('../config')
 
 /**
  * Methods to grab data from OSM Teams
@@ -65,19 +65,15 @@ class OSMTeams {
    */
   getTeams (id) {
     if (id) {
-      return rp(`${OSM_TEAMS_SERVICE}/api/teams?osmId=${id}`)
+      return rp(`${OSM_TEAMS_SERVICE}/api/teams?osmId=${id}&organizationId=${OSM_TEAMS_ORG_ID}`)
     }
-    return rp(`${OSM_TEAMS_SERVICE}/api/teams`)
-  }
-
-  getTeamsByOsmId (id) {
-    return rp(`${OSM_TEAMS_SERVICE}/api/teams?osmId=${id}`)
+    return rp(`${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/teams`)
   }
 
   async createTeam (body) {
     var options = await this.addAuthorization({
       method: 'POST',
-      uri: `${OSM_TEAMS_SERVICE}/api/teams`,
+      uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/teams`,
       body,
       json: true
     })
