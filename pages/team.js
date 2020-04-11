@@ -11,7 +11,12 @@ import Blurb from '../components/teams/TeamBlurb'
 import Link from '../components/Link'
 import { formatDecimal, normalizeHashtag } from '../lib/utils/format'
 import { actions } from '../lib/store'
-import { emptyMemberStats, priorityDescription, calculateBlurbStats } from '../lib/utils/teams'
+import {
+  calculateBlurbStats,
+  emptyMemberStats,
+  isModerator,
+  priorityDescription
+} from '../lib/utils/teams'
 
 /**
  * Schema for the Team Campaigns table.
@@ -42,10 +47,41 @@ export class Team extends Component {
     this.slugger = new Slugger()
   }
 
+  renderCampaignsElement () {
+    const { authenticatedUser, team } = this.props
+    const { id: teamId, campaigns, name: teamName } = team
+    const osmId = pathOr(0, ['account', 'id'], authenticatedUser)
+    if (campaigns.length > 0) {
+      const campaignMap = fromPairs(campaigns.map(({ name, tasker_id: taskerId, tm_id: taskingManagerId }) => {
+        return [name, { taskerId, taskingManagerId }]
+      }))
+      const campaignData = campaigns.map(({ name, updated_at: assigned, team_priority: pri }) => ({
+        name,
+        assigned,
+        priority: priorityDescription[pri]
+      }))
+      return <div className='widget'>
+        <Table tableSchema={teamCampaignsTableSchema} notSortable
+          data={campaignData} campaignMap={campaignMap} />
+      </div>
+    } else if (isModerator(Number(osmId), team)) {
+      return <h2 className='header--small width--shortened list--block'>
+        There are no current assignments for this team.{ ' ' }
+        <Link href={`/teams/${teamId}/edit-details`}>
+          <a>Add campaign assignments.</a>
+        </Link>
+      </h2>
+    } else {
+      return <h2 className='header--small width--shortened list--block'>
+        {teamName} has not made any mapping edits yet. Explore{' '}
+        <Link href={'/campaigns'}>active campaigns</Link> to get started!
+      </h2>
+    }
+  }
+
   render () {
     const { team } = this.props
     if (!team) return <div />
-
     const {
       name: teamName,
       id: teamId,
@@ -53,23 +89,13 @@ export class Team extends Component {
       created_at: teamCreated,
       lastRefreshed,
       osmesaStats,
-      campaigns,
       canEdit
     } = team
-    console.log(osmesaStats)
     const { buildingsMappedCount, poiCountMappedCount, roadsKmMapped,
       waterWaysKmMapped, coastlinesKmMapped } = calculateBlurbStats(osmesaStats.teamStats)
     const allMemberEditTimes = flatten(osmesaStats.memberStats.map(({ edit_times }) => edit_times))
     const firstYearEdited = getYear(head(allMemberEditTimes.map(t => t.day).sort(compareAsc)))
     const exportDataFilename = this.slugger.slug(teamName || 'team export', false)
-    const campaignMap = fromPairs(campaigns.map(({ name, tasker_id: taskerId, tm_id: taskingManagerId }) => {
-      return [name, { taskerId, taskingManagerId }]
-    }))
-    const campaignData = campaigns.map(({ name, updated_at: assigned, team_priority: pri }) => ({
-      name,
-      assigned,
-      priority: priorityDescription[pri]
-    }))
     const osmesaMemberStatsMap = fromPairs(osmesaStats.memberStats.map(stats => {
       return [stats.uid, stats]
     }))
@@ -159,9 +185,7 @@ export class Team extends Component {
         <section>
           <div className='row'>
             <h2 className='header--large header--with-description'>Team Campaigns</h2>
-            <div className='widget'>
-              <Table tableSchema={teamCampaignsTableSchema} notSortable data={campaignData} campaignMap={campaignMap} />
-            </div>
+            { this.renderCampaignsElement() }
           </div>
         </section>
       </div>
