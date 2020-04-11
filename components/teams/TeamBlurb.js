@@ -32,7 +32,7 @@ export default function Blurb ({
   if (!firstYearEdited) {
     return <h2 className='header--small width--shortened list--block'>
       { teamName } has not made any mapping edits yet. Explore{' '}
-      <Link href='/campaigns'>active campaigns</Link> to get started!
+      <Link href={'/campaigns'}><a>active campaigns</a></Link> to get started!
     </h2>
   }
   const fragmentList = []
