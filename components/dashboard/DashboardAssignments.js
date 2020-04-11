@@ -4,6 +4,17 @@ import AssignmentsTable from '../AssignmentsTable'
 import { sortBy, prop, concat, reduce, map } from 'ramda'
 import Link from '../Link'
 
+/**
+ * Map team assignment integer priority to simple 3 tier naming.
+ *
+ * @type {{'1': string, '2': string, '3': string}}
+ */
+const priorityDescription = Object.freeze({
+  1: 'High',
+  2: 'Medium',
+  3: 'Low'
+})
+
 class DashboardAssignments extends Component {
   constructor (props) {
     super(props)
@@ -22,9 +33,8 @@ class DashboardAssignments extends Component {
     const { favorites, assignments, all } = this.props
     let teamAssignments = map(task => {
       return {
-        priority: task.team_priority ? `team priority: ${task.team_priority}` : task.priority,
-        name: task.name,
-        campaign_hashtag: task.campaign_hashtag,
+        ...task,
+        priority: task.team_priority ? priorityDescription[task.team_priority] : task.priority,
         source: task.team_name
       }
     }, sortBy(prop('team_priority'), assignments))
@@ -87,7 +97,7 @@ class DashboardAssignments extends Component {
     return (
       <div>
         <h2 className='header--large header--with-description'>
-          <Link href='/campaigns'>
+          <Link href={'/campaigns'}>
             <a className='header-link'>Campaigns</a>
           </Link>
         </h2>
