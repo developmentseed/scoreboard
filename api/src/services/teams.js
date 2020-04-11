@@ -71,7 +71,7 @@ class OSMTeams {
   }
 
   async createTeam (body) {
-    var options = await this.addAuthorization({
+    const options = await this.addAuthorization({
       method: 'POST',
       uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/teams`,
       body,
@@ -98,7 +98,7 @@ class OSMTeams {
       const [orgOpts, teamOpts] = await Promise.all([
         this.addAuthorization({
           method: 'GET',
-          uri: `${OSM_TEAMS_SERVICE}/api/organizations/${id}`,
+          uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}`,
           json: true
         }),
         this.addAuthorization({
@@ -112,10 +112,7 @@ class OSMTeams {
       const { moderators } = team
       const getId = ({ osm_id }) => osm_id
       const allowedEditorIds = new Set(owners.map(getId).concat(moderators.map(getId)))
-      if (allowedEditorIds.has(this.osmid)) {
-        return true
-      }
-      return false
+      return allowedEditorIds.has(this.osmid)
     } catch (ex) {
       // this would occur when user is not logged in and getAccessToken throws.
       console.error(ex)
@@ -124,7 +121,7 @@ class OSMTeams {
   }
 
   async editTeam (id, body) {
-    var options = await this.addAuthorization({
+    const options = await this.addAuthorization({
       method: 'PUT',
       uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}`,
       body,
@@ -134,7 +131,7 @@ class OSMTeams {
   }
 
   async updateMembers (id, body) {
-    var options = await this.addAuthorization({
+    const options = await this.addAuthorization({
       method: 'PATCH',
       uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}/members`,
       body,
@@ -144,7 +141,7 @@ class OSMTeams {
   }
 
   async deleteTeam (id) {
-    var options = await this.addAuthorization({
+    const options = await this.addAuthorization({
       method: 'DELETE',
       uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}`,
       json: true
