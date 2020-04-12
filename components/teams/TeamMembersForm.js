@@ -1,6 +1,7 @@
 import Pagination from 'react-js-pagination'
 import React, { useEffect } from 'react'
 import { connect } from 'unistore/react'
+import { includes, prop } from 'ramda'
 import { actions } from '../../lib/store'
 import Table from '../common/Table'
 
@@ -40,7 +41,12 @@ function EditMembersForm (props) {
 
   if (!records) return <div>Error loading</div>
 
+  const memberIds = props.members.map(prop('osm_id'))
+
   const searchUsers = records.map(record => {
+    if (includes(record.osm_id, memberIds)) {
+      return record
+    }
     return Object.assign(record, {
       button: <button style={{ 'padding': '5px' }} className='button' onClick={() => props.addUser(record)} >Add</button>
     })

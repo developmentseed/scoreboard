@@ -1,20 +1,19 @@
 import { useForm, Controller } from 'react-hook-form'
-import { isNil } from 'ramda'
+import { isNil, pick } from 'ramda'
 import dynamic from 'next/dynamic'
 
 const LocationInput = dynamic(() => import('./LocationInput'), { ssr: false })
 
 export default function TeamDetailsForm ({ onSubmit, details }) {
+  details = pick(['location', 'name', 'hashtag', 'bio'], details)
   details['locationExistsWatch'] = !isNil(details['location'])
   const { register, handleSubmit, errors, control, watch } = useForm({ defaultValues: details })
   const locationExistsWatch = watch('locationExistsWatch')
 
   return (
     <form className='form' onSubmit={handleSubmit((data, e) => {
-      console.log(data)
       if (!data.location) data['location'] = null // set location to null explicitly
       delete data['locationExistsWatch'] // We don't want the checkbox value to be sent to the API
-      console.log('newdata', data)
       onSubmit(data, e)
     })}>
       <div className='form__input-unit'>
@@ -40,7 +39,7 @@ export default function TeamDetailsForm ({ onSubmit, details }) {
         </>
         }
       </div>
-      <input type='submit' className='button' value='submit' />
+      <input type='submit' className='button' value='Save Details' />
     </form>
   )
 }

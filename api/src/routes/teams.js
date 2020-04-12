@@ -110,7 +110,6 @@ async function put (req, res) {
     const teams = new OSMTeams(osmId)
     const { campaigns, bio, name, hashtag, location, oldusers, newusers } = body
     const data = await teams.editTeam(teamId, { bio, name, hashtag, location })
-    /*
 
     // Update members
     const add = difference(newusers, oldusers)
@@ -119,6 +118,7 @@ async function put (req, res) {
     await teams.updateMembers(teamId, { add, remove })
 
     // Insert assignments
+    /*
     const assignments = campaigns.map(campaign => ({
       team_id: teamId,
       campaign_id: campaign.id,
@@ -126,8 +126,6 @@ async function put (req, res) {
       created_at: db.fn.now(),
       updated_at: db.fn.now()
     }))
-    */
-    /*
 
     await db.transaction(async t => {
       await t('team_assignments').where('team_id', teamId).del() // delete existing assingnments

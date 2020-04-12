@@ -1,13 +1,40 @@
-import React from 'react'
+import React, { useReducer, useState } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
+import { pick, prop } from 'ramda'
 import fetch from '../lib/utils/api'
 import TeamDetailsForm from '../components/teams/TeamDetailsForm'
+import AdminUsersSearch from '../components/teams/TeamMembersForm'
 import Router from '../lib/router'
 
 function EditTeam (props) {
-  const handleSubmit = async (data) => {
-    await props.updateTeam(props.id, data)
+  /**
+   * Function for adding removing members from
+   * state
+   */
+  const [members, setMembers] = useReducer(
+    (members, { type, value }) => {
+      switch (type) {
+        case 'add':
+          return [...members, value]
+        case 'remove':
+          return members.filter(({ osm_id }) => (osm_id.toString() !== value.osm_id.toString()))
+      }
+    }, props.data.users
+  )
+
+  /**
+   * Function to update details
+   */
+  const [details, setDetails] = useState(
+    pick(['location', 'name', 'hashtag', 'bio'], props.data)
+  )
+
+  const handleSubmit = async () => {
+    await props.updateTeam(props.id, { ...details,
+      newusers: members.map(prop('osm_id')),
+      oldusers: props.data.users.map(prop('osm_id'))
+    })
     Router.push(`/teams/${props.id}`)
   }
 
@@ -24,11 +51,28 @@ function EditTeam (props) {
             </div>
             { props.data
               ? <TeamDetailsForm
-                onSubmit={handleSubmit}
-                details={props.data}
+                onSubmit={setDetails}
+                details={details}
               />
               : <div />
             }
+            <br />
+            <div>
+              <h1 className='header--xlarge'>Add Members</h1>
+              <AdminUsersSearch
+                members={members}
+                addUser={
+                  u => setMembers({ type: 'add', value: u })
+                }
+                removeUser={
+                  u => setMembers({ type: 'remove', value: u })
+                }
+              />
+            </div>
+            <div>
+              <h1 className='header--xlarge'>Add Campaigns</h1>
+            </div>
+            <input className='button' onClick={handleSubmit} value='Submit Form' />
           </div>
         </div>
       </section>
