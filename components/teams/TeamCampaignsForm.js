@@ -97,8 +97,6 @@ function CampaignSearch (props) {
       button: <button style={{ 'padding': '5px' }} className='button' onClick={() => props.addCampaign(record)}>Add</button>
     })
   })
-  console.log('selected', campaigns)
-  console.log('search', searchCampaigns)
 
   return (
     <div>

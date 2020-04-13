@@ -72,7 +72,7 @@ function EditTeam (props) {
             </div>
             { props.data
               ? <TeamDetailsForm
-                onSubmit={setDetails}
+                onChange={setDetails}
                 details={details}
               />
               : <div />
