@@ -4,7 +4,8 @@ import { actions } from '../lib/store'
 import { pick, prop } from 'ramda'
 import fetch from '../lib/utils/api'
 import TeamDetailsForm from '../components/teams/TeamDetailsForm'
-import AdminUsersSearch from '../components/teams/TeamMembersForm'
+import TeamMembersForm from '../components/teams/TeamMembersForm'
+import TeamCampaignsForm from '../components/teams/TeamCampaignsForm'
 import Router from '../lib/router'
 
 function EditTeam (props) {
@@ -20,7 +21,26 @@ function EditTeam (props) {
         case 'remove':
           return members.filter(({ osm_id }) => (osm_id.toString() !== value.osm_id.toString()))
       }
-    }, props.data.users
+    }, props.data.users || []
+  )
+
+  /**
+   * Function for adding removing campaigns from
+   * state
+   */
+  const [campaigns, setCampaigns] = useReducer(
+    (campaigns, { type, value }) => {
+      switch (type) {
+        case 'add': {
+          const uniqueCampaigns = campaigns.filter(
+            c => c.id !== value.id
+          )
+          return [...uniqueCampaigns, value]
+        }
+        case 'remove':
+          return campaigns.filter(({ id }) => id !== value.id)
+      }
+    }, props.data.campaigns || []
   )
 
   /**
@@ -33,7 +53,8 @@ function EditTeam (props) {
   const handleSubmit = async () => {
     await props.updateTeam(props.id, { ...details,
       newusers: members.map(prop('osm_id')),
-      oldusers: props.data.users.map(prop('osm_id'))
+      oldusers: props.data.users.map(prop('osm_id')),
+      campaigns: campaigns.map(pick(['id', 'team_priority']))
     })
     Router.push(`/teams/${props.id}`)
   }
@@ -59,7 +80,7 @@ function EditTeam (props) {
             <br />
             <div>
               <h1 className='header--xlarge'>Add Members</h1>
-              <AdminUsersSearch
+              <TeamMembersForm
                 members={members}
                 addUser={
                   u => setMembers({ type: 'add', value: u })
@@ -71,6 +92,12 @@ function EditTeam (props) {
             </div>
             <div>
               <h1 className='header--xlarge'>Add Campaigns</h1>
+              <TeamCampaignsForm
+                campaigns={campaigns}
+                addCampaign={c => { setCampaigns({ type: 'add', value: c }) }}
+                removeCampaign={
+                  c => setCampaigns({ type: 'remove', value: c })}
+              />
             </div>
             <input className='button' onClick={handleSubmit} value='Submit Form' />
           </div>

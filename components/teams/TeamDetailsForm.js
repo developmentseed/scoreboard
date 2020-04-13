@@ -1,11 +1,10 @@
 import { useForm, Controller } from 'react-hook-form'
-import { isNil, pick } from 'ramda'
+import { isNil } from 'ramda'
 import dynamic from 'next/dynamic'
 
 const LocationInput = dynamic(() => import('./LocationInput'), { ssr: false })
 
 export default function TeamDetailsForm ({ onSubmit, details }) {
-  details = pick(['location', 'name', 'hashtag', 'bio'], details)
   details['locationExistsWatch'] = !isNil(details['location'])
   const { register, handleSubmit, errors, control, watch } = useForm({ defaultValues: details })
   const locationExistsWatch = watch('locationExistsWatch')
