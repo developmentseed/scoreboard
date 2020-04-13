@@ -8,6 +8,41 @@ import TeamMembersForm from '../components/teams/TeamMembersForm'
 import TeamCampaignsForm from '../components/teams/TeamCampaignsForm'
 import Router from '../lib/router'
 
+function DestroyButton ({ onDestroy }) {
+  const [destroyConfirmation, setDestroyConfirmation] = useState(false)
+
+  const destroyConfirmationButton = <div className='form__footer'>
+    <p>Are you sure you want to delete this team?</p>
+    <button className='button button--destroy'
+      id='delete-badge-confirmation-operation-button'
+      type='button'
+      onClick={onDestroy}
+    >
+      Delete this team permanently
+    </button>
+
+    <button className='button button--secondary'
+      id='cancel-delete-badge-operation-button'
+      type='button'
+      onClick={() => setDestroyConfirmation(false)} >
+      Cancel
+    </button>
+  </div>
+
+  const destroyButton = (
+    <button className='button button--destroy'
+      id='delete-badge-operation-button'
+      type='button'
+      onClick={() => setDestroyConfirmation(true)}
+    >
+      Delete this team
+    </button>
+  )
+
+  if (destroyConfirmation) return destroyConfirmationButton
+  else return destroyButton
+}
+
 function EditTeam (props) {
   /**
    * Function for adding removing members from
@@ -59,6 +94,11 @@ function EditTeam (props) {
     Router.push(`/teams/${props.id}`)
   }
 
+  const handleDestroy = async () => {
+    await props.deleteTeam(props.id)
+    Router.push('/teams')
+  }
+
   return (
     <div className='admin'>
       <section>
@@ -99,7 +139,12 @@ function EditTeam (props) {
                   c => setCampaigns({ type: 'remove', value: c })}
               />
             </div>
-            <input className='button' onClick={handleSubmit} value='Submit Form' />
+            <section class='section-sub'>
+              <input className='button' onClick={handleSubmit} value='Submit Form' />
+            </section>
+            <section class='section-sub'>
+              <DestroyButton onDestroy={handleDestroy} />
+            </section>
           </div>
         </div>
       </section>

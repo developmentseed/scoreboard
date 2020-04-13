@@ -149,11 +149,6 @@ async function put (req, res) {
  */
 async function del (req, res) {
   const { user } = req
-
-  if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
-    return res.boom.unauthorized('Not authorized')
-  }
-
   try {
     const { id: osmId } = user
     const { id: teamId } = req.params
