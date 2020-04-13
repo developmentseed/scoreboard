@@ -118,5 +118,25 @@
         "id": "campaign-priority",
         "name": "Priority",
         "description": "Priority of campaign for mappers on team (High/Medium/Low)"
+    },
+    {
+        "id": "team-name",
+        "name": "Team Name",
+        "description": "Team Name"
+    },
+    {
+        "id": "#-members",
+        "name": "# of Members",
+        "description": "Number of Members"
+    },
+    {
+        "id": "moderator-names",
+        "name": "Moderator Names",
+        "description": "Moderator Names"
+    },
+    {
+        "id":"team-hashtag",
+        "name":"Hashtag",
+        "description":"Hashtag for this team"
     }
 ]
