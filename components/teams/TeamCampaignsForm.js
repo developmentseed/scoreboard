@@ -44,9 +44,9 @@ class Assignment extends Component {
       value={team_priority}
       onChange={this.handleChange}
       options={[
-        { value: 1, label: '1' },
-        { value: 2, label: '2' },
-        { value: 3, label: '3' }
+        { value: 1, label: 'High' },
+        { value: 2, label: 'Medium' },
+        { value: 3, label: 'Low' }
       ]}
     />
 
@@ -85,7 +85,7 @@ function CampaignSearch (props) {
   const { records: { total, records } } = props.adminTeamCampaignsSearchResults
   if (!records || !campaigns) return <div>Error loading</div>
 
-  const selectedIds = campaigns.map(prop('campaign_id'))
+  const selectedIds = campaigns.map(prop('id'))
 
   const searchCampaigns = records.map(record => {
     if (includes(record.id, selectedIds)) {

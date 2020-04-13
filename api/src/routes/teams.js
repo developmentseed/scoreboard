@@ -1,4 +1,3 @@
-const { validateRole } = require('../utils/roles')
 const OSMTeams = require('../services/teams')
 const OSMesa = require('../services/osmesa')
 const db = require('../db/connection')
@@ -69,7 +68,7 @@ async function get (req, res) {
     const teams = new OSMTeams(osmId)
     const teamData = JSON.parse(await teams.getTeam(teamId))
     const campaigns = await db('campaigns').join(
-      db('team_assignments').select(['team_id', 'campaign_id']).where('team_id', teamId).as('team_assignments'),
+      db('team_assignments').select(['team_id', 'team_priority', 'campaign_id']).where('team_id', teamId).as('team_assignments'),
       'team_assignments.campaign_id',
       '=',
       'campaigns.id'
