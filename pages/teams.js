@@ -56,7 +56,6 @@ class Teams extends Component {
     const { teams: prevTeams } = prevProps
     const { teams, authenticatedUser } = this.props
     if (prevTeams.records.length !== teams.records.length) {
-      console.log(teams.records)
       this.setState({
         user: authenticatedUser,
         teams: teams.records
@@ -77,14 +76,20 @@ class Teams extends Component {
 
   renderList () {
     const { teams } = this.state
-    // console.log( teams )
-
     if (!teams || !teams.length) return
-
+    const tableData = teams.map(team => {
+      const memberCount = team.members.length
+      const moderatorNames = Object.values(team.moderators).join(', ')
+      return {
+        ...team,
+        memberCount,
+        moderatorNames
+      }
+    })
     let idMap = Object.assign(...teams.map(({ id, name }) => ({ [name]: id })))
     return (
       <div>
-        <Table tableSchema={tableSchema} data={teams} idMap={idMap} />
+        <Table tableSchema={tableSchema} data={tableData} idMap={idMap} />
       </div>
     )
   }
