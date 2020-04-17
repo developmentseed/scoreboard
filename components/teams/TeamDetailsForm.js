@@ -1,4 +1,5 @@
-import { useForm, Controller } from 'react-hook-form'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { isNil } from 'ramda'
 import dynamic from 'next/dynamic'
 
@@ -11,13 +12,14 @@ const LocationInput = dynamic(() => import('./LocationInput'), { ssr: false })
  * with onSubmit
  */
 export default function TeamDetailsForm ({ onSubmit, onChange, details }) {
+  const [locationValue, setLocationValue] = useState(details['location'])
+
   details['locationExistsWatch'] = !isNil(details['location'])
-  const { register, handleSubmit, errors, control, watch, getValues } = useForm({ defaultValues: details })
+  const { register, handleSubmit, errors, unregister, watch, getValues, setValue } = useForm({ defaultValues: details })
   const locationExistsWatch = watch('locationExistsWatch')
 
   function reshapeData (callback) {
     return (data, e) => {
-      console.log(data)
       if (!data.location) data['location'] = null // set location to null explicitly
       delete data['locationExistsWatch'] // We don't want the checkbox value to be sent to the API
       callback(data, e)
@@ -46,12 +48,21 @@ export default function TeamDetailsForm ({ onSubmit, onChange, details }) {
         <textarea name='bio' ref={register} />
       </div>
       <div className='form__input-unit'>
-        <label className='form__label' htmlFor='locationExists'>Does this team have a location?</label>
-        <input ref={register} type='checkbox' name='locationExistsWatch' onChange={getValuesOnChange} />
+        <label className='form__label' htmlFor='locationExists'>Does this team have a location?
+          <input style={{ 'marginLeft': '10px' }} ref={register} type='checkbox' name='locationExistsWatch' onChange={getValuesOnChange} />
+        </label>
         { locationExistsWatch &&
         <>
           <label className='form__label' htmlFor='location'>Location</label>
-          <Controller as={LocationInput} control={control} name='location' onChange={getValuesOnChange} />
+          <LocationInput
+            onChange={(value) => {
+              setValue('location', value)
+              setLocationValue(value)
+              getValuesOnChange()
+            }}
+            value={locationValue}
+            {...{ register, unregister, name: 'location' }}
+          />
         </>
         }
       </div>

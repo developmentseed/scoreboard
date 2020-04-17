@@ -1,8 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Map, TileLayer, CircleMarker } from 'react-leaflet'
 import { reverse } from 'ramda'
 
-export default function LocationInput ({ value, onChange }) {
+export default function LocationInput ({
+  register, unregister, name, onChange, value
+}) {
+  useEffect(() => {
+    register({ name })
+    return () => unregister(name)
+  }, [name, register, unregister])
+
   const [ zoom, setZoom ] = useState(1)
   let newCenter = [0, 0]
   if (value) {

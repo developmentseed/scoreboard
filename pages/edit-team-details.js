@@ -139,10 +139,10 @@ function EditTeam (props) {
                   c => setCampaigns({ type: 'remove', value: c })}
               />
             </div>
-            <section class='section-sub'>
+            <section className='section-sub'>
               <input className='button' onClick={handleSubmit} value='Submit Form' />
             </section>
-            <section class='section-sub'>
+            <section className='section-sub'>
               <DestroyButton onDestroy={handleDestroy} />
             </section>
           </div>
