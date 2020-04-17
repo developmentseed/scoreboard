@@ -45,24 +45,7 @@ function DestroyButton ({ onDestroy }) {
   else return destroyButton
 }
 
-function EditTeam (props) {
-  const [loading, setLoading] = useState(true)
-
-  // On load get the user
-  useEffect(() => {
-    props.getAuthenticatedUser()
-      .then(() => setLoading(false))
-  })
-
-  if (loading) {
-    return <LoadingState />
-  }
-  const { authenticatedUser } = props
-
-  if (!authenticatedUser.loggedIn) {
-    return <NotLoggedIn />
-  }
-
+export function EditTeam (props) {
   /**
    * Function for adding removing members from
    * state
@@ -116,6 +99,23 @@ function EditTeam (props) {
   const handleDestroy = async () => {
     await props.deleteTeam(props.id)
     Router.push('/teams')
+  }
+
+  const [loading, setLoading] = useState(true)
+
+  // On load get the user
+  useEffect(() => {
+    props.getAuthenticatedUser()
+      .then(() => setLoading(false))
+  })
+
+  if (loading) {
+    return <LoadingState />
+  }
+  const { authenticatedUser } = props
+
+  if (!authenticatedUser.loggedIn) {
+    return <NotLoggedIn />
   }
 
   return (
