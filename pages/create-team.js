@@ -1,10 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import TeamDetailsForm from '../components/teams/TeamDetailsForm'
 import Router from '../lib/router'
+import NotLoggedIn from '../components/NotLoggedIn'
+import { LoadingState } from '../components/common/LoadingState'
 
 export function CreateTeam (props) {
+  const [loading, setLoading] = useState(true)
+
+  // On load get the user
+  useEffect(() => {
+    props.getAuthenticatedUser()
+      .then(() => setLoading(false))
+  })
+
+  if (loading) {
+    return <LoadingState />
+  }
+  const { authenticatedUser } = props
+
+  if (!authenticatedUser.loggedIn) {
+    return <NotLoggedIn />
+  }
   const handleSubmit = async (data) => {
     await props.createTeam(data)
     Router.push('/teams')
