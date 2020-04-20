@@ -9,7 +9,7 @@ import TeamStatsTable from '../components/campaign/CampaignTable'
 import Table from '../components/common/Table'
 import Blurb from '../components/teams/TeamBlurb'
 import Link from '../components/Link'
-import { formatDecimal, normalizeHashtag } from '../lib/utils/format'
+import { formatDecimal } from '../lib/utils/format'
 import { actions } from '../lib/store'
 import {
   calculateBlurbStats,
@@ -113,7 +113,7 @@ export class Team extends Component {
               <ul className='list--two-column'>
                 <li>
                   <span className='list-label'>hashtag</span>
-                  <strong>{ normalizeHashtag(hashtag) }</strong>
+                  <strong>{ hashtag }</strong>
                 </li>
                 <li>
                   <span className='list-label'>created</span>
