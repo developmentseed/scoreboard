@@ -107,7 +107,7 @@ export function EditTeam (props) {
   useEffect(() => {
     props.getAuthenticatedUser()
       .then(() => setLoading(false))
-  })
+  }, [])
 
   if (loading) {
     return <LoadingState />

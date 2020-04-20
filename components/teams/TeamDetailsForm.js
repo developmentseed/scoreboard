@@ -48,9 +48,11 @@ export default function TeamDetailsForm ({ onSubmit, onChange, details }) {
         <textarea name='bio' ref={register} />
       </div>
       <div className='form__input-unit'>
-        <label className='form__label' htmlFor='locationExists'>Does this team have a location?
-          <input style={{ 'marginLeft': '10px' }} ref={register} type='checkbox' name='locationExistsWatch' onChange={getValuesOnChange} />
-        </label>
+        <div className='checkbox'>
+          <input id='haveLocation' style={{ 'marginLeft': '10px' }} ref={register} type='checkbox' name='locationExistsWatch' onChange={getValuesOnChange} />
+          <label className='form__label' htmlFor='haveLocation'>Does this team have a location?</label>
+        </div>
+
         { locationExistsWatch &&
         <>
           <label className='form__label' htmlFor='location'>Location</label>
