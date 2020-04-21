@@ -8,8 +8,38 @@ import ScoreboardPanel from '../components/ScoreboardPanel'
 import TeamStatsTable from '../components/campaign/CampaignTable'
 import Table from '../components/common/Table'
 import Blurb from '../components/teams/TeamBlurb'
-import { formatDecimal, normalizeHashtag } from '../lib/utils/format'
+import Link from '../components/Link'
+import { formatDecimal } from '../lib/utils/format'
 import { actions } from '../lib/store'
+import {
+  calculateBlurbStats,
+  emptyMemberStats,
+  isModerator,
+  priorityDescription
+} from '../lib/utils/teams'
+
+/**
+ * Schema for the Team Campaigns table.
+ *
+ * @type {{headers: {'campaign-assigned': {accessor: string, type: string}, 'campaign-name': {accessor: string, type: string}, 'campaign-priority': {accessor: string, type: string}}, columnOrder: [string, string, string], displaysTooltip: [string, string, string]}}
+ */
+const teamCampaignsTableSchema = Object.freeze({
+  headers: {
+    'campaign-name': { type: 'campaignlink', accessor: 'name' },
+    'campaign-priority': { type: 'string', accessor: 'priority' },
+    'campaign-assigned': { type: 'date', accessor: 'assigned' }
+  },
+  columnOrder: [
+    'campaign-name',
+    'campaign-priority',
+    'campaign-assigned'
+  ],
+  displaysTooltip: [
+    'campaign-name',
+    'campaign-priority',
+    'campaign-assigned'
+  ]
+})
 
 export class Team extends Component {
   componentDidMount () {
@@ -17,31 +47,63 @@ export class Team extends Component {
     this.slugger = new Slugger()
   }
 
+  renderCampaignsElement () {
+    const { authenticatedUser, team } = this.props
+    const { id: teamId, campaigns, name: teamName } = team
+    const osmId = pathOr(0, ['account', 'id'], authenticatedUser)
+    if (campaigns.length > 0) {
+      const campaignMap = fromPairs(campaigns.map(({ name, tasker_id: taskerId, tm_id: taskingManagerId }) => {
+        return [name, { taskerId, taskingManagerId }]
+      }))
+      const campaignData = campaigns.map(({ name, updated_at: assigned, team_priority: pri }) => ({
+        name,
+        assigned,
+        priority: priorityDescription[pri]
+      }))
+      return <div className='widget'>
+        <Table tableSchema={teamCampaignsTableSchema} notSortable
+          data={campaignData} campaignMap={campaignMap} />
+      </div>
+    } else if (isModerator(Number(osmId), team)) {
+      return <h2 className='header--small width--shortened list--block'>
+        There are no current assignments for this team.{ ' ' }
+        <Link href={`/teams/${teamId}/edit-details`}>
+          <a>Add campaign assignments.</a>
+        </Link>
+      </h2>
+    } else {
+      return <h2 className='header--small width--shortened list--block'>
+        {teamName} has not made any mapping edits yet. Explore{' '}
+        <Link href={'/campaigns'}><a>active campaigns</a></Link> to get started!
+      </h2>
+    }
+  }
+
   render () {
     const { team } = this.props
     if (!team) return <div />
-
     const {
       name: teamName,
+      id: teamId,
       hashtag,
       created_at: teamCreated,
       lastRefreshed,
       osmesaStats,
-      campaigns
+      canEdit
     } = team
     const { buildingsMappedCount, poiCountMappedCount, roadsKmMapped,
       waterWaysKmMapped, coastlinesKmMapped } = calculateBlurbStats(osmesaStats.teamStats)
     const allMemberEditTimes = flatten(osmesaStats.memberStats.map(({ edit_times }) => edit_times))
     const firstYearEdited = getYear(head(allMemberEditTimes.map(t => t.day).sort(compareAsc)))
     const exportDataFilename = this.slugger.slug(teamName || 'team export', false)
-    const campaignMap = fromPairs(campaigns.map(({ name, tasker_id: taskerId, tm_id: taskingManagerId }) => {
-      return [name, { taskerId, taskingManagerId }]
+    const osmesaMemberStatsMap = fromPairs(osmesaStats.memberStats.map(stats => {
+      return [stats.uid, stats]
     }))
-    const campaignData = campaigns.map(({ name, updated_at: assigned, team_priority: pri }) => ({
-      name,
-      assigned,
-      priority: priorityDescription[pri]
-    }))
+    const teamStatsData = team.members.map(({ id: osmId, name }) => {
+      const osmesaMemberStats = osmesaMemberStatsMap[osmId]
+      return osmesaMemberStats || emptyMemberStats(osmId, name)
+    })
+
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
@@ -51,7 +113,7 @@ export class Team extends Component {
               <ul className='list--two-column'>
                 <li>
                   <span className='list-label'>hashtag</span>
-                  <strong>{ normalizeHashtag(hashtag) }</strong>
+                  <strong>{ hashtag }</strong>
                 </li>
                 <li>
                   <span className='list-label'>created</span>
@@ -65,6 +127,12 @@ export class Team extends Component {
             </div>
             <div className='widget-33 page-actions'>
               {/* <a className='button' href='#'>Join</a> */}
+              { canEdit
+                ? <Link href={`/teams/${teamId}/edit-details`}>
+                  <a className='button'>Edit Team</a>
+                </Link>
+                : null
+              }
             </div>
           </div>
         </header>
@@ -110,16 +178,14 @@ export class Team extends Component {
         <section>
           <div className='row'>
             <h2 className='header--large header--with-description'>Team Stats</h2>
-            <TeamStatsTable users={osmesaStats.memberStats} name={exportDataFilename} />
+            <TeamStatsTable users={teamStatsData} name={exportDataFilename} />
           </div>
         </section>
 
         <section>
           <div className='row'>
             <h2 className='header--large header--with-description'>Team Campaigns</h2>
-            <div className='widget'>
-              <Table tableSchema={teamCampaignsTableSchema} notSortable data={campaignData} campaignMap={campaignMap} />
-            </div>
+            { this.renderCampaignsElement() }
           </div>
         </section>
       </div>
@@ -133,77 +199,6 @@ Page.getInitialProps = async ({ req }) => {
   const { id } = req.params
   return {
     id
-  }
-}
-
-/**
- * Schema for the Team Campaigns table.
- *
- * @type {{headers: {'campaign-assigned': {accessor: string, type: string}, 'campaign-name': {accessor: string, type: string}, 'campaign-priority': {accessor: string, type: string}}, columnOrder: [string, string, string], displaysTooltip: [string, string, string]}}
- */
-const teamCampaignsTableSchema = Object.freeze({
-  headers: {
-    'campaign-name': { type: 'campaignlink', accessor: 'name' },
-    'campaign-priority': { type: 'string', accessor: 'priority' },
-    'campaign-assigned': { type: 'date', accessor: 'assigned' }
-  },
-  columnOrder: [
-    'campaign-name',
-    'campaign-priority',
-    'campaign-assigned'
-  ],
-  displaysTooltip: [
-    'campaign-name',
-    'campaign-priority',
-    'campaign-assigned'
-  ]
-})
-
-/**
- * Map integer priority to simple 3 tier naming.
- *
- * @type {{'1': string, '2': string, '3': string}}
- */
-const priorityDescription = Object.freeze({
-  1: 'High',
-  2: 'Medium',
-  3: 'Low'
-})
-
-/**
- * Helper function to sum statistics from osmesa for usage in the Team Blurb
- * component. Converts from osmesa database column names to JavaScript names.
- *
- * @param {number} km_roads_add
- * @param {number} km_roads_mod
- * @param {number} km_waterways_add
- * @param {number} km_waterways_mod
- * @param {number} poi_add
- * @param {number} poi_mod
- * @param {number} km_coastlines_add
- * @param {number} km_coastlines_mod
- * @param {number} buildings_add
- * @param {number} buildings_mod
- * @returns {{waterwaysKmMapped: *, buildingsMappedCount: *, poiCountMappedCount: *, coastlinesKmMapped: *, roadsKmMapped: *}}
- */
-function calculateBlurbStats ({
-  km_roads_add,
-  km_roads_mod,
-  km_waterways_add,
-  km_waterways_mod,
-  poi_add,
-  poi_mod,
-  km_coastlines_add,
-  km_coastlines_mod,
-  buildings_add,
-  buildings_mod
-}) {
-  return {
-    poiCountMappedCount: poi_add + poi_mod,
-    roadsKmMapped: km_roads_add + km_roads_mod,
-    waterwaysKmMapped: km_waterways_add + km_waterways_mod,
-    coastlinesKmMapped: km_coastlines_add + km_coastlines_mod,
-    buildingsMappedCount: buildings_add + buildings_mod
   }
 }
 

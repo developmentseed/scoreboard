@@ -75,15 +75,18 @@ async function get (req, res) {
     ).join(db('taskers').select('name as tm_name', 'id as taskers_t_id').as('t'),
       'campaigns.tasker_id', '=', 't.taskers_t_id')
     const teamMemberOsmIds = teamData.members.map(m => m.id)
+    // TODO: use Promise.all() here instead of serial await's
     const users = await db('users').whereIn('osm_id', teamMemberOsmIds)
     const osmesaStats = await OSMesa.getTeamStats(teamMemberOsmIds)
     const lastRefreshed = await getOsmesaLastRefreshed('team')
+    const canEdit = await teams.canEditTeam(teamId)
     const team = {
       ...teamData,
       campaigns,
       osmesaStats,
       lastRefreshed,
-      users
+      users,
+      canEdit
     }
     return res.send(team)
   } catch (err) {

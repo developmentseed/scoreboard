@@ -80,7 +80,11 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
 }
 
 function prepareAllHeaders (table) {
-  const headers = glossary.filter(term => Object.keys(table.headers).includes(term.id))
+  const tableHeaders = Object.keys(table.headers)
+  const headers = glossary.filter(term => tableHeaders.includes(term.id))
+  if (headers.length !== tableHeaders.length) {
+    throw new Error('Header(s) are missing from the i18n glossary')
+  }
   // appends a boolean property to headers to indicate whether the tooltip is showing
   headers.map(header => (
     table.displaysTooltip.includes(header.id) ? (

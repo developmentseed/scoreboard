@@ -4,17 +4,18 @@ import { actions } from '../lib/store'
 import join from 'url-join'
 import Table from '../components/common/Table'
 import TeamsConnectBanner from '../components/TeamConnectBanner'
-
 import { APP_URL_PREFIX } from '../api/src/config'
 
 const tableSchema = {
   'headers': {
-    'name': { type: 'teamlink', accessor: 'name' },
-    'hashtags': { type: 'string', accessor: 'hashtag' }
+    'team-name': { type: 'teamlink', accessor: 'name' },
+    '#-members': { type: 'number', accessor: 'memberCount' },
+    'team-hashtag': { type: 'string', accessor: 'hashtag' },
+    'moderator-names': { type: 'string', accessor: 'moderatorNames' }
   },
-  columnOrder: [ 'name', 'hashtags' ],
+  columnOrder: [ 'team-name', '#-of-members', 'team-hashtag', 'moderator-names' ],
   'displaysTooltip': [
-    'hashtags'
+    'team-hashtag'
   ]
 }
 
@@ -75,13 +76,20 @@ class Teams extends Component {
 
   renderList () {
     const { teams } = this.state
-
     if (!teams || !teams.length) return
-
+    const tableData = teams.map(team => {
+      const memberCount = team.members.length
+      const moderatorNames = Object.values(team.moderators).join(', ')
+      return {
+        ...team,
+        memberCount,
+        moderatorNames
+      }
+    })
     let idMap = Object.assign(...teams.map(({ id, name }) => ({ [name]: id })))
     return (
       <div>
-        <Table tableSchema={tableSchema} data={teams} idMap={idMap} />
+        <Table tableSchema={tableSchema} data={tableData} idMap={idMap} />
       </div>
     )
   }
