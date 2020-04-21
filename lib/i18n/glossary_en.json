@@ -120,6 +120,11 @@
         "description": "Priority of campaign for mappers on team (High/Medium/Low)"
     },
     {
+        "id": "campaign-hashtag",
+        "name": "Campaign Hashtag",
+        "description": "Hashtag used in campaign"
+    },
+    {
         "id": "team-name",
         "name": "Team Name",
         "description": "Team Name"
