@@ -172,8 +172,13 @@ router.get('/userinfo', (req, res) => {
  * Logout
  */
 router.get('/logout', (req, res) => {
-  req.logout()
-  res.redirect(APP_URL_FINAL)
+  req.session.destroy(function (err) {
+    req.session = null
+    if (err) {
+      console.error(err)
+    }
+    res.redirect(APP_URL_FINAL)
+  })
 })
 
 /**
