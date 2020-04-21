@@ -1,10 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
-import join from 'url-join'
 import Table from '../components/common/Table'
 import TeamsConnectBanner from '../components/TeamConnectBanner'
+import join from 'url-join'
 import { APP_URL_PREFIX } from '../api/src/config'
+import { equals } from 'ramda'
+
+const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 const tableSchema = {
   'headers': {
@@ -19,22 +22,69 @@ const tableSchema = {
   ]
 }
 
-const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
-
-const Sidebar = ({ handleSearch }) => (
-  <div className='widget-25'>
-    <h3 className='header--medium'>Filter</h3>
-    <form className='filters' onSubmit={e => e.preventDefault()}>
-      <fieldset>
-        <legend>Search</legend>
-        <div className='search'>
-          <input className='input--text' onChange={handleSearch} />
-          <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
-        </div>
-      </fieldset>
-    </form>
-  </div>
-)
+const Sidebar = ({
+  handleOnlyMemberTeamsToggle,
+  handleOnlyModeratedTeamsToggle,
+  handleReset,
+  handleSearch,
+  onlyMemberTeams,
+  onlyModeratedTeams,
+  searchText,
+  user = {}
+}) => {
+  const [initialSearchText] = useState(searchText)
+  const [initialOnlyModeratedTeams] = useState(onlyModeratedTeams)
+  const [initialOnlyMemberTeams] = useState(onlyMemberTeams)
+  const isReset = equals(
+    { searchText, onlyModeratedTeams, onlyMemberTeams },
+    { searchText: initialSearchText, onlyModeratedTeams: initialOnlyModeratedTeams, onlyMemberTeams: initialOnlyMemberTeams }
+  )
+  const _handleReset = () => {
+    handleReset({
+      searchText: initialSearchText,
+      onlyMemberTeams: initialOnlyMemberTeams,
+      onlyModeratedTeams: initialOnlyModeratedTeams
+    })
+  }
+  return (
+    <div className='widget-25'>
+      <h3 className='header--medium'>Filter</h3>
+      <form className='filters' onSubmit={e => e.preventDefault()}>
+        <fieldset>
+          <legend>Search</legend>
+          <div className='search'>
+            <input className='input--text' value={searchText} onChange={handleSearch} />
+            <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
+          </div>
+        </fieldset>
+        {
+          user.loggedIn &&
+          <fieldset>
+            <div className='checkbox'>
+              <input type='checkbox' id='toggleOnlyMemberTeams' name='onlyMembers'
+                checked={onlyMemberTeams}
+                onChange={handleOnlyMemberTeamsToggle} />
+              <label htmlFor='toggleOnlyMemberTeams'>Only show teams I am a member of.</label>
+            </div>
+            <div className='checkbox'>
+              <input type='checkbox' id='toggleOnlyModeratedTeams' name='onlyModerated'
+                checked={onlyModeratedTeams}
+                onChange={handleOnlyModeratedTeamsToggle} />
+              <label htmlFor='toggleOnlyModeratedTeams'>Only show teams I moderate.</label>
+            </div>
+          </fieldset>
+        }
+        {
+          !isReset &&
+          <div className='reset'>
+            <div className='link--normal' onClick={_handleReset}>
+              <legend>&#10005; Reset Filters</legend></div>
+          </div>
+        }
+      </form>
+    </div>
+  )
+}
 
 /**
  * Teams page shows the list of teams
@@ -43,8 +93,16 @@ const Sidebar = ({ handleSearch }) => (
 class Teams extends Component {
   constructor (props) {
     super(props)
-    this.state = { teams: [...props.teams.records] }
+    this.state = {
+      teams: [...props.teams.records],
+      searchText: '',
+      onlyMemberTeams: false,
+      onlyModeratedTeams: false
+    }
     this.handleSearch = this.handleSearch.bind(this)
+    this.handleOnlyMemberTeamsToggle = this.handleOnlyMemberTeamsToggle.bind(this)
+    this.handleOnlyModeratedTeamsToggle = this.handleOnlyModeratedTeamsToggle.bind(this)
+    this.handleReset = this.handleReset.bind(this)
   }
 
   async componentDidMount () {
@@ -63,6 +121,30 @@ class Teams extends Component {
     }
   }
 
+  handleOnlyMemberTeamsToggle (e) {
+    const { teams, user } = this.state
+    const id = Number(user.account.id)
+    const filteredTeams = teams.filter(team => team.members.includes(id))
+    this.setState({
+      teams: filteredTeams,
+      onlyMemberTeams: e.target.checked
+    })
+  }
+
+  handleOnlyModeratedTeamsToggle (e) {
+    const { teams, user } = this.state
+    const id = user.account.id
+    const filteredTeams = teams.filter(team => Object.keys(team.moderators).includes(id))
+    this.setState({
+      teams: filteredTeams,
+      onlyModeratedTeams: e.target.checked
+    })
+    this.setState({
+      teams: filteredTeams,
+      onlyModeratedTeams: e.target.checked
+    })
+  }
+
   handleSearch (e) {
     e.preventDefault()
     let searchText = e.target.value
@@ -70,8 +152,21 @@ class Teams extends Component {
     const rgx = new RegExp(searchText, 'ig')
     teams = teams.filter(record => rgx.test(record.name) || rgx.test(record.bio) || rgx.test(record.hashtag))
     this.setState({
-      teams
+      teams,
+      searchText
     })
+  }
+
+  handleReset ({ searchText, onlyMemberTeams, onlyModeratedTeams }) {
+    const teams = [...this.props.teams.records]
+    this.setState(
+      {
+        searchText,
+        onlyMemberTeams,
+        onlyModeratedTeams,
+        teams
+      }
+    )
   }
 
   renderList () {
@@ -95,7 +190,8 @@ class Teams extends Component {
   }
 
   render () {
-    const { teams, user } = this.state
+    const { teams, user, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
+    console.log(user)
 
     return (
       <div className='Users'>
@@ -114,7 +210,16 @@ class Teams extends Component {
         }
         <section>
           <div className='row widget-container'>
-            <Sidebar handleSearch={this.handleSearch} />
+            <Sidebar
+              user={user}
+              searchText={searchText}
+              onlyMemberTeams={onlyMemberTeams}
+              onlyModeratedTeams={onlyModeratedTeams}
+              handleSearch={this.handleSearch}
+              handleOnlyMemberTeamsToggle={this.handleOnlyMemberTeamsToggle}
+              handleOnlyModeratedTeamsToggle={this.handleOnlyModeratedTeamsToggle}
+              handleReset={this.handleReset}
+            />
             <div className='widget-75'>
               <h3 className='header--medium'>{`${teams.length} Teams`}</h3>
               {this.renderList()}
