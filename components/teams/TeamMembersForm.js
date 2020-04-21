@@ -36,7 +36,7 @@ function EditMembersForm (props) {
     props.adminTeamMemberSearch('')
   }, [])
 
-  const { page, searchText } = props.adminTeamMemberFilters
+  const { page } = props.adminTeamMemberFilters
   const { stats: { total, records } } = props.adminTeamMemberSearchResults
 
   if (!records) return <div>Error loading</div>
@@ -61,7 +61,7 @@ function EditMembersForm (props) {
           <fieldset>
             <legend>Search</legend>
             <div className='search'>
-              <input className='input--text' value={searchText} onChange={
+              <input className='input--text' onChange={
                 e => props.adminTeamMemberSearch(e.target.value)
               } />
             </div>
@@ -81,5 +81,7 @@ function EditMembersForm (props) {
     </div>
   )
 }
+
+EditMembersForm.whyDidYouRender = true
 
 export default connect(['adminTeamMemberFilters', 'adminTeamMemberSearchResults'], actions)(EditMembersForm)
