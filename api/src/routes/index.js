@@ -20,6 +20,7 @@ const settings = require('./settings')
  */
 router.get('/users', users.list)
 router.get('/users/stats', users.stats)
+router.post('/users/names', users.getNames)
 router.get('/users/:id', user.get)
 router.put('/users/:id', user.put)
 router.get('/campaigns/:tasker_id-:tm_id', campaign)

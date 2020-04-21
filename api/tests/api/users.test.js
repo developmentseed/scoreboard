@@ -38,6 +38,22 @@ test('Pull all users with stats', async (t) => {
   t.false(Number.isNaN(response.body.records[0].edit_count))
 })
 
+test.serial('Get user names from osm ids', async (t) => {
+  const allUsersResponse = await request(app)
+    .get('/scoreboard/api/users/stats')
+  const ids = allUsersResponse.body.records.map(prop('osm_id'))
+  const params = { ids }
+  const response = await request(app)
+    .post('/scoreboard/api/users/names').send(params)
+    .expect(200)
+  const records = response.body
+  t.is(records.length, ids.length)
+  records.forEach(({ osm_id, full_name }) => {
+    t.truthy(osm_id)
+    t.truthy(full_name)
+  })
+})
+
 test('Sort users by most recently active', async (t) => {
   const response = await request(app)
     .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Most%20recent&active=false')
