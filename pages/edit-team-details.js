@@ -8,6 +8,7 @@ import fetch from '../lib/utils/api'
 import TeamDetailsForm from '../components/teams/TeamDetailsForm'
 import TeamMembersForm from '../components/teams/TeamMembersForm'
 import TeamCampaignsForm from '../components/teams/TeamCampaignsForm'
+import Link from '../components/Link'
 import Router from '../lib/router'
 
 function DestroyButton ({ onDestroy }) {
@@ -124,10 +125,26 @@ export function EditTeam (props) {
         <div className='row widget-container'>
           <div className='widget-25'>
             <h2 className='header--large'>Edit a team</h2>
+            <ul className='admin-sidebar-links'>
+              <li>
+                <Link href={`/teams/${props.id}`}>
+                  <a className='link--large'>
+                    Team Page
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href={`/teams/${props.id}/edit-moderators`}>
+                  <a className='link--large'>
+                    Edit team moderators
+                  </a>
+                </Link>
+              </li>
+            </ul>
           </div>
           <div className='widget-75'>
             <div>
-              <h1 className='header--xlarge'>Details</h1>
+              <h1 className='header--xlarge'>Details for {props.data.name}</h1>
             </div>
             { props.data
               ? <TeamDetailsForm

@@ -4,6 +4,7 @@ import { LoadingState } from '../components/common/LoadingState'
 import { connect } from 'unistore/react'
 import { actions } from '../lib/store'
 import Table from '../components/common/Table'
+import Link from '../components/Link'
 import { includes, prop } from 'ramda'
 
 const tableSchema = {
@@ -35,7 +36,7 @@ export function EditTeamModerators (props) {
     return <NotLoggedIn />
   }
 
-  const { users, moderators, id: teamId } = props.team
+  const { users, moderators, id: teamId, name } = props.team
   const moderatorIds = moderators.map(prop('osm_id'))
 
   const rows = users.map(u => {
@@ -44,7 +45,7 @@ export function EditTeamModerators (props) {
       full_name: u.full_name,
       role: isUserModerator ? 'moderator' : 'member',
       button: isUserModerator
-        ? <button style={{ 'padding': '5px' }} className='button' onClick={() => props.removeModerator({ id: teamId, osmId: u.osm_id })} >Remove Moderator</button>
+        ? <button style={{ 'padding': '5px' }} className='button button--destroy' onClick={() => props.removeModerator({ id: teamId, osmId: u.osm_id })} >Remove Moderator</button>
         : <button style={{ 'padding': '5px' }} className='button' onClick={() => props.assignModerator({ id: teamId, osmId: u.osm_id })} >Add Moderator</button>
     }
   })
@@ -55,10 +56,26 @@ export function EditTeamModerators (props) {
         <div className='row widget-container'>
           <div className='widget-25'>
             <h2 className='header--large'>Edit team</h2>
+            <ul className='admin-sidebar-links'>
+              <li>
+                <Link href={`/teams/${teamId}`}>
+                  <a className='link--large'>
+                    Team Page
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href={`/teams/${teamId}/edit-details`}>
+                  <a className='link--large'>
+                    Edit team details
+                  </a>
+                </Link>
+              </li>
+            </ul>
           </div>
           <div className='widget-75'>
             <div>
-              <h1 className='header--xlarge'>Edit Moderators</h1>
+              <h1 className='header--xlarge'>Edit Moderators for {name}</h1>
               <div className='widget'>
                 <Table tableSchema={tableSchema} data={rows} />
               </div>
