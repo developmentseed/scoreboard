@@ -191,8 +191,6 @@ class Teams extends Component {
 
   render () {
     const { teams, user, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
-    console.log(user)
-
     return (
       <div className='Users'>
         <header className='header--internal--green header--page'>
