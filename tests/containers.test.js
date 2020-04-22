@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'unistore/react'
+import { act } from 'react-dom/test-utils'
 
 // import { Home } from '../pages/index'
 import { Campaigns } from '../pages/campaigns'
@@ -10,6 +11,7 @@ import { Country } from '../pages/country'
 import { User } from '../pages/user'
 import { Users } from '../pages/users'
 import { CreateTeam } from '../pages/create-team'
+import { EditTeam } from '../pages/edit-team-details'
 import About from '../pages/about'
 
 import store, { actions, InitialState } from '../lib/store'
@@ -131,16 +133,39 @@ it('Users renders without crashing', () => {
   ReactDOM.render(page, div)
 })
 
-it('Create Team renders without crashing', () => {
+it('Create Team renders without crashing', async () => {
   const div = document.createElement('div')
 
-  const mockProps = {}
+  const mockProps = {
+    getAuthenticatedUser: mockAction,
+    authenticatedUser: { loggedIn: false }
+  }
   const page = (
     <Provider store={store} >
       <CreateTeam {...mockProps} />
     </Provider>
   )
-  ReactDOM.render(page, div)
+  await act(async () => {
+    ReactDOM.render(page, div)
+  })
+})
+
+it('Edit Team renders without crashing', async () => {
+  const div = document.createElement('div')
+
+  const mockProps = {
+    getAuthenticatedUser: mockAction,
+    authenticatedUser: { loggedIn: false },
+    data: { users: [], campaigns: [] }
+  }
+  const page = (
+    <Provider store={store} >
+      <EditTeam {...mockProps} />
+    </Provider>
+  )
+  await act(async () => {
+    ReactDOM.render(page, div)
+  })
 })
 
 it('Countries renders without crashing', () => {

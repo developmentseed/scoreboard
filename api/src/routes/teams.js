@@ -1,4 +1,3 @@
-const { validateRole } = require('../utils/roles')
 const OSMTeams = require('../services/teams')
 const OSMesa = require('../services/osmesa')
 const db = require('../db/connection')
@@ -69,7 +68,7 @@ async function get (req, res) {
     const teams = new OSMTeams(osmId)
     const teamData = JSON.parse(await teams.getTeam(teamId))
     const campaigns = await db('campaigns').join(
-      db('team_assignments').where('team_id', teamId).as('team_assignments'),
+      db('team_assignments').select(['team_id', 'team_priority', 'campaign_id']).where('team_id', teamId).as('team_assignments'),
       'team_assignments.campaign_id',
       '=',
       'campaigns.id'
@@ -107,17 +106,12 @@ async function get (req, res) {
  */
 async function put (req, res) {
   const { user, body } = req
-
-  if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
-    return res.boom.unauthorized('Not authorized')
-  }
-
   try {
     const { id: osmId } = user
     const { id: teamId } = req.params
     const teams = new OSMTeams(osmId)
-    const { campaigns, bio, name, hashtag, oldusers, newusers } = body
-    const data = await teams.editTeam(teamId, { bio, name, hashtag })
+    const { campaigns, bio, name, hashtag, location, oldusers, newusers } = body
+    const data = await teams.editTeam(teamId, { bio, name, hashtag, location })
 
     // Update members
     const add = difference(newusers, oldusers)
@@ -157,11 +151,6 @@ async function put (req, res) {
  */
 async function del (req, res) {
   const { user } = req
-
-  if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
-    return res.boom.unauthorized('Not authorized')
-  }
-
   try {
     const { id: osmId } = user
     const { id: teamId } = req.params

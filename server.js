@@ -47,6 +47,21 @@ app.prepare()
       app.render(req, res, '/team', { id })
     })
 
+    api.get('/teams/:id/edit-details', (req, res) => {
+      const { id } = req.params
+      app.render(req, res, '/edit-team-details', { id })
+    })
+
+    api.get('/teams/:id/edit-members', (req, res) => {
+      const { id } = req.params
+      app.render(req, res, '/edit-team-members', { id })
+    })
+
+    api.get('/teams/:id/edit-campaigns', (req, res) => {
+      const { id } = req.params
+      app.render(req, res, '/edit-team-campaigns', { id })
+    })
+
     api.get('/campaigns/:id', (req, res) => {
       const { id } = req.params
       app.render(req, res, '/campaign', { id })
