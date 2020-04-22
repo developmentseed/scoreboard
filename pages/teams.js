@@ -139,10 +139,6 @@ class Teams extends Component {
       teams: filteredTeams,
       onlyModeratedTeams: e.target.checked
     })
-    this.setState({
-      teams: filteredTeams,
-      onlyModeratedTeams: e.target.checked
-    })
   }
 
   handleSearch (e) {
