@@ -141,6 +141,48 @@ async function put (req, res) {
 }
 
 /**
+ * Teams addModerator route
+ * /teams/:id/addModerator/:osmId
+ *
+ *
+ * @param {Object} req - the request object
+ * @param {Object} res - the response object
+ * @returns {Promise} a response
+ */
+async function assignModerator (req, res) {
+  const { user } = req
+  const { id: teamId, osmId } = req.params
+  const teams = new OSMTeams(user.id)
+  try {
+    await teams.assignModerator(teamId, osmId)
+  } catch (err) {
+    console.error(err)
+    return res.boom.badRequest('Could not update team')
+  }
+}
+
+/**
+ * Teams removeModerator route
+ * /teams/:id/removeModerator/:osmId
+ *
+ *
+ * @param {Object} req - the request object
+ * @param {Object} res - the response object
+ * @returns {Promise} a response
+ */
+async function removeModerator (req, res) {
+  const { user } = req
+  const { id: teamId, osmId } = req.params
+  const teams = new OSMTeams(user.id)
+  try {
+    await teams.removeModerator(teamId, osmId)
+  } catch (err) {
+    console.error(err)
+    return res.boom.badRequest('Could not update team')
+  }
+}
+
+/**
  * Teams delete route
  * /teams/:id
  *
@@ -168,5 +210,7 @@ module.exports = {
   post,
   get,
   put,
-  del
+  del,
+  assignModerator,
+  removeModerator
 }

@@ -148,6 +148,24 @@ class OSMTeams {
     })
     return rp(options)
   }
+
+  async assignModerator (id, osmId) {
+    var options = await this.addAuthorization({
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}/assignModerator/${osmId}`,
+      json: true
+    })
+    return rp(options)
+  }
+
+  async removeModerator (id, osmId) {
+    var options = await this.addAuthorization({
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}/removeModerator/${osmId}`,
+      json: true
+    })
+    return rp(options)
+  }
 }
 
 class FakeOSMTeams {
