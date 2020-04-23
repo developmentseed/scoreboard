@@ -122,35 +122,41 @@ class Teams extends Component {
   }
 
   handleOnlyMemberTeamsToggle (e) {
-    const { teams, user } = this.state
-    const id = Number(user.account.id)
-    const filteredTeams = teams.filter(team => team.members.includes(id))
-    this.setState({
-      teams: filteredTeams,
-      onlyMemberTeams: e.target.checked
-    })
+    const onlyMemberTeams = e.target.checked
+    const { onlyModeratedTeams, searchText } = this.state
+    this.handleFilters({ searchText, onlyMemberTeams, onlyModeratedTeams })
+    this.setState({ onlyMemberTeams })
   }
 
   handleOnlyModeratedTeamsToggle (e) {
-    const { teams, user } = this.state
-    const id = user.account.id
-    const filteredTeams = teams.filter(team => Object.keys(team.moderators).includes(id))
-    this.setState({
-      teams: filteredTeams,
-      onlyModeratedTeams: e.target.checked
-    })
+    const onlyModeratedTeams = e.target.checked
+    const { onlyMemberTeams, searchText } = this.state
+    this.setState({ onlyModeratedTeams })
+    this.handleFilters({ searchText, onlyMemberTeams, onlyModeratedTeams })
   }
 
   handleSearch (e) {
     e.preventDefault()
-    let searchText = e.target.value
-    let teams = this.props.teams.records
-    const rgx = new RegExp(searchText, 'ig')
-    teams = teams.filter(record => rgx.test(record.name) || rgx.test(record.bio) || rgx.test(record.hashtag))
-    this.setState({
-      teams,
-      searchText
-    })
+    const searchText = e.target.value
+    const { onlyMemberTeams, onlyModeratedTeams } = this.state
+    this.setState({ searchText })
+    this.handleFilters({ searchText, onlyMemberTeams, onlyModeratedTeams })
+  }
+
+  handleFilters ({ searchText, onlyModeratedTeams, onlyMemberTeams }) {
+    const { user: { account: { id: osmId } = {} } = {} } = this.state
+    let { teams: { records: teams } } = this.props
+    if (searchText) {
+      const rgx = new RegExp(searchText, 'ig')
+      teams = teams.filter(record => rgx.test(record.name) || rgx.test(record.bio) || rgx.test(record.hashtag))
+    }
+    if (onlyModeratedTeams) {
+      teams = teams.filter(team => Object.keys(team.moderators).includes(osmId))
+    }
+    if (onlyMemberTeams) {
+      teams = teams.filter(team => team.members.includes(Number(osmId)))
+    }
+    this.setState({ teams })
   }
 
   handleReset ({ searchText, onlyMemberTeams, onlyModeratedTeams }) {
