@@ -5,6 +5,7 @@ import Table from '../components/common/Table'
 import TeamsConnectBanner from '../components/TeamConnectBanner'
 import join from 'url-join'
 import { APP_URL_PREFIX } from '../api/src/config'
+import Link from '../components/Link'
 import { equals } from 'ramda'
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
@@ -194,10 +195,21 @@ class Teams extends Component {
   render () {
     const { teams, user, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
     return (
-      <div className='Users'>
+      <div className='Teams'>
         <header className='header--internal--green header--page'>
-          <div className='row'>
-            <h1 className='section-sub--left header--xlarge margin-top-sm'>Teams</h1>
+          <div className='row widget-container'>
+            <div class='widget-75'>
+              <h1 className='section-sub--left header--xlarge margin-top-sm'>Teams</h1>
+            </div>
+            <div class='page-actions'>
+              <Link class='button' href='/create-team'>
+                <a>
+                  <button class='button'>
+                    Create Team
+                  </button>
+                </a>
+              </Link>
+            </div>
           </div>
         </header>
         {
