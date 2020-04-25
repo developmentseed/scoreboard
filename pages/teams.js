@@ -99,6 +99,7 @@ class Teams extends Component {
     this.state = {
       loading: true,
       teams: [...props.teams.records],
+      canCreate: props.teams.canCreate,
       searchText: '',
       onlyMemberTeams: false,
       onlyModeratedTeams: false,
@@ -123,7 +124,8 @@ class Teams extends Component {
     if (prevTeams.records.length !== teams.records.length) {
       this.setState({
         user: authenticatedUser,
-        teams: teams.records
+        teams: teams.records,
+        canCreate: teams.canCreate
       })
     }
   }
@@ -208,7 +210,7 @@ class Teams extends Component {
       )
     }
 
-    const { teams, user, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
+    const { teams, canCreate, user, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
     const loggedIn = pathOr(false, ['loggedIn'], user)
     const activatedTeams = pathOr(false, ['account', 'activatedTeams'], user)
     return (
@@ -218,7 +220,7 @@ class Teams extends Component {
             <div className='widget-75'>
               <h1 className='section-sub--left header--xlarge margin-top-sm'>Teams</h1>
             </div>
-            { activatedTeams
+            { activatedTeams && canCreate
               ? <div className='page-actions'>
                 <Link href='/create-team'>
                   <a>

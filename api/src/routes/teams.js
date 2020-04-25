@@ -16,9 +16,10 @@ const getOsmesaLastRefreshed = require('../utils/osmesaStatus.js')
 async function list (req, res) {
   try {
     const { user: { id: osmId = null } = {} } = req
-    const teams = new OSMTeams(osmId)
-    const data = await teams.getTeams()
-    return res.send(data)
+    const teamService = new OSMTeams(osmId)
+    const teams = JSON.parse(await teamService.getTeams())
+    const canCreate = await teamService.canCreateTeam()
+    return res.send({ teams, canCreate })
   } catch (err) {
     console.error(err)
     return res.boom.badRequest('Could not retrieve teams list')

@@ -3,6 +3,7 @@ const sampleTeams = require('../fixtures/teams.json')
 const { getToken, storeToken } = require('../models/teams-access-tokens')
 const { teamServiceCredentials } = require('../passport')
 const { OSM_TEAMS_SERVICE, OSM_TEAMS_ORG_ID } = require('../config')
+const { prop, includes } = require('ramda')
 
 /**
  * Methods to grab data from OSM Teams
@@ -82,6 +83,29 @@ class OSMTeams {
 
   getTeam (id) {
     return rp(`${OSM_TEAMS_SERVICE}/api/teams/${id}`)
+  }
+
+  /**
+   * Check if user has permission to create a team. The user needs to be either an
+   * owner of the organization, or a manager of the organization.
+   *
+   * @returns {Promise}
+   */
+  async canCreateTeam () {
+    try {
+      const options = await this.addAuthorization({
+        method: 'GET',
+        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}`,
+        json: true
+      })
+      const org = await rp(options)
+      const { owners, managers } = org
+      const ids = owners.map(prop('osm_id')).concat(managers.map(prop('osm_id')))
+      return includes(this.osmid, ids)
+    } catch (e) {
+      console.error(e)
+      return false
+    }
   }
 
   /**
