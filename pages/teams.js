@@ -7,7 +7,7 @@ import join from 'url-join'
 import { APP_URL_PREFIX } from '../api/src/config'
 import Link from '../components/Link'
 import { LoadingState } from '../components/common/LoadingState'
-import { equals, pathOr, path } from 'ramda'
+import { equals, pathOr } from 'ramda'
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
@@ -95,12 +95,14 @@ const Sidebar = ({
 class Teams extends Component {
   constructor (props) {
     super(props)
+    const { authenticatedUser } = props
     this.state = {
       loading: true,
       teams: [...props.teams.records],
       searchText: '',
       onlyMemberTeams: false,
-      onlyModeratedTeams: false
+      onlyModeratedTeams: false,
+      user: { ...authenticatedUser }
     }
     this.handleSearch = this.handleSearch.bind(this)
     this.handleOnlyMemberTeamsToggle = this.handleOnlyMemberTeamsToggle.bind(this)
