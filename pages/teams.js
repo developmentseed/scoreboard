@@ -95,15 +95,13 @@ const Sidebar = ({
 class Teams extends Component {
   constructor (props) {
     super(props)
-    const { authenticatedUser } = props
     this.state = {
       loading: true,
       teams: [...props.teams.records],
       canCreate: props.teams.canCreate,
       searchText: '',
       onlyMemberTeams: false,
-      onlyModeratedTeams: false,
-      user: { ...authenticatedUser }
+      onlyModeratedTeams: false
     }
     this.handleSearch = this.handleSearch.bind(this)
     this.handleOnlyMemberTeamsToggle = this.handleOnlyMemberTeamsToggle.bind(this)
@@ -112,10 +110,9 @@ class Teams extends Component {
   }
 
   async componentDidMount () {
-    await this.props.getAuthenticatedUser().then(() => {
+    await this.props.getAllTeams().then(() => {
       this.setState({ loading: false })
     })
-    await this.props.getAllTeams()
   }
 
   componentDidUpdate (prevProps) {
@@ -201,7 +198,7 @@ class Teams extends Component {
   }
 
   render () {
-    if (this.state.loading || !this.state.user) {
+    if (this.state.loading) {
       return (
         <div>
           <header className='header--internal--green header--page' style={{ paddingBottom: '8rem' }} />
@@ -210,9 +207,9 @@ class Teams extends Component {
       )
     }
 
-    const { teams, canCreate, user, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
-    const { loggedIn } = this.props // comes from page props
-    const activatedTeams = pathOr(false, ['account', 'activatedTeams'], user)
+    const { teams, canCreate, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
+    const { loggedIn, authenticatedUser } = this.props // comes from page props
+    const activatedTeams = pathOr(false, ['account', 'activatedTeams'], authenticatedUser)
     return (
       <div className='Teams'>
         <header className='header--internal--green header--page'>
@@ -242,7 +239,7 @@ class Teams extends Component {
         <section>
           <div className='row widget-container'>
             <Sidebar
-              user={user}
+              user={authenticatedUser}
               searchText={searchText}
               onlyMemberTeams={onlyMemberTeams}
               onlyModeratedTeams={onlyModeratedTeams}

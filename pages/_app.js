@@ -213,7 +213,7 @@ class Layout extends React.Component {
           </div>
         </header>
         {
-          React.cloneElement(children, { loggedIn })
+          React.cloneElement(children, { loggedIn, authenticatedUser })
         }
         <Footer loggedIn={loggedIn} />
       </div>
