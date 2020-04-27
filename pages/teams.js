@@ -5,7 +5,9 @@ import Table from '../components/common/Table'
 import TeamsConnectBanner from '../components/TeamConnectBanner'
 import join from 'url-join'
 import { APP_URL_PREFIX } from '../api/src/config'
-import { equals } from 'ramda'
+import Link from '../components/Link'
+import { LoadingState } from '../components/common/LoadingState'
+import { equals, pathOr } from 'ramda'
 
 const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
@@ -93,11 +95,15 @@ const Sidebar = ({
 class Teams extends Component {
   constructor (props) {
     super(props)
+    const { authenticatedUser } = props
     this.state = {
+      loading: true,
       teams: [...props.teams.records],
+      canCreate: props.teams.canCreate,
       searchText: '',
       onlyMemberTeams: false,
-      onlyModeratedTeams: false
+      onlyModeratedTeams: false,
+      user: { ...authenticatedUser }
     }
     this.handleSearch = this.handleSearch.bind(this)
     this.handleOnlyMemberTeamsToggle = this.handleOnlyMemberTeamsToggle.bind(this)
@@ -106,7 +112,9 @@ class Teams extends Component {
   }
 
   async componentDidMount () {
-    await this.props.getAuthenticatedUser()
+    await this.props.getAuthenticatedUser().then(() => {
+      this.setState({ loading: false })
+    })
     await this.props.getAllTeams()
   }
 
@@ -116,7 +124,8 @@ class Teams extends Component {
     if (prevTeams.records.length !== teams.records.length) {
       this.setState({
         user: authenticatedUser,
-        teams: teams.records
+        teams: teams.records,
+        canCreate: teams.canCreate
       })
     }
   }
@@ -192,19 +201,41 @@ class Teams extends Component {
   }
 
   render () {
-    const { teams, user, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
+    if (this.state.loading || !this.state.user) {
+      return (
+        <div>
+          <header className='header--internal--green header--page' style={{ paddingBottom: '8rem' }} />
+          <LoadingState />
+        </div>
+      )
+    }
+
+    const { teams, canCreate, user, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
+    const loggedIn = pathOr(false, ['loggedIn'], user)
+    const activatedTeams = pathOr(false, ['account', 'activatedTeams'], user)
     return (
-      <div className='Users'>
+      <div className='Teams'>
         <header className='header--internal--green header--page'>
-          <div className='row'>
-            <h1 className='section-sub--left header--xlarge margin-top-sm'>Teams</h1>
+          <div className='row widget-container'>
+            <div className='widget-75'>
+              <h1 className='section-sub--left header--xlarge margin-top-sm'>Teams</h1>
+            </div>
+            { activatedTeams && canCreate
+              ? <div className='page-actions'>
+                <Link href='/create-team'>
+                  <a>
+                    <button className='button'>
+                    Create Team
+                    </button>
+                  </a>
+                </Link>
+              </div>
+              : <></>
+            }
           </div>
         </header>
         {
-          (
-            user &&
-            user.loggedIn &&
-            !user.account.activatedTeams)
+          loggedIn && !activatedTeams
             ? <TeamsConnectBanner />
             : <div />
         }

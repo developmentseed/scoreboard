@@ -45,15 +45,9 @@ class Dashboard extends Component {
   }
 
   componentDidMount () {
-    this.props.getAuthenticatedUser()
-  }
-
-  componentDidUpdate () {
-    const { authenticatedUser, error } = this.props
-
-    if (this.state.loading && (authenticatedUser.loggedIn || error)) {
+    this.props.getAuthenticatedUser().then(() => {
       this.setState({ loading: false })
-    }
+    })
   }
 
   render () {
@@ -65,8 +59,15 @@ class Dashboard extends Component {
         </div>
       )
     }
+
     const { authenticatedUser, project } = this.props
     const { loggedIn, account } = authenticatedUser
+    if (!loggedIn || !account) {
+      return (
+        <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
+      )
+    }
+
     const { assignments, favorites, country, allCampaigns } = account
 
     const { badges, teams, refreshDate } = account
@@ -104,11 +105,6 @@ class Dashboard extends Component {
       osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0
     const changesetCount = osmesaData ? osmesaData.changeset_count : 0
 
-    if (!loggedIn || !account) {
-      return (
-        <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
-      )
-    }
     // Dashboard header variables
     let profileImage = null
     let name = null
