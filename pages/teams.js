@@ -118,7 +118,7 @@ class Teams extends Component {
   componentDidUpdate (prevProps) {
     const { teams: prevTeams } = prevProps
     const { teams, authenticatedUser } = this.props
-    if (prevTeams.records.length !== teams.records.length) {
+    if ((prevTeams.records.length !== teams.records.length) || (prevTeams.canCreate !== teams.canCreate)) {
       this.setState({
         user: authenticatedUser,
         teams: teams.records,
