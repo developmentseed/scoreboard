@@ -211,7 +211,7 @@ class Teams extends Component {
     }
 
     const { teams, canCreate, user, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
-    const loggedIn = this.props // comes from page props
+    const { loggedIn } = this.props // comes from page props
     const activatedTeams = pathOr(false, ['account', 'activatedTeams'], user)
     return (
       <div className='Teams'>
