@@ -17,9 +17,16 @@ async function list (req, res) {
   try {
     const { user: { id: osmId = null } = {} } = req
     const teamService = new OSMTeams(osmId)
-    const teams = JSON.parse(await teamService.getTeams())
-    const canCreate = await teamService.canCreateTeam()
-    return res.send({ teams, canCreate })
+    const teams = await teamService.getTeams()
+    let canCreate = false
+    try {
+      canCreate = await teamService.canCreateTeam()
+    } catch (e) {
+      if (e.message !== 'No token for user') {
+        console.error(e)
+      }
+    }
+    return res.send({ teams: JSON.parse(teams), canCreate })
   } catch (err) {
     console.error(err)
     return res.boom.badRequest('Could not retrieve teams list')
