@@ -22,6 +22,12 @@ async function list (req, res) {
     try {
       canCreate = await teamService.canCreateTeam()
     } catch (e) {
+      /**
+       * If there is no osm-teams token for user, we catch the error and fail silently
+       * by letting canCreate = false (default). In other cases, we're interested in the error so
+       * we log it.
+       *
+       */
       if (e.message !== 'No token for user') {
         console.error(e)
       }
