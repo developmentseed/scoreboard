@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import join from 'url-join'
+import { APP_URL_PREFIX } from '../api/src/config'
 import Link from './Link'
 
 export default class TeamsConnectBanner extends Component {
@@ -10,15 +12,15 @@ export default class TeamsConnectBanner extends Component {
           <p>Connect the Teams application with Scoreboard to:</p>
           <div className='widget-container'>
             <div>
-              <img src='../../static/teams-icon-private.svg' />
+              <img src={join(APP_URL_PREFIX, '/static/teams-icon-private.svg')} />
               <h3 className='link--large'>View your private teams</h3>
             </div>
             <div>
-              <img src='../../static/teams-icon-new.svg' />
+              <img src={join(APP_URL_PREFIX, '/static/teams-icon-new.svg')} />
               <h3 className='link--large'>Create new teams</h3>
             </div>
             <div>
-              <img src='../../static/teams-icon-edit.svg' />
+              <img src={join(APP_URL_PREFIX, '/static/teams-icon-edit.svg')} />
               <h3 className='link--large'>Edit and Moderate teams</h3>
             </div>
           </div>

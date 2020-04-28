@@ -212,7 +212,9 @@ class Layout extends React.Component {
             </nav>
           </div>
         </header>
-        {children}
+        {
+          React.cloneElement(children, { loggedIn, authenticatedUser })
+        }
         <Footer loggedIn={loggedIn} />
       </div>
     )
