@@ -13,7 +13,7 @@ export default class TeamsConnectBanner extends Component {
           <div className='widget-container'>
             <div>
               <img src={join(APP_URL_PREFIX, '/static/teams-icon-private.svg')} />
-              <h3 className='link--large'>View your private teams</h3>
+              <h3 className='link--large'>View your teams</h3>
             </div>
             <div>
               <img src={join(APP_URL_PREFIX, '/static/teams-icon-new.svg')} />
