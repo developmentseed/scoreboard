@@ -56,6 +56,7 @@ export default function TeamDetailsForm ({ onSubmit, onChange, details }) {
         { locationExistsWatch &&
         <>
           <label className='form__label' htmlFor='location'>Location</label>
+          <p>Pan and zoom the map to select location</p>
           <LocationInput
             onChange={(value) => {
               setValue('location', value)
