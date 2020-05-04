@@ -124,7 +124,7 @@ function CampaignSearch (props) {
             itemsCountPerPage={10}
             totalItemsCount={total}
             pageRangeDisplayed={5}
-            onChange={no => props.adminTeamCampaignsSearch(no || 1)}
+            onChange={no => props.adminTeamCampaignsPageChange(no || 1)}
           />
         </div>
       </section>
