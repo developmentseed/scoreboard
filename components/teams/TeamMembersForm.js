@@ -37,7 +37,7 @@ function EditMembersForm (props) {
   }, [])
 
   const { page } = props.adminTeamMemberFilters
-  const { stats: { total, records } } = props.adminTeamMemberSearchResults
+  const { stats: { subTotal, records } } = props.adminTeamMemberSearchResults
 
   if (!records) return <div>Error loading</div>
 
@@ -71,8 +71,8 @@ function EditMembersForm (props) {
           <Table tableSchema={tableSchema} data={searchUsers} />
           <Pagination
             activePage={page}
-            itemsCountPerPage={10}
-            totalItemsCount={total}
+            itemsCountPerPage={25}
+            totalItemsCount={subTotal}
             pageRangeDisplayed={5}
             onChange={number => props.adminTeamMemberPageChange(number || 1)}
           />
