@@ -6,23 +6,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-Added
+### Added
 
 - Added new sections to readme about osm-teams and administration settings.
 - Added an osmesaStats data structure to the response in route /teams:id.
-- Added new Team stats page to compile team editing + list of assigned campaigns
+- Added new "Team stats" page to compile team editing + list of assigned campaigns
+- Added "Create/Edit Teams" page allowing creation/editing of team name, hashtag, description, location, members, campaigns
+- Added "Edit Moderators" page within Edit Teams allowing moderators to assign other team members as moderators
+- Added Teams index page with "own teams" and "moderated teams" filters
+- Added "Connect Teams" banner dependent on oauth flow for connecting [osm-teams](https://github.com/developmentseed/osm-teams) api
 - Added "Sort by Country" to Users page
+- Added environment variable to designate OSM Teams Organization that Scoreboard can write to
 
-Changed
+### Changed
 
 - CentOS deployment script: deployment/centos/deploy.sh corrected and updated.
 - Cleaned up and improved comments in `.env.sample`.
 - Removed environment variables from README. Instead use `.env.sample` as a reference.
 - Removed in-page table sorting from Users and Country tables
+- Removed admin area ability to create teams / edit teams
 
-Fixed
+### Fixed
 
-- n/a
+- Fixed server session duration to remove "empty" sessions for API tokens
 
 ## [v1.8.0] - 2020-02-03
 
