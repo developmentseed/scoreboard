@@ -150,8 +150,8 @@ class Teams extends Component {
   }
 
   handleFilters ({ searchText, onlyModeratedTeams, onlyMemberTeams }) {
-    const { user: { account: { id: osmId } = {} } = {} } = this.state
     let { teams: { records: teams } } = this.props
+    const osmId = pathOr(null, ['user', 'account', 'id'], this.state)
     if (searchText) {
       const rgx = new RegExp(searchText, 'ig')
       teams = teams.filter(record => rgx.test(record.name) || rgx.test(record.bio) || rgx.test(record.hashtag))
