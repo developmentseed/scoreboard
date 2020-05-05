@@ -12,9 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added an osmesaStats data structure to the response in route /teams:id.
 - Added new "Team stats" page to compile team editing + list of assigned campaigns
 - Added "Create/Edit Teams" page allowing creation/editing of team name, hashtag, description, location, members, campaigns
-- Added "Edit Moderators" page wihin Edit Teams allowing moderators to assign other team members as moderators
+- Added "Edit Moderators" page within Edit Teams allowing moderators to assign other team members as moderators
 - Added Teams index page with "own teams" and "moderated teams" filters
-- Added "Connect Teams" banner dependant on oauth flow for connecting [osm-teams](https://github.com/developmentseed/osm-teams) api
+- Added "Connect Teams" banner dependent on oauth flow for connecting [osm-teams](https://github.com/developmentseed/osm-teams) api
 - Added "Sort by Country" to Users page
 - Added environment variable to designate OSM Teams Organization that Scoreboard can write to
 
