@@ -10,7 +10,11 @@ Added
 
 - Added new sections to readme about osm-teams and administration settings.
 - Added an osmesaStats data structure to the response in route /teams:id.
-- Added new Team stats page to compile team editing + list of assigned campaigns
+- Added new "Team stats" page to compile team editing + list of assigned campaigns
+- Added "Create/Edit Teams" page allowing creation/editing of team name, hashtag, description, location, members, campaigns
+- Added "Edit Moderators" page wihin Edit Teams allowing moderators to assign other team members as moderators
+- Added Teams index page with "own teams" and "moderated teams" filters
+- Added "Connect Teams" banner dependant on oauth flow for connecting [osm-teams](https://github.com/developmentseed/osm-teams) api
 - Added "Sort by Country" to Users page
 
 Changed
@@ -22,7 +26,7 @@ Changed
 
 Fixed
 
-- n/a
+- Fixed server session duration to remove "empty" sessions for API tokens
 
 ## [v1.8.0] - 2020-02-03
 
