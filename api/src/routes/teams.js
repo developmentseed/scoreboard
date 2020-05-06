@@ -1,7 +1,7 @@
 const OSMTeams = require('../services/teams')
 const OSMesa = require('../services/osmesa')
 const db = require('../db/connection')
-const { difference } = require('ramda')
+const { difference, pathOr } = require('ramda')
 const getOsmesaLastRefreshed = require('../utils/osmesaStatus.js')
 
 /**
@@ -15,7 +15,7 @@ const getOsmesaLastRefreshed = require('../utils/osmesaStatus.js')
  */
 async function list (req, res) {
   try {
-    const { user: { id: osmId = null } = {} } = req
+    const osmId = pathOr(null, ['user', 'id'], req)
     const teamService = new OSMTeams(osmId)
     const teams = await teamService.getTeams()
     let canCreate = false
