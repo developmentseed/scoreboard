@@ -99,9 +99,13 @@ export class Team extends Component {
     const osmesaMemberStatsMap = fromPairs(osmesaStats.memberStats.map(stats => {
       return [stats.uid, stats]
     }))
+    const userCountries = fromPairs(team.users.map(({ osm_id: k, country: v }) => [k, v]))
     const teamStatsData = team.members.map(({ id: osmId, name }) => {
-      const osmesaMemberStats = osmesaMemberStatsMap[osmId]
-      return osmesaMemberStats || emptyMemberStats(osmId, name)
+      const osmesaMemberStats = osmesaMemberStatsMap[osmId] || emptyMemberStats(osmId, name)
+      return {
+        ...osmesaMemberStats,
+        country: userCountries[osmId]
+      }
     })
 
     return (
