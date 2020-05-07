@@ -1,5 +1,6 @@
 import React from 'react'
 import Table from './common/Table'
+import { fromPairs } from 'ramda'
 
 const tableSchema = {
   'headers': {
@@ -17,11 +18,11 @@ const tableSchema = {
 
 export default ({ assignments, filter }) => {
   let campaignMap = {}
-
   if (assignments.length) {
-    campaignMap = Object.assign(...assignments.map(({ name, tm_id, tasker_id }) => ({ [name]: `${tasker_id}-${tm_id}` })))
+    campaignMap = fromPairs(assignments.map(({ name, tasker_id: taskerId, tm_id: taskingManagerId }) => {
+      return [name, { taskerId, taskingManagerId }]
+    }))
   }
-
   let assignmentsWithSource = assignments.map(assignment => Object.assign(assignment, { 'source': (filter === 'Teams' || filter === 'All') ? assignment.source : '' })
   )
   return (

@@ -172,8 +172,13 @@ router.get('/userinfo', (req, res) => {
  * Logout
  */
 router.get('/logout', (req, res) => {
-  req.logout()
-  res.redirect(APP_URL_FINAL)
+  req.session.destroy(function (err) {
+    req.session = null
+    if (err) {
+      console.error(err)
+    }
+    res.redirect(APP_URL_FINAL)
+  })
 })
 
 /**
@@ -237,7 +242,7 @@ router.get('/teams/accept', async (req, res) => {
       const result = await teamServiceCredentials.authorizationCode.getToken(options)
 
       // Store access token and refresh token
-      await storeToken(result)
+      await storeToken(teamServiceCredentials.accessToken.create(result).token)
       return res.redirect(APP_URL_FINAL)
     } catch (error) {
       console.error(error)

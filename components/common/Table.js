@@ -43,9 +43,11 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
       }
     case 'campaignlink':
       return ({ cell: { value } }) => {
-        const code = campaignMap[value]
+        const { taskerId, taskingManagerId } = campaignMap[value]
         return (
-          <Link href={`/campaigns/${code}`}>
+          <Link
+            href={`/campaign?id=${taskerId}-${taskingManagerId}`}
+            as={`/campaigns/${taskerId}-${taskingManagerId}`}>
             <a className='link--normal' >
               {value}
             </a>
@@ -62,13 +64,27 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
           </Link>
         )
       }
+    case 'teamlink':
+      return ({ cell: { value } }) => {
+        return (
+          <Link href={`/teams/${idMap[value]}`}>
+            <a className='link--normal' >
+              { value }
+            </a>
+          </Link>
+        )
+      }
     default:
-      return formattedNum
+      throw new Error(`unknown datatype ${datatype}`)
   }
 }
 
 function prepareAllHeaders (table) {
-  const headers = glossary.filter(term => Object.keys(table.headers).includes(term.id))
+  const tableHeaders = Object.keys(table.headers)
+  const headers = glossary.filter(term => tableHeaders.includes(term.id))
+  if (headers.length !== tableHeaders.length) {
+    throw new Error('Header(s) are missing from the i18n glossary')
+  }
   // appends a boolean property to headers to indicate whether the tooltip is showing
   headers.map(header => (
     table.displaysTooltip.includes(header.id) ? (
@@ -99,7 +115,7 @@ function prepareColumns (props) {
     return {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
-      disableSortBy: (key === 'button'),
+      disableSortBy: (props.notSortable) ? true : (key === 'button'),
       Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap),
       Footer: footerTotals[columnSchema.accessor]
     }

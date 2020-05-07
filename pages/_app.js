@@ -6,6 +6,7 @@ import { withRouter } from 'next/router'
 import { Provider, connect } from 'unistore/react'
 import { Provider as AlertProvider, withAlert } from 'react-alert'
 import getConfig from 'next/config'
+import whyDidYouRender from '@welldone-software/why-did-you-render'
 
 import AlertTemplate from 'react-alert-template-basic'
 
@@ -41,6 +42,10 @@ const NavLink = withRouter(({ children, router, href }) => {
 
 const { publicRuntimeConfig } = getConfig()
 const VersionNumber = publicRuntimeConfig.versionNumber
+
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  whyDidYouRender(React)
+}
 
 function Footer (props) {
   return (
@@ -207,7 +212,9 @@ class Layout extends React.Component {
             </nav>
           </div>
         </header>
-        {children}
+        {
+          React.cloneElement(children, { loggedIn, authenticatedUser })
+        }
         <Footer loggedIn={loggedIn} />
       </div>
     )

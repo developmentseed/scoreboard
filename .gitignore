@@ -10,7 +10,7 @@ users.csv
 .vscode
 docs-build
 .swp
-
 # ignore node_modules symlink
 node_modules
 node_modules.nosync
+.idea

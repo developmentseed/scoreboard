@@ -133,6 +133,7 @@ legend {
     position: relative;
     display: inline-block;
     padding-left: 1rem;
+    cursor: pointer;
 }
 
 .checkbox label::before,
@@ -140,6 +141,7 @@ legend {
     position: absolute;
     content: "";
     display: inline-block;
+    cursor: pointer;
 }
 
 .checkbox label::before{

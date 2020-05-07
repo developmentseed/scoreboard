@@ -43,25 +43,15 @@ swaggerDocument.info.version = pckg.version
  */
 
 let sessionConfig = {
+  name: 'scoreboard',
   secret: SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
-  expires: new Date(Date.now() + (30 * 86400 * 1000))
+  saveUninitialized: false,
+  unset: 'destroy',
+  store: new KnexSessionStore({ knex: db }),
+  cookie: { maxAge: 30 * 86400 * 1000 } // 1 month cookies
 }
 
-if (NODE_ENV === 'production') {
-  const store = new KnexSessionStore({
-    knex: db
-  })
-
-  Object.assign(sessionConfig, {
-    secret: SESSION_SECRET,
-    cookie: {
-      expires: new Date(Date.now() + (30 * 86400 * 1000))
-    },
-    store: store
-  })
-}
 app.use(bodyParser.json())
 app.use(compression())
 app.use(boom())

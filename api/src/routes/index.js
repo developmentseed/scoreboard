@@ -20,6 +20,7 @@ const settings = require('./settings')
  */
 router.get('/users', users.list)
 router.get('/users/stats', users.stats)
+router.post('/users/names', users.getNames)
 router.get('/users/:id', user.get)
 router.put('/users/:id', user.put)
 router.get('/campaigns/:tasker_id-:tm_id', campaign)
@@ -52,6 +53,8 @@ router.post('/teams', teams.post)
 router.get('/teams/:id', teams.get)
 router.put('/teams/:id', teams.put)
 router.delete('/teams/:id', teams.del)
+router.put('/teams/:id/assignModerator/:osmId', teams.assignModerator)
+router.put('/teams/:id/removeModerator/:osmId', teams.removeModerator)
 
 // taskers routes
 router.get('/taskers', taskers.list)

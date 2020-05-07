@@ -103,5 +103,45 @@
       "id": "button",
       "name": "Action",
       "description": "Action"
+    },
+    {
+        "id": "campaign-name",
+        "name": "Campaign",
+        "description": "Campaign name"
+    },
+    {
+        "id": "campaign-assigned",
+        "name": "Assigned",
+        "description": "Date when team was assigned to campaign"
+    },
+    {
+        "id": "campaign-priority",
+        "name": "Priority",
+        "description": "Priority of campaign for mappers on team (High/Medium/Low)"
+    },
+    {
+        "id": "campaign-hashtag",
+        "name": "Campaign Hashtag",
+        "description": "Hashtag used in campaign"
+    },
+    {
+        "id": "team-name",
+        "name": "Team Name",
+        "description": "Team Name"
+    },
+    {
+        "id": "#-members",
+        "name": "# of Members",
+        "description": "Number of Members"
+    },
+    {
+        "id": "moderator-names",
+        "name": "Moderator Names",
+        "description": "Moderator Names"
+    },
+    {
+        "id":"team-hashtag",
+        "name":"Hashtag",
+        "description":"Hashtag for this team"
     }
 ]
