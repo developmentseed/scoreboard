@@ -35,12 +35,12 @@ export default function TeamDetailsForm ({ onSubmit, onChange, details }) {
   return (
     <form className='form' onSubmit={handleSubmit(reshapeData(onSubmit))}>
       <div className='form__input-unit'>
-        <label className='form__label' htmlFor='name'>Name *</label>
+        <label className='form__label' htmlFor='name'>Name (must be unique)</label>
         <input type='text' name='name' ref={register({ required: true })} onChange={getValuesOnChange} />
         { errors['name'] && 'Name is required' }
       </div>
       <div className='form__input-unit'>
-        <label className='form__label' htmlFor='hashtag'>Hashtag</label>
+        <label className='form__label' htmlFor='hashtag'>Hashtag (must be unique)</label>
         <input type='text' name='hashtag' ref={register} onChange={getValuesOnChange} />
       </div>
       <div className='form__input-unit'>
