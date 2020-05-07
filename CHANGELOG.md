@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [v1.9.1] - 2020-05-07
+
+### Added
+
+- Added some helpful labelling on the Create Team form.
+
 ## [v1.9.0] - 2020-05-07
 
 ### Added
@@ -310,7 +316,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.9.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.9.1...HEAD
+[v1.9.1]: https://github.com/developmentseed/scoreboard/compare/v1.9.0...1.9.1
 [v1.9.0]: https://github.com/developmentseed/scoreboard/compare/v1.8.0...1.9.0
 [v1.8.0]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...1.8.0
 [v1.7.2]: https://github.com/developmentseed/scoreboard/compare/v1.7.1...v1.7.2
