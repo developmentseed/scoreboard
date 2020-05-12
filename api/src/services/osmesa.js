@@ -8,7 +8,9 @@ const {
   find,
   propEq,
   reduce,
-  sum
+  sum,
+  reject,
+  isNil
 } = require('ramda')
 
 const { cache } = require('../config')
@@ -161,7 +163,7 @@ function convertUserObjectShape (countries, osmesaUserStats) {
     hashtag_changesets = {},
     country_edits = {},
     country_changesets = {}
-  } = osmesaUserStats
+  } = reject(isNil, osmesaUserStats)
 
   const country_list = []
   Object.keys(country_edits).forEach(code => {
