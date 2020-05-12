@@ -151,16 +151,16 @@ function convertCountProperties (target, source) {
 function convertUserObjectShape (countries, osmesaUserStats) {
   const {
     id: uid,
-    edit_count,
-    changeset_count,
-    name,
-    last_edit,
-    editor_edits,
-    day_edits,
-    hashtag_edits,
-    hashtag_changesets,
-    country_edits,
-    country_changesets
+    edit_count = 0,
+    changeset_count = 0,
+    name = '',
+    last_edit = null,
+    editor_edits = {},
+    day_edits = {},
+    hashtag_edits = {},
+    hashtag_changesets = {},
+    country_edits = {},
+    country_changesets = {}
   } = osmesaUserStats
 
   const country_list = []
@@ -203,7 +203,7 @@ function convertUserObjectShape (countries, osmesaUserStats) {
 
 class OSMesaDBWrapper {
   constructor () {
-    // connection the odmesa db
+    // connection the osmesa db
     this.dbUrl = null
     this.dbConn = knex({ client: 'pg', connection: this.dbUrl })
 
