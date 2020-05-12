@@ -8,7 +8,9 @@ const {
   find,
   propEq,
   reduce,
-  sum
+  sum,
+  reject,
+  isNil
 } = require('ramda')
 
 const { cache } = require('../config')
@@ -151,17 +153,17 @@ function convertCountProperties (target, source) {
 function convertUserObjectShape (countries, osmesaUserStats) {
   const {
     id: uid,
-    edit_count,
-    changeset_count,
-    name,
-    last_edit,
-    editor_edits,
-    day_edits,
-    hashtag_edits,
-    hashtag_changesets,
-    country_edits,
-    country_changesets
-  } = osmesaUserStats
+    edit_count = 0,
+    changeset_count = 0,
+    name = '',
+    last_edit = null,
+    editor_edits = {},
+    day_edits = {},
+    hashtag_edits = {},
+    hashtag_changesets = {},
+    country_edits = {},
+    country_changesets = {}
+  } = reject(isNil, osmesaUserStats)
 
   const country_list = []
   Object.keys(country_edits).forEach(code => {
@@ -203,7 +205,7 @@ function convertUserObjectShape (countries, osmesaUserStats) {
 
 class OSMesaDBWrapper {
   constructor () {
-    // connection the odmesa db
+    // connection the osmesa db
     this.dbUrl = null
     this.dbConn = knex({ client: 'pg', connection: this.dbUrl })
 
