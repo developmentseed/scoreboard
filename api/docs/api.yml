@@ -59,7 +59,7 @@ paths:
         default: false
       responses:
         200:
-          description: The list of OSM users 
+          description: The list of OSM users
   "/api/users/{id}":
     get:
       summary: a specific user
@@ -92,7 +92,7 @@ paths:
         required: false
       - in: query
         name: compl_min
-        type: integer 
+        type: integer
         description: Minimum percentage of completion
         required: false
         default: 0
@@ -127,3 +127,89 @@ paths:
       responses:
         200:
           description: Returns list of responses
+  /api/timeseries:
+    post:
+      tags:
+        - 'time series'
+      summary: 'Fetches time-series data from the osmesa database.
+       Note: all of the parameters below are properties of an application/json request payload (body).'
+      parameters:
+        - name: startDate
+          required: true
+          description: 'Start date of query.'
+          in: body
+          schema:
+            type: string
+            description: 'ISO-8601 formatted datetime string (UTC time zone). https://en.wikipedia.org/wiki/ISO_8601'
+            example: '2020-12-30'
+        - name: endDate
+          required: false
+          description: 'End date of query (defaults to now if omitted).'
+          in: body
+          schema:
+            type: string
+            description: 'ISO-8601 formatted datetime string (UTC time zone). https://en.wikipedia.org/wiki/ISO_8601'
+            example: '2020-12-30'
+        - name: binInterval
+          required: false
+          description: 'Response will be binned into equal intervals specified by this parameter. Must be shorter
+            than end-date minus start-date. If omitted, no binning will be performed.'
+          in: body
+          schema:
+            type: string
+            description: 'ISO-8601 formatted time interval/duration string. https://en.wikipedia.org/wiki/ISO_8601'
+            example: 'P1Y2M10DT2H30M'
+        - name: userIdsFilter
+          required: false
+          description: 'Filter down to these mapedit/osm user ids.'
+          in: body
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: categoriesFilter
+          required: false
+          description: "Filter down to these osmesa categories of measurements and counts. (available values from https://github.com/azavea/osmesa/blob/master/src/analytics/src/main/scala/osmesa/analytics/stats/package.scala)"
+          in: body
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                # measurements
+                - 'road_km'
+                - 'waterway_km'
+                - 'coastline_km'
+                - 'railline_km'
+                # counts
+                - 'roads'
+                - 'waterways'
+                - 'coastlines'
+                - 'buildings'
+                - 'railway_features'
+                - 'raillines'
+                - 'pois'
+                - 'other'
+        - name: hashtagsFilter
+          required: false
+          description: "Filter down to these exact hashtags"
+          in: body
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['345_task_789', '345_task_111']
+        - name: hashtagPrefixFilter
+          required: false
+          in: body
+          schema:
+            type: array
+            items:
+              type: string
+              example: ['ocelots_']
+          description: "Filter down to these hashtags, using a prefix match."
+      responses:
+        200:
+          description: "Time series data structure. TODO define schema of response data."
+          schema:
+            type: object

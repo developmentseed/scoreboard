@@ -14433,18 +14433,17 @@ svgo@^1.0.0, svgo@^1.0.5:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-swagger-markdown@^1.1.5:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/swagger-markdown/-/swagger-markdown-1.2.0.tgz#d1a3e7368f499525534086663fbdc0f1062cb147"
-  integrity sha512-pDo68F06HigyE5ZohC2Vxrr9HTqlEb1lhSK1AXQ+N2O89tb9/roCgDq3HFVkuhuM2r5R4ZWBiOm2sv/wHESeVg==
-  dependencies:
-    argparse "^1.0.10"
-    js-yaml "^3.13.1"
+swagger-ui-dist@^3.18.1:
+  version "3.31.1"
+  resolved "https://registry.yarnpkg.com/swagger-ui-dist/-/swagger-ui-dist-3.31.1.tgz#aa05a59cbd6b4f92edc5e3f147fb4fb526a22824"
+  integrity sha512-+IuIxXX8grZcDVLaC12WCGy62iHJ2v8kTptU4H4EgY/ue6tKeMu/jzIAs+pLFOuYwfG4+VQ+CrC9UeHR9oNKBw==
 
-swagger-ui-express@^3.0.10:
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/swagger-ui-express/-/swagger-ui-express-3.0.10.tgz#c72b32107a57a47913f3b46003e8fd62a7378ea2"
-  integrity sha1-xysyEHpXpHkT87RgA+j9Yqc3jqI=
+swagger-ui-express@^4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/swagger-ui-express/-/swagger-ui-express-4.1.4.tgz#8b814ad998b850a1cf90e71808d6d0a8a8daf742"
+  integrity sha512-Ea96ecpC+Iq9GUqkeD/LFR32xSs8gYqmTW1gXCuKg81c26WV6ZC2FsBSPVExQP6WkyUuz5HEiR0sEv/HCC343g==
+  dependencies:
+    swagger-ui-dist "^3.18.1"
 
 symbol-observable@^1.0.4:
   version "1.2.0"

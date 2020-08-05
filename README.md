@@ -127,12 +127,6 @@ Lint the code using:
 
 You can automatically fix some lint errors using `yarn lintfix`.
 
-## Generating Docs
-
-If you make changes to the API documentation make sure to update the README for the API which is auto-generated from the swagger YAML by running:
-
-     $ yarn docs
-
 ## Connecting to OSM Teams
 
 In OSM-teams, choose "Connect a new app". For the callback URL use the path

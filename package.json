@@ -17,7 +17,6 @@
     "seed": "knex seed:run --cwd api/src/db",
     "rollback": "knex migrate:rollback --cwd api/src/db/",
     "clocks": "nf start update_users,tm_clock",
-    "docs": "swagger-markdown -i api/docs/api.yml -o api/README.md",
     "lint": "devseed-standard",
     "lintfix": "devseed-standard --fix",
     "lint:css": "stylelint 'styles/**/**' 'scripts/**/*.js'"
@@ -154,7 +153,7 @@
     "simple-oauth2": "^3.3",
     "style-loader": "^0.23.1",
     "stylelint": "^12.0.0",
-    "swagger-ui-express": "^3.0.10",
+    "swagger-ui-express": "^4.1.4",
     "unistore": "^3.1.0",
     "url-join": "^4.0.0",
     "url-loader": "^1.1.2",
@@ -175,7 +174,6 @@
     "jest": "^23.6.0",
     "mutationobserver-shim": "^0.3.3",
     "stylelint-config-recommended": "^3.0.0",
-    "supertest": "^3.1.0",
-    "swagger-markdown": "^1.1.5"
+    "supertest": "^3.1.0"
   }
 }
