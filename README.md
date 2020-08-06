@@ -151,6 +151,10 @@ via the Admin entry in the User menu.
 - Manage Users
 - App Settings: OSMesa integration settings
 
+# API docs
+
+See [api/README](./api/README.md)
+
 # Production
 
 To use scoreboard in production follow these steps:
