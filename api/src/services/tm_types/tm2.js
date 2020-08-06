@@ -6,10 +6,10 @@ const { pick, merge } = require('ramda')
  * Methods to grab data from tasking manager version 2
  */
 class TM2API {
-  constructor (url, tasker_id, api_url, opts) {
+  constructor ({ url, taskerId, apiUrl, opts }) {
     this.url = url
-    this.api_url = api_url
-    this.tasker_id = tasker_id
+    this.api_url = apiUrl
+    this.tasker_id = taskerId
     this.opts = opts || {}
   }
 

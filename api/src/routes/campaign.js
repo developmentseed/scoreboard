@@ -1,6 +1,6 @@
 const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
-const { TM } = require('../services/tm')
+const { TaskingManagerFactory } = require('../services/tm')
 const { find, propEq } = require('ramda')
 const refreshStatus = require('../utils/osmesaStatus.js')
 const totalUsersEdits = require('../utils/sum_editCounts.js')
@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
 
     // Add tasking manager info
     const [tm] = await db('taskers').where('id', tmData.tasker_id)
-    const T = new TM(tm.id, tm.type, tm.url)
+    const T = TaskingManagerFactory.createInstance({ id: tm.id, type: tm.type, url: tm.url })
     tmData.url = T.getUrlForProject(tmData.tm_id)
     tmData.tm_name = tm.name
     let lastUpdate = tmData.updated_at
