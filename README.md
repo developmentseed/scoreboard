@@ -107,9 +107,12 @@ This will select some random changesets from the OSMesa edits and assign them to
 
 ## Start Development Server
 
-This command will start both the frontend and the api together
+This command will start both the frontend and the api together, with livereloading for both the front end and api
 
      $ yarn dev
+
+This command will start both the frontend and the api together, with a static version of the api
+    $ yarn dev-static
 
 ## Tests
 
