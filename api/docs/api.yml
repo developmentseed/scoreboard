@@ -43,7 +43,8 @@ paths:
       - in: query
         name: country
         type: string
-        description: "List of countries to filter on, using a 2 letter country code. Example 'CA,US' for Canada, United States"
+        # TODO: make this consistent with 3 letter country code used in Osmesa
+        description: 'List of countries to filter on, using a 2 letter country code. Example "CA,US" for Canada, United States'
         required: false
       - in: query
         name: sortType
@@ -169,7 +170,7 @@ paths:
               type: integer
         - name: categoriesFilter
           required: false
-          description: "Filter down to these osmesa categories of measurements and counts. (available values from https://github.com/azavea/osmesa/blob/master/src/analytics/src/main/scala/osmesa/analytics/stats/package.scala)"
+          description: 'Filter down to these osmesa categories of measurements and counts. (available values from https://github.com/azavea/osmesa/blob/master/src/analytics/src/main/scala/osmesa/analytics/stats/package.scala)'
           in: body
           schema:
             type: array
@@ -190,9 +191,19 @@ paths:
                 - 'raillines'
                 - 'pois'
                 - 'other'
+        - name: countriesFilter
+          required: false
+          description: 'Filter down to these countries'
+          in: body
+          schema:
+            type: array
+            items:
+              type: string
+              description: 'ISO-3166 country code (3 letters), or USA-XX for a US State'
+            example: ['AFG', 'AUS', 'USA', 'USA-AK']
         - name: hashtagsFilter
           required: false
-          description: "Filter down to these exact hashtags"
+          description: 'Filter down to these exact hashtags'
           in: body
           schema:
             type: array
@@ -207,9 +218,9 @@ paths:
             items:
               type: string
               example: ['ocelots_']
-          description: "Filter down to these hashtags, using a prefix match."
+          description: 'Filter down to these hashtags, using a prefix match.'
       responses:
         200:
-          description: "Time series data structure. TODO define schema of response data."
+          description: 'Time series data structure. TODO define schema of response data.'
           schema:
             type: object
