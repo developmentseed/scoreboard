@@ -22,7 +22,7 @@ class TaskingManagerFactory {
     }
     let cleanedUrl = url.replace(/\/+$/, '')
     let apiUrl = (opts && opts.proxy) || cleanedUrl
-    apiUrl = apiUrl.replace(/\/+/, '')
+    apiUrl = apiUrl.replace(/\/+$/, '')
     return new TaskingManagerCreator({
       taskerId: id,
       url: cleanedUrl,
