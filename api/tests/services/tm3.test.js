@@ -79,7 +79,6 @@ test.serial('Test TM3 schema', async t => {
 test.serial('Test URL forming', async t => {
   const tm = TaskingManagerFactory.createInstance({ id: 1, type: 'tm3', url: 'http://tasks.openstreetmap.us', opts: { proxy: 'http://localhost:4848' } })
   let projects = await tm.getProjects() // Should get from the proxy
-  e
   const project = projects.find(p => p.projectId === 77)
   t.truthy(project)
 
