@@ -1,6 +1,6 @@
-/* const rp = require('request-promise-native')
+const rp = require('request-promise-native')
 const limit = require('p-limit')(5)
-const extractCampaignHashtag = require('../../utils/extractCampaignHashtag') */
+//const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
 
 /**
  * Methods to grab data from MapRoulette API
@@ -30,7 +30,48 @@ class MapRouletteAPI {
     })
   }
 
+  /*
+   * For consistency, use Projects to refer to Scoreboard projects
+   * MapRoulette uses Projects :: Challenges
+   * Challenges are treated as Campaigs.
+  */
   async getProjects () {
+    let qs = {
+      page: 0,
+      limit: 10
+    }
+    if (this.opts.search_params) {
+      qs = { ...this.opts.search_params, ...qs }
+    }
+
+    const firstResp = await rp({
+      uri: `${this.api_url}/api/v2/challenges/featured`,
+      qs,
+      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+    })
+    const challenges = JSON.parse(firstResp)
+    return challenges
+    //const numPages = json.pagination.pages
+    //const promises = []
+    /*
+    for (let i =1; i <= numPages; i++) {
+      qs.page = i
+      promises.push(limit(() => rp({
+        uri: ``,
+        qs,
+        headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+      })))
+    }
+    Promise.all(challenges).then( resps => {
+      resps.forEach( resp => {
+        const { results } = resp.json()
+        results.forEach( challenge => {
+          challenges.push(challenge)
+        })
+      })
+      return challenges
+    })
+    */
   }
 
   getProject (id) {
@@ -43,6 +84,17 @@ class MapRouletteAPI {
   }
 
   toDBObjects (records) {
+    /*
+    const sqlObjects = records.map( challenge => {
+      priority:
+      name:
+      description:
+      validated:
+      status:
+      done:
+      tm_id:
+      tasker_id:
+    })*/
   }
 
   updateDB (db, dbObjects) {

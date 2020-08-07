@@ -1,4 +1,4 @@
-const { TM2API, TM3API, FakeTMAPI } = require('./tm_types')
+const { TM2API, TM3API, FakeTMAPI, MapRouletteAPI } = require('./tm_types')
 
 const parseType = (type) => {
   switch (type) {
@@ -10,6 +10,12 @@ const parseType = (type) => {
     }
     case 'test': {
       return FakeTMAPI
+    }
+    case 'mr': {
+      return MapRouletteAPI
+    }
+    default: {
+      return null
     }
   }
 }
