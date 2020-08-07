@@ -119,7 +119,7 @@
     "next": "^7.0.2",
     "next-images": "^1.0.1",
     "node-sass": "^4.9.4",
-    "nodemon": "^2.0.4",
+    "nodemon": "1.18",
     "npm-run-all": "^4.1.1",
     "ol": "^5.3.0",
     "ol-mapbox-style": "^3.7.1",
