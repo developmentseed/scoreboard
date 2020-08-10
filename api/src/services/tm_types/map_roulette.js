@@ -35,50 +35,45 @@ class MapRouletteAPI {
    * For consistency, use Projects to refer to Scoreboard projects
    * MapRoulette uses Projects :: Challenges
    * Challenges are treated as Campaigns.
+   * TODO this currently statically returns the first 50 objs
   */
   async getProjects () {
     let qs = {
       page: 0,
-      limit: 10
+      limit: 50
     }
     if (this.opts.search_params) {
       qs = { ...this.opts.search_params, ...qs }
     }
 
-    const firstResp = await rp({
-      uri: `${this.api_url}/api/v2/challenges/featured`,
+    const resp = await rp({
+      uri: `${this.api_url}/api/v2/challenges/extendedFind`,
       qs,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
-    const challenges = JSON.parse(firstResp)
+    const challenges = JSON.parse(resp)
     return challenges
-    // const numPages = json.pagination.pages
-    // const promises = []
-    /*
-    for (let i =1; i <= numPages; i++) {
-      qs.page = i
-      promises.push(limit(() => rp({
-        uri: ``,
-        qs,
-        headers: { 'Accept-Language': 'en-US,en;q=0.9' }
-      })))
-    }
-    Promise.all(challenges).then( resps => {
-      resps.forEach( resp => {
-        const { results } = resp.json()
-        results.forEach( challenge => {
-          challenges.push(challenge)
-        })
-      })
-      return challenges
-    })
-    */
   }
 
   getProject (id) {
+    return rp({
+      uri: `${this.api_url}/api/v2/challenge/${id}`,
+      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+    })
   }
 
   getProjectAoi (id) {
+    return new Promise((resolve, reject) => {
+      rp({
+        uri: `${this.api_url}/api/v2/challenge/${id}`,
+        headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+      })
+        .then(res => {
+          const { bounding } = JSON.parse(res)
+          resolve(bounding)
+        })
+        .catch(err => console.log(err))
+    })
   }
 
   getTasks (id) {
@@ -98,9 +93,11 @@ class MapRouletteAPI {
         // HARD CODED VALUES
         status: 'PUBLISHED',
         campaign_hashtag: 'test',
-        validated: 0
+        validated: 0,
+        done: 0 // placeholder value
       }
     })
+      .filter(obj => obj.tm_id > 0)
     return sqlObjects
   }
 
@@ -112,9 +109,14 @@ class MapRouletteAPI {
         uri: `${this.api_url}/api/v2/data/challenge/${obj.tm_id}`,
         headers: { 'Accept-Language': 'en-US,en;q=0.9' }
       })
-      const [{ actions: data }] = JSON.parse(dataRes)
-
-      obj.done = (1 - data.available / data.total) * 100
+      try {
+        const [{ actions: data }] = JSON.parse(dataRes)
+        obj.done = (1 - data.available / data.total) * 100
+      } catch (e) {
+        if (e instanceof TypeError) {
+          console.error(`No data for MR challenge ${obj.tm_id} available`)
+        }
+      }
 
       if (rows.length === 0) {
         // not found
