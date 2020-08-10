@@ -105,8 +105,8 @@ class MapRouletteAPI {
         priority: challenge.defaultPriority,
         created_at: challenge.created,
         updated_at: challenge.modified,
-        geometry: challenge.bounding,
         tasker_id: this.tasker_id,
+        geometry: challenge.bounding,
         // HARD CODED VALUES
         status: 'PUBLISHED',
         campaign_hashtag: 'test',
