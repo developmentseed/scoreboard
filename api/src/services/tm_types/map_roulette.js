@@ -5,6 +5,7 @@ const limit = require('p-limit')(5)
 /**
  * Methods to grab data from MapRoulette API
  */
+
 class MapRouletteAPI {
   /**
    * Creates an instance of MapRouletteAPI.
@@ -84,26 +85,37 @@ class MapRouletteAPI {
   }
 
   toDBObjects (records) {
-    const sqlObjects = records.map(challenge => ({
-      name: challenge.name,
-      description: challenge.description,
-      tm_id: challenge.id,
-      priority: challenge.defaultPriority,
-      status: 'PUBLISHED',
-      created_at: challenge.created,
-      updated_at: challenge.modified,
-      geometry: challenge.bounding,
-      tasker_id: this.tasker_id,
-      campaign_hashtag: 'test',
-      validated: 0,
-      done: 0
-    }))
+    const sqlObjects = records.map(challenge => {
+      return {
+        name: challenge.name,
+        description: challenge.description,
+        tm_id: challenge.id,
+        priority: challenge.defaultPriority,
+        created_at: challenge.created,
+        updated_at: challenge.modified,
+        geometry: challenge.bounding,
+        tasker_id: this.tasker_id,
+        // HARD CODED VALUES
+        status: 'PUBLISHED',
+        campaign_hashtag: 'test',
+        validated: 0
+      }
+    })
     return sqlObjects
   }
 
   updateDB (db, dbObjects) {
     const proms = dbObjects.map(obj => limit(async () => {
       let rows = await db('campaigns').where({ 'tm_id': obj.tm_id, 'tasker_id': obj.tasker_id })
+
+      const dataRes = await rp({
+        uri: `${this.api_url}/api/v2/data/challenge/${obj.tm_id}`,
+        headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+      })
+      const [{ actions: data }] = JSON.parse(dataRes)
+
+      obj.done = (1 - data.available / data.total) * 100
+
       if (rows.length === 0) {
         // not found
         return db('campaigns').insert(obj)
