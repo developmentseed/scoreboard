@@ -16,11 +16,28 @@ class MapRouletteAPI {
     this.url = url
     this.api_url = apiUrl
     this.tasker_id = taskerId
-    this.opts = opts || {}
+    this.opts = opts ? this.validateOpts(opts) : {}
+  }
+  validateOpts (opts) {
+    if (opts.search_params) {
+      const searchKeys = new Set(['pid',
+        'ps',
+        'pe',
+        'ct',
+        'cs',
+        'ce',
+        'cd'])
+      const searchParams = Object.entries(opts.search_params).filter(([k, val]) => searchKeys.has(k))
+      if (searchParams.length !== Object.keys(opts.search_params).length) {
+        console.log(`Invalid search params. Options are ${[...searchKeys.values()].join(' ')}`)
+      }
+      opts.search_params = Object.fromEntries(searchParams)
+    }
+    return opts
   }
 
   getUrlForProject (id) {
-    return `${this.url}/project/${id}`
+    return `${this.url}/challenge/${id}`
   }
 
   getLastUpdated (id) {
