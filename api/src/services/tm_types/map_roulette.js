@@ -89,7 +89,7 @@ class MapRouletteAPI {
       description: challenge.description,
       tm_id: challenge.id,
       priority: challenge.defaultPriority,
-      status: challenge.status,
+      status: 'PUBLISHED',
       created_at: challenge.created,
       updated_at: challenge.modified,
       geometry: challenge.bounding,
