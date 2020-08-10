@@ -1,6 +1,6 @@
 const rp = require('request-promise-native')
 const limit = require('p-limit')(5)
-//const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
+// const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
 
 /**
  * Methods to grab data from MapRoulette API
@@ -33,7 +33,7 @@ class MapRouletteAPI {
   /*
    * For consistency, use Projects to refer to Scoreboard projects
    * MapRoulette uses Projects :: Challenges
-   * Challenges are treated as Campaigs.
+   * Challenges are treated as Campaigns.
   */
   async getProjects () {
     let qs = {
@@ -51,8 +51,8 @@ class MapRouletteAPI {
     })
     const challenges = JSON.parse(firstResp)
     return challenges
-    //const numPages = json.pagination.pages
-    //const promises = []
+    // const numPages = json.pagination.pages
+    // const promises = []
     /*
     for (let i =1; i <= numPages; i++) {
       qs.page = i
@@ -84,20 +84,35 @@ class MapRouletteAPI {
   }
 
   toDBObjects (records) {
-    /*
-    const sqlObjects = records.map( challenge => {
-      priority:
-      name:
-      description:
-      validated:
-      status:
-      done:
-      tm_id:
-      tasker_id:
-    })*/
+    const sqlObjects = records.map(challenge => ({
+      name: challenge.name,
+      description: challenge.description,
+      tm_id: challenge.id,
+      priority: challenge.defaultPriority,
+      status: challenge.status,
+      created_at: challenge.created,
+      updated_at: challenge.modified,
+      geometry: challenge.bounding,
+      tasker_id: this.tasker_id,
+      campaign_hashtag: 'test',
+      validated: 0,
+      done: 0
+    }))
+    return sqlObjects
   }
 
   updateDB (db, dbObjects) {
+    const proms = dbObjects.map(obj => limit(async () => {
+      let rows = await db('campaigns').where({ 'tm_id': obj.tm_id, 'tasker_id': obj.tasker_id })
+      if (rows.length === 0) {
+        // not found
+        return db('campaigns').insert(obj)
+      } else {
+        return db('campaigns').where('id', rows[0].id).update(obj)
+      }
+    }))
+
+    return Promise.all(proms)
   }
 }
 

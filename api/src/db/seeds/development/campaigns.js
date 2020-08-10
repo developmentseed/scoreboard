@@ -25,7 +25,7 @@ exports.seed = async (knex) => {
           url: 'http://maproulette.org',
           name: 'test mr',
           options: {
-            //proxy: 'http://localhost:4851'
+            // proxy: 'http://localhost:4851'
           }
         })
         resolve()

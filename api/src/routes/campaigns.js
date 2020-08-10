@@ -42,7 +42,6 @@ module.exports = async (req, res) => {
         .orWhere('name', 'ilike', `%${search}%`)
         .orWhere(db.raw('tm_id::varchar(255)'), 'ilike', `%${search}%`)
     }
-
     if (tm.length > 0) {
       const tms = tm.split(',')
       query = query.whereIn('tasker_id', tms)
