@@ -43,9 +43,11 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
       }
     case 'campaignlink':
       return ({ cell: { value } }) => {
-        const code = campaignMap[value]
+        const { taskerId, taskingManagerId } = campaignMap[value]
         return (
-          <Link href={`/campaigns/${code}`}>
+          <Link
+            href={`/campaign?id=${taskerId}-${taskingManagerId}`}
+            as={`/campaigns/${taskerId}-${taskingManagerId}`}>
             <a className='link--normal' >
               {value}
             </a>
@@ -62,13 +64,27 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
           </Link>
         )
       }
+    case 'teamlink':
+      return ({ cell: { value } }) => {
+        return (
+          <Link href={`/teams/${idMap[value]}`}>
+            <a className='link--normal' >
+              { value }
+            </a>
+          </Link>
+        )
+      }
     default:
-      return formattedNum
+      throw new Error(`unknown datatype ${datatype}`)
   }
 }
 
 function prepareAllHeaders (table) {
-  const headers = glossary.filter(term => Object.keys(table.headers).includes(term.id))
+  const tableHeaders = Object.keys(table.headers)
+  const headers = glossary.filter(term => tableHeaders.includes(term.id))
+  if (headers.length !== tableHeaders.length) {
+    throw new Error('Header(s) are missing from the i18n glossary')
+  }
   // appends a boolean property to headers to indicate whether the tooltip is showing
   headers.map(header => (
     table.displaysTooltip.includes(header.id) ? (
@@ -80,28 +96,28 @@ function prepareAllHeaders (table) {
   headers.sort((a, b) => (table.columnOrder.indexOf(a.id) - table.columnOrder.indexOf(b.id)))
 
   let headerObjects = {}
-
   headers.forEach(header => (
     headerObjects[header.id] = header.displayTooltip ? (
-      <Tooltip dataTip={header.description}>{header.name}</Tooltip>
+      <Tooltip dataTip={header.description} className={table.headers[header.id].type === 'number' ? 'table-align-right' : ''} style={{ justifyContent: table.headers[header.id].type === 'number' ? 'flex-end' : '' }}>{header.name}</Tooltip>
     ) : (
       header.name
     )
   ))
-
   return headerObjects
 }
 
 function prepareColumns (props) {
   const tableSchema = props.tableSchema
   const headerDivs = prepareAllHeaders(tableSchema)
-
   const columnSchemas = toPairs(tableSchema.headers)
+  const footerTotals = (props.totals) ? props.totals : ''
   const columns = columnSchemas.map(([key, columnSchema]) => {
     return {
       Header: headerDivs[key],
       accessor: columnSchema.accessor,
-      Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap)
+      disableSortBy: (props.notSortable) ? true : (key === 'button'),
+      Cell: selectCellFormatter(columnSchema.type, props.idMap, props.countryMap, props.campaignMap),
+      Footer: footerTotals[columnSchema.accessor]
     }
   })
   return columns
@@ -124,19 +140,21 @@ export default function Table (props) {
         <tr>
           {
             headers.map(column =>
-              sortable ? (
+              column.canSort ? (
                 <th
                   key={column.id}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   title={column.Header.props ? `Sort by ${column.Header.props.children}` : `Sort by ${column.Header}`}
                 >
-                  <a className={column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none'}>
+                  <a
+                    className={(column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none') + ' ' + (column.Cell.name === 'formattedNum' ? 'table-align-right' : '')}
+                  >
                     {column.Header}
                   </a>
                 </th>)
                 : (
                   <th key={column.id} {...column.getHeaderProps()}>
-                    <div>{column.Header}</div>
+                    <div className={column.header === 'number' ? 'table-align-right' : ''}>{column.Header}</div>
                   </th>)
             )
           }
@@ -151,7 +169,7 @@ export default function Table (props) {
                 <tr {...row.getRowProps()}>
                   {
                     row.cells.map(cell => {
-                      return <td {...cell.getCellProps()}>
+                      return <td {...cell.getCellProps()} className={!isNaN(cell.value) && parseInt(cell.value) >= 0 ? 'table-align-right' : ''}>
                         {cell.render('Cell')}
                       </td>
                     })
@@ -162,6 +180,15 @@ export default function Table (props) {
           )
         }
       </tbody>
+      <tfoot>
+        <tr>
+          {
+            headers.map(column => (
+              <td key={column.id} className={'table-align-right'}>{column.Footer}</td>
+            ))
+          }
+        </tr>
+      </tfoot>
     </table>
   )
 }

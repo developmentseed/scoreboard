@@ -99,6 +99,12 @@ async function stats (req, res) {
       case 'Alphabetical Z-A':
         recordQuery = recordQuery.orderBy('full_name', 'desc')
         break
+      case 'Countries A-Z':
+        recordQuery = recordQuery.orderByRaw('country asc NULLS LAST')
+        break
+      case 'Countries Z-A':
+        recordQuery = recordQuery.orderByRaw('country desc NULLS LAST')
+        break
       default: // Most total edits
         recordQuery = recordQuery.orderByRaw('edit_count desc, full_name  NULLS LAST')
         break
@@ -159,7 +165,35 @@ async function list (req, res) {
   }
 }
 
+/**
+ * Get names route
+ * /users/names
+ *
+ * List the osm names for a set of osm ids. This is a helper route that is used by
+ * getAllTeams action.
+ *
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ * @async
+ */
+async function getNames (req, res) {
+  const { body } = req
+  try {
+    const { ids } = body
+    const data = await db
+      .select('osm_id', 'full_name')
+      .from('users')
+      .whereIn('osm_id', ids)
+    res.send(data)
+  } catch (err) {
+    console.error(err)
+    return res.boom.badRequest('Could not get user names')
+  }
+}
+
 module.exports = {
   stats,
-  list
+  list,
+  getNames
 }

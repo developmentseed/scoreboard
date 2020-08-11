@@ -11,15 +11,16 @@ const YAML = require('yamljs')
 const swaggerUi = require('swagger-ui-express')
 const path = require('path')
 const pify = require('pify')
-const request = require('request')
+const { userExtent } = require('./routes/extents')
 
 const pckg = require('../../package.json')
 const router = require('./routes')
 
 const app = express()
 const db = require('./db/connection')
+const dbSettings = require('./models/settings')
 
-const { SESSION_SECRET, NODE_ENV, OSMESA_API } = require('./config')
+const { SESSION_SECRET, NODE_ENV, cache } = require('./config')
 const { passport, authRouter } = require('./passport')
 
 /**
@@ -42,25 +43,15 @@ swaggerDocument.info.version = pckg.version
  */
 
 let sessionConfig = {
+  name: 'scoreboard',
   secret: SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
-  expires: new Date(Date.now() + (30 * 86400 * 1000))
+  saveUninitialized: false,
+  unset: 'destroy',
+  store: new KnexSessionStore({ knex: db }),
+  cookie: { maxAge: 30 * 86400 * 1000 } // 1 month cookies
 }
 
-if (NODE_ENV === 'production') {
-  const store = new KnexSessionStore({
-    knex: db
-  })
-
-  Object.assign(sessionConfig, {
-    secret: SESSION_SECRET,
-    cookie: {
-      expires: new Date(Date.now() + (30 * 86400 * 1000))
-    },
-    store: store
-  })
-}
 app.use(bodyParser.json())
 app.use(compression())
 app.use(boom())
@@ -77,6 +68,12 @@ app.use('/docs', express.static(path.join(__dirname, '../../docs-build')))
 app.get('/favicon.ico', (req, res) => res.status(200).sendFile('favicon.ico', { root: path.join(__dirname, '../../static/') }))
 
 module.exports = async function () {
+  // load the cache
+  const settings = await dbSettings.list()
+  settings.forEach(({ setting, value }) => {
+    cache.put(setting, value)
+  })
+
   if (NODE_ENV === 'development') {
     let tiles = await mbtiles(path.join(__dirname, 'db', 'earthquakes.mbtiles'))
     app.get(['/api/extents/user/test/:z/:x/:y.mvt', '/scoreboard/api/extents/user/test/:z/:x/:y.mvt'], (req, res) => {
@@ -92,10 +89,7 @@ module.exports = async function () {
     })
     return app
   } else {
-    app.get(['/api/extents/*', '/scoreboard/api/extents/*'], (req, res) => {
-      const url = `${OSMESA_API}/tiles/${req.params[0]}`
-      req.pipe(request(url)).pipe(res)
-    })
+    app.get(['/api/extents/user/:user/:z/:x/:y.mvt', '/scoreboard/api/extents/user/:user/:z/:x/:y.mvt'], userExtent)
     return app
   }
 }

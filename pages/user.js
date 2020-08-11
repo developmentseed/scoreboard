@@ -90,6 +90,7 @@ export class User extends Component {
       ],
       records
     )
+    const userHasEdits = records.edit_count > 0
     const recordsExport = [{ ...records, badgeCount, campaignCount }]
     return (
       <div className='dashboard'>
@@ -112,43 +113,59 @@ export class User extends Component {
         <div className='row'>
           <DashboardBlurb {...records} username={name} />
           <div className='widget-33 page-actions'>
-            <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
+            {userHasEdits &&
+              <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
+            }
           </div>
         </div>
-        <section>
-          <div className='row'>
-            <div className='map-lg'>
-              <UserExtentMap uid={uid} extent={extent_uri} />
-            </div>
-          </div>
-        </section>
-        <section>
-          <div className='row'>
-            <div className='widget-container'>
-              <div className='widget-66'>
-                <CampaignsChart
-                  hashtags={hashtags}
-                  height='260px'
-                />
-              </div>
-              <div className='widget-33'>
-                <EditBreakdownChart {...breakdownChartProps} height='260px' />
-              </div>
-            </div>
-          </div>
-        </section>
-        <section>
-          <div className='row widget-container'>
-            <DashboardSidebar teams={teams} osmesaData={records} />
-            <div className='widget-75'>
-              <DashboardBadges name={name} badges={badges} />
-            </div>
-          </div>
-          <div className='row'>
-            <CalendarHeatmap times={edit_times} />
-          </div>
-        </section>
+        {
+          userHasEdits
+            ? <>
+              <section id='user_map'>
+                <div className='row'>
+                  <div className='map-lg'>
+                    <UserExtentMap uid={uid} extent={extent_uri} />
+                  </div>
+                </div>
+              </section>
+              <section id='user_charts'>
+                <div className='row'>
+                  <div className='widget-container'>
+                    <div className='widget-66'>
+                      <CampaignsChart
+                        hashtags={hashtags}
+                        height='260px'
+                      />
+                    </div>
+                    <div className='widget-33'>
+                      <EditBreakdownChart {...breakdownChartProps} height='260px' />
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section id='user_sidebar-badges-heatmap'>
+                <div className='row widget-container'>
+                  <DashboardSidebar teams={teams} osmesaData={records} />
+                  <div className='widget-75'>
+                    <DashboardBadges name={name} badges={badges} />
+                  </div>
+                </div>
+                <div className='row'>
+                  <CalendarHeatmap times={edit_times} />
+                </div>
+              </section>
+              </>
+            : this.renderBlankState()
+        }
       </div>
+    )
+  }
+
+  renderBlankState () {
+    return (
+      <section className='row'>
+        <img className='img--blank-state' src='../static/dashboard-temp/open_maps.svg' />
+      </section>
     )
   }
 }

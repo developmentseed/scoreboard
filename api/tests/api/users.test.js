@@ -13,9 +13,9 @@ const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 
 test.before(async () => {
-  app = await app()
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
+  app = await app()
 
   // run users clock
   await userClocks()
@@ -36,6 +36,22 @@ test('Pull all users with stats', async (t) => {
   t.true('full_name' in response.body.records[0])
   // edit_count should always be a number
   t.false(Number.isNaN(response.body.records[0].edit_count))
+})
+
+test.serial('Get user names from osm ids', async (t) => {
+  const allUsersResponse = await request(app)
+    .get('/scoreboard/api/users/stats')
+  const ids = allUsersResponse.body.records.map(prop('osm_id'))
+  const params = { ids }
+  const response = await request(app)
+    .post('/scoreboard/api/users/names').send(params)
+    .expect(200)
+  const records = response.body
+  t.is(records.length, ids.length)
+  records.forEach(({ osm_id, full_name }) => {
+    t.truthy(osm_id)
+    t.truthy(full_name)
+  })
 })
 
 test('Sort users by most recently active', async (t) => {
@@ -133,6 +149,34 @@ test('Sort users alphabetically z-a', async (t) => {
   const resCopy = response.body.records.map(prop('full_name'))
   t.is(resCopy.length, names.length)
   t.deepEqual(resCopy, names)
+})
+
+test('Sort users by country alphabetically a-z', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Countries A-Z&active=false')
+    .expect(200)
+  const users = await db('users')
+    .select('country')
+    .orderByRaw('country asc NULLS LAST')
+    .limit(25)
+  const countries = users.map(prop('country'))
+  const resCopy = response.body.records.map(prop('country'))
+  t.deepEqual(resCopy, countries)
+})
+
+test('Sort users by country alphabetically z-a', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Countries Z-A&active=false')
+    .expect(200)
+
+  const users = await db('users')
+    .select('country')
+    .orderByRaw('country desc NULLS LAST')
+    .limit(25)
+  const countries = users.map(prop('country'))
+  const resCopy = response.body.records.map(prop('country'))
+  t.is(resCopy.length, countries.length)
+  t.deepEqual(resCopy, countries)
 })
 
 test.serial('Update user country', async (t) => {

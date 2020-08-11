@@ -5,6 +5,58 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## [v1.9.1] - 2020-05-07
+
+### Added
+
+- Added some helpful labelling on the Create Team form.
+
+## [v1.9.0] - 2020-05-07
+
+### Added
+
+- Added new sections to readme about osm-teams and administration settings.
+- Added an osmesaStats data structure to the response in route /teams:id.
+- Added new "Team stats" page to compile team editing + list of assigned campaigns
+- Added "Create/Edit Teams" page allowing creation/editing of team name, hashtag, description, location, members, campaigns
+- Added "Edit Moderators" page within Edit Teams allowing moderators to assign other team members as moderators
+- Added Teams index page with "own teams" and "moderated teams" filters
+- Added "Connect Teams" banner dependent on oauth flow for connecting [osm-teams](https://github.com/developmentseed/osm-teams) api
+- Added "Sort by Country" to Users page
+- Added environment variable to designate OSM Teams Organization that Scoreboard can write to
+
+### Changed
+
+- CentOS deployment script: deployment/centos/deploy.sh corrected and updated.
+- Cleaned up and improved comments in `.env.sample`.
+- Removed environment variables from README. Instead use `.env.sample` as a reference.
+- Removed in-page table sorting from Users and Country tables
+- Removed admin area ability to create teams / edit teams
+
+### Fixed
+
+- Fixed server session duration to remove "empty" sessions for API tokens
+
+## [v1.8.0] - 2020-02-03
+
+### Added
+- Settings Admin Page
+- Memory cache for settings
+- Added blank state illustration for users with no edits
+- Add CLI tool to allow user to assign random edits to their user for development
+- Added "Total" row for campaign tables and campaign CSV export which calculates all stat totals 
+
+### Changed 
+- User extent tiles now provided by s3 and tileserver proxy
+- Osmesa service now reads settings from cache
+- Right-align table headers and cells with numeric data, excepting first "Rank" column
+- Update node version to 12.14LTS
+
+### Fixed
+- Refactor stylesheets for modular scss best practices, added stylelint
+- Catch undefined headers for sort column title
+
 ## [v1.7.2] - 2019-12-03
 ### Changed
 - Table header link hover color; allows user to more easily distinguish hovered column
@@ -264,7 +316,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.9.1...HEAD
+[v1.9.1]: https://github.com/developmentseed/scoreboard/compare/v1.9.0...1.9.1
+[v1.9.0]: https://github.com/developmentseed/scoreboard/compare/v1.8.0...1.9.0
+[v1.8.0]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...1.8.0
 [v1.7.2]: https://github.com/developmentseed/scoreboard/compare/v1.7.1...v1.7.2
 [v1.7.1]: https://github.com/developmentseed/scoreboard/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/developmentseed/scoreboard/compare/v1.6.0...v1.7.0

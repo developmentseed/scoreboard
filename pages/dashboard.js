@@ -45,15 +45,9 @@ class Dashboard extends Component {
   }
 
   componentDidMount () {
-    this.props.getAuthenticatedUser()
-  }
-
-  componentDidUpdate () {
-    const { authenticatedUser, error } = this.props
-
-    if (this.state.loading && (authenticatedUser.loggedIn || error)) {
+    this.props.getAuthenticatedUser().then(() => {
       this.setState({ loading: false })
-    }
+    })
   }
 
   render () {
@@ -65,8 +59,15 @@ class Dashboard extends Component {
         </div>
       )
     }
-    const { authenticatedUser } = this.props
+
+    const { authenticatedUser, project } = this.props
     const { loggedIn, account } = authenticatedUser
+    if (!loggedIn || !account) {
+      return (
+        <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
+      )
+    }
+
     const { assignments, favorites, country, allCampaigns } = account
 
     const { badges, teams, refreshDate } = account
@@ -95,7 +96,6 @@ class Dashboard extends Component {
       ],
       osmesaData
     )
-
     // Calculate counts for panel
     const badgeCount =
       account.badges && badges.earnedBadges
@@ -104,12 +104,6 @@ class Dashboard extends Component {
     const campaignCount =
       osmesaData && osmesaData.hashtags ? osmesaData.hashtags.length : 0
     const changesetCount = osmesaData ? osmesaData.changeset_count : 0
-
-    if (!loggedIn || !account) {
-      return (
-        <NotLoggedIn message='Log in with your OSM account to see your personalized dashboard' />
-      )
-    }
 
     // Dashboard header variables
     let profileImage = null
@@ -132,6 +126,8 @@ class Dashboard extends Component {
       accountId = authenticatedUser.account.id
     }
     const recordsExport = [{ ...account.records, badgeCount, campaignCount, name }]
+    const userHasEdits = edit_times.length > 0
+    const userHasCampaigns = (favorites.length > 0 || assignments.length > 0 || campaignCount > 0)
     return (
       <div className='dashboard'>
         <DashboardHeader
@@ -152,57 +148,63 @@ class Dashboard extends Component {
             { label: 'Changesets', value: formatDecimal(changesetCount) }
           ]}
         />
-        <div className='row'>
-          <DashboardBlurb {...osmesaData} />
+        <div id='blurb' className='row'>
+          <DashboardBlurb {...osmesaData} project={project} />
           <div className='widget-33 page-actions'>
-            <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
+            {userHasEdits &&
+              <CSVExport filename={`${name}_ScoreboardData.csv`} data={recordsExport} />
+            }
           </div>
         </div>
-        <section className='section--dark'>
-          <div className='row'>
-            {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
-            <DashboardAssignments
-              favorites={favorites}
-              assignments={assignments}
-              authenticatedUser={authenticatedUser}
-              all={allCampaigns}
-            />
-          </div>
-        </section>
-        <section>
-          <div className='row'>
-            <div className='map-lg'>
-              <UserExtentMap uid={uid} extent={extent_uri} />
+        {
+          (userHasCampaigns || isAdmin(authenticatedUser.account.roles)) &&
+          <section id='admin-assignments' className='section--dark'>
+            <div className='row'>
+              {isAdmin(authenticatedUser.account.roles) && this.renderAdmin()}
+              {userHasCampaigns && this.renderAssignments()}
             </div>
-          </div>
-        </section>
-        <section>
-          <div className='row'>
-            <div className='widget-container'>
-              <div className='widget-66'>
-                <CampaignsChart
-                  campaigns={allCampaigns}
-                  hashtags={hashtags}
-                  height='260px'
-                />
-              </div>
-              <div className='widget-33'>
-                <EditBreakdownChart {...breakdownChartProps} height='260px' />
-              </div>
-            </div>
-          </div>
-        </section>
-        <section>
-          <div className='row widget-container'>
-            <DashboardSidebar teams={teams} osmesaData={osmesaData} loggedIn={loggedIn} />
-            <div className='widget-75'>
-              <DashboardBadges badges={badges} name={name} />
-            </div>
-          </div>
-          <div className='row'>
-            <CalendarHeatmap times={edit_times} />
-          </div>
-        </section>
+          </section>
+        }
+        {
+          userHasEdits
+            ? <>
+              <section id='dashboard_map'>
+                <div className='row'>
+                  <div className='map-lg'>
+                    <UserExtentMap uid={uid} extent={extent_uri} />
+                  </div>
+                </div>
+              </section>
+              <section id='dashboard_charts'>
+                <div className='row'>
+                  <div className='widget-container'>
+                    <div className='widget-66'>
+                      <CampaignsChart
+                        campaigns={allCampaigns}
+                        hashtags={hashtags}
+                        height='260px'
+                      />
+                    </div>
+                    <div className='widget-33'>
+                      <EditBreakdownChart {...breakdownChartProps} height='260px' />
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section id='dashboard_sidebar-badges-heatmap'>
+                <div className='row widget-container'>
+                  <DashboardSidebar teams={teams} osmesaData={osmesaData} loggedIn={loggedIn} />
+                  <div className='widget-75'>
+                    <DashboardBadges badges={badges} name={name} />
+                  </div>
+                </div>
+                <div className='row'>
+                  <CalendarHeatmap times={edit_times} />
+                </div>
+              </section>
+              </>
+            : this.renderBlankState()
+        }
       </div>
     )
   }
@@ -215,11 +217,32 @@ class Dashboard extends Component {
             <a className='header-link'>Admin</a>
           </Link>
         </h2>
-        <AdminSectionList teamsActive={this.props.authenticatedUser.account.activatedTeams} />
+        <AdminSectionList />
         <hr />
         <br />
         <br />
       </div>
+    )
+  }
+
+  renderAssignments () {
+    const { authenticatedUser } = this.props
+    const { assignments, favorites, allCampaigns } = authenticatedUser.account
+    return (
+      <DashboardAssignments
+        favorites={favorites}
+        assignments={assignments}
+        authenticatedUser={authenticatedUser}
+        all={allCampaigns}
+      />
+    )
+  }
+
+  renderBlankState () {
+    return (
+      <section className='row'>
+        <img className='img--blank-state' src='static/dashboard-temp/open_maps.svg' />
+      </section>
     )
   }
 }

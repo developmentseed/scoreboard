@@ -128,8 +128,6 @@ Add a file with the following content to `/var/scoreboard-data/.env`
 NODE_ENV=production
 DATABASE_URL=postgres://scoreboard:test@localhost:5433/scoreboard
 USERS_URL=xxxx
-OSMESA_API=xxxxx
-OSMESA_DB=xxxxx
 APP_URL=xxxxx
 OSM_CONSUMER_KEY=xxxxx
 OSM_CONSUMER_SECRET=xxxxx
@@ -142,8 +140,6 @@ Here's what all the variables mean
 | name | description
 | ---  | -----
 | NODE_ENV | The configuration to use, "test", "development" or "production"
-| OSMESA_API | URL to the OSMESA http server that serves out tiles
-| OSMESA_DB | URL to the OSMESA DB that serves out statistics
 | USERS_URL | URL to CSV that will prefill user data (Optional)
 | APP_URL | URL where the site will be hosted
 | APP_URL_PREFIX | prefix appended to APP_URL if App is not at root (e.g `/scoreboard/`)

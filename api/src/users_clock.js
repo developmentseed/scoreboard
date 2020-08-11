@@ -4,6 +4,8 @@ const {
 const pLimit = require('p-limit')
 const OSMesa = require('./services/osmesa')
 const db = require('./db/connection')
+const dbSettings = require('./models/settings')
+const { cache } = require('./config')
 const { updateUserCountryEdit, isState } = require('./models/userCountryEdits')
 
 async function updateCountries (userID, countryEditList) {
@@ -82,7 +84,13 @@ async function usersWorker () {
 
 // Run
 if (require.main === module) {
-  usersWorker()
+  dbSettings.list().then(settings =>
+    // load the cache
+    settings.forEach(({ setting, value }) => {
+      cache.put(setting, value)
+    })
+  )
+    .then(() => usersWorker())
     .then(async resp => {
       console.log(`Updated ${resp.length} records.`)
       await db('user_update').where('id', '=', 1)

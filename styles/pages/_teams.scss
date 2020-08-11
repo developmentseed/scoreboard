@@ -1,0 +1,31 @@
+.teams {
+    .widget {
+      background-color: scale-color($green-color, $lightness: 90%, $saturation: 5%);
+      text-align: center;
+      box-shadow: none;
+    }
+    .widget-container {
+      justify-content: space-around;
+    }
+    h1 {
+      text-transform: none;
+    }
+    h1, h3 {
+      color: scale-color($green-color, $lightness: -20%, $saturation: -15%);
+    }
+    .link--large {
+        text-decoration: none;
+        border: none;
+        &:hover {
+            cursor: inherit;
+            color: scale-color($green-color, $lightness: -20%, $saturation: -15%);
+        }
+    }
+    img {
+      display: none;
+      max-width: 100%;
+      @include media(medium-up) {
+        display: inline;
+      }
+    }
+}

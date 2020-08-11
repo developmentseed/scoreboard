@@ -1,0 +1,114 @@
+.Badge {
+  position: relative;
+  float: left;
+  border-radius: 50%;
+  background-image: linear-gradient(90deg, $lightgrey 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)),
+  linear-gradient(90deg, $green-color 50%, $lightgrey 50%, $lightgrey);
+  &.progress {
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+  }
+  &.upcoming {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+  }
+}
+
+.Badge-Interior {
+  position: absolute;
+  margin-top: 14px;
+  margin-left: 14px;
+  border: 2px solid lighten($lightgrey, 20%);
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 140px;
+  &.progress {
+    width: 132px;
+    height: 132px;
+  }
+  &.upcoming {
+    width: 71px;
+    height: 71px;
+    margin-top: 3px;
+    margin-left: 3px;
+    background-size: 75px;
+  }
+}
+
+.Badge-Container {
+  display: flex;
+  &:nth-of-type(even) {
+    margin-right: 0;
+  }
+  &:last-of-type {
+    margin-right: 0;
+    &:after {
+      content: " ";
+    }
+  }
+}
+
+.badge-Details {
+  width: 65%;
+  text-align: left;
+  margin-left: 1em;
+  margin-top: 1.5em;
+  .sub-head {
+    padding-bottom: .3em;
+    width: 100%;
+    @media screen and (max-width: 894px) {
+      margin-top: 15px;
+    }
+  }
+}
+
+.Badge-Roll .Badge-Completed {
+  width: 145px;
+  height: 145px;
+  background-size: 145px;
+  margin-right: 5px;
+}
+
+.Badge-Popup {
+  font-family: $base-font-regular;
+  position: absolute;
+  z-index: 1;
+  top: 95px;
+  left: 95px;
+  width: 200px;
+  margin-top: 5px;
+  margin-left: 15px;
+  padding: 10px 10px;
+  -webkit-transition: all .25s ease-in-out;
+     -moz-transition: all .25s ease-in-out;
+          transition: all .25s ease-in-out;
+  border: 1px solid $darkgrey;
+  border-radius: 5px;
+  background-color: $lightgrey;
+  &.hidden {
+    margin-top: 0;
+    margin-left: 0;
+    opacity: 0;
+  }
+  @media screen and (max-width: 375px) {
+    left: 5;
+  }
+}
+
+.Badge-Roll {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: column;
+  @include media(medium-up) {
+    flex-direction: row;
+  }
+  .Badge-Border {
+    width: 160px;
+    height: 160px;
+    background-size: 160px;
+  }
+}

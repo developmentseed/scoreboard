@@ -18,7 +18,7 @@ const { prop } = require('ramda')
  * /user/:id
  *
  * The user stats route will display the OSM stats for a user with id :id. The
- * API will get the stats from OSMESA_API/users/{id}
+ * API will get the stats from the OSMESA database
  *
  * @param {Object} req - the request object
  * @param {Object} res - the response object

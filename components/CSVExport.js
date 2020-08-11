@@ -1,7 +1,10 @@
 import React from 'react'
 import { CSVLink } from 'react-csv'
+import { formatDecimal } from '../lib/utils/format'
 
 export default function CSVExport ({ filename, data }) {
+  const isUser = data[0].campaignCount > 0
+  let totalData = data
   let headers = [
     { label: 'Name', key: 'name' },
     { label: 'Roads (Km) Added', key: 'km_roads_add' },
@@ -19,17 +22,36 @@ export default function CSVExport ({ filename, data }) {
     { label: 'Changesets', key: 'changeset_count' },
     { label: 'Edits', key: 'edit_count' }
   ]
-  if (data[0].campaignCount) {
+  if (isUser) {
     headers.splice(1, 0,
       { label: 'Campaigns', key: 'campaignCount' },
       { label: 'Badges', key: 'badgeCount' },
       { label: 'Countries', key: 'country_list.length' }
     )
   }
+
+  // Construct footer for the campaign table export
+  if (!isUser) {
+    let exportTotals = {}
+
+    const headerKeys = headers.map(e => e.key)
+    headerKeys.forEach(k => {
+      exportTotals[k] = formatDecimal(
+        data
+          .map(row => Number(row[k]))
+          .reduce((prev, cur) => prev + cur)
+      )
+    })
+
+    // Add name column
+    exportTotals['name'] = 'Total'
+    totalData = [...data, exportTotals]
+  }
+
   return (
     <CSVLink
       className='button button--secondary'
-      data={data}
+      data={totalData}
       filename={filename}
       headers={headers}
     >
