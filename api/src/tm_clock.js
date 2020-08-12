@@ -1,5 +1,5 @@
 const db = require('./db/connection')
-const { TM } = require('./services/tm')
+const { TaskingManagerFactory } = require('./services/tm')
 const bbox = require('@turf/bbox').default
 const bboxPolygon = require('@turf/bbox-polygon').default
 const dbSettings = require('./models/settings')
@@ -19,7 +19,7 @@ async function tmWorker (isCmd) {
     for (let i = 0; i < taskers.length; i++) {
       let { id, type, url, name, options } = taskers[i]
       if (isCmd) console.log(`Updating projects for ${name}`)
-      let tm = new TM(id, type, url, options)
+      let tm = TaskingManagerFactory.createInstance({ id, type, url, opts: options })
       if (isCmd) console.log('Getting projects from API..')
       let projects = await tm.getProjects()
       let dbObjects = await tm.toDBObjects(projects)

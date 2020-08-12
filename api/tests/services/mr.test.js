@@ -1,6 +1,7 @@
 /**
  * Test the TM service code for different TM adapters
  */
+
 const { TaskingManagerFactory } = require('../../src/services/tm')
 const db = require('../../src/db/connection')
 const test = require('ava')
@@ -9,7 +10,7 @@ const http = require('http')
 const yakbak = require('yakbak')
 const { has, equals, all } = require('ramda')
 
-const tm3proxy = http.createServer(yakbak('https://tasks.openstreetmap.us', {
+const mrproxy = http.createServer(yakbak('https://maproulette.org', {
   dirname: path.join(__dirname, '..', 'tapes')
 }))
 
@@ -27,27 +28,26 @@ test.after.always(async t => {
 })
 
 test.beforeEach.cb(t => {
-  tm3proxy.listen(4848, t.end)
+  mrproxy.listen(4848, t.end)
 })
 
 test.afterEach.cb(t => {
-  tm3proxy.close(t.end)
+  mrproxy.close(t.end)
 })
 
-test.serial('Test TM3', async t => {
-  const tm = TaskingManagerFactory.createInstance({ id: 1, type: 'tm3', url: 'http://localhost:4848' })
+test.serial('Test Map Roulette', async t => {
+  const tm = TaskingManagerFactory.createInstance({ id: 1, type: 'mr', url: 'http://localhost:4848' })
   let projects = await tm.getProjects()
   t.true(projects.length > 0)
 
-  let project = projects[0]
+  let project = projects[1]
   let hasAllKeys = true
   let keysToCheck = [
-    'priority',
     'name',
-    'shortDescription',
-    'percentValidated',
-    'percentMapped',
-    'projectId'
+    'description',
+    'defaultPriority',
+    'bounding',
+    'created'
   ]
 
   keysToCheck.forEach(key => {
@@ -57,18 +57,18 @@ test.serial('Test TM3', async t => {
 })
 
 test.serial('Test TM3 schema', async t => {
-  const tm = TaskingManagerFactory.createInstanceM({ id: 1, type: 'tm3', url: 'http://localhost:4848' })
+  const tm = TaskingManagerFactory.createInstance({ id: 1, type: 'mr', url: 'http://localhost:4848' })
   let projects = await tm.getProjects()
 
-  let project = projects[0]
+  let project = projects[1]
   let keysToCheck = [
-    'priority',
     'name',
-    'shortDescription',
-    'percentValidated',
-    'percentMapped',
-    'projectId'
+    'description',
+    'defaultPriority',
+    'bounding',
+    'created'
   ]
+
   t.plan(keysToCheck.length)
 
   keysToCheck.forEach(key => {
@@ -77,42 +77,43 @@ test.serial('Test TM3 schema', async t => {
 })
 
 test.serial('Test URL forming', async t => {
-  const tm = TaskingManagerFactory.createInstance({ id: 1, type: 'tm3', url: 'http://tasks.openstreetmap.us', opts: { proxy: 'http://localhost:4848' } })
+  const tm = TaskingManagerFactory.createInstance({ id: 1, type: 'mr', url: 'http://maproulette.org', opts: { proxy: 'http://localhost:4848' } })
   let projects = await tm.getProjects() // Should get from the proxy
-  const project = projects.find(p => p.projectId === 77)
+  const project = projects.find(p => p.id === 85)
   t.truthy(project)
 
-  const url = tm.getUrlForProject(project.projectId)
-  t.is(url, `http://tasks.openstreetmap.us/project/77`)
+  const url = tm.getUrlForProject(project.id)
+  t.is(url, `http://maproulette.org/challenge/85`)
 })
 
 test.serial('Test extra params', async t => {
   // Sort response with date
-  const tm = TaskingManagerFactory.createInstance({ id: 1,
-    type: 'tm3',
+  const tm = TaskingManagerFactory.createInstance({ id: 2,
+    type: 'mr',
     url: 'http://localhost:4848',
     opts: {
       search_params: {
-        'mapperLevel': 'BEGINNER'
+        'cd': 1
       }
     } })
 
   let projects = await tm.getProjects()
-  let levels = projects.map(p => p.mapperLevel)
-  t.true(all(equals('BEGINNER'), levels))
+  let levels = projects.map(p => p.difficulty)
+  t.true(all(equals(1), levels))
 })
 
-test.only('Duplicate campaigns', async t => {
+/*
+test.only('Duplicate', async t => {
   // count is from seed
   const [first] = await db('campaigns').count()
 
   // Try adding the tasks again
-  const [tm3] = await db('taskers').where('name', 'test tm3')
-  const tm = TaskingManagerFactory.createInstance({ id: tm3.id, type: 'tm3', url: 'http://tasks.openstreetmap.us', opts: { proxy: 'http://localhost:4848' } })
+  const [mr] = await db('taskers').where('type', 'mr')
+  const tm = TaskingManagerFactory.createInstance({ id: mr.id, type: 'mr', url: 'http://maproulette.prg', opts: { proxy: 'http://localhost:4848' } })
   let projects = await tm.getProjects() // Should get from the proxy
   let dbObjects = await tm.toDBObjects(projects)
   await tm.updateDB(db, dbObjects)
 
   const [second] = await db('campaigns').count()
   t.is(first.count, second.count)
-})
+}) */
