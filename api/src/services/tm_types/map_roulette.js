@@ -1,5 +1,7 @@
 const rp = require('request-promise-native')
 const limit = require('p-limit')(5)
+const { merge } = require('ramda')
+
 // const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
 
 /**
@@ -72,6 +74,45 @@ class MapRouletteAPI {
     return challenges
   }
 
+  async getAndUpdateUsers (db, challenges) {
+    let qs = {
+      limit: 10,
+      monthDuration: -1,
+      challengeIds: challenges.map(c => c.tm_id).join(',')
+    }
+    const usersResp = await rp({
+      uri: `${this.api_url}/api/v2/data/user/leaderboard`,
+      qs,
+      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+    })
+    const mrUsers = JSON.parse(usersResp)
+    const proms = mrUsers.map(curUser => limit(async () => {
+      const resp = await rp({
+        uri: `${this.api_url}/api/v2/user/${curUser.userId}/public`,
+        headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+      })
+      const userData = JSON.parse(resp)
+      const user = {
+        osm_id: userData.osmProfile.id,
+        user_info: {
+          display_name: userData.osmProfile.displayName
+        }
+      }
+      return db('users')
+        .where('osm_id', user.osm_id)
+        .then(rows => {
+          if (rows.length === 0) {
+            console.log('inserting', user.osm_id)
+            return db('users').insert(merge(user, { updated_at: db.fn.now(), created_at: db.fn.now() }))
+          } else {
+            return db('users').where('osm_id', user.osm_id).update(merge(user, { updated_at: db.fn.now() }))
+          }
+        })
+    }))
+
+    return Promise.all(proms)
+  }
+
   getProject (id) {
     return rp({
       uri: `${this.api_url}/api/v2/challenge/${id}`,
@@ -119,7 +160,7 @@ class MapRouletteAPI {
   }
 
   updateDB (db, dbObjects) {
-    const proms = dbObjects.map(obj => limit(async () => {
+    const campaignProms = dbObjects.map(obj => limit(async () => {
       let rows = await db('campaigns').where({ 'tm_id': obj.tm_id, 'tasker_id': obj.tasker_id })
 
       const dataRes = await rp({
@@ -143,7 +184,7 @@ class MapRouletteAPI {
       }
     }))
 
-    return Promise.all(proms)
+    return Promise.all([...campaignProms, this.getAndUpdateUsers(db, dbObjects)])
   }
 }
 

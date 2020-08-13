@@ -14,3 +14,4 @@ docs-build
 node_modules
 node_modules.nosync
 .idea
+api/tests/tapes
