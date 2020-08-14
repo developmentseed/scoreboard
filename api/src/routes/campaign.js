@@ -52,30 +52,50 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
-    let stats = Object.assign(osmesaResponse,
-      { success: true })
-    const userIds = stats.users.map(user => user.uid)
-    const userCountries = await db('users').select(['osm_id', 'country']).whereIn('osm_id', userIds)
-
-    stats.users = stats.users.map(user => {
-      const country = find(propEq('osm_id', user.uid))(userCountries).country
-      return Object.assign({ country }, user)
-    })
-
-    stats.editCounts = totalUsersEdits(stats) || 0
-
-    response['stats'] = stats
+    const [tm] = await db('taskers').where('id', tasker_id)
+    if (tm.type === 'mr') {
+      const T = TaskingManagerFactory.createInstance({ id: tm.id, type: tm.type, url: tm.url })
+      response['stats'] = await T.getProjectStats(response.meta.tm_id)
+      console.log(response.stats)
+    } else {
+      await loadOsMesaStats(response)
+    }
   } catch (err) {
-    console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
+    // console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err)
     if (err.statusCode && err.statusCode === 404) {
       // There are no stats yet
+      console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
       response['stats'] = Object.assign(
-        { success: true })
+        { success: false })
+    } else if (err instanceof TypeError) {
+      // campaign does not exist in osmesa
+      console.log('Campaign needs to get info')
+      console.log(`tm is ${response.meta.tm_name}`)
+      response['stats'] = Object.assign(
+        { success: false })
     } else {
+      // Some other error
       response['stats'] = Object.assign(
         { success: false })
     }
   }
   return res.send(response)
+}
+
+async function loadOsMesaStats (response) {
+  const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
+  let stats = Object.assign(osmesaResponse,
+    { success: true })
+  const userIds = stats.users.map(user => user.uid)
+  const userCountries = await db('users').select(['osm_id', 'country']).whereIn('osm_id', userIds)
+
+  stats.users = stats.users.map(user => {
+    const country = find(propEq('osm_id', user.uid))(userCountries).country
+    return Object.assign({ country }, user)
+  })
+
+  stats.editCounts = totalUsersEdits(stats) || 0
+
+  response['stats'] = stats
+  return Promise.all([osmesaResponse, userCountries])
 }

@@ -81,6 +81,37 @@ class MapRouletteAPI {
     })
   }
 
+  async getProjectStats (id) {
+    const qs = {
+      monthDuration: -1,
+      challengeIds: id,
+      limit: 20
+    }
+    const userData = await rp({
+      uri: `${this.api_url}/api/v2/data/user/leaderboard`,
+      qs,
+      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+    })
+
+    const users = JSON.parse(userData).map(user => {
+      const userObj = {
+        uid: user.userId,
+        name: user.name,
+        rank: user.rank,
+        score: user.score
+      }
+      return userObj
+    })
+
+    const campaignObj = {
+      tag: id,
+      users,
+      success: true
+    }
+    return campaignObj 
+
+  }
+
   getProjectAoi (id) {
     return new Promise((resolve, reject) => {
       rp({

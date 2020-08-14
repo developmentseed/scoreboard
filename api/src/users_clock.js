@@ -45,7 +45,6 @@ async function updateCountries (userID, countryEditList) {
  * @returns {Promise} a response
  */
 async function usersWorker () {
-  console.log('clock')
   try {
     const users = await db('users').select('id', 'osm_id') // Get all users
 

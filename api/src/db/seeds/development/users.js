@@ -13,18 +13,21 @@ exports.seed = (knex) => knex('users').del() // delete entries
     })
 
     const users = await osmesaDB('users').select('id as osm_id', 'name as full_name')
-    await knex('users').insert(users)
+    
+    // Make sure all users are unique
+    const seen = new Map()
+    users.forEach( u =>{
+      seen.set(u.osm_id, u)
+    })
+    await knex('users').insert([...seen.values()])
 
-    //for dev purposes, load MR users from project leader boards
+    // for dev purposes, load MR users from project leader boards
     return getMrUsers(knex)
-
   })
   .then(usersClock)
 
-
-
 /*
- * These functions load in users from MR Challenge leaderboards and add them to the scoreboard database 
+ * These functions load in users from MR Challenge leaderboards and add them to the scoreboard database
  */
 const getMrUsers = async knex => {
   const [{ id, url }] = await knex('taskers').where('type', 'mr').select()
@@ -45,7 +48,6 @@ async function getAndUpdateUsers (db, challenges, url) {
     headers: { 'Accept-Language': 'en-US,en;q=0.9' }
   })
   const mrUsers = JSON.parse(usersResp)
-
 
   const proms = mrUsers.map(curUser => limit(async () => {
     const resp = await rp({
@@ -68,6 +70,7 @@ async function getAndUpdateUsers (db, challenges, url) {
       .then(rows => {
         try {
           if (rows.length === 0) {
+            console.log(user.osm_id)
             return db('users').insert(merge(user, { updated_at: db.fn.now(), created_at: db.fn.now() }))
           } else {
             return db('users').where('osm_id', user.osm_id).update(merge(user, { updated_at: db.fn.now() }))
