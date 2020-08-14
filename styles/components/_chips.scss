@@ -1,0 +1,44 @@
+.chip {
+  color: #ffffff;
+  border: none;
+  height: 24px;
+  display: inline-flex;
+  outline: 0;
+  font-size: 0.8125rem;
+  box-sizing: border-box;
+  transition: $background-color-light 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  align-items: center;
+  white-space: nowrap;
+  border-radius: 16px;
+  vertical-align: middle;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.chip--label {
+  padding-left: 8px;
+  padding-right: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: $tertiary-font-family;
+  font-weight: bold;
+}
+
+.chip--wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.chip--primary {
+  background-color: $blue-color;
+}
+
+.chip--secondary {
+  background-color: $base-color;
+}
+
+.chip--tertiary {
+  background-color: $blue-purple-color;
+}
