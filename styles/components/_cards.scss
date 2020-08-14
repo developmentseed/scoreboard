@@ -178,16 +178,19 @@
     margin-bottom: .7em;
     display: block;
   }
-  .card-stats {
+  .card-footer {
     margin-top: 2em;
     color: $light-text-color;
-    display: flex;
-    justify-content: flex-start;
+    display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
     .num--large {
       color: $green-color;
     }
-    >li:first-child {
-      margin-right: 1em;
+    .card--chip {
+      display: grid;
+      justify-content: end;
     }
   }
   .map {

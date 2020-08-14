@@ -57,16 +57,16 @@ export default ({ campaign }) => {
             <h4 className='header--small header--with-description'>{trimLength(name, 70)}</h4>
             <span className='card__description-project'>Project #{tm_id} - {tm_name} { team_priority ? `- Priority ${parseInt(team_priority, 10)}` : ''}</span>
             <p>{trimLength(description, 190)}</p>
-            <ul className='card-stats'>
-              <li className='list--inline'>
+            <ul className='card-footer'>
+              <li className='card--stat'>
                 <span className='num--large'>{parseInt(Math.min(100, done), 10)}%</span>
                 <span className='descriptor-chart'>Mapped</span>
               </li>
-              <li className='list--inline'>
+              <li className='card--stat'>
                 <span className='num--large'>{parseInt(Math.min(100, validated), 10)}%</span>
                 <span className='descriptor-chart'>Validated</span>
               </li>
-              <li className='chip--wrapper'>
+              <li className='card--chip'>
                 <Chip label={type} color={CHIP_COLOR[type]} />
               </li>
             </ul>
