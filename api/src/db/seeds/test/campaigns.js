@@ -9,6 +9,31 @@ exports.seed = async (knex) => {
    * We create a tm proxy for tapes and fill the database with real
    * tasking manager data
    */
+  const mrproxy = http.createServer(yakbak('https://maproulette.org', {
+    dirname: path.join(__dirname, '..', '..', '..', '..', 'tests', 'tapes')
+  }))
+
+  await new Promise((resolve, reject) => {
+    mrproxy.listen(4851, async () => {
+      try {
+        await knex('campaigns').del()
+        await knex('taskers').del()
+
+        await knex('taskers').insert({
+          type: 'mr',
+          url: 'http://maproulette.org',
+          name: 'test mr',
+          options: {
+            // proxy: 'http://localhost:4851'
+          }
+        })
+        resolve()
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }).then(() => mrproxy.close())
+
   const tm3proxy = http.createServer(yakbak('https://tasks.openstreetmap.us', {
     dirname: path.join(__dirname, '..', '..', '..', '..', 'tests', 'tapes')
   }))
@@ -16,9 +41,6 @@ exports.seed = async (knex) => {
   await new Promise((resolve, reject) => {
     tm3proxy.listen(4850, async () => {
       try {
-        await knex('campaigns').del()
-        await knex('taskers').del()
-
         // Add tasking managers
         await knex('taskers').insert({
           type: 'tm3',
