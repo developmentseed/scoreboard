@@ -11,7 +11,7 @@ export default function Chip ({ label, color }) {
 
 Chip.propTypes = {
   label: PropTypes.string.isRequired,
-  color: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
+  color: PropTypes.oneOf(['primary', 'secondary', 'tertiary'])
 }
 
 Chip.defaultProps = {
