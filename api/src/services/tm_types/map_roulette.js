@@ -73,7 +73,6 @@ class MapRouletteAPI {
     return challenges
   }
 
-
   getProject (id) {
     return rp({
       uri: `${this.api_url}/api/v2/challenge/${id}`,
@@ -108,8 +107,7 @@ class MapRouletteAPI {
       users,
       success: true
     }
-    return campaignObj 
-
+    return campaignObj
   }
 
   getProjectAoi (id) {

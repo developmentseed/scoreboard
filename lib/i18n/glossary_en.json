@@ -5,6 +5,12 @@
         "description":"Order of contributors by number of edits"
     },
     {
+        "id":"score",
+        "name":"Score",
+        "description":"Score"
+    },
+
+    {
         "id":"name",
         "name":"Name",
         "description":"Username"

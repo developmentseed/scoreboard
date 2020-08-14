@@ -157,7 +157,7 @@ export class Campaign extends Component {
               (stats.success)
                 ? <div>
                   <Blurb {...stats} />
-                  <CampaignTable users={stats.users} name={meta.name} />
+                  <CampaignTable users={stats.users} type={stats.statsType} name={meta.name} />
                 </div>
                 : <p>There was an error retrieving stats for this campaign.</p>
             }

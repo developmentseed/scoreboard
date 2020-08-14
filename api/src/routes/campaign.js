@@ -56,7 +56,8 @@ module.exports = async (req, res) => {
     if (tm.type === 'mr') {
       const T = TaskingManagerFactory.createInstance({ id: tm.id, type: tm.type, url: tm.url })
       response['stats'] = await T.getProjectStats(response.meta.tm_id)
-      console.log(response.stats)
+
+      response.stats = { ...response.stats, statsType: 'maproulette' }
     } else {
       await loadOsMesaStats(response)
     }
@@ -65,12 +66,6 @@ module.exports = async (req, res) => {
     if (err.statusCode && err.statusCode === 404) {
       // There are no stats yet
       console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
-      response['stats'] = Object.assign(
-        { success: false })
-    } else if (err instanceof TypeError) {
-      // campaign does not exist in osmesa
-      console.log('Campaign needs to get info')
-      console.log(`tm is ${response.meta.tm_name}`)
       response['stats'] = Object.assign(
         { success: false })
     } else {
@@ -85,7 +80,9 @@ module.exports = async (req, res) => {
 async function loadOsMesaStats (response) {
   const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
   let stats = Object.assign(osmesaResponse,
-    { success: true })
+    { success: true,
+      statsType: 'osmesa'
+    })
   const userIds = stats.users.map(user => user.uid)
   const userCountries = await db('users').select(['osm_id', 'country']).whereIn('osm_id', userIds)
 

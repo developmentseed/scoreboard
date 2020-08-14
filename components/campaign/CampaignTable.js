@@ -4,7 +4,7 @@ import CSVExport from '../../components/CSVExport'
 import Table from '../common/Table'
 import { formatDecimal } from '../../lib/utils/format'
 
-const tableSchema = {
+const osmesaSchema = {
   'headers': {
     'name': { type: 'namelink', accessor: 'name' },
     'country': { type: 'string', accessor: 'country' },
@@ -36,6 +36,30 @@ const tableSchema = {
     'changesets',
     'edits'
   ]
+
+}
+const mapRouletteSchema = {
+  'headers': {
+    'name': { type: 'namelink', accessor: 'name' },
+    'rank': { type: 'number', accessor: 'rank' },
+    'score': { type: 'number', accessor: 'score' }
+  },
+  columnOrder: [
+    'name',
+    'rank',
+    'score'
+  ],
+  'displaysTooltip': [
+    'name',
+    'rank',
+    'score'
+  ]
+
+}
+
+const tableSchema = {
+  osmesa: osmesaSchema,
+  maproulette: mapRouletteSchema
 }
 
 export default function CampaignTable (props) {
@@ -44,49 +68,60 @@ export default function CampaignTable (props) {
   }
   let idMap = Object.assign(...props.users.map(({ uid, name }) => ({ [name]: uid })))
 
-  const campaignTopStats = sortBy(prop('edits'), props.users).reverse()
-    .map(user => ({
-      ...user,
-      km_roads_add_mod: user.km_roads_add + user.km_roads_mod,
-      buildings_add_mod: user.buildings_add + user.buildings_mod,
-      poi_add_mod: user.poi_add + user.poi_mod,
-      km_railways_add_mod: user.km_railways_add + user.km_railways_mod,
-      km_coastlines_add_mod: user.km_coastlines_add + user.km_coastlines_mod,
-      km_waterways_add_mod: user.km_waterways_add + user.km_waterways_mod
-    }))
+  if (props.type === 'osmesa') {
+    const campaignTopStats = sortBy(prop('edits'), props.users).reverse()
+      .map(user => ({
+        ...user,
+        km_roads_add_mod: user.km_roads_add + user.km_roads_mod,
+        buildings_add_mod: user.buildings_add + user.buildings_mod,
+        poi_add_mod: user.poi_add + user.poi_mod,
+        km_railways_add_mod: user.km_railways_add + user.km_railways_mod,
+        km_coastlines_add_mod: user.km_coastlines_add + user.km_coastlines_mod,
+        km_waterways_add_mod: user.km_waterways_add + user.km_waterways_mod
+      }))
 
-  // Construct footer for the campaign table
-  let campaignTotals = {}
+    // Construct footer for the campaign table
+    let campaignTotals = {}
 
-  let keys = [
-    'km_roads_add_mod',
-    'buildings_add_mod',
-    'poi_add_mod',
-    'km_railways_add_mod',
-    'km_coastlines_add_mod',
-    'km_waterways_add_mod',
-    'changeset_count',
-    'edit_count'
-  ]
+    let keys = [
+      'km_roads_add_mod',
+      'buildings_add_mod',
+      'poi_add_mod',
+      'km_railways_add_mod',
+      'km_coastlines_add_mod',
+      'km_waterways_add_mod',
+      'changeset_count',
+      'edit_count'
+    ]
 
-  keys.forEach(k => {
-    campaignTotals[k] = formatDecimal(
-      campaignTopStats
-        .map(row => Number(row[k]))
-        .reduce((prev, cur) => prev + cur)
+    keys.forEach(k => {
+      campaignTotals[k] = formatDecimal(
+        campaignTopStats
+          .map(row => Number(row[k]))
+          .reduce((prev, cur) => prev + cur)
+      )
+    })
+
+    // Add name column
+    campaignTotals['name'] = 'Total'
+
+    return (
+      <div className='widget clearfix table-wrapper'>
+        <Table idMap={idMap} tableSchema={tableSchema.osmesa} data={campaignTopStats} totals={campaignTotals} initialSortColumn='edit_count' />
+        <div>
+          <p><em>* All roads, railways, coastlines and waterways represent Km added and modified</em></p>
+          <CSVExport filename={`${props.name}.csv`} data={campaignTopStats} />
+        </div>
+      </div>
     )
-  })
-
-  // Add name column
-  campaignTotals['name'] = 'Total'
-
-  return (
-    <div className='widget clearfix table-wrapper'>
-      <Table idMap={idMap} tableSchema={tableSchema} data={campaignTopStats} totals={campaignTotals} initialSortColumn='edit_count' />
+  } else {
+    console.log(props.users)
+    return (<div>
+      <Table idMap={idMap} tableSchema={tableSchema.maproulette} data={props.users} initialSortColumn='rank' />
       <div>
         <p><em>* All roads, railways, coastlines and waterways represent Km added and modified</em></p>
-        <CSVExport filename={`${props.name}.csv`} data={campaignTopStats} />
       </div>
-    </div>
-  )
+
+    </div>)
+  }
 }
