@@ -38,6 +38,45 @@ const osmesaSchema = {
   ]
 
 }
+const mapChallSchema = {
+  'headers': {
+    'fixed': { type: 'number', accessor: 'fixed' },
+    'falsePositive': { type: 'number', accessor: 'falsePositive' },
+    'skipped': { type: 'number', accessor: 'skipped' },
+    'deleted': { type: 'number', accessor: 'deleted' },
+    'alreadyFixed': { type: 'number', accessor: 'alreadyFixed' },
+    'tooHard': { type: 'number', accessor: 'tooHard' },
+    'answered': { type: 'number', accessor: 'answered' },
+    'validated': { type: 'number', accessor: 'validated' },
+    'disabled': { type: 'number', accessor: 'disabled' },
+    'avgTimeSpent': { type: 'number', accessor: 'avgTimeSpent' }
+  },
+  columnOrder: [
+    'fixed',
+    'falsePositive',
+    'skipped',
+    'deleted',
+    'alreadyFixed',
+    'tooHard',
+    'answered',
+    'validated',
+    'disabled',
+    'avgTimeSpent'
+  ],
+  'displaysTooltip': [
+    'fixed',
+    'falsePositive',
+    'skipped',
+    'deleted',
+    'alreadyFixed',
+    'tooHard',
+    'answered',
+    'validated',
+    'disabled',
+    'avgTimeSpent'
+  ]
+
+}
 const mapRouletteSchema = {
   'headers': {
     'name': { type: 'namelink', accessor: 'name' },
@@ -59,7 +98,8 @@ const mapRouletteSchema = {
 
 const tableSchema = {
   osmesa: osmesaSchema,
-  maproulette: mapRouletteSchema
+  maproulette: mapRouletteSchema,
+  'maproulette-challenge': mapChallSchema
 }
 
 export default function CampaignTable (props) {
@@ -68,8 +108,11 @@ export default function CampaignTable (props) {
   }
   let idMap = Object.assign(...props.users.map(({ uid, name }) => ({ [name]: uid })))
 
+  let campaignTopStats
+  let campaignTotals
+
   if (props.type === 'osmesa') {
-    const campaignTopStats = sortBy(prop('edits'), props.users).reverse()
+    campaignTopStats = sortBy(prop('edits'), props.users).reverse()
       .map(user => ({
         ...user,
         km_roads_add_mod: user.km_roads_add + user.km_roads_mod,
@@ -81,7 +124,7 @@ export default function CampaignTable (props) {
       }))
 
     // Construct footer for the campaign table
-    let campaignTotals = {}
+    campaignTotals = {}
 
     let keys = [
       'km_roads_add_mod',
@@ -104,24 +147,15 @@ export default function CampaignTable (props) {
 
     // Add name column
     campaignTotals['name'] = 'Total'
+  }
 
-    return (
-      <div className='widget clearfix table-wrapper'>
-        <Table idMap={idMap} tableSchema={tableSchema.osmesa} data={campaignTopStats} totals={campaignTotals} initialSortColumn='edit_count' />
-        <div>
-          <p><em>* All roads, railways, coastlines and waterways represent Km added and modified</em></p>
-          <CSVExport filename={`${props.name}.csv`} data={campaignTopStats} />
-        </div>
-      </div>
-    )
-  } else {
-    console.log(props.users)
-    return (<div>
-      <Table idMap={idMap} tableSchema={tableSchema.maproulette} data={props.users} initialSortColumn='rank' />
+  return (
+    <div className='widget clearfix table-wrapper'>
+      <Table idMap={idMap} tableSchema={tableSchema[props.type]} data={campaignTopStats || props.users} totals={campaignTotals || {}} />
       <div>
         <p><em>* All roads, railways, coastlines and waterways represent Km added and modified</em></p>
+        {campaignTopStats && <CSVExport filename={`${props.name}.csv`} data={campaignTopStats} />}
       </div>
-
-    </div>)
-  }
+    </div>
+  )
 }

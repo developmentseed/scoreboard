@@ -88,8 +88,9 @@ export class Campaign extends Component {
   }
 
   render () {
-    const { meta, lastUpdate, creationDate, refreshDate } = this.props.campaign
+    const { meta, lastUpdate, creationDate, refreshDate, tables } = this.props.campaign
     const stats = merge({ users: [], editCounts: 0 }, this.props.campaign.stats)
+
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
@@ -152,16 +153,21 @@ export class Campaign extends Component {
           </div>
         </section>
         <section className='section--tertiary'>
-          <div className='row'>
-            {
-              (stats.success)
-                ? <div>
-                  <Blurb {...stats} />
-                  <CampaignTable users={stats.users} type={stats.statsType} name={meta.name} />
-                </div>
-                : <p>There was an error retrieving stats for this campaign.</p>
-            }
-          </div>
+
+          {
+            tables && tables.map(data => (
+              <div className='row' key={data.statsType}>
+                {
+                  (data.success)
+                    ? <div>
+                      <Blurb {...data} />
+                      <CampaignTable users={data.users} type={data.statsType} name={meta.name} />
+                    </div>
+                    : <p>There was an error retrieving stats for this campaign.</p>
+                }
+              </div>))
+          }
+
         </section>
       </div>
     )

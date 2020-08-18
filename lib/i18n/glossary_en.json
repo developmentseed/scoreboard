@@ -149,5 +149,46 @@
         "id":"team-hashtag",
         "name":"Hashtag",
         "description":"Hashtag for this team"
+    },
+    { 
+      "id": "fixed",
+      "name": "Fixed"
+    },
+    { 
+      "id": "falsePositive",
+      "name": "False Positive"
+    },
+    { 
+      "id": "skipped",
+      "name": "Skipped"
+    },
+    { 
+      "id": "deleted",
+      "name":"Deleted"
+    },
+    { 
+      "id": "alreadyFixed",
+      "name": "Already Fixed"
+    },
+    { 
+      "id": "tooHard",
+      "name": "Too Hard"
+    },
+    { 
+      "id": "answered",
+      "name": "Answered"
+    },
+    { 
+      "id": "validated",
+      "name": "Validated"
+    },
+    { 
+      "id": "disabled",
+      "name": "Disabled"
+    },
+    { 
+      "id": "avgTimeSpent",
+      "name":"Average Time Spent"
     }
+
 ]

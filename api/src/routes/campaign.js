@@ -23,20 +23,21 @@ module.exports = async (req, res) => {
   }
 
   let response = {}
+  let tmAPI
+  let tm
 
   try {
-    const [tmData] = await db('campaigns').where({ tasker_id, tm_id })
-
+    const [tmData] = await db('campaigns').where({ tasker_id, tm_id });
     // Add tasking manager info
-    const [tm] = await db('taskers').where('id', tmData.tasker_id)
-    const T = TaskingManagerFactory.createInstance({ id: tm.id, type: tm.type, url: tm.url })
-    tmData.url = T.getUrlForProject(tmData.tm_id)
+    [tm] = await db('taskers').where('id', tmData.tasker_id)
+    tmAPI = TaskingManagerFactory.createInstance({ id: tm.id, type: tm.type, url: tm.url })
+    tmData.url = tmAPI.getUrlForProject(tmData.tm_id)
     tmData.tm_name = tm.name
     let lastUpdate = tmData.updated_at
     const creationDate = tmData.created_at
 
     if (!lastUpdate) {
-      lastUpdate = await T.getLastUpdated(tmData.tm_id)
+      lastUpdate = await tmAPI.getLastUpdated(tmData.tm_id)
     }
 
     const refreshDate = await refreshStatus('campaign')
@@ -46,20 +47,67 @@ module.exports = async (req, res) => {
     response['creationDate'] = creationDate
     response['refreshDate'] = refreshDate
     response['meta'] = tmData
+    response['tables'] = []
   } catch (err) {
     console.error(`Campaign ${tasker_id}-${tm_id}, Failed to create response`, err.message)
     res.boom.serverUnavailable('Error processing request')
   }
 
-  try {
-    const [tm] = await db('taskers').where('id', tasker_id)
-    if (tm.type === 'mr') {
-      const T = TaskingManagerFactory.createInstance({ id: tm.id, type: tm.type, url: tm.url })
-      response['stats'] = await T.getProjectStats(response.meta.tm_id)
+  // Load project stats
+  //
 
-      response.stats = { ...response.stats, statsType: 'maproulette' }
+  try {
+    const rawData = await tmAPI.getProjectStats(response.meta.tm_id)
+    const [{ actions }] = JSON.parse(rawData)
+
+    const stats = {
+      users: [actions],
+      success: true,
+      statsType: 'maproulette-challenge'
+    }
+    response.tables.push(stats)
+  } catch (err) {
+    if (err instanceof TypeError) {
     } else {
-      await loadOsMesaStats(response)
+      console.log(`Unknown error occurred`, err.message)
+    }
+  }
+
+  try {
+    const stats = await tmAPI.getProjectUserStats(response.meta.tm_id)
+    stats.statsType = 'maproulette'
+    response.tables.push(stats)
+  } catch (err) {
+    if (err instanceof TypeError) {
+    } else {
+      console.log(`Unknown error occurred`, err.message)
+    }
+  }
+
+  // Load osmesa stats
+  try {
+    await loadOsMesaStats(response)
+  } catch (err) {
+    if (err.statusCode && err.statusCode === 404) {
+      // There are no stats yet
+      console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
+      // response['stats'] = Object.assign( { success: false })
+      response.tables.push({ success: false })
+    } else {
+      console.log(`OSMesa Stats do not exist for this hashtag`, err.message)
+    }
+  }
+
+  /*
+
+  try {
+    if (tmAPI.getProjectStats) {
+      if (tm.type === 'mr') {
+        response['stats'] = await tmAPI.getProjectStats(response.meta.tm_id)
+        response.stats = { ...response.stats, statsType: 'maproulette' }
+      } else {
+        await loadOsMesaStats(response)
+      }
     }
   } catch (err) {
     // console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err)
@@ -74,6 +122,7 @@ module.exports = async (req, res) => {
         { success: false })
     }
   }
+  */
   return res.send(response)
 }
 
@@ -92,7 +141,8 @@ async function loadOsMesaStats (response) {
   })
 
   stats.editCounts = totalUsersEdits(stats) || 0
+  response.stats = stats
 
-  response['stats'] = stats
+  response.tables.push(stats)
   return Promise.all([osmesaResponse, userCountries])
 }

@@ -80,7 +80,14 @@ class MapRouletteAPI {
     })
   }
 
-  async getProjectStats (id) {
+  getProjectStats (id) {
+    return rp({
+      uri: `${this.api_url}/api/v2/data/challenge/${id}`,
+      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+    })
+  }
+
+  async getProjectUserStats (id) {
     const qs = {
       monthDuration: -1,
       challengeIds: id,
