@@ -108,9 +108,9 @@ async function loadOsMesaStats (response) {
     statsType: 'osmesa',
     schema: osmesaUserStatSchema,
     data: osmesaResponse.users,
-    extent_uri: osmesaResponse.extent_uri,
-    tag: osmesaResponse.tag
+    ...osmesaResponse
   }
+  delete stats.users
   const userIds = stats.data.map(user => user.uid)
   const userCountries = await db('users').select(['osm_id', 'country']).whereIn('osm_id', userIds)
 

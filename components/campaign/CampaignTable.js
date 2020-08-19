@@ -55,8 +55,9 @@ export default function CampaignTable (props) {
     <div className='widget clearfix table-wrapper'>
       <Table idMap={idMap} tableSchema={props.schema} data={campaignTopStats || props.data} totals={campaignTotals || {}} />
       <div>
-        <p><em>* All roads, railways, coastlines and waterways represent Km added and modified</em></p>
-        {campaignTopStats && <CSVExport filename={`${props.name}.csv`} data={campaignTopStats} />}
+        { campaignTopStats &&
+            (<><p><em>* All roads, railways, coastlines and waterways represent Km added and modified</em></p>
+              <CSVExport filename={`${props.name}.csv`} data={campaignTopStats} /></>)}
       </div>
     </div>
   )
