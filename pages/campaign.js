@@ -160,8 +160,13 @@ export class Campaign extends Component {
                 {
                   (data.success)
                     ? <div>
-                      <Blurb {...data} />
-                      <CampaignTable users={data.users} type={data.statsType} name={meta.name} />
+                      <Blurb {...merge({ users: [], editCounts: 0 }, data)} />
+                      <CampaignTable 
+                      data={data.data} 
+                      type={data.statsType} 
+                      name={meta.name} 
+                      schema={data.schema}
+                      />
                     </div>
                     : <p>There was an error retrieving stats for this campaign.</p>
                 }

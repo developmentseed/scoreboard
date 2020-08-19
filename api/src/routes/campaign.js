@@ -5,6 +5,8 @@ const { find, propEq } = require('ramda')
 const refreshStatus = require('../utils/osmesaStatus.js')
 const totalUsersEdits = require('../utils/sum_editCounts.js')
 
+const { osmesaUserStatSchema, maprouletteUserStatSchema, maprouletteChallengeSchema } = require('../utils/campaignTableSchema.js')
+
 /**
  * Campaign Stats Route
  * /campaigns/:id
@@ -54,16 +56,15 @@ module.exports = async (req, res) => {
   }
 
   // Load project stats
-  //
-
   try {
     const rawData = await tmAPI.getProjectStats(response.meta.tm_id)
     const [{ actions }] = JSON.parse(rawData)
 
     const stats = {
-      users: [actions],
+      data: [actions],
       success: true,
-      statsType: 'maproulette-challenge'
+      statsType: 'maproulette-challenge',
+      schema: maprouletteChallengeSchema
     }
     response.tables.push(stats)
   } catch (err) {
@@ -76,6 +77,7 @@ module.exports = async (req, res) => {
   try {
     const stats = await tmAPI.getProjectUserStats(response.meta.tm_id)
     stats.statsType = 'maproulette'
+    stats.schema = maprouletteUserStatSchema
     response.tables.push(stats)
   } catch (err) {
     if (err instanceof TypeError) {
@@ -91,51 +93,28 @@ module.exports = async (req, res) => {
     if (err.statusCode && err.statusCode === 404) {
       // There are no stats yet
       console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
-      // response['stats'] = Object.assign( { success: false })
       response.tables.push({ success: false })
     } else {
       console.log(`OSMesa Stats do not exist for this hashtag`, err.message)
     }
   }
 
-  /*
-
-  try {
-    if (tmAPI.getProjectStats) {
-      if (tm.type === 'mr') {
-        response['stats'] = await tmAPI.getProjectStats(response.meta.tm_id)
-        response.stats = { ...response.stats, statsType: 'maproulette' }
-      } else {
-        await loadOsMesaStats(response)
-      }
-    }
-  } catch (err) {
-    // console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err)
-    if (err.statusCode && err.statusCode === 404) {
-      // There are no stats yet
-      console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
-      response['stats'] = Object.assign(
-        { success: false })
-    } else {
-      // Some other error
-      response['stats'] = Object.assign(
-        { success: false })
-    }
-  }
-  */
   return res.send(response)
 }
 
 async function loadOsMesaStats (response) {
   const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
-  let stats = Object.assign(osmesaResponse,
-    { success: true,
-      statsType: 'osmesa'
-    })
-  const userIds = stats.users.map(user => user.uid)
+  let stats = { success: true,
+    statsType: 'osmesa',
+    schema: osmesaUserStatSchema,
+    data: osmesaResponse.users,
+    extent_uri: osmesaResponse.extent_uri,
+    tag: osmesaResponse.tag
+  }
+  const userIds = stats.data.map(user => user.uid)
   const userCountries = await db('users').select(['osm_id', 'country']).whereIn('osm_id', userIds)
 
-  stats.users = stats.users.map(user => {
+  stats.data = stats.data.map(user => {
     const country = find(propEq('osm_id', user.uid))(userCountries).country
     return Object.assign({ country }, user)
   })

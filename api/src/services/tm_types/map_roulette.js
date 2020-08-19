@@ -111,7 +111,7 @@ class MapRouletteAPI {
 
     const campaignObj = {
       tag: id,
-      users,
+      data: users,
       success: true
     }
     return campaignObj
