@@ -147,6 +147,7 @@ class MapRouletteAPI {
         geometry: challenge.bounding,
         // HARD CODED VALUES
         status: 'PUBLISHED',
+        // TODO Need to query this from MR api
         campaign_hashtag: 'test',
         validated: 0,
         done: 0 // placeholder value
