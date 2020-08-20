@@ -156,7 +156,7 @@
     },
     { 
       "id": "falsePositive",
-      "name": "False Positive"
+      "name": "Not an Issue"
     },
     { 
       "id": "skipped",

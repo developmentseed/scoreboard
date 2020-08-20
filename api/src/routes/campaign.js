@@ -64,7 +64,8 @@ module.exports = async (req, res) => {
       data: [actions],
       success: true,
       statsType: 'maproulette-challenge',
-      schema: maprouletteChallengeSchema
+      schema: maprouletteChallengeSchema,
+      sortable: false
     }
     response.tables.push(stats)
   } catch (err) {
@@ -131,7 +132,7 @@ async function loadOsMesaStats (response) {
 function populatePanelContent (tmData, tables, type) {
   switch (type) {
     case 'mr':
-      const [data] = tables.find(t => t.statsType === 'maproulette-challenge').data;
+      const [data] = tables.find(t => t.statsType === 'maproulette-challenge').data
       return [
         { label: 'Tasks', value: `${parseInt(data.total - data.available, 10)}` },
         { label: 'Remaining', value: `${parseInt(100 - tmData.done, 10)}%` },

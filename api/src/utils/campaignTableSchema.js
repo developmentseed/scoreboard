@@ -35,15 +35,10 @@ const osmesaUserStatSchema = {
 const maprouletteChallengeSchema = {
   'headers': {
     'fixed': { type: 'number', accessor: 'fixed' },
-    'falsePositive': { type: 'number', accessor: 'falsePositive' },
-    'skipped': { type: 'number', accessor: 'skipped' },
-    'deleted': { type: 'number', accessor: 'deleted' },
     'alreadyFixed': { type: 'number', accessor: 'alreadyFixed' },
+    'falsePositive': { type: 'number', accessor: 'falsePositive' },
     'tooHard': { type: 'number', accessor: 'tooHard' },
-    'answered': { type: 'number', accessor: 'answered' },
-    'validated': { type: 'number', accessor: 'validated' },
-    'disabled': { type: 'number', accessor: 'disabled' },
-    'avgTimeSpent': { type: 'number', accessor: 'avgTimeSpent' }
+    'skipped': { type: 'number', accessor: 'skipped' }
   },
   columnOrder: [
     'fixed',

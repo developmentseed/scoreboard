@@ -88,9 +88,8 @@ export class Campaign extends Component {
   }
 
   render () {
-    const { meta, lastUpdate, creationDate, refreshDate, tables} = this.props.campaign
-    const stats = merge({ users: [], editCounts: 0 }, this.props.campaign.stats)
-    const panelContent = this.props.campaign.panelContent || [];
+    const { meta, lastUpdate, creationDate, refreshDate, tables } = this.props.campaign
+    const panelContent = this.props.campaign.panelContent || []
 
     return (
       <div className='Campaigns'>
@@ -129,9 +128,7 @@ export class Campaign extends Component {
             </div>
           </div>
         </header>
-        <ScoreboardPanel title='' facets={
-          panelContent
-        } />
+        <ScoreboardPanel title='' facets={panelContent} />
 
         <section>
           <div className='row widget-container'>
@@ -162,6 +159,7 @@ export class Campaign extends Component {
                         type={data.statsType}
                         name={meta.name}
                         schema={data.schema}
+                        sortable={data.sortable === undefined ? true : data.sortable}
                       />
                     </div>
                     : <p>There was an error retrieving stats for this campaign.</p>

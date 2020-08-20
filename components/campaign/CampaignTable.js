@@ -53,7 +53,7 @@ export default function CampaignTable (props) {
 
   return (
     <div className='widget clearfix table-wrapper'>
-      <Table idMap={idMap} tableSchema={props.schema} data={campaignTopStats || props.data} totals={campaignTotals || {}} />
+      <Table idMap={idMap} tableSchema={props.schema} notSortable={!props.sortable} data={campaignTopStats || props.data} totals={campaignTotals || {}} />
       <div>
         { campaignTopStats &&
             (<><p><em>* All roads, railways, coastlines and waterways represent Km added and modified</em></p>
