@@ -138,9 +138,13 @@ function populatePanelContent (tmData, tables, type) {
         { label: 'Avg Time Spent', value: `${parseInt(data.avgTimeSpent, 10)}` }
       ]
     case 'tm3':
+      const stats = tables.find(t => t.statsType === 'osmesa')
       return [
         { label: 'Mapped', value: `${parseInt(tmData.done, 10)}%` },
-        { label: 'Validated', value: `${parseInt(tmData.validated, 10)}%` }
+        { label: 'Validated', value: `${parseInt(tmData.validated, 10)}%` },
+        { label: 'Participants', value: stats.data.length },
+        { label: 'Total Edits', value: stats.editCounts }
+
       ]
     default:
       return []

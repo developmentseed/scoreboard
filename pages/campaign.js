@@ -130,16 +130,7 @@ export class Campaign extends Component {
           </div>
         </header>
         <ScoreboardPanel title='' facets={
-          [
-            //challenge type specific
-            //{ label: 'Mapped', value: `${parseInt(meta.done, 10)}%` },
-            //{ label: 'Validated', value: `${parseInt(meta.validated, 10)}%` },
-            ...panelContent,
-
-            //osmesa specific
-            { label: 'Participants', value: stats.users.length },
-            { label: 'Total Edits', value: stats.editCounts }
-          ]
+          panelContent
         } />
 
         <section>
