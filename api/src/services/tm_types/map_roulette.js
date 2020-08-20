@@ -104,7 +104,9 @@ class MapRouletteAPI {
         uid: user.userId,
         name: user.name,
         rank: user.rank,
-        score: user.score
+        score: user.score,
+        avgTimeSpent: user.avgTimeSpent,
+        completedTasks: user.completedTasks
       }
       return userObj
     })

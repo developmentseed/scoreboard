@@ -189,6 +189,10 @@
     { 
       "id": "avgTimeSpent",
       "name":"Average Time Spent"
+    },
+    { 
+      "id": "completedTasks",
+      "name":"Completed Tasks"
     }
 
 ]

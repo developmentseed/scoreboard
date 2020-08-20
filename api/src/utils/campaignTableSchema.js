@@ -70,19 +70,24 @@ const maprouletteUserStatSchema = {
   'headers': {
     'name': { type: 'namelink', accessor: 'name' },
     'rank': { type: 'number', accessor: 'rank' },
-    'score': { type: 'number', accessor: 'score' }
+    'score': { type: 'number', accessor: 'score' },
+    'avgTimeSpent': { type: 'number', accessor: 'avgTimeSpent' },
+    'completedTasks': { type: 'number', accessor: 'completedTasks' }
   },
   columnOrder: [
-    'name',
     'rank',
-    'score'
+    'name',
+    'score',
+    'avgTimeSpent',
+    'completedTasks'
   ],
   'displaysTooltip': [
     'name',
     'rank',
-    'score'
+    'score',
+    'avgTimeSpent',
+    'completedTasks'
   ]
-
 }
 
 module.exports = {
