@@ -168,6 +168,7 @@ class MapRouletteAPI {
       try {
         const [{ actions: data }] = JSON.parse(dataRes)
         obj.done = (1 - data.available / data.total) * 100
+        obj.validated = data.validated / data.total * 100
       } catch (e) {
         if (e instanceof TypeError) {
           console.error(`Challenge ${obj.tm_id} does not have available metadata`)

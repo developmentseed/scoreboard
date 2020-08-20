@@ -99,6 +99,8 @@ module.exports = async (req, res) => {
     }
   }
 
+  response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
+
   return res.send(response)
 }
 
@@ -124,4 +126,23 @@ async function loadOsMesaStats (response) {
 
   response.tables.push(stats)
   return Promise.all([osmesaResponse, userCountries])
+}
+
+function populatePanelContent (tmData, tables, type) {
+  switch (type) {
+    case 'mr':
+      const [data] = tables.find(t => t.statsType === 'maproulette-challenge').data;
+      return [
+        { label: 'Tasks', value: `${parseInt(data.total - data.available, 10)}` },
+        { label: 'Remaining', value: `${parseInt(100 - tmData.done, 10)}%` },
+        { label: 'Avg Time Spent', value: `${parseInt(data.avgTimeSpent, 10)}` }
+      ]
+    case 'tm3':
+      return [
+        { label: 'Mapped', value: `${parseInt(tmData.done, 10)}%` },
+        { label: 'Validated', value: `${parseInt(tmData.validated, 10)}%` }
+      ]
+    default:
+      return []
+  }
 }

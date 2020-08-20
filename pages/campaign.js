@@ -88,8 +88,9 @@ export class Campaign extends Component {
   }
 
   render () {
-    const { meta, lastUpdate, creationDate, refreshDate, tables } = this.props.campaign
+    const { meta, lastUpdate, creationDate, refreshDate, tables} = this.props.campaign
     const stats = merge({ users: [], editCounts: 0 }, this.props.campaign.stats)
+    const panelContent = this.props.campaign.panelContent || [];
 
     return (
       <div className='Campaigns'>
@@ -130,8 +131,12 @@ export class Campaign extends Component {
         </header>
         <ScoreboardPanel title='' facets={
           [
-            { label: 'Mapped', value: `${parseInt(meta.done, 10)}%` },
-            { label: 'Validated', value: `${parseInt(meta.validated, 10)}%` },
+            //challenge type specific
+            //{ label: 'Mapped', value: `${parseInt(meta.done, 10)}%` },
+            //{ label: 'Validated', value: `${parseInt(meta.validated, 10)}%` },
+            ...panelContent,
+
+            //osmesa specific
             { label: 'Participants', value: stats.users.length },
             { label: 'Total Edits', value: stats.editCounts }
           ]
