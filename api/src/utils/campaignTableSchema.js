@@ -44,25 +44,11 @@ const maprouletteChallengeSchema = {
     'fixed',
     'falsePositive',
     'skipped',
-    'deleted',
     'alreadyFixed',
     'tooHard',
-    'answered',
-    'validated',
-    'disabled',
-    'avgTimeSpent'
+    'answered'
   ],
   'displaysTooltip': [
-    'fixed',
-    'falsePositive',
-    'skipped',
-    'deleted',
-    'alreadyFixed',
-    'tooHard',
-    'answered',
-    'validated',
-    'disabled',
-    'avgTimeSpent'
   ]
 
 }

@@ -133,6 +133,7 @@ export default function Table (props) {
   if (sortable && props.initialSortColumn) {
     useEffect(() => toggleSortBy(props.initialSortColumn, 'descending'), [])
   }
+  console.log(headers)
 
   return (
     <table>
@@ -154,7 +155,7 @@ export default function Table (props) {
                 </th>)
                 : (
                   <th key={column.id} {...column.getHeaderProps()}>
-                    <div className={column.header === 'number' ? 'table-align-right' : ''}>{column.Header}</div>
+                    <a className={column.Cell.name === 'formattedNum' ? 'table-align-right' : ''}>{column.Header}</a>
                   </th>)
             )
           }

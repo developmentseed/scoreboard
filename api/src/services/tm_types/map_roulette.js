@@ -151,7 +151,7 @@ class MapRouletteAPI {
         status: 'PUBLISHED',
         // TODO Need to query this from MR api
         campaign_hashtag: 'test',
-        validated: 0,
+        validated: 0, // placeholder
         done: 0 // placeholder value
       }
     })
