@@ -133,7 +133,6 @@ export default function Table (props) {
   if (sortable && props.initialSortColumn) {
     useEffect(() => toggleSortBy(props.initialSortColumn, 'descending'), [])
   }
-  console.log(headers)
 
   return (
     <table>
