@@ -32,6 +32,8 @@ const Sidebar = ({
   onlyMemberTeams,
   onlyModeratedTeams,
   searchText,
+  activatedTeams,
+  canCreate,
   user = {}
 }) => {
   const [initialSearchText] = useState(searchText)
@@ -82,6 +84,30 @@ const Sidebar = ({
             <div className='link--normal' onClick={_handleReset}>
               <legend>&#10005; Reset Filters</legend></div>
           </div>
+        }
+        { activatedTeams && canCreate
+          ? <div className='page-actions'>
+            <Link href='/create-team'>
+              <a>
+                <button className='button button--primary'>
+                    Create Team
+                </button>
+              </a>
+            </Link>
+          </div>
+          : <></>
+        }
+        { activatedTeams && canCreate
+          ? <div className='page-actions'>
+            <Link href='/manage-org'>
+              <a>
+                <button className='button button--info'>
+                    Org Management
+                </button>
+              </a>
+            </Link>
+          </div>
+          : <></>
         }
       </form>
     </div>
@@ -217,18 +243,6 @@ class Teams extends Component {
             <div className='widget-75'>
               <h1 className='section-sub--left header--xlarge margin-top-sm'>Teams</h1>
             </div>
-            { activatedTeams && canCreate
-              ? <div className='page-actions'>
-                <Link href='/create-team'>
-                  <a>
-                    <button className='button'>
-                    Create Team
-                    </button>
-                  </a>
-                </Link>
-              </div>
-              : <></>
-            }
           </div>
         </header>
         {
@@ -247,6 +261,9 @@ class Teams extends Component {
               handleOnlyMemberTeamsToggle={this.handleOnlyMemberTeamsToggle}
               handleOnlyModeratedTeamsToggle={this.handleOnlyModeratedTeamsToggle}
               handleReset={this.handleReset}
+              activatedTeams={activatedTeams}
+              canCreate={canCreate}
+
             />
             <div className='widget-75'>
               <h3 className='header--medium'>{`${teams.length} Teams`}</h3>
