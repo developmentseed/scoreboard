@@ -1,8 +1,15 @@
 import Pagination from 'react-js-pagination'
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import join from 'url-join'
+
 import { connect } from 'unistore/react'
 import { actions } from '../../lib/store'
+import { APP_URL_PREFIX } from '../../api/src/config'
+
 import Table from '../common/Table'
+
+const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 const tableSchema = {
   'headers': {
@@ -45,7 +52,7 @@ class UsersSearch extends Component {
   }
 
   render () {
-    let { selectedUsers } = this.props
+    let { selectedUsers, searchHeader, searchInputLegend } = this.props
     selectedUsers = (selectedUsers || []).map(user => {
       return Object.assign(user, {
         button: <button style={{ 'padding': '5px' }} className='button button--destroy' onClick={() => this.onSelectedUsersClick(user)} >Remove</button>
@@ -79,12 +86,13 @@ class UsersSearch extends Component {
             : <div />
         }
         <section className='section-sub'>
-          <h1>Users</h1>
+          {searchHeader && <h1>{searchHeader}</h1>} 
           <div>
             <fieldset>
-              <legend>Search</legend>
+              {searchInputLegend && <legend>{searchInputLegend}</legend>}
               <div className='search'>
                 <input className='input--text' value={searchText} onChange={this.handleSearch} />
+                <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
               </div>
             </fieldset>
           </div>
@@ -102,6 +110,13 @@ class UsersSearch extends Component {
       </div>
     )
   }
+}
+UsersSearch.propTypes = {
+  searchHeader: PropTypes.string,
+  searchInputLegend: PropTypes.string,
+  selectedUsers: PropTypes.array.isRequired,
+  addUser: PropTypes.func.isRequired,
+  removeUser: PropTypes.func.isRequired
 }
 
 export default connect(['adminTeamMemberFilters', 'adminTeamMemberSearchResults'], actions)(UsersSearch)
