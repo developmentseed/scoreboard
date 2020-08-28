@@ -60,7 +60,7 @@ class UsersSearch extends Component {
     })
 
     const { page, searchText } = this.props.adminTeamMemberFilters
-    const { stats: { total, records } } = this.props.adminTeamMemberSearchResults
+    const { stats: { records, subTotal } } = this.props.adminTeamMemberSearchResults
     if (!records) return <div />
 
     let searchUsers = records.map(record => {
@@ -86,7 +86,7 @@ class UsersSearch extends Component {
             : <div />
         }
         <section className='section-sub'>
-          {searchHeader && <h1>{searchHeader}</h1>} 
+          {searchHeader && <h1>{searchHeader}</h1>}
           <div>
             <fieldset>
               {searchInputLegend && <legend>{searchInputLegend}</legend>}
@@ -101,7 +101,7 @@ class UsersSearch extends Component {
             <Pagination
               activePage={page}
               itemsCountPerPage={10}
-              totalItemsCount={total}
+              totalItemsCount={subTotal}
               pageRangeDisplayed={5}
               onChange={this.handlePageChange}
             />
