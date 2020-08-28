@@ -158,6 +158,10 @@ tr td:not(:first-child).table-align-right {
   text-align: right;
 }
 
+tr td:not(:first-child).table-align-left {
+  text-align: left;
+}
+
 th a[class^='sort'].table-align-right,
 span[data-tip].table-align-right:not(first-of-type) {
   justify-content: flex-end;

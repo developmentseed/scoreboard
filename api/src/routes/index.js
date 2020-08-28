@@ -10,6 +10,7 @@ const roles = require('./roles')
 const favorites = require('./favorite-campaigns')
 const exclusion = require('./exclusion-list')
 const teams = require('./teams')
+const organizations = require('./organizations')
 const countries = require('./countries')
 const country = require('./country')
 const taskers = require('./taskers')
@@ -55,6 +56,10 @@ router.put('/teams/:id', teams.put)
 router.delete('/teams/:id', teams.del)
 router.put('/teams/:id/assignModerator/:osmId', teams.assignModerator)
 router.put('/teams/:id/removeModerator/:osmId', teams.removeModerator)
+
+// org management routes
+// teams routes
+router.get('/organizations', organizations.list)
 
 // taskers routes
 router.get('/taskers', taskers.list)

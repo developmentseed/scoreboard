@@ -190,6 +190,25 @@ class OSMTeams {
     })
     return rp(options)
   }
+
+  /* Get all members of and organization from the OSM Teams API
+   *
+   * @returns {Promise} response
+   */
+  async getOrganization () {
+    try {
+      const options = await this.addAuthorization({
+        method: 'GET',
+        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}`,
+        json: true
+      })
+      const org = await rp(options)
+      return org
+    } catch (e) {
+      console.error(e)
+      return false
+    }
+  }
 }
 
 class FakeOSMTeams {

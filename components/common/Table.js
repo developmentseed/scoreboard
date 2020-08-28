@@ -169,7 +169,7 @@ export default function Table (props) {
                 <tr {...row.getRowProps()}>
                   {
                     row.cells.map(cell => {
-                      return <td {...cell.getCellProps()} className={!isNaN(cell.value) && parseInt(cell.value) >= 0 ? 'table-align-right' : ''}>
+                      return <td {...cell.getCellProps()} className={!isNaN(cell.value) && parseInt(cell.value) >= 0 ? 'table-align-left' : ''}>
                         {cell.render('Cell')}
                       </td>
                     })

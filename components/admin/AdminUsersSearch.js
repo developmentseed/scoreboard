@@ -52,7 +52,7 @@ class UsersSearch extends Component {
   }
 
   render () {
-    let { selectedUsers, searchHeader, searchInputLegend } = this.props
+    let { selectedUsers, searchHeader, searchInputLegend, showOnlyResults } = this.props
     selectedUsers = (selectedUsers || []).map(user => {
       return Object.assign(user, {
         button: <button style={{ 'padding': '5px' }} className='button button--destroy' onClick={() => this.onSelectedUsersClick(user)} >Remove</button>
@@ -96,16 +96,18 @@ class UsersSearch extends Component {
               </div>
             </fieldset>
           </div>
-          <div className='widget'>
-            <Table tableSchema={tableSchema} data={searchUsers} />
-            <Pagination
-              activePage={page}
-              itemsCountPerPage={10}
-              totalItemsCount={subTotal}
-              pageRangeDisplayed={5}
-              onChange={this.handlePageChange}
-            />
-          </div>
+          {(showOnlyResults && searchText !== '') || !showOnlyResults ? (
+            <div className='widget'>
+              <Table tableSchema={tableSchema} data={searchUsers} />
+              <Pagination
+                activePage={page}
+                itemsCountPerPage={10}
+                totalItemsCount={subTotal}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange}
+              />
+            </div>
+          ) : null}
         </section>
       </div>
     )
@@ -114,9 +116,14 @@ class UsersSearch extends Component {
 UsersSearch.propTypes = {
   searchHeader: PropTypes.string,
   searchInputLegend: PropTypes.string,
+  showOnlyResults: PropTypes.bool,
   selectedUsers: PropTypes.array.isRequired,
   addUser: PropTypes.func.isRequired,
   removeUser: PropTypes.func.isRequired
+}
+
+UsersSearch.defaultProps = {
+  showOnlyResults: false
 }
 
 export default connect(['adminTeamMemberFilters', 'adminTeamMemberSearchResults'], actions)(UsersSearch)

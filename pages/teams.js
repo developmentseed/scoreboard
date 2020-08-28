@@ -99,7 +99,7 @@ const Sidebar = ({
         }
         { activatedTeams && canCreate
           ? <div className='page-actions'>
-            <Link href='/manage-org'>
+            <Link href='/organizations'>
               <a>
                 <button className='button button--secondary'>
                     Org Management
@@ -216,7 +216,6 @@ class Teams extends Component {
       }
     })
     let idMap = Object.assign(...teams.map(({ id, name }) => ({ [name]: id })))
-    console.log('idMap', idMap)
     return (
       <div>
         <Table tableSchema={tableSchema} data={tableData} idMap={idMap} />
@@ -233,7 +232,6 @@ class Teams extends Component {
         </div>
       )
     }
-    console.log('props', this.props)
 
     const { teams, canCreate, searchText, onlyMemberTeams, onlyModeratedTeams } = this.state
     const { loggedIn, authenticatedUser } = this.props // comes from page props

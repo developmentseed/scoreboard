@@ -9,12 +9,11 @@ import AdminUsersSearch from '../components/admin/AdminUsersSearch'
 
 export function ManageOrg (props) {
   const [loading, setLoading] = useState(true)
-  const [searchText, setSearchText] = useState('')
-  const [searchResults, setSearchResults] = useState([])
 
   // On load get the user
   useEffect(() => {
     props.getAuthenticatedUser()
+      .then(() => props.getOrganization())
       .then(() => setLoading(false))
   }, [])
 
@@ -26,7 +25,6 @@ export function ManageOrg (props) {
   if (!authenticatedUser.loggedIn) {
     return <NotLoggedIn />
   }
-  console.log('props', props)
 
   return (
     <div className='Org'>
@@ -59,9 +57,10 @@ export function ManageOrg (props) {
                   selectedUsers={[]}
                   addUser={() => {}}
                   removeUser={() => {}}
+                  showOnlyResults
                 />
               </form>
-              <MemberTable teamRecords={[...props.teams.records]} />
+              {/* <MemberTable teamRecords={[...props.teams.records]} /> */}
             </div >
           </div >
         </div>
@@ -70,7 +69,7 @@ export function ManageOrg (props) {
 
   )
 }
-export default connect(['authenticatedUser', 'teams'], actions)(ManageOrg)
+export default connect(['authenticatedUser', 'organization'], actions)(ManageOrg)
 
 const memberTableSchema = {
   'headers': {
@@ -99,7 +98,7 @@ function MemberTable ({ teamRecords }) {
   let idMap = Object.assign(...teamRecords.map(({ id, name }) => ({ [name]: id })))
   return (
     <div>
-      <Table tableSchema={memberTableSchema} data={tableData} idMap={idMap}/>
+      <Table tableSchema={memberTableSchema} data={tableData} idMap={idMap} />
     </div>
   )
 }
