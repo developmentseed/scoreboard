@@ -116,6 +116,7 @@ export class AdminTeamsEdit extends Component {
           selectedUsers={this.state.teamUsers}
           addUser={this.addUserToTeam}
           removeUser={this.removeUserFromTeam}
+          showSelectedUserTable
         />
       </div>
     )

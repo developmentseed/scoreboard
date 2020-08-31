@@ -115,6 +115,7 @@ export class AdminExclusionList extends Component {
                     selectedUsers={exclusionList}
                     addUser={this.addUserToExclusionList}
                     removeUser={this.removeUserFromExclusionList}
+                    showSelectedUserTable
                   />
                 </form>
               </div >

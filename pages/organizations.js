@@ -20,12 +20,16 @@ export function ManageOrg (props) {
   if (loading) {
     return <LoadingState />
   }
-  const { authenticatedUser } = props
+  const { authenticatedUser, organization } = props
 
   if (!authenticatedUser.loggedIn) {
     return <NotLoggedIn />
   }
-  console.log('props', props)
+  const addManager = (user) => {
+    props.addManager(user.osm_id)
+  }
+  console.log('props', organization.organization)
+  const orgUserList = organization.organization.owners.concat(organization.organization.managers)
 
   return (
     <div className='Org'>
@@ -55,9 +59,8 @@ export function ManageOrg (props) {
               <form className='form'>
                 <AdminUsersSearch
                   searchInputLegend='Add Organization Manager'
-                  selectedUsers={[]}
-                  addUser={() => props.removeOwner('1835967')}
-                  removeUser={() => {}}
+                  selectedUsers={orgUserList}
+                  addUser={addManager}
                   showOnlyResults
                 />
               </form>

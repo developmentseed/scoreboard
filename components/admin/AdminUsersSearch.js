@@ -52,7 +52,7 @@ class UsersSearch extends Component {
   }
 
   render () {
-    let { selectedUsers, searchHeader, searchInputLegend, showOnlyResults } = this.props
+    let { selectedUsers, searchHeader, searchInputLegend, showOnlyResults, showSelectedUserTable } = this.props
     selectedUsers = (selectedUsers || []).map(user => {
       return Object.assign(user, {
         button: <button style={{ 'padding': '5px' }} className='button button--destroy' onClick={() => this.onSelectedUsersClick(user)} >Remove</button>
@@ -76,7 +76,7 @@ class UsersSearch extends Component {
     return (
       <div>
         {
-          (selectedUsers.length > 0)
+          (showSelectedUserTable && selectedUsers.length > 0)
             ? (<section className='section-sub'>
               <h1>Selected</h1>
               <div className='widget'>
@@ -117,13 +117,16 @@ UsersSearch.propTypes = {
   searchHeader: PropTypes.string,
   searchInputLegend: PropTypes.string,
   showOnlyResults: PropTypes.bool,
+  showSelectedUserTable: PropTypes.bool,
   selectedUsers: PropTypes.array.isRequired,
   addUser: PropTypes.func.isRequired,
-  removeUser: PropTypes.func.isRequired
+  removeUser: PropTypes.func
 }
 
 UsersSearch.defaultProps = {
-  showOnlyResults: false
+  showOnlyResults: false,
+  showSelectedUserTable: false,
+  removeUser: () => {}
 }
 
 export default connect(['adminTeamMemberFilters', 'adminTeamMemberSearchResults'], actions)(UsersSearch)
