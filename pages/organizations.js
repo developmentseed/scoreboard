@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'unistore/react'
 
-import Table from '../components/common/Table'
+// import Table from '../components/common/Table'
 import NotLoggedIn from '../components/NotLoggedIn'
 import { actions } from '../lib/store'
 import { LoadingState } from '../components/common/LoadingState'
@@ -25,6 +25,7 @@ export function ManageOrg (props) {
   if (!authenticatedUser.loggedIn) {
     return <NotLoggedIn />
   }
+  console.log('props', props)
 
   return (
     <div className='Org'>
@@ -55,7 +56,7 @@ export function ManageOrg (props) {
                 <AdminUsersSearch
                   searchInputLegend='Add Organization Manager'
                   selectedUsers={[]}
-                  addUser={() => {}}
+                  addUser={() => props.removeOwner('1835967')}
                   removeUser={() => {}}
                   showOnlyResults
                 />
@@ -71,34 +72,34 @@ export function ManageOrg (props) {
 }
 export default connect(['authenticatedUser', 'organization'], actions)(ManageOrg)
 
-const memberTableSchema = {
-  'headers': {
-    'team-name': { type: 'teamlink', accessor: 'name' },
-    '#-members': { type: 'number', accessor: 'memberCount' },
-    'team-hashtag': { type: 'string', accessor: 'hashtag' },
-    'moderator-names': { type: 'string', accessor: 'moderatorNames' }
-  },
-  columnOrder: [ 'team-name', '#-of-members', 'team-hashtag', 'moderator-names' ],
-  'displaysTooltip': [
-    'team-hashtag'
-  ]
-}
+// const memberTableSchema = {
+//   'headers': {
+//     'team-name': { type: 'teamlink', accessor: 'name' },
+//     '#-members': { type: 'number', accessor: 'memberCount' },
+//     'team-hashtag': { type: 'string', accessor: 'hashtag' },
+//     'moderator-names': { type: 'string', accessor: 'moderatorNames' }
+//   },
+//   columnOrder: [ 'team-name', '#-of-members', 'team-hashtag', 'moderator-names' ],
+//   'displaysTooltip': [
+//     'team-hashtag'
+//   ]
+// }
 
-function MemberTable ({ teamRecords }) {
-  if (!teamRecords || !teamRecords.length) return (<div />)
-  const tableData = teamRecords.map(record => {
-    const memberCount = record.members.length
-    const moderatorNames = Object.values(record.moderators).join(', ')
-    return {
-      ...record,
-      memberCount,
-      moderatorNames
-    }
-  })
-  let idMap = Object.assign(...teamRecords.map(({ id, name }) => ({ [name]: id })))
-  return (
-    <div>
-      <Table tableSchema={memberTableSchema} data={tableData} idMap={idMap} />
-    </div>
-  )
-}
+// function MemberTable ({ teamRecords }) {
+//   if (!teamRecords || !teamRecords.length) return (<div />)
+//   const tableData = teamRecords.map(record => {
+//     const memberCount = record.members.length
+//     const moderatorNames = Object.values(record.moderators).join(', ')
+//     return {
+//       ...record,
+//       memberCount,
+//       moderatorNames
+//     }
+//   })
+//   let idMap = Object.assign(...teamRecords.map(({ id, name }) => ({ [name]: id })))
+//   return (
+//     <div>
+//       <Table tableSchema={memberTableSchema} data={tableData} idMap={idMap} />
+//     </div>
+//   )
+// }
