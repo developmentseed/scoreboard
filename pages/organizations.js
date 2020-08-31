@@ -1,35 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'unistore/react'
 
-// import Table from '../components/common/Table'
+import Table from '../components/common/Table'
 import NotLoggedIn from '../components/NotLoggedIn'
 import { actions } from '../lib/store'
 import { LoadingState } from '../components/common/LoadingState'
 import AdminUsersSearch from '../components/admin/AdminUsersSearch'
 
 export function ManageOrg (props) {
+  const { getAuthenticatedUser, authenticatedUser, getOrganization, organization, getUserList, userList } = props
   const [loading, setLoading] = useState(true)
+  // const [members, setMembers] = useState([])
 
   // On load get the user
   useEffect(() => {
-    props.getAuthenticatedUser()
-      .then(() => props.getOrganization())
+    getAuthenticatedUser()
+      .then(() => getOrganization())
       .then(() => setLoading(false))
   }, [])
+
+  useEffect(() => {
+    if (organization) {
+      const memberList = organization.organization.owners.concat(organization.organization.managers)
+      const memberIds = memberList.map(member => member.osm_id.toString())
+      console.log('memberIds', memberIds)
+      getUserList(memberIds)
+        .then(() => console.log('?', props))
+    }
+  }, [organization])
 
   if (loading) {
     return <LoadingState />
   }
-  const { authenticatedUser, organization } = props
-
   if (!authenticatedUser.loggedIn) {
     return <NotLoggedIn />
   }
   const addManager = (user) => {
     props.addManager(user.osm_id)
   }
-  console.log('props', organization.organization)
-  const orgUserList = organization.organization.owners.concat(organization.organization.managers)
+  console.log('props', userList, props)
+  const memberList = organization.organization.owners.concat(organization.organization.managers)
 
   return (
     <div className='Org'>
@@ -59,12 +69,12 @@ export function ManageOrg (props) {
               <form className='form'>
                 <AdminUsersSearch
                   searchInputLegend='Add Organization Manager'
-                  selectedUsers={orgUserList}
+                  selectedUsers={memberList}
                   addUser={addManager}
                   showOnlyResults
                 />
               </form>
-              {/* <MemberTable teamRecords={[...props.teams.records]} /> */}
+              <MemberTable memberList={memberList} />
             </div >
           </div >
         </div>
@@ -73,36 +83,38 @@ export function ManageOrg (props) {
 
   )
 }
-export default connect(['authenticatedUser', 'organization'], actions)(ManageOrg)
+export default connect(['authenticatedUser', 'organization', 'users'], actions)(ManageOrg)
 
-// const memberTableSchema = {
-//   'headers': {
-//     'team-name': { type: 'teamlink', accessor: 'name' },
-//     '#-members': { type: 'number', accessor: 'memberCount' },
-//     'team-hashtag': { type: 'string', accessor: 'hashtag' },
-//     'moderator-names': { type: 'string', accessor: 'moderatorNames' }
-//   },
-//   columnOrder: [ 'team-name', '#-of-members', 'team-hashtag', 'moderator-names' ],
-//   'displaysTooltip': [
-//     'team-hashtag'
-//   ]
-// }
+const memberTableSchema = {
+  'headers': {
+    'name': { type: 'string', accessor: 'full_name' },
+    'user-id': { type: 'string', accessor: 'osm_id' },
+    'button': { type: 'string', accessor: 'button' }
+  },
+  columnOrder: ['name', 'user-id', 'button'],
+  displaysTooltip: ['user-id']
+}
 
-// function MemberTable ({ teamRecords }) {
-//   if (!teamRecords || !teamRecords.length) return (<div />)
-//   const tableData = teamRecords.map(record => {
-//     const memberCount = record.members.length
-//     const moderatorNames = Object.values(record.moderators).join(', ')
-//     return {
-//       ...record,
-//       memberCount,
-//       moderatorNames
-//     }
-//   })
-//   let idMap = Object.assign(...teamRecords.map(({ id, name }) => ({ [name]: id })))
-//   return (
-//     <div>
-//       <Table tableSchema={memberTableSchema} data={tableData} idMap={idMap} />
-//     </div>
-//   )
-// }
+function MemberTable ({ memberList }) {
+  // if (!allRecords) return <div />
+  let test = [
+    { osm_id: 10328243, edit_count: 1373, full_name: 'jo', country: null },
+    { osm_id: 1835967, edit_count: 1373, full_name: 'meg', country: null },
+    { osm_id: 2647319, edit_count: 1373, full_name: 'alic', country: null }
+  ]
+  let members = test
+    .filter(user => {
+      let memberIds = memberList.map(member => member.osm_id)
+      return memberIds.includes(user.osm_id) ? user : null
+    })
+    .map(record => {
+      return Object.assign(record, {
+        button: (<button style={{ 'padding': '5px' }} className='button' onClick={() => this.onSearchUsersClick(record)} >Add</button>)
+      })
+    })
+  return (
+    <div className='widget'>
+      <Table tableSchema={memberTableSchema} data={members} />
+    </div>
+  )
+}

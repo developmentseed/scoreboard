@@ -167,24 +167,22 @@ async function list (req, res) {
 
 /**
  * Get names route
- * /users/names
+ * /users/list
  *
- * List the osm names for a set of osm ids. This is a helper route that is used by
- * getAllTeams action.
+ * List the osm names for a set of osm ids.
  *
  * @param req
  * @param res
  * @returns {Promise<*>}
  * @async
  */
-async function getNames (req, res) {
+async function getUserList (req, res) {
   const { body } = req
   try {
-    const { ids } = body
     const data = await db
-      .select('osm_id', 'full_name')
+      .select('osm_id', 'full_name', 'country')
       .from('users')
-      .whereIn('osm_id', ids)
+      .whereIn('osm_id', body)
     res.send(data)
   } catch (err) {
     console.error(err)
@@ -195,5 +193,5 @@ async function getNames (req, res) {
 module.exports = {
   stats,
   list,
-  getNames
+  getUserList
 }
