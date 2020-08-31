@@ -57,9 +57,12 @@ router.delete('/teams/:id', teams.del)
 router.put('/teams/:id/assignModerator/:osmId', teams.assignModerator)
 router.put('/teams/:id/removeModerator/:osmId', teams.removeModerator)
 
-// org management routes
-// teams routes
+// organizations routes
 router.get('/organizations', organizations.list)
+router.put('/organizations/:id/addOwner/:osmId', organizations.addOwner)
+router.put('/organizations/:id/removeOwner/:osmId', organizations.removeOwner)
+router.put('/organizations/:id/addManager/:osmId', organizations.addManager)
+router.put('/organizations/:id/removeManager/:osmId', organizations.removeManager)
 
 // taskers routes
 router.get('/taskers', taskers.list)

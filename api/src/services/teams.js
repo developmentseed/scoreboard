@@ -209,6 +209,42 @@ class OSMTeams {
       return false
     }
   }
+
+  async addOwner (osmId) {
+    var options = await this.addAuthorization({
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/addOwner/${osmId}`,
+      json: true
+    })
+    return rp(options)
+  }
+
+  async removeOwner (osmId) {
+    var options = await this.addAuthorization({
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/removeOwner/${osmId}`,
+      json: true
+    })
+    return rp(options)
+  }
+
+  async addManager (osmId) {
+    var options = await this.addAuthorization({
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/addManager/${osmId}`,
+      json: true
+    })
+    return rp(options)
+  }
+
+  async removeManager (osmId) {
+    var options = await this.addAuthorization({
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/removeManager/${osmId}`,
+      json: true
+    })
+    return rp(options)
+  }
 }
 
 class FakeOSMTeams {
