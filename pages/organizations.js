@@ -8,9 +8,9 @@ import { LoadingState } from '../components/common/LoadingState'
 import AdminUsersSearch from '../components/admin/AdminUsersSearch'
 
 export function ManageOrg (props) {
-  const { getAuthenticatedUser, authenticatedUser, getOrganization, organization, getUserList, userList } = props
+  const { getAuthenticatedUser, authenticatedUser, getOrganization, organization, getUserList, users } = props
   const [loading, setLoading] = useState(true)
-  // const [members, setMembers] = useState([])
+  const [members, setMembers] = useState(null)
 
   // On load get the user
   useEffect(() => {
@@ -23,11 +23,22 @@ export function ManageOrg (props) {
     if (organization) {
       const memberList = organization.organization.owners.concat(organization.organization.managers)
       const memberIds = memberList.map(member => member.osm_id.toString())
-      console.log('memberIds', memberIds)
       getUserList(memberIds)
-        .then(() => console.log('?', props))
     }
   }, [organization])
+
+  useEffect(() => {
+    if (users) {
+      let membersWithRoles = users.map(user => {
+        return organization.organization.owners.find(owner => owner.osm_id === user.osm_id) ? (
+          { ...user, role: 'owner' }
+        ) : (
+          { ...user, role: 'manager' }
+        )
+      })
+      setMembers(membersWithRoles)
+    }
+  }, [users])
 
   if (loading) {
     return <LoadingState />
@@ -38,8 +49,6 @@ export function ManageOrg (props) {
   const addManager = (user) => {
     props.addManager(user.osm_id)
   }
-  console.log('props', userList, props)
-  const memberList = organization.organization.owners.concat(organization.organization.managers)
 
   return (
     <div className='Org'>
@@ -69,12 +78,12 @@ export function ManageOrg (props) {
               <form className='form'>
                 <AdminUsersSearch
                   searchInputLegend='Add Organization Manager'
-                  selectedUsers={memberList}
+                  selectedUsers={members}
                   addUser={addManager}
                   showOnlyResults
                 />
               </form>
-              <MemberTable memberList={memberList} />
+              <MemberTable members={members} />
             </div >
           </div >
         </div>
@@ -95,16 +104,12 @@ const memberTableSchema = {
   displaysTooltip: ['user-id']
 }
 
-function MemberTable ({ memberList }) {
-  // if (!allRecords) return <div />
-  let test = [
-    { osm_id: 10328243, edit_count: 1373, full_name: 'jo', country: null },
-    { osm_id: 1835967, edit_count: 1373, full_name: 'meg', country: null },
-    { osm_id: 2647319, edit_count: 1373, full_name: 'alic', country: null }
-  ]
-  let members = test
+function MemberTable ({ members }) {
+  if (!members) return <div />
+
+  let rows = members
     .filter(user => {
-      let memberIds = memberList.map(member => member.osm_id)
+      let memberIds = members.map(member => member.osm_id)
       return memberIds.includes(user.osm_id) ? user : null
     })
     .map(record => {
@@ -114,7 +119,7 @@ function MemberTable ({ memberList }) {
     })
   return (
     <div className='widget'>
-      <Table tableSchema={memberTableSchema} data={members} />
+      <Table tableSchema={memberTableSchema} data={rows} />
     </div>
   )
 }
