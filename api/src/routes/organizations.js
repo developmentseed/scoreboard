@@ -1,8 +1,5 @@
 const OSMTeams = require('../services/teams')
-// const db = require('../db/connection')
 const { pathOr } = require('ramda')
-// const getOsmesaLastRefreshed = require('../utils/osmesaStatus.js')
-// const { validateRole } = require('../utils/roles')
 
 /**
  * manager/owner list route

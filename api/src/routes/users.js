@@ -182,7 +182,7 @@ async function getNames (req, res) {
   try {
     const { ids } = body
     const data = await db
-      .select('osm_id', 'full_name', 'country')
+      .select('osm_id', 'full_name')
       .from('users')
       .whereIn('osm_id', ids)
     res.send(data)

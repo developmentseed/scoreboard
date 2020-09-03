@@ -90,7 +90,6 @@ export function ManageOrg (props) {
       }
     })
   }
-  console.log('organization', organization.organization)
   return (
     <div className='Org'>
       <header className='header--internal--green header--page'>
