@@ -1,0 +1,17 @@
+[data-reach-menu-list], [data-reach-menu-items] {
+  padding: 0 !important; 
+  width: 9.5rem;
+  border-radius: 0 0 6px 6px;
+  border: solid 1px #4FCA9E !important;
+}
+
+[data-reach-menu-item] {
+  font-family: 'Heebo-reg', "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  display: flex !important;
+  justify-content: center !important;
+  text-transform: uppercase;
+}
+
+[data-reach-menu-item][data-selected] {
+  background: #22BDC1 !important;
+}

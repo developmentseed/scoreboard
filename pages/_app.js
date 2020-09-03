@@ -22,6 +22,7 @@ import '../styles/main.scss'
 /* CSS */
 import 'react-select/dist/react-select.css'
 import 'react-input-range/lib/css/index.css'
+import '@reach/menu-button/styles.css'
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 const editorName = process.env.EDITOR_NAME || 'OSM'

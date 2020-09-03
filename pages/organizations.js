@@ -6,7 +6,6 @@ import {
   MenuButton,
   MenuItem
 } from '@reach/menu-button'
-import '@reach/menu-button/styles.css'
 
 import Table from '../components/common/Table'
 import NotLoggedIn from '../components/NotLoggedIn'
@@ -62,21 +61,23 @@ export function ManageOrg (props) {
     setMembers(updatedMembers)
   }
 
+  const findInitialRole = (role, member) => (
+    organization.organization[role].find(orgUser => orgUser.osm_id === member.osm_id)
+  )
+
   const submitChanges = () => {
+    // props.addOwner('10328243')
     members.forEach(member => {
-      const findInitialRole = (role) => (
-        organization.organization[role].find(orgUser => orgUser.osm_id === member.osm_id)
-      )
       switch (member.role) {
         case 'owner':
-          if (findInitialRole('managers')) {
+          if (findInitialRole('managers', member)) {
             console.log('assign owner', member, organization.organization)
             props.removeManager(member.osm_id)
           }
           props.addOwner(member.osm_id)
           break
         case 'manager':
-          if (findInitialRole('owners')) {
+          if (findInitialRole('owners', member)) {
             console.log('assign manager', member, organization.organization)
             props.removeOwner(member.osm_id)
           }
@@ -157,21 +158,21 @@ function MemberTable ({ members, setStatus }) {
   if (!members) return <div />
 
   let rows = members
-    .filter(user => {
+    .filter(member => {
       let memberIds = members.map(member => member.osm_id)
-      return memberIds.includes(user.osm_id) ? user : null
+      return memberIds.includes(member.osm_id) ? member : null
     })
-    .map(record => {
-      return Object.assign(record, {
+    .map(member => {
+      return Object.assign(member, {
         button: (
           <Menu>
             <MenuButton className='button button--secondary button--inline'>
           Change Status <span aria-hidden>▾</span>
             </MenuButton>
             <MenuList>
-              <MenuItem onSelect={() => setStatus(record, 'owner')}>Assign Owner</MenuItem>
-              <MenuItem onSelect={() => setStatus(record, 'manager')}>Assign Manager</MenuItem>
-              <MenuItem onSelect={() => setStatus(record, 'none')}>Remove</MenuItem>
+              {member.role !== 'owner' && <MenuItem onSelect={() => setStatus(member, 'owner')}>Assign Owner</MenuItem>}
+              {member.role !== 'manager' && <MenuItem onSelect={() => setStatus(member, 'manager')}>Assign Manager</MenuItem>}
+              <MenuItem onSelect={() => setStatus(member, 'none')} style={{ backgroundColor: `#4FCA9E`, color: `white` }} >Remove</MenuItem>
             </MenuList>
           </Menu>
         )
