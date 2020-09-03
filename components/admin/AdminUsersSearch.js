@@ -37,10 +37,12 @@ class UsersSearch extends Component {
 
   onSearchUsersClick (user) {
     this.props.addUser(user)
+    this.props.adminTeamMemberSearch('')
   }
 
   onSelectedUsersClick (user) {
     this.props.removeUser(user)
+    this.props.adminTeamMemberSearch('')
   }
 
   handlePageChange (pageNumber) {
@@ -52,7 +54,7 @@ class UsersSearch extends Component {
   }
 
   render () {
-    let { selectedUsers, searchHeader, searchInputLegend, showOnlyResults, showSelectedUserTable } = this.props
+    let { selectedUsers, searchHeader, searchInputLegend, showOnlyResults, showSelectedUserTable, addBtnText } = this.props
     selectedUsers = (selectedUsers || []).map(user => {
       return Object.assign(user, {
         button: <button style={{ 'padding': '5px' }} className='button button--destroy' onClick={() => this.onSelectedUsersClick(user)} >Remove</button>
@@ -69,7 +71,7 @@ class UsersSearch extends Component {
         if (record.osm_id.toString() === user.osm_id.toString()) isAssigned = true
       })
       return Object.assign(record, {
-        button: (isAssigned ? <div /> : <button style={{ 'padding': '5px' }} className='button' onClick={() => this.onSearchUsersClick(record)} >Add</button>)
+        button: (isAssigned ? <div /> : <button style={{ 'padding': '5px' }} className='button button--primary' onClick={() => this.onSearchUsersClick(record)} >{addBtnText}</button>)
       })
     })
 
@@ -118,15 +120,18 @@ UsersSearch.propTypes = {
   searchInputLegend: PropTypes.string,
   showOnlyResults: PropTypes.bool,
   showSelectedUserTable: PropTypes.bool,
-  selectedUsers: PropTypes.array.isRequired,
+  selectedUsers: PropTypes.array,
   addUser: PropTypes.func.isRequired,
+  addBtnText: PropTypes.string,
   removeUser: PropTypes.func
 }
 
 UsersSearch.defaultProps = {
   showOnlyResults: false,
+  selectedUsers: [],
   showSelectedUserTable: false,
-  removeUser: () => {}
+  removeUser: () => {},
+  addBtnText: 'Add'
 }
 
 export default connect(['adminTeamMemberFilters', 'adminTeamMemberSearchResults'], actions)(UsersSearch)

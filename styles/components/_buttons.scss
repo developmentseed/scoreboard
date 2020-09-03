@@ -20,6 +20,10 @@
   }
 }
 
+.button, .button--inline {
+  padding: .4em 1em;
+}
+
 .button--primary,
 .admin .button {
   background-color: $base-color;

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'unistore/react'
+import {
+  Menu,
+  MenuList,
+  MenuButton,
+  MenuItem
+} from '@reach/menu-button'
+import '@reach/menu-button/styles.css'
 
 import Table from '../components/common/Table'
 import NotLoggedIn from '../components/NotLoggedIn'
@@ -47,9 +54,42 @@ export function ManageOrg (props) {
     return <NotLoggedIn />
   }
   const addManager = (user) => {
-    props.addManager(user.osm_id)
+    setMembers([...members, { ...user, role: 'manager' }])
   }
 
+  const setStatus = (user, role) => {
+    const updatedMembers = members.map(member => member.osm_id === user.osm_id ? { ...member, role } : member)
+    setMembers(updatedMembers)
+  }
+
+  const submitChanges = () => {
+    members.forEach(member => {
+      const findInitialRole = (role) => (
+        organization.organization[role].find(orgUser => orgUser.osm_id === member.osm_id)
+      )
+      switch (member.role) {
+        case 'owner':
+          if (findInitialRole('managers')) {
+            console.log('assign owner', member, organization.organization)
+            props.removeManager(member.osm_id)
+          }
+          props.addOwner(member.osm_id)
+          break
+        case 'manager':
+          if (findInitialRole('owners')) {
+            console.log('assign manager', member, organization.organization)
+            props.removeOwner(member.osm_id)
+          }
+          props.addManager(member.osm_id)
+          break
+        case 'none':
+          props.removeManager(member.osm_id)
+          props.removeOwner(member.osm_id)
+          break
+      }
+    })
+  }
+  console.log('organization', organization.organization)
   return (
     <div className='Org'>
       <header className='header--internal--green header--page'>
@@ -80,10 +120,18 @@ export function ManageOrg (props) {
                   searchInputLegend='Add Organization Manager'
                   selectedUsers={members}
                   addUser={addManager}
+                  addBtnText='Add Manager'
                   showOnlyResults
                 />
+                <MemberTable members={members} setStatus={setStatus} />
+                <button
+                  type='submit'
+                  className='button button--primary'
+                  onClick={() => submitChanges()}
+                >
+                  Save Changes
+                </button>
               </form>
-              <MemberTable members={members} />
             </div >
           </div >
         </div>
@@ -98,13 +146,14 @@ const memberTableSchema = {
   'headers': {
     'name': { type: 'string', accessor: 'full_name' },
     'user-id': { type: 'string', accessor: 'osm_id' },
+    'role': { type: 'string', accessor: 'role' },
     'button': { type: 'string', accessor: 'button' }
   },
-  columnOrder: ['name', 'user-id', 'button'],
+  columnOrder: ['name', 'user-id', 'role', 'button'],
   displaysTooltip: ['user-id']
 }
 
-function MemberTable ({ members }) {
+function MemberTable ({ members, setStatus }) {
   if (!members) return <div />
 
   let rows = members
@@ -114,7 +163,18 @@ function MemberTable ({ members }) {
     })
     .map(record => {
       return Object.assign(record, {
-        button: (<button style={{ 'padding': '5px' }} className='button' onClick={() => this.onSearchUsersClick(record)} >Add</button>)
+        button: (
+          <Menu>
+            <MenuButton className='button button--secondary button--inline'>
+          Change Status <span aria-hidden>▾</span>
+            </MenuButton>
+            <MenuList>
+              <MenuItem onSelect={() => setStatus(record, 'owner')}>Assign Owner</MenuItem>
+              <MenuItem onSelect={() => setStatus(record, 'manager')}>Assign Manager</MenuItem>
+              <MenuItem onSelect={() => setStatus(record, 'none')}>Remove</MenuItem>
+            </MenuList>
+          </Menu>
+        )
       })
     })
   return (
