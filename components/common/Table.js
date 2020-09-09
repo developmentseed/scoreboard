@@ -154,7 +154,7 @@ export default function Table (props) {
                 </th>)
                 : (
                   <th key={column.id} {...column.getHeaderProps()}>
-                    <a className={column.Cell.name === 'formattedNum' ? 'table-align-right' : ''}>{column.Header}</a>
+                    <div className={column.header === 'number' ? 'table-align-right' : ''}>{column.Header}</div>
                   </th>)
             )
           }
@@ -169,9 +169,18 @@ export default function Table (props) {
                 <tr {...row.getRowProps()}>
                   {
                     row.cells.map(cell => {
-                      return <td {...cell.getCellProps()} className={!isNaN(cell.value) && parseInt(cell.value) >= 0 ? 'table-align-left' : ''}>
-                        {cell.render('Cell')}
-                      </td>
+                      return (
+                        <td
+                          {...cell.getCellProps()}
+                          className={
+                            (!isNaN(cell.value) && parseInt(cell.value) >= 0 && cell.column.id !== 'osm_id') ? (
+                              'table-align-right') : (
+                              '')
+                          }
+                        >
+                          {cell.render('Cell')}
+                        </td>
+                      )
                     })
                   }
                 </tr>

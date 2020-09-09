@@ -24,6 +24,10 @@
   padding: .4em 1em;
 }
 
+.button, .button--med {
+  min-width: 12rem;
+}
+
 .button--primary,
 .admin .button {
   background-color: $base-color;

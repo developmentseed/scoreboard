@@ -89,8 +89,8 @@ const Sidebar = ({
           ? <div className='page-actions'>
             <Link href='/create-team'>
               <a>
-                <button className='button button--primary'>
-                    Create Team
+                <button className='button button--primary button--med'>
+                    Create New Team
                 </button>
               </a>
             </Link>
@@ -101,7 +101,7 @@ const Sidebar = ({
           ? <div className='page-actions'>
             <Link href='/organizations'>
               <a>
-                <button className='button button--secondary'>
+                <button className='button button--secondary button--med'>
                     Org Management
                 </button>
               </a>

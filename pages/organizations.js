@@ -8,6 +8,7 @@ import {
 } from '@reach/menu-button'
 
 import Table from '../components/common/Table'
+import Link from '../components/Link'
 import NotLoggedIn from '../components/NotLoggedIn'
 import { actions } from '../lib/store'
 import { LoadingState } from '../components/common/LoadingState'
@@ -66,19 +67,16 @@ export function ManageOrg (props) {
   )
 
   const submitChanges = () => {
-    // props.addOwner('10328243')
     members.forEach(member => {
       switch (member.role) {
         case 'owner':
           if (findInitialRole('managers', member)) {
-            console.log('assign owner', member, organization.organization)
             props.removeManager(member.osm_id)
           }
           props.addOwner(member.osm_id)
           break
         case 'manager':
           if (findInitialRole('owners', member)) {
-            console.log('assign manager', member, organization.organization)
             props.removeOwner(member.osm_id)
           }
           props.addManager(member.osm_id)
@@ -103,6 +101,11 @@ export function ManageOrg (props) {
         <div className='row widget-container'>
           <div className='widget-25'>
             <h3 className='header--medium'>EDIT ORG.</h3>
+            <Link href={`/teams/`}>
+              <a className='link--large'>
+                    View Teams
+              </a>
+            </Link>
           </div>
           <div className='widget-75'>
             <div className='row'>
