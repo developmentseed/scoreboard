@@ -1,5 +1,6 @@
 const rp = require('request-promise-native')
 const limit = require('p-limit')(5)
+
 // const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
 
 /**
@@ -79,6 +80,45 @@ class MapRouletteAPI {
     })
   }
 
+  getProjectStats (id) {
+    return rp({
+      uri: `${this.api_url}/api/v2/data/challenge/${id}`,
+      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+    })
+  }
+
+  async getProjectUserStats (id) {
+    const qs = {
+      monthDuration: -1,
+      challengeIds: id,
+      limit: 20
+    }
+    const userData = await rp({
+      uri: `${this.api_url}/api/v2/data/user/leaderboard`,
+      qs,
+      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+    })
+
+    const users = JSON.parse(userData).map(user => {
+      const userObj = {
+        uid: user.userId,
+        name: user.name,
+        rank: user.rank,
+        score: user.score,
+        avgTimeSpent: user.avgTimeSpent,
+        completedTasks: user.completedTasks
+      }
+      return userObj
+    })
+
+    const campaignObj = {
+      tag: id,
+      data: users,
+      success: true
+    }
+    return campaignObj
+  }
+
   getProjectAoi (id) {
     return new Promise((resolve, reject) => {
       rp({
@@ -109,8 +149,9 @@ class MapRouletteAPI {
         geometry: challenge.bounding,
         // HARD CODED VALUES
         status: 'PUBLISHED',
+        // TODO Need to query this from MR api
         campaign_hashtag: 'test',
-        validated: 0,
+        validated: 0, // placeholder
         done: 0 // placeholder value
       }
     })
@@ -119,7 +160,7 @@ class MapRouletteAPI {
   }
 
   updateDB (db, dbObjects) {
-    const proms = dbObjects.map(obj => limit(async () => {
+    const campaignProms = dbObjects.map(obj => limit(async () => {
       let rows = await db('campaigns').where({ 'tm_id': obj.tm_id, 'tasker_id': obj.tasker_id })
 
       const dataRes = await rp({
@@ -129,6 +170,7 @@ class MapRouletteAPI {
       try {
         const [{ actions: data }] = JSON.parse(dataRes)
         obj.done = (1 - data.available / data.total) * 100
+        obj.validated = data.validated / data.total * 100
       } catch (e) {
         if (e instanceof TypeError) {
           console.error(`Challenge ${obj.tm_id} does not have available metadata`)
@@ -142,8 +184,7 @@ class MapRouletteAPI {
         return db('campaigns').where('id', rows[0].id).update(obj)
       }
     }))
-
-    return Promise.all(proms)
+    return Promise.all(campaignProms)
   }
 }
 

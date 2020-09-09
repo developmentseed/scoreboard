@@ -1,18 +1,37 @@
-version: '2'
+version: '3'
 
 services:
+
   db:
     image: mdillon/postgis:9.6-alpine
     environment:
+      POSTGRES_DB: scoreboard
       POSTGRES_PASSWORD: test
       POSTGRES_USER: scoreboard
-      POSTGRES_DB: scoreboard
     ports:
-      - 5433:5432 
+      - 5433:5432
     volumes:
       - './.tmp/pg:/var/lib/postgresql/data'
       - ./scripts/create-test-db.sh:/docker-entrypoint-initdb.d/create-test-db.sh
+
+  # simulate osmesa instance for development (see https://github.com/developmentseed/osm-fabricator for origin of init.sql)
   osmesa:
-    image: developmentseed/fabricator:latest
+    image: postgres:10
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
-      - 5434:5432 
+      - 5434:5432
+    volumes:
+      # db will load this directory at start
+      - ./scripts/osmesa-mock/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  wait-for-db-ready:
+    image: dadarek/wait-for-dependencies
+    environment:
+      SLEEP_LENGTH: 5
+    depends_on:
+      - osmesa
+      - db
+    command: osmesa:5432 db:5432
