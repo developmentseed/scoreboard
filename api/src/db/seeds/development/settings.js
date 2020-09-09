@@ -2,6 +2,7 @@ const { cache } = require('../../../config')
 const { put } = require('../../../models/settings')
 
 const settings = {
+  // default
   'osmesa-db': 'postgres://postgres@localhost:5434/postgres'
 }
 
