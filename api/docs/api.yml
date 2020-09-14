@@ -1,3 +1,5 @@
+# TODO convert to 3.0
+
 swagger: '2.0'
 info:
   description: >
@@ -169,6 +171,7 @@ paths:
             type: array
             items:
               type: integer
+              example: 10499924
         - name: categoriesFilter
           required: false
           description: 'Filter down to these osmesa categories of measurements and counts.
@@ -230,6 +233,145 @@ paths:
           description: 'Filter down to these hashtag(s), using a prefix match.'
       responses:
         200:
-          description: 'Time series data structure. TODO define schema of response data.'
+          description: 'Time series data structure.'
           schema:
             type: object
+            properties:
+              bins:
+                description: 'Result bins created according to the binInterval (duration) parameter, if any. Defaults to a single bin
+                  if binInterval was not specified.'
+                type: array
+                items:
+                  type: object
+                  description: 'Result bin of binInterval duration'
+                  properties:
+                    startDate:
+                      type: string
+                      description: 'Result bin start date. ISO-8601 formatted datetime string (UTC time zone).'
+                      example: '2020-12-30'
+                    endDate:
+                      type: string
+                      description: 'Result bin end date. ISO-8601 formatted datetime string (UTC time zone).'
+                      example: '2020-12-30'
+                    userStatistics:
+                      type: array
+                      description: 'Modeled after the user_statistics materialized view from osmesa'
+                      items:
+                        type: object
+                        properties:
+                          userId:
+                            type: integer
+                            description: 'OSM/mapedit user id'
+                          name:
+                            type: string
+                            description: 'OSM/mapedit user name'
+                          measurements:
+                            type: object
+                            description: 'Properties with values for each of the osmesa measurements categories available, e.g. road_km_added'
+                            properties:
+                              road_km_added:
+                                type: number
+                              road_km_deleted:
+                                type: number
+                              road_km_modified:
+                                type: number
+                              waterway_km_added:
+                                type: number
+                              waterway_km_deleted:
+                                type: number
+                              waterway_km_modified:
+                                type: number
+                              coastline_km_added:
+                                type: number
+                              coastline_km_deleted:
+                                type: number
+                              coastline_km_modified:
+                                type: number
+                              railline_km_added:
+                                type: number
+                              railline_km_deleted:
+                                type: number
+                              railline_km_modified:
+                                type: number
+                              landuse_km2_added:
+                                type: number
+                              landuse_km2_deleted:
+                                type: number
+                              landuse_km2_modified:
+                                type: number
+                              natural_km2_added:
+                                type: number
+                              natural_km2_deleted:
+                                type: number
+                              natural_km2_modified:
+                                type: number
+                          counts:
+                            type: object
+                            description: 'Properties with values for each of the osmesa counts categories available, e.g. pois_added'
+                            properties:
+                              roads_added:
+                                type: integer
+                              roads_deleted:
+                                type: integer
+                              roads_modified:
+                                type: integer
+                              waterways_added:
+                                type: integer
+                              waterways_deleted:
+                                type: integer
+                              waterways_modified:
+                                type: integer
+                              coastlines_added:
+                                type: integer
+                              coastlines_deleted:
+                                type: integer
+                              coastlines_modified:
+                                type: integer
+                              buildings_added:
+                                type: integer
+                              buildings_deleted:
+                                type: integer
+                              railway_features_modified:
+                                type: integer
+                              railway_features_added:
+                                type: integer
+                              railway_features_deleted:
+                                type: integer
+                              buildings_modified:
+                                type: integer
+                              raillines_added:
+                                type: integer
+                              raillines_deleted:
+                                type: integer
+                              raillines_modified:
+                                type: integer
+                              pois_modified:
+                                type: integer
+                              pois_added:
+                                type: integer
+                              pois_deleted:
+                                type: integer
+                              landuse_added:
+                                type: integer
+                              landuse_deleted:
+                                type: integer
+                              landuse_modified:
+                                type: integer
+                              natural_added:
+                                type: integer
+                              natural_deleted:
+                                type: integer
+                              natural_modified:
+                                type: integer
+                              other_added:
+                                type: integer
+                              other_deleted:
+                                type: integer
+                              other_modified:
+                                type: integer
+                          changesetCount:
+                            type: integer
+                            description: 'Number of changesets'
+                          editCount:
+                            type: integer
+                            description: 'Number of edits'
