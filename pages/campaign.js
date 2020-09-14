@@ -88,8 +88,9 @@ export class Campaign extends Component {
   }
 
   render () {
-    const { meta, lastUpdate, creationDate, refreshDate } = this.props.campaign
-    const stats = merge({ users: [], editCounts: 0 }, this.props.campaign.stats)
+    const { meta, lastUpdate, creationDate, refreshDate, tables } = this.props.campaign
+    const panelContent = this.props.campaign.panelContent || []
+
     return (
       <div className='Campaigns'>
         <header className='header--internal--green header--page'>
@@ -127,14 +128,7 @@ export class Campaign extends Component {
             </div>
           </div>
         </header>
-        <ScoreboardPanel title='' facets={
-          [
-            { label: 'Mapped', value: `${parseInt(meta.done, 10)}%` },
-            { label: 'Validated', value: `${parseInt(meta.validated, 10)}%` },
-            { label: 'Participants', value: stats.users.length },
-            { label: 'Total Edits', value: stats.editCounts }
-          ]
-        } />
+        <ScoreboardPanel title='' facets={panelContent} />
 
         <section>
           <div className='row widget-container'>
@@ -152,16 +146,27 @@ export class Campaign extends Component {
           </div>
         </section>
         <section className='section--tertiary'>
-          <div className='row'>
-            {
-              (stats.success)
-                ? <div>
-                  <Blurb {...stats} />
-                  <CampaignTable users={stats.users} name={meta.name} />
-                </div>
-                : <p>There was an error retrieving stats for this campaign.</p>
-            }
-          </div>
+
+          {
+            tables && tables.map(data => (
+              <div className='row' key={data.statsType}>
+                {
+                  (data.success)
+                    ? <div>
+                      {data.statsType === 'osmesa' && <Blurb {...merge({ users: [], editCounts: 0 }, data)} />}
+                      <CampaignTable
+                        data={data.data}
+                        type={data.statsType}
+                        name={meta.name}
+                        schema={data.schema}
+                        sortable={data.sortable === undefined ? true : data.sortable}
+                      />
+                    </div>
+                    : <p>There was an error retrieving stats for this campaign.</p>
+                }
+              </div>))
+          }
+
         </section>
       </div>
     )

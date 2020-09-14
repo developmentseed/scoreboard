@@ -4,9 +4,9 @@
  * @param {Object} records
  */
 module.exports = records => {
-  if (!(records && records.users)) return 0
+  if (!(records && records.data)) return 0
 
-  var usersEdits = records.users.reduce(
-    (i, users) => i + parseInt(users.edit_count || 0, 10), 0)
+  var usersEdits = records.data.reduce(
+    (i, data) => i + parseInt(data.edit_count || 0, 10), 0)
   return usersEdits
 }

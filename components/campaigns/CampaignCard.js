@@ -3,6 +3,7 @@ import Link from '../Link'
 import trimLength from '../../lib/utils/trim_length'
 import dynamic from 'next/dynamic'
 import { LoadingSkeleton, LoadingSkeletonGroup } from '../LoadingSkeleton'
+import Chip from '../Chip'
 
 const CampaignMap = dynamic(() => import('../charts/LeafletCampaignMap'), {
   ssr: false
@@ -37,8 +38,15 @@ export default ({ campaign }) => {
     validated,
     tasker_id,
     tm_name,
-    team_priority
+    team_priority,
+    type
   } = campaign
+
+  const CHIP_COLOR = {
+    tm3: 'primary',
+    tm4: 'secondary',
+    mr: 'tertiary'
+  }
 
   return (
     <Link href={`/campaign?id=${tasker_id}-${tm_id}`} as={`/campaigns/${tasker_id}-${tm_id}`}>
@@ -49,14 +57,17 @@ export default ({ campaign }) => {
             <h4 className='header--small header--with-description'>{trimLength(name, 70)}</h4>
             <span className='card__description-project'>Project #{tm_id} - {tm_name} { team_priority ? `- Priority ${parseInt(team_priority, 10)}` : ''}</span>
             <p>{trimLength(description, 190)}</p>
-            <ul className='card-stats'>
-              <li className='list--inline'>
+            <ul className='card-footer'>
+              <li className='card--stat'>
                 <span className='num--large'>{parseInt(Math.min(100, done), 10)}%</span>
                 <span className='descriptor-chart'>Mapped</span>
               </li>
-              <li className='list--inline'>
+              <li className='card--stat'>
                 <span className='num--large'>{parseInt(Math.min(100, validated), 10)}%</span>
                 <span className='descriptor-chart'>Validated</span>
+              </li>
+              <li className='card--chip'>
+                <Chip label={type} color={CHIP_COLOR[type]} />
               </li>
             </ul>
           </div>

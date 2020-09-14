@@ -1,7 +1,7 @@
 /**
  * Test the TM service code for different TM adapters
  */
-const { TM } = require('../../src/services/tm')
+const { TaskingManagerFactory } = require('../../src/services/tm')
 const db = require('../../src/db/connection')
 const test = require('ava')
 const path = require('path')
@@ -35,7 +35,7 @@ test.afterEach.cb(t => {
 })
 
 test.serial('Test TM3', async t => {
-  const tm = new TM(1, 'tm3', 'http://localhost:4848')
+  const tm = TaskingManagerFactory.createInstance({ id: 1, type: 'tm3', url: 'http://localhost:4848' })
   let projects = await tm.getProjects()
   t.true(projects.length > 0)
 
@@ -57,7 +57,7 @@ test.serial('Test TM3', async t => {
 })
 
 test.serial('Test TM3 schema', async t => {
-  const tm = new TM(1, 'tm3', 'http://localhost:4848')
+  const tm = TaskingManagerFactory.createInstanceM({ id: 1, type: 'tm3', url: 'http://localhost:4848' })
   let projects = await tm.getProjects()
 
   let project = projects[0]
@@ -77,9 +77,8 @@ test.serial('Test TM3 schema', async t => {
 })
 
 test.serial('Test URL forming', async t => {
-  const tm = new TM(1, 'tm3', 'http://tasks.openstreetmap.us', { proxy: 'http://localhost:4848' })
+  const tm = TaskingManagerFactory.createInstance({ id: 1, type: 'tm3', url: 'http://tasks.openstreetmap.us', opts: { proxy: 'http://localhost:4848' } })
   let projects = await tm.getProjects() // Should get from the proxy
-
   const project = projects.find(p => p.projectId === 77)
   t.truthy(project)
 
@@ -89,11 +88,14 @@ test.serial('Test URL forming', async t => {
 
 test.serial('Test extra params', async t => {
   // Sort response with date
-  const tm = new TM(1, 'tm3', 'http://localhost:4848', {
-    search_params: {
-      'mapperLevel': 'BEGINNER'
-    }
-  })
+  const tm = TaskingManagerFactory.createInstance({ id: 1,
+    type: 'tm3',
+    url: 'http://localhost:4848',
+    opts: {
+      search_params: {
+        'mapperLevel': 'BEGINNER'
+      }
+    } })
 
   let projects = await tm.getProjects()
   let levels = projects.map(p => p.mapperLevel)
@@ -106,7 +108,7 @@ test.only('Duplicate campaigns', async t => {
 
   // Try adding the tasks again
   const [tm3] = await db('taskers').where('name', 'test tm3')
-  const tm = new TM(tm3.id, 'tm3', 'http://tasks.openstreetmap.us', { proxy: 'http://localhost:4848' })
+  const tm = TaskingManagerFactory.createInstance({ id: tm3.id, type: 'tm3', url: 'http://tasks.openstreetmap.us', opts: { proxy: 'http://localhost:4848' } })
   let projects = await tm.getProjects() // Should get from the proxy
   let dbObjects = await tm.toDBObjects(projects)
   await tm.updateDB(db, dbObjects)
