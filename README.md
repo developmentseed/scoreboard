@@ -56,11 +56,11 @@ variable.
 
 ### Create and run the database
 
-     $ docker-compose up -d
+     $ docker-compose up  # wait for scoreboard_wait-for-db-ready_1 
 
 This command will create and run the database on port `5433`. The database files are stored under `.tmp` folder.
 
-If you are running the command for the first time, you should wait until the database is created. This can take a few minutes.
+If you are running the command for the first time, you should wait until the databases are created. This can take a few minutes.
 
 To start with a new database with no data, stop the command, remove the `.tmp` folder and run the command again.
 
@@ -107,9 +107,12 @@ This will select some random changesets from the OSMesa edits and assign them to
 
 ## Start Development Server
 
-This command will start both the frontend and the api together
+This command will start both the frontend and the api together, with livereloading for both the front end and api
 
      $ yarn dev
+
+This command will start both the frontend and the api together, with a static version of the api
+    $ yarn dev-static
 
 ## Tests
 
@@ -126,6 +129,12 @@ Lint the code using:
      $ yarn lint
 
 You can automatically fix some lint errors using `yarn lintfix`.
+
+## Generating Docs
+
+If you make changes to the API documentation make sure to update the README for the API which is auto-generated from the swagger YAML by running:
+
+     $ yarn docs
 
 ## Connecting to OSM Teams
 
@@ -150,6 +159,14 @@ via the Admin entry in the User menu.
 - Setup Badges
 - Manage Users
 - App Settings: OSMesa integration settings
+
+# Simulated osmesa database
+
+A pg_dump of [osm-fabricator](https://github.com/developmentseed/osm-fabricator) is used to mock the osmesa 
+db when developing locally.
+
+To update the osmesa db, first develop on osm-fabricator, then pg_dump it into `scripts/osmesa-mock/init.sql`.
+See scoreboard's `docker-compose.yml` for more details.
 
 # API docs
 
