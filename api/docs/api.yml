@@ -170,7 +170,11 @@ paths:
               type: integer
         - name: categoriesFilter
           required: false
-          description: 'Filter down to these osmesa categories of measurements and counts. (available values from https://github.com/azavea/osmesa/blob/master/src/analytics/src/main/scala/osmesa/analytics/stats/package.scala)'
+          description: 'Filter down to these osmesa categories of measurements and counts.
+           Each count and measurement will have [add, modified, deleted] in the response. Measurements
+           are in kilometers, or square kilometers, e.g. *_km and *_km2.
+           Note: available categories sourced from
+           https://github.com/azavea/osmesa/blob/master/src/analytics/src/main/scala/osmesa/analytics/stats/package.scala#L119-L180'
           in: body
           schema:
             type: array
@@ -182,6 +186,8 @@ paths:
                 - 'waterway_km'
                 - 'coastline_km'
                 - 'railline_km'
+                - 'landuse_km2'
+                - 'natural_km2'
                 # counts
                 - 'roads'
                 - 'waterways'
@@ -190,6 +196,8 @@ paths:
                 - 'railway_features'
                 - 'raillines'
                 - 'pois'
+                - 'landuse'
+                - 'natural'
                 - 'other'
         - name: countriesFilter
           required: false
