@@ -1,15 +1,11 @@
-# TODO convert to 3.0
-
-swagger: '2.0'
+openapi: 3.0.1
 info:
-  description: >
-    Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scoreboard and allow grouping and searching of users and campaigns. It also provides insight into OSM top stats.
-  version: '0.1.0'
   title: Scoreboard API
-consumes:
-  - application/json
-produces:
-  - application/json
+  description: |
+    Scoreboard API powers the Scoreboard. It provides the OSM users data to the Scoreboard and allow grouping and searching of users and campaigns. It also provides insight into OSM top stats.
+  version: 0.1.0
+servers:
+  - url: /
 tags:
   - name: users
     description: Users
@@ -20,358 +16,376 @@ tags:
 paths:
   /api/users:
     get:
-      summary: list of users
       tags:
         - users
+      summary: list of users
       responses:
         200:
           description: User object
+          content: {}
   /api/users/stats:
     get:
-      summary: list of OSM users and their stats
       tags:
         - users
+      summary: list of OSM users and their stats
       parameters:
-      - in: query
-        name: page
-        type: integer
-        description: The pagination parameter (each page is limit to 25 results)
-        required: false
-      - in: query
-        name: search
-        type: string
-        description: Is used for searching the users display name
-        required: false
-      - in: query
-        name: country
-        type: string
-        # TODO: make this consistent with 3 letter country code used in Osmesa in the /api/timeseries endpoint
-        description: 'List of countries to filter on, using a 2 letter country code. Example "CA,US" for Canada, United States'
-        required: false
-      - in: query
-        name: sortType
-        type: string
-        enum: [Least recent, Most recent, Most total, Least total]
-        description: Sort users by a given type
-        required: false
-      - in: query
-        name: active
-        type: boolean
-        description: Indicator for whether to include only users who have been active in the last 6 months
-        required: false
-        default: false
+        - name: page
+          in: query
+          description: The pagination parameter (each page is limit to 25 results)
+          schema:
+            type: integer
+        - name: search
+          in: query
+          description: Is used for searching the users display name
+          schema:
+            type: string
+        - name: country
+          in: query
+          description: List of countries to filter on, using a 2 letter country code.
+            Example "CA,US" for Canada, United States
+          schema:
+            type: string
+        - name: sortType
+          in: query
+          description: Sort users by a given type
+          schema:
+            type: string
+            enum:
+              - Least recent
+              - Most recent
+              - Most total
+              - Least total
+        - name: active
+          in: query
+          description: Indicator for whether to include only users who have been active
+            in the last 6 months
+          schema:
+            type: boolean
+            default: false
       responses:
         200:
           description: The list of OSM users
-  "/api/users/{id}":
+          content: {}
+  /api/users/{id}:
     get:
-      summary: a specific user
       tags:
         - users
+      summary: a specific user
       parameters:
         - name: id
           in: path
           description: User's OSM ID
-          type: integer
           required: true
+          schema:
+            type: integer
       responses:
         200:
           description: The OSM user object
+          content: {}
   /api/campaigns:
     get:
       tags:
         - campaigns
       summary: list of campaigns
       parameters:
-      - in: query
-        name: page
-        type: integer
-        description: The pagination parameter (each page is limit to 25 results)
-        required: false
-      - in: query
-        name: search
-        type: string
-        description: Search for campaign names
-        required: false
-      - in: query
-        name: compl_min
-        type: integer
-        description: Minimum percentage of completion
-        required: false
-        default: 0
-      - in: query
-        name: compl_max
-        type: integer
-        description: Maximum percentage of completion
-        required: false
-        default: 100
+        - name: page
+          in: query
+          description: The pagination parameter (each page is limit to 25 results)
+          schema:
+            type: integer
+        - name: search
+          in: query
+          description: Search for campaign names
+          schema:
+            type: string
+        - name: compl_min
+          in: query
+          description: Minimum percentage of completion
+          schema:
+            type: integer
+            default: 0
+        - name: compl_max
+          in: query
+          description: Maximum percentage of completion
+          schema:
+            type: integer
+            default: 100
       responses:
         200:
           description: List of campaigns
-  "/api/campaigns/{id}":
+          content: {}
+  /api/campaigns/{id}:
     get:
       tags:
         - campaigns
       summary: a specific campaign
       parameters:
-      - name: id
-        in: path
-        description: The campaign ID
-        type: integer
-        required: true
+        - name: id
+          in: path
+          description: The campaign ID
+          required: true
+          schema:
+            type: integer
       responses:
         200:
           description: The campaign object
+          content: {}
   /api/topstats:
     get:
       tags:
         - stats
-      summary: "Top level stats including: number of campaigns, campaigns sorted by priority, edits by country and number of active users"
+      summary: 'Top level stats including: number of campaigns, campaigns sorted by priority, edits by country and
+        number of active users'
       responses:
         200:
           description: Returns list of responses
+          content: {}
   /api/timeseries:
     post:
       tags:
-        - 'time series'
-      summary: 'Fetches time-series data from the osmesa database.
-       Note: all of the parameters below are properties of an application/json request payload (body).
-       Note: at least one Filter is required, otherwise a 400 Bad Request is returned.'
-      parameters:
-        - name: startDate
-          required: true
-          description: 'Start date of query.'
-          in: body
-          schema:
-            type: string
-            description: 'ISO-8601 formatted datetime string (UTC time zone). https://en.wikipedia.org/wiki/ISO_8601'
-            example: '2020-12-30'
-        - name: endDate
-          required: false
-          description: 'End date of query (defaults to now if omitted).'
-          in: body
-          schema:
-            type: string
-            description: 'ISO-8601 formatted datetime string (UTC time zone). https://en.wikipedia.org/wiki/ISO_8601'
-            example: '2020-12-30'
-        - name: binInterval
-          required: false
-          description: 'Response will be binned into equal intervals specified by this parameter. Must be shorter
-            than end-date minus start-date. If omitted, no binning will be performed.'
-          in: body
-          schema:
-            type: string
-            description: 'ISO-8601 formatted time interval/duration string. https://en.wikipedia.org/wiki/ISO_8601'
-            example: 'P1Y2M10DT2H30M'
-        - name: userIdsFilter
-          required: false
-          description: 'Filter down to these mapedit/osm user id(s).'
-          in: body
-          schema:
-            type: array
-            items:
-              type: integer
-              example: 10499924
-        - name: categoriesFilter
-          required: false
-          description: 'Filter down to these osmesa categories of measurements and counts.
-           Each count and measurement will have [add, modified, deleted] in the response. Measurements
-           are in kilometers, or square kilometers, e.g. *_km and *_km2.
-           Note: available categories sourced from
-           https://github.com/azavea/osmesa/blob/master/src/analytics/src/main/scala/osmesa/analytics/stats/package.scala#L119-L180'
-          in: body
-          schema:
-            type: array
-            items:
-              type: string
-              enum:
-                # measurements
-                - 'road_km'
-                - 'waterway_km'
-                - 'coastline_km'
-                - 'railline_km'
-                - 'landuse_km2'
-                - 'natural_km2'
-                # counts
-                - 'roads'
-                - 'waterways'
-                - 'coastlines'
-                - 'buildings'
-                - 'railway_features'
-                - 'raillines'
-                - 'pois'
-                - 'landuse'
-                - 'natural'
-                - 'other'
-        - name: countriesFilter
-          required: false
-          description: 'Filter down to these countries.'
-          in: body
-          schema:
-            type: array
-            items:
-              type: string
-              description: 'ISO-3166 country code (3 letters), or USA-XX for a US State'
-            example: ['AFG', 'AUS', 'USA', 'USA-AK']
-        - name: hashtagsFilter
-          required: false
-          description: 'Filter down to these exact changeset hashtag(s).'
-          in: body
-          schema:
-            type: array
-            items:
-              type: string
-            example: ['345_task_789', '345_task_111']
-        - name: hashtagPrefixFilter
-          required: false
-          in: body
-          schema:
-            type: array
-            items:
-              type: string
-              example: ['ocelots_']
-          description: 'Filter down to these hashtag(s), using a prefix match.'
+        - time series
+      summary: 'Fetches time-series data from the osmesa database. Note: all of the parameters below are properties of
+        an application/json request payload (body). Note: at least one Filter is required, otherwise a 400 Bad Request
+        is returned.'
+      requestBody:
+        description: 'JSON request body'
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - startDate
+              properties:
+                startDate:
+                  type: string
+                  description: Start date of query. ISO-8601 formatted datetime string (UTC time zone).
+                  example: 2020-12-30
+                endDate:
+                  type: string
+                  description: End date of query. ISO-8601 formatted datetime string (UTC time zone).
+                  default: (now)
+                  example: 2020-12-30
+                binInterval:
+                  description: 'Response will be binned into equal intervals specified by this parameter. Must be shorter
+                    than end-date minus start-date. If omitted, no binning will be performed. ISO-8601 formatted time
+                    interval/duration string.'
+                  type: string
+                  example: P1Y2M10DT2H30M
+                userIdsFilter:
+                  description: Filter down to these mapedit/osm user id(s).
+                  type: array
+                  items:
+                    type: integer
+                    example: 10499924
+                categoriesFilter:
+                  description: 'Filter down to these osmesa categories of measurements and counts.
+                    Each count and measurement will have [add, modified, deleted] in the response. Measurements
+                    are in kilometers, or square kilometers, e.g. *_km and *_km2.
+                    Note: available categories sourced from
+                    https://github.com/azavea/osmesa/blob/master/src/analytics/src/main/scala/osmesa/analytics/stats/package.scala#L119-L180'
+                  type: array
+                  example: [road_km, coastline_km, pois, buildings]
+                  items:
+                    type: string
+                    enum:
+                      # measurements
+                      - road_km
+                      - waterway_km
+                      - coastline_km
+                      - railline_km
+                      - landuse_km2
+                      - natural_km2
+                      # counts
+                      - roads
+                      - waterways
+                      - coastlines
+                      - buildings
+                      - railway_features
+                      - raillines
+                      - pois
+                      - landuse
+                      - natural
+                      - other
+                countriesFilter:
+                  description: Filter down to these countries.
+                  type: array
+                  items:
+                    type: string
+                    description: ISO-3166 country code (3 letters), or USA-XX for a US State
+                  example: [ AFG, AUS, USA, USA-AK ]
+                hashtagsFilter:
+                  description: Filter down to these exact changeset hashtag(s).
+                  type: array
+                  items:
+                    type: string
+                  example: [ 345_task_789, 345_task_111 ]
+                hashtagPrefixFilter:
+                  type: array
+                  items:
+                    type: string
+                  example: [ ocelots_ ]
+                  description: Filter down to these hashtag(s), using a prefix match.
       responses:
+        400:
+          description: Bad Request, e.g. when no filters are passed in the requestBody.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
         200:
-          description: 'Time series data structure.'
-          schema:
-            type: object
-            properties:
-              bins:
-                description: 'Result bins created according to the binInterval (duration) parameter, if any. Defaults to a single bin
-                  if binInterval was not specified.'
-                type: array
-                items:
-                  type: object
-                  description: 'Result bin of binInterval duration'
-                  properties:
-                    startDate:
-                      type: string
-                      description: 'Result bin start date. ISO-8601 formatted datetime string (UTC time zone).'
-                      example: '2020-12-30'
-                    endDate:
-                      type: string
-                      description: 'Result bin end date. ISO-8601 formatted datetime string (UTC time zone).'
-                      example: '2020-12-30'
-                    userStatistics:
-                      type: array
-                      description: 'Modeled after the user_statistics materialized view from osmesa'
-                      items:
-                        type: object
-                        properties:
-                          userId:
-                            type: integer
-                            description: 'OSM/mapedit user id'
-                          name:
-                            type: string
-                            description: 'OSM/mapedit user name'
-                          measurements:
+          description: Time series data structure.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bins:
+                    type: array
+                    description: Result bins created according to the binInterval
+                      (duration) parameter, if any. Defaults to a single bin if binInterval
+                      was not specified.
+                    items:
+                      type: object
+                      properties:
+                        startDate:
+                          type: string
+                          description: Result bin start date. ISO-8601 formatted datetime
+                            string (UTC time zone).
+                          example: 2020-12-29
+                        endDate:
+                          type: string
+                          description: Result bin end date. ISO-8601 formatted datetime
+                            string (UTC time zone).
+                          example: 2020-12-30
+                        userStatistics:
+                          type: array
+                          description: Modeled after the user_statistics materialized
+                            view from osmesa.
+                          items:
                             type: object
-                            description: 'Properties with values for each of the osmesa measurements categories available, e.g. road_km_added'
                             properties:
-                              road_km_added:
-                                type: number
-                              road_km_deleted:
-                                type: number
-                              road_km_modified:
-                                type: number
-                              waterway_km_added:
-                                type: number
-                              waterway_km_deleted:
-                                type: number
-                              waterway_km_modified:
-                                type: number
-                              coastline_km_added:
-                                type: number
-                              coastline_km_deleted:
-                                type: number
-                              coastline_km_modified:
-                                type: number
-                              railline_km_added:
-                                type: number
-                              railline_km_deleted:
-                                type: number
-                              railline_km_modified:
-                                type: number
-                              landuse_km2_added:
-                                type: number
-                              landuse_km2_deleted:
-                                type: number
-                              landuse_km2_modified:
-                                type: number
-                              natural_km2_added:
-                                type: number
-                              natural_km2_deleted:
-                                type: number
-                              natural_km2_modified:
-                                type: number
-                          counts:
-                            type: object
-                            description: 'Properties with values for each of the osmesa counts categories available, e.g. pois_added'
-                            properties:
-                              roads_added:
+                              userId:
                                 type: integer
-                              roads_deleted:
+                                description: OSM/mapedit user id
+                              name:
+                                type: string
+                                description: OSM/mapedit user name
+                              measurements:
+                                type: object
+                                properties:
+                                  road_km_added:
+                                    type: number
+                                  road_km_deleted:
+                                    type: number
+                                  road_km_modified:
+                                    type: number
+                                  waterway_km_added:
+                                    type: number
+                                  waterway_km_deleted:
+                                    type: number
+                                  waterway_km_modified:
+                                    type: number
+                                  coastline_km_added:
+                                    type: number
+                                  coastline_km_deleted:
+                                    type: number
+                                  coastline_km_modified:
+                                    type: number
+                                  railline_km_added:
+                                    type: number
+                                  railline_km_deleted:
+                                    type: number
+                                  railline_km_modified:
+                                    type: number
+                                  landuse_km2_added:
+                                    type: number
+                                  landuse_km2_deleted:
+                                    type: number
+                                  landuse_km2_modified:
+                                    type: number
+                                  natural_km2_added:
+                                    type: number
+                                  natural_km2_deleted:
+                                    type: number
+                                  natural_km2_modified:
+                                    type: number
+                                description: Properties with values for each of the
+                                  osmesa measurements categories available, e.g. road_km_added
+                              counts:
+                                type: object
+                                properties:
+                                  roads_added:
+                                    type: integer
+                                  roads_deleted:
+                                    type: integer
+                                  roads_modified:
+                                    type: integer
+                                  waterways_added:
+                                    type: integer
+                                  waterways_deleted:
+                                    type: integer
+                                  waterways_modified:
+                                    type: integer
+                                  coastlines_added:
+                                    type: integer
+                                  coastlines_deleted:
+                                    type: integer
+                                  coastlines_modified:
+                                    type: integer
+                                  buildings_added:
+                                    type: integer
+                                  buildings_deleted:
+                                    type: integer
+                                  railway_features_modified:
+                                    type: integer
+                                  railway_features_added:
+                                    type: integer
+                                  railway_features_deleted:
+                                    type: integer
+                                  buildings_modified:
+                                    type: integer
+                                  raillines_added:
+                                    type: integer
+                                  raillines_deleted:
+                                    type: integer
+                                  raillines_modified:
+                                    type: integer
+                                  pois_modified:
+                                    type: integer
+                                  pois_added:
+                                    type: integer
+                                  pois_deleted:
+                                    type: integer
+                                  landuse_added:
+                                    type: integer
+                                  landuse_deleted:
+                                    type: integer
+                                  landuse_modified:
+                                    type: integer
+                                  natural_added:
+                                    type: integer
+                                  natural_deleted:
+                                    type: integer
+                                  natural_modified:
+                                    type: integer
+                                  other_added:
+                                    type: integer
+                                  other_deleted:
+                                    type: integer
+                                  other_modified:
+                                    type: integer
+                                description: Properties with values for each of the
+                                  osmesa counts categories available, e.g. pois_added
+                              changesetCount:
                                 type: integer
-                              roads_modified:
+                                description: Number of changesets
+                              editCount:
                                 type: integer
-                              waterways_added:
-                                type: integer
-                              waterways_deleted:
-                                type: integer
-                              waterways_modified:
-                                type: integer
-                              coastlines_added:
-                                type: integer
-                              coastlines_deleted:
-                                type: integer
-                              coastlines_modified:
-                                type: integer
-                              buildings_added:
-                                type: integer
-                              buildings_deleted:
-                                type: integer
-                              railway_features_modified:
-                                type: integer
-                              railway_features_added:
-                                type: integer
-                              railway_features_deleted:
-                                type: integer
-                              buildings_modified:
-                                type: integer
-                              raillines_added:
-                                type: integer
-                              raillines_deleted:
-                                type: integer
-                              raillines_modified:
-                                type: integer
-                              pois_modified:
-                                type: integer
-                              pois_added:
-                                type: integer
-                              pois_deleted:
-                                type: integer
-                              landuse_added:
-                                type: integer
-                              landuse_deleted:
-                                type: integer
-                              landuse_modified:
-                                type: integer
-                              natural_added:
-                                type: integer
-                              natural_deleted:
-                                type: integer
-                              natural_modified:
-                                type: integer
-                              other_added:
-                                type: integer
-                              other_deleted:
-                                type: integer
-                              other_modified:
-                                type: integer
-                          changesetCount:
-                            type: integer
-                            description: 'Number of changesets'
-                          editCount:
-                            type: integer
-                            description: 'Number of edits'
+                                description: Number of edits
+                      description: Result bin of binInterval duration
+      x-codegen-request-body-name: hashtagPrefixFilter
+components: {}
