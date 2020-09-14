@@ -43,7 +43,7 @@ paths:
       - in: query
         name: country
         type: string
-        # TODO: make this consistent with 3 letter country code used in Osmesa
+        # TODO: make this consistent with 3 letter country code used in Osmesa in the /api/timeseries endpoint
         description: 'List of countries to filter on, using a 2 letter country code. Example "CA,US" for Canada, United States'
         required: false
       - in: query
@@ -133,7 +133,8 @@ paths:
       tags:
         - 'time series'
       summary: 'Fetches time-series data from the osmesa database.
-       Note: all of the parameters below are properties of an application/json request payload (body).'
+       Note: all of the parameters below are properties of an application/json request payload (body).
+       Note: at least one Filter is required, otherwise a 400 Bad Request is returned.'
       parameters:
         - name: startDate
           required: true
@@ -162,7 +163,7 @@ paths:
             example: 'P1Y2M10DT2H30M'
         - name: userIdsFilter
           required: false
-          description: 'Filter down to these mapedit/osm user ids.'
+          description: 'Filter down to these mapedit/osm user id(s).'
           in: body
           schema:
             type: array
@@ -201,7 +202,7 @@ paths:
                 - 'other'
         - name: countriesFilter
           required: false
-          description: 'Filter down to these countries'
+          description: 'Filter down to these countries.'
           in: body
           schema:
             type: array
@@ -211,7 +212,7 @@ paths:
             example: ['AFG', 'AUS', 'USA', 'USA-AK']
         - name: hashtagsFilter
           required: false
-          description: 'Filter down to these exact hashtags'
+          description: 'Filter down to these exact changeset hashtag(s).'
           in: body
           schema:
             type: array
@@ -226,7 +227,7 @@ paths:
             items:
               type: string
               example: ['ocelots_']
-          description: 'Filter down to these hashtags, using a prefix match.'
+          description: 'Filter down to these hashtag(s), using a prefix match.'
       responses:
         200:
           description: 'Time series data structure. TODO define schema of response data.'
