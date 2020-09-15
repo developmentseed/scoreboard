@@ -168,6 +168,10 @@ db when developing locally.
 To update the osmesa db, first develop on osm-fabricator, then pg_dump it into `scripts/osmesa-mock/init.sql`.
 See scoreboard's `docker-compose.yml` for more details.
 
+# API docs
+
+See [api/README](./api/README.md)
+
 # Production
 
 To use scoreboard in production follow these steps:
