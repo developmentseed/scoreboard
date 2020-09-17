@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
     const [tmData] = await db('campaigns').where({ tasker_id, tm_id });
     // Add tasking manager info
     [tm] = await db('taskers').where('id', tmData.tasker_id)
-    tmAPI = TaskingManagerFactory.createInstance({ id: tm.id, type: tm.type, url: tm.url })
+    tmAPI = TaskingManagerFactory.createInstance({ id: tm.id, type: tm.type, url: tm.url, opts: tm.options })
     tmData.url = tmAPI.getUrlForProject(tmData.tm_id)
     tmData.tm_name = tm.name
     let lastUpdate = tmData.updated_at
