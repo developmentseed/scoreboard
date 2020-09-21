@@ -1,4 +1,5 @@
 const pg = require('pg')
+const rp = require('request-promise-native')
 // conversion of postgresql bigint (int8) to JS number (from https://github.com/knex/knex/issues/387)
 pg.types.setTypeParser(pg.types.builtins.INT8, 'text', parseInt)
 const knex = require('knex')
@@ -390,6 +391,20 @@ class OSMesaDBWrapper {
     }
 
     return reduce((acc, curr) => assoc(curr.mat_view, curr.updated_at, acc), {}, data)
+  }
+
+  /* Gets mocked response from postman
+   *
+   * @returns {Promise} response
+   */
+  getTimeseries (body) {
+    const options = {
+      method: 'POST',
+      uri: `https://aafa0798-a624-445f-b894-05fc1f10e200.mock.pstmn.io/api/timeseries`,
+      body,
+      json: true
+    }
+    return rp(options)
   }
 }
 

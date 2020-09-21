@@ -340,13 +340,13 @@ paths:
                                     type: integer
                                   buildings_deleted:
                                     type: integer
+                                  buildings_modified:
+                                    type: integer
                                   railway_features_modified:
                                     type: integer
                                   railway_features_added:
                                     type: integer
                                   railway_features_deleted:
-                                    type: integer
-                                  buildings_modified:
                                     type: integer
                                   raillines_added:
                                     type: integer
