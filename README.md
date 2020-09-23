@@ -154,6 +154,8 @@ If you are setting up local development for the first time, you may need to crea
 
 1) check to see what organizations exist on your local osm-teams 
 2) if there is none, create an organization (the id can be anything, but should match `OSM_TEAMS_ORG_ID` in your scoreboard `.env`)
+3) run `yarn seed`
+4) clear your cache and login
 
 # Administrator Settings
 
