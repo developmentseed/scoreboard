@@ -108,7 +108,6 @@ export class Team extends Component {
         country: userCountries[osmId]
       }
     })
-    console.log(teamStatsData)
 
     return (
       <div className='Campaigns'>
