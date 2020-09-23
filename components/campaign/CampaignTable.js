@@ -65,6 +65,13 @@ export default function CampaignTable (props) {
   )
 }
 
+/* @param data: array of objects with props specified in schema
+ * @param schema: expected to be defined in api/src/utils/campaignTableSchema.js
+ *    contains specification regarding column names, order, and tooltip display
+ * @param type: renders a summary if osmesa
+ * @param name: name
+ * @param sortable: renders sorting trigger
+ */
 CampaignTable.propTypes = {
   data: PropTypes.array.isRequired,
   schema: PropTypes.shape({
@@ -72,7 +79,7 @@ CampaignTable.propTypes = {
     displaysTooltip: PropTypes.array,
     headers: PropTypes.object
   }).isRequired,
-  type: PropTypes.string,
+  type: PropTypes.oneOf(['osmesa', 'maproulette', 'maproulette-challenge']),
   name: PropTypes.string,
   sortable: PropTypes.bool
 }
