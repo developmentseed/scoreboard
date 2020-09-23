@@ -1,5 +1,7 @@
 import React from 'react'
 import { sortBy, prop } from 'ramda'
+import PropTypes from 'prop-types'
+
 import CSVExport from '../../components/CSVExport'
 import Table from '../common/Table'
 import { formatDecimal } from '../../lib/utils/format'
@@ -61,4 +63,22 @@ export default function CampaignTable (props) {
       </div>
     </div>
   )
+}
+
+CampaignTable.propTypes = {
+  data: PropTypes.array.isRequired,
+  schema: PropTypes.shape({
+    columnOrder: PropTypes.array,
+    displaysTooltip: PropTypes.array,
+    headers: PropTypes.object
+  }).isRequired,
+  type: PropTypes.string,
+  name: PropTypes.string,
+  sortable: PropTypes.bool
+}
+
+CampaignTable.defaultProps = {
+  type: null,
+  name: null,
+  sortable: false
 }
