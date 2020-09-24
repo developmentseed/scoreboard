@@ -25,7 +25,7 @@ async function updateCountries (userID, countryEditList) {
     countryEditTotal[countryName] += tuple.edit_count
     countryChangesetTotal[countryName] += tuple.changeset_count
   })
-
+  // console.log('update countries')
   // edit countries for each user
   const promises = Object.keys(
     countryEditTotal
@@ -49,15 +49,25 @@ async function usersWorker () {
     const users = await db('users').select('id', 'osm_id') // Get all users
 
     // run only 100 concurrent events
-    // const limit = pLimit(100)
+    const limit = pLimit(100)
     // This limit is causing problems with promises completing.
-    const promises = users.map((obj) => async () => {
+    const promises = users.map((obj) => limit(async () => {
       // Get edit count from OSMesa
       try {
-        const data = await OSMesa.getUser(obj.osm_id)
-        obj.edit_count = data.edit_count || 0
-        obj.last_edit = data.last_edit
-        await updateCountries(obj.id, data.country_list)
+        console.log('active', limit.activeCount)
+        console.log('pending', limit.pendingCount)
+
+        await OSMesa.getUser(obj.osm_id)
+          .then((data) => {
+            obj.edit_count = data.edit_count || 0
+            obj.last_edit = data.last_edit
+            return updateCountries(obj.id, data.country_list)
+          })
+          .catch(e => {
+            console.log(e)
+            return new Error(e)
+          })
+          // .catch( e => new Error(e))
       } catch (e) {
         if (e.statusCode !== 404) {
           // Only log if there was a server error
@@ -72,7 +82,7 @@ async function usersWorker () {
             updated_at: db.fn.now()
           })
         ))
-    })
+    }))
 
     // Return a single promise wrapping all the
     // SQL statements
