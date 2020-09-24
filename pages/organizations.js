@@ -53,19 +53,39 @@ export function ManageOrg (props) {
   if (!authenticatedUser.loggedIn) {
     return <NotLoggedIn />
   }
+
+  /**
+ * Assigns role of manager to user selected from user search.
+ * @constructor
+ * @param {object} user - object containing all data listed on the user table.
+ */
   const addManager = (user) => {
     setMembers([...members, { ...user, role: 'manager' }])
   }
 
+  /**
+ * Updates member state with newly selected role.
+ * @param {object} user - object containing all user data from the member table.
+ * @param {string} role - new role selected from dropdown oneOf ['owner', 'manager', 'none'].
+ */
   const setStatus = (user, role) => {
     const updatedMembers = members.map(member => member.osm_id === user.osm_id ? { ...member, role } : member)
     setMembers(updatedMembers)
   }
 
+  /**
+ * Identifies role of user on initial load - prior to any updates.
+ * @param {string} role - role from  oneOf ['owners', 'managers'].
+ * @param {object} member - object containing all user data from the member table.
+ */
   const findInitialRole = (role, member) => (
     organization.organization[role].find(orgUser => orgUser.osm_id === member.osm_id)
   )
 
+  /**
+ * Makes request for each member to change status. Since the API adds and removes members one 
+ * at a time, each request is submitted separately rather than in batches.
+ */
   const submitChanges = () => {
     members.forEach(member => {
       switch (member.role) {
