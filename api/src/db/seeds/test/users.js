@@ -9,6 +9,14 @@ exports.seed = (knex) => knex('users').del() // delete entries
     })
 
     const users = await osmesaDB('users').select('id as osm_id', 'name as full_name')
-    return knex('users').insert(users)
+    
+    // Make sure all users are unique
+    const seen = new Map()
+    users.forEach(u => {
+      seen.set(u.osm_id, u)
+    })
+
+    return knex('users').insert([...seen.values()])
+
   })
-  .then(usersClock)
+  //  .then(usersClock)

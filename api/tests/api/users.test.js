@@ -15,6 +15,7 @@ const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
 test.before(async () => {
   await db.migrate.latest({ directory: migrationsDirectory })
   await db.seed.run({ directory: seedsDirectory })
+  console.log('db')
   app = await app()
 
   // run users clock
