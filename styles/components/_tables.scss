@@ -28,19 +28,19 @@ table {
         padding-right: 0.8em;
       }
     }
-    a[class^="sort"] {
+    a[class^='sort'] {
       display: flex;
       flex-flow: row nowrap;
       justify-content: flex-start;
       align-items: center;
       &:after {
-        mask: url($appUrlFinal + "static/sort-none.svg");
-        -webkit-mask: url($appUrlFinal + "static/sort-none.svg");
+        mask: url($appUrlFinal + 'static/sort-none.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-none.svg');
         mask-size: cover;
         -webkit-mask-size: cover;
         background: $base-font-color;
         display: inline-block;
-        content: "";
+        content: '';
         height: 16px;
         width: 16px;
         transition: 0.3s all;
@@ -56,27 +56,27 @@ table {
     }
     a.sort-asc {
       &:after {
-        mask: url($appUrlFinal + "static/sort-asc.svg");
-        -webkit-mask: url($appUrlFinal + "static/sort-asc.svg");
+        mask: url($appUrlFinal + 'static/sort-asc.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-asc.svg');
       }
     }
     a.sort-desc {
       &:after {
-        mask: url($appUrlFinal + "static/sort-desc.svg");
-        -webkit-mask: url($appUrlFinal + "static/sort-desc.svg");
+        mask: url($appUrlFinal + 'static/sort-desc.svg');
+        -webkit-mask: url($appUrlFinal + 'static/sort-desc.svg');
       }
     }
     .table-tooltip {
       &:after {
-        mask: url($appUrlFinal + "static/circle-information.svg");
-        -webkit-mask: url($appUrlFinal + "static/circle-information.svg");
+        mask: url($appUrlFinal + 'static/circle-information.svg');
+        -webkit-mask: url($appUrlFinal + 'static/circle-information.svg');
         mask-size: cover;
         -webkit-mask-size: cover;
         margin-top: -0.5rem;
         opacity: 0.5;
         background: $base-font-color;
         display: inline-block;
-        content: "";
+        content: '';
         height: 12px;
         width: 12px;
         transition: 0.3s all;
@@ -166,7 +166,7 @@ th:not(:first-child) a.table-align-right {
   justify-content: flex-end;
 }
 
-th a[class^="sort"].table-align-right,
+th a[class^='sort'].table-align-right,
 span[data-tip].table-align-right:not(:first-of-type) {
   justify-content: flex-end;
 }
