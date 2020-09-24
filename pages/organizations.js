@@ -18,6 +18,7 @@ export function ManageOrg (props) {
   const { getAuthenticatedUser, authenticatedUser, getOrganization, organization, getUserList, users } = props
   const [loading, setLoading] = useState(true)
   const [members, setMembers] = useState(null)
+  const [warning, setWarning] = useState(null)
 
   // On load get the user
   useEffect(() => {
@@ -77,6 +78,10 @@ export function ManageOrg (props) {
  * @param {string} role - new role selected from dropdown oneOf ['owner', 'manager', 'none'].
  */
   const setStatus = (user, role) => {
+    if (user.osm_id.toString() === props.authenticatedUser.account.id) {
+      findInitialRole('owners', user) && setWarning('Are you sure you want to change your role? You will lose the ability to add new owners in the future.')
+      role === 'none' && setWarning("Are you sure you want to remove yourself? You won't be able to add yourself back in.")
+    }
     const updatedMembers = members.map(member => member.osm_id === user.osm_id ? { ...member, role } : member)
     setMembers(updatedMembers)
   }
@@ -154,7 +159,7 @@ export function ManageOrg (props) {
                   addBtnText='Add Manager'
                   showOnlyResults
                 />
-                <MemberTable members={members} setStatus={setStatus} />
+                <MemberTable members={members} setStatus={setStatus} warning={warning} />
                 <button
                   type='submit'
                   className='button button--primary'
@@ -184,7 +189,7 @@ const memberTableSchema = {
   displaysTooltip: ['user-id']
 }
 
-function MemberTable ({ members, setStatus }) {
+function MemberTable ({ members, setStatus, warning }) {
   if (!members) return <div />
 
   let rows = members
@@ -212,6 +217,7 @@ function MemberTable ({ members, setStatus }) {
   return (
     <div className='widget'>
       <Table tableSchema={memberTableSchema} data={rows} />
+      {warning && <div className='error--block'>{warning}</div>}
     </div>
   )
 }
