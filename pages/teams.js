@@ -76,14 +76,14 @@ const Sidebar = ({
                 onChange={handleOnlyModeratedTeamsToggle} />
               <label htmlFor='toggleOnlyModeratedTeams'>Only show teams I moderate.</label>
             </div>
+            {
+              !isReset &&
+              <div className='reset'>
+                <div className='link--normal' onClick={_handleReset}>
+                  <legend>&#10005; Reset Filters</legend></div>
+              </div>
+            }
           </fieldset>
-        }
-        {
-          !isReset &&
-          <div className='reset'>
-            <div className='link--normal' onClick={_handleReset}>
-              <legend>&#10005; Reset Filters</legend></div>
-          </div>
         }
         { activatedTeams && canCreate
           ? <div className='page-actions'>
