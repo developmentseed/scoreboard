@@ -36,6 +36,7 @@ export function ManageOrg (props) {
 
   useEffect(() => {
     if (users) {
+      // Moves roles into state
       let membersWithRoles = users.map(user => {
         return organization.organization.owners.find(owner => owner.osm_id === user.osm_id) ? (
           { ...user, role: 'owner' }
@@ -43,7 +44,7 @@ export function ManageOrg (props) {
           { ...user, role: 'manager' }
         )
       })
-      setMembers(membersWithRoles)
+      setMembers(checkForSingleOwner(membersWithRoles))
     }
   }, [users])
 
@@ -55,12 +56,19 @@ export function ManageOrg (props) {
   }
 
   /**
- * Assigns role of manager to user selected from user search.
- * @constructor
+ * Adds a new member with the role of manager.
  * @param {object} user - object containing all data listed on the user table.
  */
-  const addManager = (user) => {
-    setMembers([...members, { ...user, role: 'manager' }])
+  const addManager = (user) => setMembers([...members, { ...user, role: 'manager' }])
+
+  /**
+ * Adds a new parameter to owner if they are the only owner in the list.
+ * @param {array} members - object containing all data listed on the user table.
+ */
+  const checkForSingleOwner = (members) => {
+    const owners = members.filter(member => member.role === 'owner')
+    const singleOwner = owners.length === 1 ? owners.shift() : null
+    return singleOwner ? members.map(member => member.osm_id === singleOwner.osm_id ? { ...member, singleOwner: true } : member) : members
   }
 
   /**
@@ -83,7 +91,7 @@ export function ManageOrg (props) {
   )
 
   /**
- * Makes request for each member to change status. Since the API adds and removes members one 
+ * Makes request for each member to change status. Since the API adds and removes members one
  * at a time, each request is submitted separately rather than in batches.
  */
   const submitChanges = () => {
@@ -186,18 +194,19 @@ function MemberTable ({ members, setStatus }) {
     })
     .map(member => {
       return Object.assign(member, {
-        button: (
-          <Menu>
-            <MenuButton className='button button--secondary button--inline'>
+        button: !member.singleOwner ? (<Menu>
+          <MenuButton className='button button--secondary button--inline'>
           Change Status <span aria-hidden>▾</span>
-            </MenuButton>
-            <MenuList>
-              {member.role !== 'owner' && <MenuItem onSelect={() => setStatus(member, 'owner')}>Assign Owner</MenuItem>}
-              {member.role !== 'manager' && <MenuItem onSelect={() => setStatus(member, 'manager')}>Assign Manager</MenuItem>}
-              <MenuItem onSelect={() => setStatus(member, 'none')} style={{ backgroundColor: `#4FCA9E`, color: `white` }} >Remove</MenuItem>
-            </MenuList>
-          </Menu>
-        )
+          </MenuButton>
+          <MenuList>
+            {member.role !== 'owner' && <MenuItem onSelect={() => setStatus(member, 'owner')}>Assign Owner</MenuItem>}
+            {(member.role !== 'manager' && members.filter(member => member.role === 'owner').length > 1) && (
+              <MenuItem onSelect={() => setStatus(member, 'manager')}>Assign Manager</MenuItem>
+            )
+            }
+            {<MenuItem onSelect={() => setStatus(member, 'none')} style={{ backgroundColor: `#4FCA9E`, color: `white` }} >Remove</MenuItem>}
+          </MenuList>
+        </Menu>) : (<span> No Selection Available</span>)
       })
     })
   return (
