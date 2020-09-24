@@ -83,7 +83,7 @@ export function ManageOrg (props) {
       role === 'none' && setWarning("Are you sure you want to remove yourself? You won't be able to add yourself back in.")
     }
     const updatedMembers = members.map(member => member.osm_id === user.osm_id ? { ...member, role } : member)
-    setMembers(updatedMembers)
+    setMembers(checkForSingleOwner(updatedMembers))
   }
 
   /**
