@@ -32,11 +32,17 @@ class OSMTeams {
       throw new Error('No token for user')
     }
 
-    let accessToken = teamServiceCredentials.accessToken.create(token[0])
+    let { access_token, refresh_token, expires_at } = token[0]
+    let accessToken = teamServiceCredentials.createToken({
+      token_type: 'Bearer',
+      access_token,
+      refresh_token,
+      expires_at
+    })
     if (accessToken.expired()) {
       try {
         accessToken = await accessToken.refresh()
-        await storeToken(accessToken.token)
+        await storeToken(accessToken)
       } catch (error) {
         console.error(error)
         throw new Error(`Error refreshing access token: ${error.message}`)

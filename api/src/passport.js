@@ -8,6 +8,7 @@ const router = require('express-promise-router')()
 const OSMStrategy = require('passport-openstreetmap').Strategy
 const InternalOAuthError = require('passport-oauth').InternalOAuthError
 const MockStrategy = require('passport-mock-strategy')
+const { AuthorizationCode } = require('simple-oauth2')
 const { storeToken } = require('./models/teams-access-tokens')
 
 const users = require('./models/users')
@@ -184,7 +185,7 @@ router.get('/logout', (req, res) => {
 /**
  * OAuth credentials to exchange tokens with OSM Teams
  */
-const teamServiceCredentials = require('simple-oauth2').create({
+const teamServiceCredentials = new AuthorizationCode({
   client: {
     id: OSM_TEAMS_CLIENT_ID,
     secret: OSM_TEAMS_CLIENT_SECRET
@@ -202,7 +203,7 @@ const teamServiceCredentials = require('simple-oauth2').create({
  */
 router.get('/teams', (req, res) => {
   let state = generateState(24)
-  const authorizationUri = teamServiceCredentials.authorizationCode.authorizeURL({
+  const authorizationUri = teamServiceCredentials.authorizeURL({
     redirect_uri: join(APP_URL_FINAL, '/auth/teams/accept'),
     scope: 'openid offline',
     state
@@ -239,10 +240,10 @@ router.get('/teams/accept', async (req, res) => {
     }
 
     try {
-      const result = await teamServiceCredentials.authorizationCode.getToken(options)
+      const result = await teamServiceCredentials.getToken(options)
 
       // Store access token and refresh token
-      await storeToken(teamServiceCredentials.accessToken.create(result).token)
+      await storeToken(result)
       return res.redirect(APP_URL_FINAL)
     } catch (error) {
       console.error(error)
