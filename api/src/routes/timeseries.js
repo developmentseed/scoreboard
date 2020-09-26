@@ -23,7 +23,7 @@ function validateParams ({
   try {
     validStartDate = new Date(startDate)
   } catch (err) {
-    throw Boom.badRequest('cannot parse binInterval, expected ISO-8601 Duration format')
+    throw Boom.badRequest('cannot parse startDate, expected ISO-8601 format')
   }
   try {
     validEndDate = endDate ? new Date(endDate) : Date.now()
@@ -31,7 +31,7 @@ function validateParams ({
     throw Boom.badRequest('cannot parse endDate, expected ISO-8601 format')
   }
   try {
-    validBinInterval = Duration.fromISO(endDate)
+    validBinInterval = Duration.fromISO(binInterval)
   } catch (err) {
     throw Boom.badRequest('cannot parse binInterval, expected ISO-8601 Duration format')
   }
