@@ -14,6 +14,7 @@ const countries = require('./countries')
 const country = require('./country')
 const taskers = require('./taskers')
 const settings = require('./settings')
+const timeseries = require('./timeseries')
 
 /**
  * Route registration
@@ -70,5 +71,8 @@ router.put('/exclusion', exclusion.put)
 // settings routes
 router.get('/settings', settings.get)
 router.put('/settings', settings.put)
+
+// timeseries routes
+router.get('/timeseries', timeseries.get)
 
 module.exports = router

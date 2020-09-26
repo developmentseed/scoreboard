@@ -391,6 +391,11 @@ class OSMesaDBWrapper {
 
     return reduce((acc, curr) => assoc(curr.mat_view, curr.updated_at, acc), {}, data)
   }
+
+  async getTimeSeries () {
+    // TODO query osmesa via knex.js (may need a better handle other than this.db(tableName: string))
+    return Promise.resolve({ message: 'TODO' })
+  }
 }
 
 module.exports = new OSMesaDBWrapper()
