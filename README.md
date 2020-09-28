@@ -150,6 +150,13 @@ Scoreboard will work with a single organization at the moment. In osm-teams, rec
 ID from the API and use the environment variable `OSM_TEAMS_ORG_ID` to have scoreboard read and write
 to the organization's teams.
 
+If you are setting up local development for the first time, you may need to create an organization. There is currently no way to do this via the osm teams interfaces. Instead you can use the swagger UI to make the requests.
+
+1) check to see what organizations exist on your local osm-teams 
+2) if there is none, create an organization (the id can be anything, but should match `OSM_TEAMS_ORG_ID` in your scoreboard `.env`)
+3) run `yarn seed`
+4) clear your cache and login
+
 # Administrator Settings
 
 The Administrator Settings are found in the Admin user's dashboard, or
