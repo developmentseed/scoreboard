@@ -95,7 +95,7 @@ function deserializeIntArray (s) {
 function deserializeStringArray (s) {
   const result = s.split('|').filter(s => s.length > 0)
   if (s.length > 0 && result.length === 0) {
-    throw new Error('failed to deserialize strings array')
+    throw Boom.badRequest('failed to deserialize strings array')
   }
   return result
 }
