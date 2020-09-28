@@ -1,41 +1,66 @@
-const { Duration } = require('luxon')
+const { DateTime, Duration } = require('luxon')
 const Boom = require('@hapi/boom')
 
 const osmesa = require('../services/osmesa')
 
+/**
+ * Parse and validate timeseries parameters.
+ *
+ * @param startDate
+ * @param endDate
+ * @param binInterval
+ * @param userIdsFilter
+ * @param countriesFilter
+ * @param hashtagsFilter
+ * @param hashtagPrefixFilter
+ * @param categoriesFilter
+ * @returns {{binInterval: ({isValid}|Duration), hashtagsFilter: {length}, categoriesFilter: {length}, userIdsFilter: {length}, endDate: ({isValid}|DateTime), hashtagPrefixFilter: {length}, startDate: ({isValid}|DateTime), countriesFilter: {length}}}
+ */
 function validateParams ({
   startDate,
-  endDate = null,
-  binInterval = '1D',
+  endDate = '',
+  binInterval = 'P1D',
   userIdsFilter = '',
   countriesFilter = '',
   hashtagsFilter = '',
-  hastagPrefixFilter = '',
-  categoriesFilter
+  hashtagPrefixFilter = '',
+  categoriesFilter = ''
 }) {
   let validStartDate, validEndDate, validBinInterval, validUserIdsFilter,
     validCountriesFilter, validHashtagsFilter,
     validHashtagPrefixFilter, validCategoriesFilter
-
   if (!startDate) {
     throw Boom.badRequest('startDate is required')
   }
-  try {
-    validStartDate = new Date(startDate)
-  } catch (err) {
-    throw Boom.badRequest('cannot parse startDate, expected ISO-8601 format')
+  validStartDate = DateTime.fromISO(startDate)
+  if (!validStartDate.isValid) {
+    throw Boom.badRequest(validStartDate.invalidExplanation)
+  }
+  validEndDate = endDate ? DateTime.fromISO(endDate) : DateTime.utc()
+  if (!validEndDate.isValid) {
+    throw Boom.badRequest(validEndDate.invalidExplanation)
+  }
+  validBinInterval = Duration.fromISO(binInterval)
+  if (!validBinInterval.isValid) {
+    throw Boom.badRequest(validBinInterval.invalidExplanation)
   }
   try {
-    validEndDate = endDate ? new Date(endDate) : Date.now()
+    validUserIdsFilter = deserializeIntArray(userIdsFilter)
   } catch (err) {
-    throw Boom.badRequest('cannot parse endDate, expected ISO-8601 format')
+    throw Boom.badRequest('cannot parse userIdsFilter, expected pipe delimited integers')
   }
-  try {
-    validBinInterval = Duration.fromISO(binInterval)
-  } catch (err) {
-    throw Boom.badRequest('cannot parse binInterval, expected ISO-8601 Duration format')
+  validCategoriesFilter = deserializeStringArray(categoriesFilter)
+  validCountriesFilter = deserializeStringArray(countriesFilter) // TODO: validate these are 3 letter country codes?
+  validHashtagPrefixFilter = deserializeStringArray(hashtagPrefixFilter)
+  validHashtagsFilter = deserializeStringArray(hashtagsFilter)
+  // require at least 1 one filter, according to api spec.
+  if (!validCategoriesFilter.length &&
+      !validCountriesFilter.length &&
+      !validHashtagPrefixFilter.length &&
+      !validHashtagsFilter.length &&
+      !validUserIdsFilter.length) {
+    throw Boom.badRequest('at least one filter is required')
   }
-
   return {
     startDate: validStartDate,
     endDate: validEndDate,
@@ -46,6 +71,33 @@ function validateParams ({
     hashtagPrefixFilter: validHashtagPrefixFilter,
     categoriesFilter: validCategoriesFilter
   }
+}
+
+/**
+ * Deserialize pipe delimited integers, and filter out NaN values.
+ *
+ * @param {string} s
+ * @returns {int[]}
+ */
+function deserializeIntArray (s) {
+  const result = s.split('|').map(parseInt).filter(n => !isNaN(n))
+  if (s.length > 0 && result.length === 0) {
+    throw Boom.badRequest('failed to deserialize integers array')
+  }
+  return result
+}
+
+/**
+ * Deserialize pipe delimited strings and filter out empty strings
+ * @param {string} s
+ * @returns {string[]}
+ */
+function deserializeStringArray (s) {
+  const result = s.split('|').filter(s => s.length > 0)
+  if (s.length > 0 && result.length === 0) {
+    throw new Error('failed to deserialize strings array')
+  }
+  return result
 }
 
 /**
