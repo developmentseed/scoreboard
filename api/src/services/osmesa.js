@@ -227,7 +227,8 @@ class OSMesaDBWrapper {
   }
 
   db (tableName) {
-    return this.connection(tableName)
+    const conn = this.connection()
+    return conn(tableName)
   }
 
   tiles (prefix, z, x, y) {
@@ -418,9 +419,10 @@ class OSMesaDBWrapper {
       // add changesets_hashtags to tableNames
       tableNames['ch'] = 'changesets_hashtags'
     }
-    const result = await this.connection(tableNames)
-      .select('*')
-    return result
+    // const result = await this.connection(tableNames)
+    //   .select('*')
+    // return result
+    return Promise.resolve(true)
   }
 }
 
