@@ -1,5 +1,6 @@
-const usersClock = require('../../../users_clock')
 const { cache } = require('../../../config')
+// const usersClock = require('../../../users_clock')
+
 
 exports.seed = (knex) => knex('users').del() // delete entries
   .then(async () => {
@@ -9,7 +10,7 @@ exports.seed = (knex) => knex('users').del() // delete entries
     })
 
     const users = await osmesaDB('users').select('id as osm_id', 'name as full_name')
-    
+
     // Make sure all users are unique
     const seen = new Map()
     users.forEach(u => {
@@ -17,6 +18,6 @@ exports.seed = (knex) => knex('users').del() // delete entries
     })
 
     return knex('users').insert([...seen.values()])
-
   })
+  // Commented because this is run by ava 
   //  .then(usersClock)
