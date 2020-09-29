@@ -399,7 +399,7 @@ class OSMesaDBWrapper {
    */
   getTimeseries (body) {
     const options = {
-      method: 'POST',
+      method: 'GET',
       uri: `https://aafa0798-a624-445f-b894-05fc1f10e200.mock.pstmn.io/api/timeseries`,
       body,
       json: true
