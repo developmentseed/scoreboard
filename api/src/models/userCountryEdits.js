@@ -73,8 +73,6 @@ function update (id, data) {
 
 function updateUserCountryEdit (user_id, country_name, edit_count, changeset_count) {
   return db.transaction(async conn => {
-    // Printing here to keep active. Without this log statement, somehow promises get lost during test and ava exits.
-    console.log(`DB TX ${user_id} ${country_name}`)
     const records = await conn('user_country_edits').where({ user_id, country_name })
     if (records.length === 0) {
       await conn('user_country_edits').insert({

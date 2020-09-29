@@ -9,6 +9,7 @@ const { cache } = require('./config')
 const { updateUserCountryEdit, isState } = require('./models/userCountryEdits')
 
 async function updateCountries (userID, countryEditList) {
+  console.log('update countries', countryEditList)
   const countryEditTotal = {}
   const countryChangesetTotal = {}
 
@@ -25,7 +26,7 @@ async function updateCountries (userID, countryEditList) {
     countryEditTotal[countryName] += tuple.edit_count
     countryChangesetTotal[countryName] += tuple.changeset_count
   })
-  // console.log('update countries')
+
   // edit countries for each user
   const promises = Object.keys(
     countryEditTotal
@@ -50,29 +51,28 @@ async function usersWorker () {
 
     // run only 100 concurrent events
     const limit = pLimit(100)
-    // This limit is causing problems with promises completing.
     const promises = users.map((obj) => limit(async () => {
       // Get edit count from OSMesa
+      let data
       try {
-        console.log('active', limit.activeCount)
-        console.log('pending', limit.pendingCount)
-
-        await OSMesa.getUser(obj.osm_id)
-          .then((data) => {
-            obj.edit_count = data.edit_count || 0
-            obj.last_edit = data.last_edit
-            return updateCountries(obj.id, data.country_list)
-          })
-          .catch(e => {
-            console.log(e)
-            return new Error(e)
-          })
-          // .catch( e => new Error(e))
+        data = await OSMesa.getUser(obj.osm_id)
+        obj.edit_count = data.edit_count || 0
+        obj.last_edit = data.last_edit
+        // await updateCountries(obj.id, data.country_list)
       } catch (e) {
         if (e.statusCode !== 404) {
           // Only log if there was a server error
           console.error(`${obj.osm_id} not retrieved from OSMesa`, e.message)
         }
+        // console.error(e)
+      }
+      try {
+        // const data = await OSMesa.getUser(obj.osm_id)
+        // obj.edit_count = data.edit_count || 0
+        // obj.last_edit = data.last_edit
+       // await updateCountries(obj.id, data.country_list)
+      } catch (e) {
+        console.error(e.message)
       }
 
       return db('users')
@@ -86,8 +86,11 @@ async function usersWorker () {
 
     // Return a single promise wrapping all the
     // SQL statements
-    return Promise.all(promises)
+    await Promise.all(promises)
+    console.log('done with this')
+    return promises
   } catch (e) {
+    console.log('ergerg')
     console.error(e)
     return Promise.resolve()
   }
@@ -95,6 +98,7 @@ async function usersWorker () {
 
 // Run
 if (require.main === module) {
+  console.log('main')
   dbSettings.list().then(settings =>
     // load the cache
     settings.forEach(({ setting, value }) => {
