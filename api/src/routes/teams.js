@@ -3,6 +3,7 @@ const OSMesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { difference, pathOr } = require('ramda')
 const getOsmesaLastRefreshed = require('../utils/osmesaStatus.js')
+const { osmesaUserStatSchema } = require('../utils/campaignTableSchema.js')
 
 /**
  * Teams list route
@@ -100,6 +101,10 @@ async function get (req, res) {
       osmesaStats,
       lastRefreshed,
       users,
+      table: {
+        schema: osmesaUserStatSchema,
+        type: 'osmesa'
+      },
       canEdit
     }
     return res.send(team)

@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react'
-import Tooltip from './Tooltip'
-import Link from '../Link'
-import { useTable, useSortBy } from 'react-table'
+import PropTypes from 'prop-types'
 import { toPairs } from 'ramda'
 import { parse } from 'date-fns'
+import { useTable, useSortBy } from 'react-table'
+
+import Tooltip from './Tooltip'
+import Link from '../Link'
 import { formatDecimal, formatEditTimeDescription } from '../../lib/utils/format'
+
 const glossary = require('../../lib/i18n/glossary_en.json')
+
 const formattedNum = ({ cell: { value } }) => formatDecimal(value)
 
 const formattedDate = function ({ cell: { value } }) {
@@ -191,4 +195,28 @@ export default function Table (props) {
       </tfoot>
     </table>
   )
+}
+
+Table.propTypes = {
+  campaignMap: PropTypes.object,
+  countryMap: PropTypes.object,
+  initialSortColumn: PropTypes.string,
+  data: PropTypes.array.isRequired,
+  idMap: PropTypes.object,
+  notSortable: PropTypes.bool,
+  totals: PropTypes.object,
+  tableSchema: PropTypes.shape({
+    columnOrder: PropTypes.array,
+    displaysTooltip: PropTypes.array,
+    headers: PropTypes.object
+  }).isRequired
+}
+
+Table.defaultProps = {
+  campaignMap: null,
+  countryMap: null,
+  totals: null,
+  idMap: null,
+  notSortable: true,
+  initialSortColumn: null
 }
