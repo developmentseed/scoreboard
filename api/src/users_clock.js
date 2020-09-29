@@ -9,7 +9,6 @@ const { cache } = require('./config')
 const { updateUserCountryEdit, isState } = require('./models/userCountryEdits')
 
 async function updateCountries (userID, countryEditList) {
-  console.log('update countries', countryEditList)
   const countryEditTotal = {}
   const countryChangesetTotal = {}
 
@@ -58,23 +57,13 @@ async function usersWorker () {
         data = await OSMesa.getUser(obj.osm_id)
         obj.edit_count = data.edit_count || 0
         obj.last_edit = data.last_edit
-        // await updateCountries(obj.id, data.country_list)
+        await updateCountries(obj.id, data.country_list)
       } catch (e) {
         if (e.statusCode !== 404) {
           // Only log if there was a server error
           console.error(`${obj.osm_id} not retrieved from OSMesa`, e.message)
         }
-        // console.error(e)
       }
-      try {
-        // const data = await OSMesa.getUser(obj.osm_id)
-        // obj.edit_count = data.edit_count || 0
-        // obj.last_edit = data.last_edit
-       // await updateCountries(obj.id, data.country_list)
-      } catch (e) {
-        console.error(e.message)
-      }
-
       return db('users')
         .where('osm_id', obj.osm_id)
         .then(() => db('users').where('osm_id', obj.osm_id).update(
