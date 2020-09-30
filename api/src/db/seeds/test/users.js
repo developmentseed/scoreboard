@@ -1,7 +1,6 @@
 const { cache } = require('../../../config')
 // const usersClock = require('../../../users_clock')
 
-
 exports.seed = (knex) => knex('users').del() // delete entries
   .then(async () => {
     const osmesaDB = require('knex')({
@@ -19,5 +18,5 @@ exports.seed = (knex) => knex('users').del() // delete entries
 
     return knex('users').insert([...seen.values()])
   })
-  // Commented because this is run by ava 
+  // Commented because this is run by ava
   //  .then(usersClock)
