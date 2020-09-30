@@ -190,6 +190,7 @@ class Teams extends Component {
       }
     })
     let idMap = Object.assign(...teams.map(({ id, name }) => ({ [name]: id })))
+    console.log('tableData', tableData)
     return (
       <div>
         <Table tableSchema={tableSchema} data={tableData} idMap={idMap} />

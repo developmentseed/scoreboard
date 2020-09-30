@@ -73,6 +73,6 @@ router.get('/settings', settings.get)
 router.put('/settings', settings.put)
 
 // timeseries routes
-router.get('/timeseries', timeseries.get)
+router.post('/timeseries', timeseries.post)
 
 module.exports = router
