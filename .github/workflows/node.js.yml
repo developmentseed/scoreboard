@@ -53,7 +53,7 @@ jobs:
       # to this is a workaround using a node.js script to create the db schema.
       - name: Setup osmesa db
         #run: DATABASE_URL=postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres node scripts/osmesa-mock/ci-schema.js
-        run: DATABASE_URL=postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres psql $DATABASE_URL < scripts/osmesa-mock/init.sql
+        run:  psql postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres < scripts/osmesa-mock/init.sql
 
 
       - name: Test
