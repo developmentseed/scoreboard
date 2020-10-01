@@ -14,7 +14,6 @@ const refreshStatus = require('../utils/osmesaStatus.js')
 module.exports = async (req, res) => {
   const page = req.query.page || 1
   const search = req.query.q || ''
-  console.log(req.query)
   const tm = req.query.tm || ''
   const includeArchived = req.query.includeArchived || false
   const complMin = req.query.compl_min || 0
