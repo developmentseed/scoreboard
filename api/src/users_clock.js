@@ -52,9 +52,8 @@ async function usersWorker () {
     const limit = pLimit(100)
     const promises = users.map((obj) => limit(async () => {
       // Get edit count from OSMesa
-      let data
       try {
-        data = await OSMesa.getUser(obj.osm_id)
+        const data = await OSMesa.getUser(obj.osm_id)
         obj.edit_count = data.edit_count || 0
         obj.last_edit = data.last_edit
         await updateCountries(obj.id, data.country_list)
@@ -75,11 +74,8 @@ async function usersWorker () {
 
     // Return a single promise wrapping all the
     // SQL statements
-    await Promise.all(promises)
-    console.log('done with this')
-    return promises
+    return Promise.all(promises)
   } catch (e) {
-    console.log('ergerg')
     console.error(e)
     return Promise.resolve()
   }
@@ -87,10 +83,9 @@ async function usersWorker () {
 
 // Run
 if (require.main === module) {
-  console.log('main')
   dbSettings.list().then(settings =>
     // load the cache
-    settings.forEach(({ setting, value }) => {
+    settings.foreach(({ setting, value }) => {
       cache.put(setting, value)
     })
   )
