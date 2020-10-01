@@ -140,8 +140,10 @@ test('Get campaigns sorted alphabetically Z to A', async t => {
 
   const records = response.body.records
   const names = records.map(prop('name'))
+  console.log(names)
 
   const sorted = sort(alphabeticalDiff, names)
+  console.log(sorted)
   t.deepEqual(reverse(sorted), names)
 })
 
