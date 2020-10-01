@@ -63,7 +63,6 @@ async function usersWorker () {
           console.error(`${obj.osm_id} not retrieved from OSMesa`, e.message)
         }
       }
-
       return db('users')
         .where('osm_id', obj.osm_id)
         .then(() => db('users').where('osm_id', obj.osm_id).update(
@@ -86,7 +85,7 @@ async function usersWorker () {
 if (require.main === module) {
   dbSettings.list().then(settings =>
     // load the cache
-    settings.forEach(({ setting, value }) => {
+    settings.foreach(({ setting, value }) => {
       cache.put(setting, value)
     })
   )
