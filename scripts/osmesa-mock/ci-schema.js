@@ -13,7 +13,7 @@ if (!dsn) {
   throw new Error('missing DATABASE_URL')
 }
 
-const script = fs.readFileSync('scripts/osmesa-mock/init.sql').toString()
+const script = fs.readFileSync('scripts/osmesa-mock/inserts_init.sql').toString()
 const client = new Client({
   connectionString: dsn
 })
