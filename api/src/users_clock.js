@@ -25,7 +25,7 @@ async function updateCountries (userID, countryEditList) {
     countryEditTotal[countryName] += tuple.edit_count
     countryChangesetTotal[countryName] += tuple.changeset_count
   })
-
+  // console.log('update countries')
   // edit countries for each user
   const promises = Object.keys(
     countryEditTotal
@@ -50,6 +50,7 @@ async function usersWorker () {
 
     // run only 100 concurrent events
     const limit = pLimit(100)
+    // This limit is causing problems with promises completing.
     const promises = users.map((obj) => limit(async () => {
       // Get edit count from OSMesa
       try {
