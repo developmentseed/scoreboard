@@ -54,7 +54,8 @@ jobs:
       - name: Setup osmesa db
         #run: DATABASE_URL=postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres node scripts/osmesa-mock/ci-schema.js
         run:  psql postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres < scripts/osmesa-mock/init.sql
-        run:  psql postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres scripts/osmesa-mock/refresh_materialiazed.sql
+      - name: Refresh materialized views
+        run:  psql postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres scripts/osmesa-mock/refresh_materialized.sql
 
 
 
