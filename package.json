@@ -13,7 +13,7 @@
     "build": "next build && npm run docs-build",
     "test": "npm run test-ui && npm run test-api",
     "test-ui": "NODE_ENV=test jest tests/*.test.js",
-    "test-api": "NODE_ENV=test ava api/tests/**/*.test.js --serial",
+    "test-api": "NODE_ENV=test ava --timeout=5m api/tests/**/*.test.js --serial",
     "migrate": "knex migrate:latest --cwd api/src/db/",
     "seed": "knex seed:run --cwd api/src/db",
     "rollback": "knex migrate:rollback --cwd api/src/db/",
