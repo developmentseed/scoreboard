@@ -43,17 +43,16 @@ jobs:
         # the yarn equivalent seems to be `yarn install --frozen-lockfile`
         run: yarn install --frozen-lockfile
 
-          #      - name: Lint
-          #        run: yarn lint
+      - name: Lint
+        run: yarn lint
 
-          #      - name: Build
-          #        run: yarn build
+      - name: Build
+        run: yarn build
 
       # setup osmesa: the method used in docker-compose.yml does not work in github action's service containers
-      # to this is a workaround using a node.js script to create the db schema.
+      # to this is a workaround using the psql client to create the db schema.
       - name: Setup osmesa db
         run:  psql postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres < scripts/osmesa-mock/init.sql
-
 
       - name: Test
         run: yarn test
