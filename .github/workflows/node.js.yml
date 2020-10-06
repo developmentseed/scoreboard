@@ -52,7 +52,6 @@ jobs:
       # setup osmesa: the method used in docker-compose.yml does not work in github action's service containers
       # to this is a workaround using a node.js script to create the db schema.
       - name: Setup osmesa db
-        #run: DATABASE_URL=postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres node scripts/osmesa-mock/ci-schema.js
         run:  psql postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres < scripts/osmesa-mock/init.sql
 
 
