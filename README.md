@@ -1,4 +1,3 @@
-
 <h1 align="center">Scoreboard 🗺🎯</h1>
 
 <div align="center">
