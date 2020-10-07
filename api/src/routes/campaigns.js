@@ -78,6 +78,7 @@ module.exports = async (req, res) => {
         query = query.orderBy('name', db.raw('desc NULLS LAST'))
         break
     }
+    // FIXME: don't hardcode 10 records per page. this makes it impossible to test the various sortTypes above if there are more than 10 campaigns.
     const records = await query.clone().limit(10).offset((parseInt(page) - 1) * 10)
     const tms = await db('taskers').select('id', 'name')
 
