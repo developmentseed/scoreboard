@@ -89,7 +89,8 @@ export class Team extends Component {
       created_at: teamCreated,
       lastRefreshed,
       osmesaStats,
-      canEdit
+      canEdit,
+      table
     } = team
     const { buildingsMappedCount, poiCountMappedCount, roadsKmMapped,
       waterWaysKmMapped, coastlinesKmMapped } = calculateBlurbStats(osmesaStats.teamStats)
@@ -182,7 +183,7 @@ export class Team extends Component {
         <section>
           <div className='row'>
             <h2 className='header--large header--with-description'>Team Stats</h2>
-            <TeamStatsTable users={teamStatsData} name={exportDataFilename} />
+            <TeamStatsTable data={teamStatsData} schema={table.schema} type={table.type} name={exportDataFilename} />
           </div>
         </section>
 

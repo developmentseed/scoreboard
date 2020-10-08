@@ -1,4 +1,3 @@
-
 <h1 align="center">Scoreboard 🗺🎯</h1>
 
 <div align="center">
@@ -7,8 +6,8 @@ Engaging and encouraging mappers of OpenStreetMap by rewarding contributions, pr
 
 <br />
 <div align="center">
-  <a href="https://circleci.com/gh/developmentseed/scoreboard">
-    <img src="https://circleci.com/gh/developmentseed/scoreboard.png" />
+  <a href="https://github.com/developmentseed/scoreboard/actions?query=workflow%3ANode.js%20CI" target="_blank">
+      <img src="https://github.com/developmentseed/scoreboard/workflows/Node.js%20CI/badge.svg" alt="Test">
   </a>
   <a href="https://standardjs.com">
     <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square"
@@ -150,6 +149,13 @@ Scoreboard will work with a single organization at the moment. In osm-teams, rec
 ID from the API and use the environment variable `OSM_TEAMS_ORG_ID` to have scoreboard read and write
 to the organization's teams.
 
+If you are setting up local development for the first time, you may need to create an organization. There is currently no way to do this via the osm teams interfaces. Instead you can use the swagger UI to make the requests.
+
+1) check to see what organizations exist on your local osm-teams 
+2) if there is none, create an organization (the id can be anything, but should match `OSM_TEAMS_ORG_ID` in your scoreboard `.env`)
+3) run `yarn seed`
+4) clear your cache and login
+
 # Administrator Settings
 
 The Administrator Settings are found in the Admin user's dashboard, or
@@ -167,6 +173,10 @@ db when developing locally.
 
 To update the osmesa db, first develop on osm-fabricator, then pg_dump it into `scripts/osmesa-mock/init.sql`.
 See scoreboard's `docker-compose.yml` for more details.
+
+# API docs
+
+See [api/README](./api/README.md)
 
 # Production
 
