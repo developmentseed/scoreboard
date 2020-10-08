@@ -1,4 +1,3 @@
-
 <h1 align="center">Scoreboard 🗺🎯</h1>
 
 <div align="center">
@@ -7,8 +6,8 @@ Engaging and encouraging mappers of OpenStreetMap by rewarding contributions, pr
 
 <br />
 <div align="center">
-  <a href="https://circleci.com/gh/developmentseed/scoreboard">
-    <img src="https://circleci.com/gh/developmentseed/scoreboard.png" />
+  <a href="https://github.com/developmentseed/scoreboard/actions?query=workflow%3ANode.js%20CI" target="_blank">
+      <img src="https://github.com/developmentseed/scoreboard/workflows/Node.js%20CI/badge.svg" alt="Test">
   </a>
   <a href="https://standardjs.com">
     <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square"
