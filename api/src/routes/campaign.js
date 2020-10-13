@@ -138,6 +138,7 @@ function populatePanelContent (tmData, tables, type) {
         { label: 'Remaining', value: `${parseInt(100 - tmData.done, 10)}%` },
         { label: 'Avg Time Spent', value: `${parseInt(data.avgTimeSpent, 10)}` }
       ]
+    case 'tm2':
     case 'tm3':
       const stats = tables.find(t => t.statsType === 'osmesa')
       return [
