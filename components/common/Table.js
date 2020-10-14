@@ -138,6 +138,7 @@ export default function Table (props) {
     useEffect(() => toggleSortBy(props.initialSortColumn, 'descending'), [])
   }
 
+
   return (
     <table>
       <thead>
@@ -151,14 +152,14 @@ export default function Table (props) {
                   title={column.Header.props ? `Sort by ${column.Header.props.children}` : `Sort by ${column.Header}`}
                 >
                   <a
-                    className={(column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none') + ' ' + (column.Cell.name === 'formattedNum' ? 'table-align-right' : '')}
+                    className={(column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none') + ' ' + (column.Cell === formattedNum ? 'table-align-right' : '')}
                   >
                     {column.Header}
                   </a>
                 </th>)
                 : (
                   <th key={column.id} {...column.getHeaderProps()}>
-                    <a className={column.Cell.name === 'formattedNum' ? 'table-align-right' : ''}>{column.Header}</a>
+                    <a className={column.Cell === formattedNum ? 'table-align-right' : ''}>{column.Header}</a>
                   </th>)
             )
           }
