@@ -58,18 +58,36 @@ class MapRouletteAPI {
   async getProjects () {
     let qs = {
       page: 0,
-      limit: 50
+      limit: 50,
+      pe: true,
+      ce: true,
+      order: 'DESC',
+      sort: 'popularity'
     }
+
     if (this.opts.search_params) {
       qs = { ...this.opts.search_params, ...qs }
     }
 
-    const resp = await rp({
-      uri: `${this.api_url}/api/v2/challenges/extendedFind`,
-      qs,
-      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
-    })
-    const challenges = JSON.parse(resp)
+    const challenges = []
+
+    while (true) {
+      console.log(`requesting map roulette page ${qs.page}`)
+      const resp = await rp({
+        uri: `${this.api_url}/api/v2/challenges/extendedFind`,
+        qs,
+        headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+      })
+      const chunk = JSON.parse(resp)
+      challenges.push(...chunk)
+      qs.page = qs.page + 1
+      if (chunk.length < 50 || qs.page > 10) {
+        break
+      } else {
+        console.log(`got ${chunk.length} challenges`)
+      }
+    }
+
     return challenges
   }
 
