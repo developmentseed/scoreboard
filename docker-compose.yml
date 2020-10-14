@@ -30,7 +30,8 @@ services:
   wait-for-db-ready:
     image: dadarek/wait-for-dependencies
     environment:
-      SLEEP_LENGTH: 5
+      SLEEP_LENGTH: 10
+      TIMEOUT_LENGTH: 600
     depends_on:
       - osmesa
       - db
