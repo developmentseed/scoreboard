@@ -79,11 +79,11 @@ test.serial('Test TM3 schema', async t => {
 test.serial('Test URL forming', async t => {
   const tm = TaskingManagerFactory.createInstance({ id: 1, type: 'mr', url: 'http://maproulette.org', opts: { proxy: 'http://localhost:4848' } })
   let projects = await tm.getProjects() // Should get from the proxy
-  const project = projects.find(p => p.id === 85)
+  const project = projects.find(p => p.id === 14634)
   t.truthy(project)
 
   const url = tm.getUrlForProject(project.id)
-  t.is(url, `http://maproulette.org/challenge/85`)
+  t.is(url, `http://maproulette.org/challenge/14634`)
 })
 
 test.serial('Test extra params', async t => {
