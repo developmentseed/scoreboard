@@ -20,6 +20,11 @@ const CampaignMap = dynamic(
   }
 )
 
+const TABLE_TITLES = {
+  'maproulette': 'Challenge Task Progress',
+  'maproulette-challenge': 'Challenge Leaderboard'
+}
+
 export class Campaign extends Component {
   componentDidMount () {
     this.props.getCampaign(this.props.id)
@@ -153,7 +158,9 @@ export class Campaign extends Component {
                 {
                   (data.success)
                     ? <div>
-                      {data.statsType === 'osmesa' && <Blurb {...merge({ users: [], editCounts: 0 }, data)} />}
+                      {data.statsType === 'osmesa' ? <Blurb {...merge({ users: [], editCounts: 0 }, data)} />
+                        : <h2>{TABLE_TITLES[data.statsType]}</h2>}
+
                       <CampaignTable
                         data={data.data}
                         type={data.statsType}
