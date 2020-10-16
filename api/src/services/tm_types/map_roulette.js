@@ -121,7 +121,8 @@ class MapRouletteAPI {
         name: user.name,
         rank: user.rank,
         score: user.score,
-        avgTimeSpent: user.avgTimeSpent,
+        // FIXME set avg time to 0 if data is not available
+        avgTimeSpent: user.avgTimeSpent || 0,
         completedTasks: user.completedTasks
       }
       return userObj
