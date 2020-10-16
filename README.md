@@ -171,7 +171,7 @@ via the Admin entry in the User menu.
 A pg_dump of [osm-fabricator](https://github.com/developmentseed/osm-fabricator) is used to mock the osmesa 
 db when developing locally.
 
-To update the osmesa db, first develop on osm-fabricator, then pg_dump it into `scripts/osmesa-mock/init.sql`.
+To update the osmesa db, first develop on osm-fabricator, then pg_dump it into `docker-context/osmesa-mock/init.sql`.
 See scoreboard's `docker-compose.yml` for more details.
 
 # API docs
