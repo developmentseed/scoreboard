@@ -47,14 +47,7 @@ export function ManageOrg (props) {
       })
       setMembers(checkForSingleOwner(membersWithRoles))
     }
-  }, [users])
-
-  if (loading) {
-    return <LoadingState />
-  }
-  if (!authenticatedUser.loggedIn) {
-    return <NotLoggedIn />
-  }
+  }, [users, organization])
 
   /**
  * Adds a new member with the role of manager.
@@ -120,6 +113,14 @@ export function ManageOrg (props) {
           break
       }
     })
+  }
+
+  if (loading) {
+    return <LoadingState />
+  }
+
+  if (!authenticatedUser.loggedIn) {
+    return <NotLoggedIn />
   }
   return (
     <div className='Org'>
