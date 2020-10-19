@@ -85,7 +85,7 @@ async function usersWorker () {
 if (require.main === module) {
   dbSettings.list().then(settings =>
     // load the cache
-    settings.foreach(({ setting, value }) => {
+    settings.forEach(({ setting, value }) => {
       cache.put(setting, value)
     })
   )

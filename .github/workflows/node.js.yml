@@ -51,8 +51,9 @@ jobs:
 
       # setup osmesa: the method used in docker-compose.yml does not work in github action's service containers
       # to this is a workaround using the psql client to create the db schema.
+      # (see https://github.com/developmentseed/osm-fabricator for origin of init.sql)
       - name: Setup osmesa db
-        run:  psql postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres < scripts/osmesa-mock/init.sql
+        run:  psql postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres < docker-context/osmesa-mock/init.sql
 
       - name: Test
         run: yarn test
@@ -81,7 +82,6 @@ jobs:
         - 5432/tcp
 
       # osmesa reporting interface: postgres db
-      # simulate osmesa instance for testing (see https://github.com/developmentseed/osm-fabricator for origin of init.sql)
       osmesa:
         image: postgres:10
         env:

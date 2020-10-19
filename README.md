@@ -171,7 +171,7 @@ via the Admin entry in the User menu.
 A pg_dump of [osm-fabricator](https://github.com/developmentseed/osm-fabricator) is used to mock the osmesa 
 db when developing locally.
 
-To update the osmesa db, first develop on osm-fabricator, then pg_dump it into `scripts/osmesa-mock/init.sql`.
+To update the osmesa db, first develop on osm-fabricator, then pg_dump it into `docker-context/osmesa-mock/init.sql`.
 See scoreboard's `docker-compose.yml` for more details.
 
 # API docs
@@ -185,7 +185,7 @@ To use scoreboard in production follow these steps:
 1. Make sure you have all the [requirements](#dependencies).
 1. Install dependencies: `yarn`
 1. Setup a production Postgres database
-1. Create the database by running [these commands](scripts/create-dev-db.sh).
+1. Create the database by running [these commands](docker-context/scoreboard-db/create-dev-db.sh).
 1. Setup an `.env` file with correct values -> [example](.env.sample).
    - make sure to set `NODE_ENV=production` in your `.env` file
 1. Run the migrations: `npm run migrate`
