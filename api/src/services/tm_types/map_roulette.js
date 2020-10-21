@@ -167,7 +167,7 @@ class MapRouletteAPI {
         // HARD CODED VALUES
         status: 'PUBLISHED',
         // TODO Need to query this from MR api
-        campaign_hashtag: 'test',
+        campaign_hashtag: `maproulette-challenge-${challenge.id}`,
         validated: 0, // placeholder
         done: 0 // placeholder value
       }

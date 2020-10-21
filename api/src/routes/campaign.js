@@ -94,10 +94,11 @@ module.exports = async (req, res) => {
     if (err.statusCode && err.statusCode === 404) {
       // There are no stats yet
       console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
-      response.tables.push({ success: false })
     } else {
       console.log(`OSMesa Stats do not exist for this hashtag`, err.message)
     }
+    response.tables.push({ success: false })
+    res.send(response)
   }
 
   response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
