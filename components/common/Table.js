@@ -59,9 +59,11 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
         )
       }
     case 'namelink':
-      return ({ cell: { value } }) => {
-        return (
-          <Link href={`/users/${idMap[value]}`}>
+      return (props) => {
+        const { cell: { value } } = props
+        const disabled = props.data[ props.row.index ].disableLink
+        return disabled ? value : (
+          <Link ref={`/users/${idMap[value]}`}>
             <a className='link--normal' >
               { value }
             </a>
@@ -174,7 +176,7 @@ export default function Table (props) {
                   {
                     row.cells.map(cell => {
                       return <td {...cell.getCellProps()} className={!isNaN(cell.value) && parseInt(cell.value) >= 0 ? 'table-align-right' : ''}>
-                        {cell.render('Cell')}
+                        {cell.render('Cell', 'test')}
                       </td>
                     })
                   }

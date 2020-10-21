@@ -68,6 +68,7 @@ module.exports = async (req, res) => {
       sortable: false
     }
     response.tables.push(stats)
+    response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
   } catch (err) {
     if (err instanceof TypeError) {
     } else {
@@ -90,6 +91,7 @@ module.exports = async (req, res) => {
   // Load osmesa stats
   try {
     await loadOsMesaStats(response)
+    response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
   } catch (err) {
     if (err.statusCode && err.statusCode === 404) {
       // There are no stats yet
@@ -97,13 +99,29 @@ module.exports = async (req, res) => {
     } else {
       console.log(`OSMesa Stats do not exist for this hashtag`, err.message)
     }
-    response.tables.push({ success: false })
-    res.send(response)
   }
 
-  response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
+  response.tables = await checkUserExist(response.tables)
 
   return res.send(response)
+}
+
+async function checkUserExist (tables) {
+  const updatedTables = tables.map(async table => {
+    if (table.schema.headers.name) {
+      const ids = table.data.map(user => user.uid)
+      const dbUsers = new Set(await db('users').whereIn('id', ids).select())
+      table.data = table.data.map(user => {
+        if (!dbUsers.has(user.uid)) {
+          user.disableLink = true;
+        }
+        return user
+      })
+    }
+    return table
+  })
+  return Promise.all(updatedTables)
+    .then(res => res)
 }
 
 async function loadOsMesaStats (response) {
