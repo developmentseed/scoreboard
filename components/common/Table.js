@@ -62,8 +62,9 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
       return (props) => {
         const { cell: { value } } = props
         const disabled = props.data[ props.row.index ].disableLink
+
         return disabled ? value : (
-          <Link ref={`/users/${idMap[value]}`}>
+          <Link href={`/users/${idMap[value]}`}>
             <a className='link--normal' >
               { value }
             </a>
