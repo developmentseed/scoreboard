@@ -70,7 +70,9 @@ module.exports = async (req, res) => {
     response.tables.push(stats)
     response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
   } catch (err) {
+    console.error(err)
     if (err instanceof TypeError) {
+      // Error due to this table not being available for this challenge, continue
     } else {
       console.log(`Unknown error occurred`, err.message)
     }
@@ -82,8 +84,9 @@ module.exports = async (req, res) => {
     stats.schema = maprouletteUserStatSchema
     response.tables.push(stats)
   } catch (err) {
-    console.log(err)
+    console.error(err)
     if (err instanceof TypeError) {
+      // Error due to this table not being available for this challenge, continue
     } else {
       console.log(`Unknown error occurred`, err.message)
     }
@@ -115,10 +118,10 @@ async function checkUserExist (tables) {
         await db('users').whereIn('osm_id', ids)
           .select()
           .map(user => user.osm_id)
-    )
+      )
       table.data = table.data.map(user => {
         if (!dbUsers.has(user.uid)) {
-          user.disableLink = true;
+          user.disableLink = true
         }
         return user
       })
