@@ -115,9 +115,14 @@ class MapRouletteAPI {
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
 
-    const users = JSON.parse(userData).map(user => {
+    const users = JSON.parse(userData).map(async user => {
+      const publicUser = await rp({
+        uri: `${this.api_url}/api/v2/user/${user.userId}/public`,
+        headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+      })
+
       const userObj = {
-        uid: user.userId,
+        uid: JSON.parse(publicUser).osmProfile.id,
         name: user.name,
         rank: user.rank,
         score: user.score,
@@ -127,10 +132,11 @@ class MapRouletteAPI {
       }
       return userObj
     })
+    const updatedUsers = await Promise.all(users)
 
     const campaignObj = {
       tag: id,
-      data: users,
+      data: updatedUsers,
       success: true
     }
     return campaignObj

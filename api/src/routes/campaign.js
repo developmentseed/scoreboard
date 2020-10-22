@@ -82,6 +82,7 @@ module.exports = async (req, res) => {
     stats.schema = maprouletteUserStatSchema
     response.tables.push(stats)
   } catch (err) {
+    console.log(err)
     if (err instanceof TypeError) {
     } else {
       console.log(`Unknown error occurred`, err.message)
@@ -110,7 +111,11 @@ async function checkUserExist (tables) {
   const updatedTables = tables.map(async table => {
     if (table.schema.headers.name) {
       const ids = table.data.map(user => user.uid)
-      const dbUsers = new Set(await db('users').whereIn('id', ids).select())
+      const dbUsers = new Set(
+        await db('users').whereIn('osm_id', ids)
+          .select()
+          .map(user => user.osm_id)
+    )
       table.data = table.data.map(user => {
         if (!dbUsers.has(user.uid)) {
           user.disableLink = true;
