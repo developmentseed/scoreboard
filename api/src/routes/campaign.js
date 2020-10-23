@@ -68,8 +68,11 @@ module.exports = async (req, res) => {
       sortable: false
     }
     response.tables.push(stats)
+    response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
   } catch (err) {
+    console.error(err)
     if (err instanceof TypeError) {
+      // Error due to this table not being available for this challenge, continue
     } else {
       console.log(`Unknown error occurred`, err.message)
     }
@@ -81,7 +84,9 @@ module.exports = async (req, res) => {
     stats.schema = maprouletteUserStatSchema
     response.tables.push(stats)
   } catch (err) {
+    console.error(err)
     if (err instanceof TypeError) {
+      // Error due to this table not being available for this challenge, continue
     } else {
       console.log(`Unknown error occurred`, err.message)
     }
@@ -90,19 +95,41 @@ module.exports = async (req, res) => {
   // Load osmesa stats
   try {
     await loadOsMesaStats(response)
+    response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
   } catch (err) {
     if (err.statusCode && err.statusCode === 404) {
       // There are no stats yet
       console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
-      response.tables.push({ success: false })
     } else {
       console.log(`OSMesa Stats do not exist for this hashtag`, err.message)
     }
   }
 
-  response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
+  response.tables = await checkUserExist(response.tables)
 
   return res.send(response)
+}
+
+async function checkUserExist (tables) {
+  const updatedTables = tables.map(async table => {
+    if (table.schema.headers.name) {
+      const ids = table.data.map(user => user.uid)
+      const dbUsers = new Set(
+        await db('users').whereIn('osm_id', ids)
+          .select()
+          .map(user => user.osm_id)
+      )
+      table.data = table.data.map(user => {
+        if (!dbUsers.has(user.uid)) {
+          user.disableLink = true
+        }
+        return user
+      })
+    }
+    return table
+  })
+  return Promise.all(updatedTables)
+    .then(res => res)
 }
 
 async function loadOsMesaStats (response) {
