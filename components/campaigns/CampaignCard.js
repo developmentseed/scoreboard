@@ -62,10 +62,14 @@ export default ({ campaign }) => {
                 <span className='num--large'>{parseInt(Math.min(100, done), 10)}%</span>
                 <span className='descriptor-chart'>Mapped</span>
               </li>
-              <li className='card--stat'>
-                <span className='num--large'>{parseInt(Math.min(100, validated), 10)}%</span>
-                <span className='descriptor-chart'>Validated</span>
-              </li>
+              {
+                type !== 'mr'
+                  ? <li className='card--stat'>
+                    <span className='num--large'>{parseInt(Math.min(100, validated), 10)}%</span>
+                    <span className='descriptor-chart'>Validated</span>
+                  </li>
+                  : null
+              }
               <li className='card--chip'>
                 <Chip label={type} color={CHIP_COLOR[type]} />
               </li>
