@@ -17,6 +17,7 @@ exports.seed = async (knex) => {
     mrproxy.listen(4851, async () => {
       try {
         await knex('campaigns').del()
+
         await knex('taskers').del()
 
         await knex('taskers').insert({

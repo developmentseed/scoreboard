@@ -1,0 +1,99 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ develop, master ]
+  pull_request:
+    branches: [ develop, master ]
+
+jobs:
+  lint_build_test_nodejs:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Configure Yarn
+        run: yarn config set cache-folder ~/.yarn-cache
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.yarn-cache
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies with Yarn
+        # node.js github actions by default use `npm ci`,
+        # https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable
+        # the yarn equivalent seems to be `yarn install --frozen-lockfile`
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Build
+        run: yarn build
+
+      # setup osmesa: the method used in docker-compose.yml does not work in github action's service containers
+      # to this is a workaround using the psql client to create the db schema.
+      # (see https://github.com/developmentseed/osm-fabricator for origin of init.sql)
+      - name: Setup osmesa db
+        run:  psql postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres < docker-context/osmesa-mock/init.sql
+
+      - name: Test
+        run: yarn test
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgres://scoreboard:test@localhost:${{ job.services.postgres.ports[5432] }}/scoreboard_test
+          OSMESA_DB: postgres://postgres@localhost:${{ job.services.osmesa.ports[5432] }}/postgres
+
+    services:
+
+      # scoreboard test database
+      postgres:
+        image: postgres:9.6
+        env:
+          POSTGRES_DB: scoreboard_test
+          POSTGRES_PASSWORD: test
+          POSTGRES_USER: scoreboard
+          # set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # will assign a random free host port (reference by job.services.postgres.ports[5432])
+        - 5432/tcp
+
+      # osmesa reporting interface: postgres db
+      osmesa:
+        image: postgres:10
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        # set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # will assign a random free host port (reference by job.services.osmesa.ports[5432])
+        - 5432/tcp

@@ -58,18 +58,34 @@ class MapRouletteAPI {
   async getProjects () {
     let qs = {
       page: 0,
-      limit: 50
+      limit: 50,
+      pe: true,
+      ce: true,
+      order: 'DESC',
+      sort: 'created'
     }
+
     if (this.opts.search_params) {
       qs = { ...this.opts.search_params, ...qs }
     }
 
-    const resp = await rp({
-      uri: `${this.api_url}/api/v2/challenges/extendedFind`,
-      qs,
-      headers: { 'Accept-Language': 'en-US,en;q=0.9' }
-    })
-    const challenges = JSON.parse(resp)
+    const challenges = []
+
+    while (true) {
+      const resp = await rp({
+        uri: `${this.api_url}/api/v2/challenges/extendedFind`,
+        qs,
+        headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+      })
+      const chunk = JSON.parse(resp)
+      challenges.push(...chunk)
+      qs.page = qs.page + 1
+      if (chunk.length < 50 || qs.page > 10) {
+        break
+      } else {
+      }
+    }
+
     return challenges
   }
 
@@ -99,21 +115,28 @@ class MapRouletteAPI {
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
 
-    const users = JSON.parse(userData).map(user => {
+    const users = JSON.parse(userData).map(async user => {
+      const publicUser = await rp({
+        uri: `${this.api_url}/api/v2/user/${user.userId}/public`,
+        headers: { 'Accept-Language': 'en-US,en;q=0.9' }
+      })
+
       const userObj = {
-        uid: user.userId,
+        uid: JSON.parse(publicUser).osmProfile.id,
         name: user.name,
         rank: user.rank,
         score: user.score,
-        avgTimeSpent: user.avgTimeSpent,
-        completedTasks: user.completedTasks
+        // FIXME set avg time and completed tasks to 0 if data is not available
+        avgTimeSpent: user.avgTimeSpent || 0,
+        completedTasks: user.completedTasks || 0
       }
       return userObj
     })
+    const updatedUsers = await Promise.all(users)
 
     const campaignObj = {
       tag: id,
-      data: users,
+      data: updatedUsers,
       success: true
     }
     return campaignObj
@@ -150,7 +173,7 @@ class MapRouletteAPI {
         // HARD CODED VALUES
         status: 'PUBLISHED',
         // TODO Need to query this from MR api
-        campaign_hashtag: 'test',
+        campaign_hashtag: `maproulette-challenge-${challenge.id}`,
         validated: 0, // placeholder
         done: 0 // placeholder value
       }
