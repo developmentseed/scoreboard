@@ -6,9 +6,14 @@ import { LoadingState } from '../components/common/LoadingState'
 import Table from '../components/common/Table'
 import { all } from 'ramda'
 
+// separate data to match categories of tables
+// display data in tables
+// request data using options from drop down
+// select columns to display - what should the default be? 
+
 const measurementTableSchema = {
   'headers': {
-    'name': { type: 'teamlink', accessor: 'name' },
+    // 'name': { type: 'teamlink', accessor: 'name' },
     'road-km-added': { type: 'number', accessor: 'road_km_added' },
     'road-km-deleted': { type: 'number', accessor: 'road_km_deleted' },
     'road-km-modified': { type: 'number', accessor: 'road_km_modified' },
@@ -18,9 +23,9 @@ const measurementTableSchema = {
     'coastline-km-added': { type: 'number', accessor: 'coastline_km_added' },
     'coastline-km-deleted': { type: 'number', accessor: 'coastline_km_deleted' },
     'coastline-km-modified': { type: 'number', accessor: 'coastline_km_modified' },
-    'railine-km-added': { type: 'number', accessor: 'railine_km_added' },
-    'railine-km-deleted': { type: 'number', accessor: 'railine_km_deleted' },
-    'railine-km-modified': { type: 'number', accessor: 'railine_km_modified' }
+    'railline-km-added': { type: 'number', accessor: 'railline_km_added' },
+    'railline-km-deleted': { type: 'number', accessor: 'railline_km_deleted' },
+    'railline-km-modified': { type: 'number', accessor: 'railline_km_modified' }
   },
   columnOrder: [
     'name',
@@ -33,26 +38,13 @@ const measurementTableSchema = {
     'coastline-km-added',
     'coastline-km-deleted',
     'coastline-km-modified',
-    'railine-km-added',
-    'railine-km-deleted',
-    'railine-km-modified'
-  ]
+    'railline-km-added',
+    'railline-km-deleted',
+    'railline-km-modified'
+  ],
+  'displaysTooltip': []
 }
 
-const measurements = [
-  'road_km_added',
-  'road_km_deleted',
-  'road_km_modified',
-  'waterway_km_added',
-  'waterway_km_deleted',
-  'waterway_km_modified',
-  'coastline_km_added',
-  'coastline_km_deleted',
-  'coastline_km_modified',
-  'railine_km_added',
-  'railine_km_deleted',
-  'railine_km_modified'
-]
 
 const measurement2TableSchema = {
   'headers': {
@@ -75,14 +67,6 @@ const measurement2TableSchema = {
   ]
 }
 
-const measurements2 = [
-  'landuse-km2-added',
-  'landuse-km2-deleted',
-  'landuse-km2-modified',
-  'natural-km2-added',
-  'natural-km2-deleted',
-  'natural-km2-modified'
-]
 
 const countTableSchema = {
   'headers': {
@@ -177,32 +161,36 @@ const testBody = {
 
 export function Reports (props) {
   const [loading, setLoading] = useState(true)
+  const [bins, setBins] = useState(null)
 
   useEffect(() => {
     props.getUserTimeseries(testBody)
-      .then(() => setLoading(false))
+    .then(() => setLoading(false))
   }, [])
 
-  if (loading) {
-    return <LoadingState />
+  const getTableData = schema => {
+    fullMeasurementList.map(listItem => (
+      Object.entries(listItem).reduce((prev, [key, val]) => {
+        const headers = Object.values(schema.headers).map(val => val.accessor)
+        headers.includes(key) ? {...prev, [key]: val} : prev
+      }, {})
+    ))
   }
+
+
   const allUserStats = props.timeseries.bins.map(bin => bin.userStatistics).flat()
   const fullMeasurementList = allUserStats.map(user => user.measurements)
-  const measurementTableData = fullMeasurementList.map(listItem => {
-    return Object.keys(listItem)
-      .filter(measurementKey => {
-        console.log('measurements', measurements.includes(measurementKey))
-        measurements.includes(measurementKey)
-      })
-      // .reduce((obj, key) => {
-      //   return {
-      //     ...obj,
-      //     [key]: listItem[key]
-      //   }
-      // }, {})
-  })
+  const measurementTableData = fullMeasurementList.map(listItem => (
+    Object.entries(listItem).reduce((prev, [key, val]) => (
+      getSchemaHeader(measurementTableSchema).includes(key) ? {...prev, [key]: val} : prev
+    ), {})
+  ))
 
-  console.log('measurementTableData', measurementTableData)
+
+
+  if (loading || !props.timeseries) {
+    return <LoadingState />
+  }
   return (
     <div className='Reports'>
       <header className='header--internal '>
@@ -212,7 +200,8 @@ export function Reports (props) {
       </header>
       <section className='text-body section-first--sm'>
         <div className='row'>
-          {/* <Table tableSchema={measurementTableSchema} data={measurementTableData} /> */}
+          <Table tableSchema={measurementTableSchema} data={getTableData(measurementTableSchema)} />
+          {/* <Table tableSchema={measurement2TableSchema} data={measurementTableData} /> */}
         </div>
       </section>
     </div>
