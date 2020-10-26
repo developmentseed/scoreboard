@@ -207,14 +207,14 @@ class OSMesaDBWrapper {
   constructor () {
     // connection the osmesa db
     this.dbUrl = null
-    this.dbConn = knex({ client: 'pg', connection: this.dbUrl })
+    this.dbConn = this.connection()
 
     // connection to s3
     this.s3bucket = null
     this.s3client = null
   }
 
-  db (tableName) {
+  connection () {
     const dbUrl = cache.get('osmesa-db')
     if (dbUrl !== this.dbUrl) {
       this.dbUrl = dbUrl
@@ -223,7 +223,12 @@ class OSMesaDBWrapper {
         connection: this.dbUrl
       })
     }
-    return this.dbConn(tableName)
+    return this.dbConn
+  }
+
+  db (tableName) {
+    const conn = this.connection()
+    return conn(tableName)
   }
 
   tiles (prefix, z, x, y) {
@@ -390,6 +395,34 @@ class OSMesaDBWrapper {
     }
 
     return reduce((acc, curr) => assoc(curr.mat_view, curr.updated_at, acc), {}, data)
+  }
+
+  async getTimeSeries ({
+    startDate,
+    endDate,
+    binInterval,
+    userIdsFilter,
+    countriesFilter,
+    hashtagsFilter,
+    hashtagPrefixFilter,
+    categoriesFilter
+  }) {
+    // always include the changesets table
+    const tableNames = {
+      cs: 'changesets'
+    }
+    if (countriesFilter.length) {
+      // add changesets_countries to tableNames
+      tableNames['cc'] = 'changesets_countries'
+    }
+    if (hashtagsFilter.length || hashtagPrefixFilter.length) {
+      // add changesets_hashtags to tableNames
+      tableNames['ch'] = 'changesets_hashtags'
+    }
+    // const result = await this.connection(tableNames)
+    //   .select('*')
+    // return result
+    return Promise.resolve(true)
   }
 }
 
