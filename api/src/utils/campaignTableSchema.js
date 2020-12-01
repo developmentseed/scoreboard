@@ -57,7 +57,7 @@ const maprouletteUserStatSchema = {
     'name': { type: 'namelink', accessor: 'name' },
     'rank': { type: 'number', accessor: 'rank' },
     'score': { type: 'number', accessor: 'score' },
-    'avgTimeSpent': { type: 'number', accessor: 'avgTimeSpent' },
+    'avgTimeSpent': { type: 'string', accessor: 'avgTimeSpent' },
     'completedTasks': { type: 'number', accessor: 'completedTasks' }
   },
   columnOrder: [
@@ -67,13 +67,7 @@ const maprouletteUserStatSchema = {
     'avgTimeSpent',
     'completedTasks'
   ],
-  'displaysTooltip': [
-    'name',
-    'rank',
-    'score',
-    'avgTimeSpent',
-    'completedTasks'
-  ]
+  'displaysTooltip': []
 }
 
 module.exports = {
