@@ -96,6 +96,7 @@ export class Campaign extends Component {
   render () {
     const { meta, lastUpdate, creationDate, refreshDate, tables } = this.props.campaign
     const panelContent = this.props.campaign.panelContent || []
+    const orderedTables = tables && tables.sort((a, b) => { return a.statsType === 'osmesa' ? -1 : b.statsType === 'osmesa' ? 1 : 0 })
 
     return (
       <div className='Campaigns'>
@@ -154,7 +155,7 @@ export class Campaign extends Component {
         <section className='section--tertiary'>
 
           {
-            tables && tables.map(data => (
+            orderedTables && orderedTables.map(data => (
               <div className='row' key={data.statsType}>
                 {
                   (data.success)
