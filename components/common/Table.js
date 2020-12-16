@@ -22,6 +22,11 @@ const identity = function ({ cell: { value } }) {
   return value
 }
 
+const timeString = function ({ cell: { value } }) {
+  if (!value) return 'N/A'
+  return value
+}
+
 function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
   switch (datatype) {
     case 'string':
@@ -34,6 +39,8 @@ function selectCellFormatter (datatype, idMap, countryMap, campaignMap) {
       return identity
     case 'date':
       return formattedDate
+    case 'timestring':
+      return timeString
     case 'countrylink':
       return ({ cell: { value } }) => {
         const code = countryMap[value]
@@ -154,14 +161,14 @@ export default function Table (props) {
                   title={column.Header.props ? `Sort by ${column.Header.props.children}` : `Sort by ${column.Header}`}
                 >
                   <a
-                    className={(column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none') + ' ' + (column.Cell === formattedNum ? 'table-align-right' : '')}
+                    className={(column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : 'sort-none') + ' ' + (column.Cell === (formattedNum) || column.Cell === (timeString) ? 'table-align-right' : '')}
                   >
                     {column.Header}
                   </a>
                 </th>)
                 : (
                   <th key={column.id} {...column.getHeaderProps()}>
-                    <a className={column.Cell === formattedNum ? 'table-align-right' : ''}>{column.Header}</a>
+                    <a className={column.Cell === (formattedNum) || column.Cell === (timeString) ? 'table-align-right' : ''}>{column.Header}</a>
                   </th>)
             )
           }
@@ -176,7 +183,8 @@ export default function Table (props) {
                 <tr {...row.getRowProps()}>
                   {
                     row.cells.map(cell => {
-                      return <td {...cell.getCellProps()} className={!isNaN(cell.value) && parseInt(cell.value) >= 0 ? 'table-align-right' : ''}>
+                      console.log(cell)
+                      return <td {...cell.getCellProps()} className={(!isNaN(cell.value) && (parseInt(cell.value) >= 0)) || cell.column.Cell === timeString ? 'table-align-right' : ''}>
                         {cell.render('Cell', 'test')}
                       </td>
                     })
