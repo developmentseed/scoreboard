@@ -176,7 +176,6 @@ export default function Table (props) {
                 <tr {...row.getRowProps()}>
                   {
                     row.cells.map(cell => {
-
                       return <td {...cell.getCellProps()} className={!isNaN(cell.value) && parseInt(cell.value) >= 0 ? 'table-align-right' : ''}>
                         {cell.render('Cell', 'test')}
                       </td>
