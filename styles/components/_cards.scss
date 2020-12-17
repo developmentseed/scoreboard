@@ -191,6 +191,7 @@
     .card--chip {
       display: grid;
       justify-content: end;
+      grid-column: -2;
     }
   }
   .map {
