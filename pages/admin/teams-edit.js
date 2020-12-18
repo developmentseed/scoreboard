@@ -111,9 +111,12 @@ export class AdminTeamsEdit extends Component {
         */
         }
         <AdminUsersSearch
+          searchHeader='Users'
+          searchInputLegend='Search'
           selectedUsers={this.state.teamUsers}
           addUser={this.addUserToTeam}
           removeUser={this.removeUserFromTeam}
+          showSelectedUserTable
         />
       </div>
     )

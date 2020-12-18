@@ -196,6 +196,61 @@ class OSMTeams {
     })
     return rp(options)
   }
+
+  /* Get all members of and organization from the OSM Teams API
+   *
+   * @returns {Promise} response
+   */
+  async getOrganization () {
+    try {
+      const options = await this.addAuthorization({
+        method: 'GET',
+        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}`,
+        json: true
+      })
+      const org = await rp(options)
+      return org
+    } catch (e) {
+      console.error(e)
+      return false
+    }
+  }
+
+  async addOwner (osmId) {
+    var options = await this.addAuthorization({
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/addOwner/${osmId}`,
+      json: true
+    })
+    return rp(options)
+  }
+
+  async removeOwner (osmId) {
+    var options = await this.addAuthorization({
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/removeOwner/${osmId}`,
+      json: true
+    })
+    return rp(options)
+  }
+
+  async addManager (osmId) {
+    var options = await this.addAuthorization({
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/addManager/${osmId}`,
+      json: true
+    })
+    return rp(options)
+  }
+
+  async removeManager (osmId) {
+    var options = await this.addAuthorization({
+      method: 'PUT',
+      uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/removeManager/${osmId}`,
+      json: true
+    })
+    return rp(options)
+  }
 }
 
 class FakeOSMTeams {
