@@ -163,7 +163,7 @@ function populatePanelContent (tmData, tables, type) {
       return [
         { label: 'Tasks', value: `${parseInt(data.total - data.available, 10)}` },
         { label: 'Remaining', value: `${parseInt(100 - tmData.done, 10)}%` },
-        { label: 'Avg Time Spent', value: `${parseInt(data.avgTimeSpent, 10)}` }
+        { label: 'Avg Time Spent', value: `${Math.floor(data.avgTimeSpent / 1000 / 60)}m ${Math.floor(data.avgTimeSpent / 1000) % 60}s` }
       ]
     case 'tm2':
     case 'tm3':
