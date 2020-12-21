@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- MapRoulette integration - view MapRoulette challenges on campaigns, with MapRoulette specific information
+- Tasking Manager "chip" ui on Campaign cards to distinguish campaign project source
+- Added OSM Teams Organization management UI, enabling Scoreboard admins to designate team managers and moderators
+
+### Changed
+- Local development changes: refactored Docker compose, move to github actions
+
+### Fixed
+- Fixed refresh tokens for teams
+
+### Changed
+
 ## [v1.9.1] - 2020-05-07
 
 ### Added
