@@ -35,15 +35,15 @@ async function tmWorker (isCmd) {
       .join('taskers', 'taskers.id', 'campaigns.tasker_id')
       .select('campaigns.geometry', 'campaigns.tm_id', 'taskers.id', 'taskers.type', 'taskers.name')
     let bboxes = geometries.map(geom =>
-    ({
-      bbox: bbox(JSON.parse(geom.geometry)),
-      properties: {
-        tm_id: geom.tm_id,
-        tasker_id: geom.id,
-        tasker_type: geom.type,
-        tasker_name: geom.name
-      }
-    })
+      ({
+        bbox: bbox(JSON.parse(geom.geometry)),
+        properties: {
+          tm_id: geom.tm_id,
+          tasker_id: geom.id,
+          tasker_type: geom.type,
+          tasker_name: geom.name
+        }
+      })
     )
     let features = bboxes.map(bboxFeature => bboxPolygon(bboxFeature.bbox, { properties: bboxFeature.properties }))
     let fc = featureCollection(features)
