@@ -21,8 +21,9 @@ const CampaignMap = dynamic(
 )
 
 const TABLE_TITLES = {
-  'maproulette': 'Challenge Task Progress',
-  'maproulette-challenge': 'Challenge Leaderboard'
+  'osmesa': 'Mapping metrics',
+  'maproulette': 'Challenge Leaderboard',
+  'maproulette-challenge': 'Challenge Task Progress'
 }
 
 export class Campaign extends Component {
@@ -95,6 +96,7 @@ export class Campaign extends Component {
   render () {
     const { meta, lastUpdate, creationDate, refreshDate, tables } = this.props.campaign
     const panelContent = this.props.campaign.panelContent || []
+    const orderedTables = tables && tables.sort((a, b) => { return a.statsType === 'osmesa' ? -1 : b.statsType === 'osmesa' ? 1 : 0 })
 
     return (
       <div className='Campaigns'>
@@ -153,14 +155,13 @@ export class Campaign extends Component {
         <section className='section--tertiary'>
 
           {
-            tables && tables.map(data => (
+            orderedTables && orderedTables.map(data => (
               <div className='row' key={data.statsType}>
                 {
                   (data.success)
                     ? <div>
-                      {data.statsType === 'osmesa' ? <Blurb {...merge({ users: [], editCounts: 0 }, data)} />
-                        : <h2>{TABLE_TITLES[data.statsType]}</h2>}
-
+                      {data.statsType === 'osmesa' && <Blurb {...merge({ users: [], editCounts: 0 }, data)} />}
+                      <h2>{TABLE_TITLES[data.statsType]}</h2>
                       <CampaignTable
                         data={data.data}
                         type={data.statsType}
