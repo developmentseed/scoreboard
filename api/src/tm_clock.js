@@ -31,9 +31,21 @@ async function tmWorker (isCmd) {
     }
 
     // Get all features and turn them into a single featurecollection
-    let geometries = await db('campaigns').select('geometry')
-    let bboxes = geometries.map(geom => bbox(JSON.parse(geom.geometry)))
-    let features = bboxes.map(bboxPolygon)
+    let geometries = await db('campaigns')
+      .join('taskers', 'taskers.id', 'campaigns.tasker_id')
+      .select('campaigns.geometry', 'campaigns.tm_id', 'taskers.id', 'taskers.type', 'taskers.name')
+    let bboxes = geometries.map(geom =>
+      ({
+        bbox: bbox(JSON.parse(geom.geometry)),
+        properties: {
+          tm_id: geom.tm_id,
+          tasker_id: geom.id,
+          tasker_type: geom.type,
+          tasker_name: geom.name
+        }
+      })
+    )
+    let features = bboxes.map(bboxFeature => bboxPolygon(bboxFeature.bbox, { properties: bboxFeature.properties }))
     let fc = featureCollection(features)
     await db.transaction(async trx => {
       await trx('features').where('name', 'tm_campaigns').del()
