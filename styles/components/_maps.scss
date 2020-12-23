@@ -16,6 +16,7 @@
 .map-campaign-sm {
   margin-left: 0;
   height: 140px;
+  background: $map-background-color;
   @include media(medium-down) {
     height: 110px;
   }
@@ -24,3 +25,18 @@
 .map-lg {
   height: 400px;
  }
+
+.blank-state-map {
+  mask: url($appUrlFinal + 'static/map.svg');
+  -webkit-mask: url($appUrlFinal + 'static/map.svg');
+  mask-size: cover;
+  -webkit-mask-size: cover;
+  height: 100%;
+  background: $base-color;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+}

@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { Map, TileLayer, GeoJSON } from 'react-leaflet'
 import { isNil } from 'ramda'
 import centerOfMass from '@turf/center-of-mass'
+import BlankStateMap from './BlankStateMap'
 
 class CampaignMap extends Component {
   render () {
     if (isNil(this.props.feature) || (!this.props.feature.id && this.props.feature.type === 'Feature')) {
-      return <div>Loading...</div>
+      return <BlankStateMap />
     }
 
     const center = centerOfMass(this.props.feature)
