@@ -135,7 +135,7 @@ export function ManageOrg (props) {
         <div className='row widget-container'>
           <div className='widget-25'>
             <h3 className='header--medium'>EDIT ORG.</h3>
-            <Link href={`/teams/`}>
+            <Link href={`/teams`}>
               <a className='link--large'>
                     View Teams
               </a>
