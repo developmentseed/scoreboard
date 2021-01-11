@@ -3,15 +3,15 @@ const limit = require('p-limit')(5)
 const extractCampaignHashtag = require('../../utils/extractCampaignHashtag')
 
 /**
- * Methods to grab data from tasking manager version 3
+ * Methods to grab data from tasking manager version 4
  */
-class TM3API {
+class TM4API {
   constructor ({ url, taskerId, apiUrl, opts }) {
     this.url = url
     this.api_url = apiUrl
     this.tasker_id = taskerId
     this.opts = opts || {}
-    this.version = 'v1'
+    this.version = 'v2'
   }
 
   getUrlForProject (id) {
@@ -32,19 +32,19 @@ class TM3API {
    */
   async getProjects () {
     let qs = {
-      page: 1
+      page: 1,
+      action: 'map'
     }
     if (this.opts.search_params) {
       qs = Object.assign(this.opts.search_params, qs)
     }
 
     let firstResp = await rp({
-      uri: `${this.api_url}/api/${this.version}/project/search`,
+      uri: `${this.api_url}/api/${this.version}/projects`,
       qs,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
     let json = JSON.parse(firstResp)
-
     let projects = json.results
 
     let numPages = json.pagination.pages
@@ -52,7 +52,7 @@ class TM3API {
     for (let i = 2; i <= numPages; i++) {
       qs.page = i
       promises.push(limit(() => rp({
-        uri: `${this.api_url}/api/${this.version}/project/search`,
+        uri: `${this.api_url}/api/${this.version}/projects`,
         qs,
         headers: { 'Accept-Language': 'en-US,en;q=0.9' }
       })))
@@ -72,14 +72,14 @@ class TM3API {
 
   getProject (id) {
     return rp({
-      uri: `${this.api_url}/api/${this.version}/project/${id}?as_file=false`,
+      uri: `${this.api_url}/api/${this.version}/projects/${id}?as_file=false`,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
   }
 
   getProjectAoi (id) {
     return rp({
-      uri: `${this.api_url}/api/${this.version}/project/${id}/aoi?as_file=false`
+      uri: `${this.api_url}/api/${this.version}/projects/${id}/queries/aoi?as_file=false`
     })
   }
 
@@ -133,4 +133,4 @@ class TM3API {
   }
 }
 
-module.exports = TM3API
+module.exports = TM4API

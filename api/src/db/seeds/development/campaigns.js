@@ -35,6 +35,28 @@ exports.seed = async (knex) => {
     })
   }).then(() => mrproxy.close())
 
+  const tm4proxy = http.createServer(yakbak('https://tasks-backend.openstreetmap.us/', {
+    dirname: path.join(__dirname, '..', '..', '..', '..', 'tests', 'tapes')
+  }))
+
+  await new Promise((resolve, reject) => {
+    mrproxy.listen(4851, async () => {
+      try {
+        await knex('taskers').insert({
+          type: 'tm4',
+          url: 'http://tasks-backend.openstreetmap.us',
+          name: 'test tm4',
+          options: {
+            // proxy: 'http://localhost:4851'
+          }
+        })
+        resolve()
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }).then(() => tm4proxy.close())
+
   const tm3proxy = http.createServer(yakbak('https://tasks.openstreetmap.us', {
     dirname: path.join(__dirname, '..', '..', '..', '..', 'tests', 'tapes')
   }))
