@@ -44,10 +44,10 @@ exports.seed = async (knex) => {
       try {
         await knex('taskers').insert({
           type: 'tm4',
-          url: 'http://tasks-backend.openstreetmap.us',
+          url: 'https://tasks.openstreetmap.us',
           name: 'test tm4',
           options: {
-            // proxy: 'http://localhost:4851'
+            proxy: 'http://tasks-backend.openstreetmap.us'
           }
         })
         resolve()
