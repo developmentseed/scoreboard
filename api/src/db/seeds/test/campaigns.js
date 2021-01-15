@@ -57,7 +57,6 @@ exports.seed = async (knex) => {
     })
   }).then(() => tm4proxy.close())
 
-
   const tm3proxy = http.createServer(yakbak('https://tasks.openstreetmap.us', {
     dirname: path.join(__dirname, '..', '..', '..', '..', 'tests', 'tapes')
   }))
