@@ -100,9 +100,8 @@ module.exports = async (req, res) => {
     if (err.statusCode && err.statusCode === 404) {
       // There are no stats yet
       console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
-    } else {
-      console.log(`OSMesa Stats do not exist for this hashtag`, err.message)
     }
+    console.log(err)
   }
 
   response.tables = await checkUserExist(response.tables)
@@ -134,10 +133,15 @@ async function checkUserExist (tables) {
 
 async function loadOsMesaStats (response) {
   const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
+    .catch(err => {
+      console.error('There are no stats available for this campaign')
+      console.error(err)
+      return {}
+    })
   let stats = { success: true,
     statsType: 'osmesa',
     schema: osmesaUserStatSchema,
-    data: osmesaResponse.users,
+    data: osmesaResponse.users || [],
     ...osmesaResponse
   }
   delete stats.users
@@ -153,7 +157,7 @@ async function loadOsMesaStats (response) {
   response.stats = stats
 
   response.tables.push(stats)
-  return Promise.all([osmesaResponse, userCountries])
+  return Promise.resolve()
 }
 
 function populatePanelContent (tmData, tables, type) {
@@ -167,6 +171,7 @@ function populatePanelContent (tmData, tables, type) {
       ]
     case 'tm2':
     case 'tm3':
+    case 'tm4':
       const stats = tables.find(t => t.statsType === 'osmesa')
       return [
         { label: 'Mapped', value: `${parseInt(tmData.done, 10)}%` },
