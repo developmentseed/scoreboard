@@ -135,6 +135,17 @@ test('Get campaigns sorted alphabetically', async t => {
   t.is(response.body.length, response2.body.length)
 })
 
+test('Sort campaigns by country alphabetically', async (t) => {
+  const response = await request(app)
+    .get('/scoreboard/api/campaigns/?sortType=Countries A-Z')
+    .expect(200)
+  const response2 = await request(app)
+    .get('/scoreboard/api/campaigns?sortType=Countries Z-A')
+    .expect(200)
+  // FIXME: this test should validate the sorted results, but it cannot because of the sql result pagination as implemented in campaigns.js
+  t.is(response.body.length, response2.body.length)
+})
+
 test('Get campaigns with archived', async t => {
   const first = await request(app)
     .get('/scoreboard/api/campaigns?includeArchived=false')
