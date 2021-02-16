@@ -165,7 +165,6 @@
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 1rem;
-    align-items: center;
     @include media(medium-down) {
       padding: 2em 1.5em 1.9em;
     }
