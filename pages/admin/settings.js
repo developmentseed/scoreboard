@@ -115,13 +115,18 @@ export class AdminSettings extends Component {
               <h2 className='header--large'>Settings</h2>
             </div>
             <div className='widget-75'>
-              <div>
+              <section>
                 <h1 className='header--xlarge'>OSMesa Settings</h1>
                 <p>Scoreboard statistics are powered by <a href='https://github.com/azavea/osmesa'>OSMesa</a>. Only change these settings if you are operating Scoreboard with a custom instance of OSMesa.</p>
-              </div>
-              <div>
-                <OSMesaSettings handleSubmit={this.handleSubmit} settings={this.state.settings} />
-              </div>
+                <div>
+                  <OSMesaSettings handleSubmit={this.handleSubmit} settings={this.state.settings} />
+                </div>
+              </section>
+              <section>
+                <h1 className='header--xlarge'>Teams Settings</h1>
+                <p>When connected with the OSM Teams service, Scoreboard administrators may reset the Teams authentication tokens for all users. This feature should only be used in cases of Teams authentication connection errors.</p>
+                <button type='submit' className='button'>Reset Tokens</button>
+              </section>
             </div>
           </div>
         </section>
