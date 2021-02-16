@@ -11,10 +11,17 @@ import TopEditorsChart from '../components/charts/TopEditorsChart'
 import EditsByCountry from '../components/charts/EditsByCountryChart'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { LoadingState } from '../components/common/LoadingState'
+import Chip from '../components/Chip'
 
 const Map = dynamic(() => import('../components/charts/LeafletHomeMap'), {
   ssr: false
 })
+
+const CHIP_COLOR = {
+  tm3: 'primary',
+  tm4: 'secondary',
+  mr: 'tertiary'
+}
 
 const projectName = process.env.PROJECT_NAME || 'OpenStreetMap'
 export class Home extends Component {
@@ -96,30 +103,20 @@ export class Home extends Component {
                 {
                   priorityCampaigns.map(record =>
                     <li key={`block-${record.id}`} className='card--wrapper'>
+                      {console.log(record)}
                       <div className='card'>
-                        <div className='card-content'>
+                        <div className='card-header'>
                           <h3 className='header--small header--with-description-xlg'>
                             <Link href={`/campaigns/${record.tasker_id}-${record.tm_id}`}>
                               <a className='header--underlined'>{record.name}</a>
                             </Link>
                           </h3>
+                          <li className='card--chip'>
+                            <Chip label={record.type} color={CHIP_COLOR[record.type]} />
+                          </li>
+                        </div>
+                        <div className='card-content'>
                           <p>{trimLength(record.description, 195)}</p>
-                          <ul className='chart-bar--main'>
-                            <li>
-                              <span className='chart-bar--title'>Mapped</span>
-                              <span className='chart-bar--wrapper'>
-                                <span className='chart-bar' style={{ 'width': `${parseInt(record.done, 10)}%` }} />
-                                <span className='chart-bar--percent'>{parseInt(record.done, 10)}%</span>
-                              </span>
-                            </li>
-                            <li>
-                              <span className='chart-bar--title'>Validated</span>
-                              <span className='chart-bar--wrapper'>
-                                <span className='chart-bar' style={{ 'width': `${parseInt(record.validated, 10)}%` }} />
-                                <span className='chart-bar--percent'>{parseInt(record.validated, 10)}%</span>
-                              </span>
-                            </li>
-                          </ul>
                         </div>
                       </div>
                     </li>
