@@ -47,6 +47,7 @@ export class AdminSettings extends Component {
 
     this.state = {
       loading: true,
+      tokenResetConfirmation: false,
       settings: {
         'osmesa-db': '',
         'osmesa-s3-prefix': '',
@@ -84,6 +85,47 @@ export class AdminSettings extends Component {
         settings
       })
     }
+  }
+
+  renderResetButton () {
+    return (
+      <button className='button button--destroy'
+        id='delete-badge-operation-button'
+        type='button'
+        onClick={() => {
+          this.setState({ tokenResetConfirmation: true })
+        }}
+      >
+        Reset Tokens
+      </button>
+    )
+  }
+
+  renderResetButtonConfirmation () {
+    return (
+      <div className='form__footer'>
+        <p>Are you sure you want to reset team access tokens?</p>
+        <button className='button button--destroy'
+          id='delete-badge-confirmation-operation-button'
+          type='button'
+          onClick={async () => {
+            await this.props.resetTeamsAccessTokens()
+          }}
+        >
+          Confirm Reset Tokens
+        </button>
+
+        <button className='button button--secondary'
+          id='cancel-delete-badge-operation-button'
+          type='button'
+          onClick={() => {
+            this.setState({ tokenResetConfirmation: false })
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    )
   }
 
   render () {
@@ -125,7 +167,11 @@ export class AdminSettings extends Component {
               <section>
                 <h1 className='header--xlarge'>Teams Settings</h1>
                 <p>When connected with the OSM Teams service, Scoreboard administrators may reset the Teams authentication tokens for all users. This feature should only be used in cases of Teams authentication connection errors.</p>
-                <button type='submit' className='button'>Reset Tokens</button>
+                {
+                  this.state.tokenResetConfirmation
+                    ? this.renderResetButtonConfirmation()
+                    : this.renderResetButton()
+                }
               </section>
             </div>
           </div>
