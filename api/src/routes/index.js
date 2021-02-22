@@ -78,5 +78,6 @@ router.put('/exclusion', exclusion.put)
 // settings routes
 router.get('/settings', settings.get)
 router.put('/settings', settings.put)
+router.delete('/settings/teams-access-tokens', settings.deleteAccessTokens)
 
 module.exports = router
