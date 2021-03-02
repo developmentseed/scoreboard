@@ -66,7 +66,7 @@ async function put (req, res) {
 
 async function deleteAccessTokens (req, res) {
   try {
-    const { user, body } = req
+    const { user } = req
 
     // only admins are allowed to delete access tokens
     if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
