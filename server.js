@@ -99,6 +99,10 @@ app.prepare()
       app.render(req, res, '/admin/badges-edit', { id })
     })
 
+    api.get('/reports', (req, res) => {
+      return app.render(req, res, '/reports')
+    })
+
     api.get('*', (req, res) => {
       return handle(req, res)
     })

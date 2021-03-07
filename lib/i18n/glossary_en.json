@@ -193,6 +193,67 @@
     { 
       "id": "completedTasks",
       "name":"Completed Tasks"
+    },
+
+    { 
+        "id": "road-km-added",
+        "name":"Roads Added (Km)",
+        "description":"Kilometers of road added"
+    },
+    { 
+        "id": "road-km-deleted",
+        "name":"Roads Deleted (Km)",
+        "description":"Kilometers of road deleted"
+    },
+    { 
+        "id": "road-km-modified",
+        "name":"Roads Modified (Km)",
+        "description":"Kilometers of road modified"
+    },
+    { 
+        "id": "waterway-km-added",
+        "name":"Waterways Added (Km)",
+        "description":"Kilometers of waterway added"
+    },
+    { 
+        "id": "waterway-km-deleted",
+        "name":"Waterways Deleted (Km)",
+        "description":"Kilometers of waterway deleted"
+    },
+    { 
+        "id": "waterway-km-modified",
+        "name":"Waterways Modified (Km)",
+        "description":"Kilometers of waterway modified"
+    },
+    { 
+        "id": "coastline-km-added",
+        "name":"Coastlines Added (Km)",
+        "description":"Kilometers of coastline added"
+    },
+    { 
+        "id": "coastline-km-deleted",
+        "name":"Coastlines Deleted (Km)",
+        "description":"Kilometers of coastline deleted"
+    },
+    { 
+        "id": "coastline-km-modified",
+        "name":"Coastlines Modified (Km)",
+        "description":"Kilometers of coastline modified"
+    },
+    { 
+        "id": "railline-km-added",
+        "name":"raillines Added (Km)",
+        "description":"Kilometers of railline added"
+    },
+    { 
+        "id": "railline-km-deleted",
+        "name":"raillines Deleted (Km)",
+        "description":"Kilometers of railline deleted"
+    },
+    { 
+        "id": "railline-km-modified",
+        "name":"raillines Modified (Km)",
+        "description":"Kilometers of railline modified"
     }
 
 ]

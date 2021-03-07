@@ -87,6 +87,7 @@ function Footer (props) {
               <li><NavLink href='/teams'>Teams</NavLink></li>
               <li><NavLink href='/countries'>Countries</NavLink></li>
               <li><NavLink href='/about'>About</NavLink></li>
+              <li><NavLink href='/reports'>Reports</NavLink></li>
             </ul>
           </nav>
           <div>
@@ -179,6 +180,7 @@ class Layout extends React.Component {
                 <li onClick={this.toggle.bind(this)}><NavLink href='/teams'>Teams</NavLink></li>
                 <li onClick={this.toggle.bind(this)}><NavLink href='/countries'>Countries</NavLink></li>
                 <li onClick={this.toggle.bind(this)}><NavLink href='/about'>About</NavLink></li>
+                <li onClick={this.toggle.bind(this)}><NavLink href='/reports'>Reports</NavLink></li>
               </ul>
               {
                 loggedIn
