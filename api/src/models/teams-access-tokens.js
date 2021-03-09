@@ -37,8 +37,13 @@ async function hasToken (id) {
   return (tokens.length > 0)
 }
 
+async function deleteTokens () {
+  return db('teams_access_tokens').truncate()
+}
+
 module.exports = {
   getToken,
   storeToken,
-  hasToken
+  hasToken,
+  deleteTokens
 }

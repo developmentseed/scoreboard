@@ -79,8 +79,8 @@ class MapRouletteAPI {
       })
       const chunk = JSON.parse(resp)
       challenges.push(...chunk)
-      qs.page = qs.page + 1
-      if (chunk.length < 50 || qs.page > 10) {
+      qs.page = qs.page + 50
+      if (chunk.length < 50 || qs.page > 50 * 10) {
         break
       } else {
       }
