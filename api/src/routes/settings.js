@@ -1,5 +1,6 @@
 const { cache } = require('../config')
 const dbSettings = require('../models/settings')
+const { deleteTokens } = require('../models/teams-access-tokens')
 const { validateRole } = require('../utils/roles')
 
 /**
@@ -63,7 +64,26 @@ async function put (req, res) {
   }
 }
 
+async function deleteAccessTokens (req, res) {
+  try {
+    const { user } = req
+
+    // only admins are allowed to delete access tokens
+    if (!user || !user.roles || !validateRole(user.roles, 'admin')) {
+      return res.boom.unauthorized('Not authorized')
+    }
+
+    await deleteTokens()
+
+    return res.sendStatus(200)
+  } catch (e) {
+    console.error(e)
+    return res.sendStatus(500)
+  }
+}
+
 module.exports = {
   get,
-  put
+  put,
+  deleteAccessTokens
 }

@@ -87,9 +87,6 @@ test('Get campaigns sorted by least recently created', async t => {
   const createdDates = records.map(prop('created_at'))
   let toCompare = new Date(0)
   createdDates.forEach(date => {
-    console.log(toCompare)
-    console.log(date)
-
     t.truthy(isBefore(toCompare, date) || isEqual(toCompare, date))
     toCompare = date
   })

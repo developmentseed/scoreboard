@@ -47,6 +47,11 @@
 
 .admin {
   .widget-75 {
+    section {
+      &:first-of-type {
+        padding-top: 0;
+      }
+    }
     @include media(medium-up) {
       max-width: 876px;
     }
