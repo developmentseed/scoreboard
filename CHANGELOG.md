@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+## [v1.10.1] - 2021-03-18
+### Added
+- TM4 interface for campaigns
+- Homepage UI "chips"
+- Admin ability to reset tokens
+### Fixed
+- Tests for map roulette integration 
 
 ## [v1.10.0] - 2020-12-23
 
@@ -332,7 +339,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.10.0...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.10.1...HEAD
+[v1.10.1]: https://github.com/developmentseed/scoreboard/compare/v1.10.0...1.10.1
 [v1.10.0]: https://github.com/developmentseed/scoreboard/compare/v1.9.1...1.10.0
 [v1.9.1]: https://github.com/developmentseed/scoreboard/compare/v1.9.0...1.9.1
 [v1.9.0]: https://github.com/developmentseed/scoreboard/compare/v1.8.0...1.9.0
