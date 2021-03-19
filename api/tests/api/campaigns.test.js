@@ -4,7 +4,7 @@ const db = require('../../src/db/connection')
 let app = require('../../src/index')
 const path = require('path')
 const { prop, reject, propEq } = require('ramda')
-const { isBefore, isAfter } = require('date-fns')
+const { isBefore, isAfter, isEqual } = require('date-fns')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')
@@ -87,7 +87,7 @@ test('Get campaigns sorted by least recently created', async t => {
   const createdDates = records.map(prop('created_at'))
   let toCompare = new Date(0)
   createdDates.forEach(date => {
-    t.truthy(isBefore(toCompare, date))
+    t.truthy(isBefore(toCompare, date) || isEqual(toCompare, date))
     toCompare = date
   })
 })
@@ -115,7 +115,8 @@ test('Get campaigns sorted by least recently updated', async t => {
   const updatedDates = records.map(prop('updated_at'))
   let toCompare = new Date(0)
   updatedDates.forEach(date => {
-    t.truthy(isBefore(toCompare, date))
+    t.truthy(isBefore(toCompare, date) || isEqual(toCompare, date))
+
     toCompare = date
   })
 })

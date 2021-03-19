@@ -11,6 +11,7 @@ class TM3API {
     this.api_url = apiUrl
     this.tasker_id = taskerId
     this.opts = opts || {}
+    this.version = 'v1'
   }
 
   getUrlForProject (id) {
@@ -38,7 +39,7 @@ class TM3API {
     }
 
     let firstResp = await rp({
-      uri: `${this.api_url}/api/v1/project/search`,
+      uri: `${this.api_url}/api/${this.version}/project/search`,
       qs,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
@@ -51,7 +52,7 @@ class TM3API {
     for (let i = 2; i <= numPages; i++) {
       qs.page = i
       promises.push(limit(() => rp({
-        uri: `${this.api_url}/api/v1/project/search`,
+        uri: `${this.api_url}/api/${this.version}/project/search`,
         qs,
         headers: { 'Accept-Language': 'en-US,en;q=0.9' }
       })))
@@ -71,20 +72,20 @@ class TM3API {
 
   getProject (id) {
     return rp({
-      uri: `${this.api_url}/api/v1/project/${id}?as_file=false`,
+      uri: `${this.api_url}/api/${this.version}/project/${id}?as_file=false`,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
   }
 
   getProjectAoi (id) {
     return rp({
-      uri: `${this.api_url}/api/v1/project/${id}/aoi?as_file=false`
+      uri: `${this.api_url}/api/${this.version}/project/${id}/aoi?as_file=false`
     })
   }
 
   getTasks (id) {
     return rp({
-      uri: `${this.api_url}/api/v1/project/${id}/tasks`
+      uri: `${this.api_url}/api/${this.version}/project/${id}/tasks`
     })
   }
 
