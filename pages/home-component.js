@@ -103,7 +103,6 @@ export class Home extends Component {
                 {
                   priorityCampaigns.map(record =>
                     <li key={`block-${record.id}`} className='card--wrapper'>
-                      {console.log(record)}
                       <div className='card'>
                         <div className='card-header'>
                           <h3 className='header--small header--with-description-xlg'>
