@@ -48,7 +48,7 @@ async function get (req, res) {
  */
 async function getMapSettings (req, res) {
   let settingsMap = await getSettings()
-  return res.send(pick(['leaflet-source', 'webgl-source', 'use-webgl'], settingsMap))
+  return res.send(pick(['leaflet-source', 'webgl-source', 'disable-webgl'], settingsMap))
 }
 
 /**

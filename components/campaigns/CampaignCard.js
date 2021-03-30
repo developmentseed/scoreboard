@@ -9,7 +9,7 @@ const CampaignMap = dynamic(() => import('../charts/LeafletCampaignMap'), {
   ssr: false
 })
 
-export default ({ campaign }) => {
+export default ({ campaign, mapSettings }) => {
   if (!campaign) {
     return (// empty state
       <div className='card--wrapper'>
@@ -52,7 +52,7 @@ export default ({ campaign }) => {
     <Link href={`/campaign?id=${tasker_id}-${tm_id}`} as={`/campaigns/${tasker_id}-${tm_id}`}>
       <a className='card--wrapper'>
         <div className='card'>
-          <div className='map-campaign-sm'><CampaignMap feature={JSON.parse(geometry)} interactive={false} /></div>
+          <div className='map-campaign-sm'><CampaignMap feature={JSON.parse(geometry)} interactive={false} settings={mapSettings} /></div>
           <div className='card-content'>
             <h4 className='header--small header--with-description'>{trimLength(name, 70)}</h4>
             <span className='card__description-project'>Project #{tm_id} - {tm_name} { team_priority ? `- Priority ${parseInt(team_priority, 10)}` : ''}</span>

@@ -91,7 +91,6 @@ export class AdminTeamsEdit extends Component {
     try {
       await this.props.updateTeam(id, params)
     } catch (e) {
-      console.log(e)
       this.setState({ disableInteraction: false })
     }
   }

@@ -60,7 +60,7 @@ class Dashboard extends Component {
       )
     }
 
-    const { authenticatedUser, project } = this.props
+    const { authenticatedUser, project, mapSettings } = this.props
     const { loggedIn, account } = authenticatedUser
     if (!loggedIn || !account) {
       return (
@@ -171,7 +171,7 @@ class Dashboard extends Component {
               <section id='dashboard_map'>
                 <div className='row'>
                   <div className='map-lg'>
-                    <UserExtentMap uid={uid} extent={extent_uri} />
+                    <UserExtentMap uid={uid} extent={extent_uri} settings={mapSettings} />
                   </div>
                 </div>
               </section>
@@ -248,6 +248,6 @@ class Dashboard extends Component {
 }
 
 export default connect(
-  ['authenticatedUser', 'error'],
+  ['authenticatedUser', 'error', 'mapSettings'],
   actions
 )(withAlert(Dashboard))
