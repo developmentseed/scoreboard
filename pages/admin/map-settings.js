@@ -24,8 +24,8 @@ function MapSettings (props) {
         <input type='text' name='webgl-source' defaultValue={props.settings['webgl-source']} ref={register} />
       </div>
       <div className='form__input-unit'>
-        <label htmlFor='setting-use-webgl'>Checking this box will enable WebGL Maps when possible: </label>
-        <input type='checkbox' name='use-webgl' defaultChecked={props.settings['use-webgl']} ref={register} />
+        <input type='checkbox' name='disable-webgl' defaultChecked={props.settings['disable-webgl']} ref={register} />
+        <label htmlFor='setting-disable-webgl'> Disable WebGL and default to Leaflet maps</label>
       </div>
       <input type='submit' className='button' value='submit' />
     </form>
@@ -42,7 +42,7 @@ export class AdminSettings extends Component {
       settings: {
         'leaflet-source': '',
         'webgl-source': '',
-        'use-webgl': false
+        'disable-webgl': false
       }
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -61,7 +61,7 @@ export class AdminSettings extends Component {
 
   async handleSubmit (data) {
     try {
-      data['use-webgl'] = String(data['use-webgl'])
+      data['disable-webgl'] = String(data['disable-webgl'])
       await this.props.updateSettings(data)
     } catch (e) {
       console.error(e)
@@ -71,7 +71,7 @@ export class AdminSettings extends Component {
   componentDidUpdate () {
     const { settings } = this.props
     if (settings && this.state.loading) {
-      settings['use-webgl'] = (settings['use-webgl'] === 'true')
+      settings['disable-webgl'] = (settings['disable-webgl'] === 'true')
       this.setState({
         loading: false,
         settings
