@@ -192,6 +192,7 @@ export class AdminTaskersAdd extends Component {
             options={[
               { value: 'tm2', label: 'Tasking Manager v2' },
               { value: 'tm3', label: 'Tasking Manager v3' },
+              { value: 'tm4', label: 'Tasking Manager v4' },
               { value: 'mr', label: 'Map Roulette' }
             ]}
           />
