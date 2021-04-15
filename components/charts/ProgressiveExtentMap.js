@@ -35,7 +35,7 @@ export default class ProgressiveExtentMap extends Component {
   }
   render () {
     if (!this.state.canRender) return <div />
-    if (this.state.hasWebGL) return <GLExtentMap {...this.props} />
+    if (this.state.hasWebGL && (this.props.settings['disable-webgl'] === 'false')) return <GLExtentMap {...this.props} />
     return <LeafletExtentMap {...this.props} />
   }
 }

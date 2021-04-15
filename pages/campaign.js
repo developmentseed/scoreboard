@@ -95,6 +95,7 @@ export class Campaign extends Component {
 
   render () {
     const { meta, lastUpdate, creationDate, refreshDate, tables } = this.props.campaign
+    const { mapSettings } = this.props
     const panelContent = this.props.campaign.panelContent || []
     const orderedTables = tables && tables.sort((a, b) => { return a.statsType === 'osmesa' ? -1 : b.statsType === 'osmesa' ? 1 : 0 })
 
@@ -144,7 +145,7 @@ export class Campaign extends Component {
             </div>
             <div className='widget-50'>
               <div className='map-lg'>
-                <CampaignMap feature={JSON.parse(meta.geometry)} interactive />
+                <CampaignMap feature={JSON.parse(meta.geometry)} interactive settings={mapSettings} />
               </div>
             </div>
             <div className='widget-33 page-actions'>
@@ -184,7 +185,7 @@ export class Campaign extends Component {
 }
 
 const Page = connect(
-  ['authenticatedUser', 'campaign'],
+  ['authenticatedUser', 'campaign', 'mapSettings'],
   actions
 )(Campaign)
 

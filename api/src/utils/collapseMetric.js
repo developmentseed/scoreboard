@@ -1,6 +1,6 @@
 function collapseOnKey (arr, keyName) {
   const collapsed = []
-  arr.reduce((acc, obj) => {
+  arr.forEach((obj) => {
     collapsed.push(obj[keyName])
   })
   return collapsed
