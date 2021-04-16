@@ -69,6 +69,11 @@ export default function AdminSectionList (props) {
               <a className='link--normal'>Edit App Settings</a>
             </Link>
           </li>
+          <li>
+            <Link href='/admin/map-settings'>
+              <a className='link--normal'>Edit Map Settings</a>
+            </Link>
+          </li>
         </ul>
       </li>
     </ul>

@@ -62,6 +62,9 @@ export class User extends Component {
       teams,
       refreshDate
     } = this.props.user
+
+    const { mapSettings } = this.props
+
     const { extent_uri, uid } = records
     if (!records) return <div />
     const badgeCount = Object.keys(badges.earnedBadges).length
@@ -124,7 +127,7 @@ export class User extends Component {
               <section id='user_map'>
                 <div className='row'>
                   <div className='map-lg'>
-                    <UserExtentMap uid={uid} extent={extent_uri} />
+                    <UserExtentMap uid={uid} extent={extent_uri} settings={mapSettings} />
                   </div>
                 </div>
               </section>
@@ -171,7 +174,7 @@ export class User extends Component {
 }
 
 const connectedUser = connect(
-  ['user'],
+  ['user', 'mapSettings'],
   actions
 )(User)
 

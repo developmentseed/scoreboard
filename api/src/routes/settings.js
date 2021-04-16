@@ -1,7 +1,27 @@
 const { cache } = require('../config')
 const dbSettings = require('../models/settings')
+const { pick } = require('ramda')
 const { deleteTokens } = require('../models/teams-access-tokens')
 const { validateRole } = require('../utils/roles')
+
+async function getSettings () {
+  // Get data from the cache first
+  let settingsMap = {}
+  const keys = cache.keys()
+  if (keys.length === 0) {
+    const settings = await dbSettings.list()
+    if (settings.length) {
+      settingsMap = Object.assign(
+        ...settings.map(({ setting, value }) => ({ [setting]: value }))
+      )
+    }
+  } else {
+    keys.map(key => {
+      settingsMap[key] = cache.get(key)
+    })
+  }
+  return settingsMap
+}
 
 /**
  * Retrieve app settings from the database
@@ -15,27 +35,20 @@ async function get (req, res) {
       return res.boom.unauthorized('Not authorized')
     }
 
-    // Get data from the cache first
-    let settingsMap = {}
-    const keys = cache.keys()
-    if (keys.length === 0) {
-      const settings = await dbSettings.list()
-      if (settings.length) {
-        settingsMap = Object.assign(
-          ...settings.map(({ setting, value }) => ({ [setting]: value }))
-        )
-      }
-    } else {
-      keys.map(key => {
-        settingsMap[key] = cache.get(key)
-      })
-    }
-
+    let settingsMap = await getSettings()
     return res.send(settingsMap)
   } catch (e) {
     console.error(e)
     return res.sendStatus(500)
   }
+}
+
+/**
+ * Public route to get map settings
+ */
+async function getMapSettings (req, res) {
+  let settingsMap = await getSettings()
+  return res.send(pick(['leaflet-source', 'webgl-source', 'disable-webgl'], settingsMap))
 }
 
 /**
@@ -84,6 +97,7 @@ async function deleteAccessTokens (req, res) {
 
 module.exports = {
   get,
+  getMapSettings,
   put,
   deleteAccessTokens
 }

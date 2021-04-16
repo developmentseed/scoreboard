@@ -115,6 +115,7 @@ class Layout extends React.Component {
 
   componentDidMount () {
     this.props.getAuthenticatedUser()
+    this.props.getMapSettings()
   }
 
   componentDidUpdate () {
@@ -144,7 +145,7 @@ class Layout extends React.Component {
   }
 
   render () {
-    const { authenticatedUser, children } = this.props
+    const { authenticatedUser, mapSettings, children } = this.props
     const { loggedIn, osm, account, name } = authenticatedUser
     let menuClass = ['nav--left', 'mobile-hidden']
     if (this.state.removeClass) {
@@ -214,7 +215,7 @@ class Layout extends React.Component {
           </div>
         </header>
         {
-          React.cloneElement(children, { loggedIn, authenticatedUser })
+          React.cloneElement(children, { loggedIn, authenticatedUser, mapSettings })
         }
         <Footer loggedIn={loggedIn} />
       </div>
@@ -222,7 +223,7 @@ class Layout extends React.Component {
   }
 }
 
-const LayoutWithStore = connect(['authenticatedUser', 'notification'], actions)(withAlert(Layout))
+const LayoutWithStore = connect(['authenticatedUser', 'notification', 'mapSettings'], actions)(withAlert(Layout))
 
 class Scoreboard extends App {
   static async getInitialProps ({ Component, router, ctx }) {

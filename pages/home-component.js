@@ -43,7 +43,7 @@ export class Home extends Component {
   }
 
   render () {
-    const { topStats } = this.props
+    const { topStats, mapSettings } = this.props
 
     if (this.state.loading) {
       return (
@@ -95,7 +95,7 @@ export class Home extends Component {
               <h2 className='header--large'>Campaigns</h2>
               <div className='home-map'>
                 {features
-                  ? <Map overlay={features} />
+                  ? <Map overlay={features} settings={mapSettings} />
                   : <div>Loading map...</div>
                 }
               </div>
@@ -103,7 +103,6 @@ export class Home extends Component {
                 {
                   priorityCampaigns.map(record =>
                     <li key={`block-${record.id}`} className='card--wrapper'>
-                      {console.log(record)}
                       <div className='card'>
                         <div className='card-header'>
                           <h3 className='header--small header--with-description-xlg'>
@@ -155,4 +154,4 @@ export class Home extends Component {
   }
 }
 
-export default connect(['topStats', 'notification', 'authenticatedUser'], actions)(withAlert(Home))
+export default connect(['topStats', 'notification', 'authenticatedUser', 'mapSettings'], actions)(withAlert(Home))

@@ -3,7 +3,7 @@ import CampaignCard from './CampaignCard'
 import { LoadingState } from '../common/LoadingState'
 import { range } from 'ramda'
 
-export default ({ records, apiStatus, total, allCount }) => {
+export default ({ records, apiStatus, total, allCount, mapSettings }) => {
   let content = <div />
   switch (apiStatus) {
     case 'SUCCESS':
@@ -11,7 +11,7 @@ export default ({ records, apiStatus, total, allCount }) => {
         <div>
           <h3 className='header--medium'>{(parseInt(total) < parseInt(allCount)) ? `${total} campaigns out of ${allCount}` : `${total} campaigns`}</h3>
           <div className='clearfix cards-container widget-container'>
-            {records.map((record, idx) => <CampaignCard key={`campaign-${idx}`} campaign={record} />)}
+            {records.map((record, idx) => <CampaignCard key={`campaign-${idx}`} campaign={record} mapSettings={mapSettings} />)}
           </div>
 
         </div>

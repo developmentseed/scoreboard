@@ -74,6 +74,8 @@ export class Campaigns extends Component {
       includeArchived
     } = this.props.campaigns
 
+    const { mapSettings } = this.props
+
     const {
       records: { total, records, allCount, tms, refreshDate },
       apiStatus
@@ -118,7 +120,7 @@ export class Campaigns extends Component {
               />
             </div>
             <div className='widget-75'>
-              <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} />
+              <CampaignsListing records={records} apiStatus={apiStatus} total={total} allCount={allCount} mapSettings={mapSettings} />
               <Pagination
                 activePage={page}
                 itemsCountPerPage={10}
@@ -134,4 +136,4 @@ export class Campaigns extends Component {
   }
 };
 
-export default connect(['campaigns', 'campaignSearchResults', 'campaign'], actions)(Campaigns)
+export default connect(['campaigns', 'campaignSearchResults', 'campaign', 'mapSettings'], actions)(Campaigns)
