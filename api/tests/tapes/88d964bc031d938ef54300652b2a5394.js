@@ -12,7 +12,7 @@ module.exports = function (req, res) {
   res.statusCode = 308;
 
   res.setHeader("server", "nginx");
-  res.setHeader("date", "Tue, 30 Mar 2021 04:17:12 GMT");
+  res.setHeader("date", "Fri, 09 Apr 2021 16:23:43 GMT");
   res.setHeader("content-type", "text/html; charset=utf-8");
   res.setHeader("content-length", "351");
   res.setHeader("connection", "close");

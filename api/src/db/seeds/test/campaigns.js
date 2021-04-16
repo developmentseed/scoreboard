@@ -13,7 +13,7 @@ exports.seed = async (knex) => {
     dirname: path.join(__dirname, '..', '..', '..', '..', 'tests', 'tapes')
   }))
 
-  const tm4proxy = http.createServer(yakbak('https://tasks-backend.openstreetmap.us/', {
+  const tm4proxy = http.createServer(yakbak('https://tasks-backend.openstreetmap.us/api', {
     dirname: path.join(__dirname, '..', '..', '..', '..', 'tests', 'tapes')
   }))
 
@@ -43,10 +43,10 @@ exports.seed = async (knex) => {
 
           await knex('taskers').insert({
             type: 'tm4',
-            url: 'https://tasks-backend.openstreetmap.us',
+            url: 'https://tasks-backend.openstreetmap.us/api',
             name: 'test tm4',
             options: {
-              proxy: 'http://localhost:4851'
+              proxy: 'http://localhost:4851/api'
             }
           })
 

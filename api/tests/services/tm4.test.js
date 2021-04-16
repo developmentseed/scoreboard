@@ -9,7 +9,7 @@ const http = require('http')
 const yakbak = require('yakbak')
 const { has, equals, all } = require('ramda')
 
-const tm4proxy = http.createServer(yakbak('https://tasks-backend.openstreetmap.us/', {
+const tm4proxy = http.createServer(yakbak('https://tasks-backend.openstreetmap.us/api', {
   dirname: path.join(__dirname, '..', '..', '..', '..', 'tests', 'tapes')
 }))
 
@@ -38,7 +38,7 @@ test.serial('Test TM4', async t => {
   const tm = TaskingManagerFactory.createInstance({ id: 1,
     type: 'tm4',
     url: 'https://tasks.openstreetmap.us',
-    options: { proxy: 'http://localhost:4848' } })
+    options: { proxy: 'http://localhost:4848/api' } })
   let projects = await tm.getProjects()
   t.true(projects.length > 0)
 
@@ -63,7 +63,7 @@ test.serial('Test TM4 schema', async t => {
   const tm = TaskingManagerFactory.createInstance({ id: 1,
     type: 'tm4',
     url: 'https://tasks.openstreetmap.us',
-    options: { proxy: 'http://localhost:4848' } })
+    options: { proxy: 'http://localhost:4848/api' } })
 
   let projects = await tm.getProjects()
 
@@ -87,7 +87,7 @@ test.serial('Test URL forming', async t => {
   const tm = TaskingManagerFactory.createInstance({ id: 1,
     type: 'tm4',
     url: 'https://tasks.openstreetmap.us',
-    options: { proxy: 'http://localhost:4848' } })
+    options: { proxy: 'http://localhost:4848/api' } })
 
   let projects = await tm.getProjects() // Should get from the proxy
   const project = projects.find(p => p.projectId === 229)
@@ -102,7 +102,7 @@ test.serial('Test extra params', async t => {
   const tm = TaskingManagerFactory.createInstance({ id: 1,
     type: 'tm4',
     url: 'https://tasks.openstreetmap.us',
-    options: { proxy: 'http://localhost:4848',
+    options: { proxy: 'http://localhost:4848/api',
       search_params: {
         'mapperLevel': 'BEGINNER'
       }
@@ -120,7 +120,7 @@ test.only('Duplicate campaigns', async t => {
 
   // Try adding the tasks again
   const [tm4] = await db('taskers').where('name', 'test tm4')
-  const tm = TaskingManagerFactory.createInstance({ id: tm4.id, type: 'tm4', url: 'http://tasks.openstreetmap.us', opts: { proxy: 'http://localhost:4848' } })
+  const tm = TaskingManagerFactory.createInstance({ id: tm4.id, type: 'tm4', url: 'http://tasks.openstreetmap.us', opts: { proxy: 'http://localhost:4848/api' } })
   let projects = await tm.getProjects() // Should get from the proxy
   let dbObjects = await tm.toDBObjects(projects)
   await tm.updateDB(db, dbObjects)

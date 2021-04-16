@@ -15,7 +15,7 @@ class TM4API {
   }
 
   getUrlForProject (id) {
-    return `${this.url}/project/${id}`
+    return `${this.url}/project/${id}/`
   }
 
   getLastUpdated (id) {
@@ -40,7 +40,7 @@ class TM4API {
     }
 
     let firstResp = await rp({
-      uri: `${this.api_url}/api/${this.version}/projects`,
+      uri: `${this.api_url}/${this.version}/projects/`,
       qs,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
@@ -52,7 +52,7 @@ class TM4API {
     for (let i = 2; i <= numPages; i++) {
       qs.page = i
       promises.push(limit(() => rp({
-        uri: `${this.api_url}/api/${this.version}/projects`,
+        uri: `${this.api_url}/${this.version}/projects/`,
         qs,
         headers: { 'Accept-Language': 'en-US,en;q=0.9' }
       })))
@@ -72,20 +72,20 @@ class TM4API {
 
   getProject (id) {
     return rp({
-      uri: `${this.api_url}/api/${this.version}/projects/${id}?as_file=false`,
+      uri: `${this.api_url}/${this.version}/projects/${id}?as_file=false`,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
   }
 
   getProjectAoi (id) {
     return rp({
-      uri: `${this.api_url}/api/${this.version}/projects/${id}/queries/aoi?as_file=false`
+      uri: `${this.api_url}/${this.version}/projects/${id}/queries/aoi?as_file=false`
     })
   }
 
   getTasks (id) {
     return rp({
-      uri: `${this.api_url}/api/${this.version}/project/${id}/tasks`
+      uri: `${this.api_url}/${this.version}/project/${id}/tasks/`
     })
   }
 
