@@ -5,9 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+## [v1.11.0] - 2021-04-19
 ### Fixed
 - Fix TM prefixes for TM4
 - Update map data on front page to filter out draft campaign AOIs
+
+# Added
+- Map settings page in the Admin that allows control over the basemap
 ## [v1.10.1] - 2021-03-18
 ### Added
 - TM4 interface for campaigns
@@ -342,7 +346,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.10.1...HEAD
+[v1.11.0]: https://github.com/developmentseed/scoreboard/compare/v1.11.0...HEAD
+[v1.10.1]: https://github.com/developmentseed/scoreboard/compare/v1.10.1...1.11.0
 [v1.10.1]: https://github.com/developmentseed/scoreboard/compare/v1.10.0...1.10.1
 [v1.10.0]: https://github.com/developmentseed/scoreboard/compare/v1.9.1...1.10.0
 [v1.9.1]: https://github.com/developmentseed/scoreboard/compare/v1.9.0...1.9.1
