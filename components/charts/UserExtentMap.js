@@ -25,11 +25,11 @@ class UserExtentMap extends Component {
   }
 
   loadMap () {
-    const { uid } = this.props
+    const { uid, settings } = this.props
 
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/devseed/cjqpb3z440t302smfnewsl6vb',
+      style: settings['webgl-source'],
       zoom: 1,
       center: [0, 0]
     })

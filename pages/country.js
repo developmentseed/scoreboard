@@ -17,6 +17,8 @@ export class Country extends Component {
   }
 
   render () {
+    const { mapSettings } = this.props
+
     if (!this.props.country) return <div />
     const { name, edit_count, users, numParticipants, records, refreshDate } = this.props.country
     records.numParticipants = numParticipants
@@ -55,7 +57,7 @@ export class Country extends Component {
             </div>
             <div className='widget-50'>
               <div className='map-lg'>
-                <CountryMap geography={this.props.country.geography} centroid={this.props.country.center} interactive />
+                <CountryMap geography={this.props.country.geography} centroid={this.props.country.center} interactive settings={mapSettings} />
               </div>
             </div>
           </div>
@@ -65,7 +67,7 @@ export class Country extends Component {
   }
 }
 
-const connectedCountry = connect(['country'], actions)(Country)
+const connectedCountry = connect(['country', 'mapSettings'], actions)(Country)
 
 export default connectedCountry
 
