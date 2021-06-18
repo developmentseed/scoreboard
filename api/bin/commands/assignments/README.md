@@ -33,3 +33,31 @@ scoreboard assignments team-assignments
 ```
 
 Similarly, you can use `---tasker_id` to filter which tasking manager you want the assignments from, and `--csv` to format the data in comma delimited rows.
+
+## To insert a favorite
+```
+scoreboard assignments insert-favorite --tasker_id 19 --tm_id 17893 --user_id 4012  
+```
+
+Will add the campaign to a user's favorites
+
+Running `scoreboard assignments favorites` will now print
+
+```
+tasker_id: 19 | tm_id: 17895 | author: null | hashtag: maproulette-challenge-17895 | user_id: 4012
+tasker_id: 19 | tm_id: 17894 | author: null | hashtag: maproulette-challenge-17894 | user_id: 4012
+tasker_id: 19 | tm_id: 17893 | author: null | hashtag: maproulette-challenge-17893 | user_id: 4012
+```
+
+## To insert a team assignment
+Similarly, to add an assignment to `team_assignments` we use:
+
+```
+scoreboard assignments insert-to-team --tasker_id 19 --tm_id 17895 --team_id 1 --team_priority 1   
+```
+
+Running `scoreboard assignments team-assignments` will now print:
+
+```
+tasker_id: 19 | tm_id: 17895 | author: null | hashtag: maproulette-challenge-17895 | team_id: 1 | team_priority: 1
+```

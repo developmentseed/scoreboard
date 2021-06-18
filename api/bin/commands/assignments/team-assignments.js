@@ -20,7 +20,7 @@ async function command (args, flags) {
     }))
   } else {
     await Promise.all(list.map(async (a) => {
-      console.log(`tasker_id: ${a.tasker_id} | tm_id: ${a.tm_id} | author: ${a.author} | hashtag: ${a.campaign_hashtag} | team_id: ${a.team_id} | team_prioiryt: ${a.team_priority}`)
+      console.log(`tasker_id: ${a.tasker_id} | tm_id: ${a.tm_id} | author: ${a.author} | hashtag: ${a.campaign_hashtag} | team_id: ${a.team_id} | team_priority: ${a.team_priority}`)
     }))
   }
 
