@@ -38,7 +38,6 @@ class TM4API {
     if (this.opts.search_params) {
       qs = Object.assign(this.opts.search_params, qs)
     }
-
     let firstResp = await rp({
       uri: `${this.api_url}/${this.version}/projects/`,
       qs,
@@ -71,8 +70,15 @@ class TM4API {
   }
 
   getProject (id) {
+    let qs = { as_file: false }
+
+    if (this.opts.search_params) {
+      qs = Object.assign(this.opts.search_params, qs)
+    }
+
     return rp({
-      uri: `${this.api_url}/${this.version}/projects/${id}?as_file=false`,
+      uri: `${this.api_url}/${this.version}/projects/${id}/`,
+      qs,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
   }
