@@ -50,8 +50,8 @@ class TM4API {
     let numPages = json.pagination.pages
     let promises = []
     for (let i = 2; i <= numPages; i++) {
-      qs = Object.assign({}, qs);
-      qs.page = i;
+      qs = Object.assign({}, qs)
+      qs.page = i
 
       promises.push({
         uri: `${this.api_url}/${this.version}/projects/`,
