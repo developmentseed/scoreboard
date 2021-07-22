@@ -71,7 +71,6 @@ class TM4API {
       return projects
     })
   }
-  }
 
   getProject (id) {
     return rp({
