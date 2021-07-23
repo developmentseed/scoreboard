@@ -49,15 +49,17 @@ class TM4API {
     let numPages = json.pagination.pages
     let promises = []
     for (let i = 2; i <= numPages; i++) {
+      qs = Object.assign({}, qs)
       qs.page = i
-      promises.push(limit(() => rp({
+
+      promises.push({
         uri: `${this.api_url}/${this.version}/projects/`,
         qs,
         headers: { 'Accept-Language': 'en-US,en;q=0.9' }
-      })))
+      })
     }
 
-    return Promise.all(promises).then(responses => {
+    return Promise.all(promises.map(config => limit(() => rp(config)))).then(responses => {
       responses.forEach(response => {
         let results = JSON.parse(response).results
         results.forEach(project => {
