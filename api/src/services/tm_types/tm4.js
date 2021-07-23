@@ -33,7 +33,7 @@ class TM4API {
   async getProjects () {
     let qs = {
       page: 1,
-      action: 'map'
+      action: 'any'
     }
     if (this.opts.search_params) {
       qs = Object.assign(this.opts.search_params, qs)
