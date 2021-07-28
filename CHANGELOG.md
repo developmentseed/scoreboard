@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## [v1.11.1] - 2021-07-28
+
+### Fixed
+- TM4 clock process now runs serially in some cases
+- TM4 paging bug
+- Fix TM4 single project requests
+
+### Added
+- Create new `scoreboard assignments` command to insert assignments through the CLI
+
 ## [v1.11.0] - 2021-04-19
 ### Fixed
 - Fix TM prefixes for TM4
@@ -346,13 +357,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[v1.11.0]: https://github.com/developmentseed/scoreboard/compare/v1.11.0...HEAD
-[v1.10.1]: https://github.com/developmentseed/scoreboard/compare/v1.10.1...1.11.0
-[v1.10.1]: https://github.com/developmentseed/scoreboard/compare/v1.10.0...1.10.1
-[v1.10.0]: https://github.com/developmentseed/scoreboard/compare/v1.9.1...1.10.0
-[v1.9.1]: https://github.com/developmentseed/scoreboard/compare/v1.9.0...1.9.1
-[v1.9.0]: https://github.com/developmentseed/scoreboard/compare/v1.8.0...1.9.0
-[v1.8.0]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...1.8.0
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.11.1...HEAD
+[v1.11.1]: https://github.com/developmentseed/scoreboard/compare/v1.11.0...v1.11.1
+[v1.11.0]: https://github.com/developmentseed/scoreboard/compare/v1.10.1...v1.11.0
+[v1.10.1]: https://github.com/developmentseed/scoreboard/compare/v1.10.0...v1.10.1
+[v1.10.0]: https://github.com/developmentseed/scoreboard/compare/v1.9.1...v1.10.0
+[v1.9.1]: https://github.com/developmentseed/scoreboard/compare/v1.9.0...v1.9.1
+[v1.9.0]: https://github.com/developmentseed/scoreboard/compare/v1.8.0...v1.9.0
+[v1.8.0]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...v1.8.0
 [v1.7.2]: https://github.com/developmentseed/scoreboard/compare/v1.7.1...v1.7.2
 [v1.7.1]: https://github.com/developmentseed/scoreboard/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/developmentseed/scoreboard/compare/v1.6.0...v1.7.0
