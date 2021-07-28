@@ -17,7 +17,8 @@
     "migrate": "knex migrate:latest --cwd api/src/db/",
     "seed": "knex seed:run --cwd api/src/db",
     "rollback": "knex migrate:rollback --cwd api/src/db/",
-    "clocks": "nf start update_users,tm_clock",
+    "clocks": "nf start clocks",
+    "clocks_serial": "nf start clocks_serial",
     "lint": "devseed-standard",
     "lintfix": "devseed-standard --fix",
     "lint:css": "stylelint 'styles/**/**' 'scripts/**/*.js'"
