@@ -8,7 +8,6 @@ const path = require('path')
 const http = require('http')
 const yakbak = require('yakbak')
 const { has, equals, all } = require('ramda')
-
 const tm4proxy = http.createServer(yakbak('https://tasks-backend.openstreetmap.us/api', {
   dirname: path.join(__dirname, '..', '..', '..', '..', 'tests', 'tapes')
 }))

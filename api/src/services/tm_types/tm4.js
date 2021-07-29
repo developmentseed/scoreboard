@@ -33,12 +33,11 @@ class TM4API {
   async getProjects () {
     let qs = {
       page: 1,
-      action: 'map'
+      action: 'any'
     }
     if (this.opts.search_params) {
       qs = Object.assign(this.opts.search_params, qs)
     }
-
     let firstResp = await rp({
       uri: `${this.api_url}/${this.version}/projects/`,
       qs,
@@ -50,15 +49,17 @@ class TM4API {
     let numPages = json.pagination.pages
     let promises = []
     for (let i = 2; i <= numPages; i++) {
+      qs = Object.assign({}, qs)
       qs.page = i
-      promises.push(limit(() => rp({
+
+      promises.push({
         uri: `${this.api_url}/${this.version}/projects/`,
         qs,
         headers: { 'Accept-Language': 'en-US,en;q=0.9' }
-      })))
+      })
     }
 
-    return Promise.all(promises).then(responses => {
+    return Promise.all(promises.map(config => limit(() => rp(config)))).then(responses => {
       responses.forEach(response => {
         let results = JSON.parse(response).results
         results.forEach(project => {
@@ -71,8 +72,15 @@ class TM4API {
   }
 
   getProject (id) {
+    let qs = { as_file: false }
+
+    if (this.opts.search_params) {
+      qs = Object.assign(this.opts.search_params, qs)
+    }
+
     return rp({
-      uri: `${this.api_url}/${this.version}/projects/${id}?as_file=false`,
+      uri: `${this.api_url}/${this.version}/projects/${id}/`,
+      qs,
       headers: { 'Accept-Language': 'en-US,en;q=0.9' }
     })
   }
