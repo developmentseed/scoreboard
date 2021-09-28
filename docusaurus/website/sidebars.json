@@ -49,6 +49,11 @@
       "admin/badges",
       "admin/create-badge",
       "admin/edit-badge"
+    ],
+    "Settings": [
+      "admin/settings",
+      "admin/edit-app-settings",
+      "admin/edit-map-settings"
     ]
   },
   "developers": {

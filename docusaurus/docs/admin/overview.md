@@ -26,3 +26,6 @@ The admin section of Scoreboard allows admin users to manage badges, teams, and 
 - [Tasking Managers overview](admin/tasking-managers.md)
 - [Add a new Tasking Manager](admin/add-tasking-manager.md)
 - [Edit a Tasking Manager](admin/edit-tasking-manager.md)
+
+## Settings
+- [Settings Overview](admin/settings.md)
