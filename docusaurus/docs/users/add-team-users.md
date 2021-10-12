@@ -4,14 +4,13 @@ title: "Add users to a team"
 sidebar_label: "Add users to a team"
 ---
 
-Admin users can edit existing teams to add users as team members.
+Team managers can edit existing teams to add users as team members.
 
-> Learn about [creating teams](admin/create-team.md).
+> Learn about [creating teams](users/create-team.md).
 
 To find and edit an existing team:
 
 - Log in to Scoreboard if you haven't already
-- Visit the teams admin page
 - Choose a team from the list and click it to edit that team
 
 ### Add users
