@@ -4,12 +4,11 @@ title: "Create a team"
 sidebar_label: "Create a team"
 ---
 
-Admin users of Scoreboard are able to create teams using the admin section of the site.
+Managers of Scoreboard are able to create teams.
 
 To create a team:
 
 - Log in to Scoreboard if you haven't already
-- Visit the teams admin page
 - Click the Create New Team link
 - Enter information about the team:
   - name
@@ -20,8 +19,8 @@ To create a team:
 
 ## Adding users to a team
 
-Learn more about [adding users to a team](admin/add-team-users.md).
+Learn more about [adding users to a team](users/add-team-users.md).
 
 ## Adding campaigns to a team
 
-Learn more about [adding campaigns to a team](admin/add-team-campaigns.md).
+Learn more about [adding campaigns to a team](users/add-team-campaigns.md).
