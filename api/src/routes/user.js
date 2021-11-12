@@ -33,6 +33,7 @@ async function get (req, res) {
   let user
   try {
     [user] = await users.findByOsmId(id)
+    console.log(user)
     if (!user) {
       return res.boom.notFound(`User with id ${id} not found`)
     }
@@ -155,6 +156,7 @@ async function get (req, res) {
   return res.send({
     id,
     uid,
+    userInfo: user.user_info,
     badges,
     teams,
     assignments,

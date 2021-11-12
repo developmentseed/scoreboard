@@ -27,7 +27,7 @@ async function populateUsers () {
       .map((line) => {
         const parts = line.split(',')
         return zipObj(
-          ['osm_id', 'display_name', 'email', 'status', 'full_name', 'country'],
+          ['osm_id', 'display_name', 'email', 'status', 'full_name', 'country', 'flair'],
           parts
         )
       })
@@ -58,7 +58,8 @@ async function populateUsers () {
               full_name: obj.full_name,
               display_name: obj.display_name,
               email: obj.email,
-              status: obj.status
+              status: obj.status,
+              flair: obj.flair
             }
           }
           if (rows.length === 0) { // Not found
