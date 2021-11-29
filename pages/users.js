@@ -6,6 +6,7 @@ import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
+import { assoc, path } from 'ramda'
 
 const AllUsersFilter = dynamic(() => import('../components/users/AllUsersFilter'), { ssr: false })
 
@@ -60,6 +61,11 @@ export class Users extends Component {
     const { stats, apiStatus } = this.props.usersSearchResults
 
     const { total, records, subTotal, editTotal, countries, active, refreshDate } = stats
+    let userRecords = []
+    if (records) {
+      userRecords = records.map(record => assoc('user_tag', path(['user_info', 'flair'], record), record))
+    }
+
 
     return (
       <div className='Users'>
@@ -99,7 +105,7 @@ export class Users extends Component {
             />
             <div className='widget-75'>
               <h3 className='header--medium'>{subTotal} Mappers</h3>
-              <AllUsersTable users={records} apiStatus={apiStatus} />
+              <AllUsersTable users={userRecords} apiStatus={apiStatus} />
               <Pagination
                 activePage={page}
                 itemsCountPerPage={25}

@@ -7,6 +7,7 @@ const tableSchema = {
     'rank': { type: 'string', accessor: 'rank' },
     'name': { type: 'namelink', accessor: 'full_name' },
     'country': { type: 'string', accessor: 'country' },
+    'user-tag': { type: 'string', accessor: 'user_tag' },
     'total-edits': { type: 'number', accessor: 'edit_count' },
     'last-edit': { type: 'date', accessor: 'last_edit' }
   },
@@ -14,6 +15,7 @@ const tableSchema = {
     'rank',
     'name',
     'country',
+    'user-tag',
     'total-edits',
     'last-edit'
   ],
