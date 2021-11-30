@@ -21,7 +21,7 @@ function getLastEdit (edit_times) {
 }
 
 function DashboardHeader (props) {
-  const { loggedIn, id, edit_times, country, name, profileImage, refreshDate } = props
+  const { loggedIn, id, edit_times, country, name, profileImage, refreshDate, tags } = props
 
   return (
     <header className='header--internal--green header--page'>
@@ -44,6 +44,10 @@ function DashboardHeader (props) {
               <li>
                 <span className='list-label'>Country:</span>
                 <strong>{country}</strong>
+              </li>
+              <li>
+                <span className='list-label'>Tags:</span>
+                <strong>{tags}</strong>
               </li>
             </ul>
             {
