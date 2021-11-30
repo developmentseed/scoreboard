@@ -11,7 +11,7 @@ const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 const UsersFilter = ({
   handleSearch, handleSelect, handleSortSelect, selectedValue, selectedSortValue,
-  handleActiveSelect, selectedActive, searchText
+  handleActiveSelect, selectedActive, searchText, selectedTagValue, handleTagSelect, tags
 }) => (
   <div className='widget-25'>
     <h3 className='header--medium'>Filter</h3>
@@ -33,6 +33,16 @@ const UsersFilter = ({
           options={
             sortByLabel(countries.map(({ name }) => { return { value: name, label: name } }).filter((country) => country.label))
           }
+        />
+      </fieldset>
+      <fieldset>
+        <legend>Tags</legend>
+        <Select name='tags'
+          multi
+          simpleValue
+          value={selectedTagValue}
+          onChange={handleTagSelect}
+          options={tags.map(t => ({ value: t, label: t }))}
         />
       </fieldset>
       <fieldset>

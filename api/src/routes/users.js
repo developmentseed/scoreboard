@@ -11,6 +11,7 @@ const refreshStatus = require('../utils/osmesaStatus.js')
 function applyFilters (query, req) {
   const search = req.query.q || ''
   const country = req.query.country || ''
+  const tags = req.query.tags || ''
   const active = req.query.active || false
 
   if (search.length > 0) {
@@ -20,6 +21,10 @@ function applyFilters (query, req) {
   if (country.length > 0) {
     const countries = country.split(',')
     query = query.whereIn('country', countries)
+  }
+
+  if (tags.length > 0) {
+    query = query.whereRaw(`user_info->>'flair' = ?`, [tags]).debug()
   }
 
   if (active) {
