@@ -1,5 +1,6 @@
 const db = require('../db/connection')
 const { subMonths } = require('date-fns')
+const { pluck } = require('ramda')
 
 const users = require('../models/users')
 const roles = require('../models/roles')
@@ -10,6 +11,7 @@ const refreshStatus = require('../utils/osmesaStatus.js')
 function applyFilters (query, req) {
   const search = req.query.q || ''
   const country = req.query.country || ''
+  const tags = req.query.tags || ''
   const active = req.query.active || false
 
   if (search.length > 0) {
@@ -19,6 +21,10 @@ function applyFilters (query, req) {
   if (country.length > 0) {
     const countries = country.split(',')
     query = query.whereIn('country', countries)
+  }
+
+  if (tags.length > 0) {
+    query = query.whereRaw(`user_info->>'flair' = ?`, [tags])
   }
 
   if (active) {
@@ -66,7 +72,7 @@ async function stats (req, res) {
   try {
     // Create table with ranking
     const allUsers = db.with('edits', (conn) => conn
-      .select('osm_id', 'full_name',
+      .select('osm_id', 'full_name', 'user_info',
         db.raw('case "edit_count" when NULL then 0 else "edit_count" end'),
         'country', 'last_edit')
       .from('users')
@@ -75,6 +81,7 @@ async function stats (req, res) {
         's.osm_id',
         's.edit_count',
         's.full_name',
+        's.user_info',
         's.country',
         's.last_edit',
         db.raw(
@@ -117,6 +124,7 @@ async function stats (req, res) {
       .offset((parseInt(page) - 1) * 25)
 
     const countries = await db('users').distinct('country').select()
+    const tags = pluck('flair', await db('users').pluck('user_info').whereNotNull('user_info'))
 
     // Create counts
     const realUsers = db('users').whereNotIn('id', exclusion.list())
@@ -126,7 +134,7 @@ async function stats (req, res) {
     const [{ editTotal }] = await realUsers.clone().sum('edit_count as editTotal')
 
     return res.send({
-      records, subTotal, total, editTotal, countries, active, refreshDate
+      records, subTotal, total, editTotal, countries, active, refreshDate, tags
     })
   } catch (err) {
     console.error(err)

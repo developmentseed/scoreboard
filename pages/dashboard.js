@@ -5,7 +5,7 @@ import { withAlert } from 'react-alert'
 
 import { actions } from '../lib/store'
 import { isAdmin } from '../lib/utils/roles'
-import { pick } from 'ramda'
+import { pick, prop } from 'ramda'
 
 import NotLoggedIn from '../components/NotLoggedIn'
 import AdminSectionList from '../components/admin/AdminSectionList'
@@ -68,7 +68,7 @@ class Dashboard extends Component {
       )
     }
 
-    const { assignments, favorites, country, allCampaigns } = account
+    const { assignments, favorites, country, allCampaigns, userInfo } = account
 
     const { badges, teams, refreshDate } = account
     const osmesaData = account.records
@@ -134,6 +134,7 @@ class Dashboard extends Component {
           id={accountId}
           loggedIn
           name={name}
+          tags={prop('flair', userInfo)}
           profileImage={profileImage}
           edit_times={edit_times}
           country={country}

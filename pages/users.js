@@ -6,6 +6,7 @@ import { connect } from 'unistore/react'
 import dynamic from 'next/dynamic'
 import ScoreboardPanel from '../components/ScoreboardPanel'
 import { formatDecimal, formatUpdateDescription } from '../lib/utils/format'
+import { assoc, path } from 'ramda'
 
 const AllUsersFilter = dynamic(() => import('../components/users/AllUsersFilter'), { ssr: false })
 
@@ -18,6 +19,7 @@ export class Users extends Component {
     this.handleSortSelect = this.handleSortSelect.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.handleActiveSelect = this.handleActiveSelect.bind(this)
+    this.handleTagSelect = this.handleTagSelect.bind(this)
   }
 
   componentDidMount () {
@@ -48,18 +50,27 @@ export class Users extends Component {
     this.props.usersChangeActiveSelect(selectedOption || null)
   }
 
+  handleTagSelect (selectedTagValue) {
+    this.props.usersChangeTagSelect(selectedTagValue || null)
+  }
+
   render () {
     const {
       searchText,
       selectedValue,
       selectedSortValue,
       selectedActive,
+      selectedTagValue,
       page
     } = this.props.usersFilters
 
     const { stats, apiStatus } = this.props.usersSearchResults
 
-    const { total, records, subTotal, editTotal, countries, active, refreshDate } = stats
+    const { total, records, subTotal, editTotal, countries, active, refreshDate, tags } = stats
+    let userRecords = []
+    if (records) {
+      userRecords = records.map(record => assoc('user_tag', path(['user_info', 'flair'], record), record))
+    }
 
     return (
       <div className='Users'>
@@ -90,16 +101,19 @@ export class Users extends Component {
               handleSearch={this.handleSearch}
               handleSelect={this.handleSelect}
               handleSortSelect={this.handleSortSelect}
+              handleTagSelect={this.handleTagSelect}
               searchText={searchText}
               selectedValue={selectedValue}
               selectedSortValue={selectedSortValue}
               selectedActive={selectedActive}
+              selectedTagValue={selectedTagValue}
               handleActiveSelect={this.handleActiveSelect}
               countries={countries || []}
+              tags={tags || []}
             />
             <div className='widget-75'>
               <h3 className='header--medium'>{subTotal} Mappers</h3>
-              <AllUsersTable users={records} apiStatus={apiStatus} />
+              <AllUsersTable users={userRecords} apiStatus={apiStatus} />
               <Pagination
                 activePage={page}
                 itemsCountPerPage={25}

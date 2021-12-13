@@ -86,6 +86,11 @@
         "description":"Most recent edit"
     },
     {
+        "id":"user-tag",
+        "name":"Tag",
+        "description":"Context or special status of user"
+    },
+    {
         "id":"last-run-time",
         "name":"Last run time",
         "description":"Most recent use of tasking manager"
