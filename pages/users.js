@@ -72,7 +72,6 @@ export class Users extends Component {
       userRecords = records.map(record => assoc('user_tag', path(['user_info', 'flair'], record), record))
     }
 
-
     return (
       <div className='Users'>
         <header className='header--internal--green header--page'>
