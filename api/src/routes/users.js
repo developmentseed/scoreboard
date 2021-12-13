@@ -24,7 +24,7 @@ function applyFilters (query, req) {
   }
 
   if (tags.length > 0) {
-    query = query.whereRaw(`user_info->>'flair' = ?`, [tags]).debug()
+    query = query.whereRaw(`user_info->>'flair' = ?`, [tags])
   }
 
   if (active) {

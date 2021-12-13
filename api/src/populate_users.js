@@ -27,7 +27,7 @@ async function populateUsers () {
       .map((line) => {
         const parts = line.split(',')
         return zipObj(
-          ['osm_id', 'display_name', 'email', 'status', 'full_name', 'country', 'flair'],
+          ['email', 'osm_id', 'display_name', 'status', 'full_name', 'country', 'flair'],
           parts
         )
       })

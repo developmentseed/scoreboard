@@ -3,6 +3,7 @@ import Link from '../Link'
 import { parse, compareDesc } from 'date-fns'
 import { formatEditTimeDescription, formatUpdateDescription } from '../../lib/utils/format'
 import { head } from 'ramda'
+import Chip from '../Chip'
 
 /**
  * Given the edit times for a user return the difference between now()
@@ -47,7 +48,7 @@ function DashboardHeader (props) {
               </li>
               <li>
                 <span className='list-label'>Tags:</span>
-                <strong>{tags}</strong>
+                <Chip label={tags} color='primary' />
               </li>
             </ul>
             {
