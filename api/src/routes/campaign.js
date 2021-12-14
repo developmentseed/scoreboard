@@ -1,7 +1,7 @@
 const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { TaskingManagerFactory } = require('../services/tm')
-const { find, propEq } = require('ramda')
+const { find, propEq, prop } = require('ramda')
 const refreshStatus = require('../utils/osmesaStatus.js')
 const totalUsersEdits = require('../utils/sum_editCounts.js')
 
@@ -149,7 +149,7 @@ async function loadOsMesaStats (response) {
   const userCountries = await db('users').select(['osm_id', 'country']).whereIn('osm_id', userIds)
 
   stats.data = stats.data.map(user => {
-    const country = find(propEq('osm_id', user.uid))(userCountries).country
+    const country = prop('country', find(propEq('osm_id', user.uid))(userCountries))
     return Object.assign({ country }, user)
   })
 
