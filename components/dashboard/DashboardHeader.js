@@ -46,10 +46,13 @@ function DashboardHeader (props) {
                 <span className='list-label'>Country:</span>
                 <strong>{country}</strong>
               </li>
-              <li>
-                <span className='list-label'>Tags:</span>
-                <Chip label={tags} color='primary' />
-              </li>
+              {tags
+                ? <li>
+                  <span className='list-label'>Tags:</span>
+                  <Chip label={tags} color='primary' />
+                </li>
+                : <div />
+              }
             </ul>
             {
               loggedIn
