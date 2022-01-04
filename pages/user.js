@@ -11,7 +11,7 @@ import { LoadingState } from '../components/common/LoadingState'
 import { formatDecimal } from '../lib/utils/format'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
-import { pick } from 'ramda'
+import { pick, prop } from 'ramda'
 import dynamic from 'next/dynamic'
 import CSVExport from '../components/CSVExport'
 
@@ -60,7 +60,8 @@ export class User extends Component {
       country,
       badges,
       teams,
-      refreshDate
+      refreshDate,
+      userInfo
     } = this.props.user
 
     const { mapSettings } = this.props
@@ -103,6 +104,7 @@ export class User extends Component {
           edit_times={edit_times}
           country={country}
           refreshDate={refreshDate}
+          tags={prop('flair', userInfo)}
         />
         <ScoreboardPanel
           title={`${records.name}'s Scoreboard`}

@@ -4,14 +4,13 @@ title: "Add campaigns to a team"
 sidebar_label: "Add campaigns to a team"
 ---
 
-Admin users can edit existing teams to add campaigns.
+Team managers can edit existing teams to add campaigns.
 
-> Learn about [creating teams](admin/create-team.md).
+> Learn about [creating teams](users/create-team.md).
 
 To find and edit an existing team:
 
 - Log in to Scoreboard if you haven't already
-- Visit the teams admin page
 - Choose a team from the list and click it to edit that team
 
 ### Add campaigns

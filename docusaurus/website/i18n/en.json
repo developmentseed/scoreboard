@@ -9,14 +9,6 @@
         "title": "Add a tasking manager",
         "sidebar_label": "Add a tasking manager"
       },
-      "admin/add-team-campaigns": {
-        "title": "Add campaigns to a team",
-        "sidebar_label": "Add campaigns to a team"
-      },
-      "admin/add-team-users": {
-        "title": "Add users to a team",
-        "sidebar_label": "Add users to a team"
-      },
       "admin/assign-admin-role": {
         "title": "Make a user an admin",
         "sidebar_label": "Make a user an admin"
@@ -29,13 +21,17 @@
         "title": "Create a new badge",
         "sidebar_label": "Create a new badge"
       },
-      "admin/create-team": {
-        "title": "Create a team",
-        "sidebar_label": "Create a team"
+      "admin/edit-app-settings": {
+        "title": "Edit App Settings",
+        "sidebar_label": "Edit App Settings"
       },
       "admin/edit-badge": {
         "title": "Edit an existing badge",
         "sidebar_label": "Edit a badge"
+      },
+      "admin/edit-map-settings": {
+        "title": "Edit Map Settings",
+        "sidebar_label": "Edit Map Settings"
       },
       "admin/edit-tasking-manager": {
         "title": "Edit Tasking Manager",
@@ -49,13 +45,13 @@
         "title": "Administration",
         "sidebar_label": "Administration"
       },
+      "admin/settings": {
+        "title": "Settings Overview",
+        "sidebar_label": "Settings Overview"
+      },
       "admin/tasking-managers": {
         "title": "Tasking Managers Overview",
         "sidebar_label": "Tasking Managers Overview"
-      },
-      "admin/teams": {
-        "title": "Teams Overview",
-        "sidebar_label": "Teams Overview"
       },
       "admin/users": {
         "title": "Users Overview",
@@ -68,6 +64,14 @@
       "developers/overview": {
         "title": "Overview for developers",
         "sidebar_label": "Overvew for developers"
+      },
+      "users/add-team-campaigns": {
+        "title": "Add campaigns to a team",
+        "sidebar_label": "Add campaigns to a team"
+      },
+      "users/add-team-users": {
+        "title": "Add users to a team",
+        "sidebar_label": "Add users to a team"
       },
       "users/badges": {
         "title": "Badges Overview",
@@ -85,9 +89,17 @@
         "title": "Campaigns Overview",
         "sidebar_label": "Campaigns Overview"
       },
+      "users/create-team": {
+        "title": "Create a team",
+        "sidebar_label": "Create a team"
+      },
       "users/default-badges": {
         "title": "List of included badges",
         "sidebar_label": "List of included badges"
+      },
+      "users/exporting-data": {
+        "title": "Exporting data",
+        "sidebar_label": "Exporting data"
       },
       "users/favorite-campaigns": {
         "title": "Create a list of favorite campaigns",
@@ -135,6 +147,7 @@
       "Overview": "Overview",
       "Users": "Users",
       "Tasking Managers": "Tasking Managers",
+      "Settings": "Settings",
       "Install": "Install"
     }
   },
