@@ -110,14 +110,14 @@ class Dashboard extends Component {
     let name = null
     let accountId = null
     if (authenticatedUser) {
-      const osmUser = authenticatedUser.osm._xml2json.user
+      const osmUser = authenticatedUser.osm._xml2json.osm.user[0]
       if (
         osmUser &&
         osmUser.img &&
-        osmUser.img['@'] &&
-        osmUser.img['@']['href']
+        osmUser.img[0]['$'] &&
+        osmUser.img[0]['$']['href']
       ) {
-        profileImage = osmUser.img['@']['href']
+        profileImage = osmUser.img[0]['$']['href']
       } else {
         profileImage =
           'https://www.gravatar.com/avatar/00000000000000000000000000000000'

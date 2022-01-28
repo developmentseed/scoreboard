@@ -161,6 +161,7 @@
     "unistore": "^3.1.0",
     "url-join": "^4.0.0",
     "url-loader": "^1.1.2",
+    "xml2js": "^0.4.23",
     "yakbak": "^3.0.0",
     "yamljs": "^0.3.0"
   },
