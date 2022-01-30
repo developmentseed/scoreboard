@@ -122,7 +122,7 @@ class Dashboard extends Component {
         profileImage =
           'https://www.gravatar.com/avatar/00000000000000000000000000000000'
       }
-      name = osmUser['@']['display_name']
+      name = osmUser['$']['display_name']
       accountId = authenticatedUser.account.id
     }
     const recordsExport = [{ ...account.records, badgeCount, campaignCount, name }]
