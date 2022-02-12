@@ -3,7 +3,7 @@ const sampleTeams = require('../fixtures/teams.json')
 const { getToken, storeToken } = require('../models/teams-access-tokens')
 const { teamServiceCredentials } = require('../passport')
 const { OSM_TEAMS_SERVICE, OSM_TEAMS_ORG_ID } = require('../config')
-const { prop, includes } = require('ramda')
+const { prop, includes, map } = require('ramda')
 
 /**
  * Methods to grab data from OSM Teams
@@ -91,6 +91,10 @@ class OSMTeams {
     return rp(`${OSM_TEAMS_SERVICE}/api/teams/${id}`)
   }
 
+  getTeamMembers (id) {
+    return rp(`${OSM_TEAMS_SERVICE}/api/teams/${id}/members`)
+  }
+
   /**
    * Check if user has permission to create a team. The user needs to be either an
    * owner of the organization, or a manager of the organization.
@@ -101,12 +105,13 @@ class OSMTeams {
     try {
       const options = await this.addAuthorization({
         method: 'GET',
-        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}`,
+        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/staff`,
         json: true
       })
       const org = await rp(options)
       const { owners, managers } = org
-      const ids = owners.map(prop('osm_id')).concat(managers.map(prop('osm_id')))
+      let ids = owners.map(prop('id')).concat(managers.map(prop('id')))
+      ids = map(parseInt, ids)
       return includes(this.osmid, ids)
     } catch (e) {
       console.error(e)
@@ -128,19 +133,19 @@ class OSMTeams {
       const [orgOpts, teamOpts] = await Promise.all([
         this.addAuthorization({
           method: 'GET',
-          uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}`,
+          uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/staff`,
           json: true
         }),
         this.addAuthorization({
           method: 'GET',
-          uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}`,
+          uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}/members`,
           json: true
         })
       ])
       const [org, team] = await Promise.all([ rp(orgOpts), rp(teamOpts) ])
       const { owners } = org
       const { moderators } = team
-      const getId = ({ osm_id }) => osm_id
+      const getId = prop('id')
       const allowedEditorIds = new Set(owners.map(getId).concat(moderators.map(getId)))
       return allowedEditorIds.has(this.osmid)
     } catch (ex) {
