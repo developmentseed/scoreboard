@@ -51,8 +51,8 @@ OSMStrategy.prototype.userProfile = function (token, tokenSecret, params, done) 
       if (err) { return done(err) };
 
       var profile = { provider: 'openstreetmap' }
-      profile.id = xml.user['@'].id
-      profile.displayName = xml.user['@'].display_name
+      profile.id = xml.osm.user[0]['$'].id
+      profile.displayName = xml.osm.user[0]['$'].display_name
 
       profile._raw = body
       profile._xml2json =

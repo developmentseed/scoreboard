@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
+## [v1.12.1] - 2022-01-17
+### Fixed
+- Fix for new xml2js breaking change
+- Fix for new OSM Teams breaking change where permissions are in separate API calls
 ## [v1.12.0] - 2022-01-04
 ### Added 
 - New user flairs for highlighting tags associated with individual users
