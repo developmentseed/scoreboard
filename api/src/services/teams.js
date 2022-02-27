@@ -202,15 +202,15 @@ class OSMTeams {
     return rp(options)
   }
 
-  /* Get all members of and organization from the OSM Teams API
+  /* Get all staff members of an organization from the OSM Teams API
    *
    * @returns {Promise} response
    */
-  async getOrganization () {
+  async getOrganizationStaff () {
     try {
       const options = await this.addAuthorization({
         method: 'GET',
-        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}`,
+        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/staff`,
         json: true
       })
       const org = await rp(options)
