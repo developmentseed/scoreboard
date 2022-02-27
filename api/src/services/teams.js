@@ -145,8 +145,10 @@ class OSMTeams {
       const [org, team] = await Promise.all([ rp(orgOpts), rp(teamOpts) ])
       const { owners } = org
       const { moderators } = team
-      const getId = prop('id')
-      const allowedEditorIds = new Set(owners.map(getId).concat(moderators.map(getId)))
+      const ownerIds = owners.map(prop('id')).map(parseInt)
+      const moderatorIds = moderators.map(prop('osm_id')).map(parseInt) //TODO Ideally this interface should be the same in OSM Teams
+      const allowedEditorIds = new Set(ownerIds.concat(moderatorIds))
+      console.log(allowedEditorIds, allowedEditorIds.has(this.osmid), this.osmid)
       return allowedEditorIds.has(this.osmid)
     } catch (ex) {
       // this would occur when user is not logged in and getAccessToken throws.
