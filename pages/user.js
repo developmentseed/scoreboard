@@ -11,7 +11,7 @@ import { LoadingState } from '../components/common/LoadingState'
 import { formatDecimal } from '../lib/utils/format'
 import { actions } from '../lib/store'
 import { connect } from 'unistore/react'
-import { pick } from 'ramda'
+import { pick, prop } from 'ramda'
 import dynamic from 'next/dynamic'
 import CSVExport from '../components/CSVExport'
 
@@ -60,8 +60,12 @@ export class User extends Component {
       country,
       badges,
       teams,
-      refreshDate
+      refreshDate,
+      userInfo
     } = this.props.user
+
+    const { mapSettings } = this.props
+
     const { extent_uri, uid } = records
     if (!records) return <div />
     const badgeCount = Object.keys(badges.earnedBadges).length
@@ -100,6 +104,7 @@ export class User extends Component {
           edit_times={edit_times}
           country={country}
           refreshDate={refreshDate}
+          tags={prop('flair', userInfo)}
         />
         <ScoreboardPanel
           title={`${records.name}'s Scoreboard`}
@@ -124,7 +129,7 @@ export class User extends Component {
               <section id='user_map'>
                 <div className='row'>
                   <div className='map-lg'>
-                    <UserExtentMap uid={uid} extent={extent_uri} />
+                    <UserExtentMap uid={uid} extent={extent_uri} settings={mapSettings} />
                   </div>
                 </div>
               </section>
@@ -171,7 +176,7 @@ export class User extends Component {
 }
 
 const connectedUser = connect(
-  ['user'],
+  ['user', 'mapSettings'],
   actions
 )(User)
 

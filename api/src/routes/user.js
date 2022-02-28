@@ -155,6 +155,7 @@ async function get (req, res) {
   return res.send({
     id,
     uid,
+    userInfo: user.user_info,
     badges,
     teams,
     assignments,

@@ -6,6 +6,7 @@ const path = require('path')
 
 const osmesa = require('../../src/services/osmesa')
 const db = require('../../src/db/connection')
+const { T } = require('ramda')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')
@@ -93,4 +94,22 @@ test.serial('get team stats', async t => {
     const predicate = expectedTeamStats[k]
     t.true(predicate(teamStats[k]), `unexpected ${k}`)
   })
+})
+
+test.serial('get timeseries count rows', t => {
+    function makeRows(rows) {
+        return rows.map(k => ['added','modified','deleted'].map(c => `${k}_${c}`)).flat()
+    }
+    // returns all counts as rows if no categories filter provided
+    const countRows = osmesa.getCountRows();
+    const allRows =  ['roads', 'waterways', 'coastlines', 'buildings', 'pois', 'raillines']
+    t.true(allRows.length === countRows.length)
+    t.true(makeRows(allRows).every(row => countRows.includes(`sum(coalesce((counts->>'${r}')::integer,0)) as ${row}`)))
+
+
+    // returns only rows in categoriesFilter array
+    const filterRows = ['roads', 'waterways']
+    const filteredCountRows = osmesa.getCountRows(filterRows)
+    t.true(filterRows.length === filteredCountRows.length)
+    t.true(makeRows(filterRows).every(row => filteredCountRows.includes(`sum(coalesce((counts->>'${r}')::integer,0)) as ${row}`)))
 })

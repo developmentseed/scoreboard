@@ -3,6 +3,7 @@ const OSMesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { difference, pathOr } = require('ramda')
 const getOsmesaLastRefreshed = require('../utils/osmesaStatus.js')
+const { osmesaUserStatSchema } = require('../utils/campaignTableSchema.js')
 
 /**
  * Teams list route
@@ -81,6 +82,7 @@ async function get (req, res) {
     const { user: { id: osmId = null } = {} } = req
     const teams = new OSMTeams(osmId)
     const teamData = JSON.parse(await teams.getTeam(teamId))
+    const teamMembers = JSON.parse(await teams.getTeamMembers(teamId))
     const campaigns = await db('campaigns').join(
       db('team_assignments').select(['team_id', 'team_priority', 'campaign_id']).where('team_id', teamId).as('team_assignments'),
       'team_assignments.campaign_id',
@@ -88,7 +90,7 @@ async function get (req, res) {
       'campaigns.id'
     ).join(db('taskers').select('name as tm_name', 'id as taskers_t_id').as('t'),
       'campaigns.tasker_id', '=', 't.taskers_t_id')
-    const teamMemberOsmIds = teamData.members.map(m => m.id)
+    const teamMemberOsmIds = teamMembers.members.map(m => m.id)
     // TODO: use Promise.all() here instead of serial await's
     const users = await db('users').whereIn('osm_id', teamMemberOsmIds)
     const osmesaStats = await OSMesa.getTeamStats(teamMemberOsmIds)
@@ -96,10 +98,15 @@ async function get (req, res) {
     const canEdit = await teams.canEditTeam(teamId)
     const team = {
       ...teamData,
+      ...teamMembers,
       campaigns,
       osmesaStats,
       lastRefreshed,
       users,
+      table: {
+        schema: osmesaUserStatSchema,
+        type: 'osmesa'
+      },
       canEdit
     }
     return res.send(team)

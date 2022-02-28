@@ -3,6 +3,7 @@ import Link from '../Link'
 import { parse, compareDesc } from 'date-fns'
 import { formatEditTimeDescription, formatUpdateDescription } from '../../lib/utils/format'
 import { head } from 'ramda'
+import Chip from '../Chip'
 
 /**
  * Given the edit times for a user return the difference between now()
@@ -21,7 +22,7 @@ function getLastEdit (edit_times) {
 }
 
 function DashboardHeader (props) {
-  const { loggedIn, id, edit_times, country, name, profileImage, refreshDate } = props
+  const { loggedIn, id, edit_times, country, name, profileImage, refreshDate, tags } = props
 
   return (
     <header className='header--internal--green header--page'>
@@ -45,6 +46,13 @@ function DashboardHeader (props) {
                 <span className='list-label'>Country:</span>
                 <strong>{country}</strong>
               </li>
+              {tags
+                ? <li>
+                  <span className='list-label'>Tags:</span>
+                  <Chip label={tags} color='primary' />
+                </li>
+                : <div />
+              }
             </ul>
             {
               loggedIn

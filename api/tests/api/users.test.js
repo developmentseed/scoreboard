@@ -85,7 +85,7 @@ test('Sort users by least recently active', async (t) => {
     .get('/scoreboard/api/users/stats/?q=&page=1&sortType=Least%20recent&active=false')
     .expect(200)
   const users = await db('users')
-    .select('country', 'edit_count', 'full_name', 'osm_id', 'last_edit')
+    .select('country', 'edit_count', 'full_name', 'osm_id', 'last_edit', 'user_info')
     .orderByRaw('last_edit asc, full_name')
     .limit(25)
   const resCopy = response.body.records.map(omit(['rank', 'last_edit']))

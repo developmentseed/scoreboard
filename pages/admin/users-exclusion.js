@@ -109,9 +109,13 @@ export class AdminExclusionList extends Component {
               </div>
               <div className='row'>
                 <form className='form'>
-                  <AdminUsersSearch selectedUsers={exclusionList}
+                  <AdminUsersSearch
+                    searchHeader='Users'
+                    searchInputLegend='Search'
+                    selectedUsers={exclusionList}
                     addUser={this.addUserToExclusionList}
                     removeUser={this.removeUserFromExclusionList}
+                    showSelectedUserTable
                   />
                 </form>
               </div >

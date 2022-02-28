@@ -12,13 +12,15 @@ function getToken (id) {
 }
 
 async function storeToken (tokenObject) {
-  const { access_token, refresh_token, expires_at, id_token } = tokenObject
+  const { access_token, refresh_token, expires_at, id_token } = tokenObject.token
 
   const { sub } = jwt.decode(id_token)
   let existingToken = await getToken(sub)
   if (existingToken.length > 0) {
     await db('teams_access_tokens').where('osm_id', sub).update({
-      access_token, refresh_token, expires_at
+      access_token,
+      refresh_token,
+      expires_at
     })
   } else {
     await db('teams_access_tokens').insert({
@@ -35,8 +37,13 @@ async function hasToken (id) {
   return (tokens.length > 0)
 }
 
+async function deleteTokens () {
+  return db('teams_access_tokens').truncate()
+}
+
 module.exports = {
   getToken,
   storeToken,
-  hasToken
+  hasToken,
+  deleteTokens
 }

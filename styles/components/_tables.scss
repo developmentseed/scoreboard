@@ -8,7 +8,7 @@ table {
   border-collapse: collapse;
   overflow-x: auto;
   @include media(small-down) {
-    font-size: .86em;
+    font-size: 0.86em;
   }
   th,
   tfoot td {
@@ -22,10 +22,10 @@ table {
     white-space: nowrap;
     @include media(small-up) {
       &:first-child {
-        padding-left: .8em;
+        padding-left: 0.8em;
       }
       &:last-child {
-        padding-right: .8em;
+        padding-right: 0.8em;
       }
     }
     a[class^='sort'] {
@@ -43,7 +43,7 @@ table {
         content: '';
         height: 16px;
         width: 16px;
-        transition: .3s all;
+        transition: 0.3s all;
       }
       &:hover,
       &:focus {
@@ -72,14 +72,14 @@ table {
         -webkit-mask: url($appUrlFinal + 'static/circle-information.svg');
         mask-size: cover;
         -webkit-mask-size: cover;
-        margin-top: -.5rem;
+        margin-top: -0.5rem;
         opacity: 0.5;
         background: $base-font-color;
         display: inline-block;
         content: '';
         height: 12px;
         width: 12px;
-        transition: .3s all;
+        transition: 0.3s all;
       }
     }
   }
@@ -93,10 +93,10 @@ table {
       }
       td:first-child {
         font-family: $heading-font-bold;
-        padding-left: .8em;
+        padding-left: 0.8em;
       }
       td:last-child {
-        padding-right: .8em;
+        padding-right: 0.8em;
       }
     }
   }
@@ -136,18 +136,20 @@ table {
   font-family: $heading-font-regular;
   li {
     display: inline-block;
-    margin: 0 .4em;
+    margin: 0 0.4em;
   }
-  a, a:visited {
-    padding: 0 .2em;
+  a,
+  a:visited {
+    padding: 0 0.2em;
     color: $med-text-color;
     font-size: 1em;
     &:hover {
       color: $blue-color;
     }
   }
-  .active{
-    a, a:visited {
+  .active {
+    a,
+    a:visited {
       color: $blue-color;
       border-bottom: 1px solid $blue-color;
     }
@@ -158,15 +160,13 @@ tr td:not(:first-child).table-align-right {
   text-align: right;
 }
 
-th:not(:first-child) a.table-align-right{
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-end;
+th:not(:first-child) a.table-align-right {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
 }
 
 th a[class^='sort'].table-align-right,
 span[data-tip].table-align-right:not(:first-of-type) {
   justify-content: flex-end;
 }
-
-

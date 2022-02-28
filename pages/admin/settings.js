@@ -47,6 +47,7 @@ export class AdminSettings extends Component {
 
     this.state = {
       loading: true,
+      tokenResetConfirmation: false,
       settings: {
         'osmesa-db': '',
         'osmesa-s3-prefix': '',
@@ -86,6 +87,47 @@ export class AdminSettings extends Component {
     }
   }
 
+  renderResetButton () {
+    return (
+      <button className='button button--destroy'
+        id='delete-badge-operation-button'
+        type='button'
+        onClick={() => {
+          this.setState({ tokenResetConfirmation: true })
+        }}
+      >
+        Reset Tokens
+      </button>
+    )
+  }
+
+  renderResetButtonConfirmation () {
+    return (
+      <div className='form__footer'>
+        <p>Are you sure you want to reset team access tokens?</p>
+        <button className='button button--destroy'
+          id='delete-badge-confirmation-operation-button'
+          type='button'
+          onClick={async () => {
+            await this.props.resetTeamsAccessTokens()
+          }}
+        >
+          Confirm Reset Tokens
+        </button>
+
+        <button className='button button--secondary'
+          id='cancel-delete-badge-operation-button'
+          type='button'
+          onClick={() => {
+            this.setState({ tokenResetConfirmation: false })
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    )
+  }
+
   render () {
     const { authenticatedUser } = this.props
 
@@ -115,13 +157,22 @@ export class AdminSettings extends Component {
               <h2 className='header--large'>Settings</h2>
             </div>
             <div className='widget-75'>
-              <div>
+              <section>
                 <h1 className='header--xlarge'>OSMesa Settings</h1>
                 <p>Scoreboard statistics are powered by <a href='https://github.com/azavea/osmesa'>OSMesa</a>. Only change these settings if you are operating Scoreboard with a custom instance of OSMesa.</p>
-              </div>
-              <div>
-                <OSMesaSettings handleSubmit={this.handleSubmit} settings={this.state.settings} />
-              </div>
+                <div>
+                  <OSMesaSettings handleSubmit={this.handleSubmit} settings={this.state.settings} />
+                </div>
+              </section>
+              <section>
+                <h1 className='header--xlarge'>Teams Settings</h1>
+                <p>When connected with the OSM Teams service, Scoreboard administrators may reset the Teams authentication tokens for all users. This feature should only be used in cases of Teams authentication connection errors.</p>
+                {
+                  this.state.tokenResetConfirmation
+                    ? this.renderResetButtonConfirmation()
+                    : this.renderResetButton()
+                }
+              </section>
             </div>
           </div>
         </section>

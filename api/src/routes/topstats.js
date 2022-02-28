@@ -19,7 +19,9 @@ module.exports = async (req, res) => {
 
     const [{ numCountries }] = await db('user_country_edits').countDistinct('country_name as numCountries')
 
-    const priorityCampaigns = await db('campaigns')
+    const priorityCampaigns = await db('campaigns').join(
+      db('taskers').select('name as tm_name', 'id as tasker_t_id', 'type').as('t'),
+      'tasker_id', 't.tasker_t_id')
       .whereNotNull('campaign_hashtag')
       .where('status', 'PUBLISHED')
       .where('done', '>', 0)

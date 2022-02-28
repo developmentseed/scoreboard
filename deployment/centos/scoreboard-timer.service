@@ -4,7 +4,7 @@ After=network.timer
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/npm run clocks
+ExecStart=/usr/bin/npm run clocks_serial
 WorkingDirectory=/var/www/scoreboard/api
 
 User=centos

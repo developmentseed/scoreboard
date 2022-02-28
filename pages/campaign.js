@@ -20,6 +20,12 @@ const CampaignMap = dynamic(
   }
 )
 
+const TABLE_TITLES = {
+  'osmesa': 'Mapping metrics',
+  'maproulette': 'Challenge Leaderboard',
+  'maproulette-challenge': 'Challenge Task Progress'
+}
+
 export class Campaign extends Component {
   componentDidMount () {
     this.props.getCampaign(this.props.id)
@@ -89,7 +95,9 @@ export class Campaign extends Component {
 
   render () {
     const { meta, lastUpdate, creationDate, refreshDate, tables } = this.props.campaign
+    const { mapSettings } = this.props
     const panelContent = this.props.campaign.panelContent || []
+    const orderedTables = tables && tables.sort((a, b) => { return a.statsType === 'osmesa' ? -1 : b.statsType === 'osmesa' ? 1 : 0 })
 
     return (
       <div className='Campaigns'>
@@ -137,7 +145,7 @@ export class Campaign extends Component {
             </div>
             <div className='widget-50'>
               <div className='map-lg'>
-                <CampaignMap feature={JSON.parse(meta.geometry)} interactive />
+                <CampaignMap feature={JSON.parse(meta.geometry)} interactive settings={mapSettings} />
               </div>
             </div>
             <div className='widget-33 page-actions'>
@@ -148,19 +156,22 @@ export class Campaign extends Component {
         <section className='section--tertiary'>
 
           {
-            tables && tables.map(data => (
+            orderedTables && orderedTables.map(data => (
               <div className='row' key={data.statsType}>
                 {
                   (data.success)
                     ? <div>
                       {data.statsType === 'osmesa' && <Blurb {...merge({ users: [], editCounts: 0 }, data)} />}
-                      <CampaignTable
-                        data={data.data}
-                        type={data.statsType}
-                        name={meta.name}
-                        schema={data.schema}
-                        sortable={data.sortable === undefined ? true : data.sortable}
-                      />
+                      {data.data.length > 0 && <>
+                        <h2>{TABLE_TITLES[data.statsType]}</h2>
+                        <CampaignTable
+                          data={data.data}
+                          type={data.statsType}
+                          name={meta.name}
+                          schema={data.schema}
+                          sortable={data.sortable === undefined ? true : data.sortable}
+                        />
+                      </>}
                     </div>
                     : <p>There was an error retrieving stats for this campaign.</p>
                 }
@@ -174,7 +185,7 @@ export class Campaign extends Component {
 }
 
 const Page = connect(
-  ['authenticatedUser', 'campaign'],
+  ['authenticatedUser', 'campaign', 'mapSettings'],
   actions
 )(Campaign)
 

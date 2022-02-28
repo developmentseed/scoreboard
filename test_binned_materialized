@@ -1,0 +1,62 @@
+WITH filtered_changesets        as (select
+        changesets.*,
+        hashtags.hashtag,
+        code
+       from "changesets" inner join "changesets_hashtags" on "changesets_hashtags"."changeset_id" = "changesets"."id" inner join "changesets_countries" on "changesets_countries"."changeset_id" = "changesets"."id" inner join "hashtags" on "hashtags"."id" = "changesets_hashtags"."hashtag_id" inner join "countries" on "countries"."id" = "changesets_countries"."country_id" where created_at >= '2016-06-09 21:03:36.947 -07:00'::timestamp and created_at  < '2022-02-27 18:43:28.179 Z'::timestamp and
+        changesets.id in (
+          select changeset_id from changesets_hashtags where hashtag_id in (
+            select id from hashtags where hashtag ilike
+              ANY(select s || '%' from unnest(ARRAY['osmus-tasks']) s(s))
+          )
+        )
+      ),
+        --  binned_changesets          as (select *, to_timestamp(floor(extract(epoch from created_at) / (172800)) * (172800)) as bin_start from "filtered_changesets"),
+         binned_changesets          as (select *, to_timestamp(floor(extract(epoch from created_at) / (86400)) * (86400)) as bin_start from "filtered_changesets"),
+         general                    as (select
+        binned_changesets.user_id,
+        array_agg(distinct binned_changesets.code) as countries,
+        array_agg(distinct binned_changesets.hashtag) as hashtags,
+        array_agg(distinct binned_changesets.id) as changeset_ids,
+        count(*) AS changeset_count,
+        sum(COALESCE(binned_changesets.total_edits, 0)) AS edit_count,
+        bin_start
+       from "binned_changesets" group by "binned_changesets"."bin_start", "binned_changesets"."user_id"),
+         measurements               as (select "binned_changesets"."user_id", "binned_changesets"."bin_start", "jsonb_each"."key", "jsonb_each"."value" from "binned_changesets" cross join LATERAL jsonb_each(binned_changesets.measurements) jsonb_each(key, value)),
+         aggregated_measurements_kv as (select
+        measurements.user_id,
+        measurements.bin_start,
+        measurements.key,
+        sum(((measurements.value ->> 0))::numeric) AS value
+       from "measurements" group by "measurements"."user_id", "measurements"."bin_start", "measurements"."key"),
+         aggregated_measurements    as (select
+        aggregated_measurements_kv.user_id,
+        aggregated_measurements_kv.bin_start,
+        jsonb_object_agg(aggregated_measurements_kv.key, aggregated_measurements_kv.value) AS measurements
+       from "aggregated_measurements_kv" group by "aggregated_measurements_kv"."user_id", "aggregated_measurements_kv"."bin_start"),
+         counts                     as (select "binned_changesets"."user_id", "binned_changesets"."bin_start", "jsonb_each"."key", "jsonb_each"."value" from "binned_changesets" cross join LATERAL jsonb_each(binned_changesets.counts) jsonb_each(key, value)),
+         aggregated_counts_kv       as (select
+        counts.user_id,
+        counts.bin_start,
+        counts.key,
+        sum(((counts.value ->> 0))::numeric) AS value
+       from "counts" group by "counts"."user_id", "counts"."bin_start", "counts"."key"),
+         aggregated_counts          as (select
+        aggregated_counts_kv.user_id,
+        aggregated_counts_kv.bin_start,
+        jsonb_object_agg(aggregated_counts_kv.key, aggregated_counts_kv.value) AS counts
+       from "aggregated_counts_kv" group by "aggregated_counts_kv"."user_id", "aggregated_counts_kv"."bin_start")
+    SELECT
+        -- to_char(general.bin_start at time zone 'UTC', 'YYYY-MM-DD') as bin_start,
+        -- to_char((general.bin_start + interval '172800 seconds') at time zone 'UTC', 'YYYY-MM-DD') as bin_end,
+        count(distinct general.user_id)
+        -- users.name,
+        -- general.hashtags,
+        -- general.countries,
+        -- aggregated_measurements.measurements,
+        -- aggregated_counts.counts,
+        -- general.changeset_count,
+        -- general.edit_count
+    FROM (((general
+         LEFT JOIN aggregated_measurements USING (user_id, bin_start))
+         LEFT JOIN aggregated_counts USING (user_id, bin_start))
+         JOIN public.users ON ((general.user_id = users.id)))
