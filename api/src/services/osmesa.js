@@ -397,6 +397,20 @@ class OSMesaDBWrapper {
     return reduce((acc, curr) => assoc(curr.mat_view, curr.updated_at, acc), {}, data)
   }
 
+  getCountsRows(categoriesFilter = []) {
+    return countConversions
+      .filter(count => categoriesFilter.includes(count[0]))
+      .map(count => editTypes.map(type => `'${count[1]}_${type[0]}'`))
+      .flat()
+  }
+
+  getMeasurementRows(categoriesFilter = []) {
+    return categoriesFilter
+      .filter(c => c.includes('km'))
+      .map(measurement => editTypes.map(type => `'${measurement}_${type[0]}'`))
+      .flat()
+  }
+
   async getTimeSeries ({
     startDate,
     endDate,
@@ -407,22 +421,166 @@ class OSMesaDBWrapper {
     hashtagPrefixFilter,
     categoriesFilter
   }) {
-    // always include the changesets table
-    const tableNames = {
-      cs: 'changesets'
+    const binWidth = binInterval.toMillis() / 1000; // each bin's width in seconds.
+    const binStart = `to_timestamp(floor(extract(epoch from created_at) / (${binWidth})) * (${binWidth})) as bin_start`
+    const whereClause = [`created_at >= '${startDate.toSQL()}'::timestamp`, `created_at  < '${endDate.toSQL()}'::timestamp`];
+
+    if (userIdsFilter.length) {
+      whereClause.push(`user_id in (${userIdsFilter.join(',')})`)
     }
+
     if (countriesFilter.length) {
-      // add changesets_countries to tableNames
-      tableNames['cc'] = 'changesets_countries'
+      whereClause.push(`
+        changesets.id in (select changeset_id from changesets_countries where country_id in (
+          select id from countries where code in (${countriesFilter.map(c => `'${c}'`).join(',')})
+        ))
+      `)
     }
-    if (hashtagsFilter.length || hashtagPrefixFilter.length) {
-      // add changesets_hashtags to tableNames
-      tableNames['ch'] = 'changesets_hashtags'
+
+    if (hashtagsFilter.length) {
+      whereClause.push(`
+        changesets.id in (select changeset_id from changesets_hashtags where hashtag_id in (
+          select id from hashtags where hashtag in (${hashtagsFilter.map(h => `'${h}'`).join(',')})
+        ))
+      `)
     }
-    // const result = await this.connection(tableNames)
-    //   .select('*')
-    // return result
-    return Promise.resolve(true)
+
+    if (hashtagPrefixFilter.length) {
+      whereClause.push(`
+        changesets.id in (
+          select changeset_id from changesets_hashtags where hashtag_id in (
+            select id from hashtags where hashtag ilike
+              ANY(select s || '%' from unnest(ARRAY[${hashtagPrefixFilter.map(h => `'${h}'`).join(',')}]) s(s))
+          )
+        )
+      `)
+    }
+
+    const fiteredChangesets = this.connection()
+      .select(this.connection().raw(`
+        changesets.*,
+        hashtags.hashtag,
+        code
+      `))
+      .from('changesets')
+      .join('changesets_hashtags', 'changesets_hashtags.changeset_id', 'changesets.id')
+      .join('changesets_countries', 'changesets_countries.changeset_id', 'changesets.id')
+      .join('hashtags', 'hashtags.id', 'changesets_hashtags.hashtag_id')
+      .join('countries', 'countries.id', 'changesets_countries.country_id')
+      .whereRaw(whereClause.join(' and '))
+
+    const binnedChangesets = this.connection()
+      .select(this.connection().raw(`*, ${binStart}`))
+      .from('filtered_changesets');
+
+    const general = this.connection()
+      .select(this.connection().raw(`
+        binned_changesets.user_id,
+        array_agg(distinct binned_changesets.code) as countries,
+        array_agg(distinct binned_changesets.hashtag) as hashtags,
+        array_agg(distinct binned_changesets.id) as changeset_ids,
+        count(*) AS changeset_count,
+        sum(COALESCE(binned_changesets.total_edits, 0)) AS edit_count,
+        bin_start
+      `))
+      .from('binned_changesets')
+      .groupBy('binned_changesets.bin_start', 'binned_changesets.user_id')
+
+    const measurements = this.connection()
+      .select(
+        'binned_changesets.user_id',
+        'binned_changesets.bin_start',
+        'jsonb_each.key',
+        'jsonb_each.value'
+      )
+      .from('binned_changesets')
+      .crossJoin(this.connection().raw('LATERAL jsonb_each(binned_changesets.measurements) jsonb_each(key, value)'))
+
+    const measurementRows = this.getMeasurementRows(categoriesFilter);
+    let aggregatedMeasurementsKv = this.connection()
+      .select(this.connection().raw(`
+        measurements.user_id,
+        measurements.bin_start,
+        measurements.key,
+        sum(((measurements.value ->> 0))::numeric) AS value
+      `))
+      .from('measurements')
+      .groupBy('measurements.user_id', 'measurements.bin_start', 'measurements.key')
+
+    if (measurementRows.length)
+      aggregatedMeasurementsKv = aggregatedMeasurementsKv.whereIn('key', measurementRows)
+
+    const aggregateMeasurements = this.connection()
+      .select(this.connection().raw(`
+        aggregated_measurements_kv.user_id,
+        aggregated_measurements_kv.bin_start,
+        jsonb_object_agg(aggregated_measurements_kv.key, aggregated_measurements_kv.value) AS measurements
+      `))
+      .from('aggregated_measurements_kv')
+      .groupBy('aggregated_measurements_kv.user_id', 'aggregated_measurements_kv.bin_start')
+
+    const counts = this.connection()
+      .select(
+        'binned_changesets.user_id',
+        'binned_changesets.bin_start',
+        'jsonb_each.key',
+        'jsonb_each.value'
+      )
+      .from('binned_changesets')
+      .crossJoin(this.connection().raw('LATERAL jsonb_each(binned_changesets.counts) jsonb_each(key, value)'))
+
+    const countsRows = this.getCountsRows(categoriesFilter);
+    let aggregatedCountsKv = this.connection()
+      .select(this.connection().raw(`
+        counts.user_id,
+        counts.bin_start,
+        counts.key,
+        sum(((counts.value ->> 0))::numeric) AS value
+      `))
+      .from('counts')
+      .groupBy('counts.user_id', 'counts.bin_start', 'counts.key')
+
+    if (countsRows.length)
+      aggregatedCountsKv = aggregatedCountsKv.whereIn('key', countsRows)
+
+    const aggregatedCounts = this.connection()
+      .select(this.connection().raw(`
+        aggregated_counts_kv.user_id,
+        aggregated_counts_kv.bin_start,
+        jsonb_object_agg(aggregated_counts_kv.key, aggregated_counts_kv.value) AS counts
+      `))
+      .from('aggregated_counts_kv')
+      .groupBy('aggregated_counts_kv.user_id', 'aggregated_counts_kv.bin_start')
+
+    const {rows} = await this.connection().raw(`
+        WITH filtered_changesets        as (${fiteredChangesets.toString()}),
+             binned_changesets          as (${binnedChangesets.toString()}),
+             general                    as (${general.toString()}),
+             measurements               as (${measurements.toString()}),
+             aggregated_measurements_kv as (${aggregatedMeasurementsKv.toString()}),
+             aggregated_measurements    as (${aggregateMeasurements.toString()}),
+             counts                     as (${counts.toString()}),
+             aggregated_counts_kv       as (${aggregatedCountsKv.toString()}),
+             aggregated_counts          as (${aggregatedCounts.toString()})
+        SELECT
+            to_char(general.bin_start at time zone 'UTC', 'YYYY-MM-DD') as bin_start,
+            to_char((general.bin_start + interval '${binWidth} seconds') at time zone 'UTC', 'YYYY-MM-DD') as bin_end,
+            general.user_id,
+            users.name,
+            general.hashtags,
+            general.countries,
+            aggregated_measurements.measurements,
+            aggregated_counts.counts,
+            general.changeset_count,
+            general.edit_count
+        FROM (((general
+             LEFT JOIN aggregated_measurements USING (user_id, bin_start))
+             LEFT JOIN aggregated_counts USING (user_id, bin_start))
+             JOIN public.users ON ((general.user_id = users.id)))
+        ORDER BY general.bin_start
+    `)
+
+    return rows
   }
 }
 
