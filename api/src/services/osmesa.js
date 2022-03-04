@@ -456,7 +456,7 @@ class OSMesaDBWrapper {
       `)
     }
 
-    const fiteredChangesets = this.connection()
+    const filteredChangesets = this.connection()
       .select(this.connection().raw(`
         changesets.*,
         hashtags.hashtag,
@@ -502,7 +502,7 @@ class OSMesaDBWrapper {
         measurements.user_id,
         measurements.bin_start,
         measurements.key,
-        sum(((measurements.value ->> 0))::numeric) AS value
+        round(sum(((measurements.value ->> 0))::numeric), 3) AS value
       `))
       .from('measurements')
       .groupBy('measurements.user_id', 'measurements.bin_start', 'measurements.key')
@@ -553,7 +553,7 @@ class OSMesaDBWrapper {
       .groupBy('aggregated_counts_kv.user_id', 'aggregated_counts_kv.bin_start')
 
     const {rows} = await this.connection().raw(`
-        WITH filtered_changesets        as (${fiteredChangesets.toString()}),
+        WITH filtered_changesets        as (${filteredChangesets.toString()}),
              binned_changesets          as (${binnedChangesets.toString()}),
              general                    as (${general.toString()}),
              measurements               as (${measurements.toString()}),
