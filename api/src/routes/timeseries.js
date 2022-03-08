@@ -55,13 +55,13 @@ function validateParams ({
   validHashtagPrefixFilter = deserializeStringArray(hashtagPrefixFilter)
   validHashtagsFilter = deserializeStringArray(hashtagsFilter)
   // require at least 1 one filter, according to api spec.
-  // if (!validCategoriesFilter.length &&
-  //     !validCountriesFilter.length &&
-  //     !validHashtagPrefixFilter.length &&
-  //     !validHashtagsFilter.length &&
-  //     !validUserIdsFilter.length) {
-  //   throw Boom.badRequest('at least one filter is required')
-  // }
+  if (!validCategoriesFilter.length &&
+      !validCountriesFilter.length &&
+      !validHashtagPrefixFilter.length &&
+      !validHashtagsFilter.length &&
+      !validUserIdsFilter.length) {
+    throw Boom.badRequest('at least one filter is required')
+  }
   return {
     startDate: validStartDate,
     endDate: validEndDate,

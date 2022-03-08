@@ -423,7 +423,9 @@ class OSMesaDBWrapper {
   }) {
     const binWidth = binInterval.toMillis() / 1000; // each bin's width in seconds.
     const binStart = `to_timestamp(floor(extract(epoch from created_at) / (${binWidth})) * (${binWidth})) as bin_start`
-    const whereClause = [`created_at >= '${startDate.toSQL()}'::timestamp`, `created_at  < '${endDate.toSQL()}'::timestamp`];
+    const startDateSQL = `'${startDate.toSQL()}'::timestamp`;
+    const endDateSQL = `'${endDate.toSQL()}'::timestamp`
+    const whereClause = [`created_at >= ${startDateSQL}`, `created_at  < ${endDateSQL}`];
 
     if (userIdsFilter.length) {
       whereClause.push(`user_id in (${userIdsFilter.join(',')})`)

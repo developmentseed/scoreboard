@@ -4,6 +4,7 @@ import { formatDecimal } from '../lib/utils/format'
 
 export default function CSVExport ({ filename, data }) {
   const isUser = data[0].campaignCount > 0
+  const isTimeseries = data[0].hasOwnProperty('bin_start')
   let totalData = data
   let headers = [
     { label: 'Name', key: 'name' },
@@ -30,13 +31,22 @@ export default function CSVExport ({ filename, data }) {
     )
   }
 
+  if (isTimeseries) {
+    headers.splice(1,0,
+      { label: 'Bin Start', key: 'bin_start'},
+      { label: 'Bin End', key: 'bin_end'}
+    )
+  }
+
   // Construct footer for the campaign table export
   if (!isUser) {
     let exportTotals = {}
 
-    const headerKeys = headers.map(e => e.key)
+    let headerKeys = headers.map(e => e.key)
+
+
     headerKeys.forEach(k => {
-      exportTotals[k] = formatDecimal(
+      exportTotals[k] = isTimeseries && k.indexOf('bin') !== -1 ? '' : formatDecimal(
         data
           .map(row => Number(row[k]))
           .reduce((prev, cur) => prev + cur)

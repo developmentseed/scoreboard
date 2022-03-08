@@ -34,7 +34,7 @@ export default function TimeSeriesEditsChart ({userData}) {
   })
 
   return (
-    (userData && userData.length) && <ResponsiveBar
+    (userData && userData.length) ? <ResponsiveBar
       data={data}
       keys={Object.keys(keys)}
       indexBy="type"
@@ -92,6 +92,6 @@ export default function TimeSeriesEditsChart ({userData}) {
       ariaLabel="Nivo bar chart demo"
       groupMode='grouped'
       barAriaLabel={function(e){return e.id+": "+e.formattedValue+" in country: "+e.indexValue}}
-    />
+    /> : <></>
   )
 }
