@@ -15,7 +15,7 @@ import { LoadingState } from '../components/common/LoadingState'
 import AdminUsersSearch from '../components/admin/AdminUsersSearch'
 
 export function ManageOrg (props) {
-  const { getAuthenticatedUser, authenticatedUser, getOrganization, organization, getUserList, users } = props
+  const { getAuthenticatedUser, authenticatedUser, getOrganizationStaff, organization, getUserList, users } = props
   const [loading, setLoading] = useState(true)
   const [members, setMembers] = useState(null)
   const [warning, setWarning] = useState(null)
@@ -23,14 +23,14 @@ export function ManageOrg (props) {
   // On load get the user
   useEffect(() => {
     getAuthenticatedUser()
-      .then(() => getOrganization())
+      .then(() => getOrganizationStaff())
       .then(() => setLoading(false))
   }, [])
 
   useEffect(() => {
     if (organization) {
       const memberList = organization.organization.owners.concat(organization.organization.managers)
-      const memberIds = memberList.map(member => member.osm_id.toString())
+      const memberIds = memberList.map(member => member.id.toString())
       getUserList(memberIds)
     }
   }, [organization])
@@ -39,7 +39,7 @@ export function ManageOrg (props) {
     if (users) {
       // Moves roles into state
       let membersWithRoles = users.map(user => {
-        return organization.organization.owners.find(owner => owner.osm_id === user.osm_id) ? (
+        return organization.organization.owners.find(owner => parseInt(owner.id) === parseInt(user.osm_id)) ? (
           { ...user, role: 'owner' }
         ) : (
           { ...user, role: 'manager' }
@@ -162,7 +162,7 @@ export function ManageOrg (props) {
                 />
                 <MemberTable members={members} setStatus={setStatus} warning={warning} />
                 <button
-                  type='submit'
+                  type='button'
                   className='button button--primary'
                   onClick={() => submitChanges()}
                 >
