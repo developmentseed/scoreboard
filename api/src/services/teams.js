@@ -145,8 +145,9 @@ class OSMTeams {
       const [org, team] = await Promise.all([ rp(orgOpts), rp(teamOpts) ])
       const { owners } = org
       const { moderators } = team
-      const getId = prop('id')
-      const allowedEditorIds = new Set(owners.map(getId).concat(moderators.map(getId)))
+      const ownerIds = owners.map(prop('id')).map(x => Number(x))
+      const moderatorIds = moderators.map(prop('osm_id')).map(x => Number(x)) // TODO Ideally this interface should be the same in OSM Teams
+      const allowedEditorIds = new Set(ownerIds.concat(moderatorIds))
       return allowedEditorIds.has(this.osmid)
     } catch (ex) {
       // this would occur when user is not logged in and getAccessToken throws.
@@ -202,15 +203,15 @@ class OSMTeams {
     return rp(options)
   }
 
-  /* Get all members of and organization from the OSM Teams API
+  /* Get all staff members of an organization from the OSM Teams API
    *
    * @returns {Promise} response
    */
-  async getOrganization () {
+  async getOrganizationStaff () {
     try {
       const options = await this.addAuthorization({
         method: 'GET',
-        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}`,
+        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/staff`,
         json: true
       })
       const org = await rp(options)

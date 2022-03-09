@@ -10,11 +10,11 @@ const { pathOr } = require('ramda')
  * @param {Object} res - the response object
  * @returns {Promise} a response
  */
-async function list (req, res) {
+async function getStaff (req, res) {
   try {
     const osmId = pathOr(null, ['user', 'id'], req)
     const teamService = new OSMTeams(osmId)
-    const organization = await teamService.getOrganization()
+    const organization = await teamService.getOrganizationStaff()
     return res.send({ organization })
   } catch (err) {
     console.error(err)
@@ -107,7 +107,7 @@ async function removeManager (req, res) {
 }
 
 module.exports = {
-  list,
+  getStaff,
   addOwner,
   removeOwner,
   addManager,
