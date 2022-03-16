@@ -89,7 +89,7 @@ export default function TimeSeriesEditsChart ({userData}) {
       labelSkipWidth={12}
       labelSkipHeight={12}
       role="application"
-      ariaLabel="Nivo bar chart demo"
+      ariaLabel="User Edits by Category"
       groupMode='grouped'
       barAriaLabel={function(e){return e.id+": "+e.formattedValue+" in country: "+e.indexValue}}
     /> : <></>

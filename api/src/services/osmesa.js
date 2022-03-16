@@ -421,8 +421,8 @@ class OSMesaDBWrapper {
     hashtagPrefixFilter,
     categoriesFilter
   }) {
-    const binWidth = binInterval.toMillis() / 1000; // each bin's width in seconds.
-    const binStart = `to_timestamp(floor(extract(epoch from created_at) / (${binWidth})) * (${binWidth})) as bin_start`
+    const [interval, value] = Object.entries(binInterval.toObject())[0];
+    const binWidth = `${value} ${interval}` // bin width as an interval string
     const startDateSQL = `'${startDate.toSQL()}'::timestamp`;
     const endDateSQL = `'${endDate.toSQL()}'::timestamp`
     const whereClause = [`created_at >= ${startDateSQL}`, `created_at  < ${endDateSQL}`];
@@ -458,9 +458,16 @@ class OSMesaDBWrapper {
       `)
     }
 
+    const timeseries = this.connection().raw(`
+      select bin_start, (bin_start + interval '${binWidth}') as bin_end
+      from (select generate_series(${startDateSQL}, ${endDateSQL}, '${binWidth}') as bin_start) as series
+    `)
+
     const filteredChangesets = this.connection()
       .select(this.connection().raw(`
         changesets.*,
+        bin_start,
+        bin_end,
         hashtags.hashtag,
         code
       `))
@@ -469,10 +476,15 @@ class OSMesaDBWrapper {
       .join('changesets_countries', 'changesets_countries.changeset_id', 'changesets.id')
       .join('hashtags', 'hashtags.id', 'changesets_hashtags.hashtag_id')
       .join('countries', 'countries.id', 'changesets_countries.country_id')
+      .join('timeseries', function() {
+          return this
+            .on('timeseries.bin_start', '<=', 'changesets.created_at')
+            .andOn('changesets.created_at', '<', 'timeseries.bin_end')
+      })
       .whereRaw(whereClause.join(' and '))
 
     const binnedChangesets = this.connection()
-      .select(this.connection().raw(`*, ${binStart}`))
+      .select("*")
       .from('filtered_changesets');
 
     const general = this.connection()
@@ -483,15 +495,17 @@ class OSMesaDBWrapper {
         array_agg(distinct binned_changesets.id) as changeset_ids,
         count(*) AS changeset_count,
         sum(COALESCE(binned_changesets.total_edits, 0)) AS edit_count,
-        bin_start
+        binned_changesets.bin_start,
+        binned_changesets.bin_end
       `))
       .from('binned_changesets')
-      .groupBy('binned_changesets.bin_start', 'binned_changesets.user_id')
+      .groupBy('binned_changesets.bin_start', 'binned_changesets.bin_end', 'binned_changesets.user_id')
 
     const measurements = this.connection()
       .select(
         'binned_changesets.user_id',
         'binned_changesets.bin_start',
+        'binned_changesets.bin_end',
         'jsonb_each.key',
         'jsonb_each.value'
       )
@@ -503,11 +517,12 @@ class OSMesaDBWrapper {
       .select(this.connection().raw(`
         measurements.user_id,
         measurements.bin_start,
+        measurements.bin_end,
         measurements.key,
         round(sum(((measurements.value ->> 0))::numeric), 3) AS value
       `))
       .from('measurements')
-      .groupBy('measurements.user_id', 'measurements.bin_start', 'measurements.key')
+      .groupBy('measurements.user_id', 'measurements.bin_start', 'measurements.bin_end', 'measurements.key')
 
     if (measurementRows.length)
       aggregatedMeasurementsKv = aggregatedMeasurementsKv.whereIn('key', measurementRows)
@@ -516,15 +531,17 @@ class OSMesaDBWrapper {
       .select(this.connection().raw(`
         aggregated_measurements_kv.user_id,
         aggregated_measurements_kv.bin_start,
+        aggregated_measurements_kv.bin_end,
         jsonb_object_agg(aggregated_measurements_kv.key, aggregated_measurements_kv.value) AS measurements
       `))
       .from('aggregated_measurements_kv')
-      .groupBy('aggregated_measurements_kv.user_id', 'aggregated_measurements_kv.bin_start')
+      .groupBy('aggregated_measurements_kv.user_id', 'aggregated_measurements_kv.bin_start', 'aggregated_measurements_kv.bin_end')
 
     const counts = this.connection()
       .select(
         'binned_changesets.user_id',
         'binned_changesets.bin_start',
+        'binned_changesets.bin_end',
         'jsonb_each.key',
         'jsonb_each.value'
       )
@@ -536,11 +553,12 @@ class OSMesaDBWrapper {
       .select(this.connection().raw(`
         counts.user_id,
         counts.bin_start,
+        counts.bin_end,
         counts.key,
         sum(((counts.value ->> 0))::numeric) AS value
       `))
       .from('counts')
-      .groupBy('counts.user_id', 'counts.bin_start', 'counts.key')
+      .groupBy('counts.user_id', 'counts.bin_start', 'counts.bin_end', 'counts.key')
 
     if (countsRows.length)
       aggregatedCountsKv = aggregatedCountsKv.whereIn('key', countsRows)
@@ -549,13 +567,15 @@ class OSMesaDBWrapper {
       .select(this.connection().raw(`
         aggregated_counts_kv.user_id,
         aggregated_counts_kv.bin_start,
+        aggregated_counts_kv.bin_end,
         jsonb_object_agg(aggregated_counts_kv.key, aggregated_counts_kv.value) AS counts
       `))
       .from('aggregated_counts_kv')
-      .groupBy('aggregated_counts_kv.user_id', 'aggregated_counts_kv.bin_start')
+      .groupBy('aggregated_counts_kv.user_id', 'aggregated_counts_kv.bin_start', 'aggregated_counts_kv.bin_end')
 
     const {rows} = await this.connection().raw(`
-        WITH filtered_changesets        as (${filteredChangesets.toString()}),
+        WITH timeseries                 as (${timeseries.toString()}),
+             filtered_changesets        as (${filteredChangesets.toString()}),
              binned_changesets          as (${binnedChangesets.toString()}),
              general                    as (${general.toString()}),
              measurements               as (${measurements.toString()}),
@@ -565,9 +585,9 @@ class OSMesaDBWrapper {
              aggregated_counts_kv       as (${aggregatedCountsKv.toString()}),
              aggregated_counts          as (${aggregatedCounts.toString()})
         SELECT
-            to_char(general.bin_start at time zone 'UTC', 'YYYY-MM-DD') as bin_start,
-            to_char((general.bin_start + interval '${binWidth} seconds') at time zone 'UTC', 'YYYY-MM-DD') as bin_end,
             general.user_id,
+            to_char(general.bin_start at time zone 'UTC', 'YYYY-MM-DD') as bin_start,
+            to_char(general.bin_end at time zone 'UTC', 'YYYY-MM-DD') as bin_end,
             users.name,
             general.hashtags,
             general.countries,
