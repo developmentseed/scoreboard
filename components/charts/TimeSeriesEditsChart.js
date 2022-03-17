@@ -24,12 +24,12 @@ export default function TimeSeriesEditsChart ({userData}) {
   }, {
     keys: {},
     data: [
-      {type: 'km_roads_add_mod'},
-      {type: 'buildings_add_mod'},
-      {type: 'poi_add_mod'},
-      {type: 'km_railways_add_mod'},
-      {type: 'km_waterways_add_mod'},
-      {type: 'km_coastlines_add_mod'}
+      {type: 'Roads (KM)'},
+      {type: 'Buildings'},
+      {type: 'POI'},
+      {type: 'Railways (KM)'},
+      {type: 'Waterways (KM)'},
+      {type: 'Coastlines (KM)'}
     ]
   })
 
@@ -50,7 +50,6 @@ export default function TimeSeriesEditsChart ({userData}) {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'statistics',
           legendPosition: 'middle',
           legendOffset: 32
       }}
@@ -58,7 +57,6 @@ export default function TimeSeriesEditsChart ({userData}) {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'edits',
           legendPosition: 'middle',
           legendOffset: -40
       }}

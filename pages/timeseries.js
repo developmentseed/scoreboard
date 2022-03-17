@@ -360,7 +360,6 @@ export default class TimeSeries extends Component {
   }
 
   onMultiSelectChange(id, selected) {
-    console.log(selected)
     this.setState({ [id]: selected.reduce((nextState, {value}) => {
       nextState[value] = true;
       return nextState
