@@ -463,6 +463,8 @@ class OSMesaDBWrapper {
       from (select generate_series(${startDateSQL}, ${endDateSQL}, '${binWidth}') as bin_start) as series
     `)
 
+    // join changeset rows with timeseries rows so we have a columns (timeseries.bin_start and changeset.user_id)
+    // to aggregate with
     const filteredChangesets = this.connection()
       .select(this.connection().raw(`
         changesets.*,
@@ -487,6 +489,35 @@ class OSMesaDBWrapper {
       .select("*")
       .from('filtered_changesets');
 
+    // make sure we have a 'default' bin without any stats for the bins
+    //  the user does not have edits within.
+    const binsWithoutResults = this.connection().raw(`
+      SELECT *
+      FROM (
+        SELECT
+          user_id,
+          to_char(timeseries.bin_start at time zone 'UTC', 'YYYY-MM-DD') as bin_start,
+          to_char(timeseries.bin_end at time zone 'UTC', 'YYYY-MM-DD') as bin_end,
+          name,
+         '{}'::text[] as hashtags,
+         '{}'::text[] as countries,
+         '{}'::jsonb as measurements,
+         '{}'::jsonb as counts,
+          0 as changeset_count,
+          0 as edit_count
+        FROM timeseries
+          inner join (
+            select distinct(user_id), name from binned_changesets
+            inner join users on user_id = users.id)
+          changeset_users on true
+      ) as bins_without
+      WHERE bins_without.bin_start not in (
+        select distinct(to_char(bin_start at time zone 'UTC', 'YYYY-MM-DD'))
+        from general where general.user_id = bins_without.user_id
+      )
+    `)
+
+    // aggregate non-json columns in the binned_changesets table
     const general = this.connection()
       .select(this.connection().raw(`
         binned_changesets.user_id,
@@ -501,6 +532,7 @@ class OSMesaDBWrapper {
       .from('binned_changesets')
       .groupBy('binned_changesets.bin_start', 'binned_changesets.bin_end', 'binned_changesets.user_id')
 
+    // create rows per user & measurement...
     const measurements = this.connection()
       .select(
         'binned_changesets.user_id',
@@ -512,6 +544,7 @@ class OSMesaDBWrapper {
       .from('binned_changesets')
       .crossJoin(this.connection().raw('LATERAL jsonb_each(binned_changesets.measurements) jsonb_each(key, value)'))
 
+    // aggregate those measurements on bin-start + user_id
     const measurementRows = this.getMeasurementRows(categoriesFilter);
     let aggregatedMeasurementsKv = this.connection()
       .select(this.connection().raw(`
@@ -537,6 +570,7 @@ class OSMesaDBWrapper {
       .from('aggregated_measurements_kv')
       .groupBy('aggregated_measurements_kv.user_id', 'aggregated_measurements_kv.bin_start', 'aggregated_measurements_kv.bin_end')
 
+    // do the same we did for measurements with counts
     const counts = this.connection()
       .select(
         'binned_changesets.user_id',
@@ -573,33 +607,38 @@ class OSMesaDBWrapper {
       .from('aggregated_counts_kv')
       .groupBy('aggregated_counts_kv.user_id', 'aggregated_counts_kv.bin_start', 'aggregated_counts_kv.bin_end')
 
+    // select a union of users' data binned by the bin interval
+    // with the default bins alias.
     const {rows} = await this.connection().raw(`
         WITH timeseries                 as (${timeseries.toString()}),
              filtered_changesets        as (${filteredChangesets.toString()}),
              binned_changesets          as (${binnedChangesets.toString()}),
              general                    as (${general.toString()}),
+             bins_without_results       as (${binsWithoutResults.toString()}),
              measurements               as (${measurements.toString()}),
              aggregated_measurements_kv as (${aggregatedMeasurementsKv.toString()}),
              aggregated_measurements    as (${aggregateMeasurements.toString()}),
              counts                     as (${counts.toString()}),
              aggregated_counts_kv       as (${aggregatedCountsKv.toString()}),
              aggregated_counts          as (${aggregatedCounts.toString()})
-        SELECT
-            general.user_id,
-            to_char(general.bin_start at time zone 'UTC', 'YYYY-MM-DD') as bin_start,
-            to_char(general.bin_end at time zone 'UTC', 'YYYY-MM-DD') as bin_end,
-            users.name,
-            general.hashtags,
-            general.countries,
-            aggregated_measurements.measurements,
-            aggregated_counts.counts,
-            general.changeset_count,
-            general.edit_count
-        FROM (((general
-             LEFT JOIN aggregated_measurements USING (user_id, bin_start))
-             LEFT JOIN aggregated_counts USING (user_id, bin_start))
-             JOIN public.users ON ((general.user_id = users.id)))
-        ORDER BY general.bin_start
+       (SELECT
+             general.user_id,
+             to_char(general.bin_start at time zone 'UTC', 'YYYY-MM-DD') as bin_start,
+             to_char(general.bin_end at time zone 'UTC', 'YYYY-MM-DD') as bin_end,
+             users.name,
+             general.hashtags,
+             general.countries,
+             aggregated_measurements.measurements,
+             aggregated_counts.counts,
+             general.changeset_count,
+             general.edit_count
+         FROM (((general
+              LEFT JOIN aggregated_measurements USING (user_id, bin_start))
+              LEFT JOIN aggregated_counts USING (user_id, bin_start))
+              JOIN public.users ON ((general.user_id = users.id)))
+        ORDER BY general.bin_start)
+        UNION
+        SELECT * FROM bins_without_results
     `)
 
     return rows
