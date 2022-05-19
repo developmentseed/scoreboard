@@ -22,7 +22,10 @@
       "users/default-badges"
     ],
     "Teams": [
-      "users/teams"
+      "users/teams",
+      "users/create-team",
+      "users/add-team-users",
+      "users/add-team-campaigns"
     ]
   },
   "admins": {
@@ -34,12 +37,6 @@
       "admin/assign-admin-role",
       "admin/exclusion-list"
     ],
-    "Teams": [
-      "admin/teams",
-      "admin/create-team",
-      "admin/add-team-users",
-      "admin/add-team-campaigns"
-    ],
     "Tasking Managers": [
       "admin/tasking-managers",
       "admin/add-tasking-manager",
@@ -49,6 +46,11 @@
       "admin/badges",
       "admin/create-badge",
       "admin/edit-badge"
+    ],
+    "Settings": [
+      "admin/settings",
+      "admin/edit-app-settings",
+      "admin/edit-map-settings"
     ]
   },
   "developers": {

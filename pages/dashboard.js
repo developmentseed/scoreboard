@@ -5,7 +5,7 @@ import { withAlert } from 'react-alert'
 
 import { actions } from '../lib/store'
 import { isAdmin } from '../lib/utils/roles'
-import { pick } from 'ramda'
+import { pick, prop } from 'ramda'
 
 import NotLoggedIn from '../components/NotLoggedIn'
 import AdminSectionList from '../components/admin/AdminSectionList'
@@ -60,7 +60,7 @@ class Dashboard extends Component {
       )
     }
 
-    const { authenticatedUser, project } = this.props
+    const { authenticatedUser, project, mapSettings } = this.props
     const { loggedIn, account } = authenticatedUser
     if (!loggedIn || !account) {
       return (
@@ -68,7 +68,7 @@ class Dashboard extends Component {
       )
     }
 
-    const { assignments, favorites, country, allCampaigns } = account
+    const { assignments, favorites, country, allCampaigns, userInfo } = account
 
     const { badges, teams, refreshDate } = account
     const osmesaData = account.records
@@ -110,19 +110,19 @@ class Dashboard extends Component {
     let name = null
     let accountId = null
     if (authenticatedUser) {
-      const osmUser = authenticatedUser.osm._xml2json.user
+      const osmUser = authenticatedUser.osm._xml2json.osm.user[0]
       if (
         osmUser &&
         osmUser.img &&
-        osmUser.img['@'] &&
-        osmUser.img['@']['href']
+        osmUser.img[0]['$'] &&
+        osmUser.img[0]['$']['href']
       ) {
-        profileImage = osmUser.img['@']['href']
+        profileImage = osmUser.img[0]['$']['href']
       } else {
         profileImage =
           'https://www.gravatar.com/avatar/00000000000000000000000000000000'
       }
-      name = osmUser['@']['display_name']
+      name = osmUser['$']['display_name']
       accountId = authenticatedUser.account.id
     }
     const recordsExport = [{ ...account.records, badgeCount, campaignCount, name }]
@@ -134,6 +134,7 @@ class Dashboard extends Component {
           id={accountId}
           loggedIn
           name={name}
+          tags={prop('flair', userInfo)}
           profileImage={profileImage}
           edit_times={edit_times}
           country={country}
@@ -171,7 +172,7 @@ class Dashboard extends Component {
               <section id='dashboard_map'>
                 <div className='row'>
                   <div className='map-lg'>
-                    <UserExtentMap uid={uid} extent={extent_uri} />
+                    <UserExtentMap uid={uid} extent={extent_uri} settings={mapSettings} />
                   </div>
                 </div>
               </section>
@@ -248,6 +249,6 @@ class Dashboard extends Component {
 }
 
 export default connect(
-  ['authenticatedUser', 'error'],
+  ['authenticatedUser', 'error', 'mapSettings'],
   actions
 )(withAlert(Dashboard))

@@ -91,7 +91,6 @@ export class AdminTeamsEdit extends Component {
     try {
       await this.props.updateTeam(id, params)
     } catch (e) {
-      console.log(e)
       this.setState({ disableInteraction: false })
     }
   }
@@ -111,9 +110,12 @@ export class AdminTeamsEdit extends Component {
         */
         }
         <AdminUsersSearch
+          searchHeader='Users'
+          searchInputLegend='Search'
           selectedUsers={this.state.teamUsers}
           addUser={this.addUserToTeam}
           removeUser={this.removeUserFromTeam}
+          showSelectedUserTable
         />
       </div>
     )

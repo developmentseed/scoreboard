@@ -1,7 +1,7 @@
 const osmesa = require('../services/osmesa')
 const db = require('../db/connection')
 const { TaskingManagerFactory } = require('../services/tm')
-const { find, propEq } = require('ramda')
+const { find, propEq, prop } = require('ramda')
 const refreshStatus = require('../utils/osmesaStatus.js')
 const totalUsersEdits = require('../utils/sum_editCounts.js')
 
@@ -68,8 +68,11 @@ module.exports = async (req, res) => {
       sortable: false
     }
     response.tables.push(stats)
+    response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
   } catch (err) {
+    console.error(err)
     if (err instanceof TypeError) {
+      // Error due to this table not being available for this challenge, continue
     } else {
       console.log(`Unknown error occurred`, err.message)
     }
@@ -81,7 +84,9 @@ module.exports = async (req, res) => {
     stats.schema = maprouletteUserStatSchema
     response.tables.push(stats)
   } catch (err) {
+    console.error(err)
     if (err instanceof TypeError) {
+      // Error due to this table not being available for this challenge, continue
     } else {
       console.log(`Unknown error occurred`, err.message)
     }
@@ -90,27 +95,53 @@ module.exports = async (req, res) => {
   // Load osmesa stats
   try {
     await loadOsMesaStats(response)
+    response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
   } catch (err) {
     if (err.statusCode && err.statusCode === 404) {
       // There are no stats yet
       console.error(`Campaign ${tasker_id}-${tm_id}, Failed to get stats from OSMesa`, err.message)
-      response.tables.push({ success: false })
-    } else {
-      console.log(`OSMesa Stats do not exist for this hashtag`, err.message)
     }
+    console.log(err)
   }
 
-  response['panelContent'] = populatePanelContent(response.meta, response.tables, tm.type)
+  response.tables = await checkUserExist(response.tables)
 
   return res.send(response)
 }
 
+async function checkUserExist (tables) {
+  const updatedTables = tables.map(async table => {
+    if (table.schema.headers.name) {
+      const ids = table.data.map(user => user.uid)
+      const dbUsers = new Set(
+        await db('users').whereIn('osm_id', ids)
+          .select()
+          .map(user => user.osm_id)
+      )
+      table.data = table.data.map(user => {
+        if (!dbUsers.has(user.uid)) {
+          user.disableLink = true
+        }
+        return user
+      })
+    }
+    return table
+  })
+  return Promise.all(updatedTables)
+    .then(res => res)
+}
+
 async function loadOsMesaStats (response) {
   const osmesaResponse = await osmesa.getCampaign(response['meta'].campaign_hashtag)
+    .catch(err => {
+      console.error('There are no stats available for this campaign')
+      console.error(err)
+      return {}
+    })
   let stats = { success: true,
     statsType: 'osmesa',
     schema: osmesaUserStatSchema,
-    data: osmesaResponse.users,
+    data: osmesaResponse.users || [],
     ...osmesaResponse
   }
   delete stats.users
@@ -118,7 +149,7 @@ async function loadOsMesaStats (response) {
   const userCountries = await db('users').select(['osm_id', 'country']).whereIn('osm_id', userIds)
 
   stats.data = stats.data.map(user => {
-    const country = find(propEq('osm_id', user.uid))(userCountries).country
+    const country = prop('country', find(propEq('osm_id', user.uid))(userCountries))
     return Object.assign({ country }, user)
   })
 
@@ -126,7 +157,7 @@ async function loadOsMesaStats (response) {
   response.stats = stats
 
   response.tables.push(stats)
-  return Promise.all([osmesaResponse, userCountries])
+  return Promise.resolve()
 }
 
 function populatePanelContent (tmData, tables, type) {
@@ -136,9 +167,11 @@ function populatePanelContent (tmData, tables, type) {
       return [
         { label: 'Tasks', value: `${parseInt(data.total - data.available, 10)}` },
         { label: 'Remaining', value: `${parseInt(100 - tmData.done, 10)}%` },
-        { label: 'Avg Time Spent', value: `${parseInt(data.avgTimeSpent, 10)}` }
+        { label: 'Avg Time Spent', value: `${Math.floor(data.avgTimeSpent / 1000 / 60)}m ${Math.floor(data.avgTimeSpent / 1000) % 60}s` }
       ]
+    case 'tm2':
     case 'tm3':
+    case 'tm4':
       const stats = tables.find(t => t.statsType === 'osmesa')
       return [
         { label: 'Mapped', value: `${parseInt(tmData.done, 10)}%` },

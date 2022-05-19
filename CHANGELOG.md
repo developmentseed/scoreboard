@@ -6,6 +6,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [v1.12.2] - 2022-03-08
+### Fixed
+- Fix for organization page
+## [v1.12.1] - 2022-01-17
+### Fixed
+- Fix for new xml2js breaking change
+- Fix for new OSM Teams breaking change where permissions are in separate API calls
+## [v1.12.0] - 2022-01-04
+### Added 
+- New user flairs for highlighting tags associated with individual users
+### Fixed
+- Upgrade PostGIS for different local development architectures
+- Country total edits now uses the exclusion list
+
+## [v1.11.1] - 2021-07-28
+
+### Fixed
+- TM4 clock process now runs serially in some cases
+- TM4 paging bug
+- Fix TM4 single project requests
+
+### Added
+- Create new `scoreboard assignments` command to insert assignments through the CLI
+
+## [v1.11.0] - 2021-04-19
+### Fixed
+- Fix TM prefixes for TM4
+- Update map data on front page to filter out draft campaign AOIs
+
+# Added
+- Map settings page in the Admin that allows control over the basemap
+## [v1.10.1] - 2021-03-18
+### Added
+- TM4 interface for campaigns
+- Homepage UI "chips"
+- Admin ability to reset tokens
+### Fixed
+- Tests for map roulette integration 
+
+## [v1.10.0] - 2020-12-23
+
+### Added
+- MapRoulette integration - view MapRoulette challenges on campaigns, with MapRoulette specific information
+- Tasking Manager "chip" ui on Campaign cards to distinguish campaign project source
+- Added OSM Teams Organization management UI, enabling Scoreboard admins to designate team managers and moderators
+
+### Changed
+- Local development changes: refactored Docker compose, move to github actions
+
+### Fixed
+- Fixed refresh tokens for teams
+- Blank map image for loading state
+
+### Changed
+
 ## [v1.9.1] - 2020-05-07
 
 ### Added
@@ -316,10 +371,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.9.1...HEAD
-[v1.9.1]: https://github.com/developmentseed/scoreboard/compare/v1.9.0...1.9.1
-[v1.9.0]: https://github.com/developmentseed/scoreboard/compare/v1.8.0...1.9.0
-[v1.8.0]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...1.8.0
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.12.2...HEAD
+[v1.12.2]: https://github.com/developmentseed/scoreboard/compare/v1.12.1...v1.12.2
+[v1.12.1]: https://github.com/developmentseed/scoreboard/compare/v1.12.0...v1.12.1
+[v1.12.0]: https://github.com/developmentseed/scoreboard/compare/v1.11.1...v1.12.0
+[v1.11.1]: https://github.com/developmentseed/scoreboard/compare/v1.11.0...v1.11.1
+[v1.11.0]: https://github.com/developmentseed/scoreboard/compare/v1.10.1...v1.11.0
+[v1.10.1]: https://github.com/developmentseed/scoreboard/compare/v1.10.0...v1.10.1
+[v1.10.0]: https://github.com/developmentseed/scoreboard/compare/v1.9.1...v1.10.0
+[v1.9.1]: https://github.com/developmentseed/scoreboard/compare/v1.9.0...v1.9.1
+[v1.9.0]: https://github.com/developmentseed/scoreboard/compare/v1.8.0...v1.9.0
+[v1.8.0]: https://github.com/developmentseed/scoreboard/compare/v1.7.2...v1.8.0
 [v1.7.2]: https://github.com/developmentseed/scoreboard/compare/v1.7.1...v1.7.2
 [v1.7.1]: https://github.com/developmentseed/scoreboard/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/developmentseed/scoreboard/compare/v1.6.0...v1.7.0

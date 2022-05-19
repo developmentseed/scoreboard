@@ -1,5 +1,7 @@
 import React from 'react'
 import { sortBy, prop } from 'ramda'
+import PropTypes from 'prop-types'
+
 import CSVExport from '../../components/CSVExport'
 import Table from '../common/Table'
 import { formatDecimal } from '../../lib/utils/format'
@@ -61,4 +63,29 @@ export default function CampaignTable (props) {
       </div>
     </div>
   )
+}
+
+/* @param data: array of objects with props specified in schema
+ * @param schema: expected to be defined in api/src/utils/campaignTableSchema.js
+ *    contains specification regarding column names, order, and tooltip display
+ * @param type: renders a summary if osmesa
+ * @param name: name
+ * @param sortable: renders sorting trigger
+ */
+CampaignTable.propTypes = {
+  data: PropTypes.array.isRequired,
+  schema: PropTypes.shape({
+    columnOrder: PropTypes.array,
+    displaysTooltip: PropTypes.array,
+    headers: PropTypes.object
+  }).isRequired,
+  type: PropTypes.oneOf(['osmesa', 'maproulette', 'maproulette-challenge']),
+  name: PropTypes.string,
+  sortable: PropTypes.bool
+}
+
+CampaignTable.defaultProps = {
+  type: null,
+  name: null,
+  sortable: false
 }

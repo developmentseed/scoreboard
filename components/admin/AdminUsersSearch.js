@@ -1,8 +1,15 @@
 import Pagination from 'react-js-pagination'
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import join from 'url-join'
+
 import { connect } from 'unistore/react'
 import { actions } from '../../lib/store'
+import { APP_URL_PREFIX } from '../../api/src/config'
+
 import Table from '../common/Table'
+
+const searchIcon = join(APP_URL_PREFIX, '/static/magnifier-left.svg')
 
 const tableSchema = {
   'headers': {
@@ -30,10 +37,12 @@ class UsersSearch extends Component {
 
   onSearchUsersClick (user) {
     this.props.addUser(user)
+    this.props.adminTeamMemberSearch('')
   }
 
   onSelectedUsersClick (user) {
     this.props.removeUser(user)
+    this.props.adminTeamMemberSearch('')
   }
 
   handlePageChange (pageNumber) {
@@ -45,7 +54,7 @@ class UsersSearch extends Component {
   }
 
   render () {
-    let { selectedUsers } = this.props
+    let { selectedUsers, searchHeader, searchInputLegend, showOnlyResults, showSelectedUserTable, addBtnText } = this.props
     selectedUsers = (selectedUsers || []).map(user => {
       return Object.assign(user, {
         button: <button style={{ 'padding': '5px' }} className='button button--destroy' onClick={() => this.onSelectedUsersClick(user)} >Remove</button>
@@ -53,7 +62,7 @@ class UsersSearch extends Component {
     })
 
     const { page, searchText } = this.props.adminTeamMemberFilters
-    const { stats: { total, records } } = this.props.adminTeamMemberSearchResults
+    const { stats: { records, subTotal } } = this.props.adminTeamMemberSearchResults
     if (!records) return <div />
 
     let searchUsers = records.map(record => {
@@ -62,14 +71,14 @@ class UsersSearch extends Component {
         if (record.osm_id.toString() === user.osm_id.toString()) isAssigned = true
       })
       return Object.assign(record, {
-        button: (isAssigned ? <div /> : <button style={{ 'padding': '5px' }} className='button' onClick={() => this.onSearchUsersClick(record)} >Add</button>)
+        button: (isAssigned ? <div /> : <button style={{ 'padding': '5px' }} className='button button--primary' onClick={() => this.onSearchUsersClick(record)} >{addBtnText}</button>)
       })
     })
 
     return (
       <div>
         {
-          (selectedUsers.length > 0)
+          (showSelectedUserTable && selectedUsers.length > 0)
             ? (<section className='section-sub'>
               <h1>Selected</h1>
               <div className='widget'>
@@ -79,29 +88,50 @@ class UsersSearch extends Component {
             : <div />
         }
         <section className='section-sub'>
-          <h1>Users</h1>
+          {searchHeader && <h1>{searchHeader}</h1>}
           <div>
             <fieldset>
-              <legend>Search</legend>
+              {searchInputLegend && <legend>{searchInputLegend}</legend>}
               <div className='search'>
                 <input className='input--text' value={searchText} onChange={this.handleSearch} />
+                <span className='search-icon' style={{ backgroundImage: `url(${searchIcon})` }} />
               </div>
             </fieldset>
           </div>
-          <div className='widget'>
-            <Table tableSchema={tableSchema} data={searchUsers} />
-            <Pagination
-              activePage={page}
-              itemsCountPerPage={10}
-              totalItemsCount={total}
-              pageRangeDisplayed={5}
-              onChange={this.handlePageChange}
-            />
-          </div>
+          {(showOnlyResults && searchText !== '') || !showOnlyResults ? (
+            <div className='widget'>
+              <Table tableSchema={tableSchema} data={searchUsers} />
+              <Pagination
+                activePage={page}
+                itemsCountPerPage={10}
+                totalItemsCount={subTotal}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange}
+              />
+            </div>
+          ) : null}
         </section>
       </div>
     )
   }
+}
+UsersSearch.propTypes = {
+  searchHeader: PropTypes.string,
+  searchInputLegend: PropTypes.string,
+  showOnlyResults: PropTypes.bool,
+  showSelectedUserTable: PropTypes.bool,
+  selectedUsers: PropTypes.array,
+  addUser: PropTypes.func.isRequired,
+  addBtnText: PropTypes.string,
+  removeUser: PropTypes.func
+}
+
+UsersSearch.defaultProps = {
+  showOnlyResults: false,
+  selectedUsers: [],
+  showSelectedUserTable: false,
+  removeUser: () => {},
+  addBtnText: 'Add'
 }
 
 export default connect(['adminTeamMemberFilters', 'adminTeamMemberSearchResults'], actions)(UsersSearch)

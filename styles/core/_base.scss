@@ -173,3 +173,14 @@ dl {
     }
   }
 }
+
+/* ==========================================================================
+   ERROR MESSAGE
+========================================================================== */
+.error--block {
+  border: solid $blue-color 2px;
+  border-radius: 6px;
+  padding: 2px 4px;
+  display: flex;
+  justify-content: center;
+}

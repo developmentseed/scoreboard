@@ -1,5 +1,6 @@
 const db = require('../db/connection')
 const countryList = require('../../../lib/utils/country-list.json')
+const exclusionList = require('../models/exclusion-list.js')
 const refreshStatus = require('../utils/osmesaStatus.js')
 
 function applyFilters (query, req) {
@@ -38,8 +39,9 @@ async function stats (req, res) {
 
     // Create table with ranking
     const allCountries = db('user_country_edits')
+      .innerJoin(exclusionList.includedUsers().as('users'), 'user_id', 'users.id')
       .select('country_name as name')
-      .sum('edit_count as edit_count')
+      .sum('user_country_edits.edit_count as edit_count')
       .groupBy('country_name')
 
     // apply search filter
