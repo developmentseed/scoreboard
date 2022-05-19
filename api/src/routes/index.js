@@ -59,7 +59,7 @@ router.put('/teams/:id/assignModerator/:osmId', teams.assignModerator)
 router.put('/teams/:id/removeModerator/:osmId', teams.removeModerator)
 
 // organizations routes
-router.get('/organizations', organizations.list)
+router.get('/organizations/:id/staff', organizations.getStaff)
 router.put('/organizations/:id/addOwner/:osmId', organizations.addOwner)
 router.put('/organizations/:id/removeOwner/:osmId', organizations.removeOwner)
 router.put('/organizations/:id/addManager/:osmId', organizations.addManager)
