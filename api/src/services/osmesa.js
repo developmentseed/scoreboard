@@ -424,7 +424,7 @@ class OSMesaDBWrapper {
     const [interval, value] = Object.entries(binInterval.toObject())[0];
     const binWidth = `${value} ${interval}` // bin width as an interval string
     const startDateSQL = `'${startDate.toSQL()}'::timestamp`;
-    const endBinStartSQL = `'${endDate.minus({ [interval]: value }).toSQL()}::timestamp'`
+    const endBinStartSQL = `'${endDate.minus({ [interval]: value }).toSQL()}'::timestamp`
     const endDateSQL = `'${endDate.toSQL()}'::timestamp`
     const whereClause = [`created_at >= ${startDateSQL}`, `created_at  < ${endDateSQL}`];
 
