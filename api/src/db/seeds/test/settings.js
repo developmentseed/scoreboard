@@ -3,7 +3,7 @@ const { put } = require('../../../models/settings')
 
 const settings = {
   'osmesa-db': process.env.OSMESA_DB
-    ? process.env.DB
+    ? process.env.OSMESA_DB
     : 'postgres://postgres@localhost:5434/postgres'
 }
 

@@ -119,7 +119,6 @@ async function get (req, res) {
       bins: result
     })
   } catch (err) {
-    console.log(err)
     res.boom.boomify(err)
   }
 }

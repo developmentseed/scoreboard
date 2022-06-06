@@ -283,7 +283,7 @@ paths:
                           description: 'ISO-8601 formatted time interval/duration string of binning interval.'
                           type: string
                           example: P1Y2M10DT2H30M
-                        userStatisti  cs:
+                        userStatistics:
                           type: array
                           description: Modeled after the user_statistics materialized
                             view from osmesa.
