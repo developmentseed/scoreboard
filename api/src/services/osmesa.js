@@ -424,6 +424,7 @@ class OSMesaDBWrapper {
     const [interval, value] = Object.entries(binInterval.toObject())[0];
     const binWidth = `${value} ${interval}` // bin width as an interval string
     const startDateSQL = `'${startDate.toSQL()}'::timestamp`;
+    const endBinStartSQL = `'${endDate.minus({ [interval]: value }).toSQL()}::timestamp'`
     const endDateSQL = `'${endDate.toSQL()}'::timestamp`
     const whereClause = [`created_at >= ${startDateSQL}`, `created_at  < ${endDateSQL}`];
 
@@ -460,7 +461,7 @@ class OSMesaDBWrapper {
 
     const timeseries = this.connection().raw(`
       select bin_start, (bin_start + interval '${binWidth}') as bin_end
-      from (select generate_series(${startDateSQL}, ${endDateSQL}, '${binWidth}') as bin_start) as series
+      from (select generate_series(${startDateSQL}, ${endBinStartSQL}, '${binWidth}') as bin_start) as series
     `)
 
     // join changeset rows with timeseries rows so we have a columns (timeseries.bin_start and changeset.user_id)
@@ -626,10 +627,10 @@ class OSMesaDBWrapper {
              to_char(general.bin_start at time zone 'UTC', 'YYYY-MM-DD') as bin_start,
              to_char(general.bin_end at time zone 'UTC', 'YYYY-MM-DD') as bin_end,
              users.name,
-             general.hashtags,
-             general.countries,
-             aggregated_measurements.measurements,
-             aggregated_counts.counts,
+             coalesce(general.hashtags, '{}'::text[]) as hashtags,
+             coalesce(general.countries, '{}'::text[]) as countries,
+             coalesce(aggregated_measurements.measurements, '{}'::jsonb) as measurements,
+             coalesce(aggregated_counts.counts, '{}'::jsonb) as counts,
              general.changeset_count,
              general.edit_count
          FROM (((general
