@@ -5,6 +5,7 @@ import Table from '../components/common/Table';
 import TimeSeriesEditsChart from '../components/charts/TimeSeriesEditsChart';
 import { Duration, DateTime } from 'luxon';
 import CSVExport from '../components/CSVExport';
+import fetch from '../lib/utils/api'
 
 const apiHeaderCrosswalk = {
   counts: {
