@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import Select from 'react-select'
+import Select, { Async } from 'react-select'
 import { createApiUrl } from '../lib/utils/api'
 import Table from '../components/common/Table';
 import TimeSeriesEditsChart from '../components/charts/TimeSeriesEditsChart';
 import { Duration, DateTime } from 'luxon';
 import CSVExport from '../components/CSVExport';
 import fetch from '../lib/utils/api'
+import debounce from 'lodash.debounce'
+import { AllSubstringsIndexStrategy, Search, UnorderedSearchIndex } from 'js-search';
 
 const apiHeaderCrosswalk = {
   counts: {
@@ -136,6 +138,7 @@ export default class TimeSeries extends Component {
       teamsList: [],
       usersList: [],
       timeseriesData: [],
+      debouncedLoadOptions: { usersList: () => {} },
       accumulatedUserTimeseriesData: {},
       userIdMap: {}
     }
@@ -189,10 +192,28 @@ export default class TimeSeries extends Component {
       fetchTeams()
     ])
 
+    function loadOptions(jsSearch) {
+      return debounce((searchTerm, callback) => {
+        callback(null, {options: jsSearch.search(searchTerm)})
+      }, 300)
+    }
+
+    const debouncedLoadOptions = this.state.debouncedLoadOptions;
+
+    Object.keys(debouncedLoadOptions).forEach(list => {
+      const search = new Search('label');
+      search.searchIndex = new UnorderedSearchIndex();
+      search.indexStrategy = new AllSubstringsIndexStrategy();
+      search.addIndex('label')
+      search.addDocuments(users)
+      debouncedLoadOptions[list] = loadOptions(search)
+    })
+
     this.setState({
       countriesList: countries,
       usersList: users,
       teamsList: teamsList,
+      debouncedLoadOptions: debouncedLoadOptions,
       teamsLookup: teamsLookup
     })
   }
@@ -368,14 +389,14 @@ export default class TimeSeries extends Component {
   }
 
   statsHeader(description) {
-      return this.state.timeseriesData.length
+      return this.state.timeseriesData && this.state.timeseriesData.length
         ? `${description} User Edits from ${this.state.startDate.split('T')[0]} to ${this.state.endDate.split('T')[0]}`
         : 'Apply a country or user filter'
   }
 
 
   render () {
-    const haveUserData = this.state.timeseriesData.length > 0;
+    const haveUserData = this.state.timeseriesData && this.state.timeseriesData.length > 0;
     const containerStyle = {};
     const rightWidgetStyle = {};
 
@@ -415,10 +436,11 @@ export default class TimeSeries extends Component {
                 </fieldset>
                 <fieldset>
                   <legend>Users</legend>
-                  <Select
+                  <Async
                     multi
-                    value={Object.keys(this.state.users)}
+                    value={Object.keys(this.state.users).map(uid => { const nUid = Number(uid); return this.state.usersList.find(({value}) => value === nUid); })}
                     onChange={(clicked) => this.onMultiSelectChange('users', clicked)}
+                    loadOptions={this.state.debouncedLoadOptions.usersList}
                     id="users"
                     options={this.state.usersList}
                     className="basic-multi-select"
