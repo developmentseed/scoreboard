@@ -409,7 +409,7 @@ export default class TimeSeries extends Component {
       <div className='Timeseries'>
         <section>
           <div className="row widget-container" style={containerStyle}>
-            <div class="widget-10">
+            <div class="widget-10" style={{maxWidth: '25%'}}>
               <form>
                 <fieldset>
                   <legend>Start date</legend>
