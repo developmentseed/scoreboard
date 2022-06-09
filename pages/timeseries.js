@@ -372,7 +372,6 @@ export default class TimeSeries extends Component {
     this.setState({
       accumulatedUserTimeseriesData: accumulatedUserTimeseriesData,
       timeseriesData: timeseriesData.sort((userA,userB) => userA.name.localeCompare(userB.name)),
-
       userIdMap: accumulatedUserTimeseriesData
     })
   }
@@ -389,9 +388,12 @@ export default class TimeSeries extends Component {
   }
 
   statsHeader(description) {
-      return this.state.timeseriesData && this.state.timeseriesData.length
-        ? `${description} User Edits from ${this.state.startDate.split('T')[0]} to ${this.state.endDate.split('T')[0]}`
-        : 'Apply a country or user filter'
+    if (this.state.timeseriesData && this.state.timeseriesData.length)
+      return `${description} User Edits from ${this.state.startDate.split('T')[0]} to ${this.state.endDate.split('T')[0]}`
+    else if (Object.keys(this.state.users).length || Object.keys(this.state.countries).length || Object.keys(this.state.teams).length)
+      return 'Supplied query has no results'
+    else
+      return 'Apply a country or user filter'
   }
 
 
