@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import Select, { Async } from 'react-select'
-import { createApiUrl } from '../lib/utils/api'
-import Table from '../components/common/Table';
-import TimeSeriesEditsChart from '../components/charts/TimeSeriesEditsChart';
-import { Duration, DateTime } from 'luxon';
-import CSVExport from '../components/CSVExport';
-import fetch from '../lib/utils/api'
+import fetch, { createApiUrl } from '../lib/utils/api'
+import Table from '../components/common/Table'
+import TimeSeriesEditsChart from '../components/charts/TimeSeriesEditsChart'
+import { Duration, DateTime } from 'luxon'
+import CSVExport from '../components/CSVExport'
 import debounce from 'lodash.debounce'
-import { AllSubstringsIndexStrategy, Search, UnorderedSearchIndex } from 'js-search';
+import { AllSubstringsIndexStrategy, Search, UnorderedSearchIndex } from 'js-search'
 
 const apiHeaderCrosswalk = {
   counts: {
     buildings: 'buildings_add_mod',
-    pois: 'poi_add_mod',
+    pois: 'poi_add_mod'
   },
   measurements: {
     road: 'km_roads_add_mod',
@@ -33,7 +32,7 @@ const csvCrosswalk = {
   railline_km_modified: 'km_railways_mod',
   coastline_km_added: 'km_coastlines_add',
   coastline_km_deleted: 'km_coastlines_mod',
-  coastline_km_added: 'km_waterways_add',
+  waterway_km_added: 'km_waterways_add',
   waterway_km_modified: 'km_waterways_add'
 }
 
@@ -70,57 +69,65 @@ const osmesaUserStatSchema = {
 
 }
 
-function fetchTeams() {
+function fetchTeams () {
   return fetch(createApiUrl('/api/teams', {}), { credentials: 'include' })
     .then(async res => {
       if (res.status === 200) {
-        const {teams} = await res.json()
-        return teams.reduce((teamsConfig, {name, id, members, moderators}) => {
-          teamsConfig.teamsList.push({label: name, value: id});
-          teamsConfig.teamsLookup[id] = [...members, ...moderators];
+        const { teams } = await res.json()
+        return teams.reduce((teamsConfig, { name, id, members, moderators }) => {
+          teamsConfig.teamsList.push({ label: name, value: id })
+          teamsConfig.teamsLookup[id] = [...members, ...moderators]
           return teamsConfig
-        }, {teamsList: [], teamsLookup: {}})
+        }, { teamsList: [], teamsLookup: {} })
       } else {
         throw new Error('failed to get user data')
       }
     })
-    .catch((error) => [])
+    .catch((error) => {
+      console.log(error)
+      return []
+    })
 }
 
-function fetchCountries() {
+function fetchCountries () {
   return fetch(createApiUrl('/api/countries', {}))
     .then(async res => {
       if (res.status === 200) {
         const results = await res.json()
-        return results.records.map(({name,code}) =>
-          { return { label: name, value: code} });
+        return results.records.map(({ name, code }) => { return { label: name, value: code } })
       } else {
         throw new Error('failed to get country data')
       }
     })
-    .catch((error) => [])
+    .catch((error) => {
+      console.log(error)
+      return []
+    })
 }
 
-function fetchUsers() {
+function fetchUsers () {
   return fetch(createApiUrl('/api/users', {}), { credentials: 'include' })
     .then(async res => {
       if (res.status === 200) {
         const results = await res.json()
-        return results.map(({osm_id, full_name}) => {
+        return results.map(({ osm_id, full_name }) => {
           return { label: full_name, value: osm_id }
-        });
+        })
       } else {
         throw new Error('failed to get user data')
       }
     })
-    .catch((error) => [])
+    .catch((error) => {
+      console.log(error)
+      return []
+    })
 }
 
 export default class TimeSeries extends Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
-      startDate: new Date(new Date().setMonth(new Date().getMonth() - (4*12))).toISOString().split('T')[0],
+      startDate: new Date(new Date().setMonth(new Date().getMonth() - (4 * 12))).toISOString().split('T')[0],
       endDate: new Date().toISOString().split('T')[0],
       rangeUnits: [
         { label: 'Years', value: 'Y' },
@@ -140,43 +147,33 @@ export default class TimeSeries extends Component {
       timeseriesData: [],
       debouncedLoadOptions: { usersList: () => {} },
       accumulatedUserTimeseriesData: {},
-      userIdMap: {}
+      userIdMap: {},
+      requestInflight: false
     }
   }
 
-  filterRangeUnits() {
+  filterRangeUnits () {
     let duration = DateTime.fromISO(this.state.endDate).diff(DateTime.fromISO(this.state.startDate))
-    const filteredUnits = [];
+    const filteredUnits = []
 
-    if (duration.as('years') >= 1)
-      filteredUnits.push({ label: 'Years', value: 'Y' })
+    if (duration.as('years') >= 1) { filteredUnits.push({ label: 'Years', value: 'Y' }) }
 
-    if (duration.as('months') >= 1)
-      filteredUnits.push({ label: 'Months', value: 'M' })
+    if (duration.as('months') >= 1) { filteredUnits.push({ label: 'Months', value: 'M' }) }
 
-    if (duration.as('weeks') >= 1)
-      filteredUnits.push({ label: 'Weeks', value: 'W' })
+    if (duration.as('weeks') >= 1) { filteredUnits.push({ label: 'Weeks', value: 'W' }) }
 
-    if (duration.as('years') <= 0.5)
-      filteredUnits.push({ label: 'Days', value: 'D' })
+    if (duration.as('years') <= 0.5) { filteredUnits.push({ label: 'Days', value: 'D' }) }
 
-    return filteredUnits;
+    return filteredUnits
   }
 
-  getInitialRangeUnit() {
+  getInitialRangeUnit () {
     let duration = DateTime.fromISO(this.state.endDate).diff(DateTime.fromISO(this.state.startDate))
 
-    if (duration.as('years') >= 1)
-      return 'Y'
-    else if (duration.as('months') >= 6)
-      return 'M'
-    else if (duration.as('months') >= 1)
-      return 'W'
-    else
-      return 'D'
+    if (duration.as('years') >= 1) { return 'Y' } else if (duration.as('months') >= 6) { return 'M' } else if (duration.as('months') >= 1) { return 'W' } else { return 'D' }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.setState({
       rangeUnits: this.filterRangeUnits(),
       rangeUnit: this.getInitialRangeUnit()
@@ -185,25 +182,25 @@ export default class TimeSeries extends Component {
     this.initializeFilters()
   }
 
-  async initializeFilters() {
-    const [countries, users, {teamsList, teamsLookup}] = await Promise.all([
+  async initializeFilters () {
+    const [countries, users, { teamsList, teamsLookup }] = await Promise.all([
       fetchCountries(),
       fetchUsers(),
       fetchTeams()
     ])
 
-    function loadOptions(jsSearch) {
+    function loadOptions (jsSearch) {
       return debounce((searchTerm, callback) => {
-        callback(null, {options: jsSearch.search(searchTerm)})
+        callback(null, { options: jsSearch.search(searchTerm) })
       }, 300)
     }
 
-    const debouncedLoadOptions = this.state.debouncedLoadOptions;
+    const debouncedLoadOptions = this.state.debouncedLoadOptions
 
     Object.keys(debouncedLoadOptions).forEach(list => {
-      const search = new Search('label');
-      search.searchIndex = new UnorderedSearchIndex();
-      search.indexStrategy = new AllSubstringsIndexStrategy();
+      const search = new Search('label')
+      search.searchIndex = new UnorderedSearchIndex()
+      search.indexStrategy = new AllSubstringsIndexStrategy()
       search.addIndex('label')
       search.addDocuments(users)
       debouncedLoadOptions[list] = loadOptions(search)
@@ -218,53 +215,50 @@ export default class TimeSeries extends Component {
     })
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate (prevProps, prevState, snapshot) {
     const changedInputs = ['startDate', 'endDate', 'rangeValue', 'rangeUnit']
-      .filter(key => prevState[key] !== this.state[key]);
+      .filter(key => prevState[key] !== this.state[key])
 
     const changedMultiselect = ['users', 'countries', 'teams']
       .filter(key => Object.keys(prevState[key]).length !== Object.keys(this.state[key]).length)
 
-    if (changedInputs.filter(i => i.indexOf('Date') !== -1).length)
-      this.setState({ rangeUnits: this.filterRangeUnits(), rangeUnit: this.getInitialRangeUnit() })
+    if (changedInputs.filter(i => i.indexOf('Date') !== -1).length) { this.setState({ rangeUnits: this.filterRangeUnits(), rangeUnit: this.getInitialRangeUnit() }) }
 
-    if (changedInputs.length || changedMultiselect.length)
-      this.updateTimeseriesData()
+    if (changedInputs.length || changedMultiselect.length) { this.updateTimeseriesData() }
   }
 
-  buildBinInterval() {
-    if (!this.state.rangeValue.length || Number.isNaN(this.state.rangeValue))
-      return null;
+  buildBinInterval () {
+    if (!this.state.rangeValue.length || Number.isNaN(this.state.rangeValue)) { return null }
 
-    const interval = this.state.rangeUnits.find(({value}) => value === this.state.rangeUnit);
+    const interval = this.state.rangeUnits.find(({ value }) => value === this.state.rangeUnit)
 
-    if (interval === undefined)
-      return null;
+    if (interval === undefined) { return null }
 
     const duration = Duration.fromObject({ [interval.label]: this.state.rangeValue })
 
-    if (duration.toMillis() <= 0)
-      return null;
+    if (duration.toMillis() <= 0) { return null }
 
     return duration.toISO()
   }
 
-  buildGraphBins() {
-    const bins = {},
-          end = DateTime.fromISO(this.state.endDate),
-          binInterval = Duration.fromISO(this.buildBinInterval());
+  buildGraphBins () {
+    const bins = {}
 
-    let bin = DateTime.fromISO(this.state.startDate);
+    const end = DateTime.fromISO(this.state.endDate)
 
-    while (bin.startOf("day") < end.startOf("day")) {
-      bins[bin.toISODate()] = {x: bin.toISODate(), y: 0}
+    const binInterval = Duration.fromISO(this.buildBinInterval())
+
+    let bin = DateTime.fromISO(this.state.startDate)
+
+    while (bin.startOf('day') < end.startOf('day')) {
+      bins[bin.toISODate()] = { x: bin.toISODate(), y: 0 }
       bin = bin.plus(binInterval)
     }
 
-    return bins;
+    return bins
   }
 
-  async updateTimeseriesData() {
+  async updateTimeseriesData () {
     const queryParams = {
       startDate: this.state.startDate,
       endDate: this.state.endDate
@@ -272,39 +266,43 @@ export default class TimeSeries extends Component {
 
     const validBinInterval = this.buildBinInterval()
 
-    if (validBinInterval === null) // do not send request if user did not specify a time unit
-      return;
+    if (validBinInterval === null) { // do not send request if user did not specify a time unit
+      return
+    }
 
     queryParams.binInterval = validBinInterval
 
     const countries = Object.keys(this.state.countries)
     const users = Object.keys(this.state.users)
-    const teams = Object.keys(this.state.teams);
+    const teams = Object.keys(this.state.teams)
 
-    const queryUsers = [];
+    const queryUsers = []
 
-    if (countries.length) queryParams.countriesFilter = countries.join('|');
+    if (countries.length) queryParams.countriesFilter = countries.join('|')
     if (users.length) queryUsers.push(...users)
     if (teams.length) teams.forEach(teamId => queryUsers.push(...this.state.teamsLookup[teamId]))
 
-    if (queryUsers.length)
-      queryParams.userIdsFilter = queryUsers.filter((u, idx) => queryUsers.indexOf(u) === idx).join('|')
+    if (queryUsers.length) { queryParams.userIdsFilter = queryUsers.filter((u, idx) => queryUsers.indexOf(u) === idx).join('|') }
 
+    this.setState({ requestInflight: true })
     const nextTimeseriesData = await fetch(createApiUrl('/api/timeseries', queryParams))
       .then(async res => {
         if (res.status === 200) {
           const results = await res.json()
-          return results;
+          return results
         } else {
           throw new Error('failed to get country data')
         }
       })
-      .catch((error) => { return { bins: [] }})
+      .catch((error) => {
+        console.log(error)
+        return { bins: [] }
+      })
 
     // accumulate the timeseries data for users
-    const accumulatedUserTimeseriesData = {};
+    const accumulatedUserTimeseriesData = {}
     const timeseriesData = []
-    const userIdMap = {};
+    const userIdMap = {}
     nextTimeseriesData.bins.forEach((bin) => {
       const {
         bin_start,
@@ -315,7 +313,7 @@ export default class TimeSeries extends Component {
         edit_count,
         measurements,
         counts
-      } = bin;
+      } = bin
 
       timeseriesData.push(
         Object.assign({
@@ -325,8 +323,8 @@ export default class TimeSeries extends Component {
           edit_count: edit_count,
           changeset_count: changeset_count
         },
-        Object.keys(measurements).reduce((crossWalked, k) => { crossWalked[csvCrosswalk[k]] = measurements[k]; return crossWalked; }, {}),
-        Object.keys(counts).reduce((crossWalked, k) => { crossWalked[csvCrosswalk[k]] = counts[k]; return crossWalked; }, {}),
+        Object.keys(measurements).reduce((crossWalked, k) => { crossWalked[csvCrosswalk[k]] = measurements[k]; return crossWalked }, {}),
+        Object.keys(counts).reduce((crossWalked, k) => { crossWalked[csvCrosswalk[k]] = counts[k]; return crossWalked }, {})
         )
       )
 
@@ -342,7 +340,7 @@ export default class TimeSeries extends Component {
         changeset_count: changeset_count
       }
 
-      userIdMap[name] = user_id;
+      userIdMap[name] = user_id
 
       Object.keys(measurements).forEach(measurement => {
         if (!measurement.includes('deleted')) {
@@ -357,82 +355,77 @@ export default class TimeSeries extends Component {
 
       Object.keys(counts).forEach(count => {
         if (!count.includes('deleted')) {
-          const key = count.split('_')[0];
+          const key = count.split('_')[0]
           if (apiHeaderCrosswalk.counts.hasOwnProperty(key)) {
             accumulatedUserStats[apiHeaderCrosswalk.counts[key]] += counts[count]
           }
         }
       })
 
-      accumulatedUserStats.edit_count += edit_count;
-      accumulatedUserStats.changeset_count += changeset_count;
+      accumulatedUserStats.edit_count += edit_count
+      accumulatedUserStats.changeset_count += changeset_count
       accumulatedUserTimeseriesData[user_id] = accumulatedUserStats
     })
 
     this.setState({
       accumulatedUserTimeseriesData: accumulatedUserTimeseriesData,
-      timeseriesData: timeseriesData.sort((userA,userB) => userA.name.localeCompare(userB.name)),
+      timeseriesData: timeseriesData.sort((userA, userB) => userA.name.localeCompare(userB.name)),
+      requestInFlight: false,
       userIdMap: accumulatedUserTimeseriesData
     })
   }
 
-  onInputChange({id, value}) {
+  onInputChange ({ id, value }) {
     this.setState({ [id]: value })
   }
 
-  onMultiSelectChange(id, selected) {
-    this.setState({ [id]: selected.reduce((nextState, {value}) => {
-      nextState[value] = true;
+  onMultiSelectChange (id, selected) {
+    this.setState({ [id]: selected.reduce((nextState, { value }) => {
+      nextState[value] = true
       return nextState
     }, {}) })
   }
 
-  statsHeader(description) {
-    if (this.state.timeseriesData && this.state.timeseriesData.length)
-      return `${description} User Edits from ${this.state.startDate.split('T')[0]} to ${this.state.endDate.split('T')[0]}`
-    else if (Object.keys(this.state.users).length || Object.keys(this.state.countries).length || Object.keys(this.state.teams).length)
-      return 'Supplied query has no results'
-    else
-      return 'Apply a country or user filter'
+  statsHeader (description) {
+    if (this.state.timeseriesData && this.state.timeseriesData.length) { return `${description} User Edits from ${this.state.startDate.split('T')[0]} to ${this.state.endDate.split('T')[0]}` } else if (!this.state.requestInflight && ['users', 'countries', 'teams'].some(k => Object.keys(this.state[k]).length)) { return 'Supplied query has no results' } else { return 'Apply a country or user filter' }
   }
 
-
   render () {
-    const haveUserData = this.state.timeseriesData && this.state.timeseriesData.length > 0;
-    const containerStyle = {};
-    const rightWidgetStyle = {};
+    const haveUserData = this.state.timeseriesData && this.state.timeseriesData.length > 0
+    const containerStyle = {}
+    const rightWidgetStyle = {}
 
     if (!haveUserData) {
       containerStyle.justifyContent = 'start'
-      rightWidgetStyle.marginLeft = '10px';
+      rightWidgetStyle.marginLeft = '10px'
     }
 
     return (
       <div className='Timeseries'>
         <section>
-          <div className="row widget-container" style={containerStyle}>
-            <div class="widget-10" style={{maxWidth: '25%'}}>
+          <div className='row widget-container' style={containerStyle}>
+            <div class='widget-10' style={{ maxWidth: '25%' }}>
               <form>
                 <fieldset>
                   <legend>Start date</legend>
-                  <input className='input--text' id="startDate" type="date" value={this.state.startDate} onChange={evt => this.onInputChange(evt.target)} />
+                  <input className='input--text' id='startDate' type='date' value={this.state.startDate} onChange={evt => this.onInputChange(evt.target)} />
                 </fieldset>
                 <fieldset>
                   <legend>End date</legend>
-                  <input className='input--text' id="endDate" type="date" value={this.state.endDate} onChange={evt => this.onInputChange(evt.target)} />
+                  <input className='input--text' id='endDate' type='date' value={this.state.endDate} onChange={evt => this.onInputChange(evt.target)} />
                 </fieldset>
                 <fieldset>
                   <legend>Interval</legend>
                   <input className='form__input-unit input--text'
-                    id="rangeValue"
+                    id='rangeValue'
                     min='1'
-                    type="number"
+                    type='number'
                     value={this.state.rangeValue}
                     onChange={evt => this.onInputChange(evt.target)} />
                   <Select
                     value={this.state.rangeUnit}
-                    onChange={(e) => this.onInputChange({id: 'rangeUnit', value: e.value})}
-                    id="rangeUnit"
+                    onChange={(e) => this.onInputChange({ id: 'rangeUnit', value: e.value })}
+                    id='rangeUnit'
                     clearable={false}
                     options={this.state.rangeUnits} />
                 </fieldset>
@@ -440,13 +433,13 @@ export default class TimeSeries extends Component {
                   <legend>Users</legend>
                   <Async
                     multi
-                    value={Object.keys(this.state.users).map(uid => { const nUid = Number(uid); return this.state.usersList.find(({value}) => value === nUid); })}
+                    value={Object.keys(this.state.users).map(uid => { const nUid = Number(uid); return this.state.usersList.find(({ value }) => value === nUid) })}
                     onChange={(clicked) => this.onMultiSelectChange('users', clicked)}
                     loadOptions={this.state.debouncedLoadOptions.usersList}
-                    id="users"
+                    id='users'
                     options={this.state.usersList}
-                    className="basic-multi-select"
-                    classNamePrefix="select"/>
+                    className='basic-multi-select'
+                    classNamePrefix='select' />
                 </fieldset>
                 <fieldset>
                   <legend>Teams</legend>
@@ -454,10 +447,10 @@ export default class TimeSeries extends Component {
                     multi
                     value={Object.keys(this.state.teams)}
                     onChange={(clicked) => this.onMultiSelectChange('teams', clicked)}
-                    id="teams"
+                    id='teams'
                     options={this.state.teamsList}
-                    className="basic-multi-select"
-                    classNamePrefix="select"/>
+                    className='basic-multi-select'
+                    classNamePrefix='select' />
                 </fieldset>
                 <fieldset>
                   <legend>Countries</legend>
@@ -465,13 +458,13 @@ export default class TimeSeries extends Component {
                     multi
                     value={Object.keys(this.state.countries)}
                     onChange={(clicked) => this.onMultiSelectChange('countries', clicked)}
-                    id="users"
+                    id='users'
                     options={this.state.countriesList}
-                    className="basic-multi-select"
-                    classNamePrefix="select"/>
+                    className='basic-multi-select'
+                    classNamePrefix='select' />
                 </fieldset>
                 <fieldset>
-                  {haveUserData && <CSVExport filename='timeseries.csv' data={this.state.timeseriesData}/>}
+                  {haveUserData && <CSVExport filename='timeseries.csv' data={this.state.timeseriesData} />}
                 </fieldset>
               </form>
             </div>
@@ -485,7 +478,7 @@ export default class TimeSeries extends Component {
                   <Table
                     idMap={this.state.userIdMap}
                     tableSchema={osmesaUserStatSchema}
-                    notSortable={true}
+                    notSortable
                     data={Object.values(this.state.accumulatedUserTimeseriesData)}
                     totals={{}}
                   />
