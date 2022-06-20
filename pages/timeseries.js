@@ -123,10 +123,15 @@ function fetchUsers () {
     })
 }
 
+const APPLY_MESSAGE = 'Apply a country or user filter'
+const NO_RESPONSE_MESSAGE = 'Supplied query returns no results'
+const RESPONSE_MESSAGE = (startDate, endDate) => `Edits from ${startDate.split('T')[0]} to ${endDate.split('T')[0]}`
+
 export default class TimeSeries extends Component {
   constructor () {
     super()
     this.state = {
+      headerMessage: APPLY_MESSAGE,
       startDate: new Date(new Date().setMonth(new Date().getMonth() - (4 * 12))).toISOString().split('T')[0],
       endDate: new Date().toISOString().split('T')[0],
       rangeUnits: [
@@ -157,11 +162,8 @@ export default class TimeSeries extends Component {
     const filteredUnits = []
 
     if (duration.as('years') >= 1) { filteredUnits.push({ label: 'Years', value: 'Y' }) }
-
     if (duration.as('months') >= 1) { filteredUnits.push({ label: 'Months', value: 'M' }) }
-
     if (duration.as('weeks') >= 1) { filteredUnits.push({ label: 'Weeks', value: 'W' }) }
-
     if (duration.as('years') <= 0.5) { filteredUnits.push({ label: 'Days', value: 'D' }) }
 
     return filteredUnits
@@ -170,7 +172,15 @@ export default class TimeSeries extends Component {
   getInitialRangeUnit () {
     let duration = DateTime.fromISO(this.state.endDate).diff(DateTime.fromISO(this.state.startDate))
 
-    if (duration.as('years') >= 1) { return 'Y' } else if (duration.as('months') >= 6) { return 'M' } else if (duration.as('months') >= 1) { return 'W' } else { return 'D' }
+    if (duration.as('years') >= 1) {
+      return 'Y'
+    } else if (duration.as('months') >= 6) {
+      return 'M'
+    } else if (duration.as('months') >= 1) {
+      return 'W'
+    } else {
+      return 'D'
+    }
   }
 
   componentDidMount () {
@@ -178,7 +188,6 @@ export default class TimeSeries extends Component {
       rangeUnits: this.filterRangeUnits(),
       rangeUnit: this.getInitialRangeUnit()
     })
-    this.updateTimeseriesData()
     this.initializeFilters()
   }
 
@@ -215,56 +224,27 @@ export default class TimeSeries extends Component {
     })
   }
 
-  componentDidUpdate (prevProps, prevState, snapshot) {
-    const changedInputs = ['startDate', 'endDate', 'rangeValue', 'rangeUnit']
-      .filter(key => prevState[key] !== this.state[key])
+  buildBinInterval (nextState) {
+    if (!nextState.rangeValue.length || Number.isNaN(nextState.rangeValue)) { return null }
 
-    const changedMultiselect = ['users', 'countries', 'teams']
-      .filter(key => Object.keys(prevState[key]).length !== Object.keys(this.state[key]).length)
-
-    if (changedInputs.filter(i => i.indexOf('Date') !== -1).length) { this.setState({ rangeUnits: this.filterRangeUnits(), rangeUnit: this.getInitialRangeUnit() }) }
-
-    if (changedInputs.length || changedMultiselect.length) { this.updateTimeseriesData() }
-  }
-
-  buildBinInterval () {
-    if (!this.state.rangeValue.length || Number.isNaN(this.state.rangeValue)) { return null }
-
-    const interval = this.state.rangeUnits.find(({ value }) => value === this.state.rangeUnit)
+    const interval = nextState.rangeUnits.find(({ value }) => value === nextState.rangeUnit)
 
     if (interval === undefined) { return null }
 
-    const duration = Duration.fromObject({ [interval.label]: this.state.rangeValue })
+    const duration = Duration.fromObject({ [interval.label]: nextState.rangeValue })
 
     if (duration.toMillis() <= 0) { return null }
 
     return duration.toISO()
   }
 
-  buildGraphBins () {
-    const bins = {}
-
-    const end = DateTime.fromISO(this.state.endDate)
-
-    const binInterval = Duration.fromISO(this.buildBinInterval())
-
-    let bin = DateTime.fromISO(this.state.startDate)
-
-    while (bin.startOf('day') < end.startOf('day')) {
-      bins[bin.toISODate()] = { x: bin.toISODate(), y: 0 }
-      bin = bin.plus(binInterval)
-    }
-
-    return bins
-  }
-
-  async updateTimeseriesData () {
+  async updateTimeseriesData (nextState) {
     const queryParams = {
-      startDate: this.state.startDate,
-      endDate: this.state.endDate
+      startDate: nextState.startDate,
+      endDate: nextState.endDate
     }
 
-    const validBinInterval = this.buildBinInterval()
+    const validBinInterval = this.buildBinInterval(nextState)
 
     if (validBinInterval === null) { // do not send request if user did not specify a time unit
       return
@@ -272,9 +252,9 @@ export default class TimeSeries extends Component {
 
     queryParams.binInterval = validBinInterval
 
-    const countries = Object.keys(this.state.countries)
-    const users = Object.keys(this.state.users)
-    const teams = Object.keys(this.state.teams)
+    const countries = Object.keys(nextState.countries)
+    const users = Object.keys(nextState.users)
+    const teams = Object.keys(nextState.teams)
 
     const queryUsers = []
 
@@ -284,7 +264,6 @@ export default class TimeSeries extends Component {
 
     if (queryUsers.length) { queryParams.userIdsFilter = queryUsers.filter((u, idx) => queryUsers.indexOf(u) === idx).join('|') }
 
-    this.setState({ requestInflight: true })
     const nextTimeseriesData = await fetch(createApiUrl('/api/timeseries', queryParams))
       .then(async res => {
         if (res.status === 200) {
@@ -367,27 +346,37 @@ export default class TimeSeries extends Component {
       accumulatedUserTimeseriesData[user_id] = accumulatedUserStats
     })
 
-    this.setState({
+    let nextHeaderMessage = ''
+    if (timeseriesData.length) {
+      nextHeaderMessage = RESPONSE_MESSAGE(nextState.startDate, nextState.endDate)
+    } else if (users.length || countries.length || teams.length) {
+      nextHeaderMessage = NO_RESPONSE_MESSAGE
+    } else {
+      nextHeaderMessage = APPLY_MESSAGE
+    }
+
+    this.setState(Object.assign(nextState, {
+      headerMessage: nextHeaderMessage,
       accumulatedUserTimeseriesData: accumulatedUserTimeseriesData,
       timeseriesData: timeseriesData.sort((userA, userB) => userA.name.localeCompare(userB.name)),
       requestInFlight: false,
       userIdMap: accumulatedUserTimeseriesData
-    })
+    }))
   }
 
   onInputChange ({ id, value }) {
-    this.setState({ [id]: value })
+    const nextState = this.state
+    nextState[id] = value
+    this.updateTimeseriesData(nextState)
   }
 
   onMultiSelectChange (id, selected) {
-    this.setState({ [id]: selected.reduce((nextState, { value }) => {
-      nextState[value] = true
-      return nextState
-    }, {}) })
-  }
-
-  statsHeader (description) {
-    if (this.state.timeseriesData && this.state.timeseriesData.length) { return `${description} User Edits from ${this.state.startDate.split('T')[0]} to ${this.state.endDate.split('T')[0]}` } else if (!this.state.requestInflight && ['users', 'countries', 'teams'].some(k => Object.keys(this.state[k]).length)) { return 'Supplied query has no results' } else { return 'Apply a country or user filter' }
+    const nextState = this.state
+    nextState[id] = selected.reduce((next, { value }) => {
+      next[value] = true
+      return next
+    }, {})
+    this.updateTimeseriesData(nextState)
   }
 
   render () {
@@ -469,7 +458,7 @@ export default class TimeSeries extends Component {
               </form>
             </div>
             <div className='widget-90' style={rightWidgetStyle}>
-              <h3 className='header--small'>{this.statsHeader('Categorized')}</h3>
+              <h3 className='header--small'>{this.state.headerMessage}</h3>
               <div className='chart' style={{ height: '400px', marginBottom: '50px' }}>
                 <TimeSeriesEditsChart userData={Object.values(this.state.accumulatedUserTimeseriesData)} />
               </div>
