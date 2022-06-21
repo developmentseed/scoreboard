@@ -10,6 +10,22 @@ const chartCrosswalk = {
   'km_coastlines_add_mod': 5
 }
 
+// builds log scale inclusive of largest statistic
+function getLog10Scale (maxInteger) {
+  const linearScale = []
+  const logScale = {}
+
+  let i = 0
+  let next = 0
+  while (next < maxInteger) {
+    next = Math.pow(10, i)
+    linearScale.push(i)
+    logScale[i] = next
+    ++i
+  }
+  return [linearScale, logScale]
+}
+
 export default function TimeSeriesEditsChart ({ userData }) {
   const { keys, data } = userData.reduce((chartData, userData) => {
     chartData.keys[userData.name] = true
@@ -25,71 +41,59 @@ export default function TimeSeriesEditsChart ({ userData }) {
     data: [
       { type: 'Roads (KM)' },
       { type: 'Buildings' },
-      { type: 'POI' },
+      { type: 'POIs' },
       { type: 'Railways (KM)' },
       { type: 'Waterways (KM)' },
       { type: 'Coastlines (KM)' }
     ]
   })
 
+  const userKeys = Object.keys(keys)
+  let maxInteger = 0
+
+  for (let d of data) {
+    for (const k of userKeys) {
+      maxInteger += d[k] || 0
+      d[k + '_log'] = d[k]
+      d[k] = Math.log10(d[k])
+    }
+  }
+
+  const [linearScale, logScale] = getLog10Scale(maxInteger)
+
   return (
-    (userData && userData.length) ? <ResponsiveBar
-      data={data}
-      enableLabel={false}
-      keys={Object.keys(keys)}
-      indexBy='type'
-      margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-      padding={0.3}
-      valueScale={{ type: 'linear' }}
-      indexScale={{ type: 'band', round: true }}
-      colors={['#22BDC1', '#8BC544', '#334A42', '#5657C2', '#4FCA9C', '#301F11']}
-      colorBy='id'
-      axisTop={null}
-      axisRight={null}
-      axisBottom={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legendPosition: 'middle',
-        legendOffset: 32
-      }}
-      axisLeft={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legendPosition: 'middle',
-        legendOffset: -40
-      }}
-      legends={[
-        {
-          dataFrom: 'keys',
-          anchor: 'bottom-right',
-          direction: 'column',
-          justify: false,
-          translateX: 120,
-          translateY: 0,
-          itemsSpacing: 2,
-          itemWidth: 100,
-          itemHeight: 20,
-          itemDirection: 'left-to-right',
-          itemOpacity: 0.85,
-          symbolSize: 20,
-          effects: [
-            {
-              on: 'hover',
-              style: {
-                itemOpacity: 1
-              }
-            }
-          ]
-        }
-      ]}
-      labelSkipWidth={12}
-      labelSkipHeight={12}
-      role='application'
-      ariaLabel='User Edits by Category'
-      groupMode='grouped'
-      barAriaLabel={function (e) { return e.id + ': ' + e.formattedValue + ' in country: ' + e.indexValue }}
-    /> : <></>
+    (userData && userData.length)
+      ? <ResponsiveBar
+        width={800}
+        data={data}
+        maxValue={linearScale[linearScale.length - 1]}
+        enableLabel={false}
+        keys={userKeys}
+        indexBy='type'
+        margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+        padding={0.3}
+        valueScale={{ type: 'linear' }}
+        gridYValues={linearScale}
+        axisLeft={{
+          tickValues: linearScale,
+          format: (v) => logScale[v]
+        }}
+        tooltip={(d) => {
+          return <div>{`${d.data[d.id + '_log']} ${d.indexValue}`}</div>
+        }}
+        legends={[
+          {
+            anchor: 'bottom-right',
+            dataFrom: 'keys',
+            direction: 'column',
+            itemHeight: 20,
+            itemWidth: 110,
+            toggleSerie: true,
+            translateX: 120
+          }
+        ]}
+        groupMode='grouped'
+        colors={['#22BDC1', '#8BC544', '#334A42', '#5657C2', '#4FCA9C', '#301F11']}
+      /> : <></>
   )
 }
