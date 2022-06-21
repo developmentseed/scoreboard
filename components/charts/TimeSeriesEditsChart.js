@@ -10,34 +10,34 @@ const chartCrosswalk = {
   'km_coastlines_add_mod': 5
 }
 
-
-export default function TimeSeriesEditsChart ({userData}) {
-  const {keys, data} = userData.reduce((chartData, userData) => {
-    chartData.keys[userData.name] = true;
+export default function TimeSeriesEditsChart ({ userData }) {
+  const { keys, data } = userData.reduce((chartData, userData) => {
+    chartData.keys[userData.name] = true
     Object.keys(userData).forEach((k) => {
       if (userData[k] && chartCrosswalk.hasOwnProperty(k)) {
         chartData.data[chartCrosswalk[k]][userData.name] =
           userData[k] + (chartData.data[chartCrosswalk[k]][userData.name] || 0)
       }
     })
-    return chartData;
+    return chartData
   }, {
     keys: {},
     data: [
-      {type: 'Roads (KM)'},
-      {type: 'Buildings'},
-      {type: 'POI'},
-      {type: 'Railways (KM)'},
-      {type: 'Waterways (KM)'},
-      {type: 'Coastlines (KM)'}
+      { type: 'Roads (KM)' },
+      { type: 'Buildings' },
+      { type: 'POI' },
+      { type: 'Railways (KM)' },
+      { type: 'Waterways (KM)' },
+      { type: 'Coastlines (KM)' }
     ]
   })
 
   return (
     (userData && userData.length) ? <ResponsiveBar
       data={data}
+      enableLabel={false}
       keys={Object.keys(keys)}
-      indexBy="type"
+      indexBy='type'
       margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
       padding={0.3}
       valueScale={{ type: 'linear' }}
@@ -47,49 +47,49 @@ export default function TimeSeriesEditsChart ({userData}) {
       axisTop={null}
       axisRight={null}
       axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legendPosition: 'middle',
-          legendOffset: 32
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legendPosition: 'middle',
+        legendOffset: 32
       }}
       axisLeft={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legendPosition: 'middle',
-          legendOffset: -40
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legendPosition: 'middle',
+        legendOffset: -40
       }}
       legends={[
         {
-            dataFrom: 'keys',
-            anchor: 'bottom-right',
-            direction: 'column',
-            justify: false,
-            translateX: 120,
-            translateY: 0,
-            itemsSpacing: 2,
-            itemWidth: 100,
-            itemHeight: 20,
-            itemDirection: 'left-to-right',
-            itemOpacity: 0.85,
-            symbolSize: 20,
-            effects: [
-                {
-                    on: 'hover',
-                    style: {
-                        itemOpacity: 1
-                    }
-                }
-            ]
-          }
+          dataFrom: 'keys',
+          anchor: 'bottom-right',
+          direction: 'column',
+          justify: false,
+          translateX: 120,
+          translateY: 0,
+          itemsSpacing: 2,
+          itemWidth: 100,
+          itemHeight: 20,
+          itemDirection: 'left-to-right',
+          itemOpacity: 0.85,
+          symbolSize: 20,
+          effects: [
+            {
+              on: 'hover',
+              style: {
+                itemOpacity: 1
+              }
+            }
+          ]
+        }
       ]}
       labelSkipWidth={12}
       labelSkipHeight={12}
-      role="application"
-      ariaLabel="User Edits by Category"
+      role='application'
+      ariaLabel='User Edits by Category'
       groupMode='grouped'
-      barAriaLabel={function(e){return e.id+": "+e.formattedValue+" in country: "+e.indexValue}}
+      barAriaLabel={function (e) { return e.id + ': ' + e.formattedValue + ' in country: ' + e.indexValue }}
     /> : <></>
   )
 }
