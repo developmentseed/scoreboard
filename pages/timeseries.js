@@ -15,8 +15,8 @@ const apiHeaderCrosswalk = {
   },
   measurements: {
     road: 'km_roads_add_mod',
-    raillines: 'km_railways_add_mod',
-    waterways: 'km_waterways_add_mod',
+    railline: 'km_railways_add_mod',
+    waterway: 'km_waterways_add_mod',
     coastline: 'km_coastlines_add_mod'
   }
 }

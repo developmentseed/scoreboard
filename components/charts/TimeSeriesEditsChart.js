@@ -56,6 +56,7 @@ export default function TimeSeriesEditsChart ({ userData }) {
       maxInteger += d[k] || 0
       d[k + '_log'] = d[k]
       d[k] = Math.log10(d[k])
+      if (d[k] < 0) d[k] = 0 // cut off nums > 0 for now.
     }
   }
 
@@ -79,7 +80,7 @@ export default function TimeSeriesEditsChart ({ userData }) {
           format: (v) => logScale[v]
         }}
         tooltip={(d) => {
-          return <div>{`${d.data[d.id + '_log']} ${d.indexValue}`}</div>
+          return <div>{`${d.data[d.id + '_log'].toLocaleString('en-US')} ${d.indexValue}`}</div>
         }}
         legends={[
           {
