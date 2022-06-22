@@ -397,14 +397,14 @@ class OSMesaDBWrapper {
     return reduce((acc, curr) => assoc(curr.mat_view, curr.updated_at, acc), {}, data)
   }
 
-  getCountsRows(categoriesFilter = []) {
+  getCountsRows (categoriesFilter = []) {
     return countConversions
       .filter(count => categoriesFilter.includes(count[0]))
       .map(count => editTypes.map(type => `'${count[1]}_${type[0]}'`))
       .flat()
   }
 
-  getMeasurementRows(categoriesFilter = []) {
+  getMeasurementRows (categoriesFilter = []) {
     return categoriesFilter
       .filter(c => c.includes('km'))
       .map(measurement => editTypes.map(type => `'${measurement}_${type[0]}'`))
@@ -421,12 +421,12 @@ class OSMesaDBWrapper {
     hashtagPrefixFilter,
     categoriesFilter
   }) {
-    const [interval, value] = Object.entries(binInterval.toObject())[0];
+    const [interval, value] = Object.entries(binInterval.toObject())[0]
     const binWidth = `${value} ${interval}` // bin width as an interval string
-    const startDateSQL = `'${startDate.toSQL()}'::timestamp`;
+    const startDateSQL = `'${startDate.toSQL()}'::timestamp`
     const endBinStartSQL = `'${endDate.minus({ [interval]: value }).toSQL()}'::timestamp`
     const endDateSQL = `'${endDate.toSQL()}'::timestamp`
-    const whereClause = [`created_at >= ${startDateSQL}`, `created_at  < ${endDateSQL}`];
+    const whereClause = [`created_at >= ${startDateSQL}`, `created_at  < ${endDateSQL}`]
 
     if (userIdsFilter.length) {
       whereClause.push(`user_id in (${userIdsFilter.join(',')})`)
@@ -479,16 +479,16 @@ class OSMesaDBWrapper {
       .join('changesets_countries', 'changesets_countries.changeset_id', 'changesets.id')
       .join('hashtags', 'hashtags.id', 'changesets_hashtags.hashtag_id')
       .join('countries', 'countries.id', 'changesets_countries.country_id')
-      .join('timeseries', function() {
-          return this
-            .on('timeseries.bin_start', '<=', 'changesets.created_at')
-            .andOn('changesets.created_at', '<', 'timeseries.bin_end')
+      .join('timeseries', function () {
+        return this
+          .on('timeseries.bin_start', '<=', 'changesets.created_at')
+          .andOn('changesets.created_at', '<', 'timeseries.bin_end')
       })
       .whereRaw(whereClause.join(' and '))
 
     const binnedChangesets = this.connection()
-      .select("*")
-      .from('filtered_changesets');
+      .select('*')
+      .from('filtered_changesets')
 
     // make sure we have a 'default' bin without any stats for the bins
     //  the user does not have edits within.
@@ -546,7 +546,7 @@ class OSMesaDBWrapper {
       .crossJoin(this.connection().raw('LATERAL jsonb_each(binned_changesets.measurements) jsonb_each(key, value)'))
 
     // aggregate those measurements on bin-start + user_id
-    const measurementRows = this.getMeasurementRows(categoriesFilter);
+    const measurementRows = this.getMeasurementRows(categoriesFilter)
     let aggregatedMeasurementsKv = this.connection()
       .select(this.connection().raw(`
         measurements.user_id,
@@ -558,8 +558,7 @@ class OSMesaDBWrapper {
       .from('measurements')
       .groupBy('measurements.user_id', 'measurements.bin_start', 'measurements.bin_end', 'measurements.key')
 
-    if (measurementRows.length)
-      aggregatedMeasurementsKv = aggregatedMeasurementsKv.whereIn('key', measurementRows)
+    if (measurementRows.length) { aggregatedMeasurementsKv = aggregatedMeasurementsKv.whereIn('key', measurementRows) }
 
     const aggregateMeasurements = this.connection()
       .select(this.connection().raw(`
@@ -583,7 +582,7 @@ class OSMesaDBWrapper {
       .from('binned_changesets')
       .crossJoin(this.connection().raw('LATERAL jsonb_each(binned_changesets.counts) jsonb_each(key, value)'))
 
-    const countsRows = this.getCountsRows(categoriesFilter);
+    const countsRows = this.getCountsRows(categoriesFilter)
     let aggregatedCountsKv = this.connection()
       .select(this.connection().raw(`
         counts.user_id,
@@ -595,8 +594,7 @@ class OSMesaDBWrapper {
       .from('counts')
       .groupBy('counts.user_id', 'counts.bin_start', 'counts.bin_end', 'counts.key')
 
-    if (countsRows.length)
-      aggregatedCountsKv = aggregatedCountsKv.whereIn('key', countsRows)
+    if (countsRows.length) { aggregatedCountsKv = aggregatedCountsKv.whereIn('key', countsRows) }
 
     const aggregatedCounts = this.connection()
       .select(this.connection().raw(`
@@ -610,7 +608,7 @@ class OSMesaDBWrapper {
 
     // select a union of users' data binned by the bin interval
     // with the default bins alias.
-    const {rows} = await this.connection().raw(`
+    const { rows } = await this.connection().raw(`
         WITH timeseries                 as (${timeseries.toString()}),
              filtered_changesets        as (${filteredChangesets.toString()}),
              binned_changesets          as (${binnedChangesets.toString()}),
