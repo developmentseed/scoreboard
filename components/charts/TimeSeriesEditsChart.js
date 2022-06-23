@@ -80,7 +80,7 @@ export default function TimeSeriesEditsChart ({ userData }) {
           format: (v) => logScale[v]
         }}
         tooltip={(d) => {
-          return <div>{`${d.data[d.id + '_log'].toLocaleString('en-US')} ${d.indexValue}`}</div>
+          return <div>{`${d.id}: ${d.data[d.id + '_log'].toLocaleString('en-US')} ${d.indexValue}`}</div>
         }}
         legends={[
           {
