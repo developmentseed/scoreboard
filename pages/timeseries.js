@@ -360,7 +360,7 @@ export default class TimeSeries extends Component {
       accumulatedUserTimeseriesData: accumulatedUserTimeseriesData,
       timeseriesData: timeseriesData.sort((userA, userB) => userA.name.localeCompare(userB.name)),
       requestInFlight: false,
-      userIdMap: accumulatedUserTimeseriesData
+      userIdMap: userIdMap
     }))
   }
 
