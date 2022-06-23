@@ -179,6 +179,7 @@ class Layout extends React.Component {
                 <li onClick={this.toggle.bind(this)}><NavLink href='/users'>Users</NavLink></li>
                 <li onClick={this.toggle.bind(this)}><NavLink href='/teams'>Teams</NavLink></li>
                 <li onClick={this.toggle.bind(this)}><NavLink href='/countries'>Countries</NavLink></li>
+                {loggedIn && <li onClick={this.toggle.bind(this)}><NavLink href='/timeseries'>Timeseries</NavLink></li>}
                 <li onClick={this.toggle.bind(this)}><NavLink href='/about'>About</NavLink></li>
               </ul>
               {
