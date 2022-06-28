@@ -33,7 +33,7 @@ const csvCrosswalk = {
   coastline_km_added: 'km_coastlines_add',
   coastline_km_deleted: 'km_coastlines_mod',
   waterway_km_added: 'km_waterways_add',
-  waterway_km_modified: 'km_waterways_add'
+  waterway_km_modified: 'km_waterways_mod'
 }
 
 const osmesaUserStatSchema = {
@@ -302,9 +302,22 @@ export default class TimeSeries extends Component {
           edit_count: edit_count,
           changeset_count: changeset_count
         },
-        Object.keys(measurements).reduce((crossWalked, k) => { crossWalked[csvCrosswalk[k]] = measurements[k]; return crossWalked }, {}),
-        Object.keys(counts).reduce((crossWalked, k) => { crossWalked[csvCrosswalk[k]] = counts[k]; return crossWalked }, {})
-        )
+        Object.keys(measurements).reduce((crossWalked, k) => { crossWalked[csvCrosswalk[k]] = measurements[k]; return crossWalked }, {
+          km_roads_add: 0,
+          km_roads_mod: 0,
+          km_railways_add: 0,
+          km_railways_mod: 0,
+          km_coastlines_add: 0,
+          km_coastlines_mod: 0,
+          km_waterways_add: 0,
+          km_waterways_mod: 0
+        }),
+        Object.keys(counts).reduce((crossWalked, k) => { crossWalked[csvCrosswalk[k]] = counts[k]; return crossWalked }, {
+          buildings_add: 0,
+          buildings_mod: 0,
+          poi_add: 0,
+          poi_mod: 0
+        }))
       )
 
       const accumulatedUserStats = accumulatedUserTimeseriesData[user_id] || {
