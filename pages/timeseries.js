@@ -328,8 +328,8 @@ export default class TimeSeries extends Component {
         km_railways_add_mod: 0,
         km_waterways_add_mod: 0,
         km_coastlines_add_mod: 0,
-        edit_count: edit_count,
-        changeset_count: changeset_count
+        edit_count: 0,
+        changeset_count: 0
       }
 
       userIdMap[name] = user_id
