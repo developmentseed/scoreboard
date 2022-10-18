@@ -475,10 +475,10 @@ class OSMesaDBWrapper {
         code
       `))
       .from('changesets')
-      .join('changesets_hashtags', 'changesets_hashtags.changeset_id', 'changesets.id')
-      .join('changesets_countries', 'changesets_countries.changeset_id', 'changesets.id')
-      .join('hashtags', 'hashtags.id', 'changesets_hashtags.hashtag_id')
-      .join('countries', 'countries.id', 'changesets_countries.country_id')
+      .leftJoin('changesets_hashtags', 'changesets_hashtags.changeset_id', 'changesets.id')
+      .leftJoin('changesets_countries', 'changesets_countries.changeset_id', 'changesets.id')
+      .leftJoin('hashtags', 'hashtags.id', 'changesets_hashtags.hashtag_id')
+      .leftJoin('countries', 'countries.id', 'changesets_countries.country_id')
       .join('timeseries', function () {
         return this
           .on('timeseries.bin_start', '<=', 'changesets.created_at')
@@ -522,8 +522,8 @@ class OSMesaDBWrapper {
     const general = this.connection()
       .select(this.connection().raw(`
         binned_changesets.user_id,
-        array_agg(distinct binned_changesets.code) as countries,
-        array_agg(distinct binned_changesets.hashtag) as hashtags,
+        array_remove(array_agg(distinct binned_changesets.code), NULL) as countries,
+        array_remove(array_agg(distinct binned_changesets.hashtag), NULL) as hashtags,
         array_agg(distinct binned_changesets.id) as changeset_ids,
         count(*) AS changeset_count,
         sum(COALESCE(binned_changesets.total_edits, 0)) AS edit_count,
