@@ -466,19 +466,13 @@ class OSMesaDBWrapper {
 
     // join changeset rows with timeseries rows so we have a columns (timeseries.bin_start and changeset.user_id)
     // to aggregate with
-    const filteredChangesets = this.connection()
+    const binnedChangesets = this.connection()
       .select(this.connection().raw(`
         changesets.*,
         bin_start,
-        bin_end,
-        hashtags.hashtag,
-        code
+        bin_end
       `))
       .from('changesets')
-      .leftJoin('changesets_hashtags', 'changesets_hashtags.changeset_id', 'changesets.id')
-      .leftJoin('changesets_countries', 'changesets_countries.changeset_id', 'changesets.id')
-      .leftJoin('hashtags', 'hashtags.id', 'changesets_hashtags.hashtag_id')
-      .leftJoin('countries', 'countries.id', 'changesets_countries.country_id')
       .join('timeseries', function () {
         return this
           .on('timeseries.bin_start', '<=', 'changesets.created_at')
@@ -486,9 +480,63 @@ class OSMesaDBWrapper {
       })
       .whereRaw(whereClause.join(' and '))
 
-    const binnedChangesets = this.connection()
-      .select('*')
-      .from('filtered_changesets')
+    const inBinnedChangesetsIds = this.connection().raw('changeset_id in (select binned_changesets.id from binned_changesets)')
+
+    // get hashtags and countries for the filtered worked in binned_changesets
+    // and bin them by the interval bins
+    const binnedChangesetsHashtags = this.connection()
+      .select(this.connection().raw(`
+        binned_changesets.user_id,
+        binned_changesets.bin_start,
+        array_agg(distinct hashtags.hashtag) as hashtags
+      `))
+      .from('changesets_hashtags')
+      .join('hashtags', 'changesets_hashtags.hashtag_id', 'hashtags.id')
+      .leftJoin('binned_changesets', 'binned_changesets.id', 'changesets_hashtags.changeset_id')
+      .where(inBinnedChangesetsIds)
+      .groupBy('user_id', 'bin_start')
+
+    const binnedChangesetsCountries = this.connection()
+      .select(this.connection().raw(`
+        binned_changesets.user_id,
+        binned_changesets.bin_start,
+        array_agg(distinct countries.code) as countries
+      `))
+      .from('changesets_countries')
+      .join('countries', 'changesets_countries.country_id', 'countries.id')
+      .leftJoin('binned_changesets', 'binned_changesets.id', 'changesets_countries.changeset_id')
+      .where(inBinnedChangesetsIds)
+      .groupBy('user_id', 'bin_start')
+
+    // aggregate non-json columns in the binned_changesets
+    // and join with the aggregated-on-bin_start binned_changesets_hashtags/countries tables
+    const general = this.connection()
+      .select(this.connection().raw(`
+        binned_changesets.user_id,
+        binned_changesets_hashtags.hashtags,
+        binned_changesets_countries.countries,
+        array_agg(distinct binned_changesets.id) as changeset_ids,
+        count(*) AS changeset_count,
+        sum(COALESCE(binned_changesets.total_edits, 0)) AS edit_count,
+        binned_changesets.bin_start,
+        binned_changesets.bin_end
+      `))
+      .from('binned_changesets')
+      .join('binned_changesets_hashtags',   function() {
+        this.on('binned_changesets.bin_start', 'binned_changesets_hashtags.bin_start')
+            .andOn('binned_changesets.user_id', 'binned_changesets_hashtags.user_id')
+      })
+      .join('binned_changesets_countries', function() {
+        this.on('binned_changesets.bin_start', 'binned_changesets_countries.bin_start')
+            .andOn('binned_changesets.user_id', 'binned_changesets_countries.user_id')
+      })
+      .groupBy(
+        'binned_changesets.bin_start',
+        'binned_changesets.bin_end',
+        'binned_changesets.user_id',
+        'binned_changesets_hashtags.hashtags',
+        'binned_changesets_countries.countries'
+      )
 
     // make sure we have a 'default' bin without any stats for the bins
     //  the user does not have edits within.
@@ -517,21 +565,6 @@ class OSMesaDBWrapper {
         from general where general.user_id = bins_without.user_id
       )
     `)
-
-    // aggregate non-json columns in the binned_changesets table
-    const general = this.connection()
-      .select(this.connection().raw(`
-        binned_changesets.user_id,
-        array_remove(array_agg(distinct binned_changesets.code), NULL) as countries,
-        array_remove(array_agg(distinct binned_changesets.hashtag), NULL) as hashtags,
-        array_agg(distinct binned_changesets.id) as changeset_ids,
-        count(*) AS changeset_count,
-        sum(COALESCE(binned_changesets.total_edits, 0)) AS edit_count,
-        binned_changesets.bin_start,
-        binned_changesets.bin_end
-      `))
-      .from('binned_changesets')
-      .groupBy('binned_changesets.bin_start', 'binned_changesets.bin_end', 'binned_changesets.user_id')
 
     // create rows per user & measurement...
     const measurements = this.connection()
@@ -607,37 +640,38 @@ class OSMesaDBWrapper {
       .groupBy('aggregated_counts_kv.user_id', 'aggregated_counts_kv.bin_start', 'aggregated_counts_kv.bin_end')
 
     // select a union of users' data binned by the bin interval
-    // with the default bins alias.
+    // with the default bins alias
     const { rows } = await this.connection().raw(`
-        WITH timeseries                 as (${timeseries.toString()}),
-             filtered_changesets        as (${filteredChangesets.toString()}),
-             binned_changesets          as (${binnedChangesets.toString()}),
-             general                    as (${general.toString()}),
-             bins_without_results       as (${binsWithoutResults.toString()}),
-             measurements               as (${measurements.toString()}),
-             aggregated_measurements_kv as (${aggregatedMeasurementsKv.toString()}),
-             aggregated_measurements    as (${aggregateMeasurements.toString()}),
-             counts                     as (${counts.toString()}),
-             aggregated_counts_kv       as (${aggregatedCountsKv.toString()}),
-             aggregated_counts          as (${aggregatedCounts.toString()})
-       (SELECT
-             general.user_id,
-             to_char(general.bin_start at time zone 'UTC', 'YYYY-MM-DD') as bin_start,
-             to_char(general.bin_end at time zone 'UTC', 'YYYY-MM-DD') as bin_end,
-             users.name,
-             coalesce(general.hashtags, '{}'::text[]) as hashtags,
-             coalesce(general.countries, '{}'::text[]) as countries,
-             coalesce(aggregated_measurements.measurements, '{}'::jsonb) as measurements,
-             coalesce(aggregated_counts.counts, '{}'::jsonb) as counts,
-             general.changeset_count,
-             general.edit_count
-         FROM (((general
-              LEFT JOIN aggregated_measurements USING (user_id, bin_start))
-              LEFT JOIN aggregated_counts USING (user_id, bin_start))
-              JOIN public.users ON ((general.user_id = users.id)))
-        ORDER BY general.bin_start)
-        UNION
-        SELECT * FROM bins_without_results
+      WITH  timeseries                   as (${timeseries.toString()}),
+            binned_changesets            as (${binnedChangesets.toString()}),
+            binned_changesets_hashtags   as (${binnedChangesetsHashtags.toString()}),
+            binned_changesets_countries  as (${binnedChangesetsCountries.toString()}),
+            general                      as (${general.toString()}),
+            bins_without_results         as (${binsWithoutResults.toString()}),
+            measurements                 as (${measurements.toString()}),
+            aggregated_measurements_kv   as (${aggregatedMeasurementsKv.toString()}),
+            aggregated_measurements      as (${aggregateMeasurements.toString()}),
+            counts                       as (${counts.toString()}),
+            aggregated_counts_kv         as (${aggregatedCountsKv.toString()}),
+            aggregated_counts            as (${aggregatedCounts.toString()})
+      (SELECT
+            general.user_id,
+            to_char(general.bin_start at time zone 'UTC', 'YYYY-MM-DD') as bin_start,
+            to_char(general.bin_end at time zone 'UTC', 'YYYY-MM-DD') as bin_end,
+            users.name,
+            coalesce(general.hashtags, '{}'::text[]) as hashtags,
+            coalesce(general.countries, '{}'::text[]) as countries,
+            coalesce(aggregated_measurements.measurements, '{}'::jsonb) as measurements,
+            coalesce(aggregated_counts.counts, '{}'::jsonb) as counts,
+            general.changeset_count,
+            general.edit_count
+        FROM (((general
+            LEFT JOIN aggregated_measurements USING (user_id, bin_start))
+            LEFT JOIN aggregated_counts USING (user_id, bin_start))
+            JOIN public.users ON ((general.user_id = users.id)))
+      ORDER BY general.bin_start)
+      UNION
+      SELECT * FROM bins_without_results
     `)
 
     return rows
