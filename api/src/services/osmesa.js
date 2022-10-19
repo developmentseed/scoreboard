@@ -522,11 +522,11 @@ class OSMesaDBWrapper {
         binned_changesets.bin_end
       `))
       .from('binned_changesets')
-      .join('binned_changesets_hashtags',   function() {
+      .leftJoin('binned_changesets_hashtags',   function() {
         this.on('binned_changesets.bin_start', 'binned_changesets_hashtags.bin_start')
             .andOn('binned_changesets.user_id', 'binned_changesets_hashtags.user_id')
       })
-      .join('binned_changesets_countries', function() {
+      .leftJoin('binned_changesets_countries', function() {
         this.on('binned_changesets.bin_start', 'binned_changesets_countries.bin_start')
             .andOn('binned_changesets.user_id', 'binned_changesets_countries.user_id')
       })
