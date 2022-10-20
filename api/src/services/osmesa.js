@@ -586,7 +586,7 @@ class OSMesaDBWrapper {
         measurements.bin_start,
         measurements.bin_end,
         measurements.key,
-        round(sum(((measurements.value ->> 0))::numeric), 3) AS value
+        sum(((measurements.value ->> 0))::numeric) AS value
       `))
       .from('measurements')
       .groupBy('measurements.user_id', 'measurements.bin_start', 'measurements.bin_end', 'measurements.key')
