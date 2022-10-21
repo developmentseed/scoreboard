@@ -404,6 +404,13 @@ export default class TimeSeries extends Component {
 
     return (
       <div className='Timeseries'>
+        <header className='header--internal--green header--page'>
+          <div className='row'>
+            <div className='section-sub--left section-width-forty'>
+              <h1 className='header--xlarge'>Timeseries</h1>
+            </div>
+          </div>
+        </header>
         <section>
           <div className='row widget-container' style={containerStyle}>
             <div class='widget-10' style={{ maxWidth: '25%' }}>
@@ -465,9 +472,6 @@ export default class TimeSeries extends Component {
                     className='basic-multi-select'
                     classNamePrefix='select' />
                 </fieldset>
-                <fieldset>
-                  {haveUserData && <CSVExport filename='timeseries.csv' data={this.state.timeseriesData} />}
-                </fieldset>
               </form>
             </div>
             <div className='widget-90' style={rightWidgetStyle}>
@@ -477,13 +481,16 @@ export default class TimeSeries extends Component {
               </div>
               <div style={{ marginTop: '50px' }}>
                 {haveUserData &&
-                  <Table
-                    idMap={this.state.userIdMap}
-                    tableSchema={osmesaUserStatSchema}
-                    notSortable
-                    data={Object.values(this.state.accumulatedUserTimeseriesData)}
-                    totals={{}}
-                  />
+                  <>
+                    <Table
+                      idMap={this.state.userIdMap}
+                      tableSchema={osmesaUserStatSchema}
+                      notSortable
+                      data={Object.values(this.state.accumulatedUserTimeseriesData)}
+                      totals={{}}
+                    />
+                    <CSVExport filename='timeseries.csv' data={this.state.timeseriesData} />
+                  </>
                 }
               </div>
             </div>
