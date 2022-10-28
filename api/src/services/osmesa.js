@@ -418,7 +418,6 @@ class OSMesaDBWrapper {
     userIdsFilter,
     countriesFilter,
     hashtagsFilter,
-    hashtagPrefixFilter,
     categoriesFilter
   }) {
     const [interval, value] = Object.entries(binInterval.toObject())[0]
@@ -445,17 +444,6 @@ class OSMesaDBWrapper {
         changesets.id in (select changeset_id from changesets_hashtags where hashtag_id in (
           select id from hashtags where hashtag in (${hashtagsFilter.map(h => `'${h}'`).join(',')})
         ))
-      `)
-    }
-
-    if (hashtagPrefixFilter.length) {
-      whereClause.push(`
-        changesets.id in (
-          select changeset_id from changesets_hashtags where hashtag_id in (
-            select id from hashtags where hashtag ilike
-              ANY(select s || '%' from unnest(ARRAY[${hashtagPrefixFilter.map(h => `'${h}'`).join(',')}]) s(s))
-          )
-        )
       `)
     }
 

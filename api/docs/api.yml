@@ -201,16 +201,6 @@ paths:
             items:
               type: string
               example: [ 345_task_789, 345_task_111 ]
-        - name: hashtagPrefixFilter
-          description: Filter down to these hashtag(s), using a prefix match.
-          in: query
-          explode: false
-          style: pipeDelimited
-          schema:
-            type: array
-            items:
-              type: string
-              example: [ ocelots_ ]
         - name: categoriesFilter
           description: 'Filter down to these osmesa categories of measurements and counts.
             Each count and measurement will have [add, modified, deleted] in the response. Measurements
@@ -409,5 +399,4 @@ paths:
                                 type: integer
                                 description: Number of edits
                       description: Result bin of binInterval duration
-      x-codegen-request-body-name: hashtagPrefixFilter
 components: {}

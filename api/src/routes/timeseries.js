@@ -12,9 +12,8 @@ const osmesa = require('../services/osmesa')
  * @param userIdsFilter
  * @param countriesFilter
  * @param hashtagsFilter
- * @param hashtagPrefixFilter
  * @param categoriesFilter
- * @returns {{binInterval: ({isValid}|Duration), hashtagsFilter: {length}, categoriesFilter: {length}, userIdsFilter: {length}, endDate: ({isValid}|DateTime), hashtagPrefixFilter: {length}, startDate: ({isValid}|DateTime), countriesFilter: {length}}}
+ * @returns {{binInterval: ({isValid}|Duration), hashtagsFilter: {length}, categoriesFilter: {length}, userIdsFilter: {length}, endDate: ({isValid}|DateTime), startDate: ({isValid}|DateTime), countriesFilter: {length}}}
  */
 function validateParams ({
   startDate,
@@ -23,12 +22,11 @@ function validateParams ({
   userIdsFilter = '',
   countriesFilter = '',
   hashtagsFilter = '',
-  hashtagPrefixFilter = '',
   categoriesFilter = ''
 }) {
   let validStartDate, validEndDate, validBinInterval, validUserIdsFilter,
     validCountriesFilter, validHashtagsFilter,
-    validHashtagPrefixFilter, validCategoriesFilter
+    validCategoriesFilter
   if (!startDate) {
     throw Boom.badRequest('startDate is required')
   }
@@ -52,12 +50,10 @@ function validateParams ({
   }
   validCategoriesFilter = deserializeStringArray(categoriesFilter)
   validCountriesFilter = deserializeStringArray(countriesFilter) // TODO: validate these are 3 letter country codes?
-  validHashtagPrefixFilter = deserializeStringArray(hashtagPrefixFilter)
   validHashtagsFilter = deserializeStringArray(hashtagsFilter)
   // require at least 1 one filter, according to api spec.
   if (!validCategoriesFilter.length &&
       !validCountriesFilter.length &&
-      !validHashtagPrefixFilter.length &&
       !validHashtagsFilter.length &&
       !validUserIdsFilter.length) {
     throw Boom.badRequest('at least one filter is required')
@@ -69,7 +65,6 @@ function validateParams ({
     userIdsFilter: validUserIdsFilter,
     countriesFilter: validCountriesFilter,
     hashtagsFilter: validHashtagsFilter,
-    hashtagPrefixFilter: validHashtagPrefixFilter,
     categoriesFilter: validCategoriesFilter
   }
 }
@@ -105,7 +100,7 @@ function deserializeStringArray (s) {
 /**
  * TimeSeries route
  *
- * {{baseUrl}}/api/timeseries?startDate=<string>&endDate=(now)&binInterval=<string>&userIdsFilter=<integer>|<integer>&countriesFilter=<string>|<string>&hashtagsFilter=<string>|<string>&hashtagPrefixFilter=<string>|<string>&categoriesFilter=<string>|<string> *
+ * {{baseUrl}}/api/timeseries?startDate=<string>&endDate=(now)&binInterval=<string>&userIdsFilter=<integer>|<integer>&countriesFilter=<string>|<string>&hashtagsFilter=<string>|<string>&categoriesFilter=<string>|<string> *
  *
  * @param {Object} req - the request object
  * @param {Object} res - the response object
