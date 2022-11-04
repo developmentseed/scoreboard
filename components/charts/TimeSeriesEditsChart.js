@@ -10,6 +10,8 @@ const chartCrosswalk = {
   'km_coastlines_add_mod': 5
 }
 
+const MAX_USERS_CHART = 20
+
 // builds log scale inclusive of largest statistic
 function getLog10Scale (maxInteger) {
   const linearScale = []
@@ -27,12 +29,14 @@ function getLog10Scale (maxInteger) {
 }
 
 export default function TimeSeriesEditsChart ({ userData }) {
-  const { keys, data } = userData.reduce((chartData, userData) => {
-    chartData.keys[userData.name] = true
-    Object.keys(userData).forEach((k) => {
-      if (userData[k] && chartCrosswalk.hasOwnProperty(k)) {
-        chartData.data[chartCrosswalk[k]][userData.name] =
-          userData[k] + (chartData.data[chartCrosswalk[k]][userData.name] || 0)
+  const topUsers = userData.sort((a, b) => (a.edit_count > b.edit_count ? -1 : 1)).slice(0, MAX_USERS_CHART).reverse()
+
+  const { keys, data } = topUsers.reduce((chartData, topUsers) => {
+    chartData.keys[topUsers.name] = true
+    Object.keys(topUsers).forEach((k) => {
+      if (topUsers[k] && chartCrosswalk.hasOwnProperty(k)) {
+        chartData.data[chartCrosswalk[k]][topUsers.name] =
+        topUsers[k] + (chartData.data[chartCrosswalk[k]][topUsers.name] || 0)
       }
     })
     return chartData
@@ -63,7 +67,7 @@ export default function TimeSeriesEditsChart ({ userData }) {
   const [linearScale, logScale] = getLog10Scale(maxInteger)
 
   return (
-    (userData && userData.length)
+    (topUsers && topUsers.length)
       ? <ResponsiveBar
         width={800}
         data={data}
@@ -71,8 +75,7 @@ export default function TimeSeriesEditsChart ({ userData }) {
         enableLabel={false}
         keys={userKeys}
         indexBy='type'
-        margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-        padding={0.3}
+        margin={{ top: 50, right: 130, bottom: 50, left: 50 }}
         valueScale={{ type: 'linear' }}
         gridYValues={linearScale}
         axisLeft={{
