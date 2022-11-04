@@ -480,7 +480,6 @@ export default class TimeSeries extends Component {
               {haveUserData &&
                 <div>
                   <div className='widget chart' style={{ height: '528px', margin: '1rem 0', width: '100%', overflow: 'scroll' }}>
-                    <h4 className='header--small'>Top 20 Users</h4>
                     <TimeSeriesEditsChart userData={Object.values(this.state.accumulatedUserTimeseriesData)} />
                   </div>
                   <div className='page-actions'>

@@ -68,36 +68,39 @@ export default function TimeSeriesEditsChart ({ userData }) {
 
   return (
     (topUsers && topUsers.length)
-      ? <ResponsiveBar
-        width={800}
-        data={data}
-        maxValue={linearScale[linearScale.length - 1]}
-        enableLabel={false}
-        keys={userKeys}
-        indexBy='type'
-        margin={{ top: 50, right: 130, bottom: 50, left: 50 }}
-        valueScale={{ type: 'linear' }}
-        gridYValues={linearScale}
-        axisLeft={{
-          tickValues: linearScale,
-          format: (v) => logScale[v]
-        }}
-        tooltip={(d) => {
-          return <div>{`${d.id}: ${d.data[d.id + '_log'].toLocaleString('en-US')} ${d.indexValue}`}</div>
-        }}
-        legends={[
-          {
-            anchor: 'bottom-right',
-            dataFrom: 'keys',
-            direction: 'column',
-            itemHeight: 20,
-            itemWidth: 110,
-            toggleSerie: true,
-            translateX: 120
-          }
-        ]}
-        groupMode='grouped'
-        colors={['#22BDC1', '#8BC544', '#334A42', '#5657C2', '#4FCA9C', '#301F11']}
-      /> : <></>
+      ? <>
+        <h4 className='header--small'>Top {topUsers.length} Users</h4>
+        <ResponsiveBar
+          width={800}
+          data={data}
+          maxValue={linearScale[linearScale.length - 1]}
+          enableLabel={false}
+          keys={userKeys}
+          indexBy='type'
+          margin={{ top: 50, right: 130, bottom: 50, left: 50 }}
+          valueScale={{ type: 'linear' }}
+          gridYValues={linearScale}
+          axisLeft={{
+            tickValues: linearScale,
+            format: (v) => logScale[v]
+          }}
+          tooltip={(d) => {
+            return <div>{`${d.id}: ${d.data[d.id + '_log'].toLocaleString('en-US')} ${d.indexValue}`}</div>
+          }}
+          legends={[
+            {
+              anchor: 'bottom-right',
+              dataFrom: 'keys',
+              direction: 'column',
+              itemHeight: 20,
+              itemWidth: 110,
+              toggleSerie: true,
+              translateX: 120
+            }
+          ]}
+          groupMode='grouped'
+          colors={['#22BDC1', '#8BC544', '#334A42', '#5657C2', '#4FCA9C', '#301F11']}
+        />
+      </> : <></>
   )
 }
