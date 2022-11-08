@@ -48,7 +48,7 @@ export default function AdminSectionList (props) {
         </h3>
         <ul>
           <li>
-            <Link href='/timeseries'>
+            <Link href='/admin/timeseries'>
               <a className='link--normal'>Run Timeseries Analysis</a>
             </Link>
           </li>

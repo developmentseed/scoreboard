@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Select, { Async } from 'react-select'
-import fetch, { createApiUrl } from '../lib/utils/api'
-import Table from '../components/common/Table'
-import TimeSeriesEditsChart from '../components/charts/TimeSeriesEditsChart'
+import Link from '../../components/Link'
+import fetch, { createApiUrl } from '../../lib/utils/api'
+import Table from '../../components/common/Table'
+import TimeSeriesEditsChart from '../../components/charts/TimeSeriesEditsChart'
 import { Duration, DateTime } from 'luxon'
-import CSVExport from '../components/CSVExport'
+import CSVExport from '../../components/CSVExport'
 import debounce from 'lodash.debounce'
 import { AllSubstringsIndexStrategy, Search, UnorderedSearchIndex } from 'js-search'
 
@@ -408,12 +409,19 @@ export default class TimeSeries extends Component {
 
     return (
       <div className='Timeseries'>
-        <header className='header--internal--green header--page'>
+        <header className='header--internal--green header--page header--admin'>
           <div className='row'>
             <div className='section-sub--left section-width-forty'>
-              <ul className='list--two-column' style={{ margin: '0' }}>
-                <li style={{ margin: '0' }}><span>Admin</span></li>
-              </ul>
+              <Link href='/admin'>
+                <a style={{
+                  textTransform: 'uppercase',
+                  fontSize: '0.75rem',
+                  lineHeight: '1rem',
+                  fontFamily: 'Heebo-reg'
+                }}>
+                  Admin
+                </a>
+              </Link>
               <h1 className='header--xlarge'>Timeseries</h1>
             </div>
           </div>
