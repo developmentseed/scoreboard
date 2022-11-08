@@ -155,6 +155,8 @@ export default class TimeSeries extends Component {
       userIdMap: {},
       requestInflight: false
     }
+
+    this.updateTimeseriesData = this.updateTimeseriesData.bind(this)
   }
 
   filterRangeUnits () {
@@ -238,7 +240,8 @@ export default class TimeSeries extends Component {
     return duration.toISO()
   }
 
-  async updateTimeseriesData (nextState) {
+  async updateTimeseriesData () {
+    const nextState = this.state
     const queryParams = {
       startDate: nextState.startDate,
       endDate: nextState.endDate
@@ -270,7 +273,7 @@ export default class TimeSeries extends Component {
           const results = await res.json()
           return results
         } else {
-          throw new Error('failed to get country data')
+          throw new Error('failed to get timeseries data')
         }
       })
       .catch((error) => {
@@ -380,7 +383,7 @@ export default class TimeSeries extends Component {
   onInputChange ({ id, value }) {
     const nextState = this.state
     nextState[id] = value
-    this.updateTimeseriesData(nextState)
+    this.setState(nextState)
   }
 
   onMultiSelectChange (id, selected) {
@@ -389,7 +392,7 @@ export default class TimeSeries extends Component {
       next[value] = true
       return next
     }, {})
-    this.updateTimeseriesData(nextState)
+    this.setState(nextState)
   }
 
   render () {
@@ -465,6 +468,7 @@ export default class TimeSeries extends Component {
                     className='basic-multi-select'
                     classNamePrefix='select' />
                 </fieldset>
+                <input className='button button--primary' type='submit' value='Submit' onClick={this.updateTimeseriesData} />
                 <fieldset>
                   {haveUserData && <CSVExport filename='timeseries.csv' data={this.state.timeseriesData} />}
                 </fieldset>
