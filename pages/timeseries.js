@@ -477,7 +477,7 @@ export default class TimeSeries extends Component {
                     className='basic-multi-select'
                     classNamePrefix='select' />
                 </fieldset>
-                <input className='button button--primary' type='submit' value='Submit' onClick={this.updateTimeseriesData} />
+                <input className='button button--primary' type='submit' value='Submit' style={{ width: '100%' }} onClick={this.updateTimeseriesData} />
               </form>
             </div>
             <div className='widget-75 dashboard' style={rightWidgetStyle}>
