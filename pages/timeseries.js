@@ -411,6 +411,9 @@ export default class TimeSeries extends Component {
         <header className='header--internal--green header--page'>
           <div className='row'>
             <div className='section-sub--left section-width-forty'>
+              <ul className='list--two-column' style={{ margin: '0' }}>
+                <li style={{ margin: '0' }}><span>Admin</span></li>
+              </ul>
               <h1 className='header--xlarge'>Timeseries</h1>
             </div>
           </div>
