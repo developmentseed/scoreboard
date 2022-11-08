@@ -240,7 +240,8 @@ export default class TimeSeries extends Component {
     return duration.toISO()
   }
 
-  async updateTimeseriesData () {
+  async updateTimeseriesData (e) {
+    e.preventDefault()
     const nextState = this.state
     const queryParams = {
       startDate: nextState.startDate,
