@@ -240,7 +240,8 @@ export default class TimeSeries extends Component {
     return duration.toISO()
   }
 
-  async updateTimeseriesData () {
+  async updateTimeseriesData (e) {
+    e.preventDefault()
     const nextState = this.state
     const queryParams = {
       startDate: nextState.startDate,
@@ -397,8 +398,8 @@ export default class TimeSeries extends Component {
 
   render () {
     const haveUserData = this.state.timeseriesData && this.state.timeseriesData.length > 0
-    const containerStyle = {}
-    const rightWidgetStyle = {}
+    const containerStyle = { margin: '0 auto', 'flex-wrap': 'no-wrap', gap: '1rem' }
+    const rightWidgetStyle = { overflow: 'hidden' }
 
     if (!haveUserData) {
       containerStyle.justifyContent = 'start'
@@ -407,10 +408,18 @@ export default class TimeSeries extends Component {
 
     return (
       <div className='Timeseries'>
+        <header className='header--internal--green header--page'>
+          <div className='row'>
+            <div className='section-sub--left section-width-forty'>
+              <h1 className='header--xlarge'>Timeseries</h1>
+            </div>
+          </div>
+        </header>
         <section>
           <div className='row widget-container' style={containerStyle}>
-            <div class='widget-10' style={{ maxWidth: '25%' }}>
+            <div class='widget-25'>
               <form>
+                <h3 className='header--medium'>Filter</h3>
                 <fieldset>
                   <legend>Start date</legend>
                   <input className='input--text' id='startDate' type='date' value={this.state.startDate} onChange={evt => this.onInputChange(evt.target)} />
@@ -468,30 +477,36 @@ export default class TimeSeries extends Component {
                     className='basic-multi-select'
                     classNamePrefix='select' />
                 </fieldset>
-                <input className='button button--primary' type='submit' value='Submit' onClick={this.updateTimeseriesData} />
-                <fieldset>
-                  {haveUserData && <CSVExport filename='timeseries.csv' data={this.state.timeseriesData} />}
-                </fieldset>
+                <input className='button button--primary' type='submit' value='Submit' style={{ width: '100%' }} onClick={this.updateTimeseriesData} />
               </form>
             </div>
-            <div className='widget-90' style={rightWidgetStyle}>
-              <h3 className='header--small'>{this.state.headerMessage}</h3>
-              <div className='chart' style={{ height: '400px', marginBottom: '50px' }}>
-                <TimeSeriesEditsChart userData={Object.values(this.state.accumulatedUserTimeseriesData)} />
-              </div>
-              <div style={{ marginTop: '50px' }}>
-                {haveUserData &&
-                  <Table
-                    idMap={this.state.userIdMap}
-                    tableSchema={osmesaUserStatSchema}
-                    notSortable
-                    data={Object.values(this.state.accumulatedUserTimeseriesData)}
-                    totals={{}}
-                  />
-                }
-              </div>
+            <div className='widget-75 dashboard' style={rightWidgetStyle}>
+              <h3 className='header--medium'>{this.state.headerMessage}</h3>
+              {haveUserData &&
+                <div>
+                  <div className='widget chart' style={{ height: '528px', margin: '1rem 0', width: '100%', overflow: 'scroll' }}>
+                    <TimeSeriesEditsChart userData={Object.values(this.state.accumulatedUserTimeseriesData)} />
+                  </div>
+                  <div className='page-actions'>
+                    <CSVExport filename='timeseries.csv' data={this.state.timeseriesData} />
+                  </div>
+                </div>
+              }
             </div>
           </div>
+          {haveUserData &&
+            <div className='row'>
+              <div className='widget' style={{ overflow: 'scroll' }}>
+                <h4 className='header--small'>All Users</h4>
+                <Table
+                  idMap={this.state.userIdMap}
+                  tableSchema={osmesaUserStatSchema}
+                  data={Object.values(this.state.accumulatedUserTimeseriesData)}
+                  totals={{}}
+                />
+              </div>
+            </div>
+          }
         </section>
       </div>
     )
