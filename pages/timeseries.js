@@ -468,7 +468,7 @@ export default class TimeSeries extends Component {
                     className='basic-multi-select'
                     classNamePrefix='select' />
                 </fieldset>
-                <input className='button button--primary' type='button' value='Query' onClick={this.updateTimeseriesData} />
+                <input className='button button--primary' type='submit' value='Submit' onClick={this.updateTimeseriesData} />
                 <fieldset>
                   {haveUserData && <CSVExport filename='timeseries.csv' data={this.state.timeseriesData} />}
                 </fieldset>
