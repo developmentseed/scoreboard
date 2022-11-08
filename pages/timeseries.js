@@ -492,10 +492,10 @@ export default class TimeSeries extends Component {
           {haveUserData &&
             <div className='row'>
               <div className='widget' style={{ overflow: 'scroll' }}>
+                <h4 className='header--small'>All Users</h4>
                 <Table
                   idMap={this.state.userIdMap}
                   tableSchema={osmesaUserStatSchema}
-                  notSortable
                   data={Object.values(this.state.accumulatedUserTimeseriesData)}
                   totals={{}}
                 />
