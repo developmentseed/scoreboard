@@ -141,91 +141,99 @@ paths:
           description: Returns list of responses
           content: {}
   /api/timeseries:
-    post:
+    get:
       tags:
         - time series
       summary: 'Fetches time-series data from the osmesa database. Note: all of the parameters below are properties of
         an application/json request payload (body). Note: at least one Filter is required, otherwise a 400 Bad Request
         is returned.'
-      requestBody:
-        description: 'JSON request body'
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - startDate
-              properties:
-                startDate:
-                  type: string
-                  description: Start date of query. ISO-8601 formatted datetime string (UTC time zone).
-                  example: 2020-12-30
-                endDate:
-                  type: string
-                  description: End date of query. ISO-8601 formatted datetime string (UTC time zone).
-                  default: (now)
-                  example: 2020-12-30
-                binInterval:
-                  description: 'Response will be binned into equal intervals specified by this parameter. Must be shorter
-                    than end-date minus start-date. If omitted, no binning will be performed. ISO-8601 formatted time
-                    interval/duration string.'
-                  type: string
-                  example: P1Y2M10DT2H30M
-                userIdsFilter:
-                  description: Filter down to these mapedit/osm user id(s).
-                  type: array
-                  items:
-                    type: integer
-                    example: 10499924
-                categoriesFilter:
-                  description: 'Filter down to these osmesa categories of measurements and counts.
-                    Each count and measurement will have [add, modified, deleted] in the response. Measurements
-                    are in kilometers, or square kilometers, e.g. *_km and *_km2.
-                    Note: available categories sourced from
-                    https://github.com/azavea/osmesa/blob/master/src/analytics/src/main/scala/osmesa/analytics/stats/package.scala#L119-L180'
-                  type: array
-                  example: [road_km, coastline_km, pois, buildings]
-                  items:
-                    type: string
-                    enum:
-                      # measurements
-                      - road_km
-                      - waterway_km
-                      - coastline_km
-                      - railline_km
-                      - landuse_km2
-                      - natural_km2
-                      # counts
-                      - roads
-                      - waterways
-                      - coastlines
-                      - buildings
-                      - railway_features
-                      - raillines
-                      - pois
-                      - landuse
-                      - natural
-                      - other
-                countriesFilter:
-                  description: Filter down to these countries.
-                  type: array
-                  items:
-                    type: string
-                    description: ISO-3166 country code (3 letters), or USA-XX for a US State
-                  example: [ AFG, AUS, USA, USA-AK ]
-                hashtagsFilter:
-                  description: Filter down to these exact changeset hashtag(s).
-                  type: array
-                  items:
-                    type: string
-                  example: [ 345_task_789, 345_task_111 ]
-                hashtagPrefixFilter:
-                  type: array
-                  items:
-                    type: string
-                  example: [ ocelots_ ]
-                  description: Filter down to these hashtag(s), using a prefix match.
+      parameters:
+        - name: startDate
+          in: query
+          description: Start date of query. ISO-8601 formatted datetime string (UTC time zone).
+          required: true
+          schema:
+            type: string
+            example: 2020-12-30
+        - name: endDate
+          in: query
+          description: End date of query. ISO-8601 formatted datetime string (UTC time zone).
+          schema:
+            type: string
+            default: (now)
+            example: 2020-12-30
+        - name: binInterval
+          in: query
+          description: 'Response will be binned into equal intervals specified by this parameter. Must be shorter
+              than end-date minus start-date. If omitted, no binning will be performed. ISO-8601 formatted time
+              interval/duration string.'
+          schema:
+            type: string
+            example: P1Y2M10DT2H30M
+        - name: userIdsFilter
+          description: Filter down to these mapedit/osm user id(s).
+          in: query
+          explode: false
+          style: pipeDelimited
+          schema:
+            type: array
+            items:
+              type: integer
+              example: 10499924
+        - name: countriesFilter
+          description: Filter down to these countries.
+          in: query
+          explode: false
+          style: pipeDelimited
+          schema:
+            type: array
+            items:
+              type: string
+              description: ISO-3166 country code (3 letters), or USA-XX for a US State
+            example: [ AFG, AUS, USA, USA-AK ]
+        - name: hashtagsFilter
+          description: Filter down to these exact changeset hashtag(s).
+          in: query
+          explode: false
+          style: pipeDelimited
+          schema:
+            type: array
+            items:
+              type: string
+              example: [ 345_task_789, 345_task_111 ]
+        - name: categoriesFilter
+          description: 'Filter down to these osmesa categories of measurements and counts.
+            Each count and measurement will have [add, modified, deleted] in the response. Measurements
+            are in kilometers, or square kilometers, e.g. *_km and *_km2.
+            Note: available categories sourced from
+            https://github.com/azavea/osmesa/blob/master/src/analytics/src/main/scala/osmesa/analytics/stats/package.scala#L119-L180'
+          in: query
+          explode: false
+          style: pipeDelimited
+          schema:
+            type: array
+            example: '[road_km, coastline_km, pois, buildings]'
+            items:
+              type: string
+              enum:
+                # measurements
+                - road_km
+                - waterway_km
+                - coastline_km
+                - railline_km
+                - landuse_km2
+                - natural_km2
+                # counts
+                - roads
+                - waterways
+                - coastlines
+                - buildings
+                - railway_features
+                - raillines
+                - pois
+                - landuse
+                - natural
+                - other
       responses:
         400:
           description: Bad Request, e.g. when no filters are passed in the requestBody.
@@ -261,6 +269,10 @@ paths:
                           description: Result bin end date. ISO-8601 formatted datetime
                             string (UTC time zone).
                           example: 2020-12-30
+                        binInterval:
+                          description: 'ISO-8601 formatted time interval/duration string of binning interval.'
+                          type: string
+                          example: P1Y2M10DT2H30M
                         userStatistics:
                           type: array
                           description: Modeled after the user_statistics materialized
@@ -387,5 +399,4 @@ paths:
                                 type: integer
                                 description: Number of edits
                       description: Result bin of binInterval duration
-      x-codegen-request-body-name: hashtagPrefixFilter
 components: {}

@@ -15,6 +15,7 @@ const countries = require('./countries')
 const country = require('./country')
 const taskers = require('./taskers')
 const settings = require('./settings')
+const timeseries = require('./timeseries')
 
 /**
  * Route registration
@@ -80,5 +81,8 @@ router.get('/settings', settings.get)
 router.put('/settings', settings.put)
 router.get('/map-settings', settings.getMapSettings)
 router.delete('/settings/teams-access-tokens', settings.deleteAccessTokens)
+
+// timeseries routes
+router.get('/timeseries', timeseries.get)
 
 module.exports = router
