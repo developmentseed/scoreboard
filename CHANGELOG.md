@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [v1.13] - 2022-11-22
+### Added
+- Timeseries API that allows querying for users', teams', countries' changes in an interval
+of time
+- Timeseries UI allows an admin user to visualize the timeseries API query
+- Timeseries CSV export allows an admin to make a faceted timeseries query 
+and export it to CSV
+
 ## [v1.12.2] - 2022-03-08
 ### Fixed
 - Fix for organization page
@@ -371,7 +379,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The first release
 
-[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.12.2...HEAD
+[Unreleased]: https://github.com/developmentseed/scoreboard/compare/v1.13.0...HEAD
+[v1.13.0]: https://github.com/developmentseed/scoreboard/compare/v1.12.2...v1.13.0
 [v1.12.2]: https://github.com/developmentseed/scoreboard/compare/v1.12.1...v1.12.2
 [v1.12.1]: https://github.com/developmentseed/scoreboard/compare/v1.12.0...v1.12.1
 [v1.12.0]: https://github.com/developmentseed/scoreboard/compare/v1.11.1...v1.12.0
