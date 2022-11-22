@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [v1.13] - 2022-11-22
+## [v1.13.0] - 2022-11-22
 ### Added
 - Timeseries API that allows querying for users', teams', countries' changes in an interval
 of time
