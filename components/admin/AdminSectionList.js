@@ -44,6 +44,18 @@ export default function AdminSectionList (props) {
       </li>
       <li className='widget'>
         <h3 className='header--medium'>
+          Timeseries
+        </h3>
+        <ul>
+          <li>
+            <Link href='/admin/timeseries'>
+              <a className='link--normal'>Run Timeseries Analysis</a>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li className='widget'>
+        <h3 className='header--medium'>
           Tasking Managers
         </h3>
         <ul>

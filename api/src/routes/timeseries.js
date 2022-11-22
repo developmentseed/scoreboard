@@ -12,9 +12,8 @@ const osmesa = require('../services/osmesa')
  * @param userIdsFilter
  * @param countriesFilter
  * @param hashtagsFilter
- * @param hashtagPrefixFilter
  * @param categoriesFilter
- * @returns {{binInterval: ({isValid}|Duration), hashtagsFilter: {length}, categoriesFilter: {length}, userIdsFilter: {length}, endDate: ({isValid}|DateTime), hashtagPrefixFilter: {length}, startDate: ({isValid}|DateTime), countriesFilter: {length}}}
+ * @returns {{binInterval: ({isValid}|Duration), hashtagsFilter: {length}, categoriesFilter: {length}, userIdsFilter: {length}, endDate: ({isValid}|DateTime), startDate: ({isValid}|DateTime), countriesFilter: {length}}}
  */
 function validateParams ({
   startDate,
@@ -23,15 +22,15 @@ function validateParams ({
   userIdsFilter = '',
   countriesFilter = '',
   hashtagsFilter = '',
-  hashtagPrefixFilter = '',
   categoriesFilter = ''
 }) {
   let validStartDate, validEndDate, validBinInterval, validUserIdsFilter,
     validCountriesFilter, validHashtagsFilter,
-    validHashtagPrefixFilter, validCategoriesFilter
+    validCategoriesFilter
   if (!startDate) {
     throw Boom.badRequest('startDate is required')
   }
+
   validStartDate = DateTime.fromISO(startDate)
   if (!validStartDate.isValid) {
     throw Boom.badRequest(validStartDate.invalidExplanation)
@@ -51,12 +50,10 @@ function validateParams ({
   }
   validCategoriesFilter = deserializeStringArray(categoriesFilter)
   validCountriesFilter = deserializeStringArray(countriesFilter) // TODO: validate these are 3 letter country codes?
-  validHashtagPrefixFilter = deserializeStringArray(hashtagPrefixFilter)
   validHashtagsFilter = deserializeStringArray(hashtagsFilter)
   // require at least 1 one filter, according to api spec.
   if (!validCategoriesFilter.length &&
       !validCountriesFilter.length &&
-      !validHashtagPrefixFilter.length &&
       !validHashtagsFilter.length &&
       !validUserIdsFilter.length) {
     throw Boom.badRequest('at least one filter is required')
@@ -68,7 +65,6 @@ function validateParams ({
     userIdsFilter: validUserIdsFilter,
     countriesFilter: validCountriesFilter,
     hashtagsFilter: validHashtagsFilter,
-    hashtagPrefixFilter: validHashtagPrefixFilter,
     categoriesFilter: validCategoriesFilter
   }
 }
@@ -80,7 +76,8 @@ function validateParams ({
  * @returns {int[]}
  */
 function deserializeIntArray (s) {
-  const result = s.split('|').map(parseInt).filter(n => !isNaN(n))
+  const result = s.split('|').map(p => parseInt(p)).filter(n => !isNaN(n))
+
   if (s.length > 0 && result.length === 0) {
     throw Boom.badRequest('failed to deserialize integers array')
   }
@@ -103,7 +100,7 @@ function deserializeStringArray (s) {
 /**
  * TimeSeries route
  *
- * {{baseUrl}}/api/timeseries?startDate=<string>&endDate=(now)&binInterval=<string>&userIdsFilter=<integer>|<integer>&countriesFilter=<string>|<string>&hashtagsFilter=<string>|<string>&hashtagPrefixFilter=<string>|<string>&categoriesFilter=<string>|<string> *
+ * {{baseUrl}}/api/timeseries?startDate=<string>&endDate=(now)&binInterval=<string>&userIdsFilter=<integer>|<integer>&countriesFilter=<string>|<string>&hashtagsFilter=<string>|<string>&categoriesFilter=<string>|<string> *
  *
  * @param {Object} req - the request object
  * @param {Object} res - the response object
@@ -112,8 +109,10 @@ function deserializeStringArray (s) {
 async function get (req, res) {
   try {
     const params = validateParams(req.query)
-    const result = osmesa.getTimeSeries(params)
-    res.send(result)
+    const result = await osmesa.getTimeSeries(params)
+    res.send({
+      bins: result
+    })
   } catch (err) {
     res.boom.boomify(err)
   }

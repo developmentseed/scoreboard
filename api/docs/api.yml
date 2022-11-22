@@ -201,16 +201,6 @@ paths:
             items:
               type: string
               example: [ 345_task_789, 345_task_111 ]
-        - name: hashtagPrefixFilter
-          description: Filter down to these hashtag(s), using a prefix match.
-          in: query
-          explode: false
-          style: pipeDelimited
-          schema:
-            type: array
-            items:
-              type: string
-              example: [ ocelots_ ]
         - name: categoriesFilter
           description: 'Filter down to these osmesa categories of measurements and counts.
             Each count and measurement will have [add, modified, deleted] in the response. Measurements
@@ -279,6 +269,10 @@ paths:
                           description: Result bin end date. ISO-8601 formatted datetime
                             string (UTC time zone).
                           example: 2020-12-30
+                        binInterval:
+                          description: 'ISO-8601 formatted time interval/duration string of binning interval.'
+                          type: string
+                          example: P1Y2M10DT2H30M
                         userStatistics:
                           type: array
                           description: Modeled after the user_statistics materialized
@@ -405,5 +399,4 @@ paths:
                                 type: integer
                                 description: Number of edits
                       description: Result bin of binInterval duration
-      x-codegen-request-body-name: hashtagPrefixFilter
 components: {}
