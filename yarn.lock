@@ -12505,10 +12505,10 @@ react-select@^1.2.1:
     prop-types "^15.5.8"
     react-input-autosize "^2.1.2"
 
-react-table@^7.0.0-beta.11:
-  version "7.0.0-rc.15"
-  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.0.0-rc.15.tgz#bb855e4e2abbb4aaf0ed2334404a41f3ada8e13a"
-  integrity sha512-ofMOlgrioHhhvHjvjsQkxvfQzU98cqwy6BjPGNwhLN1vhgXeWi0mUGreaCPvRenEbTiXsQbMl4k3Xmx3Mut8Rw==
+react-table@7.0.0-beta.11:
+  version "7.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.0.0-beta.11.tgz#978a22a179d168f6a4e4ed41dec149057b63412d"
+  integrity sha512-mkjyzpZgvNEZa4O308Qv+3oNOVTDR5SrpX+xHIlC8ZkN5/SDTlEtqFs2CgBbUvUNad8qEJup2CoKg7akNNzOvw==
 
 react-tooltip@^3.11.1:
   version "3.11.2"
