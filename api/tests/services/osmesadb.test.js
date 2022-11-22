@@ -6,13 +6,11 @@ const path = require('path')
 
 const osmesa = require('../../src/services/osmesa')
 const db = require('../../src/db/connection')
-const { T } = require('ramda')
 const { DateTime, Duration } = require('luxon')
 
 const dbDirectory = path.join(__dirname, '..', '..', 'src', 'db')
 const migrationsDirectory = path.join(dbDirectory, 'migrations')
 const seedsDirectory = path.join(dbDirectory, 'seeds', 'test')
-
 
 test.before(async t => {
   await db.migrate.latest({ directory: migrationsDirectory })
@@ -102,7 +100,7 @@ test.serial('validate timeseries accuracy', async t => {
   const buildRangeQuery = (
     start = '2018-01-01 00:00:00.000 -04:00',
     end = '2020-01-01 00:00:00.000 -04:00',
-    users = [33757,19239,4732]
+    users = [33757, 19239, 4732]
   ) => {
     return `
     with range_changesets as (
@@ -168,9 +166,9 @@ test.serial('validate timeseries accuracy', async t => {
     `
   }
 
-  function getRangeQueryData(start,end) {
-    return osmesa.connection().raw(buildRangeQuery(start,end)).then(({rows}) => {
-        return { bin_start: start, bin_end: end, rows: rows }
+  function getRangeQueryData (start, end) {
+    return osmesa.connection().raw(buildRangeQuery(start, end)).then(({ rows }) => {
+      return { bin_start: start, bin_end: end, rows: rows }
     })
   }
   const [
@@ -179,18 +177,18 @@ test.serial('validate timeseries accuracy', async t => {
     binRangeResults
   ] = await Promise.all([
     osmesa.getTimeSeries({
-      startDate:DateTime.fromISO('2018-01-01'),
-      endDate:DateTime.fromISO('2020-01-01'),
+      startDate: DateTime.fromISO('2018-01-01'),
+      endDate: DateTime.fromISO('2020-01-01'),
       binInterval: Duration.fromISO('P1Y'),
-      userIdsFilter: [33757,19239,4732],
+      userIdsFilter: [33757, 19239, 4732],
       countriesFilter: [],
       hashtagsFilter: [],
       categoriesFilter: []
     }),
-    getRangeQueryData('2018-01-01 00:00:00.000 -04:00','2020-01-01 00:00:00.000 -04:00'),
+    getRangeQueryData('2018-01-01 00:00:00.000 -04:00', '2020-01-01 00:00:00.000 -04:00'),
     Promise.all([
-      getRangeQueryData('2018-01-01 00:00:00.000 -04:00','2019-01-01 00:00:00.000 -04:00'),
-      getRangeQueryData('2019-01-01 00:00:00.000 -04:00','2020-01-01 00:00:00.000 -04:00')
+      getRangeQueryData('2018-01-01 00:00:00.000 -04:00', '2019-01-01 00:00:00.000 -04:00'),
+      getRangeQueryData('2019-01-01 00:00:00.000 -04:00', '2020-01-01 00:00:00.000 -04:00')
     ])
   ])
 
@@ -199,22 +197,22 @@ test.serial('validate timeseries accuracy', async t => {
   // show for measurements the difference is within a .0000001 'confidence interval'.
   // either because of node's floating point numbers or something in the sql aggregation functions there can be a small
   // in the sum of the bins and the entire range.
-  const measurementCountsKeys = rangeResult.rows.reduce((map,r) => {
+  const measurementCountsKeys = rangeResult.rows.reduce((map, r) => {
     map[r.name] = {
-        measurements: Object.assign({}, r.measurements),
-        counts:  Object.assign({}, r.counts),
-        changeset_count: r.changeset_count,
-        edit_count: r.edit_count
+      measurements: Object.assign({}, r.measurements),
+      counts: Object.assign({}, r.counts),
+      changeset_count: r.changeset_count,
+      edit_count: r.edit_count
     }
-    return map;
+    return map
   }, {})
 
   timeseriesResult.forEach(row => {
     Object.keys(row.measurements).forEach(m => {
-        measurementCountsKeys[row.name].measurements[m] -= row.measurements[m]
+      measurementCountsKeys[row.name].measurements[m] -= row.measurements[m]
     })
     Object.keys(row.counts).forEach(m => {
-        measurementCountsKeys[row.name].counts[m] -= row.counts[m]
+      measurementCountsKeys[row.name].counts[m] -= row.counts[m]
     })
     measurementCountsKeys[row.name].changeset_count -= row.changeset_count
     measurementCountsKeys[row.name].edit_count -= row.edit_count
@@ -232,35 +230,34 @@ test.serial('validate timeseries accuracy', async t => {
   // also validate that repored measurements/counts are the same by showing the keys in the jsonb are the same.
   const timeseriesWalkable = timeseriesResult.reduce((map, r) => {
     if (!map.hasOwnProperty(r.name)) {
-        map[r.name] = {}
+      map[r.name] = {}
     }
 
-    map[r.name][r.bin_start] = r;
-    return map;
+    map[r.name][r.bin_start] = r
+    return map
   }, {})
 
   binRangeResults.forEach(bin => {
     bin.rows.forEach(r => {
       const timeseriesMatch = timeseriesWalkable[r.name][bin.bin_start.split(' ')[0]] // bin_start here is full iso. timesereies bintimesereies
 
-      const rowMeasurementKeys = Object.keys(r.measurements);
-      const timeseriesMeasurementKeys = Object.keys(timeseriesMatch.measurements);
+      const rowMeasurementKeys = Object.keys(r.measurements)
+      const timeseriesMeasurementKeys = Object.keys(timeseriesMatch.measurements)
 
-      const rowCountsKeys = Object.keys(r.counts);
-      const timeseriesCountsKeys = Object.keys(timeseriesMatch.counts);
-
+      const rowCountsKeys = Object.keys(r.counts)
+      const timeseriesCountsKeys = Object.keys(timeseriesMatch.counts)
 
       t.true(rowMeasurementKeys.length === timeseriesMeasurementKeys.length)
       t.true(rowCountsKeys.length === timeseriesCountsKeys.length)
       t.true(rowMeasurementKeys.sort().join(',') === timeseriesMeasurementKeys.sort().join(','))
       t.true(rowCountsKeys.sort().join(',') === timeseriesCountsKeys.sort().join(','))
 
-      rowMeasurementKeys.forEach(key => t.true((r.measurements[key] - timeseriesMatch.measurements[key]) === 0));
+      rowMeasurementKeys.forEach(key => t.true((r.measurements[key] - timeseriesMatch.measurements[key]) === 0))
 
-      rowCountsKeys.forEach(key => t.true((r.counts[key] - timeseriesMatch.counts[key]) === 0));
+      rowCountsKeys.forEach(key => t.true((r.counts[key] - timeseriesMatch.counts[key]) === 0))
 
-      t.true((r.changeset_count - timeseriesMatch.changeset_count) === 0);
-      t.true((r.edit_count - timeseriesMatch.edit_count) === 0);
+      t.true((r.changeset_count - timeseriesMatch.changeset_count) === 0)
+      t.true((r.edit_count - timeseriesMatch.edit_count) === 0)
     })
   })
 })

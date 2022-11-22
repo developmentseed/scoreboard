@@ -32,9 +32,9 @@ export default function CSVExport ({ filename, data }) {
   }
 
   if (isTimeseries) {
-    headers.splice(1,0,
-      { label: 'Bin Start', key: 'bin_start'},
-      { label: 'Bin End', key: 'bin_end'}
+    headers.splice(1, 0,
+      { label: 'Bin Start', key: 'bin_start' },
+      { label: 'Bin End', key: 'bin_end' }
     )
   }
 
@@ -43,7 +43,6 @@ export default function CSVExport ({ filename, data }) {
     let exportTotals = {}
 
     let headerKeys = headers.map(e => e.key)
-
 
     headerKeys.forEach(k => {
       exportTotals[k] = isTimeseries && k.indexOf('bin') !== -1 ? '' : formatDecimal(
