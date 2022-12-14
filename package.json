@@ -100,7 +100,7 @@
     "dotenv": "^6.2.0",
     "dotenv-webpack": "^1.5.7",
     "enzyme": "^3.7.0",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "express-boom": "^3.0.0",
     "express-promise-router": "^2.0.0",
     "express-session": "^1.15.6",
