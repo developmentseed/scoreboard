@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: test
       POSTGRES_USER: scoreboard
     ports:
-      - 5433:5432
+      - 5436:5432
 
   osmesa:
     build: docker-context/osmesa-mock/
@@ -18,7 +18,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
     ports:
-      - 5434:5432
+      - 5437:5432
 
   wait-for-db-ready:
     image: dadarek/wait-for-dependencies
