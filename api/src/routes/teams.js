@@ -33,7 +33,7 @@ async function list (req, res) {
         console.error(e)
       }
     }
-    return res.send({ teams: JSON.parse(teams), canCreate })
+    return res.send({ teams, canCreate })
   } catch (err) {
     console.error(err)
     return res.boom.badRequest('Could not retrieve teams list')
