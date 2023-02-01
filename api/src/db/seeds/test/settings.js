@@ -4,7 +4,7 @@ const { put } = require('../../../models/settings')
 const settings = {
   'osmesa-db': process.env.OSMESA_DB
     ? process.env.OSMESA_DB
-    : 'postgres://postgres@localhost:5434/postgres'
+    : 'postgres://postgres@localhost:5437/postgres'
 }
 
 exports.seed = (knex) => knex('settings').del() // delete entries
