@@ -114,7 +114,7 @@ async function get (req, res) {
   let teams
   try {
     const t = new OSMTeams(user.osm_id)
-    teams = JSON.parse(await t.getTeams(user.osm_id))
+    teams = await t.getTeams(user.osm_id)
   } catch (err) {
     console.error(err)
   }

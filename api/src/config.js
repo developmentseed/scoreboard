@@ -15,9 +15,9 @@ const APP_SECRET = process.env.APP_SECRET || 'changeme!........(32 characters)'
 const cryptr = new Cryptr(APP_SECRET)
 
 if (process.env.NODE_ENV === 'test') {
-  DATABASE_URL = process.env.DATABASE_URL || 'postgres://scoreboard_test:test@localhost:5433/scoreboard_test'
+  DATABASE_URL = process.env.DATABASE_URL || 'postgres://scoreboard_test:test@localhost:5436/scoreboard_test'
 } else {
-  DATABASE_URL = process.env.DATABASE_URL || 'postgres://scoreboard:test@localhost:5433/scoreboard'
+  DATABASE_URL = process.env.DATABASE_URL || 'postgres://scoreboard:test@localhost:5436/scoreboard'
 }
 
 module.exports = {

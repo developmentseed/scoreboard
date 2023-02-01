@@ -3,7 +3,7 @@ const sampleTeams = require('../fixtures/teams.json')
 const { getToken, storeToken } = require('../models/teams-access-tokens')
 const { teamServiceCredentials } = require('../passport')
 const { OSM_TEAMS_SERVICE, OSM_TEAMS_ORG_ID } = require('../config')
-const { prop, includes, map } = require('ramda')
+const { prop, includes, propEq } = require('ramda')
 
 /**
  * Methods to grab data from OSM Teams
@@ -16,6 +16,44 @@ class OSMTeams {
    */
   constructor (osmid) {
     this.osmid = Number(osmid)
+  }
+
+  /**
+   * Get + Auth
+   * @param {String} baseUrl endpoint to get
+   * @returns result of request
+   */
+  async authorizedGet (baseUrl) {
+    if (!baseUrl) return
+    const options = await this.addAuthorization({
+      method: 'GET',
+      uri: baseUrl,
+      json: true
+    })
+
+    return rp(options)
+  }
+
+  /**
+   * Paginate through all results at an endpoint
+   * @param {String} baseUrl endpoint to get
+   * @returns result of all data at endpoint
+   */
+  async paginatedGet (baseUrl) {
+    if (!baseUrl) return
+    let endpoint = baseUrl
+    let allData = []
+    let isLastPage = true
+
+    while (isLastPage) {
+      let result = await this.authorizedGet(endpoint)
+      allData = allData.concat(result.data)
+
+      // change endpoint
+      isLastPage = result.pagination.lastPage === result.pagination.currentPage
+      endpoint = baseUrl + `?page=${result.pagination.currentPage + 1}`
+    }
+    return allData
   }
 
   /**
@@ -70,11 +108,16 @@ class OSMTeams {
    *
    * @returns {Promise} response
    */
-  getTeams (id) {
-    if (id) {
-      return rp(`${OSM_TEAMS_SERVICE}/api/teams?osmId=${id}&organizationId=${OSM_TEAMS_ORG_ID}`)
-    }
-    return rp(`${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/teams`)
+  async getTeams () {
+    const teams = await this.paginatedGet(`${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/teams`)
+    let getAllMembers = teams.map(async team => {
+      let { members, moderators } = await this.getTeamMembers(team.id)
+      let teamMembers = members.map(prop('id'))
+      let teamModerators = moderators.map(prop('osm_id'))
+
+      return Object.assign({}, team, { members: teamMembers, moderators: teamModerators })
+    })
+    return Promise.all(getAllMembers)
   }
 
   async createTeam (body) {
@@ -88,11 +131,11 @@ class OSMTeams {
   }
 
   getTeam (id) {
-    return rp(`${OSM_TEAMS_SERVICE}/api/teams/${id}`)
+    return this.authorizedGet(`${OSM_TEAMS_SERVICE}/api/teams/${id}`)
   }
 
   getTeamMembers (id) {
-    return rp(`${OSM_TEAMS_SERVICE}/api/teams/${id}/members`)
+    return this.authorizedGet(`${OSM_TEAMS_SERVICE}/api/teams/${id}/members`)
   }
 
   /**
@@ -103,16 +146,9 @@ class OSMTeams {
    */
   async canCreateTeam () {
     try {
-      const options = await this.addAuthorization({
-        method: 'GET',
-        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/staff`,
-        json: true
-      })
-      const org = await rp(options)
-      const { owners, managers } = org
-      let ids = owners.map(prop('id')).concat(managers.map(prop('id')))
-      ids = map(parseInt, ids)
-      return includes(this.osmid, ids)
+      const staff = await this.paginatedGet(`${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/staff`)
+      const staffIds = staff.map(prop('id'))
+      return includes(this.osmid, staffIds)
     } catch (e) {
       console.error(e)
       return false
@@ -130,21 +166,9 @@ class OSMTeams {
    */
   async canEditTeam (id) {
     try {
-      const [orgOpts, teamOpts] = await Promise.all([
-        this.addAuthorization({
-          method: 'GET',
-          uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/staff`,
-          json: true
-        }),
-        this.addAuthorization({
-          method: 'GET',
-          uri: `${OSM_TEAMS_SERVICE}/api/teams/${id}/members`,
-          json: true
-        })
-      ])
-      const [org, team] = await Promise.all([ rp(orgOpts), rp(teamOpts) ])
-      const { owners } = org
-      const { moderators } = team
+      const [orgStaff, teamMembers] = await Promise.all([ this.getOrganizationStaff(), this.getTeamMembers(id) ])
+      const owners = orgStaff.filter(propEq('type', 'owner'))
+      const { moderators } = teamMembers
       const ownerIds = owners.map(prop('id')).map(x => Number(x))
       const moderatorIds = moderators.map(prop('osm_id')).map(x => Number(x)) // TODO Ideally this interface should be the same in OSM Teams
       const allowedEditorIds = new Set(ownerIds.concat(moderatorIds))
@@ -209,12 +233,7 @@ class OSMTeams {
    */
   async getOrganizationStaff () {
     try {
-      const options = await this.addAuthorization({
-        method: 'GET',
-        uri: `${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/staff`,
-        json: true
-      })
-      const org = await rp(options)
+      const org = this.paginatedGet(`${OSM_TEAMS_SERVICE}/api/organizations/${OSM_TEAMS_ORG_ID}/staff`)
       return org
     } catch (e) {
       console.error(e)
