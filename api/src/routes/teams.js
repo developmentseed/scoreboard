@@ -81,8 +81,8 @@ async function get (req, res) {
     const { id: teamId } = req.params
     const { user: { id: osmId = null } = {} } = req
     const teams = new OSMTeams(osmId)
-    const teamData = JSON.parse(await teams.getTeam(teamId))
-    const teamMembers = JSON.parse(await teams.getTeamMembers(teamId))
+    const teamData = await teams.getTeam(teamId)
+    const teamMembers = await teams.getTeamMembers(teamId)
     const campaigns = await db('campaigns').join(
       db('team_assignments').select(['team_id', 'team_priority', 'campaign_id']).where('team_id', teamId).as('team_assignments'),
       'team_assignments.campaign_id',
